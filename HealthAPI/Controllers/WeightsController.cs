@@ -13,9 +13,9 @@ namespace HealthAPI.Controllers
    // [Route("api/[controller]")]
     public class WeightsController : Controller
     {
-        private readonly HealthContext _context;
+        private readonly IHealthContext _context;
 
-        public WeightsController(HealthContext context)
+        public WeightsController(IHealthContext context)
         {
             _context = context;
 
