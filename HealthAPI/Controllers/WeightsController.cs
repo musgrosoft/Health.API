@@ -34,7 +34,7 @@ namespace HealthAPI.Controllers
         {
             List<Weight> weights = _context.Weights.Select(w => new Weight
             {
-                Kg = w.WeightKg,
+                Kg = 333,//w.WeightKg,
                 DateTime = w.DateTime
             }).OrderBy(x => x.DateTime).ToList();
 
