@@ -13,9 +13,9 @@ namespace HealthAPI.Controllers
    // [Route("api/[controller]")]
     public class WeightsController : Controller
     {
-        private readonly IHealthContext _context;
+        private readonly HealthContext _context;
 
-        public WeightsController(IHealthContext context)
+        public WeightsController(HealthContext context)
         {
             _context = context;
 
@@ -34,7 +34,7 @@ namespace HealthAPI.Controllers
         {
             List<Weight> weights = _context.Weights.Select(w => new Weight
             {
-                Kg = 333,//w.WeightKg,
+                Kg = w.WeightKg,
                 DateTime = w.DateTime
             }).OrderBy(x => x.DateTime).ToList();
 

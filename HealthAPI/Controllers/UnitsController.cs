@@ -25,9 +25,9 @@ namespace HealthAPI.Controllers
 
         // GET api/weights
         [HttpGet]
-        public IEnumerable<int> Get()
+        public IEnumerable<Units> Get()
         {
-            return _context.Units.OrderBy(x=>x.DateTime).Select(x => 123).ToList();
+            return _context.Units.OrderBy(x=>x.DateTime).ToList();
         }
 
         
