@@ -13,17 +13,17 @@ namespace HealthAPI.Controllers
    // [Route("api/[controller]")]
     public class WeightsController : Controller
     {
-        private readonly HealthContext _context;
+        private readonly IHealthContext _context;
+
+        public WeightsController(IHealthContext context)
+        {
+            _context = context;
+        }
 
         public WeightsController(HealthContext context)
         {
             _context = context;
-
-            //if (_context.TodoItems.Count() == 0)
-            //{
-            //    _context.TodoItems.Add(new TodoItem { Name = "Item1" });
-            //    _context.SaveChanges();
-            //}
+            
         }
 
         // GET api/weights

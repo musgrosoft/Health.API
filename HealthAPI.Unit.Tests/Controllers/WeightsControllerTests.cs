@@ -15,6 +15,17 @@ namespace HealthAPI.Unit.Tests.Controllers
         [Fact]
         public void Test1()
         {
+            var context = new FakeLocalContext();
+            
+            context.Add(new Weights { WeightKg = 123, DateTime = DateTime.Now , DataSource = "abc"});
+            context.Add(new Weights { WeightKg = 345, DateTime = DateTime.Now, DataSource = "abc" });
+            context.Add(new Weights { WeightKg = 678, DateTime = DateTime.Now, DataSource = "abc" });
+            context.SaveChanges();
+
+            var weightsControlller = new WeightsController(context);
+
+
+
             //var data = new List<Weight>
             //{
             //    new Weight{Kg = 123, DateTime = DateTime.Now},
@@ -38,10 +49,10 @@ namespace HealthAPI.Unit.Tests.Controllers
 
             //var weightsControlller = new WeightsController(healthContxt.Object);
 
-            //var result = weightsControlller.Get();
+            var result = weightsControlller.Get();
 
-            //Assert.Equal(result.Count(), 3);
-            //Assert.True(result.Any(x=>x.Kg == 123) );
+            Assert.Equal(3, result.Count());
+            Assert.True(result.Any(x=>x.Kg == 123) );
 
         }
     }
