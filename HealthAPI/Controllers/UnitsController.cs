@@ -29,7 +29,7 @@ namespace HealthAPI.Controllers
         {
             return new List<Units> {new Units
             {
-                DateTime = DateTime.Now, Units1 = 1234
+                DateTime = DateTime.Now, Units1 = 555
             }};
 //            return _context.Units.OrderBy(x=>x.DateTime).ToList();
         }
