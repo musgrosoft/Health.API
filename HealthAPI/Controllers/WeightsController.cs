@@ -14,16 +14,16 @@ namespace HealthAPI.Controllers
     public class WeightsController : Controller
     {
         private readonly IHealthContext _context;
-
-        public WeightsController(IHealthContext context)
-        {
-            _context = context;
-        }
-
+        
         public WeightsController(HealthContext context)
         {
             _context = context;
             
+        }
+
+        public WeightsController(IHealthContext context)
+        {
+            _context = context;
         }
 
         // GET api/weights
