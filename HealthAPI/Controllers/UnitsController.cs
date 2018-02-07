@@ -27,7 +27,11 @@ namespace HealthAPI.Controllers
         [HttpGet]
         public IEnumerable<Units> Get()
         {
-            return _context.Units.OrderBy(x=>x.DateTime).ToList();
+            return new List<Units> {new Units
+            {
+                DateTime = DateTime.Now, Units1 = 1234
+            }};
+//            return _context.Units.OrderBy(x=>x.DateTime).ToList();
         }
 
         
