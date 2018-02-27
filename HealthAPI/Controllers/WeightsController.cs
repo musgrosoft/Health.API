@@ -21,10 +21,6 @@ namespace HealthAPI.Controllers
             
         }
 
-        public WeightsController(IHealthContext context)
-        {
-            _context = context;
-        }
 
         // GET api/weights
         [EnableCors("CorsPolicy")]
