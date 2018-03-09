@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HealthAPI.Models
 {
-    public partial class Weights
+    public class Weights
     {
         public DateTime DateTime { get; set; }
         public string DataSource { get; set; }

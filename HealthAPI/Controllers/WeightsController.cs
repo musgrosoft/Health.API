@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using HealthAPI.Models;
 using HealthAPI.ViewModels;
 using Microsoft.AspNetCore.Cors;
@@ -13,7 +11,7 @@ namespace HealthAPI.Controllers
    // [Route("api/[controller]")]
     public class WeightsController : Controller
     {
-        private readonly IHealthContext _context;
+        private readonly HealthContext _context;
         
         public WeightsController(HealthContext context)
         {
