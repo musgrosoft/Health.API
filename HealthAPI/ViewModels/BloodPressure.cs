@@ -16,5 +16,7 @@ namespace HealthAPI.ViewModels
 
         public int? MovingAverageDiastolic { get; set; }
 
+        
+
     }
 }

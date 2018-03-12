@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using HealthAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +17,9 @@ namespace HealthAPI.Controllers
 
         // GET api/bloodpressures
         [HttpGet]
-        public IEnumerable<DailySteps> Get()
+        public IEnumerable<RestingHeartRate> Get()
         {
-            return _context.DailySteps.OrderBy(x=>x.DateTime);
+            return _context.RestingHeartRate.OrderBy(x=>x.DateTime);
         }
 
         
