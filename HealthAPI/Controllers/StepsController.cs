@@ -18,6 +18,7 @@ namespace HealthAPI.Controllers
 
         // GET api/bloodpressures
         [HttpGet]
+        [Route("api/stepsx")]
         // public IEnumerable<DailySteps> Get([FromUri] string groupBy)
         public IEnumerable<StepCount> Get(string groupBy = "day")
         {
