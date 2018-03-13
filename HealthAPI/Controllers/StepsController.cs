@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Models;
+using HealthAPI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
@@ -18,37 +19,43 @@ namespace HealthAPI.Controllers
         // GET api/bloodpressures
         [HttpGet]
         // public IEnumerable<DailySteps> Get([FromUri] string groupBy)
-        public IEnumerable<DailySteps> Get(string groupBy = "day")
+        public IEnumerable<StepCount> Get(string groupBy = "day")
         {
-            //var dailySteps = _context.DailySteps.OrderBy(x => x.DateTime);
+            var dailyStepCounts = _context.DailySteps.OrderBy(x => x.DateTime).Select(x=>new StepCount
+            {
+                DateTime = x.DateTime,
+                Steps = x.Steps
+            });
 
-            //if (groupBy.ToLower() == "week")
-            //{
-            //    var weekGroups = dailySteps.GroupBy(x => x.DateTime.AddDays(-(int)x.DateTime.DayOfWeek));
+            if (groupBy.ToLower() == "week")
+            {
+                var weekGroups = dailyStepCounts.GroupBy(x => x.DateTime.AddDays(-(int)x.DateTime.DayOfWeek));
 
 
-            //    var weeklyStepCounts = new List<StepCount>();
-            //    foreach (var group in weekGroups)
-            //    {
-            //        var stepCount = new StepCount
-            //        {
-            //            Day = group.Key,
-            //            Steps = group.Sum(x => x.Steps)
-            //        };
+                var weeklyStepCounts = new List<StepCount>();
+                foreach (var group in weekGroups)
+                {
+                    var stepCount = new StepCount
+                    {
+                        DateTime = group.Key,
+                        Steps = group.Sum(x => x.Steps)
+                    };
 
-            //        weeklyStepCounts.Add(stepCount);
-            //    }
+                    weeklyStepCounts.Add(stepCount);
+                }
 
-            //    return weeklyStepCounts;
-            //}
+                return weeklyStepCounts;
+            }
 
-            return _context.DailySteps.OrderBy(x=>x.DateTime);
+            return dailyStepCounts;
+
+            // return _context.DailySteps.OrderBy(x=>x.DateTime);
 
             //------------------------------------------------------------------------------------------
 
             //var dailyStepCounts = GetDailyStepCounts();
 
-            //var weekGroups = dailyStepCounts.GroupBy(x => x.Day.AddDays(-(int)x.Day.DayOfWeek));
+            //var weekGroups = dailyStepCounts.GroupBy(x => x.DateTime.AddDays(-(int)x.DateTime.DayOfWeek));
 
 
             //var weeklyStepCounts = new List<StepCount>();
@@ -56,7 +63,7 @@ namespace HealthAPI.Controllers
             //{
             //    var stepCount = new StepCount
             //    {
-            //        Day = group.Key,
+            //        DateTime = group.Key,
             //        Steps = group.Sum(x => x.Steps)
             //    };
 

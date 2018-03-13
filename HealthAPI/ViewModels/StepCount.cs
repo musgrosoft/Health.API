@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace HealthAPI.Models
+namespace HealthAPI.ViewModels
 {
-    public class DailySteps
+    public class StepCount
     {
         public DateTime DateTime { get; set; }
-        public string DataSource { get; set; }
         public int? Steps { get; set; }
     }
 }
