@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using HealthAPI.Models;
+﻿using HealthAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HealthAPI.Controllers
 {

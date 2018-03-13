@@ -6,19 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
-  //  [Route("api/[controller]")]
-    public class StepsController : Controller
+    [Route("api/[controller]")]
+    public class StepsxController : Controller
     {
         private readonly HealthContext _context;
 
-        public StepsController(HealthContext context)
+        public StepsxController(HealthContext context)
         {
             _context = context;
         }
 
         // GET api/bloodpressures
         [HttpGet]
-        [Route("api/stepsx")]
         // public IEnumerable<DailySteps> Get([FromUri] string groupBy)
         public IEnumerable<StepCount> Get(string groupBy = "day")
         {
