@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
-    [Route("api/[controller]")]
+  //  [Route("api/[controller]")]
     public class StepsController : Controller
     {
         private readonly HealthContext _context;
