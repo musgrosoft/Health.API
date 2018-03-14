@@ -16,9 +16,8 @@ namespace HealthAPI.Controllers
             _context = context;
         }
 
-        // GET api/bloodpressures
+        // GET api/Stepsx
         [HttpGet]
-        // public IEnumerable<DailySteps> Get([FromUri] string groupBy)
         public IEnumerable<StepCount> Get(string groupBy = "day")
         {
             var dailyStepCounts = _context.DailySteps.OrderBy(x => x.DateTime).Select(x=>new StepCount

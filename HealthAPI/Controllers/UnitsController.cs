@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using HealthAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,23 +13,13 @@ namespace HealthAPI.Controllers
         public UnitsController(HealthContext context)
         {
             _context = context;
-
-            //if (_context.TodoItems.Count() == 0)
-            //{
-            //    _context.TodoItems.Add(new TodoItem { Name = "Item1" });
-            //    _context.SaveChanges();
-            //}
         }
 
-        // GET api/weights
+        // GET api/Units
         [HttpGet]
         public IEnumerable<Units> Get()
         {
-            return new List<Units> {new Units
-            {
-                DateTime = DateTime.Now, Units1 = 555
-            }};
-//            return _context.Units.OrderBy(x=>x.DateTime).ToList();
+            return _context.Units.OrderBy(x=>x.DateTime).ToList();
         }
 
         

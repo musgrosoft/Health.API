@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using HealthAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +15,7 @@ namespace HealthAPI.Controllers
             _context = context;
         }
 
-        // GET api/bloodpressures
+        // GET api/DailyActivities
         [HttpGet]
         public IEnumerable<DailyActivitySummaries> Get()
         {

@@ -15,7 +15,7 @@ namespace HealthAPI.Controllers
             _context = context;
         }
 
-        // GET api/bloodpressures
+        // GET api/RestingHeartRates
         [HttpGet]
         public IEnumerable<ViewModels.RestingHeartRate> Get()
         {
