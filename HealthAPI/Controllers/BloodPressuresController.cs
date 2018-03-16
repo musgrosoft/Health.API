@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Models;
 using HealthAPI.ViewModels;
@@ -36,31 +37,38 @@ namespace HealthAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Models.BloodPressures bloodPressure)
         {
-            if (bloodPressure == null)
+            try
             {
-                return BadRequest();
+                if (bloodPressure == null)
+                {
+                    return BadRequest();
+                }
+
+                var existingItem = _context.BloodPressures.FirstOrDefault(x => x.DateTime == bloodPressure.DateTime);
+
+                if (existingItem != null)
+                {
+                    existingItem.DataSource = bloodPressure.DataSource;
+                    existingItem.Diastolic = bloodPressure.Diastolic;
+                    existingItem.Systolic = bloodPressure.Systolic;
+
+                    _context.BloodPressures.Update(existingItem);
+                }
+                else
+                {
+                    _context.BloodPressures.Add(bloodPressure);
+                }
+
+
+                _context.SaveChanges();
+
+                return CreatedAtRoute("GetTodo", bloodPressure);
+                //return new NoContentResult();
             }
-
-            var existingItem = _context.BloodPressures.FirstOrDefault(x => x.DateTime == bloodPressure.DateTime);
-
-            if (existingItem != null)
+            catch (Exception ex)
             {
-                existingItem.DataSource = bloodPressure.DataSource;
-                existingItem.Diastolic = bloodPressure.Diastolic;
-                existingItem.Systolic = bloodPressure.Systolic;
-
-                _context.BloodPressures.Update(existingItem);
+                return BadRequest(ex);
             }
-            else
-            {
-                _context.BloodPressures.Add(bloodPressure);
-            }
-
-            
-            _context.SaveChanges();
-
-            return CreatedAtRoute("GetTodo", bloodPressure);
-            //return new NoContentResult();
 
         }
 
