@@ -33,6 +33,58 @@ namespace HealthAPI.Controllers
             return bloodPressures;
         }
 
+        [HttpPost]
+        public IActionResult Create([FromBody] Models.BloodPressures bloodPressure)
+        {
+            if (bloodPressure == null)
+            {
+                return BadRequest();
+            }
+
+            var existingItem = _context.BloodPressures.FirstOrDefault(x => x.DateTime == bloodPressure.DateTime);
+
+            if (existingItem != null)
+            {
+                existingItem.DataSource = bloodPressure.DataSource;
+                existingItem.Diastolic = bloodPressure.Diastolic;
+                existingItem.Systolic = bloodPressure.Systolic;
+
+                _context.BloodPressures.Update(existingItem);
+            }
+            else
+            {
+                _context.BloodPressures.Add(bloodPressure);
+            }
+
+            
+            _context.SaveChanges();
+
+            //return CreatedAtRoute("GetTodo", new { id = item.Id }, item);
+            return new NoContentResult();
+        }
+
+        //[HttpPut("{id}")]
+        //public IActionResult Update(long id, [FromBody] TodoItem item)
+        //{
+        //    if (item == null || item.Id != id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var todo = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+        //    if (todo == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    todo.IsComplete = item.IsComplete;
+        //    todo.Name = item.Name;
+
+        //    _context.TodoItems.Update(todo);
+        //    _context.SaveChanges();
+        //    return new NoContentResult();
+        //}
+
         public void AddMovingAverages(List<BloodPressure> bloodPressures, int period)
         {
             for (int i = 0; i < bloodPressures.Count(); i++)
