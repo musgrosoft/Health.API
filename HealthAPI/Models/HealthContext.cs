@@ -14,6 +14,7 @@ namespace HealthAPI.Models
         //public virtual DbSet<Salaries> Salaries { get; set; }
         public virtual DbSet<Units> Units { get; set; }
         public virtual DbSet<Weights> Weights { get; set; }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,6 +27,8 @@ namespace HealthAPI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
             modelBuilder.Entity<BloodPressures>(entity =>
             {
                 entity.HasKey(e => new { e.DateTime, e.DataSource });

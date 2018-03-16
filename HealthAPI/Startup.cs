@@ -71,8 +71,14 @@ namespace HealthAPI
             app.UseMvc();
 
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
-            
 
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<HealthContext>();
+                //context.Database.Migrate();
+                // context.EnsureSeedData();
+                context.Database.EnsureCreated();
+            }
 
         }
     }
