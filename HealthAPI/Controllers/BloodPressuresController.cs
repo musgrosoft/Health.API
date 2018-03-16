@@ -59,8 +59,9 @@ namespace HealthAPI.Controllers
             
             _context.SaveChanges();
 
-            //return CreatedAtRoute("GetTodo", new { id = item.Id }, item);
-            return new NoContentResult();
+            return CreatedAtRoute("GetTodo", bloodPressure);
+            //return new NoContentResult();
+
         }
 
         //[HttpPut("{id}")]
