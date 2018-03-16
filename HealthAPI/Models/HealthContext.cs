@@ -6,7 +6,7 @@ namespace HealthAPI.Models
 
     public class HealthContext : DbContext
     {
-        public virtual DbSet<BloodPressures> BloodPressures { get; set; }
+        public virtual DbSet<BloodPressure> BloodPressures { get; set; }
         public virtual DbSet<DailyActivitySummaries> DailyActivitySummaries { get; set; }
         public virtual DbSet<DailySteps> DailySteps { get; set; }
         public virtual DbSet<HeartRateDailySummaries> HeartRateDailySummaries { get; set; }
@@ -29,15 +29,12 @@ namespace HealthAPI.Models
         {
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Entity<BloodPressures>(entity =>
+            modelBuilder.Entity<BloodPressure>(entity =>
             {
-                entity.HasKey(e => new { e.DateTime, e.DataSource });
+                entity.HasKey(e => new { e.DateTime});
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.DataSource)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                
             });
 
             modelBuilder.Entity<DailyActivitySummaries>(entity =>

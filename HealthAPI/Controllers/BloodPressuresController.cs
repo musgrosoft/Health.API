@@ -19,9 +19,9 @@ namespace HealthAPI.Controllers
 
         // GET api/bloodpressures
         [HttpGet]
-        public IEnumerable<BloodPressure> Get()
+        public IEnumerable<ViewModels.BloodPressure> Get()
         {
-            var bloodPressures = _context.BloodPressures.OrderBy(x => x.DateTime).Select(x=> new BloodPressure { 
+            var bloodPressures = _context.BloodPressures.OrderBy(x => x.DateTime).Select(x=> new ViewModels.BloodPressure { 
                 
                 DateTime = x.DateTime,
                 Systolic = x.Systolic.Value,
@@ -35,7 +35,7 @@ namespace HealthAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Models.BloodPressures bloodPressure)
+        public IActionResult Create([FromBody] Models.BloodPressure bloodPressure)
         {
             try
             {
@@ -48,7 +48,6 @@ namespace HealthAPI.Controllers
 
                 if (existingItem != null)
                 {
-                    existingItem.DataSource = bloodPressure.DataSource;
                     existingItem.Diastolic = bloodPressure.Diastolic;
                     existingItem.Systolic = bloodPressure.Systolic;
 
@@ -94,7 +93,7 @@ namespace HealthAPI.Controllers
         //    return new NoContentResult();
         //}
 
-        public void AddMovingAverages(List<BloodPressure> bloodPressures, int period)
+        public void AddMovingAverages(List<ViewModels.BloodPressure> bloodPressures, int period)
         {
             for (int i = 0; i < bloodPressures.Count(); i++)
             {
