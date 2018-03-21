@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Models;
 using HealthAPI.ViewModels;
@@ -24,9 +25,9 @@ namespace HealthAPI.Controllers
         [EnableCors("CorsPolicy")]
         [HttpGet]
         [Route("api/weightsx")]
-        public IEnumerable<Weight> Get()
+        public IEnumerable<ViewModels.Weight> Get()
         {
-            List<Weight> weights = _context.Weights.Select(w => new Weight
+            List<ViewModels.Weight> weights = _context.Weights.Select(w => new ViewModels.Weight
             {
                 Kg = w.WeightKg,
                 DateTime = w.DateTime
@@ -37,7 +38,44 @@ namespace HealthAPI.Controllers
             return weights;//.OrderBy(x=>x.DateTime);
         }
 
-        private void AddMovingAverages(List<Weight> weights, int period)
+        [HttpPost]
+        public IActionResult Create([FromBody] Models.Weight weight)
+        {
+            try
+            {
+                if (weight == null)
+                {
+                    return BadRequest();
+                }
+
+                var existingItem = _context.Weights.FirstOrDefault(x => x.DateTime == weight.DateTime);
+
+                if (existingItem != null)
+                {
+                    existingItem.WeightKg = weight.WeightKg;
+                    existingItem.FatRatioPercentage = weight.FatRatioPercentage;
+
+                    _context.Weights.Update(existingItem);
+                }
+                else
+                {
+                    _context.Weights.Add(weight);
+                }
+
+
+                _context.SaveChanges();
+
+                return CreatedAtRoute("GetTodo", weight);
+                //return new NoContentResult();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+        }
+
+        private void AddMovingAverages(List<ViewModels.Weight> weights, int period)
         {
             for (int i = 0; i < weights.Count(); i++)
             {

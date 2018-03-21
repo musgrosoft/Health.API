@@ -13,7 +13,7 @@ namespace HealthAPI.Models
         public virtual DbSet<RestingHeartRate> RestingHeartRate { get; set; }
         //public virtual DbSet<Salaries> Salaries { get; set; }
         public virtual DbSet<Units> Units { get; set; }
-        public virtual DbSet<Weights> Weights { get; set; }
+        public virtual DbSet<Weight> Weights { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -115,15 +115,15 @@ namespace HealthAPI.Models
                 entity.Property(e => e.Units1).HasColumnName("Units");
             });
 
-            modelBuilder.Entity<Weights>(entity =>
+            modelBuilder.Entity<Weight>(entity =>
             {
-                entity.HasKey(e => new { e.DateTime, e.DataSource });
+                entity.HasKey(e => new { e.DateTime});
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.DataSource)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                //entity.Property(e => e.DataSource)
+                //    .HasMaxLength(100)
+                //    .IsUnicode(false);
 
                 entity.Property(e => e.FatRatioPercentage).HasColumnType("decimal(10, 5)");
 

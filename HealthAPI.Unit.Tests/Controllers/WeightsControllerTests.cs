@@ -17,9 +17,9 @@ namespace HealthAPI.Unit.Tests.Controllers
         {
             var context = new FakeLocalContext();
             
-            context.Add(new Weights { WeightKg = 123, DateTime = DateTime.Now , DataSource = "abc"});
-            context.Add(new Weights { WeightKg = 345, DateTime = DateTime.Now, DataSource = "abc" });
-            context.Add(new Weights { WeightKg = 678, DateTime = DateTime.Now, DataSource = "abc" });
+            context.Add(new Models.Weight { WeightKg = 123, DateTime = DateTime.Now});
+            context.Add(new Models.Weight { WeightKg = 345, DateTime = DateTime.Now});
+            context.Add(new Models.Weight { WeightKg = 678, DateTime = DateTime.Now});
             context.SaveChanges();
 
             var weightsControlller = new WeightsController(context);
