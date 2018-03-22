@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
-    [EnableCors("CorsPolicy")]
-   // [Route("api/[controller]")]
+   // [EnableCors("CorsPolicy")]
+    [Route("api/[controller]")]
     public class WeightsController : Controller
     {
         private readonly HealthContext _context;
@@ -22,9 +22,9 @@ namespace HealthAPI.Controllers
 
 
         // GET api/weights
-        [EnableCors("CorsPolicy")]
+        //[EnableCors("CorsPolicy")]
         [HttpGet]
-        [Route("api/weightsx")]
+        //[Route("api/weightsx")]
         public IEnumerable<ViewModels.Weight> Get()
         {
             List<ViewModels.Weight> weights = _context.Weights.Select(w => new ViewModels.Weight
