@@ -65,7 +65,8 @@ namespace HealthAPI.Controllers
 
                 _context.SaveChanges();
 
-                return CreatedAtRoute("GetTodo", weight);
+                //return CreatedAtRoute("GetTodo", weight);
+                return Created("/bum", weight);
                 //return new NoContentResult();
             }
             catch (Exception ex)

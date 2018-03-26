@@ -62,7 +62,8 @@ namespace HealthAPI.Controllers
                 _context.SaveChanges();
 
                 //return CreatedAtRoute("GetTodo", bloodPressure);
-                return new NoContentResult();
+                //return new NoContentResult();
+                return Created("/bum", bloodPressure);
             }
             catch (Exception ex)
             {
