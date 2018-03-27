@@ -50,13 +50,10 @@ namespace HealthAPI.Models
 
             modelBuilder.Entity<DailySteps>(entity =>
             {
-                entity.HasKey(e => new { e.DateTime, e.DataSource });
+                entity.HasKey(e => new { e.DateTime });
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.DataSource)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<HeartRateDailySummaries>(entity =>
