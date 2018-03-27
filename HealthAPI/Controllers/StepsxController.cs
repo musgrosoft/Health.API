@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Models;
 using HealthAPI.ViewModels;
@@ -74,6 +75,44 @@ namespace HealthAPI.Controllers
 
         }
 
-        
+
+        [HttpPost]
+        public IActionResult Create([FromBody] Models.DailySteps dailySteps)
+        {
+            try
+            {
+                if (dailySteps == null)
+                {
+                    return BadRequest();
+                }
+
+                var existingItem = _context.DailySteps.FirstOrDefault(x => x.DateTime == dailySteps.DateTime);
+
+                if (existingItem != null)
+                {
+                    existingItem.DateTime = dailySteps.DateTime;
+                    existingItem.Steps = dailySteps.Steps;
+
+                    _context.DailySteps.Update(existingItem);
+                }
+                else
+                {
+                    _context.DailySteps.Add(dailySteps);
+                }
+
+
+                _context.SaveChanges();
+
+                //return CreatedAtRoute("GetTodo", weight);
+                return Created("/bum", dailySteps);
+                //return new NoContentResult();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+        }
+
     }
 }
