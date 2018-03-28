@@ -7,9 +7,9 @@ namespace HealthAPI.Models
     public class HealthContext : DbContext
     {
         public virtual DbSet<BloodPressure> BloodPressures { get; set; }
-        public virtual DbSet<DailyActivitySummaries> DailyActivitySummaries { get; set; }
+        public virtual DbSet<DailyActivitySummary> DailyActivitySummaries { get; set; }
         public virtual DbSet<DailySteps> DailySteps { get; set; }
-        public virtual DbSet<HeartRateDailySummaries> HeartRateDailySummaries { get; set; }
+        public virtual DbSet<HeartRateDailySummary> HeartRateDailySummaries { get; set; }
         public virtual DbSet<RestingHeartRate> RestingHeartRate { get; set; }
         //public virtual DbSet<Salaries> Salaries { get; set; }
         public virtual DbSet<Units> Units { get; set; }
@@ -37,15 +37,12 @@ namespace HealthAPI.Models
                 
             });
 
-            modelBuilder.Entity<DailyActivitySummaries>(entity =>
+            modelBuilder.Entity<DailyActivitySummary>(entity =>
             {
-                entity.HasKey(e => new { e.DateTime, e.DataSource });
+                entity.HasKey(e => new { e.DateTime });
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.DataSource)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<DailySteps>(entity =>
@@ -56,15 +53,12 @@ namespace HealthAPI.Models
 
             });
 
-            modelBuilder.Entity<HeartRateDailySummaries>(entity =>
+            modelBuilder.Entity<HeartRateDailySummary>(entity =>
             {
-                entity.HasKey(e => new { e.DateTime, e.DataSource });
+                entity.HasKey(e => new { e.DateTime});
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.DataSource)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<RestingHeartRate>(entity =>

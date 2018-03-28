@@ -18,13 +18,13 @@ namespace HealthAPI.Controllers
 
         // GET api/HeartRateDailySummaries
         [HttpGet]
-        public IEnumerable<HeartRateDailySummaries> Get()
+        public IEnumerable<HeartRateDailySummary> Get()
         {
             return _context.HeartRateDailySummaries.OrderBy(x=>x.DateTime);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Models.HeartRateDailySummaries heartRateDailySummaries)
+        public IActionResult Create([FromBody] Models.HeartRateDailySummary heartRateDailySummaries)
         {
             try
             {
@@ -38,7 +38,6 @@ namespace HealthAPI.Controllers
                 if (existingItem != null)
                 {
                     existingItem.DateTime = heartRateDailySummaries.DateTime;
-                    existingItem.DataSource = heartRateDailySummaries.DataSource;
                     existingItem.RestingHeartRate = heartRateDailySummaries.RestingHeartRate;
                     existingItem.OutOfRangeMinutes = heartRateDailySummaries.OutOfRangeMinutes;
                     existingItem.FatBurnMinutes = heartRateDailySummaries.FatBurnMinutes;
