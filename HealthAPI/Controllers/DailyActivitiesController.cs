@@ -21,12 +21,12 @@ namespace HealthAPI.Controllers
         [HttpGet]
         public IEnumerable<Activity> Get()
         {
-            return _context.DailyActivitySummaries.OrderBy(x=>x.DateTime).Select(x=>new Activity
+            return _context.DailyActivitySummaries.Select(x=>new Activity
             {
                 Day = x.DateTime,
                 ActiveMinutes = x.FairlyActiveMinutes.Value + x.VeryActiveMinutes.Value
 
-            });
+            }).OrderBy(x=>x.Day);
         }
 
         [HttpPost]
