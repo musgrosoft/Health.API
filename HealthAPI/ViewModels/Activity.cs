@@ -8,7 +8,7 @@ namespace HealthAPI.ViewModels
     public class Activity
     {
 
-        public DateTime Day { get; set; }
+        public DateTime DateTime { get; set; }
         public int ActiveMinutes { get; set; }
 
         //        public string DataSource { get; set; }

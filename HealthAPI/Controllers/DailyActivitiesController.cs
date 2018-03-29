@@ -23,10 +23,10 @@ namespace HealthAPI.Controllers
         {
             return _context.DailyActivitySummaries.Select(x=>new Activity
             {
-                Day = x.DateTime,
+                DateTime = x.DateTime,
                 ActiveMinutes = x.FairlyActiveMinutes + x.VeryActiveMinutes
 
-            }).OrderBy(x=>x.Day).ToList();
+            }).OrderBy(x=>x.DateTime).ToList();
         }
 
         [HttpPost]
