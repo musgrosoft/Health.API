@@ -24,7 +24,7 @@ namespace HealthAPI.Controllers
             return _context.DailyActivitySummaries.Select(x=>new Activity
             {
                 Day = x.DateTime,
-                ActiveMinutes = x.FairlyActiveMinutes.Value + x.VeryActiveMinutes.Value
+                ActiveMinutes = x.FairlyActiveMinutes + x.VeryActiveMinutes
 
             }).OrderBy(x=>x.Day).ToList();
         }
