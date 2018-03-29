@@ -83,3 +83,15 @@ namespace HealthAPI
         }
     }
 }
+
+/*
+
+drop table weights
+drop table bloodpressures
+drop table dailysteps
+drop table units
+drop table heartratedailysummaries
+drop table restingHeartRate
+drop table DailyActivitySummaries
+
+*/

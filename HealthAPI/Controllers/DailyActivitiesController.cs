@@ -26,7 +26,7 @@ namespace HealthAPI.Controllers
                 Day = x.DateTime,
                 ActiveMinutes = x.FairlyActiveMinutes.Value + x.VeryActiveMinutes.Value
 
-            }).OrderBy(x=>x.Day);
+            }).OrderBy(x=>x.Day).ToList();
         }
 
         [HttpPost]
