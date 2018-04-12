@@ -78,6 +78,7 @@ namespace HealthAPI
                 //context.Database.Migrate();
                 // context.EnsureSeedData();
                 context.Database.EnsureCreated();
+                
             }
 
         }

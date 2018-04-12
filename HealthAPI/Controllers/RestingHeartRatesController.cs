@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace HealthAPI.Controllers
 {
@@ -19,7 +20,7 @@ namespace HealthAPI.Controllers
         [HttpGet]
         public IEnumerable<ViewModels.RestingHeartRate> Get()
         {
-            var beats = _context.RestingHeartRate.Select(x=>new ViewModels.RestingHeartRate
+            var beats = _context.RestingHeartRates.Select(x=>new ViewModels.RestingHeartRate
             {
                 DateTime = x.DateTime,
                 Beats = x.Beats
@@ -54,6 +55,46 @@ namespace HealthAPI.Controllers
             }
         }
 
+
+
+
+        [HttpPost]
+        public IActionResult Create([FromBody] Models.RestingHeartRate restingHeartRate)
+        {
+            try
+            {
+                if (restingHeartRate == null)
+                {
+                    return BadRequest();
+                }
+
+                var existingItem = _context.RestingHeartRates.FirstOrDefault(x => x.DateTime == restingHeartRate.DateTime);
+
+                if (existingItem != null)
+                {
+                    existingItem.DateTime = restingHeartRate.DateTime;
+                    existingItem.Beats = restingHeartRate.Beats;
+
+                    _context.RestingHeartRates.Update(existingItem);
+                }
+                else
+                {
+                    _context.RestingHeartRates.Add(restingHeartRate);
+                }
+
+
+                _context.SaveChanges();
+
+                //return CreatedAtRoute("GetTodo", weight);
+                return Created("/bum", restingHeartRate);
+                //return new NoContentResult();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+        }
 
     }
 }

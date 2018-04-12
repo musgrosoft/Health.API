@@ -10,8 +10,7 @@ namespace HealthAPI.Models
         public virtual DbSet<DailyActivitySummary> DailyActivitySummaries { get; set; }
         public virtual DbSet<DailySteps> DailySteps { get; set; }
         public virtual DbSet<HeartRateDailySummary> HeartRateDailySummaries { get; set; }
-        public virtual DbSet<RestingHeartRate> RestingHeartRate { get; set; }
-        //public virtual DbSet<Salaries> Salaries { get; set; }
+        public virtual DbSet<RestingHeartRate> RestingHeartRates { get; set; }
         public virtual DbSet<Units> Units { get; set; }
         public virtual DbSet<Weight> Weights { get; set; }
         
