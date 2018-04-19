@@ -19,7 +19,7 @@ namespace HealthAPI.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = Environment.GetEnvironmentVariable("HealthDbConnectionString");
+                var connectionString = "Server=tcp:musgrosoft.database.windows.net,1433;Initial Catalog=Health;Persist Security Info=False;User ID=timmusgrove;Password=Starbucks1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";// Environment.GetEnvironmentVariable("HealthDbConnectionString");
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }

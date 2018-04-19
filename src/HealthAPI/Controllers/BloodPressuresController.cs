@@ -34,6 +34,31 @@ namespace HealthAPI.Controllers
             return bloodPressures;
         }
 
+        [HttpDelete]
+        public IActionResult Delete(DateTime id)
+        {
+            try
+            {
+                var existingItem = _context.BloodPressures.FirstOrDefault(x => x.DateTime == id);
+                if (existingItem != null)
+                {
+                    _context.BloodPressures.Remove(existingItem);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] Models.BloodPressure bloodPressure)
         {
