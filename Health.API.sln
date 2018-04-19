@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI", "src\HealthAPI\HealthAPI.csproj", "{EEFBBD7D-561C-4C12-8EFE-3536B66FA6F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Unit.Tests", "src\HealthAPI.Unit.Tests\HealthAPI.Unit.Tests.csproj", "{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEFBBD7D-561C-4C12-8EFE-3536B66FA6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEFBBD7D-561C-4C12-8EFE-3536B66FA6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEFBBD7D-561C-4C12-8EFE-3536B66FA6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEFBBD7D-561C-4C12-8EFE-3536B66FA6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57E8B505-0062-4C35-8F3C-BBCA3B5A5337}
+	EndGlobalSection
+EndGlobal
