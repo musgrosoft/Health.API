@@ -38,9 +38,10 @@ namespace HealthAPI.Controllers
             return weights;//.OrderBy(x=>x.DateTime);
         }
 
-        [HttpGet]
-        [Route("api/weight/LatestWeightDate")]
-        public DateTime? LatestWeightDate()
+        [HttpGet("LatestDate")]
+        //[Route("api/weights/LatestWeightDate")]
+        //[ActionName("LatestWeightDate")]
+        public DateTime? LatestDate()
         {
             if (_context.Weights.Any())
             {
