@@ -21,7 +21,7 @@ namespace HealthAPI.Controllers
         [HttpGet]
         public IEnumerable<StepCount> Get(string groupBy = "day")
         {
-            var dailyStepCounts = _context.DailySteps.OrderBy(x => x.DateTime).Select(x=>new StepCount
+            var dailyStepCounts = _context.DailySteps.OrderBy(x => x.DateTime).Select(x => new StepCount
             {
                 DateTime = x.DateTime,
                 Steps = x.Steps

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Controllers\StepsController.cs" />
+    <Compile Remove="Controllers\StepsxController.cs" />
   </ItemGroup>
 
   <ItemGroup>
