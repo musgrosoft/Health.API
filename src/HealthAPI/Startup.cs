@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthAPI.Models;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +42,7 @@ namespace HealthAPI
                         .AllowCredentials());
             });
 
+            services.AddOData();
             services.AddMvc();
 
             //// ********************
@@ -69,6 +72,17 @@ namespace HealthAPI
             app.UseCors("CorsPolicy");
 
             app.UseMvc();
+
+
+            //Adding Model class to OData
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Weight>(nameof(Weight));
+            //Enabling OData routing.
+            app.UseMvc(routeBuilder =>
+                {
+                    routeBuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
+                });
+
 
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
