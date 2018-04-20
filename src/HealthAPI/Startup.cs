@@ -78,19 +78,22 @@ namespace HealthAPI
             var builder = new ODataConventionModelBuilder();
             builder.EntitySet<Weight>(nameof(Weight))
                 .EntityType
-                .Filter() // Allow for the $filter Command
+                .HasKey(e => new { e.DateTime })
+                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
                 .Expand() // Allow for the $expand Command
                 .OrderBy() // Allow for the $orderby Command
+                
                 .Page() // Allow for the $top and $skip Commands
+                
                 .Select(); // Allow for the $select Command
 
             //Enabling OData routing.
             app.UseMvc(routeBuilder =>
                 {
                     routeBuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
+                    routeBuilder.EnableDependencyInjection();
                 });
-
 
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 

@@ -11,19 +11,21 @@ namespace HealthAPI.Controllers
 {
 
     [Produces("application/json")]
-    //[Route("api/Wibble")]
-    public class WibbleController : ODataController
+ //   [Route("odata/Weights")]
+    [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+    public class WeightController : ODataController
     {
         private readonly HealthContext _context;
         
-        public WibbleController(HealthContext context)
+        public WeightController(HealthContext context)
         {
             _context = context;
             
         }
 
-       // [HttpGet]
-        [EnableQuery]
+        [HttpGet]
+      //  [EnableQuery]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IQueryable<Models.Weight> Get()
         {
             return _context.Weights.AsQueryable();
