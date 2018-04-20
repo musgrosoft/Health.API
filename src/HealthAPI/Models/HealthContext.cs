@@ -27,6 +27,7 @@ namespace HealthAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            
 
             modelBuilder.Entity<BloodPressure>(entity =>
             {
