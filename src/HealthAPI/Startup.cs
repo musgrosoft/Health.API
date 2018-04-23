@@ -76,16 +76,24 @@ namespace HealthAPI
 
             //Adding Model class to OData
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Weight>(nameof(Weight))
+            builder.EntitySet<Weight>("Weights")
                 .EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
                 .Expand() // Allow for the $expand Command
-                .OrderBy() // Allow for the $orderby Command
-                
-                .Page() // Allow for the $top and $skip Commands
-                
+                .OrderBy() // Allow for the $orderby Command                
+                .Page() // Allow for the $top and $skip Commands                
+                .Select(); // Allow for the $select Command
+
+            builder.EntitySet<BloodPressure>("BloodPressures")
+                .EntityType
+                .HasKey(e => new { e.DateTime })
+                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
+                .Count() // Allow for the $count Command
+                .Expand() // Allow for the $expand Command
+                .OrderBy() // Allow for the $orderby Command                
+                .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command
 
             //Enabling OData routing.

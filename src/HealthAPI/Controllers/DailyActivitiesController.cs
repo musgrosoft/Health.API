@@ -19,7 +19,7 @@ namespace HealthAPI.Controllers
 
         // GET api/DailyActivities
         [HttpGet]
-        public IEnumerable<Activity> Get()
+        public IEnumerable<Activity> Get(string groupBy = "day")
         {
             return _context.DailyActivitySummaries.Select(x=>new Activity
             {

@@ -1,18 +1,18 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace HealthAPI.Models
+namespace HealthAPI
 {
 
     public class HealthContext : DbContext
     {
-        public virtual DbSet<BloodPressure> BloodPressures { get; set; }
-        public virtual DbSet<DailyActivitySummary> DailyActivitySummaries { get; set; }
-        public virtual DbSet<DailySteps> DailySteps { get; set; }
-        public virtual DbSet<HeartRateDailySummary> HeartRateDailySummaries { get; set; }
-        public virtual DbSet<RestingHeartRate> RestingHeartRates { get; set; }
-        public virtual DbSet<Units> Units { get; set; }
-        public virtual DbSet<Weight> Weights { get; set; }
+        public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
+        public virtual DbSet<Models.DailyActivitySummary> DailyActivitySummaries { get; set; }
+        public virtual DbSet<Models.DailySteps> DailySteps { get; set; }
+        public virtual DbSet<Models.HeartRateDailySummary> HeartRateDailySummaries { get; set; }
+        public virtual DbSet<Models.RestingHeartRate> RestingHeartRates { get; set; }
+        public virtual DbSet<Models.Units> Units { get; set; }
+        public virtual DbSet<Models.Weight> Weights { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,7 +29,7 @@ namespace HealthAPI.Models
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             
 
-            modelBuilder.Entity<BloodPressure>(entity =>
+            modelBuilder.Entity<Models.BloodPressure>(entity =>
             {
                 entity.HasKey(e => new { e.DateTime});
 
@@ -37,7 +37,7 @@ namespace HealthAPI.Models
                 
             });
 
-            modelBuilder.Entity<DailyActivitySummary>(entity =>
+            modelBuilder.Entity<Models.DailyActivitySummary>(entity =>
             {
                 entity.HasKey(e => new { e.DateTime });
 
@@ -45,7 +45,7 @@ namespace HealthAPI.Models
 
             });
 
-            modelBuilder.Entity<DailySteps>(entity =>
+            modelBuilder.Entity<Models.DailySteps>(entity =>
             {
                 entity.HasKey(e => new { e.DateTime });
 
@@ -53,7 +53,7 @@ namespace HealthAPI.Models
 
             });
 
-            modelBuilder.Entity<HeartRateDailySummary>(entity =>
+            modelBuilder.Entity<Models.HeartRateDailySummary>(entity =>
             {
                 entity.HasKey(e => new { e.DateTime});
 
@@ -61,40 +61,15 @@ namespace HealthAPI.Models
 
             });
 
-            modelBuilder.Entity<RestingHeartRate>(entity =>
+            modelBuilder.Entity<Models.RestingHeartRate>(entity =>
             {
                 entity.HasKey(e => new { e.DateTime });
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
             });
-
-            //modelBuilder.Entity<Salaries>(entity =>
-            //{
-            //    entity.HasKey(e => new { e.Keyword, e.Location });
-
-            //    entity.Property(e => e.Keyword)
-            //        .HasMaxLength(200)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.Location)
-            //        .HasMaxLength(200)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.Average)
-            //        .HasMaxLength(200)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.High)
-            //        .HasMaxLength(200)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.Low)
-            //        .HasMaxLength(200)
-            //        .IsUnicode(false);
-            //});
-
-            modelBuilder.Entity<Units>(entity =>
+            
+            modelBuilder.Entity<Models.Units>(entity =>
             {
                 entity.HasKey(e => e.DateTime);
 
@@ -103,7 +78,7 @@ namespace HealthAPI.Models
                 entity.Property(e => e.Units1).HasColumnName("Units");
             });
 
-            modelBuilder.Entity<Weight>(entity =>
+            modelBuilder.Entity<Models.Weight>(entity =>
             {
                 entity.HasKey(e => new { e.DateTime});
 

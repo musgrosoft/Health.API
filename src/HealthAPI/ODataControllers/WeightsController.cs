@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using HealthAPI.Models;
-using HealthAPI.ViewModels;
+﻿using System.Linq;
 using Microsoft.AspNet.OData;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
+using System;
+using System.Collections.Generic;
 
 namespace HealthAPI.Controllers
 {
-   // [EnableCors("CorsPolicy")]
-    [Route("api/[controller]")]
-    public class WeightsController : Controller
+
+    [Produces("application/json")]
+ //   [Route("odata/Weights")]
+    [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+    public class WeightsController : ODataController
     {
         private readonly HealthContext _context;
         
@@ -21,14 +21,18 @@ namespace HealthAPI.Controllers
             
         }
 
+        [HttpGet]
+      //  [EnableQuery]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IQueryable<Models.Weight> Get()
+        {
+            return _context.Weights.AsQueryable();
+        }
 
-
-
-        // GET api/weights
-        //[EnableCors("CorsPolicy")]
         [HttpGet]
         //[Route("api/weightsx")]
-        public IEnumerable<ViewModels.Weight> Get()
+        [Route("odata/Weights/WithMovingAverages")]
+        public IEnumerable<ViewModels.Weight> GetMovingAverages()
         {
             List<ViewModels.Weight> weights = _context.Weights.Select(w => new ViewModels.Weight
             {
@@ -39,19 +43,6 @@ namespace HealthAPI.Controllers
             AddMovingAverages(weights, 10);
 
             return weights;//.OrderBy(x=>x.DateTime);
-        }
-
-        [HttpGet("LatestDate")]
-        //[Route("api/weights/LatestWeightDate")]
-        //[ActionName("LatestWeightDate")]
-        public DateTime? LatestDate()
-        {
-            if (_context.Weights.Any())
-            {
-                return _context.Weights.OrderByDescending(x => x.DateTime).First().DateTime;
-            }
-
-            return null;
         }
 
         [HttpPost]
@@ -113,7 +104,6 @@ namespace HealthAPI.Controllers
 
             }
         }
-
 
     }
 }

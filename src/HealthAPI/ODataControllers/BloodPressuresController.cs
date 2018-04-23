@@ -1,33 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HealthAPI.Models;
-using HealthAPI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNet.OData;
 
-namespace HealthAPI.Controllers
+
+namespace HealthAPI.ODataControllers
 {
-    [Route("api/[controller]")]
-    public class BloodPressuresController : Controller
+    [Produces("application/json")]
+    //[Route("api/BloodPressure")]
+    public class BloodPressuresController : ODataController
     {
+
         private readonly HealthContext _context;
 
         public BloodPressuresController(HealthContext context)
         {
             _context = context;
+
         }
+
+        [HttpGet]
+        //  [EnableQuery]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IQueryable<Models.BloodPressure> Get()
+        {
+            return _context.BloodPressures.AsQueryable();
+        }
+
+
+
 
         // GET api/bloodpressures
         [HttpGet]
-        public IEnumerable<ViewModels.BloodPressure> Get()
+        [Route("odata/BloodPressures/WithMovingAverages")]
+        public IEnumerable<ViewModels.BloodPressure> GetMovingAverages()
         {
-            var bloodPressures = _context.BloodPressures.OrderBy(x => x.DateTime).Select(x=> new ViewModels.BloodPressure { 
-                
+            var bloodPressures = _context.BloodPressures.OrderBy(x => x.DateTime).Select(x => new ViewModels.BloodPressure
+            {
+
                 DateTime = x.DateTime,
                 Systolic = x.Systolic.Value,
                 Diastolic = x.Diastolic.Value
 
-                }).ToList();
+            }).ToList();
 
             AddMovingAverages(bloodPressures, 10);
 
@@ -51,7 +67,7 @@ namespace HealthAPI.Controllers
                     return NotFound();
                 }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -148,6 +164,7 @@ namespace HealthAPI.Controllers
 
             }
         }
+
 
     }
 }

@@ -8,8 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\StepsxController.cs" />
+    <Compile Remove="Controllers\WeightsController.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ODataControllers\WeightsController.cs" />
+  </ItemGroup>
+
+ 
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
