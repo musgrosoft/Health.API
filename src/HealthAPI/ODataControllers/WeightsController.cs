@@ -31,7 +31,15 @@ namespace HealthAPI.Controllers
 
         //       
 
-
+        [HttpGet]
+        //[Route("api/weightsx")]
+        [Route("odata/Weights/LastWeight")]
+        public ViewModels.Weight GetLastWeight()
+        {
+            var weights = GetMovingAverages();
+            var lastWeight = weights.OrderByDescending(x => x.DateTime).FirstOrDefault();
+            return lastWeight;
+        }
 
         [HttpGet]
         //[Route("api/weightsx")]
