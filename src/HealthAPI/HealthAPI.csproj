@@ -7,15 +7,6 @@
     <StartupObject>HealthAPI.Program</StartupObject>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Controllers\WeightsController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="ODataControllers\WeightsController.cs" />
-  </ItemGroup>
-
- 
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
