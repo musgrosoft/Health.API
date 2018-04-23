@@ -29,6 +29,22 @@ namespace HealthAPI.Controllers
             return _context.Weights.AsQueryable();
         }
 
+        //       
+
+
+
+        [HttpGet]
+        //[Route("api/weightsx")]
+        [Route("odata/Weights/LastHealthyWeight")]
+        public ViewModels.Weight GetLastHealthyWeight()
+        {
+            decimal healthyWeight = 88.7M;
+
+            var weights = GetMovingAverages();
+            var lastHealthyWeight = weights.OrderByDescending(x => x.DateTime).FirstOrDefault(x => x.MovingAverageKg < healthyWeight);
+            return lastHealthyWeight;
+        }
+
         [HttpGet]
         //[Route("api/weightsx")]
         [Route("odata/Weights/WithMovingAverages")]
