@@ -52,7 +52,7 @@ namespace HealthAPI.Unit.Tests.Controllers
             var result = weightsControlller.Get().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.True(result.Any(x=>x.Kg == 123) );
+            Assert.Contains(result, x =>x.Kg == 123);
 
         }
     }
