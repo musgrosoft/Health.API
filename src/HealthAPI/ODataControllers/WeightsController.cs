@@ -55,6 +55,16 @@ namespace HealthAPI.Controllers
 
         [HttpGet]
         //[Route("api/weightsx")]
+        [Route("odata/Weights/HealthyWeight")]
+        public Decimal GetHealthyWeight()
+        {
+            decimal healthyWeight = 88.7M;
+            
+            return healthyWeight;
+        }
+
+        [HttpGet]
+        //[Route("api/weightsx")]
         [Route("odata/Weights/WithMovingAverages")]
         public IEnumerable<ViewModels.Weight> GetMovingAverages()
         {
