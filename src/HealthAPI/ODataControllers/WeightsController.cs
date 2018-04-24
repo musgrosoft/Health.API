@@ -10,7 +10,7 @@ namespace HealthAPI.Controllers
 
     [Produces("application/json")]
  //   [Route("odata/Weights")]
-    [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+  //  [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
     public class WeightsController : ODataController
     {
         private readonly HealthContext _context;
