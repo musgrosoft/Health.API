@@ -11,7 +11,7 @@ namespace HealthAPI.Models
         public DateTime DateTime { get; set; }
 
         [Column(TypeName = "decimal(10, 5)")]
-        public decimal WeightKg { get; set; }
+        public decimal Kg { get; set; }
 
         [Column(TypeName = "decimal(10, 5)")]
         public decimal? FatRatioPercentage { get; set; }

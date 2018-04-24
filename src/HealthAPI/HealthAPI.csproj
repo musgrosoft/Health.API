@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Models\StepCount.cs" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

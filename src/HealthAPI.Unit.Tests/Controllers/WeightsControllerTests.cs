@@ -17,9 +17,9 @@ namespace HealthAPI.Unit.Tests.Controllers
         {
             var context = new FakeLocalContext();
             
-            context.Add(new Models.Weight { WeightKg = 123, DateTime = DateTime.Now});
-            context.Add(new Models.Weight { WeightKg = 345, DateTime = DateTime.Now});
-            context.Add(new Models.Weight { WeightKg = 678, DateTime = DateTime.Now});
+            context.Add(new Models.Weight { Kg = 123, DateTime = DateTime.Now});
+            context.Add(new Models.Weight { Kg = 345, DateTime = DateTime.Now});
+            context.Add(new Models.Weight { Kg = 678, DateTime = DateTime.Now});
             context.SaveChanges();
 
             var weightsControlller = new WeightsController(context);
@@ -52,7 +52,7 @@ namespace HealthAPI.Unit.Tests.Controllers
             var result = weightsControlller.Get().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.True(result.Any(x=>x.WeightKg == 123) );
+            Assert.True(result.Any(x=>x.Kg == 123) );
 
         }
     }

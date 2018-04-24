@@ -50,7 +50,7 @@ namespace HealthAPI.Controllers
 
                 if (existingItem != null)
                 {
-                    existingItem.WeightKg = weight.WeightKg;
+                    existingItem.Kg = weight.Kg;
                     existingItem.FatRatioPercentage = weight.FatRatioPercentage;
 
                     _context.Weights.Update(existingItem);
@@ -89,7 +89,7 @@ namespace HealthAPI.Controllers
                     {
                         decimal total = 0;
                         for (int x = i; x > (i - period); x--)
-                            total += orderedWeights[x].WeightKg;
+                            total += orderedWeights[x].Kg;
                         decimal average = total / period;
                         // result.Add(series.Keys[i], average);
                         orderedWeights[i].MovingAverageKg = average;
