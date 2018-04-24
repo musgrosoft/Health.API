@@ -9,52 +9,24 @@ namespace HealthAPI.Controllers
 {
 
     [Produces("application/json")]
- //   [Route("odata/Weights")]
-  //  [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
     public class WeightsController : ODataController
     {
         private readonly HealthContext _context;
         
         public WeightsController(HealthContext context)
         {
-            _context = context;
-            
+            _context = context;            
         }
 
+        //   odata/Weights
         [HttpGet]
-      //  [EnableQuery]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IQueryable<Models.Weight> Get()
         {
             return _context.Weights.AsQueryable();
         }
-
-        //       
-
-        //[HttpGet]
-        ////[Route("api/weightsx")]
-        //[Route("odata/Weights/LastWeight")]
-        //public ViewModels.Weight GetLastWeight()
-        //{
-        //    var weights = GetMovingAverages();
-        //    var lastWeight = weights.OrderByDescending(x => x.DateTime).FirstOrDefault();
-        //    return lastWeight;
-        //}
-
-        //[HttpGet]
-        ////[Route("api/weightsx")]
-        //[Route("odata/Weights/LastHealthyWeight")]
-        //public ViewModels.Weight GetLastHealthyWeight()
-        //{
-        //    decimal healthyWeight = 88.7M;
-
-        //    var weights = GetMovingAverages();
-        //    var lastHealthyWeight = weights.OrderByDescending(x => x.DateTime).FirstOrDefault(x => x.MovingAverageKg < healthyWeight);
-        //    return lastHealthyWeight;
-        //}
-
+        
         [HttpGet]
-        //[Route("api/weightsx")]
         [Route("odata/Weights/HealthyWeight")]
         public Decimal GetHealthyWeight()
         {
@@ -62,22 +34,6 @@ namespace HealthAPI.Controllers
             
             return healthyWeight;
         }
-
-//        [HttpGet]
-//        //[Route("api/weightsx")]
-//        [Route("odata/Weights/WithMovingAverages")]
-//        public IEnumerable<ViewModels.Weight> GetMovingAverages()
-//        {
-//            List<ViewModels.Weight> weights = _context.Weights.Select(w => new ViewModels.Weight
-//            {
-//                Kg = w.WeightKg,
-//                DateTime = w.DateTime
-//            }).OrderBy(x => x.DateTime).ToList();
-//
-//            AddMovingAverages(weights, 10);
-//
-//            return weights;//.OrderBy(x=>x.DateTime);
-//        }
 
         [HttpPost]
         [Route("odata/Weights")]
@@ -159,28 +115,6 @@ namespace HealthAPI.Controllers
             }
 
         }
-//        
-//        private void AddMovingAverages(List<ViewModels.Weight> weights, int period)
-//        {
-//            for (int i = 0; i < weights.Count(); i++)
-//            {
-//                if (i >= period - 1)
-//                {
-//                    decimal total = 0;
-//                    for (int x = i; x > (i - period); x--)
-//                        total += weights[x].Kg;
-//                    decimal average = total / period;
-//                    // result.Add(series.Keys[i], average);
-//                    weights[i].MovingAverageKg = average;
-//                }
-//                else
-//                {
-//                    //weights[i].MovingAverageKg = weights[i].Kg;
-//                    weights[i].MovingAverageKg = null;
-//                }
-//
-//            }
-//        }
 
     }
 }

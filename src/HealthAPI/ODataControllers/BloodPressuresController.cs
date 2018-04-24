@@ -8,48 +8,23 @@ using Microsoft.AspNet.OData;
 namespace HealthAPI.ODataControllers
 {
     [Produces("application/json")]
-    //[Route("api/BloodPressure")]
     public class BloodPressuresController : ODataController
     {
-
         private readonly HealthContext _context;
 
         public BloodPressuresController(HealthContext context)
         {
             _context = context;
-
         }
-
+        
+        // odata/BloodPressures
         [HttpGet]
-        //  [EnableQuery]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IQueryable<Models.BloodPressure> Get()
         {
             return _context.BloodPressures.AsQueryable();
         }
-
-
-
-
-        //// GET api/bloodpressures
-        //[HttpGet]
-        //[Route("odata/BloodPressures/WithMovingAverages")]
-        //public IEnumerable<ViewModels.BloodPressure> GetMovingAverages()
-        //{
-        //    var bloodPressures = _context.BloodPressures.OrderBy(x => x.DateTime).Select(x => new ViewModels.BloodPressure
-        //    {
-
-        //        DateTime = x.DateTime,
-        //        Systolic = x.Systolic.Value,
-        //        Diastolic = x.Diastolic.Value
-
-        //    }).ToList();
-
-        //    AddMovingAverages(bloodPressures, 10);
-
-        //    return bloodPressures;
-        //}
-
+        
         [HttpDelete]
         [Route("odata/BloodPressures")]
         public IActionResult Delete(DateTime id)
