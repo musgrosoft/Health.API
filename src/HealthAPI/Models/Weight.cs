@@ -7,5 +7,7 @@ namespace HealthAPI.Models
         public DateTime DateTime { get; set; }
         public decimal WeightKg { get; set; }
         public decimal? FatRatioPercentage { get; set; }
+        public decimal? MovingAverageKg { get; set; }
+        
     }
 }

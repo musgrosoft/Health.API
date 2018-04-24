@@ -31,27 +31,27 @@ namespace HealthAPI.Controllers
 
         //       
 
-        [HttpGet]
-        //[Route("api/weightsx")]
-        [Route("odata/Weights/LastWeight")]
-        public ViewModels.Weight GetLastWeight()
-        {
-            var weights = GetMovingAverages();
-            var lastWeight = weights.OrderByDescending(x => x.DateTime).FirstOrDefault();
-            return lastWeight;
-        }
+        //[HttpGet]
+        ////[Route("api/weightsx")]
+        //[Route("odata/Weights/LastWeight")]
+        //public ViewModels.Weight GetLastWeight()
+        //{
+        //    var weights = GetMovingAverages();
+        //    var lastWeight = weights.OrderByDescending(x => x.DateTime).FirstOrDefault();
+        //    return lastWeight;
+        //}
 
-        [HttpGet]
-        //[Route("api/weightsx")]
-        [Route("odata/Weights/LastHealthyWeight")]
-        public ViewModels.Weight GetLastHealthyWeight()
-        {
-            decimal healthyWeight = 88.7M;
+        //[HttpGet]
+        ////[Route("api/weightsx")]
+        //[Route("odata/Weights/LastHealthyWeight")]
+        //public ViewModels.Weight GetLastHealthyWeight()
+        //{
+        //    decimal healthyWeight = 88.7M;
 
-            var weights = GetMovingAverages();
-            var lastHealthyWeight = weights.OrderByDescending(x => x.DateTime).FirstOrDefault(x => x.MovingAverageKg < healthyWeight);
-            return lastHealthyWeight;
-        }
+        //    var weights = GetMovingAverages();
+        //    var lastHealthyWeight = weights.OrderByDescending(x => x.DateTime).FirstOrDefault(x => x.MovingAverageKg < healthyWeight);
+        //    return lastHealthyWeight;
+        //}
 
         [HttpGet]
         //[Route("api/weightsx")]
@@ -63,21 +63,21 @@ namespace HealthAPI.Controllers
             return healthyWeight;
         }
 
-        [HttpGet]
-        //[Route("api/weightsx")]
-        [Route("odata/Weights/WithMovingAverages")]
-        public IEnumerable<ViewModels.Weight> GetMovingAverages()
-        {
-            List<ViewModels.Weight> weights = _context.Weights.Select(w => new ViewModels.Weight
-            {
-                Kg = w.WeightKg,
-                DateTime = w.DateTime
-            }).OrderBy(x => x.DateTime).ToList();
-
-            AddMovingAverages(weights, 10);
-
-            return weights;//.OrderBy(x=>x.DateTime);
-        }
+//        [HttpGet]
+//        //[Route("api/weightsx")]
+//        [Route("odata/Weights/WithMovingAverages")]
+//        public IEnumerable<ViewModels.Weight> GetMovingAverages()
+//        {
+//            List<ViewModels.Weight> weights = _context.Weights.Select(w => new ViewModels.Weight
+//            {
+//                Kg = w.WeightKg,
+//                DateTime = w.DateTime
+//            }).OrderBy(x => x.DateTime).ToList();
+//
+//            AddMovingAverages(weights, 10);
+//
+//            return weights;//.OrderBy(x=>x.DateTime);
+//        }
 
         [HttpPost]
         public IActionResult Create([FromBody] Models.Weight weight)
@@ -117,27 +117,69 @@ namespace HealthAPI.Controllers
 
         }
 
-        private void AddMovingAverages(List<ViewModels.Weight> weights, int period)
+
+        [HttpPost]
+        [Route("odata/Weights/AddMovingAverages")]
+        public IActionResult AddMovingAverages(int period = 10)
         {
-            for (int i = 0; i < weights.Count(); i++)
+            try
             {
-                if (i >= period - 1)
+                var orderedWeights = _context.Weights.OrderBy(x => x.DateTime).ToList();
+
+                for (int i = 0; i < orderedWeights.Count(); i++)
                 {
-                    decimal total = 0;
-                    for (int x = i; x > (i - period); x--)
-                        total += weights[x].Kg;
-                    decimal average = total / period;
-                    // result.Add(series.Keys[i], average);
-                    weights[i].MovingAverageKg = average;
-                }
-                else
-                {
-                    //weights[i].MovingAverageKg = weights[i].Kg;
-                    weights[i].MovingAverageKg = null;
+                    if (i >= period - 1)
+                    {
+                        decimal total = 0;
+                        for (int x = i; x > (i - period); x--)
+                            total += orderedWeights[x].WeightKg;
+                        decimal average = total / period;
+                        // result.Add(series.Keys[i], average);
+                        orderedWeights[i].MovingAverageKg = average;
+                    }
+                    else
+                    {
+                        //weights[i].MovingAverageKg = weights[i].Kg;
+                        orderedWeights[i].MovingAverageKg = null;
+                    }
+
+                    _context.SaveChanges();
+
                 }
 
+                return Ok();
+
+
             }
+            catch (Exception ex)
+            {
+                //return internal error
+                return BadRequest(ex);
+            }
+
         }
+//        
+//        private void AddMovingAverages(List<ViewModels.Weight> weights, int period)
+//        {
+//            for (int i = 0; i < weights.Count(); i++)
+//            {
+//                if (i >= period - 1)
+//                {
+//                    decimal total = 0;
+//                    for (int x = i; x > (i - period); x--)
+//                        total += weights[x].Kg;
+//                    decimal average = total / period;
+//                    // result.Add(series.Keys[i], average);
+//                    weights[i].MovingAverageKg = average;
+//                }
+//                else
+//                {
+//                    //weights[i].MovingAverageKg = weights[i].Kg;
+//                    weights[i].MovingAverageKg = null;
+//                }
+//
+//            }
+//        }
 
     }
 }
