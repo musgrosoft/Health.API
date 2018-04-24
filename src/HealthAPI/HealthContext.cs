@@ -8,7 +8,7 @@ namespace HealthAPI
     {
         public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
         public virtual DbSet<Models.DailyActivitySummary> DailyActivitySummaries { get; set; }
-        public virtual DbSet<Models.DailySteps> DailySteps { get; set; }
+        public virtual DbSet<Models.StepCount> StepCounts { get; set; }
         public virtual DbSet<Models.HeartRateDailySummary> HeartRateDailySummaries { get; set; }
         public virtual DbSet<Models.RestingHeartRate> RestingHeartRates { get; set; }
         public virtual DbSet<Models.Units> Units { get; set; }
@@ -45,7 +45,7 @@ namespace HealthAPI
 
             });
 
-            modelBuilder.Entity<Models.DailySteps>(entity =>
+            modelBuilder.Entity<Models.StepCount>(entity =>
             {
                 entity.HasKey(e => new { e.DateTime });
 
@@ -78,20 +78,20 @@ namespace HealthAPI
                 entity.Property(e => e.Units1).HasColumnName("Units");
             });
 
-            modelBuilder.Entity<Models.Weight>(entity =>
-            {
-                entity.HasKey(e => new { e.DateTime});
+            //modelBuilder.Entity<Models.Weight>(entity =>
+            //{
+            //    entity.HasKey(e => new { e.DateTime});
 
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
+            //    entity.Property(e => e.DateTime).HasColumnType("datetime");
 
-                //entity.Property(e => e.DataSource)
-                //    .HasMaxLength(100)
-                //    .IsUnicode(false);
+            //    //entity.Property(e => e.DataSource)
+            //    //    .HasMaxLength(100)
+            //    //    .IsUnicode(false);
 
-                entity.Property(e => e.FatRatioPercentage).HasColumnType("decimal(10, 5)");
+            //    entity.Property(e => e.FatRatioPercentage).HasColumnType("decimal(10, 5)");
 
-                entity.Property(e => e.WeightKg).HasColumnType("decimal(10, 5)");
-            });
+            //    entity.Property(e => e.WeightKg).HasColumnType("decimal(10, 5)");
+            //});
         }
     }
 }

@@ -2,10 +2,9 @@
 
 namespace HealthAPI.Models
 {
-    public class DailySteps
+    public class StepCount
     {
         public DateTime DateTime { get; set; }
-        //public string DataSource { get; set; }
-        public int? Steps { get; set; }
+        public int? Count { get; set; }
     }
 }

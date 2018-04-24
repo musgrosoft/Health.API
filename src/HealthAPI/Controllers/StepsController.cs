@@ -21,11 +21,7 @@ namespace HealthAPI.Controllers
         [HttpGet]
         public IEnumerable<StepCount> Get(string groupBy = "day")
         {
-            var dailyStepCounts = _context.DailySteps.OrderBy(x => x.DateTime).Select(x => new StepCount
-            {
-                DateTime = x.DateTime,
-                Steps = x.Steps
-            });
+            var dailyStepCounts = _context.StepCounts.OrderBy(x => x.DateTime);
 
             if (groupBy.ToLower() == "week")
             {
@@ -38,7 +34,7 @@ namespace HealthAPI.Controllers
                     var stepCount = new StepCount
                     {
                         DateTime = group.Key,
-                        Steps = group.Sum(x => x.Steps)
+                        Count = group.Sum(x => x.Count)
                     };
 
                     weeklyStepCounts.Add(stepCount);
@@ -77,34 +73,34 @@ namespace HealthAPI.Controllers
 
 
         [HttpPost]
-        public IActionResult Create([FromBody] Models.DailySteps dailySteps)
+        public IActionResult Create([FromBody] Models.StepCount stepCount)
         {
             try
             {
-                if (dailySteps == null)
+                if (stepCount == null)
                 {
                     return BadRequest();
                 }
 
-                var existingItem = _context.DailySteps.FirstOrDefault(x => x.DateTime == dailySteps.DateTime);
+                var existingItem = _context.StepCounts.FirstOrDefault(x => x.DateTime == stepCount.DateTime);
 
                 if (existingItem != null)
                 {
-                    existingItem.DateTime = dailySteps.DateTime;
-                    existingItem.Steps = dailySteps.Steps;
+                    existingItem.DateTime = stepCount.DateTime;
+                    existingItem.Count = stepCount.Count;
 
-                    _context.DailySteps.Update(existingItem);
+                    _context.StepCounts.Update(existingItem);
                 }
                 else
                 {
-                    _context.DailySteps.Add(dailySteps);
+                    _context.StepCounts.Add(stepCount);
                 }
 
 
                 _context.SaveChanges();
 
                 //return CreatedAtRoute("GetTodo", weight);
-                return Created("/bum", dailySteps);
+                return Created("/bum", stepCount);
                 //return new NoContentResult();
             }
             catch (Exception ex)
