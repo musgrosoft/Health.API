@@ -80,6 +80,7 @@ namespace HealthAPI.Controllers
 //        }
 
         [HttpPost]
+        [Route("odata/Weights")]
         public IActionResult Create([FromBody] Models.Weight weight)
         {
             try
