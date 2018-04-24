@@ -122,11 +122,10 @@ namespace HealthAPI
 
 drop table weights
 drop table bloodpressures
-drop table dailysteps
 drop table StepCounts
 drop table units
 drop table heartratedailysummaries
-drop table RestingHearRates
+drop table RestingHeartRates
 drop table DailyActivitySummaries
 
 */
