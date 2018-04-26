@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Models;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
-    [Route("api/[controller]")]
-    public class UnitsController : Controller
+    //[Route("api/[controller]")]
+    public class UnitsController : ODataController
     {
         private readonly HealthContext _context;
 
@@ -18,12 +19,14 @@ namespace HealthAPI.Controllers
 
         // GET api/Units
         [HttpGet]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<Units> Get()
         {
             return _context.Units.OrderBy(x=>x.DateTime).ToList();
         }
 
         [HttpPost]
+        [Route("odata/BloodPressures/AddMovingAverages")]
         public IActionResult Create([FromBody] Models.Units dailyUnits)
         {
             try

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Models;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
-    [Route("api/[controller]")]
-    public class HeartRateDailySummariesController : Controller
+    //[Route("api/[controller]")]
+    public class HeartRateDailySummariesController : ODataController
     {
         private readonly HealthContext _context;
 
@@ -18,6 +19,7 @@ namespace HealthAPI.Controllers
 
         // GET api/HeartRateDailySummaries
         [HttpGet]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateDailySummary> Get()
         {
             return _context.HeartRateDailySummaries.OrderBy(x=>x.DateTime);

@@ -96,6 +96,10 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command
 
+            builder.EntitySet<Units>("Units");
+            builder.EntitySet<RestingHeartRate>("RestingHeartRates");
+            builder.EntitySet<HeartRateDailySummary>("HeartRateDailySummaries");
+
             //Enabling OData routing.
             app.UseMvc(routeBuilder =>
                 {

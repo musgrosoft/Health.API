@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Models;
-using HealthAPI.ViewModels;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
@@ -19,6 +19,7 @@ namespace HealthAPI.Controllers
 
         // GET api/DailyActivities
         [HttpGet]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<DailyActivitySummary> Get(string groupBy = "day")
         {
             

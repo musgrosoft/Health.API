@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Controllers;
 using HealthAPI.Models;
-using HealthAPI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
