@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthAPI.Models
 {
@@ -10,5 +11,9 @@ namespace HealthAPI.Models
         public int? FatBurnMinutes { get; set; }
         public int? CardioMinutes { get; set; }
         public int? PeakMinutes { get; set; }
+
+
+        [NotMapped]
+        public int? Thing { get { return CardioMinutes + PeakMinutes; } }
     }
 }
