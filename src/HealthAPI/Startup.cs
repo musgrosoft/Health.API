@@ -96,9 +96,30 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command
 
-            builder.EntitySet<Units>("Units");
-            builder.EntitySet<RestingHeartRate>("RestingHeartRates");
-            builder.EntitySet<HeartRateDailySummary>("HeartRateDailySummaries");
+            builder.EntitySet<Units>("Units").EntityType
+                .HasKey(e => new { e.DateTime })
+                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
+                .Count() // Allow for the $count Command
+                .Expand() // Allow for the $expand Command
+                .OrderBy() // Allow for the $orderby Command                
+                .Page() // Allow for the $top and $skip Commands                
+                .Select(); // Allow for the $select Command;
+            builder.EntitySet<RestingHeartRate>("RestingHeartRates").EntityType
+                .HasKey(e => new { e.DateTime })
+                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
+                .Count() // Allow for the $count Command
+                .Expand() // Allow for the $expand Command
+                .OrderBy() // Allow for the $orderby Command                
+                .Page() // Allow for the $top and $skip Commands                
+                .Select(); // Allow for the $select Command;
+            builder.EntitySet<HeartRateDailySummary>("HeartRateDailySummaries").EntityType
+                .HasKey(e => new { e.DateTime })
+                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
+                .Count() // Allow for the $count Command
+                .Expand() // Allow for the $expand Command
+                .OrderBy() // Allow for the $orderby Command                
+                .Page() // Allow for the $top and $skip Commands                
+                .Select(); // Allow for the $select Command;
 
             //Enabling OData routing.
             app.UseMvc(routeBuilder =>
