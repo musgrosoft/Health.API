@@ -19,32 +19,27 @@ namespace HealthAPI.Controllers
 
         // GET api/DailyActivities
         [HttpGet]
-        public IEnumerable<Activity> Get(string groupBy = "day")
+        public IEnumerable<DailyActivitySummary> Get(string groupBy = "day")
         {
             
-            var dailyActivities =  _context.DailyActivitySummaries.Select(x=>new Activity
-            {
-                DateTime = x.DateTime,
-                ActiveMinutes = x.FairlyActiveMinutes + x.VeryActiveMinutes
-
-            }).OrderBy(x=>x.DateTime).ToList();
+            var dailyActivities =  _context.DailyActivitySummaries.OrderBy(x=>x.DateTime).ToList();
 
             if (groupBy.ToLower() == "week")
             {
                 var weekGroups = dailyActivities.GroupBy(x => x.DateTime.AddDays(-(int)x.DateTime.DayOfWeek));
 
 
-                var weeklyActivities = new List<Activity>();
+                var weeklyActivities = new List<DailyActivitySummary>();
                 foreach (var group in weekGroups)
                 {
-                    var activity = new Activity
+                    var activity = new DailyActivitySummary
                     {
                         DateTime = group.Key,
-                        ActiveMinutes = group.Sum(x => x.ActiveMinutes)
-                        //                    SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
-                        //                    LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
-                        //                    FairlyActiveMinutes = group.Sum(x => x.FairlyActiveMinutes),
-                        //                    VeryActiveMinutes = group.Sum(x => x.VeryActiveMinutes)
+                        //  ActiveMinutes = group.Sum(x => x.ActiveMinutes)
+                        SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
+                        LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
+                        FairlyActiveMinutes = group.Sum(x => x.FairlyActiveMinutes),
+                        VeryActiveMinutes = group.Sum(x => x.VeryActiveMinutes)
                     };
 
                     weeklyActivities.Add(activity);

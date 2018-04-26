@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthAPI.Models
 {
@@ -10,5 +11,8 @@ namespace HealthAPI.Models
         public int LightlyActiveMinutes { get; set; }
         public int FairlyActiveMinutes { get; set; }
         public int VeryActiveMinutes { get; set; }
+
+        [NotMapped]
+        public int ActiveMinutes { get { return FairlyActiveMinutes + VeryActiveMinutes; } }
     }
 }
