@@ -27,7 +27,7 @@ namespace HealthAPI.Controllers
 
         // GET api/HeartRateDailySummaries
         [HttpGet]
-        [Route("odata/HeartRateDailySummaries/GroupByWeek")]
+        [Route("api/HeartRateDailySummaries/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateDailySummary> GetByWeek()
         {
@@ -35,7 +35,7 @@ namespace HealthAPI.Controllers
         }
 
         [HttpPost]
-        [Route("odata/HeartRateDailySummaries")]
+        [Route("api/HeartRateDailySummaries")]
         public IActionResult Create([FromBody] Models.HeartRateDailySummary heartRateDailySummaries)
         {
             try

@@ -26,7 +26,7 @@ namespace HealthAPI.ODataControllers
         }
         
         [HttpDelete]
-        [Route("odata/BloodPressures")]
+        [Route("api/BloodPressures")]
         public IActionResult Delete(DateTime id)
         {
             try
@@ -52,7 +52,7 @@ namespace HealthAPI.ODataControllers
         }
 
         [HttpPost]
-        [Route("odata/BloodPressures")]
+        [Route("api/BloodPressures")]
         public IActionResult Create([FromBody] Models.BloodPressure bloodPressure)
         {
             try
@@ -93,7 +93,7 @@ namespace HealthAPI.ODataControllers
 
 
         [HttpPost]
-        [Route("odata/BloodPressures/AddMovingAverages")]
+        [Route("api/BloodPressures/AddMovingAverages")]
         public IActionResult AddMovingAverages(int period = 10)
         {
             try

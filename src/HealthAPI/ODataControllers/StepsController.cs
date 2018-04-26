@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     public class StepsController : ODataController
     {
         private readonly HealthContext _context;
@@ -19,6 +19,7 @@ namespace HealthAPI.Controllers
 
         // GET api/Stepsx
         [HttpGet]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<StepCount> Get(string groupBy = "day")
         {
             var dailyStepCounts = _context.StepCounts.OrderBy(x => x.DateTime);
@@ -73,6 +74,7 @@ namespace HealthAPI.Controllers
 
 
         [HttpPost]
+        [Route("api/Steps")]
         public IActionResult Create([FromBody] Models.StepCount stepCount)
         {
             try

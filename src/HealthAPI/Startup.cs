@@ -121,12 +121,35 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.StructuralTypes.First(t => t.ClrType == typeof(HeartRateDailySummary)).AddProperty(typeof(HeartRateDailySummary).GetProperty("Thing"));
+            builder.EntitySet<DailyActivitySummary>("DailyActivitySummaries").EntityType
+                .HasKey(e => new { e.DateTime })
+                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
+                .Count() // Allow for the $count Command
+                .Expand() // Allow for the $expand Command
+                .OrderBy() // Allow for the $orderby Command                
+                .Page() // Allow for the $top and $skip Commands                
+                .Select(); // Allow for the $select Command;
+
+            builder.EntitySet<StepCount>("Steps").EntityType
+                .HasKey(e => new { e.DateTime })
+                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
+                .Count() // Allow for the $count Command
+                .Expand() // Allow for the $expand Command
+                .OrderBy() // Allow for the $orderby Command                
+                .Page() // Allow for the $top and $skip Commands                
+                .Select(); // Allow for the $select Command;
+
+            builder.StructuralTypes.First(t => t.ClrType == typeof(HeartRateDailySummary)).AddProperty(typeof(HeartRateDailySummary).GetProperty("Week"));
+
+            builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivitySummary)).AddProperty(typeof(DailyActivitySummary).GetProperty("Week"));
+            builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivitySummary)).AddProperty(typeof(DailyActivitySummary).GetProperty("ActiveMinutes"));
+            
+            builder.StructuralTypes.First(t => t.ClrType == typeof(StepCount)).AddProperty(typeof(StepCount).GetProperty("Week"));
 
             //Enabling OData routing.
             app.UseMvc(routeBuilder =>
                 {
-                    routeBuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
+                    routeBuilder.MapODataServiceRoute("ODataRoutes", "api", builder.GetEdmModel());
                     routeBuilder.EnableDependencyInjection();
                 });
 

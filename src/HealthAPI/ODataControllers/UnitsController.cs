@@ -26,7 +26,7 @@ namespace HealthAPI.Controllers
         }
 
         [HttpPost]
-        [Route("odata/BloodPressures/AddMovingAverages")]
+        [Route("api/Units/AddMovingAverages")]
         public IActionResult Create([FromBody] Models.Units dailyUnits)
         {
             try

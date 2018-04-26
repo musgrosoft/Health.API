@@ -27,7 +27,7 @@ namespace HealthAPI.Controllers
         }
         
         [HttpGet]
-        [Route("odata/Weights/HealthyWeight")]
+        [Route("api/Weights/HealthyWeight")]
         public Decimal GetHealthyWeight()
         {
             decimal healthyWeight = 88.7M;
@@ -36,7 +36,7 @@ namespace HealthAPI.Controllers
         }
 
         [HttpPost]
-        [Route("odata/Weights")]
+        [Route("api/Weights")]
         public IActionResult Create([FromBody] Models.Weight weight)
         {
             try
@@ -76,7 +76,7 @@ namespace HealthAPI.Controllers
 
 
         [HttpPost]
-        [Route("odata/Weights/AddMovingAverages")]
+        [Route("api/Weights/AddMovingAverages")]
         public IActionResult AddMovingAverages(int period = 10)
         {
             try

@@ -67,7 +67,7 @@ namespace HealthAPI.Controllers
 
 
         [HttpPost]
-        [Route("odata/RestingHeartRates/AddMovingAverages")]
+        [Route("api/RestingHeartRates/AddMovingAverages")]
         public IActionResult AddMovingAverages(int period = 10)
         {
             try
