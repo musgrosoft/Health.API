@@ -25,7 +25,17 @@ namespace HealthAPI.Controllers
             return _context.HeartRateDailySummaries.OrderBy(x=>x.DateTime);
         }
 
+        // GET api/HeartRateDailySummaries
+        [HttpGet]
+        [Route("odata/HeartRateDailySummaries/GroupByWeek")]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IEnumerable<HeartRateDailySummary> GetByWeek()
+        {
+            return _context.HeartRateDailySummaries.OrderBy(x => x.DateTime);
+        }
+
         [HttpPost]
+        [Route("odata/HeartRateDailySummaries")]
         public IActionResult Create([FromBody] Models.HeartRateDailySummary heartRateDailySummaries)
         {
             try

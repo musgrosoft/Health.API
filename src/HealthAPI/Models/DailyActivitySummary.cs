@@ -14,5 +14,9 @@ namespace HealthAPI.Models
 
         [NotMapped]
         public int ActiveMinutes { get { return FairlyActiveMinutes + VeryActiveMinutes; } }
+
+        [NotMapped]
+        public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
+
     }
 }

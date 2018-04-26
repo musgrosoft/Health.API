@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Models;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class StepsController : Controller
+    public class StepsController : ODataController
     {
         private readonly HealthContext _context;
 

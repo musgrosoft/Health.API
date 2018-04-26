@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
-    [Route("api/[controller]")]
-    public class DailyActivitiesController : Controller
+//    [Route("api/[controller]")]
+    public class DailyActivitiesController : ODataController
     {
         private readonly HealthContext _context;
 
@@ -20,41 +20,43 @@ namespace HealthAPI.Controllers
         // GET api/DailyActivities
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<DailyActivitySummary> Get(string groupBy = "day")
+        public IEnumerable<DailyActivitySummary> Get()
         {
-            
-            var dailyActivities =  _context.DailyActivitySummaries.OrderBy(x=>x.DateTime).ToList();
+            return _context.DailyActivitySummaries.AsQueryable();
+        }
 
-            if (groupBy.ToLower() == "week")
+
+        [HttpGet]
+        [Route("api/DailyActivitySummaries/GroupByWeek")]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IEnumerable<DailyActivitySummary> GetByWeek()
+        {
+            var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
+
+            var weekGroups = dailyActivities.GroupBy(x => x.DateTime.AddDays(-(int)x.DateTime.DayOfWeek));
+
+
+            var weeklyActivities = new List<DailyActivitySummary>();
+            foreach (var group in weekGroups)
             {
-                var weekGroups = dailyActivities.GroupBy(x => x.DateTime.AddDays(-(int)x.DateTime.DayOfWeek));
-
-
-                var weeklyActivities = new List<DailyActivitySummary>();
-                foreach (var group in weekGroups)
+                var activity = new DailyActivitySummary
                 {
-                    var activity = new DailyActivitySummary
-                    {
-                        DateTime = group.Key,
-                        //  ActiveMinutes = group.Sum(x => x.ActiveMinutes)
-                        SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
-                        LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
-                        FairlyActiveMinutes = group.Sum(x => x.FairlyActiveMinutes),
-                        VeryActiveMinutes = group.Sum(x => x.VeryActiveMinutes)
-                    };
+                    DateTime = group.Key,
+                    SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
+                    LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
+                    FairlyActiveMinutes = group.Sum(x => x.FairlyActiveMinutes),
+                    VeryActiveMinutes = group.Sum(x => x.VeryActiveMinutes)
+                };
 
-                    weeklyActivities.Add(activity);
-                }
-
-                return weeklyActivities;
+                weeklyActivities.Add(activity);
             }
 
-            return dailyActivities;
+            return weeklyActivities.AsQueryable();
         }
-        
 
-        
+
         [HttpPost]
+        [Route("api/DailyActivitySummaries/GroupByWeek")]
         public IActionResult Create([FromBody] Models.DailyActivitySummary activity)
         {
             try

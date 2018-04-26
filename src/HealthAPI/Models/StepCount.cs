@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthAPI.Models
 {
@@ -6,5 +7,9 @@ namespace HealthAPI.Models
     {
         public DateTime DateTime { get; set; }
         public int? Count { get; set; }
+
+        [NotMapped]
+        public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
+
     }
 }
