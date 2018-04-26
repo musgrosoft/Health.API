@@ -13,7 +13,7 @@ namespace HealthAPI.Models
         public int? PeakMinutes { get; set; }
 
 
-        [NotMapped]
-        public int? Thing { get { return CardioMinutes + PeakMinutes; } }
+        //[NotMapped]
+        //public int? Thing { get { return CardioMinutes + PeakMinutes; } }
     }
 }
