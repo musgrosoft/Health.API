@@ -121,6 +121,8 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
+            builder.StructuralTypes.First(t => t.ClrType == typeof(HeartRateDailySummary)).AddProperty(typeof(HeartRateDailySummary).GetProperty("Thing"));
+
             //Enabling OData routing.
             app.UseMvc(routeBuilder =>
                 {
