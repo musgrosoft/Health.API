@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthAPI
 {
-
     public class HealthContext : DbContext
     {
         public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
@@ -13,8 +12,7 @@ namespace HealthAPI
         public virtual DbSet<Models.RestingHeartRate> RestingHeartRates { get; set; }
         public virtual DbSet<Models.Units> Units { get; set; }
         public virtual DbSet<Models.Weight> Weights { get; set; }
-        
-
+ 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -23,75 +21,6 @@ namespace HealthAPI
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            
-
-            modelBuilder.Entity<Models.BloodPressure>(entity =>
-            {
-                entity.HasKey(e => new { e.DateTime});
-
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
-                
-            });
-
-            modelBuilder.Entity<Models.DailyActivitySummary>(entity =>
-            {
-                entity.HasKey(e => new { e.DateTime });
-
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
-
-            });
-
-            modelBuilder.Entity<Models.StepCount>(entity =>
-            {
-                entity.HasKey(e => new { e.DateTime });
-
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
-
-            });
-
-            modelBuilder.Entity<Models.HeartRateDailySummary>(entity =>
-            {
-                entity.HasKey(e => new { e.DateTime});
-
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
-
-            });
-
-            modelBuilder.Entity<Models.RestingHeartRate>(entity =>
-            {
-                entity.HasKey(e => new { e.DateTime });
-
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
-
-            });
-            
-            modelBuilder.Entity<Models.Units>(entity =>
-            {
-                entity.HasKey(e => e.DateTime);
-
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.Units1).HasColumnName("Units");
-            });
-
-            //modelBuilder.Entity<Models.Weight>(entity =>
-            //{
-            //    entity.HasKey(e => new { e.DateTime});
-
-            //    entity.Property(e => e.DateTime).HasColumnType("datetime");
-
-            //    //entity.Property(e => e.DataSource)
-            //    //    .HasMaxLength(100)
-            //    //    .IsUnicode(false);
-
-            //    entity.Property(e => e.FatRatioPercentage).HasColumnType("decimal(10, 5)");
-
-            //    entity.Property(e => e.WeightKg).HasColumnType("decimal(10, 5)");
-            //});
-        }
+        
     }
 }

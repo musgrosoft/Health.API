@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthAPI.Models
 {
     public class BloodPressure
     {
+        [Key]
+        [Column(TypeName = "DateTime")]
         public DateTime DateTime { get; set; }
         public int Diastolic { get; set; }
         public int Systolic { get; set; }
