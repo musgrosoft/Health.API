@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace HealthAPI.Controllers
 {
     //[Route("api/[controller]")]
-    public class StepsController : ODataController
+    public class StepCountsController : ODataController
     {
         private readonly HealthContext _context;
 
-        public StepsController(HealthContext context)
+        public StepCountsController(HealthContext context)
         {
             _context = context;
         }

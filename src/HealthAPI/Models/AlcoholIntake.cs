@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthAPI.Models
 {
-    public partial class Units
+    public class AlcoholIntake
     {
         [Key]
         [Column(TypeName = "DateTime")]
         public DateTime DateTime { get; set; }
-        public int? Units1 { get; set; }
+        public int? Units { get; set; }
     }
 }

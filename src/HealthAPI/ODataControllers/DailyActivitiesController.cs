@@ -20,7 +20,7 @@ namespace HealthAPI.Controllers
         // GET api/DailyActivities
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<DailyActivitySummary> Get()
+        public IEnumerable<DailyActivity> Get()
         {
             return _context.DailyActivitySummaries.AsQueryable();
         }
@@ -29,17 +29,17 @@ namespace HealthAPI.Controllers
         [HttpGet]
         [Route("api/DailyActivities/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<DailyActivitySummary> GetByWeek()
+        public IEnumerable<DailyActivity> GetByWeek()
         {
             var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
             var weekGroups = dailyActivities.GroupBy(x => x.DateTime.AddDays(-(int)x.DateTime.DayOfWeek));
 
 
-            var weeklyActivities = new List<DailyActivitySummary>();
+            var weeklyActivities = new List<DailyActivity>();
             foreach (var group in weekGroups)
             {
-                var activity = new DailyActivitySummary
+                var activity = new DailyActivity
                 {
                     DateTime = group.Key,
                     SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
@@ -57,7 +57,7 @@ namespace HealthAPI.Controllers
 
         [HttpPost]
         [Route("api/DailyActivitySummaries/GroupByWeek")]
-        public IActionResult Create([FromBody] Models.DailyActivitySummary activity)
+        public IActionResult Create([FromBody] Models.DailyActivity activity)
         {
             try
             {

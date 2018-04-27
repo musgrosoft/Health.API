@@ -6,11 +6,11 @@ namespace HealthAPI
     public class HealthContext : DbContext
     {
         public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
-        public virtual DbSet<Models.DailyActivitySummary> DailyActivitySummaries { get; set; }
+        public virtual DbSet<Models.DailyActivity> DailyActivitySummaries { get; set; }
         public virtual DbSet<Models.StepCount> StepCounts { get; set; }
-        public virtual DbSet<Models.HeartRateDailySummary> HeartRateDailySummaries { get; set; }
+        public virtual DbSet<Models.HeartRateZoneSummary> HeartRateDailySummaries { get; set; }
         public virtual DbSet<Models.RestingHeartRate> RestingHeartRates { get; set; }
-        public virtual DbSet<Models.Units> Units { get; set; }
+        public virtual DbSet<Models.AlcoholIntake> AlcoholIntakes { get; set; }
         public virtual DbSet<Models.Weight> Weights { get; set; }
  
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

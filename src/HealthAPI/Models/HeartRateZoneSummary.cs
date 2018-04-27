@@ -1,25 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthAPI.Models
 {
-    public class DailyActivitySummary
+    public class HeartRateZoneSummary
     {
         [Key]
         [Column(TypeName = "DateTime")]
         public DateTime DateTime { get; set; }
-        public int SedentaryMinutes { get; set; }
-        public int LightlyActiveMinutes { get; set; }
-        public int FairlyActiveMinutes { get; set; }
-        public int VeryActiveMinutes { get; set; }
+        public int? RestingHeartRate { get; set; }
+        public int? OutOfRangeMinutes { get; set; }
+        public int? FatBurnMinutes { get; set; }
+        public int? CardioMinutes { get; set; }
+        public int? PeakMinutes { get; set; }
+
 
         [NotMapped]
-        public int ActiveMinutes { get { return FairlyActiveMinutes + VeryActiveMinutes; } }
+        public int? Thing { get { return CardioMinutes + PeakMinutes; } }
 
         [NotMapped]
         public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
-
     }
 }

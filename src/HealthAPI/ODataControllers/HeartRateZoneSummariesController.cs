@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace HealthAPI.Controllers
 {
     //[Route("api/[controller]")]
-    public class HeartRateDailySummariesController : ODataController
+    public class HeartRateZoneSummariesController : ODataController
     {
         private readonly HealthContext _context;
 
-        public HeartRateDailySummariesController(HealthContext context)
+        public HeartRateZoneSummariesController(HealthContext context)
         {
             _context = context;
         }
@@ -20,7 +20,7 @@ namespace HealthAPI.Controllers
         // GET api/HeartRateDailySummaries
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<HeartRateDailySummary> Get()
+        public IEnumerable<HeartRateZoneSummary> Get()
         {
             return _context.HeartRateDailySummaries.OrderBy(x=>x.DateTime);
         }
@@ -29,14 +29,14 @@ namespace HealthAPI.Controllers
         [HttpGet]
         [Route("api/HeartRateDailySummaries/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<HeartRateDailySummary> GetByWeek()
+        public IEnumerable<HeartRateZoneSummary> GetByWeek()
         {
             return _context.HeartRateDailySummaries.OrderBy(x => x.DateTime);
         }
 
         [HttpPost]
         [Route("api/HeartRateDailySummaries")]
-        public IActionResult Create([FromBody] Models.HeartRateDailySummary heartRateDailySummaries)
+        public IActionResult Create([FromBody] Models.HeartRateZoneSummary heartRateDailySummaries)
         {
             try
             {
