@@ -130,7 +130,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.EntitySet<StepCount>("Steps").EntityType
+            builder.EntitySet<StepCount>("StepCounts").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
