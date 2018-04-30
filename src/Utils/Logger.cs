@@ -4,7 +4,7 @@
     {
         public void Log(string message)
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

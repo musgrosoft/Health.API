@@ -49,6 +49,7 @@ namespace HealthAPI.Controllers.Migration
             }
             catch (Exception ex)
             {
+                return NotFound(ex.Message);
                 //LambdaLogger.Log(ex.ToString());
 
                 //return new APIGatewayProxyResponse
