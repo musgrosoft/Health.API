@@ -96,7 +96,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command
 
-            builder.EntitySet<Units>("Units").EntityType
+            builder.EntitySet<AlcoholIntake>("AlcoholIntakes").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
@@ -112,7 +112,7 @@ namespace HealthAPI
                 .OrderBy() // Allow for the $orderby Command                
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
-            builder.EntitySet<HeartRateDailySummary>("HeartRateDailySummaries").EntityType
+            builder.EntitySet<HeartRateZoneSummary>("HeartRateDailySummaries").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
@@ -121,7 +121,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.EntitySet<DailyActivitySummary>("DailyActivities").EntityType
+            builder.EntitySet<DailyActivity>("DailyActivities").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
@@ -130,7 +130,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.EntitySet<StepCount>("Steps").EntityType
+            builder.EntitySet<StepCount>("StepCounts").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
@@ -139,10 +139,10 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.StructuralTypes.First(t => t.ClrType == typeof(HeartRateDailySummary)).AddProperty(typeof(HeartRateDailySummary).GetProperty("Week"));
+            builder.StructuralTypes.First(t => t.ClrType == typeof(HeartRateZoneSummary)).AddProperty(typeof(HeartRateZoneSummary).GetProperty("Week"));
 
-            builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivitySummary)).AddProperty(typeof(DailyActivitySummary).GetProperty("Week"));
-            builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivitySummary)).AddProperty(typeof(DailyActivitySummary).GetProperty("ActiveMinutes"));
+            builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivity)).AddProperty(typeof(DailyActivity).GetProperty("Week"));
+            builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivity)).AddProperty(typeof(DailyActivity).GetProperty("ActiveMinutes"));
             
             builder.StructuralTypes.First(t => t.ClrType == typeof(StepCount)).AddProperty(typeof(StepCount).GetProperty("Week"));
 

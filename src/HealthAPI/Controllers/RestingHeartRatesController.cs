@@ -7,7 +7,8 @@ using Microsoft.AspNet.OData;
 
 namespace HealthAPI.Controllers
 {
-   // [Route("api/[controller]")]
+    [Produces("application/json")]
+    // [Route("api/[controller]")]
     public class RestingHeartRatesController : ODataController
     {
         private readonly HealthContext _context;

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthAPI.Models
 {
-    public class HeartRateDailySummary
+    public class HeartRateZoneSummary
     {
+        [Key]
+        [Column(TypeName = "DateTime")]
         public DateTime DateTime { get; set; }
         public int? RestingHeartRate { get; set; }
         public int? OutOfRangeMinutes { get; set; }

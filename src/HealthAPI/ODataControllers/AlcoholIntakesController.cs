@@ -25,30 +25,6 @@ namespace HealthAPI.Controllers
             return _context.AlcoholIntakes.AsQueryable();
         }
 
-        [HttpGet]
-        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        [Route("api/Units/GroupByWeek")]
-        public IEnumerable<Units> GetByWeek()
-        {
-            var dailyUnits = _context.Units.OrderBy(x => x.DateTime).ToList();
-
-            var groups = dailyUnits.GroupBy(x => x.Week);
-            
-            var weeklyUnits = new List<Units>();
-            foreach (var group in groups)
-            {
-                var unit = new Units
-                {
-                    DateTime = group.Key,
-                    Units1 = group.Sum(x => x.Units1)
-                };
-
-                weeklyUnits.Add(unit);
-            }
-
-            return weeklyUnits;
-        }
-
         [HttpPost]
         [Route("api/Units/AddMovingAverages")]
         public IActionResult Create([FromBody] AlcoholIntake alcoholIntake)
