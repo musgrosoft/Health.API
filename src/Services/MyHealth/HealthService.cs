@@ -152,9 +152,19 @@ namespace Services.MyHealth
         }
 
 
-        public async Task SaveWeight(Weight weight)
+        public async Task UpsertWeight(Weight weight)
         {
-            await _healthContext.Weights.AddAsync(weight);
+            var existingWeight = await _healthContext.Weights.FindAsync(weight.DateTime);
+            if (existingWeight != null)
+            {
+                existingWeight.Kg = weight.Kg;
+                existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
+            }
+            else
+            {
+                await _healthContext.AddAsync(weight);
+            }
+            
             await _healthContext.SaveChangesAsync();
         }
 
@@ -178,16 +188,27 @@ namespace Services.MyHealth
                     //weights[i].MovingAverageKg = weights[i].Kg;
                     orderedWeights[i].MovingAverageKg = null;
                 }
-
-                await _healthContext.SaveChangesAsync();
-
+                
             }
+
+            await _healthContext.SaveChangesAsync();
         }
 
-        public async Task SaveBloodPressure(BloodPressure bloodPressure)
+        public async Task UpsertBloodPressure(BloodPressure bloodPressure)
         {
-            await _healthContext.BloodPressures.AddAsync(bloodPressure);
+            var existingBloodPressure = await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
+            if (existingBloodPressure != null)
+            {
+                existingBloodPressure.Diastolic = bloodPressure.Diastolic;
+                existingBloodPressure.Systolic = bloodPressure.Systolic;
+            }
+            else
+            {
+                await _healthContext.BloodPressures.AddAsync(bloodPressure);
+            }
+
             await _healthContext.SaveChangesAsync();
+            
         }
 
         public async Task AddMovingAveragesToBloodPressures(int period = 10)
@@ -219,8 +240,10 @@ namespace Services.MyHealth
                     bloodPressures[i].MovingAverageDiastolic = null;
                 }
 
-               await _healthContext.SaveChangesAsync();
+               
             }
+
+            await _healthContext.SaveChangesAsync();
         }
 
         public async Task SaveStepCount(DailySteps dailySteps)

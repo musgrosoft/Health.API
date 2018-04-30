@@ -50,7 +50,7 @@ namespace Migrators
 
                 _logger.Log($"About to save Weight record : {wsData.DateTime:yy-MM-dd} , {wsData.Kg} Kg , {wsData.FatRatioPercentage} % Fat");
 
-                await _healthService.SaveWeight(wsData);
+                await _healthService.UpsertWeight(wsData);
             }
 
             await _healthService.AddMovingAveragesToWeights();
@@ -81,7 +81,7 @@ namespace Migrators
 
                 _logger.Log($"About to save Blood Pressure record : {bpData.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bpData.Diastolic} mmHg Diastolic , {bpData.Systolic} mmHg Systolic");
 
-                await _healthService.SaveBloodPressure(bpData);
+                await _healthService.UpsertBloodPressure(bpData);
             }
 
             await _healthService.AddMovingAveragesToBloodPressures();
