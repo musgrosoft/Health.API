@@ -1,6 +1,6 @@
 ﻿using System;
-using HealthAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Repositories;
 
 namespace HealthAPI.Unit.Tests
 {

@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HealthAPI;
-using HealthAPI.Models;
+ using Repositories;
+ using Repositories.Models;
 
 namespace HealthAPI.Controllers
 {

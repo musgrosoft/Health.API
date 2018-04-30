@@ -1,11 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
-using System;
-using System.Collections.Generic;
+using Repositories;
+using Repositories.Models;
 
-namespace HealthAPI.Controllers
+namespace HealthAPI.Controllers.OData
 {
 
     [Produces("application/json")]
@@ -21,7 +21,7 @@ namespace HealthAPI.Controllers
         //   odata/Weights
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IQueryable<Models.Weight> Get()
+        public IQueryable<Weight> Get()
         {
             return _context.Weights.AsQueryable();
         }
@@ -37,7 +37,7 @@ namespace HealthAPI.Controllers
 
         [HttpPost]
         [Route("api/Weights")]
-        public IActionResult Create([FromBody] Models.Weight weight)
+        public IActionResult Create([FromBody] Weight weight)
         {
             try
             {

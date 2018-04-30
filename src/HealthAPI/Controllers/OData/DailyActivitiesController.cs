@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HealthAPI.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Repositories;
+using Repositories.Models;
 
-namespace HealthAPI.Controllers
+namespace HealthAPI.Controllers.OData
 {
 //    [Route("api/[controller]")]
     public class DailyActivitiesController : ODataController
@@ -57,7 +58,7 @@ namespace HealthAPI.Controllers
 
         [HttpPost]
         [Route("api/DailyActivitySummaries")]
-        public IActionResult Create([FromBody] Models.DailyActivity activity)
+        public IActionResult Create([FromBody] DailyActivity activity)
         {
             try
             {

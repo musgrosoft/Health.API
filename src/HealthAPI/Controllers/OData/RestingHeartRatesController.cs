@@ -1,11 +1,12 @@
-﻿using HealthAPI.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Mvc;
+using Repositories;
+using Repositories.Models;
 
-namespace HealthAPI.Controllers
+namespace HealthAPI.Controllers.OData
 {
     [Produces("application/json")]
     // [Route("api/[controller]")]

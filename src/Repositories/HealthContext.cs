@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace HealthAPI
+namespace Repositories
 {
     public class HealthContext : DbContext
     {

@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HealthAPI;
-using HealthAPI.Models;
 using Migrators;
+using Repositories;
 using Services.MyHealth;
 using Services.Nokia;
 using Utils;
 
-namespace HealthAPI.Controllers
+namespace HealthAPI.Controllers.Migration
 {
     [Produces("application/json")]
     [Route("api/Nokia")]

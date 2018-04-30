@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using HealthAPI.Controllers;
-using HealthAPI.Models;
+using HealthAPI.Controllers.OData;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Repositories.Models;
 using Xunit;
 
 namespace HealthAPI.Unit.Tests.Controllers
@@ -16,9 +17,9 @@ namespace HealthAPI.Unit.Tests.Controllers
         {
             var context = new FakeLocalContext();
             
-            context.Add(new Models.Weight { Kg = 123, DateTime = DateTime.Now});
-            context.Add(new Models.Weight { Kg = 345, DateTime = DateTime.Now});
-            context.Add(new Models.Weight { Kg = 678, DateTime = DateTime.Now});
+            context.Add(new Weight { Kg = 123, DateTime = DateTime.Now});
+            context.Add(new Weight { Kg = 345, DateTime = DateTime.Now});
+            context.Add(new Weight { Kg = 678, DateTime = DateTime.Now});
             context.SaveChanges();
 
             var weightsControlller = new WeightsController(context);
