@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Mvc;
 
-
-namespace HealthAPI.ODataControllers
+namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
     public class BloodPressuresController : ODataController

@@ -20,7 +20,7 @@ namespace HealthAPI.Controllers
         // GET api/Stepsx
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<StepCount> Get(string groupBy = "day")
+        public IEnumerable<StepCount> Get()
         {
             return _context.StepCounts;
         }

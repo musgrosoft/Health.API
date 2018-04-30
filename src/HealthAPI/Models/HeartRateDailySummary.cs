@@ -11,11 +11,7 @@ namespace HealthAPI.Models
         public int? FatBurnMinutes { get; set; }
         public int? CardioMinutes { get; set; }
         public int? PeakMinutes { get; set; }
-
-
-        [NotMapped]
-        public int? Thing { get { return CardioMinutes + PeakMinutes; } }
-
+        
         [NotMapped]
         public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
     }

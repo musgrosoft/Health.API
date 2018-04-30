@@ -56,7 +56,7 @@ namespace HealthAPI.Controllers
 
 
         [HttpPost]
-        [Route("api/DailyActivitySummaries/GroupByWeek")]
+        [Route("api/DailyActivitySummaries")]
         public IActionResult Create([FromBody] Models.DailyActivitySummary activity)
         {
             try
