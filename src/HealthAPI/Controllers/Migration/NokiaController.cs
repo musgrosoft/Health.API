@@ -31,7 +31,7 @@ namespace HealthAPI.Controllers.Migration
                 var logger = new Logger();
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
-                var healthService = HealthServiceFactory.Build( logger);
+                var healthService = HealthServiceFactory.Build( logger, _context);
 
                 var nokiaMigrator = new NokiaMigrator(healthService, logger, new NokiaClient());
 

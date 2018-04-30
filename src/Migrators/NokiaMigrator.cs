@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Amazon.Lambda.Core;
+using Repositories.Models;
 using Services.MyHealth;
-using Services.MyHealth.Domain;
 using Services.Nokia;
 using Utils;
 
@@ -17,9 +16,8 @@ namespace Migrators
 
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
-        private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
-        private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
-
+        
+        
         public NokiaMigrator(HealthService healthService, ILogger logger, NokiaClient nokiaClient)
         {
             _healthService = healthService;
@@ -29,8 +27,7 @@ namespace Migrators
         
         public async Task MigrateWeights()
         {
-            var latestWeight = await _healthService.GetLatestWeight();
-            var latestWeightDate = latestWeight?.DateTime ?? MIN_WEIGHT_DATE;
+            var latestWeightDate  = _healthService.GetLatestWeightDate();
 
             _logger.Log($"Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
@@ -59,14 +56,9 @@ namespace Migrators
             await _healthService.AddMovingAveragesToWeights();
         }
 
-
-       
-
-
         public async Task MigrateBloodPressures()
         {
-            var latestBloodPressure = await _healthService.GetLatestBloodPressure();
-            var latestBloodPressureDate = latestBloodPressure?.DateTime ?? MIN_BLOOD_PRESSURE_DATE;
+            var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate();
 
             _logger.Log($"Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 

@@ -5,8 +5,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Repositories;
+using Repositories.Models;
 using Services.MyHealth.Domain;
 using Utils;
+using DailyActivity = Services.MyHealth.Domain.DailyActivity;
+using RestingHeartRate = Services.MyHealth.Domain.RestingHeartRate;
 
 namespace Services.MyHealth
 {
@@ -14,54 +18,29 @@ namespace Services.MyHealth
     {   
         private readonly IConfig _config;
         private readonly ILogger _logger;
+        private readonly HealthContext _healthContext;
         private const string HEALTH_API_BASE_URL = "http://musgrosoft-health-api.azurewebsites.net";
-        
-        public HealthService(IConfig config, ILogger logger)
+
+        private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
+        private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
+
+        public HealthService(IConfig config, ILogger logger, HealthContext healthContext)
         {
             _config = config;
             _logger = logger;
+            _healthContext = healthContext;
         }
 
-        public async Task<Weight> GetLatestWeight()
+        public DateTime GetLatestWeightDate()
         {
-            var path = $"{HEALTH_API_BASE_URL}/api/Weights?$top=1&$orderby=DateTime%20desc";
-            var httpClient = new HttpClient();
-
-            HttpResponseMessage response = await httpClient.GetAsync(path);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var weightsJson = await response.Content.ReadAsStringAsync();
-                var weights = JsonConvert.DeserializeObject<ODataResponse<Weight>>(weightsJson);
-                
-                return weights.value.FirstOrDefault();
-            }
-            else
-            {
-                throw new Exception($"non ok status code : {path}, status code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
-            }
+            var latestWeightDate = _healthContext.Weights.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return latestWeightDate ?? MIN_WEIGHT_DATE;
         }
-        
 
-        public async Task<BloodPressure> GetLatestBloodPressure()
+        public DateTime GetLatestBloodPressureDate()
         {
-            var path = $"{HEALTH_API_BASE_URL}/api/BloodPressures?$top=1&$orderby=DateTime%20desc";
-            var httpClient = new HttpClient();
-
-            HttpResponseMessage response = await httpClient.GetAsync(path);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var bpsJson = await response.Content.ReadAsStringAsync();
-                var bps = JsonConvert.DeserializeObject<ODataResponse<BloodPressure>>(bpsJson);
-                
-                return bps.value.FirstOrDefault();
-
-            }
-            else
-            {
-                throw new Exception($"non ok status code : {path}, status code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
-            }
+            var latestBloodPressureDate = _healthContext.BloodPressures.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return latestBloodPressureDate ?? MIN_BLOOD_PRESSURE_DATE;
         }
 
         public async Task<DailySteps> GetLatestStepData()
@@ -175,53 +154,72 @@ namespace Services.MyHealth
 
         public async Task SaveWeight(Weight weight)
         {
-            var path = $"{HEALTH_API_BASE_URL}/api/Weights";
-            var httpClient = new HttpClient();
-
-            HttpResponseMessage response = await httpClient.PostAsync(path, new StringContent(JsonConvert.SerializeObject(weight), Encoding.UTF8, "application/json"));
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error saving weight non ok status code : {path} , status code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
-            }
+            await _healthContext.Weights.AddAsync(weight);
+            await _healthContext.SaveChangesAsync();
         }
 
-        public async Task AddMovingAveragesToWeights()
+        public async Task AddMovingAveragesToWeights(int period = 10)
         {
-            var path = $"{HEALTH_API_BASE_URL}/api/Weights/AddMovingAverages";
-            var httpClient = new HttpClient();
+            var orderedWeights = _healthContext.Weights.OrderBy(x => x.DateTime).ToList();
 
-            HttpResponseMessage response = await httpClient.PostAsync(path, new StringContent("", Encoding.UTF8, "application/json"));
-
-            if (!response.IsSuccessStatusCode)
+            for (int i = 0; i < orderedWeights.Count(); i++)
             {
-                throw new Exception($"Error AddMovingAveragesToWeights non ok status code : {path} , status code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
+                if (i >= period - 1)
+                {
+                    decimal total = 0;
+                    for (int x = i; x > (i - period); x--)
+                        total += orderedWeights[x].Kg;
+                    decimal average = total / period;
+                    // result.Add(series.Keys[i], average);
+                    orderedWeights[i].MovingAverageKg = average;
+                }
+                else
+                {
+                    //weights[i].MovingAverageKg = weights[i].Kg;
+                    orderedWeights[i].MovingAverageKg = null;
+                }
+
+                await _healthContext.SaveChangesAsync();
+
             }
         }
 
         public async Task SaveBloodPressure(BloodPressure bloodPressure)
         {
-            var path = $"{HEALTH_API_BASE_URL}/api/BloodPressures";
-            var httpClient = new HttpClient();
-
-            HttpResponseMessage response = await httpClient.PostAsync(path, new StringContent(JsonConvert.SerializeObject(bloodPressure), Encoding.UTF8, "application/json"));
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error saving blood pressure non ok status code : {path} , status code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
-            }
+            await _healthContext.BloodPressures.AddAsync(bloodPressure);
+            await _healthContext.SaveChangesAsync();
         }
 
-        public async Task AddMovingAveragesToBloodPressures()
+        public async Task AddMovingAveragesToBloodPressures(int period = 10)
         {
-            var path = $"{HEALTH_API_BASE_URL}/api/BloodPressures/AddMovingAverages";
-            var httpClient = new HttpClient();
+            var bloodPressures = _healthContext.BloodPressures.OrderBy(x => x.DateTime).ToList();
 
-            HttpResponseMessage response = await httpClient.PostAsync(path, new StringContent("", Encoding.UTF8, "application/json"));
-
-            if (!response.IsSuccessStatusCode)
+            for (int i = 0; i < bloodPressures.Count(); i++)
             {
-                throw new Exception($"Error AddMovingAveragesToBloodPressures non ok status code : {path} , status code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
+                if (i >= period - 1)
+                {
+                    int systolicTotal = 0;
+                    int diastolicTotal = 0;
+                    for (int x = i; x > (i - period); x--)
+                    {
+                        systolicTotal += bloodPressures[x].Systolic;
+                        diastolicTotal += bloodPressures[x].Diastolic;
+                    }
+                    int averageSystolic = systolicTotal / period;
+                    int averageDiastolic = diastolicTotal / period;
+                    // result.Add(series.Keys[i], average);
+                    bloodPressures[i].MovingAverageSystolic = averageSystolic;
+                    bloodPressures[i].MovingAverageDiastolic = averageDiastolic;
+                }
+                else
+                {
+                    //bloodPressures[i].MovingAverageSystolic = bloodPressures[i].Systolic;
+                    //bloodPressures[i].MovingAverageDiastolic = bloodPressures[i].Diastolic;
+                    bloodPressures[i].MovingAverageSystolic = null;
+                    bloodPressures[i].MovingAverageDiastolic = null;
+                }
+
+               await _healthContext.SaveChangesAsync();
             }
         }
 

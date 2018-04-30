@@ -1,12 +1,13 @@
-﻿using Utils;
+﻿using Repositories;
+using Utils;
 
 namespace Services.MyHealth
 {
     public static class HealthServiceFactory
     {
-        public static HealthService Build(ILogger logger) {
+        public static HealthService Build(ILogger logger, HealthContext healthContext) {
             
-            return new HealthService(new Config(), logger);
+            return new HealthService(new Config(), logger, healthContext);
         } 
     }
 }
