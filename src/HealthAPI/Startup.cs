@@ -150,7 +150,7 @@ namespace HealthAPI
             //Enabling OData routing.
             app.UseMvc(routeBuilder =>
                 {
-                    routeBuilder.MapODataServiceRoute("ODataRoutes", "api", builder.GetEdmModel());
+                    routeBuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
                     routeBuilder.EnableDependencyInjection();
                 });
 
