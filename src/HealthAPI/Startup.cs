@@ -147,11 +147,29 @@ namespace HealthAPI
             
             builder.StructuralTypes.First(t => t.ClrType == typeof(StepCount)).AddProperty(typeof(StepCount).GetProperty("Week"));
 
+            //app.UseMvc(route =>
+            //{
+            //    route.MapRoute(
+            //      name: "api",
+            //      template: "api/{controller=Home}/{action=Index}/{id?}"
+            //    );
+
+            //    //route.MapRoute(
+            //    //  name: "areas",
+            //    //  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+            //    //);
+            //});
+
             //Enabling OData routing.
             app.UseMvc(routeBuilder =>
                 {
+                    //routebuilder.Filter().Expand().Select().OrderBy().MaxTop(null).Count();
                     routeBuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
                     routeBuilder.EnableDependencyInjection();
+                    routeBuilder.MapRoute(
+                  name: "api",
+                  template: "api/{controller=Home}/{action=Index}/{id?}"
+                );
                 });
 
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));

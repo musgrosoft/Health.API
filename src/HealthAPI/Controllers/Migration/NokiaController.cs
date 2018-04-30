@@ -21,8 +21,8 @@ namespace HealthAPI.Controllers.Migration
         }
 
         // POST: api/AlcoholIntakes1
-        [HttpPost]
-        [Route("api/Nokia/Migrate")]
+        [HttpGet]
+     //   [Route("api/Nokia/Migrate")]
         public async Task<IActionResult> Migrate()
         {
 
