@@ -11,5 +11,7 @@ namespace HealthAPI.Models
         [Column(TypeName = "DateTime")]
         public DateTime DateTime { get; set; }
         public int? Units { get; set; }
+        [NotMapped]
+        public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
     }
 }
