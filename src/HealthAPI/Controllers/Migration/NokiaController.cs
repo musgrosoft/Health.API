@@ -19,6 +19,12 @@ namespace HealthAPI.Controllers
     [Route("api/Nokia")]
     public class NokiaController : Controller
     {
+        private readonly HealthContext _context;
+
+        public NokiaController(HealthContext context)
+        {
+            _context = context;
+        }
 
         // POST: api/AlcoholIntakes1
         [HttpPost]
@@ -31,7 +37,7 @@ namespace HealthAPI.Controllers
                 var logger = new Logger();
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
-                var healthService = HealthServiceFactory.Build(logger);
+                var healthService = HealthServiceFactory.Build( logger);
 
                 var nokiaMigrator = new NokiaMigrator(healthService, logger, new NokiaClient());
 

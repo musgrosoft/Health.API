@@ -9,6 +9,10 @@
 
 
   <ItemGroup>
+    <Folder Include="Areas\MigrationArea\Controllers\" />
+    <Folder Include="Areas\MigrationArea\Data\" />
+    <Folder Include="Areas\MigrationArea\Models\" />
+    <Folder Include="Areas\MigrationArea\Views\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

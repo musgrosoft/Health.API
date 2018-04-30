@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Amazon.Lambda.Core;
 using Newtonsoft.Json;
 using Services.MyHealth.Domain;
 using Utils;
