@@ -40,7 +40,7 @@ namespace HealthAPI.Controllers.Migration
                 var oAuthService = new OAuthService(new OAuthTokenRepository(new Config(), logger));
                 var v = await oAuthService.GetFitbitRefreshToken();
                 logger.Log("fitbit refresh token is " + v);
-                return Ok("fitbit refresh token is " + v);
+              //  return Ok("fitbit refresh token is " + v);
 
                 var fitbitAuthenticator = new FitbitAuthenticator(oAuthService);
                 var fitbitAccessToken = await fitbitAuthenticator.GetAccessToken();
