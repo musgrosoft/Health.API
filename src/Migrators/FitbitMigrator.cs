@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using Services.Fitbit;
 using Services.MyHealth;
+using Utils;
 
 namespace Migrators
 {
     public class FitbitMigrator
     {
-        private readonly ILambdaLogger _logger;
+        private readonly ILogger _logger;
         private HealthService _healthService;
         private FitbitClient _fitbitClient;
 
@@ -19,24 +20,21 @@ namespace Migrators
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
-        public FitbitMigrator(ILambdaLogger logger)
+        public FitbitMigrator(ILogger logger)
         {
             _logger = logger;
         }
-
-
-        public FitbitMigrator(HealthService healthService, ILambdaLogger logger, FitbitClient fitbitClient)
+        
+        public FitbitMigrator(HealthService healthService, ILogger logger, FitbitClient fitbitClient)
         {
             _healthService = healthService;
             _logger = logger;
             _fitbitClient = fitbitClient;
         }
-
-
+        
         public async Task MigrateStepData()
         {
-            var latestStep = await _healthService.GetLatestStepData();
-            var latestStepDate = latestStep?.DateTime ?? MIN_FITBIT_DATE;
+            var latestStepDate = _healthService.GetLatestStepCountDate();
 
             _logger.Log($"Latest Step record has a date of : {latestStepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
@@ -49,8 +47,8 @@ namespace Migrators
 
                 if (dailySteps != null)
                 {
-                    _logger.Log($"Saving Step Data for {date:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailySteps.Steps} steps");
-                    await _healthService.SaveStepCount(dailySteps);
+                    _logger.Log($"Saving Step Data for {date:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailySteps.Count} steps");
+                    await _healthService.UpsertStepCount(dailySteps);
 
                 }
                 else
@@ -63,8 +61,7 @@ namespace Migrators
 
         public async Task MigrateActivity()
         {
-            var latestActivity = await _healthService.GetLatestDailyActivity();
-            var latestActivityDate = latestActivity?.DateTime ?? MIN_FITBIT_DATE;
+            var latestActivityDate  = _healthService.GetLatestDailyActivityDate();
 
             _logger.Log($"Latest Activity record has a date of : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
@@ -86,8 +83,7 @@ namespace Migrators
 
         public async Task MigrateRestingHeartRateData()
         {
-            var latestRestingHeartRate = await _healthService.GetLatestRestingHeartRate();
-            var latestRestingHeartRateDate = latestRestingHeartRate?.DateTime ?? MIN_FITBIT_DATE;
+            var latestRestingHeartRateDate = _healthService.GetLatestRestingHeartRateDate();
 
             _logger.Log($"Latest Resting Heart Rate record has a date of : {latestRestingHeartRateDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
@@ -119,9 +115,7 @@ namespace Migrators
             //var latestHeartZonesDate = new DateTime(2017, 12, 1);
             try
             {
-               var latestHeartZones = await _healthService.GetLatestHeartRateDailySummary() ;
-                var latestHeartZonesDate = latestHeartZones?.DateTime ?? MIN_FITBIT_DATE;
-             
+               var latestHeartZonesDate = _healthService.GetLatestHeartRateDailySummaryDate();
 
                 _logger.Log(
                     $"Latest Heart Zone Data has a date of : {latestHeartZonesDate:dd-MMM-yyyy HH:mm:ss (ddd)}");

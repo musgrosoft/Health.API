@@ -5,17 +5,16 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Services.Fitbit.Domain;
 using System.Threading.Tasks;
-using Amazon.Lambda.Core;
-using Amazon.Runtime.Internal.Util;
-using Services.MyHealth.Domain;
+using Repositories.Models;
 using Utils;
+
 
 namespace Services.Fitbit
 {
     public class FitbitClient
     {
         
-        private readonly ILambdaLogger _logger;
+        private readonly ILogger _logger;
         private readonly string _accessToken;
         private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 //        private static string theAccessToken;
@@ -23,7 +22,7 @@ namespace Services.Fitbit
 
         private IConfig _config { get; }
 
-        public FitbitClient(IConfig config, ILambdaLogger logger, string accessToken)
+        public FitbitClient(IConfig config, ILogger logger, string accessToken)
         {
         
             _logger = logger;
@@ -35,16 +34,16 @@ namespace Services.Fitbit
 
         
 
-        public async Task<DailySteps> GetDailySteps(DateTime date)
+        public async Task<StepCount> GetDailySteps(DateTime date)
         {
             var fitbitDailyActivity = await GetActivity(date);
 
             if (fitbitDailyActivity != null)
             {
-                return  new DailySteps
+                return  new StepCount
                 {
                     DateTime = date,
-                    Steps = fitbitDailyActivity.summary.steps
+                    Count = fitbitDailyActivity.summary.steps
                 };
             }
 
@@ -114,13 +113,13 @@ namespace Services.Fitbit
             return restingHeartRates;
         }
 
-        public async Task<IEnumerable<SmallHeartRateSummary>> GetMonthOfHeartZones(DateTime date)
+        public async Task<IEnumerable<HeartRateZoneSummary>> GetMonthOfHeartZones(DateTime date)
         {
 
             var heartSummaries = await GetMonthOfHeartSummaries(date);
 
 
-            var smallHeartRateSummaries = heartSummaries.activitiesHeart.Select(x => new SmallHeartRateSummary
+            var smallHeartRateSummaries = heartSummaries.activitiesHeart.Select(x => new HeartRateZoneSummary
             {
                 DateTime = x.dateTime,
                 RestingHeartRate = x.value.restingHeartRate,

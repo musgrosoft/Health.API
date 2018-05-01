@@ -13,9 +13,9 @@ namespace Repositories.OAuth
     public class OAuthTokenRepository : IOAuthTokenRepository
     {
         private readonly IConfig _config;
-        private readonly ILambdaLogger _logger;
+        private readonly ILogger _logger;
         
-        public OAuthTokenRepository(IConfig config, ILambdaLogger logger)
+        public OAuthTokenRepository(IConfig config, ILogger logger)
         {
             _config = config;
             _logger = logger;
