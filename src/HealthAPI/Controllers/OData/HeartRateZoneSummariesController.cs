@@ -51,7 +51,7 @@ namespace HealthAPI.Controllers.OData
                 if (existingItem != null)
                 {
                     existingItem.DateTime = heartRateDailySummaries.DateTime;
-                    existingItem.RestingHeartRate = heartRateDailySummaries.RestingHeartRate;
+                    //existingItem.RestingHeartRate = heartRateDailySummaries.RestingHeartRate;
                     existingItem.OutOfRangeMinutes = heartRateDailySummaries.OutOfRangeMinutes;
                     existingItem.FatBurnMinutes = heartRateDailySummaries.FatBurnMinutes;
                     existingItem.CardioMinutes = heartRateDailySummaries.CardioMinutes;

@@ -16,7 +16,6 @@ namespace Services.MyHealth
         private readonly IConfig _config;
         private readonly ILogger _logger;
         private readonly HealthContext _healthContext;
-        private const string HEALTH_API_BASE_URL = "http://musgrosoft-health-api.azurewebsites.net";
 
         private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
         private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
@@ -112,48 +111,58 @@ namespace Services.MyHealth
 
             await _healthContext.SaveChangesAsync();
         }
-
-        public async Task SaveDailyActivity(DailyActivity dailyActivity)
+        
+        public async Task UpsertDailyActivity(DailyActivity dailyActivity)
         {
-            var path = $"{HEALTH_API_BASE_URL}/api/DailyActivities";
-            var httpClient = new HttpClient();
-
-            HttpResponseMessage response = await httpClient.PostAsync(path, new StringContent(JsonConvert.SerializeObject(dailyActivity), Encoding.UTF8, "application/json"));
-
-            if (!response.IsSuccessStatusCode)
+            var existingDailyActivity = await _healthContext.DailyActivitySummaries.FindAsync(dailyActivity.DateTime);
+            if (existingDailyActivity != null)
             {
-                throw new Exception($"Error saving activity non ok status code : {path} , stsus code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
+                existingDailyActivity.SedentaryMinutes = dailyActivity.SedentaryMinutes;
+                existingDailyActivity.LightlyActiveMinutes = dailyActivity.LightlyActiveMinutes;
+                existingDailyActivity.FairlyActiveMinutes = dailyActivity.FairlyActiveMinutes;
+                existingDailyActivity.VeryActiveMinutes = dailyActivity.VeryActiveMinutes;
             }
-        }
-
-        public async Task SaveRestingHeartRate(RestingHeartRate restingHeartRate)
-        {
-            var path = $"{HEALTH_API_BASE_URL}/api/RestingHeartRates";
-            var httpClient = new HttpClient();
-
-            HttpResponseMessage response = await httpClient.PostAsync(path, new StringContent(JsonConvert.SerializeObject(restingHeartRate), Encoding.UTF8, "application/json"));
-
-            if (!response.IsSuccessStatusCode)
+            else
             {
-                throw new Exception($"Error saving resting heart rate non ok status code : {path} , status code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
-            }
-        }
-
-        public async Task SaveFitbitDailyHeartSummaryDataAsync(HeartRateZoneSummary dailyHeartSummaryData)
-        {
-            var path = $"{HEALTH_API_BASE_URL}/api/HeartRateDailySummaries";
-            var httpClient = new HttpClient();
-
-            HttpResponseMessage response = await httpClient.PostAsync(path, new StringContent(JsonConvert.SerializeObject(dailyHeartSummaryData), Encoding.UTF8, "application/json"));
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error saving FitbitDailyHeartSummary non ok status code : {path} , status code is {response.StatusCode} , content is {await response.Content.ReadAsStringAsync()} ");
+                await _healthContext.DailyActivitySummaries.AddAsync(dailyActivity);
             }
 
+            await _healthContext.SaveChangesAsync();
         }
 
+        public async Task UpsertRestingHeartRate(RestingHeartRate restingHeartRate)
+        {
+            var existingRestingHeartRate = await _healthContext.RestingHeartRates.FindAsync(restingHeartRate.DateTime);
+            if (existingRestingHeartRate != null)
+            {
+                existingRestingHeartRate.Beats = restingHeartRate.Beats;
+            }
+            else
+            {
+                await _healthContext.RestingHeartRates.AddAsync(restingHeartRate);
+            }
 
+            await _healthContext.SaveChangesAsync();
+        }
+        
+        public async Task UpsertDailyHeartSummary(HeartRateZoneSummary dailyHeartZoneSummary)
+        {
+            var existingHeartRateZoneSummary = await _healthContext.HeartRateDailySummaries.FindAsync(dailyHeartZoneSummary.DateTime);
+            if (existingHeartRateZoneSummary != null)
+            {
+                existingHeartRateZoneSummary.OutOfRangeMinutes = dailyHeartZoneSummary.OutOfRangeMinutes;
+                existingHeartRateZoneSummary.FatBurnMinutes = dailyHeartZoneSummary.FatBurnMinutes;
+                existingHeartRateZoneSummary.CardioMinutes = dailyHeartZoneSummary.CardioMinutes;
+                existingHeartRateZoneSummary.PeakMinutes = dailyHeartZoneSummary.PeakMinutes;
+
+            }
+            else
+            {
+                await _healthContext.HeartRateDailySummaries.AddAsync(dailyHeartZoneSummary);
+            }
+
+            await _healthContext.SaveChangesAsync();
+        }
 
         public async Task AddMovingAveragesToWeights(int period = 10)
         {

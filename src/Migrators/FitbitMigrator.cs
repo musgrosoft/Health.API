@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Amazon.Lambda.Core;
+using Repositories.Models;
 using Services.Fitbit;
 using Services.MyHealth;
 using Utils;
@@ -13,9 +14,7 @@ namespace Migrators
         private readonly ILogger _logger;
         private HealthService _healthService;
         private FitbitClient _fitbitClient;
-
-        private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
-
+        
 
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
         private const int SEARCH_DAYS_PREVIOUS = 10;
@@ -76,7 +75,7 @@ namespace Migrators
                 if (dailyActivity != null)
                 {
                     _logger.Log($"Saving Activity Data for {date:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailyActivity.SedentaryMinutes} sedentary minutes, {dailyActivity.LightlyActiveMinutes} lightly active minutes, {dailyActivity.FairlyActiveMinutes} fairly active minutes, {dailyActivity.VeryActiveMinutes} very active minutes.");
-                    await _healthService.SaveDailyActivity(dailyActivity);
+                    await _healthService.UpsertDailyActivity(dailyActivity);
                 }
             }
         }
@@ -104,7 +103,7 @@ namespace Migrators
                     foreach (var restingHeartRate in restingHeartRates)
                     {
                         _logger.Log($"About to save Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
-                        await _healthService.SaveRestingHeartRate(restingHeartRate);
+                        await _healthService.UpsertRestingHeartRate(restingHeartRate);
                     }
                 }
             }
@@ -137,30 +136,20 @@ namespace Migrators
 
                         _logger.Log($"Found {heartSummaries.Count()} Heart Zone Data records.");
 
-                        foreach (var smallHeartRateSummary in heartSummaries)
+                        foreach (var heartSummary in heartSummaries)
                         {
-                            //if (activityHeart.restingHeartRate != 0)
-                            //{
-                            //var smallHeartRateSummary = new SmallHeartRateSummary
-                            //{
-                            //    DateTime = DateTime.Parse(activityHeart.DateTime),
-                            //    RestingHeartRate = activityHeart.value.restingHeartRate,
-                            //    OutOfRangeMinutes = activityHeart.value.heartRateZones.First(x => x.name == "Out of Range").minutes,
-                            //    FatBurnMinutes = activityHeart.value.heartRateZones.First(x => x.name == "Fat Burn").minutes,
-                            //    CardioMinutes = activityHeart.value.heartRateZones.First(x => x.name == "Cardio").minutes,
-                            //    PeakMinutes = activityHeart.value.heartRateZones.First(x => x.name == "Peak").minutes
-                            //};
+                            await _healthService.UpsertDailyHeartSummary(heartSummary);
 
-                            if (smallHeartRateSummary.RestingHeartRate != 0)
-                            {
-                                _logger.Log($"Saving heart rate summary for {smallHeartRateSummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)}, {smallHeartRateSummary.RestingHeartRate}");
-                                await _healthService.SaveFitbitDailyHeartSummaryDataAsync(smallHeartRateSummary);
-                            }
+                            //if (smallHeartRateSummary.RestingHeartRate != 0)
+                            //{
+                            //    _logger.Log($"Saving heart rate summary for {smallHeartRateSummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)}, {smallHeartRateSummary.RestingHeartRate}");
+                            //    await _healthService.SaveFitbitDailyHeartSummaryDataAsync(smallHeartRateSummary);
                             //}
-                            else
-                            {
-                                _logger.Log($"No resting hear rate data found for {smallHeartRateSummary.DateTime}");
-                            }
+                            ////}
+                            //else
+                            //{
+                            //    _logger.Log($"No resting hear rate data found for {smallHeartRateSummary.DateTime}");
+                            //}
                         }
                     }
                 }

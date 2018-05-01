@@ -122,7 +122,7 @@ namespace Services.Fitbit
             var smallHeartRateSummaries = heartSummaries.activitiesHeart.Select(x => new HeartRateZoneSummary
             {
                 DateTime = x.dateTime,
-                RestingHeartRate = x.value.restingHeartRate,
+               // RestingHeartRate = x.value.restingHeartRate,
                 OutOfRangeMinutes = x.value.heartRateZones.First(y => y.name == "Out of Range").minutes,
                 FatBurnMinutes = x.value.heartRateZones.First(y => y.name == "Fat Burn").minutes,
                 CardioMinutes = x.value.heartRateZones.First(y => y.name == "Cardio").minutes,
