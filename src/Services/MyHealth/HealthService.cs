@@ -95,12 +95,11 @@ namespace Services.MyHealth
                 }
                 else
                 {
-                    await _healthContext.AddAsync(weight);
+                    _healthContext.Add(weight);
                 }
             }
-            //concurrency problem?, what if item not yet added before running addmovingaverages
-
-            await AddMovingAveragesToWeights();
+            
+            AddMovingAveragesToWeights();
 
             await _healthContext.SaveChangesAsync();
         }
@@ -210,7 +209,7 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
 
-        private async Task AddMovingAveragesToWeights(int period = 10)
+        private void AddMovingAveragesToWeights(int period = 10)
         {
             var orderedWeights = _healthContext.Weights.OrderBy(x => x.DateTime).ToList();
 

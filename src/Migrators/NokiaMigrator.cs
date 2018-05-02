@@ -39,6 +39,8 @@ namespace Migrators
             var weights = scaleMeasurements.Select(x => new Weight { DateTime = x.DateTime, Kg = x.Kg, FatRatioPercentage = x.FatRatioPercentage});
 
             await _healthService.UpsertWeights(weights);
+
+     //       await _healthService.AddMovingAveragesToBloodPressures();
         }
 
         public async Task MigrateBloodPressures()
