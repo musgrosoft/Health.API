@@ -51,44 +51,6 @@ namespace HealthAPI.Controllers.OData
             return weeklyStepCounts.AsQueryable();
         }
 
-        [HttpPost]
-        [Route("api/Steps")]
-        public IActionResult Create([FromBody] StepCount stepCount)
-        {
-            try
-            {
-                if (stepCount == null)
-                {
-                    return BadRequest();
-                }
-
-                var existingItem = _context.StepCounts.FirstOrDefault(x => x.DateTime == stepCount.DateTime);
-
-                if (existingItem != null)
-                {
-                    existingItem.DateTime = stepCount.DateTime;
-                    existingItem.Count = stepCount.Count;
-
-                    _context.StepCounts.Update(existingItem);
-                }
-                else
-                {
-                    _context.StepCounts.Add(stepCount);
-                }
-
-
-                _context.SaveChanges();
-
-                //return CreatedAtRoute("GetTodo", weight);
-                return Created("/bum", stepCount);
-                //return new NoContentResult();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-
-        }
 
     }
 }

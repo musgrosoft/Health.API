@@ -39,21 +39,9 @@ namespace Migrators
 
             _logger.Log($"Found {scaleMeasurements.Count()} weight records.");
 
-            foreach (var dataScaleMeasure in scaleMeasurements)
-            {
-                var wsData = new Weight
-                {
-                    DateTime = dataScaleMeasure.DateTime,
-                    Kg = dataScaleMeasure.Kg,
-                    FatRatioPercentage = dataScaleMeasure.FatRatioPercentage
-                };
+            var weights = scaleMeasurements.Select(x => new Weight { DateTime = x.DateTime, Kg = x.Kg, FatRatioPercentage = x.FatRatioPercentage});
 
-                _logger.Log($"About to save Weight record : {wsData.DateTime:yy-MM-dd} , {wsData.Kg} Kg , {wsData.FatRatioPercentage} % Fat");
-
-                await _healthService.UpsertWeight(wsData);
-            }
-
-            await _healthService.AddMovingAveragesToWeights();
+            await _healthService.UpsertWeights(weights);
         }
 
         public async Task MigrateBloodPressures()

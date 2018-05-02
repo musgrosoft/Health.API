@@ -65,19 +65,43 @@ namespace Services.MyHealth
             return latestDate ?? MIN_FITBIT_DATE;
         }
         
-        public async Task UpsertWeight(Weight weight)
-        {
-            var existingWeight = await _healthContext.Weights.FindAsync(weight.DateTime);
-            if (existingWeight != null)
-            {
-                existingWeight.Kg = weight.Kg;
-                existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
-            }
-            else
-            {
-                await _healthContext.AddAsync(weight);
-            }
+        //public async Task UpsertWeight(Weight weight)
+        //{
+        //    var existingWeight = await _healthContext.Weights.FindAsync(weight.DateTime);
+        //    if (existingWeight != null)
+        //    {
+        //        existingWeight.Kg = weight.Kg;
+        //        existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
+        //    }
+        //    else
+        //    {
+        //        await _healthContext.AddAsync(weight);
+        //    }
             
+        //    await _healthContext.SaveChangesAsync();
+        //}
+
+        public async Task UpsertWeights(IEnumerable<Weight> weights)
+        {
+            foreach (var weight in weights)
+            {
+                _logger.Log($"About to save Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+
+                var existingWeight = await _healthContext.Weights.FindAsync(weight.DateTime);
+                if (existingWeight != null)
+                {
+                    existingWeight.Kg = weight.Kg;
+                    existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
+                }
+                else
+                {
+                    await _healthContext.AddAsync(weight);
+                }
+            }
+            //concurrency problem?, what if item not yet added before running addmovingaverages
+
+            await AddMovingAveragesToWeights();
+
             await _healthContext.SaveChangesAsync();
         }
 
@@ -164,7 +188,7 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
 
-        public async Task AddMovingAveragesToWeights(int period = 10)
+        private async Task AddMovingAveragesToWeights(int period = 10)
         {
             var orderedWeights = _healthContext.Weights.OrderBy(x => x.DateTime).ToList();
 
@@ -187,7 +211,7 @@ namespace Services.MyHealth
 
             }
 
-            await _healthContext.SaveChangesAsync();
+            
         }
 
 
@@ -226,6 +250,37 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
 
+
+        public async Task AddMovingAveragesToRestingHeartRates(int period = 10)
+        {
+                var heartRates = _healthContext.RestingHeartRates.OrderBy(x => x.DateTime).ToList();
+
+                for (int i = 0; i < heartRates.Count(); i++)
+                {
+                    if (i >= period - 1)
+                    {
+                        decimal total = 0;
+                        for (int x = i; x > (i - period); x--)
+                            total += heartRates[x].Beats;
+                        decimal average = total / period;
+                        // result.Add(series.Keys[i], average);
+                        heartRates[i].MovingAverageBeats = average;
+                    }
+                    else
+                    {
+                        //weights[i].MovingAverageKg = weights[i].Kg;
+                        heartRates[i].MovingAverageBeats = null;
+                    }
+
+                   
+
+                }
+            await _healthContext.SaveChangesAsync();
+
+
+            
+
+        }
 
 
 

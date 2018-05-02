@@ -107,6 +107,8 @@ namespace Migrators
                     }
                 }
             }
+
+            await _healthService.AddMovingAveragesToRestingHeartRates();
         }
 
         public async Task MigrateHeartZoneData()
