@@ -27,7 +27,7 @@ namespace HealthAPI.Controllers.OData
         }
 
         [HttpGet]
-        [Route("api/Steps/GroupByWeek")]
+        [Route("odata/StepCounts/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<StepCount> GetByWeek()
         {
