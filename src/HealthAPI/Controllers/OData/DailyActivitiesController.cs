@@ -28,7 +28,7 @@ namespace HealthAPI.Controllers.OData
 
 
         [HttpGet]
-        [Route("api/DailyActivities/GroupByWeek")]
+        [Route("odata/DailyActivities/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<DailyActivity> GetByWeek()
         {
