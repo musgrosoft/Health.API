@@ -105,22 +105,44 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
 
-        public async Task UpsertBloodPressure(BloodPressure bloodPressure)
+//        public async Task UpsertBloodPressure(BloodPressure bloodPressure)
+//        {
+//            var existingBloodPressure = await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
+//            if (existingBloodPressure != null)
+//            {
+//                existingBloodPressure.Diastolic = bloodPressure.Diastolic;
+//                existingBloodPressure.Systolic = bloodPressure.Systolic;
+//            }
+//            else
+//            {
+//                await _healthContext.BloodPressures.AddAsync(bloodPressure);
+//            }
+//
+//            await _healthContext.SaveChangesAsync();
+//        }
+
+
+        public async Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
-            var existingBloodPressure = await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
-            if (existingBloodPressure != null)
+            foreach (var bloodPressure in bloodPressures)
             {
-                existingBloodPressure.Diastolic = bloodPressure.Diastolic;
-                existingBloodPressure.Systolic = bloodPressure.Systolic;
-            }
-            else
-            {
-                await _healthContext.BloodPressures.AddAsync(bloodPressure);
+                _logger.Log($"About to save Blood Pressure record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
+
+                var existingBloodPressure = await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
+                if (existingBloodPressure != null)
+                {
+                    existingBloodPressure.Diastolic = bloodPressure.Diastolic;
+                    existingBloodPressure.Systolic = bloodPressure.Systolic;
+                }
+                else
+                {
+                    await _healthContext.BloodPressures.AddAsync(bloodPressure);
+                }
             }
 
             await _healthContext.SaveChangesAsync();
         }
-        
+
         public async Task UpsertStepCount(StepCount stepCount)
         {
             var existingStepCount = await _healthContext.StepCounts.FindAsync(stepCount.DateTime);

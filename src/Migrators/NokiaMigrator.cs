@@ -28,15 +28,12 @@ namespace Migrators
         public async Task MigrateWeights()
         {
             var latestWeightDate  = _healthService.GetLatestWeightDate();
-
             _logger.Log($"Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var getDataFromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-
             _logger.Log($"Retrieving Weight records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var scaleMeasurements = await _nokiaClient.GetScaleMeasures(getDataFromDate);
-
             _logger.Log($"Found {scaleMeasurements.Count()} weight records.");
 
             var weights = scaleMeasurements.Select(x => new Weight { DateTime = x.DateTime, Kg = x.Kg, FatRatioPercentage = x.FatRatioPercentage});
@@ -47,30 +44,22 @@ namespace Migrators
         public async Task MigrateBloodPressures()
         {
             var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate();
-
             _logger.Log($"Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var getDataFromDate = latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-
             _logger.Log($"Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var bloodPressures = await _nokiaClient.GetBloodPressures(getDataFromDate);
-
             _logger.Log($"Found {bloodPressures.Count()} Blood Pressure records.");
 
-            foreach (var bloodPressure in bloodPressures)
+            var bps = bloodPressures.Select(x => new BloodPressure
             {
-                var bpData = new BloodPressure
-                {
-                    DateTime = bloodPressure.DateTime,
-                    Diastolic = (int)bloodPressure.Diastolic,
-                    Systolic = (int)bloodPressure.Systolic
-                };
-
-                _logger.Log($"About to save Blood Pressure record : {bpData.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bpData.Diastolic} mmHg Diastolic , {bpData.Systolic} mmHg Systolic");
-
-                await _healthService.UpsertBloodPressure(bpData);
-            }
+                DateTime = x.DateTime,
+                Diastolic = (int)x.Diastolic,
+                Systolic = (int)x.Systolic
+            });
+            
+            await _healthService.UpsertBloodPressures(bps);
 
             await _healthService.AddMovingAveragesToBloodPressures();
         }
