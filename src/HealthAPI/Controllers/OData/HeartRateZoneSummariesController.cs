@@ -28,7 +28,7 @@ namespace HealthAPI.Controllers.OData
 
         // GET api/HeartRateDailySummaries
         [HttpGet]
-        [Route("api/HeartRateDailySummaries/GroupByWeek")]
+        [Route("odata/HeartRateDailySummaries/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateZoneSummary> GetByWeek()
         {
