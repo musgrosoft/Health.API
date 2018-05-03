@@ -31,9 +31,7 @@ namespace HealthAPI.Controllers.OData
         [Route("odata/HeartRateDailySummaries/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateZoneSummary> GetByWeek()
-        {
-            return _context.HeartRateDailySummaries.OrderBy(x => x.DateTime);
-            
+        {   
             var dailyHeartZones = _context.HeartRateDailySummaries;
 
             var weekGroups = dailyHeartZones.GroupBy(x => x.Week);
