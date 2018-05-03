@@ -33,6 +33,28 @@ namespace HealthAPI.Controllers.OData
         public IEnumerable<HeartRateZoneSummary> GetByWeek()
         {
             return _context.HeartRateDailySummaries.OrderBy(x => x.DateTime);
+            
+            var dailyHeartZones = _context.HeartRateDailySummaries;
+
+            var weekGroups = dailyHeartZones.GroupBy(x => x.Week);
+
+            var weeklyHeartZones = new List<HeartRateZoneSummary>();
+            foreach (var group in weekGroups)
+            {
+                var heartZone = new HeartRateZoneSummary
+                {
+                    DateTime = group.Key,
+                    OutOfRangeMinutes = group.Sum(x => x.OutOfRangeMinutes),
+                    FatBurnMinutes = group.Sum(x => x.FatBurnMinutes),
+                    CardioMinutes = group.Sum(x => x.CardioMinutes),
+                    PeakMinutes = group.Sum(x => x.PeakMinutes)
+
+                };
+
+                weeklyHeartZones.Add(heartZone);
+            }
+
+            return weeklyHeartZones.AsQueryable();
         }
 
 

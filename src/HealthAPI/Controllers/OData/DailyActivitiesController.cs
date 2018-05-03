@@ -34,7 +34,7 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
-            var weekGroups = dailyActivities.GroupBy(x => x.DateTime.AddDays(-(int)x.DateTime.DayOfWeek));
+            var weekGroups = dailyActivities.GroupBy(x => x.Week);
 
 
             var weeklyActivities = new List<DailyActivity>();
