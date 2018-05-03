@@ -11,7 +11,7 @@ using Utils;
 
 namespace Services.Fitbit
 {
-    public class FitbitClient
+    public class FitbitClient : IFitbitClient
     {
         
         private readonly ILogger _logger;

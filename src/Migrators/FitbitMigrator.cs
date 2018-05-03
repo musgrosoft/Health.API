@@ -10,8 +10,8 @@ namespace Migrators
     public class FitbitMigrator
     {
         private readonly ILogger _logger;
-        private HealthService _healthService;
-        private FitbitClient _fitbitClient;
+        private IHealthService _healthService;
+        private IFitbitClient _fitbitClient;
         
 
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
@@ -22,7 +22,7 @@ namespace Migrators
             _logger = logger;
         }
         
-        public FitbitMigrator(HealthService healthService, ILogger logger, FitbitClient fitbitClient)
+        public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitClient fitbitClient)
         {
             _healthService = healthService;
             _logger = logger;
