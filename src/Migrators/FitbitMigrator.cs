@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Amazon.Lambda.Core;
-using Repositories.Models;
 using Services.Fitbit;
 using Services.MyHealth;
 using Utils;
@@ -66,7 +64,7 @@ namespace Migrators
 
             latestActivityDate = latestActivityDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             _logger.Log($"Retrieving Activity records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
+            
             //for (DateTime date = DateTime.Now; date > DateTime.Now.AddDays(-100); date = date.AddDays(-1))
             for (DateTime date = latestActivityDate; date < DateTime.Now && date < latestActivityDate.AddDays(FITBIT_HOURLY_RATE_LIMIT); date = date.AddDays(1))
             {
@@ -113,7 +111,6 @@ namespace Migrators
 
         public async Task MigrateHeartZoneData()
         {
-            //var latestHeartZonesDate = new DateTime(2017, 12, 1);
             try
             {
                var latestHeartZonesDate = _healthService.GetLatestHeartRateDailySummaryDate();
@@ -138,21 +135,7 @@ namespace Migrators
 
                         _logger.Log($"Found {heartSummaries.Count()} Heart Zone Data records.");
 
-                        foreach (var heartSummary in heartSummaries)
-                        {
-                            await _healthService.UpsertDailyHeartSummary(heartSummary);
-
-                            //if (smallHeartRateSummary.RestingHeartRate != 0)
-                            //{
-                            //    _logger.Log($"Saving heart rate summary for {smallHeartRateSummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)}, {smallHeartRateSummary.RestingHeartRate}");
-                            //    await _healthService.SaveFitbitDailyHeartSummaryDataAsync(smallHeartRateSummary);
-                            //}
-                            ////}
-                            //else
-                            //{
-                            //    _logger.Log($"No resting hear rate data found for {smallHeartRateSummary.DateTime}");
-                            //}
-                        }
+                        await _healthService.UpsertDailyHeartSummaries(heartSummaries);
                     }
                 }
                 _logger.Log($"Finished that");

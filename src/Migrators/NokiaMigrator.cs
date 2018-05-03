@@ -63,7 +63,7 @@ namespace Migrators
             
             await _healthService.UpsertBloodPressures(bps);
 
-            await _healthService.AddMovingAveragesToBloodPressures();
+            
         }
 
      

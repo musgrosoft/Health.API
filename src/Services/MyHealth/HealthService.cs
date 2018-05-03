@@ -65,22 +65,6 @@ namespace Services.MyHealth
             return latestDate ?? MIN_FITBIT_DATE;
         }
         
-        //public async Task UpsertWeight(Weight weight)
-        //{
-        //    var existingWeight = await _healthContext.Weights.FindAsync(weight.DateTime);
-        //    if (existingWeight != null)
-        //    {
-        //        existingWeight.Kg = weight.Kg;
-        //        existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
-        //    }
-        //    else
-        //    {
-        //        await _healthContext.AddAsync(weight);
-        //    }
-            
-        //    await _healthContext.SaveChangesAsync();
-        //}
-
         public async Task UpsertWeights(IEnumerable<Weight> weights)
         {
             foreach (var weight in weights)
@@ -103,24 +87,7 @@ namespace Services.MyHealth
 
             await _healthContext.SaveChangesAsync();
         }
-
-//        public async Task UpsertBloodPressure(BloodPressure bloodPressure)
-//        {
-//            var existingBloodPressure = await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
-//            if (existingBloodPressure != null)
-//            {
-//                existingBloodPressure.Diastolic = bloodPressure.Diastolic;
-//                existingBloodPressure.Systolic = bloodPressure.Systolic;
-//            }
-//            else
-//            {
-//                await _healthContext.BloodPressures.AddAsync(bloodPressure);
-//            }
-//
-//            await _healthContext.SaveChangesAsync();
-//        }
-
-
+        
         public async Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
             foreach (var bloodPressure in bloodPressures)
@@ -135,9 +102,11 @@ namespace Services.MyHealth
                 }
                 else
                 {
-                    await _healthContext.BloodPressures.AddAsync(bloodPressure);
+                    _healthContext.BloodPressures.Add(bloodPressure);
                 }
             }
+
+            AddMovingAveragesToBloodPressures();
 
             await _healthContext.SaveChangesAsync();
         }
@@ -156,7 +125,8 @@ namespace Services.MyHealth
 
             await _healthContext.SaveChangesAsync();
         }
-        
+
+
         public async Task UpsertDailyActivity(DailyActivity dailyActivity)
         {
             var existingDailyActivity = await _healthContext.DailyActivitySummaries.FindAsync(dailyActivity.DateTime);
@@ -190,20 +160,22 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
         
-        public async Task UpsertDailyHeartSummary(HeartRateZoneSummary dailyHeartZoneSummary)
+        public async Task UpsertDailyHeartSummaries(IEnumerable<HeartRateZoneSummary> heartZoneSummaries)
         {
-            var existingHeartRateZoneSummary = await _healthContext.HeartRateDailySummaries.FindAsync(dailyHeartZoneSummary.DateTime);
-            if (existingHeartRateZoneSummary != null)
+            foreach (var heartRateZoneSummary in heartZoneSummaries)
             {
-                existingHeartRateZoneSummary.OutOfRangeMinutes = dailyHeartZoneSummary.OutOfRangeMinutes;
-                existingHeartRateZoneSummary.FatBurnMinutes = dailyHeartZoneSummary.FatBurnMinutes;
-                existingHeartRateZoneSummary.CardioMinutes = dailyHeartZoneSummary.CardioMinutes;
-                existingHeartRateZoneSummary.PeakMinutes = dailyHeartZoneSummary.PeakMinutes;
-
-            }
-            else
-            {
-                await _healthContext.HeartRateDailySummaries.AddAsync(dailyHeartZoneSummary);
+                 var existingHeartRateZoneSummary = await _healthContext.HeartRateDailySummaries.FindAsync(heartRateZoneSummary.DateTime);
+                if (existingHeartRateZoneSummary != null)
+                {
+                    existingHeartRateZoneSummary.OutOfRangeMinutes = heartRateZoneSummary.OutOfRangeMinutes;
+                    existingHeartRateZoneSummary.FatBurnMinutes = heartRateZoneSummary.FatBurnMinutes;
+                    existingHeartRateZoneSummary.CardioMinutes = heartRateZoneSummary.CardioMinutes;
+                    existingHeartRateZoneSummary.PeakMinutes = heartRateZoneSummary.PeakMinutes;
+                }
+                else
+                {
+                    _healthContext.HeartRateDailySummaries.Add(heartRateZoneSummary);
+                }
             }
 
             await _healthContext.SaveChangesAsync();
@@ -221,12 +193,11 @@ namespace Services.MyHealth
                     for (int x = i; x > (i - period); x--)
                         total += orderedWeights[x].Kg;
                     decimal average = total / period;
-                    // result.Add(series.Keys[i], average);
+
                     orderedWeights[i].MovingAverageKg = average;
                 }
                 else
                 {
-                    //weights[i].MovingAverageKg = weights[i].Kg;
                     orderedWeights[i].MovingAverageKg = null;
                 }
 
@@ -236,7 +207,7 @@ namespace Services.MyHealth
         }
 
 
-        public async Task AddMovingAveragesToBloodPressures(int period = 10)
+        public void AddMovingAveragesToBloodPressures(int period = 10)
         {
             var bloodPressures = _healthContext.BloodPressures.OrderBy(x => x.DateTime).ToList();
 
@@ -253,54 +224,41 @@ namespace Services.MyHealth
                     }
                     int averageSystolic = systolicTotal / period;
                     int averageDiastolic = diastolicTotal / period;
-                    // result.Add(series.Keys[i], average);
                     bloodPressures[i].MovingAverageSystolic = averageSystolic;
                     bloodPressures[i].MovingAverageDiastolic = averageDiastolic;
                 }
                 else
                 {
-                    //bloodPressures[i].MovingAverageSystolic = bloodPressures[i].Systolic;
-                    //bloodPressures[i].MovingAverageDiastolic = bloodPressures[i].Diastolic;
                     bloodPressures[i].MovingAverageSystolic = null;
                     bloodPressures[i].MovingAverageDiastolic = null;
                 }
-
-
             }
 
-            await _healthContext.SaveChangesAsync();
         }
 
 
         public async Task AddMovingAveragesToRestingHeartRates(int period = 10)
         {
-                var heartRates = _healthContext.RestingHeartRates.OrderBy(x => x.DateTime).ToList();
+            var heartRates = _healthContext.RestingHeartRates.OrderBy(x => x.DateTime).ToList();
 
-                for (int i = 0; i < heartRates.Count(); i++)
+            for (int i = 0; i < heartRates.Count(); i++)
+            {
+                if (i >= period - 1)
                 {
-                    if (i >= period - 1)
-                    {
-                        decimal total = 0;
-                        for (int x = i; x > (i - period); x--)
-                            total += heartRates[x].Beats;
-                        decimal average = total / period;
-                        // result.Add(series.Keys[i], average);
-                        heartRates[i].MovingAverageBeats = average;
-                    }
-                    else
-                    {
-                        //weights[i].MovingAverageKg = weights[i].Kg;
-                        heartRates[i].MovingAverageBeats = null;
-                    }
+                    decimal total = 0;
+                    for (int x = i; x > (i - period); x--)
+                        total += heartRates[x].Beats;
+                    decimal average = total / period;
 
-                   
-
+                    heartRates[i].MovingAverageBeats = average;
                 }
+                else
+                {
+                    heartRates[i].MovingAverageBeats = null;
+                }
+            }
+
             await _healthContext.SaveChangesAsync();
-
-
-            
-
         }
 
 
