@@ -51,8 +51,9 @@ namespace HealthAPI.Controllers.Migration
 
                 await fitbitMigrator.MigrateHeartZoneData();
                 await fitbitMigrator.MigrateStepData();
-                await fitbitMigrator.MigrateRestingHeartRateData();
                 await fitbitMigrator.MigrateActivity();
+                await fitbitMigrator.MigrateRestingHeartRateData();
+                
 
 
                 return Ok();
