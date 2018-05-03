@@ -11,7 +11,7 @@ using Utils;
 
 namespace Services.MyHealth
 {
-    public class HealthService
+    public class HealthService : IHealthService
     {   
         private readonly IConfig _config;
         private readonly ILogger _logger;

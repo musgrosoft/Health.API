@@ -10,7 +10,7 @@ using Utils;
 
 namespace Services.Nokia
 {
-    public class NokiaClient
+    public class NokiaClient : INokiaClient
     {
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
