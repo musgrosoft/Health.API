@@ -33,6 +33,7 @@ namespace HealthAPI.Controllers.Migration
             {
                 //var logger = context.Logger;
                 var logger = new Logger();
+                logger.Log("hello starting fitbit migrate");
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
                 var healthService = HealthServiceFactory.Build( logger, _context);
