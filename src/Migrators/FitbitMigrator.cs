@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Services.Fitbit;
 using Services.MyHealth;
 using Utils;
+using Exceptionless;
 
 namespace Migrators
 {
@@ -12,7 +13,8 @@ namespace Migrators
         private readonly ILogger _logger;
         private IHealthService _healthService;
         private IFitbitClient _fitbitClient;
-        
+        private ExceptionlessClient _client;
+
 
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
         private const int SEARCH_DAYS_PREVIOUS = 10;
@@ -24,6 +26,8 @@ namespace Migrators
         
         public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitClient fitbitClient)
         {
+            
+
             _healthService = healthService;
             _logger = logger;
             _fitbitClient = fitbitClient;

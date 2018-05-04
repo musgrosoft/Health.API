@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Repositories;
 using Repositories.Models;
+using Exceptionless;
 
 namespace HealthAPI
 {
