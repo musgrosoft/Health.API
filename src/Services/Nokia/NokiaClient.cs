@@ -45,7 +45,7 @@ namespace Services.Nokia
                         Kg = (Decimal)( weightMeasure.measures.First(x => x.type == WeightKgMeasureTypeId).value * Math.Pow(10, weightMeasure.measures.First(x => x.type == WeightKgMeasureTypeId).unit)),
 
                         //todo set if available
-                        FatRatioPercentage = (Decimal)(weightMeasure.measures.First(x => x.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, weightMeasure.measures.First(x => x.type == FatRatioPercentageMeasureTypeId).unit)),
+                       // FatRatioPercentage = (Decimal)(weightMeasure.measures.FirstOrDefault(x => x.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, weightMeasure.measures.FirstOrDefault(x => x.type == FatRatioPercentageMeasureTypeId).unit)),
                     });
                 }
 
