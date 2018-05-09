@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Services.Fitbit;
 using Services.MyHealth;
 using Utils;
+using Exceptionless;
 
 namespace Migrators
 {
@@ -12,7 +13,9 @@ namespace Migrators
         private readonly ILogger _logger;
         private IHealthService _healthService;
         private IFitbitClient _fitbitClient;
-        
+        private readonly ICalendar _calendar;
+        private ExceptionlessClient _client;
+
 
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
         private const int SEARCH_DAYS_PREVIOUS = 10;
@@ -22,11 +25,12 @@ namespace Migrators
             _logger = logger;
         }
         
-        public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitClient fitbitClient)
+        public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitClient fitbitClient, ICalendar  calendar)
         {
             _healthService = healthService;
             _logger = logger;
             _fitbitClient = fitbitClient;
+            _calendar = calendar;
         }
         
         public async Task MigrateStepData()
@@ -38,7 +42,7 @@ namespace Migrators
             var getDataFromDate = latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             _logger.Log($"Retrieving Step records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            for (DateTime date = getDataFromDate; date < DateTime.Now && date < getDataFromDate.AddDays(FITBIT_HOURLY_RATE_LIMIT); date = date.AddDays(1))
+            for (DateTime date = getDataFromDate; date < _calendar.Now() && date < getDataFromDate.AddDays(FITBIT_HOURLY_RATE_LIMIT); date = date.AddDays(1))
             {
                 var dailySteps = await _fitbitClient.GetDailySteps(date);
 
@@ -50,7 +54,7 @@ namespace Migrators
                 }
                 else
                 {
-
+                    _logger.Log($"WARNING Did not find Step Data for {date:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailySteps.Count} steps");
                 }
             }
         }

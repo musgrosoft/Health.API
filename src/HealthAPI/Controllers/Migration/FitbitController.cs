@@ -33,6 +33,7 @@ namespace HealthAPI.Controllers.Migration
             {
                 //var logger = context.Logger;
                 var logger = new Logger();
+                logger.Log("hello starting fitbit migrate");
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
                 var healthService = HealthServiceFactory.Build( logger, _context);
@@ -47,7 +48,7 @@ namespace HealthAPI.Controllers.Migration
 
                // var healthService = HealthServiceFactory.Build(logger);
 
-                var fitbitMigrator = new FitbitMigrator(healthService, logger, new FitbitClient(new Config(), logger, fitbitAccessToken));
+                var fitbitMigrator = new FitbitMigrator(healthService, logger, new FitbitClient(new Config(), logger, fitbitAccessToken), new Calendar());
 
                 await fitbitMigrator.MigrateHeartZoneData();
                 await fitbitMigrator.MigrateStepData();
