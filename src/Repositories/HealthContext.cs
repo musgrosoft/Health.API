@@ -11,7 +11,8 @@ namespace Repositories
         public virtual DbSet<Models.RestingHeartRate> RestingHeartRates { get; set; }
         public virtual DbSet<Models.AlcoholIntake> AlcoholIntakes { get; set; }
         public virtual DbSet<Models.Weight> Weights { get; set; }
- 
+        public virtual DbSet<Models.Run> Runs { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
