@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Services.Fitbit;
 using Services.MyHealth;
 using Utils;
-using Exceptionless;
 
 namespace Migrators
 {
@@ -13,10 +10,7 @@ namespace Migrators
         private readonly ILogger _logger;
         private IHealthService _healthService;
         private IFitbitClient _fitbitClient;
-        private readonly ICalendar _calendar;
-        private ExceptionlessClient _client;
-
-
+        
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
@@ -25,39 +19,35 @@ namespace Migrators
             _logger = logger;
         }
         
-        public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitClient fitbitClient, ICalendar  calendar)
+        public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitClient fitbitClient)
         {
             _healthService = healthService;
             _logger = logger;
             _fitbitClient = fitbitClient;
-            _calendar = calendar;
         }
         
         public async Task MigrateStepData()
         {
             var latestStepDate = _healthService.GetLatestStepCountDate();
-
             _logger.Log($"Latest Step record has a date of : {latestStepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             _logger.Log($"Retrieving Step records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            var dailySteps = await _fitbitClient.GetStepCounts(fromDate, _calendar.Now());
+            var dailySteps = await _fitbitClient.GetStepCounts(fromDate);
 
             await _healthService.UpsertStepCounts(dailySteps);
         }
-
-
+        
         public async Task MigrateActivity()
         {
             var latestActivityDate  = _healthService.GetLatestDailyActivityDate();
-
             _logger.Log($"Latest Activity record has a date of : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestActivityDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             _logger.Log($"Retrieving Activity records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            var dailyActivites = await _fitbitClient.GetDailyActivities(fromDate, _calendar.Now());
+            var dailyActivites = await _fitbitClient.GetDailyActivities(fromDate);
 
             await _healthService.UpsertDailyActivities(dailyActivites);
         }
@@ -65,14 +55,12 @@ namespace Migrators
         public async Task MigrateRestingHeartRateData()
         {
             var latestRestingHeartRateDate = _healthService.GetLatestRestingHeartRateDate();
-
             _logger.Log($"Latest Resting Heart Rate record has a date of : {latestRestingHeartRateDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var getDataFromDate = latestRestingHeartRateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-
             _logger.Log($"Retrieving Resting Heart Rate records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            var restingHeartRates = await _fitbitClient.GetRestingHeartRates(getDataFromDate, _calendar.Now());
+            var restingHeartRates = await _fitbitClient.GetRestingHeartRates(getDataFromDate);
 
             await _healthService.UpsertRestingHeartRates(restingHeartRates);
 
@@ -87,7 +75,7 @@ namespace Migrators
             var getDataFromDate = latestHeartZonesDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             _logger.Log($"Retrieving Heart Zone Data records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
                 
-            var heartSummaries = await _fitbitClient.GetHeartZones(getDataFromDate, _calendar.Now());
+            var heartSummaries = await _fitbitClient.GetHeartZones(getDataFromDate);
 
             await _healthService.UpsertDailyHeartSummaries(heartSummaries);
         }

@@ -16,7 +16,7 @@ namespace Migrators.Unit.Tests
         private Mock<ILogger> _logger;
         private Mock<IHealthService> _healthService;
         private FitbitMigrator _fitbitMigrator;
-        private Mock<ICalendar> _calendar;
+        
 
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
@@ -25,20 +25,19 @@ namespace Migrators.Unit.Tests
             _fitbitClient = new Mock<IFitbitClient>();
             _logger = new Mock<ILogger>();
             _healthService = new Mock<IHealthService>();
-            _calendar = new Mock<ICalendar>();
+        
 
-            _fitbitMigrator = new FitbitMigrator(_healthService.Object, _logger.Object, _fitbitClient.Object, _calendar.Object);
+            _fitbitMigrator = new FitbitMigrator(_healthService.Object, _logger.Object, _fitbitClient.Object);
         }
 
         [Fact]
         public async Task ShouldMigrateSteps()
         {
             var latestStepDate = new DateTime(2010, 12, 1);
-            var now = new DateTime(2010, 12, 4);
+            
             _healthService.Setup(x => x.GetLatestStepCountDate()).Returns(latestStepDate);
             _healthService.Setup(x => x.UpsertStepCounts(It.IsAny<IEnumerable<StepCount>>())).Returns(Task.CompletedTask);
 
-            _calendar.Setup(x => x.Now()).Returns(now);
 
             var stepCounts = new List<StepCount>
             {
@@ -53,7 +52,7 @@ namespace Migrators.Unit.Tests
 
             };
 
-            _fitbitClient.Setup(x => x.GetStepCounts(latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS), now)).Returns(Task.FromResult((IEnumerable<StepCount>)stepCounts));
+            _fitbitClient.Setup(x => x.GetStepCounts(latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<StepCount>)stepCounts));
 
             await _fitbitMigrator.MigrateStepData();
 

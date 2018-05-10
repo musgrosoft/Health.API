@@ -16,17 +16,20 @@ namespace Services.Fitbit
         
         private readonly ILogger _logger;
         private readonly string _accessToken;
+        private readonly ICalendar _calendar;
+
         private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 //        private static string theAccessToken;
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
 
         private IConfig _config { get; }
 
-        public FitbitClient(IConfig config, ILogger logger, string accessToken)
+        public FitbitClient(IConfig config, ILogger logger, string accessToken, ICalendar calendar)
         {
         
             _logger = logger;
             _accessToken = accessToken;
+            _calendar = calendar;
             _config = config;
         }
 
@@ -52,11 +55,11 @@ namespace Services.Fitbit
             return null;
         }
 
-        public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate)
         {
             var stepCounts = new List<StepCount>();
 
-            for (DateTime date = fromDate; date < toDate; date = date.AddDays(1))
+            for (DateTime date = fromDate; date < _calendar.Now(); date = date.AddDays(1))
             {
                 var dailySteps = await GetStepCount(date);
                 if (dailySteps != null)
@@ -70,12 +73,12 @@ namespace Services.Fitbit
 
 
 
-        public async Task<IEnumerable<DailyActivity>> GetDailyActivities(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<DailyActivity>> GetDailyActivities(DateTime fromDate)
         {
             var dailyActivities = new List<DailyActivity>();
 
             for (DateTime date = fromDate; 
-                date < toDate; 
+                date < _calendar.Now(); 
                 date = date.AddDays(1))
             {
                 var dailyActivity = await GetDailyActivity(date);
@@ -152,19 +155,19 @@ namespace Services.Fitbit
             return restingHeartRates;
         }
 
-        public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate)
         {
             var restingHeartRates = new List<RestingHeartRate>();
 
             for (DateTime dateTime = fromDate.AddMonths(1);
-                dateTime < toDate.AddMonths(1).AddDays(1);
+                dateTime < _calendar.Now().AddMonths(1).AddDays(1);
                 dateTime = dateTime.AddMonths(1))
             {
                 var monthRestingHeartRates = await GetMonthOfRestingHeartRates(dateTime);
 
                 if (monthRestingHeartRates != null)
                 {
-                    monthRestingHeartRates = restingHeartRates.Where(x => x.DateTime >= fromDate && x.DateTime <= toDate);
+                    monthRestingHeartRates = restingHeartRates.Where(x => x.DateTime >= fromDate && x.DateTime <= _calendar.Now());
 
                     restingHeartRates.AddRange(monthRestingHeartRates);
                 }
@@ -195,19 +198,19 @@ namespace Services.Fitbit
             return smallHeartRateSummaries;
         }
 
-        public async Task<IEnumerable<HeartRateZoneSummary>> GetHeartZones(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<HeartRateZoneSummary>> GetHeartZones(DateTime fromDate)
         {
             var heartSummaries = new List<HeartRateZoneSummary>();
 
             for (DateTime date = fromDate.AddMonths(1);
-                date < toDate.AddMonths(1).AddDays(1);
+                date < _calendar.Now().AddMonths(1).AddDays(1);
                 date = date.AddMonths(1))
             {
                 var monthHeartSummaries = await GetMonthOfHeartZones(date);
 
                 if (monthHeartSummaries != null)
                 {
-                    monthHeartSummaries = monthHeartSummaries.Where(x => x.DateTime >= fromDate && x.DateTime <= toDate);
+                    monthHeartSummaries = monthHeartSummaries.Where(x => x.DateTime >= fromDate && x.DateTime <= _calendar.Now());
 
                     heartSummaries.AddRange(monthHeartSummaries);
                 }
