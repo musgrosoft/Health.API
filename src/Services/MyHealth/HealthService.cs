@@ -82,7 +82,9 @@ namespace Services.MyHealth
                     _healthContext.Add(weight);
                 }
             }
-            
+
+            _healthContext.SaveChanges();
+
             AddMovingAveragesToWeights();
 
             await _healthContext.SaveChangesAsync();
@@ -105,6 +107,8 @@ namespace Services.MyHealth
                     _healthContext.BloodPressures.Add(bloodPressure);
                 }
             }
+
+            _healthContext.SaveChanges();
 
             AddMovingAveragesToBloodPressures();
 

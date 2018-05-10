@@ -16,7 +16,7 @@ namespace Utils
 
         public void Log(string message)
         {
-            _client.SubmitLog(message);
+           // _client.SubmitLog(message);
         }
     }
 }
