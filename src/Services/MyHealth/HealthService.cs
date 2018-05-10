@@ -159,20 +159,20 @@ namespace Services.MyHealth
         }
 
 
-        public async Task UpsertRestingHeartRate(RestingHeartRate restingHeartRate)
-        {
-            var existingRestingHeartRate = await _healthContext.RestingHeartRates.FindAsync(restingHeartRate.DateTime);
-            if (existingRestingHeartRate != null)
-            {
-                existingRestingHeartRate.Beats = restingHeartRate.Beats;
-            }
-            else
-            {
-                await _healthContext.RestingHeartRates.AddAsync(restingHeartRate);
-            }
+        //public async Task UpsertRestingHeartRate(RestingHeartRate restingHeartRate)
+        //{
+        //    var existingRestingHeartRate = await _healthContext.RestingHeartRates.FindAsync(restingHeartRate.DateTime);
+        //    if (existingRestingHeartRate != null)
+        //    {
+        //        existingRestingHeartRate.Beats = restingHeartRate.Beats;
+        //    }
+        //    else
+        //    {
+        //        await _healthContext.RestingHeartRates.AddAsync(restingHeartRate);
+        //    }
 
-            await _healthContext.SaveChangesAsync();
-        }
+        //    await _healthContext.SaveChangesAsync();
+        //}
 
         public async Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {

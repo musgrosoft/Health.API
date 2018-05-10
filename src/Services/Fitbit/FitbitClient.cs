@@ -68,6 +68,8 @@ namespace Services.Fitbit
             return stepCounts;
         }
 
+
+
         public async Task<IEnumerable<DailyActivity>> GetDailyActivities(DateTime fromDate, DateTime toDate)
         {
             var dailyActivities = new List<DailyActivity>();
@@ -152,17 +154,10 @@ namespace Services.Fitbit
 
         public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
         {
-            //for (DateTime dateTime = fromDate.AddMonths(1);
-            //    dateTime < DateTime.Now.AddMonths(1).AddDays(1);
-            //    dateTime = dateTime.AddMonths(1))
-            //{
-
-            //}
-
             var restingHeartRates = new List<RestingHeartRate>();
 
-            for (DateTime dateTime = fromDate;
-                dateTime < toDate;
+            for (DateTime dateTime = fromDate.AddMonths(1);
+                dateTime < toDate.AddMonths(1).AddDays(1);
                 dateTime = dateTime.AddMonths(1))
             {
                 var monthRestingHeartRates = await GetMonthOfRestingHeartRates(dateTime);
@@ -198,6 +193,27 @@ namespace Services.Fitbit
             
 
             return smallHeartRateSummaries;
+        }
+
+        public async Task<IEnumerable<HeartRateZoneSummary>> GetHeartZones(DateTime fromDate, DateTime toDate)
+        {
+            var heartSummaries = new List<HeartRateZoneSummary>();
+
+            for (DateTime date = fromDate.AddMonths(1);
+                date < toDate.AddMonths(1).AddDays(1);
+                date = date.AddMonths(1))
+            {
+                var monthHeartSummaries = await GetMonthOfHeartZones(date);
+
+                if (monthHeartSummaries != null)
+                {
+                    monthHeartSummaries = monthHeartSummaries.Where(x => x.DateTime >= fromDate && x.DateTime <= toDate);
+
+                    heartSummaries.AddRange(monthHeartSummaries);
+                }
+            }
+
+            return heartSummaries;
         }
 
         private async Task<FitBitActivity> GetMonthOfHeartSummaries(DateTime startDate)
