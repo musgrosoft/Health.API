@@ -39,10 +39,10 @@ namespace Migrators
 
             _logger.Log($"Latest Step record has a date of : {latestStepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            var getDataFromDate = latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            _logger.Log($"Retrieving Step records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            var fromDate = latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+            _logger.Log($"Retrieving Step records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            var dailySteps = await _fitbitClient.GetStepCounts(getDataFromDate, _calendar.Now());
+            var dailySteps = await _fitbitClient.GetStepCounts(fromDate, _calendar.Now());
 
             await _healthService.UpsertStepCounts(dailySteps);
         }
@@ -54,20 +54,12 @@ namespace Migrators
 
             _logger.Log($"Latest Activity record has a date of : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            latestActivityDate = latestActivityDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+            var fromDate = latestActivityDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             _logger.Log($"Retrieving Activity records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-            
-            //for (DateTime date = DateTime.Now; date > DateTime.Now.AddDays(-100); date = date.AddDays(-1))
-            for (DateTime date = latestActivityDate; date < DateTime.Now && date < latestActivityDate.AddDays(SEARCH_DAYS_PREVIOUS); date = date.AddDays(1))
-            {
-                var dailyActivity = await _fitbitClient.GetDailyActivity(date);
 
-                if (dailyActivity != null)
-                {
-                    _logger.Log($"Saving Activity Data for {date:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailyActivity.SedentaryMinutes} sedentary minutes, {dailyActivity.LightlyActiveMinutes} lightly active minutes, {dailyActivity.FairlyActiveMinutes} fairly active minutes, {dailyActivity.VeryActiveMinutes} very active minutes.");
-                    await _healthService.UpsertDailyActivity(dailyActivity);
-                }
-            }
+            var dailyActivites = await _fitbitClient.GetDailyActivities(fromDate, _calendar.Now());
+
+            await _healthService.UpsertDailyActivities(dailyActivites);
         }
 
         public async Task MigrateRestingHeartRateData()
@@ -80,23 +72,27 @@ namespace Migrators
 
             _logger.Log($"Retrieving Resting Heart Rate records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            for (DateTime dateTime = getDataFromDate.AddMonths(1);
-                dateTime < DateTime.Now.AddMonths(1).AddDays(1);
-                dateTime = dateTime.AddMonths(1))
-            {
-                var restingHeartRates = await _fitbitClient.GetMonthOfRestingHeartRates(dateTime);
+            var restingHeartRates = await _fitbitClient.GetRestingHeartRates(getDataFromDate, _calendar.Now());
 
-                if (restingHeartRates != null)
-                {
-                    restingHeartRates = restingHeartRates.Where(x => x.DateTime >= getDataFromDate && x.DateTime <= DateTime.Now);
+            await _healthService.UpsertRestingHeartRates(restingHeartRates);
 
-                    foreach (var restingHeartRate in restingHeartRates)
-                    {
-                        _logger.Log($"About to save Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
-                        await _healthService.UpsertRestingHeartRate(restingHeartRate);
-                    }
-                }
-            }
+            //for (DateTime dateTime = getDataFromDate.AddMonths(1);
+            //    dateTime < DateTime.Now.AddMonths(1).AddDays(1);
+            //    dateTime = dateTime.AddMonths(1))
+            //{
+            //    var restingHeartRates = await _fitbitClient.GetMonthOfRestingHeartRates(dateTime);
+
+            //    if (restingHeartRates != null)
+            //    {
+            //        restingHeartRates = restingHeartRates.Where(x => x.DateTime >= getDataFromDate && x.DateTime <= DateTime.Now);
+
+            //        foreach (var restingHeartRate in restingHeartRates)
+            //        {
+            //            _logger.Log($"About to save Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
+            //            await _healthService.UpsertRestingHeartRate(restingHeartRate);
+            //        }
+            //    }
+            //}
 
             await _healthService.AddMovingAveragesToRestingHeartRates();
         }

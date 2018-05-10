@@ -18,10 +18,11 @@ namespace Services.MyHealth
         DateTime GetLatestWeightDate();
 
         Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
-        Task UpsertDailyActivity(DailyActivity dailyActivity);
+        Task UpsertDailyActivities(IEnumerable<DailyActivity> dailyActivity);
         Task UpsertDailyHeartSummaries(IEnumerable<HeartRateZoneSummary> heartZoneSummaries);
         Task UpsertRestingHeartRate(RestingHeartRate restingHeartRate);
         Task UpsertStepCounts(IEnumerable<StepCount> stepCount);
         Task UpsertWeights(IEnumerable<Weight> weights);
+        Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
     }
 }

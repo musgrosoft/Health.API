@@ -89,7 +89,9 @@ namespace Services.MyHealth
 
             await _healthContext.SaveChangesAsync();
         }
-        
+
+
+
         public async Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
             foreach (var bloodPressure in bloodPressures)
@@ -133,41 +135,29 @@ namespace Services.MyHealth
 
             await _healthContext.SaveChangesAsync();
         }
-
-        //public async Task UpsertStepCount(StepCount stepCount)
-        //{
-        //    var existingStepCount = await _healthContext.StepCounts.FindAsync(stepCount.DateTime);
-        //    if (existingStepCount != null)
-        //    {
-        //        existingStepCount.Count = stepCount.Count;
-        //    }
-        //    else
-        //    {
-        //        _logger.Log($"Saving Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
-        //        await _healthContext.StepCounts.AddAsync(stepCount);
-        //    }
-
-        //    await _healthContext.SaveChangesAsync();
-        //}
-
-
-        public async Task UpsertDailyActivity(DailyActivity dailyActivity)
+        
+        public async Task UpsertDailyActivities(IEnumerable<DailyActivity>  dailyActivities)
         {
-            var existingDailyActivity = await _healthContext.DailyActivitySummaries.FindAsync(dailyActivity.DateTime);
-            if (existingDailyActivity != null)
+            foreach (var dailyActivity in dailyActivities)
             {
-                existingDailyActivity.SedentaryMinutes = dailyActivity.SedentaryMinutes;
-                existingDailyActivity.LightlyActiveMinutes = dailyActivity.LightlyActiveMinutes;
-                existingDailyActivity.FairlyActiveMinutes = dailyActivity.FairlyActiveMinutes;
-                existingDailyActivity.VeryActiveMinutes = dailyActivity.VeryActiveMinutes;
-            }
-            else
-            {
-                await _healthContext.DailyActivitySummaries.AddAsync(dailyActivity);
+                var existingDailyActivity = await _healthContext.DailyActivitySummaries.FindAsync(dailyActivity.DateTime);
+                if (existingDailyActivity != null)
+                {
+                    existingDailyActivity.SedentaryMinutes = dailyActivity.SedentaryMinutes;
+                    existingDailyActivity.LightlyActiveMinutes = dailyActivity.LightlyActiveMinutes;
+                    existingDailyActivity.FairlyActiveMinutes = dailyActivity.FairlyActiveMinutes;
+                    existingDailyActivity.VeryActiveMinutes = dailyActivity.VeryActiveMinutes;
+                }
+                else
+                {
+                    _logger.Log($"Saving Activity Data for {dailyActivity.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailyActivity.SedentaryMinutes} sedentary minutes, {dailyActivity.LightlyActiveMinutes} lightly active minutes, {dailyActivity.FairlyActiveMinutes} fairly active minutes, {dailyActivity.VeryActiveMinutes} very active minutes.");
+                    _healthContext.DailyActivitySummaries.Add(dailyActivity);
+                }
             }
 
             await _healthContext.SaveChangesAsync();
         }
+
 
         public async Task UpsertRestingHeartRate(RestingHeartRate restingHeartRate)
         {
@@ -183,7 +173,26 @@ namespace Services.MyHealth
 
             await _healthContext.SaveChangesAsync();
         }
-        
+
+        public async Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
+        {
+            foreach (var restingHeartRate in restingHeartRates)
+            {
+                _logger.Log($"About to save Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
+                var existingRestingHeartRate = await _healthContext.RestingHeartRates.FindAsync(restingHeartRate.DateTime);
+                if (existingRestingHeartRate != null)
+                {
+                    existingRestingHeartRate.Beats = restingHeartRate.Beats;
+                }
+                else
+                {
+                    _healthContext.RestingHeartRates.Add(restingHeartRate);
+                }
+            }
+
+            await _healthContext.SaveChangesAsync();
+        }
+
         public async Task UpsertDailyHeartSummaries(IEnumerable<HeartRateZoneSummary> heartZoneSummaries)
         {
             foreach (var heartRateZoneSummary in heartZoneSummaries)

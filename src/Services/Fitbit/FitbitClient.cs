@@ -54,21 +54,40 @@ namespace Services.Fitbit
 
         public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
         {
-            var steps = new List<StepCount>();
+            var stepCounts = new List<StepCount>();
 
             for (DateTime date = fromDate; date < toDate; date = date.AddDays(1))
             {
                 var dailySteps = await GetStepCount(date);
                 if (dailySteps != null)
                 {
-                    steps.Add(dailySteps);
+                    stepCounts.Add(dailySteps);
                 }
             }
 
-            return steps;
+            return stepCounts;
         }
 
-        public async Task<DailyActivity> GetDailyActivity(DateTime date)
+        public async Task<IEnumerable<DailyActivity>> GetDailyActivities(DateTime fromDate, DateTime toDate)
+        {
+            var dailyActivities = new List<DailyActivity>();
+
+            for (DateTime date = fromDate; 
+                date < toDate; 
+                date = date.AddDays(1))
+            {
+                var dailyActivity = await GetDailyActivity(date);
+                if (dailyActivity != null)
+                {
+                    dailyActivities.Add(dailyActivity);
+                }
+            }
+
+            return dailyActivities;
+
+        }
+
+        private async Task<DailyActivity> GetDailyActivity(DateTime date)
         {
             var fitbitDailyActivity = await GetActivity(date);
 
@@ -118,7 +137,7 @@ namespace Services.Fitbit
             }
         }
 
-        public async Task<IEnumerable<RestingHeartRate>> GetMonthOfRestingHeartRates(DateTime dateTime)
+        private async Task<IEnumerable<RestingHeartRate>> GetMonthOfRestingHeartRates(DateTime dateTime)
         {
             var heartSummaries = await GetMonthOfHeartSummaries(dateTime);
             //might need to check if bpm is zero
@@ -129,6 +148,36 @@ namespace Services.Fitbit
             });
 
             return restingHeartRates;
+        }
+
+        public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
+        {
+            //for (DateTime dateTime = fromDate.AddMonths(1);
+            //    dateTime < DateTime.Now.AddMonths(1).AddDays(1);
+            //    dateTime = dateTime.AddMonths(1))
+            //{
+
+            //}
+
+            var restingHeartRates = new List<RestingHeartRate>();
+
+            for (DateTime dateTime = fromDate;
+                dateTime < toDate;
+                dateTime = dateTime.AddMonths(1))
+            {
+                var monthRestingHeartRates = await GetMonthOfRestingHeartRates(dateTime);
+
+                if (monthRestingHeartRates != null)
+                {
+                    monthRestingHeartRates = restingHeartRates.Where(x => x.DateTime >= fromDate && x.DateTime <= toDate);
+
+                    restingHeartRates.AddRange(monthRestingHeartRates);
+                }
+
+            }
+
+            return restingHeartRates;
+
         }
 
         public async Task<IEnumerable<HeartRateZoneSummary>> GetMonthOfHeartZones(DateTime date)
