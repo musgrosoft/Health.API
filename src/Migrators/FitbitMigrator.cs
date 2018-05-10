@@ -42,21 +42,9 @@ namespace Migrators
             var getDataFromDate = latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             _logger.Log($"Retrieving Step records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            for (DateTime date = getDataFromDate; date < _calendar.Now() && date < getDataFromDate.AddDays(FITBIT_HOURLY_RATE_LIMIT); date = date.AddDays(1))
-            {
-                var dailySteps = await _fitbitClient.GetDailySteps(date);
+            var dailySteps = await _fitbitClient.GetStepCounts(getDataFromDate, _calendar.Now());
 
-                if (dailySteps != null)
-                {
-                    _logger.Log($"Saving Step Data for {date:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailySteps.Count} steps");
-                    await _healthService.UpsertStepCount(dailySteps);
-
-                }
-                else
-                {
-                    _logger.Log($"WARNING Did not find Step Data for {date:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailySteps.Count} steps");
-                }
-            }
+            await _healthService.UpsertStepCounts(dailySteps);
         }
 
 
@@ -70,7 +58,7 @@ namespace Migrators
             _logger.Log($"Retrieving Activity records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
             
             //for (DateTime date = DateTime.Now; date > DateTime.Now.AddDays(-100); date = date.AddDays(-1))
-            for (DateTime date = latestActivityDate; date < DateTime.Now && date < latestActivityDate.AddDays(FITBIT_HOURLY_RATE_LIMIT); date = date.AddDays(1))
+            for (DateTime date = latestActivityDate; date < DateTime.Now && date < latestActivityDate.AddDays(SEARCH_DAYS_PREVIOUS); date = date.AddDays(1))
             {
                 var dailyActivity = await _fitbitClient.GetDailyActivity(date);
 

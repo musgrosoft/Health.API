@@ -115,20 +115,40 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
 
-        public async Task UpsertStepCount(StepCount stepCount)
+        public async Task UpsertStepCounts(IEnumerable<StepCount> stepCounts)
         {
-            var existingStepCount = await _healthContext.StepCounts.FindAsync(stepCount.DateTime);
-            if (existingStepCount != null)
+            foreach (var stepCount in stepCounts)
             {
-                existingStepCount.Count = stepCount.Count;
-            }
-            else
-            {
-                await _healthContext.StepCounts.AddAsync(stepCount);
+                var existingStepCount = await _healthContext.StepCounts.FindAsync(stepCount.DateTime);
+                if (existingStepCount != null)
+                {
+                    existingStepCount.Count = stepCount.Count;
+                }
+                else
+                {
+                    _logger.Log($"Saving Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
+                    _healthContext.StepCounts.Add(stepCount);
+                }
             }
 
             await _healthContext.SaveChangesAsync();
         }
+
+        //public async Task UpsertStepCount(StepCount stepCount)
+        //{
+        //    var existingStepCount = await _healthContext.StepCounts.FindAsync(stepCount.DateTime);
+        //    if (existingStepCount != null)
+        //    {
+        //        existingStepCount.Count = stepCount.Count;
+        //    }
+        //    else
+        //    {
+        //        _logger.Log($"Saving Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
+        //        await _healthContext.StepCounts.AddAsync(stepCount);
+        //    }
+
+        //    await _healthContext.SaveChangesAsync();
+        //}
 
 
         public async Task UpsertDailyActivity(DailyActivity dailyActivity)

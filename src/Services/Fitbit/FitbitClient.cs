@@ -34,7 +34,7 @@ namespace Services.Fitbit
 
         
 
-        public async Task<StepCount> GetDailySteps(DateTime date)
+        private async Task<StepCount> GetStepCount(DateTime date)
         {
             var fitbitDailyActivity = await GetActivity(date);
 
@@ -47,7 +47,25 @@ namespace Services.Fitbit
                 };
             }
 
+            _logger.Log($"no stepcount found for date : {date}");
+
             return null;
+        }
+
+        public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
+        {
+            var steps = new List<StepCount>();
+
+            for (DateTime date = fromDate; date < toDate; date = date.AddDays(1))
+            {
+                var dailySteps = await GetStepCount(date);
+                if (dailySteps != null)
+                {
+                    steps.Add(dailySteps);
+                }
+            }
+
+            return steps;
         }
 
         public async Task<DailyActivity> GetDailyActivity(DateTime date)

@@ -21,7 +21,7 @@ namespace Services.MyHealth
         Task UpsertDailyActivity(DailyActivity dailyActivity);
         Task UpsertDailyHeartSummaries(IEnumerable<HeartRateZoneSummary> heartZoneSummaries);
         Task UpsertRestingHeartRate(RestingHeartRate restingHeartRate);
-        Task UpsertStepCount(StepCount stepCount);
+        Task UpsertStepCounts(IEnumerable<StepCount> stepCount);
         Task UpsertWeights(IEnumerable<Weight> weights);
     }
 }
