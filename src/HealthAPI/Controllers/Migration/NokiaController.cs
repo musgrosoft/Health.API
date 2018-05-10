@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
@@ -34,7 +35,7 @@ namespace HealthAPI.Controllers.Migration
                 //logger.Log("STARTING NOKIA MIGRATOR");
                 var healthService = HealthServiceFactory.Build( logger, _context);
 
-                var nokiaMigrator = new NokiaMigrator(healthService, logger, new NokiaClient());
+                var nokiaMigrator = new NokiaMigrator(healthService, logger, new NokiaClient(new HttpClient()));
 
                 await nokiaMigrator.MigrateWeights();
                 await nokiaMigrator.MigrateBloodPressures();
