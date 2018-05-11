@@ -23,14 +23,16 @@ namespace Services.Fitbit
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
 
         private IConfig _config { get; }
+        private HttpClient _httpClient;
 
-        public FitbitClient(IConfig config, ILogger logger, string accessToken, ICalendar calendar)
+        public FitbitClient(IConfig config, ILogger logger, string accessToken, ICalendar calendar, HttpClient httpClient)
         {
         
             _logger = logger;
             _accessToken = accessToken;
             _calendar = calendar;
             _config = config;
+            _httpClient = httpClient;
         }
 
         
@@ -122,11 +124,10 @@ namespace Services.Fitbit
 
         private async Task<FitbitDailyActivity> GetActivity(DateTime date)
         {
-            var client = new HttpClient();
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/date/{date:yyyy-MM-dd}.json";
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _accessToken);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _accessToken);
 
-            var response = await client.GetAsync(uri);
+            var response = await _httpClient.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
 
@@ -178,7 +179,7 @@ namespace Services.Fitbit
 
         }
 
-        public async Task<IEnumerable<HeartRateZoneSummary>> GetMonthOfHeartZones(DateTime date)
+        private async Task<IEnumerable<HeartRateZoneSummary>> GetMonthOfHeartZones(DateTime date)
         {
 
             var heartSummaries = await GetMonthOfHeartSummaries(date);
@@ -221,11 +222,10 @@ namespace Services.Fitbit
 
         private async Task<FitBitActivity> GetMonthOfHeartSummaries(DateTime startDate)
         {
-            var client = new HttpClient();
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/1m.json";
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _accessToken);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _accessToken);
 
-            var response = await client.GetAsync(uri);
+            var response = await _httpClient.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

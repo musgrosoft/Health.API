@@ -26,43 +26,29 @@ namespace HealthAPI.Controllers.OData
             return _context.AlcoholIntakes.AsQueryable();
         }
 
-        [HttpPost]
-        [Route("api/Units/AddMovingAverages")]
-        public IActionResult Create([FromBody] AlcoholIntake alcoholIntake)
+
+        [HttpGet]
+        [Route("odata/AlcoholIntakes/GroupByWeek")]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IEnumerable<AlcoholIntake> GetByWeek()
         {
-            try
+            var dailyAlcoholIntakes = _context.AlcoholIntakes;
+
+            var weekGroups = dailyAlcoholIntakes.GroupBy(x => x.Week);
+
+            var weeklyAlcoholIntakes = new List<AlcoholIntake>();
+            foreach (var group in weekGroups)
             {
-                if (alcoholIntake == null)
+                var alcoholIntake = new AlcoholIntake
                 {
-                    return BadRequest();
-                }
+                    DateTime = group.Key,
+                    Units = group.Sum(x => x.Units)
+                };
 
-                var existingItem = _context.AlcoholIntakes.FirstOrDefault(x => x.DateTime == alcoholIntake.DateTime);
-
-                if (existingItem != null)
-                {
-                    existingItem.DateTime = alcoholIntake.DateTime;
-                    existingItem.Units = alcoholIntake.Units;
-
-                    _context.AlcoholIntakes.Update(alcoholIntake);
-                }
-                else
-                {
-                    _context.AlcoholIntakes.Add(alcoholIntake);
-                }
-
-
-                _context.SaveChanges();
-
-                //return CreatedAtRoute("GetTodo", weight);
-                return Created("/bum", alcoholIntake);
-                //return new NoContentResult();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
+                weeklyAlcoholIntakes.Add(alcoholIntake);
             }
 
+            return weeklyAlcoholIntakes.AsQueryable();
         }
 
     }
