@@ -15,8 +15,8 @@ namespace Services.Nokia
         private readonly HttpClient _httpClient;
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
-        private const int DiastolicBlooPressureMeasureTypeId = 9;
-        private const int SystolicBlooPressureMeasureTypeId = 10;
+        private const int DiastolicBloodPressureMeasureTypeId = 9;
+        private const int SystolicBloodPressureMeasureTypeId = 10;
 
         private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
 
@@ -77,16 +77,16 @@ namespace Services.Nokia
                 var dateFilteredMeasures = data.body.measuregrps.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
 
                 var bloodPressureMeasures = dateFilteredMeasures.Where(x =>
-                    x.measures.Any(y => y.type == DiastolicBlooPressureMeasureTypeId) &&
-                    x.measures.Any(y => y.type == SystolicBlooPressureMeasureTypeId)).ToList();
+                    x.measures.Any(y => y.type == DiastolicBloodPressureMeasureTypeId) &&
+                    x.measures.Any(y => y.type == SystolicBloodPressureMeasureTypeId)).ToList();
 
                 foreach (var bloodPressureMeasure in bloodPressureMeasures)
                 {
                     bloodPressures.Add(new BloodPressure
                     {
                         DateTime = bloodPressureMeasure.date.ToDateFromUnixTime(),
-                        Diastolic = (int)( bloodPressureMeasure.measures.First(x => x.type == DiastolicBlooPressureMeasureTypeId).value * Math.Pow(10, bloodPressureMeasure.measures.First(x => x.type == DiastolicBlooPressureMeasureTypeId).unit)),
-                        Systolic = (int)( bloodPressureMeasure.measures.First(x => x.type == SystolicBlooPressureMeasureTypeId).value * Math.Pow(10, bloodPressureMeasure.measures.First(x => x.type == SystolicBlooPressureMeasureTypeId).unit)),
+                        Diastolic = (int)( bloodPressureMeasure.measures.First(x => x.type == DiastolicBloodPressureMeasureTypeId).value * Math.Pow(10, bloodPressureMeasure.measures.First(x => x.type == DiastolicBloodPressureMeasureTypeId).unit)),
+                        Systolic = (int)( bloodPressureMeasure.measures.First(x => x.type == SystolicBloodPressureMeasureTypeId).value * Math.Pow(10, bloodPressureMeasure.measures.First(x => x.type == SystolicBloodPressureMeasureTypeId).unit)),
                     });
                 }
 
@@ -97,6 +97,8 @@ namespace Services.Nokia
                 throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
             }
         }
+
+
 
 
     }
