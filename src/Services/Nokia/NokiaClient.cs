@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Repositories.Models;
 using Services.Nokia.Domain;
 using Utils;
+using JetBrains.Annotations;
 
 namespace Services.Nokia
 {
@@ -25,19 +26,12 @@ namespace Services.Nokia
             _httpClient = httpClient;
         }
 
-        public Weight GetThing()
-        {
-            var weight = new Weight();
-            weight = null;
+       
 
-            return weight;
-           // return new Weight();
-        }
-
-        
+        [NotNull]
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {
-           
+            //return null;
 
             _httpClient.DefaultRequestHeaders.Accept.Clear();
 

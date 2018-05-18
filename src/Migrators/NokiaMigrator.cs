@@ -33,6 +33,7 @@ namespace Migrators
             _logger.Log($"Found {weights.Count()} weight records.");
 
             await _healthService.UpsertWeights(weights);
+            await _healthService.AddMovingAveragesToWeights();
         }
 
         public async Task MigrateBloodPressures()

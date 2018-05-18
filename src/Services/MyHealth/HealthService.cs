@@ -74,23 +74,15 @@ namespace Services.MyHealth
             {
                 _logger.Log($"About to save Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                 
-                var existingWeight = await _healthRepository.FindWeightAsync(weight);
+                var existingWeight = await _healthRepository.FindAsync(weight);
 
                 existingWeight.Case(
-                    some : ew =>
-                    {
-                        ew.Kg = weight.Kg;
-                        ew.FatRatioPercentage = weight.FatRatioPercentage;
-                    },
-                    none : () => { _healthContext.Add(weight); }
+                    some : ew => _healthRepository.Update(ew,weight),
+                    none : () => _healthRepository.Insert(weight)
                 );
             }
-
-            _healthContext.SaveChanges();
-
-            AddMovingAveragesToWeights();
-
-            await _healthContext.SaveChangesAsync();
+            
+            
         }
 
 
@@ -217,7 +209,7 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
 
-        private void AddMovingAveragesToWeights(int period = 10)
+        public async Task AddMovingAveragesToWeights(int period = 10)
         {
             var orderedWeights = _healthContext.Weights.OrderBy(x => x.DateTime).ToList();
 
@@ -239,7 +231,7 @@ namespace Services.MyHealth
 
             }
 
-            
+            await _healthContext.SaveChangesAsync();
         }
 
 

@@ -8,6 +8,16 @@ namespace Utils
     {
         readonly IEnumerable<T> values;
 
+        public static Maybe<T> CreateFrom(T value)
+        {
+            if (value == null)
+            {
+                return None;
+            }
+
+            return new Maybe<T>(new[] { value });
+        }
+
         public static Maybe<T> Some(T value)
         {
             if (value == null)

@@ -23,5 +23,7 @@ namespace Services.MyHealth
         Task UpsertStepCounts(IEnumerable<StepCount> stepCount);
         Task UpsertWeights(IEnumerable<Weight> weights);
         Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
+
+        Task AddMovingAveragesToWeights(int period = 10);
     }
 }
