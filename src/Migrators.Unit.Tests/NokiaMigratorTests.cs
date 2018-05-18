@@ -42,7 +42,7 @@ namespace Migrators.Unit.Tests
                 new Weight { DateTime = new DateTime(2016,1,1), Kg = 234}
             };
             
-            _nokiaClient.Setup(x => x.GetScaleMeasures(latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<Weight>)weights));
+            _nokiaClient.Setup(x => x.GetWeights(latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<Weight>)weights));
 
             await _nokiaMigrator.MigrateWeights();
 

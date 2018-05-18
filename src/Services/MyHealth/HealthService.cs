@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Repositories;
+using Repositories.Health;
 using Repositories.Models;
 using Utils;
 
@@ -16,17 +17,19 @@ namespace Services.MyHealth
         private readonly IConfig _config;
         private readonly ILogger _logger;
         private readonly HealthContext _healthContext;
+        private readonly IHealthRepository _healthRepository;
 
         private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
         private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
 
         private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
 
-        public HealthService(IConfig config, ILogger logger, HealthContext healthContext)
+        public HealthService(IConfig config, ILogger logger, HealthContext healthContext, IHealthRepository healthRepository)
         {
             _config = config;
             _logger = logger;
             _healthContext = healthContext;
+            _healthRepository = healthRepository;
         }
 
         public DateTime GetLatestWeightDate()
@@ -70,17 +73,17 @@ namespace Services.MyHealth
             foreach (var weight in weights)
             {
                 _logger.Log($"About to save Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                
+                var existingWeight = await _healthRepository.FindWeightAsync(weight);
 
-                var existingWeight = await _healthContext.Weights.FindAsync(weight.DateTime);
-                if (existingWeight != null)
-                {
-                    existingWeight.Kg = weight.Kg;
-                    existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
-                }
-                else
-                {
-                    _healthContext.Add(weight);
-                }
+                existingWeight.Case(
+                    some : ew =>
+                    {
+                        ew.Kg = weight.Kg;
+                        ew.FatRatioPercentage = weight.FatRatioPercentage;
+                    },
+                    none : () => { _healthContext.Add(weight); }
+                );
             }
 
             _healthContext.SaveChanges();

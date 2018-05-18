@@ -1,4 +1,5 @@
 ﻿using Repositories;
+using Repositories.Health;
 using Utils;
 
 namespace Services.MyHealth
@@ -7,7 +8,7 @@ namespace Services.MyHealth
     {
         public static HealthService Build(ILogger logger, HealthContext healthContext) {
             
-            return new HealthService(new Config(), logger, healthContext);
+            return new HealthService(new Config(), logger, healthContext, new HealthRepository(healthContext));
         } 
     }
 }

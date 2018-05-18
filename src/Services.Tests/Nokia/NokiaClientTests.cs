@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
+using Repositories.Models;
 using Services.Nokia;
 using Xunit;
 
@@ -15,26 +16,32 @@ namespace Services.Tests.Nokia
 {
     public class NokiaClientTests
     {
-        [Fact]
-        public async Task ShouldGetScaleMeasures()
-        {
-            Uri capturedUri = new Uri("http://www.test.com");
+        Uri _capturedUri = new Uri("http://www.null.com");
+        private Mock<HttpMessageHandler> _httpMessageHandler;
+        private HttpClient _httpClient;
+        private NokiaClient _nokiaClient;
 
-            var httpMessageHandler = new Mock<HttpMessageHandler>();
-            httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+        public NokiaClientTests()
+        {
+            _httpMessageHandler = new Mock<HttpMessageHandler>();
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.FromResult(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(nokiaContent)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedUri = h.RequestUri); ;
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
 
-            var httpClient = new HttpClient(httpMessageHandler.Object);
+            _httpClient = new HttpClient(_httpMessageHandler.Object);
 
-            var nokiaClient = new NokiaClient(httpClient);
+            _nokiaClient = new NokiaClient(_httpClient);
+        }
 
-            var weights = await nokiaClient.GetScaleMeasures(new DateTime());
+        [Fact]
+        public async Task ShouldGetWeights()
+        {
+            var weights = await _nokiaClient.GetWeights(new DateTime());
 
-            Assert.Equal("http://api.health.nokia.com/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669", capturedUri.AbsoluteUri);
+            Assert.Equal("http://api.health.nokia.com/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669", _capturedUri.AbsoluteUri);
             Assert.Equal(2, weights.Count());
             Assert.Contains(weights, x => x.Kg == (Decimal)90.435 && x.DateTime == new DateTime(2018,5,11,4,57,27));
             Assert.Contains(weights, x => x.Kg == (Decimal)90.261 && x.DateTime == new DateTime(2018,5,10,5,4,42));
@@ -44,26 +51,20 @@ namespace Services.Tests.Nokia
 
         }
 
+        //[Fact]
+        //public void FodyShouldThrowNullExceptionIfSinceDateaTimeIsNull()
+        //{
+
+        //    Assert.Throws<InvalidOperationException>(() =>  _nokiaClient.GetThing());
+           
+        //}
+
         [Fact]
         public async Task ShouldGetBloodPressureMeasures()
         {
-            Uri capturedUri = new Uri("http://www.test.com");
+            var bps = await _nokiaClient.GetBloodPressures(new DateTime());
 
-            var httpMessageHandler = new Mock<HttpMessageHandler>();
-            httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(nokiaContent)
-                })).Callback<HttpRequestMessage, CancellationToken>( (h,c) => capturedUri = h.RequestUri);
-
-            var httpClient = new HttpClient(httpMessageHandler.Object);
-
-            var nokiaClient = new NokiaClient(httpClient);
-
-            var bps = await nokiaClient.GetBloodPressures(new DateTime());
-
-            Assert.Equal("http://api.health.nokia.com/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669",capturedUri.AbsoluteUri);
+            Assert.Equal("http://api.health.nokia.com/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669",_capturedUri.AbsoluteUri);
             Assert.Equal(3, bps.Count());
             Assert.Contains(bps, x => x.Systolic == 130 && x.Diastolic == 83 && x.DateTime == new DateTime(2018, 5, 11, 5, 8, 52));
             Assert.Contains(bps, x => x.Systolic == 127 && x.Diastolic == 80 && x.DateTime == new DateTime(2018, 5, 10, 5, 20, 43));
@@ -257,8 +258,6 @@ namespace Services.Tests.Nokia
     }
 }";
 
-
-
-
+        
     }
 }

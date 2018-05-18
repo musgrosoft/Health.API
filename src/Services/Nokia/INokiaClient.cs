@@ -8,6 +8,6 @@ namespace Services.Nokia
     public interface INokiaClient
     {
         Task<IEnumerable<BloodPressure>> GetBloodPressures(DateTime sinceDateTime);
-        Task<IEnumerable<Weight>> GetScaleMeasures(DateTime sinceDateTime);
+        Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime);
     }
 }
