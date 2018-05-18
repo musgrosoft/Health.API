@@ -48,7 +48,7 @@ namespace HealthAPI.Controllers.Migration
 
                // var healthService = HealthServiceFactory.Build(logger);
 
-                var fitbitMigrator = new FitbitMigrator(healthService, logger, new FitbitClient(new Config(), logger, fitbitAccessToken, new Calendar()));
+                var fitbitMigrator = new FitbitMigrator(healthService, logger, new FitbitClient(new Config(), logger, fitbitAccessToken, new Calendar(), new System.Net.Http.HttpClient()));
 
                 await fitbitMigrator.MigrateHeartZoneData();
                 await fitbitMigrator.MigrateStepData();

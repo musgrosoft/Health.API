@@ -61,7 +61,9 @@ namespace Services.Fitbit
         {
             var stepCounts = new List<StepCount>();
 
-            for (DateTime date = fromDate; date < _calendar.Now(); date = date.AddDays(1))
+            for (DateTime date = fromDate; 
+                date < _calendar.Now(); 
+                date = date.AddDays(1))
             {
                 var dailySteps = await GetStepCount(date);
                 if (dailySteps != null)
