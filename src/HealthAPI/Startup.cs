@@ -142,8 +142,10 @@ namespace HealthAPI
                 .Select(); // Allow for the $select Command;
 
             builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivity)).AddProperty(typeof(DailyActivity).GetProperty("ActiveMinutes"));
-            
-            
+
+            builder.StructuralTypes.First(t => t.ClrType == typeof(Weight)).AddProperty(typeof(Weight).GetProperty("Target"));
+
+
             //app.UseMvc(route =>
             //{
             //    route.MapRoute(

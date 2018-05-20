@@ -18,6 +18,23 @@ namespace Repositories.Models
 
         [Column(TypeName = "decimal(10, 5)")]
         public decimal? MovingAverageKg { get; set; }
+
+        public double? Target { get {
+
+                if (DateTime < new DateTime(2018, 5, 10))
+                {
+                    return null;
+                }
+                else
+                {
+                    var daysDiff = (DateTime - new DateTime(2018, 5, 10)).TotalDays;
+                    return 90.5 - (daysDiff * 0.017);
+                }
+                
+
+
+
+            } } 
         
     }
 }
