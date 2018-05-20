@@ -5,6 +5,7 @@ using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using Repositories.Models;
+using Utils;
 
 namespace HealthAPI.Controllers.OData
 {
@@ -34,7 +35,7 @@ namespace HealthAPI.Controllers.OData
         {   
             var dailyHeartZones = _context.HeartRateDailySummaries;
 
-            var weekGroups = dailyHeartZones.GroupBy(x => x.Week);
+            var weekGroups = dailyHeartZones.GroupBy(x => x.DateTime.HealthWeek());
 
             var weeklyHeartZones = new List<HeartRateZoneSummary>();
             foreach (var group in weekGroups)

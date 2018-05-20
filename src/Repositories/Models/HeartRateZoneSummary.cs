@@ -15,7 +15,7 @@ namespace Repositories.Models
         public int? CardioMinutes { get; set; }
         public int? PeakMinutes { get; set; }
         
-        [NotMapped]
-        public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
+        //[NotMapped]
+        //public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
     }
 }

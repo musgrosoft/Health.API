@@ -5,6 +5,7 @@ using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using Repositories.Models;
+using Utils;
 
 namespace HealthAPI.Controllers.OData
 {
@@ -34,7 +35,7 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyAlcoholIntakes = _context.AlcoholIntakes;
 
-            var weekGroups = dailyAlcoholIntakes.GroupBy(x => x.Week);
+            var weekGroups = dailyAlcoholIntakes.GroupBy(x => x.DateTime.HealthWeek());
 
             var weeklyAlcoholIntakes = new List<AlcoholIntake>();
             foreach (var group in weekGroups)

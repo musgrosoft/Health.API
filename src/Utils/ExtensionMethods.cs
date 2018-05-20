@@ -15,5 +15,15 @@ namespace Utils
         {
             return epoch.AddSeconds(val);
         }
+
+        public static DateTime HealthWeek(this DateTime val)
+        {
+            return val.AddDays(-(int)val.DayOfWeek);
+        }
+
+        public static DateTime HealthMonth(this DateTime val)
+        {
+            return new DateTime(val.Year, val.Month, 1);
+        }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using Repositories.Models;
+using Utils;
 
 namespace HealthAPI.Controllers.OData
 {
@@ -34,7 +35,7 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
-            var weekGroups = dailyActivities.GroupBy(x => x.Week);
+            var weekGroups = dailyActivities.GroupBy(x => x.DateTime.HealthWeek());
 
 
             var weeklyActivities = new List<DailyActivity>();
@@ -62,7 +63,7 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
-            var monthGroups = dailyActivities.GroupBy(x => x.Month);
+            var monthGroups = dailyActivities.GroupBy(x => x.DateTime.HealthMonth());
 
 
             var monthlyActivities = new List<DailyActivity>();
