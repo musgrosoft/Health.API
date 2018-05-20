@@ -55,6 +55,35 @@ namespace HealthAPI.Controllers.OData
             return weeklyActivities.AsQueryable();
         }
 
+        [HttpGet]
+        [Route("odata/DailyActivities/GroupByMonth")]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IEnumerable<DailyActivity> GetByMonth()
+        {
+            var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
+
+            var monthGroups = dailyActivities.GroupBy(x => x.Month);
+
+
+            var monthlyActivities = new List<DailyActivity>();
+            foreach (var group in monthGroups)
+            {
+                var activity = new DailyActivity
+                {
+                    DateTime = group.Key,
+                    SedentaryMinutes = (int)group.Average(x => x.SedentaryMinutes),
+                    LightlyActiveMinutes = (int)group.Average(x => x.LightlyActiveMinutes),
+                    FairlyActiveMinutes = (int)group.Average(x => x.FairlyActiveMinutes),
+                    VeryActiveMinutes = (int)group.Average(x => x.VeryActiveMinutes)
+                };
+
+                monthlyActivities.Add(activity);
+            }
+
+            return monthlyActivities.AsQueryable();
+        }
+
+
 
     }
 }

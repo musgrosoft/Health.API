@@ -19,6 +19,8 @@ namespace Repositories.Models
 
         [NotMapped]
         public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
+        [NotMapped]
+        public DateTime Month { get { return new DateTime(DateTime.Year, DateTime.Month, 1); } }
 
     }
 }
