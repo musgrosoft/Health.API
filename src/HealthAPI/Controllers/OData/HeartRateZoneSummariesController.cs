@@ -35,7 +35,7 @@ namespace HealthAPI.Controllers.OData
         {   
             var dailyHeartZones = _context.HeartRateDailySummaries;
 
-            var weekGroups = dailyHeartZones.GroupBy(x => x.DateTime.HealthWeek());
+            var weekGroups = dailyHeartZones.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
 
             var weeklyHeartZones = new List<HeartRateZoneSummary>();
             foreach (var group in weekGroups)

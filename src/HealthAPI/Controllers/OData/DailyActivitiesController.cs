@@ -35,7 +35,7 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
-            var weekGroups = dailyActivities.GroupBy(x => x.DateTime.HealthWeek());
+            var weekGroups = dailyActivities.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
 
 
             var weeklyActivities = new List<DailyActivity>();
@@ -63,7 +63,7 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
-            var monthGroups = dailyActivities.GroupBy(x => x.DateTime.HealthMonth());
+            var monthGroups = dailyActivities.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
 
 
             var monthlyActivities = new List<DailyActivity>();

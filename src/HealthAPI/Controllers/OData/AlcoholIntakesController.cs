@@ -35,7 +35,7 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyAlcoholIntakes = _context.AlcoholIntakes;
 
-            var weekGroups = dailyAlcoholIntakes.GroupBy(x => x.DateTime.HealthWeek());
+            var weekGroups = dailyAlcoholIntakes.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
 
             var weeklyAlcoholIntakes = new List<AlcoholIntake>();
             foreach (var group in weekGroups)

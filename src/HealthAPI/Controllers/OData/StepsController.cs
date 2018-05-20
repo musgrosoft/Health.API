@@ -34,7 +34,7 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyStepCounts = _context.StepCounts;
 
-            var weekGroups = dailyStepCounts.GroupBy(x => x.DateTime.HealthWeek());
+            var weekGroups = dailyStepCounts.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
             
             var weeklyStepCounts = new List<StepCount>();
             foreach (var group in weekGroups)

@@ -16,12 +16,19 @@ namespace Utils
             return epoch.AddSeconds(val);
         }
 
-        public static DateTime HealthWeek(this DateTime val)
+        public static DateTime GetWeekStartingOnMonday(this DateTime val)
         {
-            return val.AddDays(-(int)val.DayOfWeek);
+            //set Monday as first day of week
+            int day = (DateTime.Now.DayOfWeek == 0) 
+                ? 7 
+                : (int)DateTime.Now.DayOfWeek;
+
+            day = day - 1;
+
+            return val.AddDays(-day);
         }
 
-        public static DateTime HealthMonth(this DateTime val)
+        public static DateTime GetFirstDayOfMonth(this DateTime val)
         {
             return new DateTime(val.Year, val.Month, 1);
         }
