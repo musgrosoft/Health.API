@@ -141,13 +141,9 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.StructuralTypes.First(t => t.ClrType == typeof(HeartRateZoneSummary)).AddProperty(typeof(HeartRateZoneSummary).GetProperty("Week"));
-
-            builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivity)).AddProperty(typeof(DailyActivity).GetProperty("Week"));
             builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivity)).AddProperty(typeof(DailyActivity).GetProperty("ActiveMinutes"));
             
-            builder.StructuralTypes.First(t => t.ClrType == typeof(StepCount)).AddProperty(typeof(StepCount).GetProperty("Week"));
-
+            
             //app.UseMvc(route =>
             //{
             //    route.MapRoute(
