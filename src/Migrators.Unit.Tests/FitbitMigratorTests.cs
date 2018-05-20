@@ -12,7 +12,7 @@ namespace Migrators.Unit.Tests
 {
     public class FitbitMigratorTests
     {
-        private Mock<IFitbitClient> _fitbitClient;
+        private Mock<IFitbitService> _fitbitClient;
         private Mock<ILogger> _logger;
         private Mock<IHealthService> _healthService;
         private FitbitMigrator _fitbitMigrator;
@@ -23,7 +23,7 @@ namespace Migrators.Unit.Tests
 
         public FitbitMigratorTests()
         {
-            _fitbitClient = new Mock<IFitbitClient>();
+            _fitbitClient = new Mock<IFitbitService>();
             _logger = new Mock<ILogger>();
             _healthService = new Mock<IHealthService>();
         

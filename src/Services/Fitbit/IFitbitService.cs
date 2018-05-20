@@ -5,7 +5,7 @@ using Repositories.Models;
 
 namespace Services.Fitbit
 {
-    public interface IFitbitClient
+    public interface IFitbitService
     {
         Task<IEnumerable<DailyActivity>> GetDailyActivities(DateTime fromDate);
         Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate);
