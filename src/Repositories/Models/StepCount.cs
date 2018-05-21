@@ -11,6 +11,8 @@ namespace Repositories.Models
         public DateTime DateTime { get; set; }
         public int? Count { get; set; }
 
+        
+
         //[NotMapped]
         //public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
 

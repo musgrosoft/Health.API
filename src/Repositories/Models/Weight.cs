@@ -21,7 +21,8 @@ namespace Repositories.Models
 
         public double? Target { get {
 
-                if (DateTime < new DateTime(2018, 5, 10))
+                //if (DateTime < new DateTime(2018, 5, 21))
+                if (DateTime < new DateTime(2018, 5, 1))
                 {
                     return null;
                 }
