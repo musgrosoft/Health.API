@@ -19,9 +19,9 @@ namespace Utils
         public static DateTime GetWeekStartingOnMonday(this DateTime val)
         {
             //set Monday as first day of week
-            int day = (DateTime.Now.DayOfWeek == 0) 
+            int day = (val.DayOfWeek == 0) 
                 ? 7 
-                : (int)DateTime.Now.DayOfWeek;
+                : (int)val.DayOfWeek;
 
             day = day - 1;
 
