@@ -32,5 +32,10 @@ namespace Utils
         {
             return new DateTime(val.Year, val.Month, 1);
         }
+
+        public static bool Between(this DateTime val, DateTime startDate, DateTime endDate)
+        {
+            return (val >= startDate && val <= endDate);
+        }
     }
 }

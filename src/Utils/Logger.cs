@@ -18,5 +18,7 @@ namespace Utils
         {
            // _client.SubmitLog(message);
         }
+
+
     }
 }
