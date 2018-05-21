@@ -15,11 +15,11 @@ namespace Services.Fitbit
         private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 
         private readonly HttpClient _httpClient;
-        private readonly Config _config;
+        private readonly IConfig _config;
         private readonly string _accessToken;
         private readonly ILogger _logger;
 
-        public FitbitClient(HttpClient httpClient, Config config, string accessToken, ILogger logger)
+        public FitbitClient(HttpClient httpClient, IConfig config, string accessToken, ILogger logger)
         {
             _httpClient = httpClient;
             _config = config;
@@ -27,7 +27,7 @@ namespace Services.Fitbit
             _logger = logger;
         }
 
-        
+        [NotNull]
         public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate)
         {
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/1m.json";

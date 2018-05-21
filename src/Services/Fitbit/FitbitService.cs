@@ -191,7 +191,30 @@ namespace Services.Fitbit
 
 
 
-        
+        private async Task<IEnumerable<T>> MapFitBitActivity(DateTime fromDate, Func<FitBitActivity , IEnumerable<T>>)
+        {
+            var list = new List<T>();
+
+            for (DateTime dateTime = fromDate.AddMonths(1);
+                dateTime < _calendar.Now().AddMonths(1).AddDays(1);
+                dateTime = dateTime.AddMonths(1))
+            {
+                var fitbitActivity = await _client.GetMonthOfFitbitActivities(dateTime);
+
+                var monthRestingHeartRates = fitbitActivity.activitiesHeart
+                    .Where(a => a.value.restingHeartRate != 0)
+                    .Where(x => x.dateTime.Between(fromDate, _calendar.Now()))
+                    .Select(x => new RestingHeartRate
+                    {
+                        DateTime = x.dateTime,
+                        Beats = x.value.restingHeartRate
+                    });
+
+                restingHeartRates.AddRange(monthRestingHeartRates);
+            }
+
+            return restingHeartRates;
+        }
 
 
 

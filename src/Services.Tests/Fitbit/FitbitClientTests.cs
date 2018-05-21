@@ -19,7 +19,8 @@ namespace Services.Tests.Fitbit
 
         Uri _capturedUri = new Uri("http://www.null.com");
         private Mock<HttpMessageHandler> _httpMessageHandler;
-        private Mock<Config> _config;
+        private Mock<IConfig> _config;
+        private Mock<ILogger> _logger;
         private HttpClient _httpClient;
         private FitbitClient _fitbitClient;
         private string _accessToken = "TEST_ACCESS_TOKEN";
@@ -34,11 +35,12 @@ namespace Services.Tests.Fitbit
                     Content = new StringContent(fitbitDailyActivityContent)
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
 
-            _config = new Mock<Config>();
+            _config = new Mock<IConfig>();
+            _logger = new Mock<ILogger>();
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
 
-            _fitbitClient = new FitbitClient(_httpClient, _config.Object, _accessToken);
+            _fitbitClient = new FitbitClient(_httpClient, _config.Object, _accessToken, _logger.Object);
         }
 
         //[Fact]
