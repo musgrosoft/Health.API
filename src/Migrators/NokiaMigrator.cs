@@ -47,7 +47,7 @@ namespace Migrators
             var bloodPressures = await _nokiaClient.GetBloodPressures(fromDate);
             _logger.Log($"Found {bloodPressures.Count()} Blood Pressure records.");
             
-            await _healthService.UpsertBloodPressures(bloodPressures);
+            _healthService.UpsertBloodPressures(bloodPressures);
         }
 
     }

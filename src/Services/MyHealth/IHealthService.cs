@@ -17,7 +17,7 @@ namespace Services.MyHealth
         DateTime GetLatestStepCountDate();
         DateTime GetLatestWeightDate();
 
-        Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
+        void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
         Task UpsertDailyActivities(IEnumerable<DailyActivity> dailyActivity);
         Task UpsertDailyHeartSummaries(IEnumerable<HeartRateZoneSummary> heartZoneSummaries);
         Task UpsertStepCounts(IEnumerable<StepCount> stepCount);

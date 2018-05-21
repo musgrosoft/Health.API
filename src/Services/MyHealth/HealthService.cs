@@ -87,13 +87,13 @@ namespace Services.MyHealth
 
 
 
-        public async Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
+        public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
             foreach (var bloodPressure in bloodPressures)
             {
                 _logger.Log($"About to save Blood Pressure record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
 
-                var existingBloodPressure = await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
+                var existingBloodPressure = _healthContext.BloodPressures.Find(bloodPressure.DateTime);
                 if (existingBloodPressure != null)
                 {
                     existingBloodPressure.Diastolic = bloodPressure.Diastolic;
@@ -109,7 +109,7 @@ namespace Services.MyHealth
 
             AddMovingAveragesToBloodPressures();
 
-            await _healthContext.SaveChangesAsync();
+            _healthContext.SaveChanges();
         }
 
         public async Task UpsertStepCounts(IEnumerable<StepCount> stepCounts)
