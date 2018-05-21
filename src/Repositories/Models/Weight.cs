@@ -27,8 +27,12 @@ namespace Repositories.Models
                 }
                 else
                 {
-                    var daysDiff = (DateTime - new DateTime(2018, 5, 10)).TotalDays;
-                    return 90.5 - (daysDiff * 0.017);
+                    //var daysDiff = (DateTime - new DateTime(2018, 5, 21)).TotalDays;
+                    //return 90.4 - (daysDiff * 0.017);
+
+                    var daysDiff = (DateTime - new DateTime(2018, 5, 1)).TotalDays;
+                    return 90.74 - (daysDiff * 0.017);
+
                 }
                 
 
