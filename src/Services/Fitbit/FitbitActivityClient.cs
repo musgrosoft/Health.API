@@ -28,6 +28,7 @@ namespace Services.Fitbit
         public async Task<FitBitActivity> GetMonthOfHeartSummaries(DateTime startDate)
         {
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/1m.json";
+            _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _accessToken);
 
             var response = await _httpClient.GetAsync(uri);
@@ -47,6 +48,7 @@ namespace Services.Fitbit
         public async Task<FitbitDailyActivity> GetActivity(DateTime date)
         {
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/date/{date:yyyy-MM-dd}.json";
+            _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _accessToken);
 
             var response = await _httpClient.GetAsync(uri);
