@@ -59,15 +59,15 @@ namespace Services.Fitbit
             var response = await _httpClient.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
-
                 var content = await response.Content.ReadAsStringAsync();
 
                 var data = JsonConvert.DeserializeObject<FitbitDailyActivity>(content);
-
+                data.DateTime = date;
                 return data;
             }
             else
             {
+                _logger.Log("No FitbitDailyActivity found for date : {date}");
                 return null;
             }
         }

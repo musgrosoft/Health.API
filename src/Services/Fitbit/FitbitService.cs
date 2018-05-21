@@ -8,215 +8,83 @@ using System.Threading.Tasks;
 using Repositories.Models;
 using Utils;
 
-
 namespace Services.Fitbit
 {
     public class FitbitService : IFitbitService
     {
-        
         private readonly ILogger _logger;
-        private readonly ICalendar _calendar;
 
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
 
         private IConfig _config { get; }
-        private HttpClient _httpClient;
-        private FitbitClient _client;
+        private FitbitAggregator _fitbitAggregator;
 
-        public FitbitService(IConfig config, ILogger logger, ICalendar calendar, HttpClient httpClient, FitbitClient client)
+        public FitbitService(IConfig config, ILogger logger, FitbitAggregator fitbitAggregator)
         {
-        
             _logger = logger;
-            _calendar = calendar;
             _config = config;
-            _httpClient = httpClient;
-            _client = client;
+            _fitbitAggregator = fitbitAggregator;
         }
 
-
-
-        public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate)
+        public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
         {
-            var stepCounts = new List<StepCount>();
+            var fitbitDailyActivities = await _fitbitAggregator.GetFitbitDailyActivities(fromDate, toDate);
 
-            for (DateTime date = fromDate;
-                date < _calendar.Now();
-                date = date.AddDays(1))
+            return fitbitDailyActivities.Select(x => new StepCount
             {
-                var dailySteps = await GetStepCount(date);
-                if (dailySteps != null)
-                {
-                    stepCounts.Add(dailySteps);
-                }
-            }
-
-            return stepCounts;
+                DateTime = x.DateTime,
+                Count = x.summary.steps
+            });
         }
 
-        private async Task<StepCount> GetStepCount(DateTime date)
+        public async Task<IEnumerable<DailyActivity>> GetDailyActivities(DateTime fromDate, DateTime toDate)
         {
-            var fitbitDailyActivity = await _client.GetFitbitDailyActivity(date);
+            var fitbitDailyActivities = await _fitbitAggregator.GetFitbitDailyActivities(fromDate, toDate);
 
-            if (fitbitDailyActivity != null)
+            return fitbitDailyActivities.Select(x => new DailyActivity
             {
-                return  new StepCount
-                {
-                    DateTime = date,
-                    Count = fitbitDailyActivity.summary.steps
-                };
-            }
-
-            _logger.Log($"no stepcount found for date : {date}");
-
-            return null;
-        }
-
-
-
-
-
-        public async Task<IEnumerable<DailyActivity>> GetDailyActivities(DateTime fromDate)
-        {
-            var dailyActivities = new List<DailyActivity>();
-
-            for (DateTime date = fromDate; 
-                date < _calendar.Now(); 
-                date = date.AddDays(1))
-            {
-                var dailyActivity = await GetDailyActivity(date);
-                if (dailyActivity != null)
-                {
-                    dailyActivities.Add(dailyActivity);
-                }
-            }
-
-            return dailyActivities;
+                DateTime = x.DateTime,
+                //activityCalories
+                //caloriesBMR
+                //caloriesOut
+                //distances
+                //elevation
+                FairlyActiveMinutes = x.summary.fairlyActiveMinutes,
+                //floors
+                LightlyActiveMinutes = x.summary.lightlyActiveMinutes,
+                //marginalCalories
+                SedentaryMinutes = x.summary.sedentaryMinutes,
+                VeryActiveMinutes = x.summary.veryActiveMinutes
+            });
 
         }
-
-        private async Task<DailyActivity> GetDailyActivity(DateTime date)
+        
+        public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
         {
-            var fitbitDailyActivity = await _client.GetFitbitDailyActivity(date);
+            var heartActivies = await _fitbitAggregator.GetFitbitHeartActivities(fromDate, toDate);
 
-            if (fitbitDailyActivity != null)
-            {
-                return new DailyActivity
-                {
-                    DateTime = date,
-                    //activityCalories
-                    //caloriesBMR
-                    //caloriesOut
-                    //distances
-                    //elevation
-                    FairlyActiveMinutes = fitbitDailyActivity.summary.fairlyActiveMinutes,
-                    //floors
-                    LightlyActiveMinutes = fitbitDailyActivity.summary.lightlyActiveMinutes,
-                    //marginalCalories
-                    SedentaryMinutes = fitbitDailyActivity.summary.sedentaryMinutes,
-                    VeryActiveMinutes = fitbitDailyActivity.summary.veryActiveMinutes
-                };
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate)
-        {
-            var restingHeartRates = new List<RestingHeartRate>();
-
-            for (DateTime dateTime = fromDate.AddMonths(1);
-                dateTime < _calendar.Now().AddMonths(1).AddDays(1);
-                dateTime = dateTime.AddMonths(1))
-            {
-                var fitbitActivity = await _client.GetMonthOfFitbitActivities(dateTime);
-
-                var monthRestingHeartRates = fitbitActivity.activitiesHeart
+            return heartActivies
                     .Where(a => a.value.restingHeartRate != 0)
-                    .Where(x => x.dateTime.Between(fromDate, _calendar.Now()))
                     .Select(x => new RestingHeartRate
                     {
                         DateTime = x.dateTime,
                         Beats = x.value.restingHeartRate
                     });
-
-                restingHeartRates.AddRange(monthRestingHeartRates);
-            }
-
-            return restingHeartRates;
         }
-
-
-        public async Task<IEnumerable<HeartRateZoneSummary>> GetHeartZones(DateTime fromDate)
+        
+        public async Task<IEnumerable<HeartRateZoneSummary>> GetHeartZones(DateTime fromDate, DateTime toDate)
         {
-            var heartSummaries = new List<HeartRateZoneSummary>();
+            var heartActivies = await _fitbitAggregator.GetFitbitHeartActivities(fromDate, toDate);
 
-            for (DateTime date = fromDate.AddMonths(1);
-                date < _calendar.Now().AddMonths(1).AddDays(1);
-                date = date.AddMonths(1))
-            {
-                var monthHeartSummaries = await GetMonthOfHeartZones(date);
-
-                if (monthHeartSummaries != null)
-                {
-                    monthHeartSummaries = monthHeartSummaries.Where(x => x.DateTime >= fromDate && x.DateTime <= _calendar.Now());
-
-                    heartSummaries.AddRange(monthHeartSummaries);
-                }
-            }
-
-            return heartSummaries;
-        }
-
-        private async Task<IEnumerable<HeartRateZoneSummary>> GetMonthOfHeartZones(DateTime date)
-        {
-
-            var heartSummaries = await _client.GetMonthOfFitbitActivities(date);
-
-
-            var smallHeartRateSummaries = heartSummaries.activitiesHeart.Select(x => new HeartRateZoneSummary
+            return heartActivies.Select(x => new HeartRateZoneSummary
             {
                 DateTime = x.dateTime,
-               // RestingHeartRate = x.value.restingHeartRate,
                 OutOfRangeMinutes = x.value.heartRateZones.First(y => y.name == "Out of Range").minutes,
                 FatBurnMinutes = x.value.heartRateZones.First(y => y.name == "Fat Burn").minutes,
                 CardioMinutes = x.value.heartRateZones.First(y => y.name == "Cardio").minutes,
                 PeakMinutes = x.value.heartRateZones.First(y => y.name == "Peak").minutes
             });
-            
-
-            return smallHeartRateSummaries;
         }
-
-
-
-        private async Task<IEnumerable<T>> MapFitBitActivity(DateTime fromDate, Func<FitBitActivity , IEnumerable<T>>)
-        {
-            var list = new List<T>();
-
-            for (DateTime dateTime = fromDate.AddMonths(1);
-                dateTime < _calendar.Now().AddMonths(1).AddDays(1);
-                dateTime = dateTime.AddMonths(1))
-            {
-                var fitbitActivity = await _client.GetMonthOfFitbitActivities(dateTime);
-
-                var monthRestingHeartRates = fitbitActivity.activitiesHeart
-                    .Where(a => a.value.restingHeartRate != 0)
-                    .Where(x => x.dateTime.Between(fromDate, _calendar.Now()))
-                    .Select(x => new RestingHeartRate
-                    {
-                        DateTime = x.dateTime,
-                        Beats = x.value.restingHeartRate
-                    });
-
-                restingHeartRates.AddRange(monthRestingHeartRates);
-            }
-
-            return restingHeartRates;
-        }
-
-
 
     }
 }

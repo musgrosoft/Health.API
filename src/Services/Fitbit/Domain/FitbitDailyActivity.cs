@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Services.Fitbit.Domain
 {
@@ -54,5 +55,6 @@ namespace Services.Fitbit.Domain
         public List<Activity> activities { get; set; }
         public Goals goals { get; set; }
         public Summary summary { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

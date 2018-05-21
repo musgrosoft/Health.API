@@ -15,6 +15,7 @@ namespace Migrators.Unit.Tests
         private Mock<IFitbitService> _fitbitClient;
         private Mock<ILogger> _logger;
         private Mock<IHealthService> _healthService;
+        private readonly Mock<ICalendar> _calendar;
         private FitbitMigrator _fitbitMigrator;
         private readonly DateTime latestDate = new DateTime(2012, 3, 4);
 
@@ -26,9 +27,10 @@ namespace Migrators.Unit.Tests
             _fitbitClient = new Mock<IFitbitService>();
             _logger = new Mock<ILogger>();
             _healthService = new Mock<IHealthService>();
+            _calendar = new Mock<ICalendar>();
         
 
-            _fitbitMigrator = new FitbitMigrator(_healthService.Object, _logger.Object, _fitbitClient.Object);
+            _fitbitMigrator = new FitbitMigrator(_healthService.Object, _logger.Object, _fitbitClient.Object, _calendar.Object);
         }
 
         [Fact]
@@ -43,7 +45,7 @@ namespace Migrators.Unit.Tests
                 new StepCount{ DateTime = new DateTime(2022, 12, 22), Count = 222}
             };
 
-            _fitbitClient.Setup(x => x.GetStepCounts(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<StepCount>)stepCounts));
+            _fitbitClient.Setup(x => x.GetStepCounts(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS),It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<StepCount>)stepCounts));
 
             await _fitbitMigrator.MigrateStepData();
 
@@ -63,7 +65,7 @@ namespace Migrators.Unit.Tests
                 new DailyActivity{ DateTime = new DateTime(2010, 12, 1), VeryActiveMinutes = 222 }
             };
 
-            _fitbitClient.Setup(x => x.GetDailyActivities(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<DailyActivity>)dailyActivities));
+            _fitbitClient.Setup(x => x.GetDailyActivities(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<DailyActivity>)dailyActivities));
 
             await _fitbitMigrator.MigrateActivity();
 
@@ -82,7 +84,7 @@ namespace Migrators.Unit.Tests
                 new RestingHeartRate{ DateTime = new DateTime(2010, 12, 1), Beats = 222 }
             };
 
-            _fitbitClient.Setup(x => x.GetRestingHeartRates(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<RestingHeartRate>)restingHeartRates));
+            _fitbitClient.Setup(x => x.GetRestingHeartRates(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<RestingHeartRate>)restingHeartRates));
 
             await _fitbitMigrator.MigrateRestingHeartRateData();
 
@@ -101,7 +103,7 @@ namespace Migrators.Unit.Tests
                 new HeartRateZoneSummary{ DateTime = new DateTime(2022, 12, 22), CardioMinutes = 222}
             };
 
-            _fitbitClient.Setup(x => x.GetHeartZones(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<HeartRateZoneSummary>)heartZones));
+            _fitbitClient.Setup(x => x.GetHeartZones(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartRateZoneSummary>)heartZones));
 
             await _fitbitMigrator.MigrateHeartZoneData();
 
