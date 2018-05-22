@@ -52,7 +52,7 @@ namespace HealthAPI.Controllers.Migration
             {
                 logger.Log(ex.Message);
                 logger.Log(ex.ToString());
-                return NotFound(ex.Message);
+                return NotFound(ex.ToString());
                 //LambdaLogger.Log(ex.ToString());
 
                 //return new APIGatewayProxyResponse
