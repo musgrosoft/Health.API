@@ -26,11 +26,11 @@ namespace HealthAPI.Controllers.Migration
      //   [Route("api/Nokia/Migrate")]
         public async Task<IActionResult> Migrate()
         {
-
+            var logger = new Logger();
             try
             {
                 //var logger = context.Logger;
-                var logger = new Logger();
+                
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
                 var healthService = HealthServiceFactory.Build( logger, _context);
@@ -50,6 +50,7 @@ namespace HealthAPI.Controllers.Migration
             }
             catch (Exception ex)
             {
+                logger.Log(ex.ToString());
                 return NotFound(ex.Message);
                 //LambdaLogger.Log(ex.ToString());
 
