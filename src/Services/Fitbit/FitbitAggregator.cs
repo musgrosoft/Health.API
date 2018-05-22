@@ -8,7 +8,7 @@ using Utils;
 
 namespace Services.Fitbit
 {
-    public class FitbitAggregator
+    public class FitbitAggregator : IFitbitAggregator
     {
         private readonly FitbitClient _fitbitClient;
 

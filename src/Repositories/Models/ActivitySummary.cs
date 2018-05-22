@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Repositories.Models
 {
-    public class DailyActivity
+    public class ActivitySummary
     {
         [Key]
         [Column(TypeName = "DateTime")]

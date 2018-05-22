@@ -114,7 +114,7 @@ namespace HealthAPI
                 .OrderBy() // Allow for the $orderby Command                
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
-            builder.EntitySet<HeartRateZoneSummary>("HeartRateZoneSummaries").EntityType
+            builder.EntitySet<HeartSummary>("HeartRateZoneSummaries").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
@@ -123,7 +123,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.EntitySet<DailyActivity>("DailyActivities").EntityType
+            builder.EntitySet<ActivitySummary>("DailyActivities").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
@@ -141,7 +141,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.StructuralTypes.First(t => t.ClrType == typeof(DailyActivity)).AddProperty(typeof(DailyActivity).GetProperty("ActiveMinutes"));
+            builder.StructuralTypes.First(t => t.ClrType == typeof(ActivitySummary)).AddProperty(typeof(ActivitySummary).GetProperty("ActiveMinutes"));
 
             builder.StructuralTypes.First(t => t.ClrType == typeof(Weight)).AddProperty(typeof(Weight).GetProperty("Target"));
 

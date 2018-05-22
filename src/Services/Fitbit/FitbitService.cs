@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using Newtonsoft.Json;
-using Services.Fitbit.Domain;
 using System.Threading.Tasks;
 using Repositories.Models;
 using Utils;
@@ -17,9 +14,9 @@ namespace Services.Fitbit
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
 
         private IConfig _config { get; }
-        private FitbitAggregator _fitbitAggregator;
+        private IFitbitAggregator _fitbitAggregator;
 
-        public FitbitService(IConfig config, ILogger logger, FitbitAggregator fitbitAggregator)
+        public FitbitService(IConfig config, ILogger logger, IFitbitAggregator fitbitAggregator)
         {
             _logger = logger;
             _config = config;
@@ -37,11 +34,11 @@ namespace Services.Fitbit
             });
         }
 
-        public async Task<IEnumerable<DailyActivity>> GetDailyActivities(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<ActivitySummary>> GetDailyActivities(DateTime fromDate, DateTime toDate)
         {
             var fitbitDailyActivities = await _fitbitAggregator.GetFitbitDailyActivities(fromDate, toDate);
 
-            return fitbitDailyActivities.Select(x => new DailyActivity
+            return fitbitDailyActivities.Select(x => new ActivitySummary
             {
                 DateTime = x.DateTime,
                 //activityCalories
@@ -72,11 +69,11 @@ namespace Services.Fitbit
                     });
         }
         
-        public async Task<IEnumerable<HeartRateZoneSummary>> GetHeartZones(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<HeartSummary>> GetHeartZones(DateTime fromDate, DateTime toDate)
         {
             var heartActivies = await _fitbitAggregator.GetFitbitHeartActivities(fromDate, toDate);
 
-            return heartActivies.Select(x => new HeartRateZoneSummary
+            return heartActivies.Select(x => new HeartSummary
             {
                 DateTime = x.dateTime,
                 OutOfRangeMinutes = x.value.heartRateZones.First(y => y.name == "Out of Range").minutes,

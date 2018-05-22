@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Repositories.Models
 {
-    public class HeartRateZoneSummary
+    public class HeartSummary
     {
         [Key]
         [Column(TypeName = "DateTime")]

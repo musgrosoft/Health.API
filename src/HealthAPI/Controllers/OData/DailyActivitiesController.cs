@@ -22,7 +22,7 @@ namespace HealthAPI.Controllers.OData
         // GET api/DailyActivities
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<DailyActivity> Get()
+        public IEnumerable<ActivitySummary> Get()
         {
             return _context.DailyActivitySummaries.AsQueryable();
         }
@@ -31,17 +31,17 @@ namespace HealthAPI.Controllers.OData
         [HttpGet]
         [Route("odata/DailyActivities/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<DailyActivity> GetByWeek()
+        public IEnumerable<ActivitySummary> GetByWeek()
         {
             var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
             var weekGroups = dailyActivities.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
 
 
-            var weeklyActivities = new List<DailyActivity>();
+            var weeklyActivities = new List<ActivitySummary>();
             foreach (var group in weekGroups)
             {
-                var activity = new DailyActivity
+                var activity = new ActivitySummary
                 {
                     DateTime = group.Key,
                     SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
@@ -59,17 +59,17 @@ namespace HealthAPI.Controllers.OData
         [HttpGet]
         [Route("odata/DailyActivities/GroupByMonth")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<DailyActivity> GetByMonth()
+        public IEnumerable<ActivitySummary> GetByMonth()
         {
             var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
             var monthGroups = dailyActivities.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
 
 
-            var monthlyActivities = new List<DailyActivity>();
+            var monthlyActivities = new List<ActivitySummary>();
             foreach (var group in monthGroups)
             {
-                var activity = new DailyActivity
+                var activity = new ActivitySummary
                 {
                     DateTime = group.Key,
                     SedentaryMinutes = (int)group.Average(x => x.SedentaryMinutes),

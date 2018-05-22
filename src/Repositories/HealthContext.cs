@@ -5,9 +5,9 @@ namespace Repositories
     public class HealthContext : DbContext
     {
         public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
-        public virtual DbSet<Models.DailyActivity> DailyActivitySummaries { get; set; }
+        public virtual DbSet<Models.ActivitySummary> DailyActivitySummaries { get; set; }
         public virtual DbSet<Models.StepCount> StepCounts { get; set; }
-        public virtual DbSet<Models.HeartRateZoneSummary> HeartRateDailySummaries { get; set; }
+        public virtual DbSet<Models.HeartSummary> HeartRateDailySummaries { get; set; }
         public virtual DbSet<Models.RestingHeartRate> RestingHeartRates { get; set; }
         public virtual DbSet<Models.AlcoholIntake> AlcoholIntakes { get; set; }
         public virtual DbSet<Models.Weight> Weights { get; set; }

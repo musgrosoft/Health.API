@@ -131,7 +131,7 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
         
-        public async Task UpsertDailyActivities(IEnumerable<DailyActivity>  dailyActivities)
+        public async Task UpsertDailyActivities(IEnumerable<ActivitySummary>  dailyActivities)
         {
             foreach (var dailyActivity in dailyActivities)
             {
@@ -188,7 +188,7 @@ namespace Services.MyHealth
             await _healthContext.SaveChangesAsync();
         }
 
-        public async Task UpsertDailyHeartSummaries(IEnumerable<HeartRateZoneSummary> heartZoneSummaries)
+        public async Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartZoneSummaries)
         {
             foreach (var heartRateZoneSummary in heartZoneSummaries)
             {
