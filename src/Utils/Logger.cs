@@ -17,7 +17,7 @@ namespace Utils
 
         public void Log(string message)
         {
-            var requestUri = "http://listener.logz.io:8070/?token={{API_TOKEN}}&type=MY-TYPE";
+            var requestUri = "http://listener.logz.io:8070/?token=gDonUjvYKMuWpLcDeBdSGyAbowpiusee&type=MY-TYPE";
             var content = new StringContent("{\"message\": \"" + message + "\"}");
             var httpClient = new HttpClient();
             httpClient.PostAsync(requestUri, content);
