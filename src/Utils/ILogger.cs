@@ -1,4 +1,6 @@
-﻿namespace Utils
+﻿using System;
+
+namespace Utils
 {
     public interface ILogger
     {
