@@ -70,8 +70,8 @@ namespace HealthAPI.Controllers.Migration
             }
             catch (Exception ex)
             {
-                logger.Log(ex.Message);
-                logger.Log(ex.ToString());
+                
+                logger.Error(ex);
                 return NotFound(ex.ToString());
                 //LambdaLogger.Log(ex.ToString());
 
