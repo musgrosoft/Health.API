@@ -69,7 +69,7 @@ namespace Services.Fitbit
                     });
         }
         
-        public async Task<IEnumerable<HeartSummary>> GetHeartZones(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<HeartSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate)
         {
             var heartActivies = await _fitbitAggregator.GetFitbitHeartActivities(fromDate, toDate);
 

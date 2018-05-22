@@ -103,7 +103,7 @@ namespace Migrators.Unit.Tests
                 new HeartSummary{ DateTime = new DateTime(2022, 12, 22), CardioMinutes = 222}
             };
 
-            _fitbitClient.Setup(x => x.GetHeartZones(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartSummary>)heartZones));
+            _fitbitClient.Setup(x => x.GetHeartSummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartSummary>)heartZones));
 
             await _fitbitMigrator.MigrateHeartZoneData();
 

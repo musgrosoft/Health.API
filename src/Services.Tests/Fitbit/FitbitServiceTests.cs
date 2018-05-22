@@ -98,5 +98,47 @@ namespace Services.Tests.Fitbit
             Assert.Contains(restingHeartRates, x => x.DateTime == new DateTime(2017, 1, 3) && x.Beats == 333);
 
         }
+
+        [Fact]
+        public async Task ShouldGetHeartSummaries()
+        {
+            //Given
+            _fitbitAggregator.Setup(x => x.GetFitbitHeartActivities(fromDate, toDate))
+                .Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)new List<ActivitiesHeart>
+                {
+                    new ActivitiesHeart{dateTime = new DateTime(2017,1,1), value = new Value {heartRateZones = new List<HeartRateZone>
+                    {
+                        new HeartRateZone{name = "Out of Range", minutes = 1},
+                        new HeartRateZone{name = "Fat Burn", minutes = 2},
+                        new HeartRateZone{name = "Cardio", minutes = 3},
+                        new HeartRateZone{name = "Peak", minutes = 4},
+                    }}},
+                    new ActivitiesHeart{dateTime = new DateTime(2017,1,2), value = new Value {heartRateZones = new List<HeartRateZone>
+                    {
+                        new HeartRateZone{name = "Out of Range", minutes = 5},
+                        new HeartRateZone{name = "Fat Burn", minutes = 6},
+                        new HeartRateZone{name = "Cardio", minutes = 7},
+                        new HeartRateZone{name = "Peak", minutes = 8},
+                    }}},
+                    new ActivitiesHeart{dateTime = new DateTime(2017,1,3), value = new Value {heartRateZones = new List<HeartRateZone>
+                    {
+                        new HeartRateZone{name = "Out of Range", minutes = 9},
+                        new HeartRateZone{name = "Fat Burn", minutes = 10},
+                        new HeartRateZone{name = "Cardio", minutes = 11},
+                        new HeartRateZone{name = "Peak", minutes = 12},
+                    }}},
+                }));
+
+            //When
+            var heartSummaries = await _fitbitService.GetHeartSummaries(fromDate, toDate);
+
+            //Then
+            Assert.Equal(3, heartSummaries.Count());
+            Assert.Contains(heartSummaries, x => x.DateTime == new DateTime(2017, 1, 1) && x.OutOfRangeMinutes == 1 && x.FatBurnMinutes == 2 && x.CardioMinutes == 3 && x.PeakMinutes == 4);
+            Assert.Contains(heartSummaries, x => x.DateTime == new DateTime(2017, 1, 2) && x.OutOfRangeMinutes == 5 && x.FatBurnMinutes == 6 && x.CardioMinutes == 7 && x.PeakMinutes == 8);
+            Assert.Contains(heartSummaries, x => x.DateTime == new DateTime(2017, 1, 3) && x.OutOfRangeMinutes == 9 && x.FatBurnMinutes == 10 && x.CardioMinutes == 11 && x.PeakMinutes == 12);
+
+
+        }
     }
 }
