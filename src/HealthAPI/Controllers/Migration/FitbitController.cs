@@ -29,10 +29,10 @@ namespace HealthAPI.Controllers.Migration
         public async Task<IActionResult> Migrate()
         {
 
+            var logger = new Logger();
             try
             {
                 //var logger = context.Logger;
-                var logger = new Logger();
                 logger.Log("hello starting fitbit migrate");
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
@@ -70,6 +70,8 @@ namespace HealthAPI.Controllers.Migration
             }
             catch (Exception ex)
             {
+                logger.Log(ex.Message);
+                logger.Log(ex.ToString());
                 return NotFound(ex.Message);
                 //LambdaLogger.Log(ex.ToString());
 

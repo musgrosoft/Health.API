@@ -1,4 +1,6 @@
 ﻿using Exceptionless;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 
 namespace Utils
@@ -15,14 +17,23 @@ namespace Utils
             });
         }
 
-        public void Log(string message)
+        public void Error(Exception ex)
         {
-            var requestUri = "http://listener.logz.io:8070/?token=gDonUjvYKMuWpLcDeBdSGyAbowpiusee&type=MY-TYPE";
-            var content = new StringContent("{\"message\": \"" + message + "\"}");
+            var requestUri = "http://listener.logz.io:8070/?token=gDonUjvYKMuWpLcDeBdSGyAbowpiusee&type=ERROR";
+            var content = new StringContent("{\"message\": \"" + System.Web.HttpUtility.JavaScriptStringEncode(ex.ToString()) + "\"}");
             var httpClient = new HttpClient();
             httpClient.PostAsync(requestUri, content);
-            //drop table stepcounts
-            // _client.SubmitLog(message);
+
+        }
+
+
+        public void Log(string message)
+        {
+            var requestUri = "http://listener.logz.io:8070/?token=gDonUjvYKMuWpLcDeBdSGyAbowpiusee&type=LOG";
+            var content = new StringContent("{\"message\": \"" + System.Web.HttpUtility.JavaScriptStringEncode(message) + "\"}");
+            var httpClient = new HttpClient();
+            httpClient.PostAsync(requestUri, content);
+
         }
 
 
