@@ -24,7 +24,7 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartSummary> Get()
         {
-            return _context.HeartRateDailySummaries.OrderBy(x=>x.DateTime);
+            return _context.HeartSummaries.OrderBy(x=>x.DateTime);
         }
 
         // GET api/HeartRateDailySummaries
@@ -33,7 +33,7 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartSummary> GetByWeek()
         {   
-            var dailyHeartZones = _context.HeartRateDailySummaries;
+            var dailyHeartZones = _context.HeartSummaries;
 
             var weekGroups = dailyHeartZones.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
 

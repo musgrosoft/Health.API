@@ -52,7 +52,7 @@ namespace Services.MyHealth
         
         public DateTime GetLatestDailyActivityDate()
         {
-            var latestDate = _healthContext.DailyActivitySummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            var latestDate = _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
             return latestDate ?? MIN_FITBIT_DATE;
         }
 
@@ -64,7 +64,7 @@ namespace Services.MyHealth
 
         public DateTime GetLatestHeartRateDailySummaryDate()
         {
-            var latestDate = _healthContext.HeartRateDailySummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            var latestDate = _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
             return latestDate ?? MIN_FITBIT_DATE;
         }
         
@@ -135,7 +135,7 @@ namespace Services.MyHealth
         {
             foreach (var dailyActivity in dailyActivities)
             {
-                var existingDailyActivity = await _healthContext.DailyActivitySummaries.FindAsync(dailyActivity.DateTime);
+                var existingDailyActivity = await _healthContext.ActivitySummaries.FindAsync(dailyActivity.DateTime);
                 if (existingDailyActivity != null)
                 {
                     existingDailyActivity.SedentaryMinutes = dailyActivity.SedentaryMinutes;
@@ -146,7 +146,7 @@ namespace Services.MyHealth
                 else
                 {
                     _logger.Log($"Saving Activity Data for {dailyActivity.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailyActivity.SedentaryMinutes} sedentary minutes, {dailyActivity.LightlyActiveMinutes} lightly active minutes, {dailyActivity.FairlyActiveMinutes} fairly active minutes, {dailyActivity.VeryActiveMinutes} very active minutes.");
-                    _healthContext.DailyActivitySummaries.Add(dailyActivity);
+                    _healthContext.ActivitySummaries.Add(dailyActivity);
                 }
             }
 
@@ -192,7 +192,7 @@ namespace Services.MyHealth
         {
             foreach (var heartRateZoneSummary in heartZoneSummaries)
             {
-                 var existingHeartRateZoneSummary = await _healthContext.HeartRateDailySummaries.FindAsync(heartRateZoneSummary.DateTime);
+                 var existingHeartRateZoneSummary = await _healthContext.HeartSummaries.FindAsync(heartRateZoneSummary.DateTime);
                 if (existingHeartRateZoneSummary != null)
                 {
                     existingHeartRateZoneSummary.OutOfRangeMinutes = heartRateZoneSummary.OutOfRangeMinutes;
@@ -202,7 +202,7 @@ namespace Services.MyHealth
                 }
                 else
                 {
-                    _healthContext.HeartRateDailySummaries.Add(heartRateZoneSummary);
+                    _healthContext.HeartSummaries.Add(heartRateZoneSummary);
                 }
             }
 

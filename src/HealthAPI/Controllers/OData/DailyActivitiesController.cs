@@ -24,7 +24,7 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<ActivitySummary> Get()
         {
-            return _context.DailyActivitySummaries.AsQueryable();
+            return _context.ActivitySummaries.AsQueryable();
         }
 
 
@@ -33,7 +33,7 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<ActivitySummary> GetByWeek()
         {
-            var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
+            var dailyActivities = _context.ActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
             var weekGroups = dailyActivities.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
 
@@ -61,7 +61,7 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<ActivitySummary> GetByMonth()
         {
-            var dailyActivities = _context.DailyActivitySummaries.OrderBy(x => x.DateTime).ToList();
+            var dailyActivities = _context.ActivitySummaries.OrderBy(x => x.DateTime).ToList();
 
             var monthGroups = dailyActivities.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
 
