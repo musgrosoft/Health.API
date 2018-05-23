@@ -31,10 +31,10 @@ namespace Migrators
             _logger.Log($"Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            _logger.Log($"Retrieving Weight records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            _logger.Log($"NOKIA - WEIGHT - Retrieving Weight records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var weights = await _nokiaClient.GetWeights(fromDate);
-            _logger.Log($"Found {weights.Count()} weight records.");
+            _logger.Log($"NOKIA - WEIGHT - Found {weights.Count()} weight records.");
 
             await _healthService.UpsertWeights(weights);
             await _healthService.AddMovingAveragesToWeights();
@@ -46,10 +46,10 @@ namespace Migrators
             _logger.Log($"Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            _logger.Log($"Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            _logger.Log($"NOKIA - BP - Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var bloodPressures = await _nokiaClient.GetBloodPressures(fromDate);
-            _logger.Log($"Found {bloodPressures.Count()} Blood Pressure records.");
+            _logger.Log($"NOKIA - BP - Found {bloodPressures.Count()} Blood Pressure records.");
             
             await _healthService.UpsertBloodPressures(bloodPressures);
         }
