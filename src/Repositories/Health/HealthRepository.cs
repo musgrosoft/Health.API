@@ -19,7 +19,7 @@ namespace Repositories.Health
         DateTime? GetLatestRestingHeartRateDate();
         DateTime? GetLatestHeartSummaryDate();
 
-        Task<Weight> FindAsync(Weight weight);
+        Weight Find(Weight weight);
         Task<BloodPressure> FindAsync(BloodPressure bloodPressure);
         StepCount Find(StepCount stepCount);
         Task<ActivitySummary> FindAsync(ActivitySummary activitySummary);
@@ -80,9 +80,9 @@ namespace Repositories.Health
         }
 
 
-        public async Task<Weight> FindAsync(Weight weight)
+        public Weight Find(Weight weight)
         {
-            return await _healthContext.Weights.FindAsync(weight.DateTime);
+            return _healthContext.Weights.Find(weight.DateTime);
         }
 
         public async Task<BloodPressure> FindAsync(BloodPressure bloodPressure)

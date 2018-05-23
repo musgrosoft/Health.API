@@ -35,8 +35,8 @@ namespace Migrators
             var weights = await _nokiaClient.GetWeights(fromDate);
             _logger.Log($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
 
-            await _healthService.UpsertWeights(weights);
-            await _healthService.AddMovingAveragesToWeights();
+            _healthService.UpsertWeights(weights);
+            _healthService.AddMovingAveragesToWeights();
         }
 
         public async Task MigrateBloodPressures()

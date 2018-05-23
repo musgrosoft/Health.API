@@ -21,9 +21,9 @@ namespace Services.MyHealth
         Task UpsertDailyActivities(IEnumerable<ActivitySummary> activitySummaries);
         Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartSummaries);
         void UpsertStepCounts(IEnumerable<StepCount> stepCount);
-        Task UpsertWeights(IEnumerable<Weight> weights);
+        void UpsertWeights(IEnumerable<Weight> weights);
         Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
 
-        Task AddMovingAveragesToWeights(int period = 10);
+        void AddMovingAveragesToWeights(int period = 10);
     }
 }
