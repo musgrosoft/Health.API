@@ -104,12 +104,12 @@ namespace Services.MyHealth
             _healthContext.SaveChanges();
         }
 
-        public async Task UpsertStepCounts(IEnumerable<StepCount> stepCounts)
+        public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
         {
             foreach (var stepCount in stepCounts)
             {
                 _logger.Log($"STEP COUNT : Saving Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
-                var existingStepCount = await _healthRepository.FindAsync(stepCount);
+                var existingStepCount = _healthRepository.Find(stepCount);
                 if (existingStepCount != null)
                 {
                     _healthRepository.Update(existingStepCount, stepCount);

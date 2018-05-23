@@ -37,7 +37,7 @@ namespace Migrators.Unit.Tests
         public async Task ShouldMigrateStepCounts()
         {
             _healthService.Setup(x => x.GetLatestStepCountDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertStepCounts(It.IsAny<IEnumerable<StepCount>>())).Returns(Task.CompletedTask);
+            _healthService.Setup(x => x.UpsertStepCounts(It.IsAny<IEnumerable<StepCount>>()));
             
             var stepCounts = new List<StepCount>
             {

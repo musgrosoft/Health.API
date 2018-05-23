@@ -21,7 +21,7 @@ namespace Repositories.Health
 
         Task<Weight> FindAsync(Weight weight);
         Task<BloodPressure> FindAsync(BloodPressure bloodPressure);
-        Task<StepCount> FindAsync(StepCount stepCount);
+        StepCount Find(StepCount stepCount);
         Task<ActivitySummary> FindAsync(ActivitySummary activitySummary);
         Task<RestingHeartRate> FindAsync(RestingHeartRate restingHeartRate);
         Task<HeartSummary> FindAsync(HeartSummary heartSummary);
@@ -90,9 +90,9 @@ namespace Repositories.Health
             return await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
         }
 
-        public async Task<StepCount> FindAsync(StepCount stepCount)
+        public StepCount Find(StepCount stepCount)
         {
-            return await _healthContext.StepCounts.FindAsync(stepCount.DateTime);
+            return _healthContext.StepCounts.Find(stepCount.DateTime);
         }
 
         public async Task<ActivitySummary> FindAsync(ActivitySummary activitySummary)

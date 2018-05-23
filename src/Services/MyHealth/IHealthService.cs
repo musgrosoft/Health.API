@@ -20,7 +20,7 @@ namespace Services.MyHealth
         Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
         Task UpsertDailyActivities(IEnumerable<ActivitySummary> dailyActivity);
         Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartSummaries);
-        Task UpsertStepCounts(IEnumerable<StepCount> stepCount);
+        void UpsertStepCounts(IEnumerable<StepCount> stepCount);
         Task UpsertWeights(IEnumerable<Weight> weights);
         Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
 
