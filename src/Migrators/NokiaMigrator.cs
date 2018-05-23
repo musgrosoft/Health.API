@@ -31,10 +31,9 @@ namespace Migrators
             _logger.Log($"WEIGHT : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            _logger.Log($"WEIGHT : Retrieving Weight records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
+            
             var weights = await _nokiaClient.GetWeights(fromDate);
-            _logger.Log($"WEIGHT : Found {weights.Count()} weight records.");
+            _logger.Log($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
 
             await _healthService.UpsertWeights(weights);
             await _healthService.AddMovingAveragesToWeights();

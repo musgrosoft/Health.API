@@ -63,17 +63,17 @@ namespace Services.MyHealth
         public async Task UpsertWeights(IEnumerable<Weight> weights)
         {
             foreach (var weight in weights)
-            {
-                _logger.Log($"WEIGHT : About to save Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                
+            {   
                 var existingWeight = await _healthRepository.FindAsync(weight);
 
                 if (existingWeight == null)
                 {
+                    _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                     _healthRepository.Insert(weight);
                 }
                 else
                 {
+                    _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                     _healthRepository.Update(existingWeight, weight);
                 }
             }
