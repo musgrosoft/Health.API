@@ -24,6 +24,8 @@ namespace Utils
             var httpClient = new HttpClient();
             httpClient.PostAsync(requestUri, content);
 
+            _client.SubmitException(ex);
+
         }
 
 
