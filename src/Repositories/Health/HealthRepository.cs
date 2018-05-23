@@ -20,11 +20,11 @@ namespace Repositories.Health
         DateTime? GetLatestHeartSummaryDate();
 
         Weight Find(Weight weight);
-        Task<BloodPressure> FindAsync(BloodPressure bloodPressure);
+        BloodPressure Find(BloodPressure bloodPressure);
         StepCount Find(StepCount stepCount);
-        Task<ActivitySummary> FindAsync(ActivitySummary activitySummary);
-        Task<RestingHeartRate> FindAsync(RestingHeartRate restingHeartRate);
-        Task<HeartSummary> FindAsync(HeartSummary heartSummary);
+        ActivitySummary Find(ActivitySummary activitySummary);
+        RestingHeartRate Find(RestingHeartRate restingHeartRate);
+        HeartSummary Find(HeartSummary heartSummary);
         void Update(BloodPressure existingBloodPressure, BloodPressure bloodPressure);
         void Update(StepCount existingStepCount, StepCount stepCount);
         void Update(ActivitySummary existingDailyActivity, ActivitySummary dailyActivity);
@@ -85,9 +85,9 @@ namespace Repositories.Health
             return _healthContext.Weights.Find(weight.DateTime);
         }
 
-        public async Task<BloodPressure> FindAsync(BloodPressure bloodPressure)
+        public BloodPressure Find(BloodPressure bloodPressure)
         {
-            return await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
+            return _healthContext.BloodPressures.Find(bloodPressure.DateTime);
         }
 
         public StepCount Find(StepCount stepCount)
@@ -95,19 +95,19 @@ namespace Repositories.Health
             return _healthContext.StepCounts.Find(stepCount.DateTime);
         }
 
-        public async Task<ActivitySummary> FindAsync(ActivitySummary activitySummary)
+        public ActivitySummary Find(ActivitySummary activitySummary)
         {
-            return await _healthContext.ActivitySummaries.FindAsync(activitySummary.DateTime);
+            return _healthContext.ActivitySummaries.Find(activitySummary.DateTime);
         }
 
-        public async Task<RestingHeartRate> FindAsync(RestingHeartRate restingHeartRate)
+        public RestingHeartRate Find(RestingHeartRate restingHeartRate)
         {
-            return await _healthContext.RestingHeartRates.FindAsync(restingHeartRate.DateTime);
+            return _healthContext.RestingHeartRates.Find(restingHeartRate.DateTime);
         }
 
-        public async Task<HeartSummary> FindAsync(HeartSummary heartSummary)
+        public HeartSummary Find(HeartSummary heartSummary)
         {
-            return await _healthContext.HeartSummaries.FindAsync(heartSummary.DateTime);
+            return _healthContext.HeartSummaries.Find(heartSummary.DateTime);
         }
 
         public void Update(Weight existingWeight, Weight newWeight)

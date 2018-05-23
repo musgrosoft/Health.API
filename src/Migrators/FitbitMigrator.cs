@@ -49,7 +49,7 @@ namespace Migrators
 
             var dailyActivites = await _fitbitService.GetDailyActivities(fromDate, _calendar.Now());
 
-            await _healthService.UpsertDailyActivities(dailyActivites);
+             _healthService.UpsertDailyActivities(dailyActivites);
         }
 
         public async Task MigrateRestingHeartRates()
@@ -62,9 +62,9 @@ namespace Migrators
 
             var restingHeartRates = await _fitbitService.GetRestingHeartRates(getDataFromDate, _calendar.Now());
 
-            await _healthService.UpsertRestingHeartRates(restingHeartRates);
+            _healthService.UpsertRestingHeartRates(restingHeartRates);
 
-            await _healthService.AddMovingAveragesToRestingHeartRates();
+            _healthService.AddMovingAveragesToRestingHeartRates();
         }
 
         public async Task MigrateHeartSummaries()
@@ -77,7 +77,7 @@ namespace Migrators
                 
             var heartSummaries = await _fitbitService.GetHeartSummaries(getDataFromDate, _calendar.Now());
 
-            await _healthService.UpsertDailyHeartSummaries(heartSummaries);
+            _healthService.UpsertDailyHeartSummaries(heartSummaries);
         }
 
         //        public async Task MigrateCalorieData()

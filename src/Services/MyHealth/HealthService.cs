@@ -82,13 +82,13 @@ namespace Services.MyHealth
         }
         
 
-        public async Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
+        public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
             _logger.Log($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
 
             foreach (var bloodPressure in bloodPressures)
             {
-                var existingBloodPressure = await _healthRepository.FindAsync(bloodPressure);
+                var existingBloodPressure = _healthRepository.Find(bloodPressure);
 
                 if (existingBloodPressure != null)
                 {
@@ -127,14 +127,14 @@ namespace Services.MyHealth
             }
         }
         
-        public async Task UpsertDailyActivities(IEnumerable<ActivitySummary>  activitySummaries)
+        public void UpsertDailyActivities(IEnumerable<ActivitySummary>  activitySummaries)
         {
             _logger.Log($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
 
             foreach (var activitySummary in activitySummaries)
             {
                
-                var existingDailyActivity = await _healthRepository.FindAsync(activitySummary);
+                var existingDailyActivity = _healthRepository.Find(activitySummary);
                 if (existingDailyActivity != null)
                 {
                      _logger.Log($"ACTIVITY SUMMARY : Update Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
@@ -148,13 +148,13 @@ namespace Services.MyHealth
             }
         }
         
-        public async Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
+        public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {
             _logger.Log($"RESTING HEART RATE : Saving {restingHeartRates.Count()} resting heart rates");
 
             foreach (var restingHeartRate in restingHeartRates)
             {
-                var existingRestingHeartRate = await _healthRepository.FindAsync(restingHeartRate);
+                var existingRestingHeartRate = _healthRepository.Find(restingHeartRate);
                 if (existingRestingHeartRate != null)
                 {
                     _logger.Log($"RESTING HEART RATE : About to update Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
@@ -168,14 +168,14 @@ namespace Services.MyHealth
             }
         }
 
-        public async Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
+        public void UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
         {
             _logger.Log($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
 
             foreach (var heartSummary in heartSummaries)
             {
                 
-                var existingHeartSummary = await _healthRepository.FindAsync(heartSummary);
+                var existingHeartSummary = _healthRepository.Find(heartSummary);
                 if (existingHeartSummary != null)
                 {
                     _logger.Log("HEART SUMMARY : update thing");
@@ -247,7 +247,7 @@ namespace Services.MyHealth
         }
 
 
-        public async Task AddMovingAveragesToRestingHeartRates(int period = 10)
+        public void AddMovingAveragesToRestingHeartRates(int period = 10)
         {
             _logger.Log("RESTING HEART RATE : Add moving averages");
             var heartRates = _healthContext.RestingHeartRates.OrderBy(x => x.DateTime).ToList();
@@ -269,7 +269,7 @@ namespace Services.MyHealth
                 }
             }
 
-            await _healthContext.SaveChangesAsync();
+            _healthContext.SaveChanges();
         }
 
 

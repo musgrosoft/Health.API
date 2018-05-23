@@ -57,7 +57,7 @@ namespace Migrators.Unit.Tests
         public async Task ShouldMigrateActivityData()
         {
             _healthService.Setup(x => x.GetLatestActivitySummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertDailyActivities(It.IsAny<IEnumerable<ActivitySummary>>())).Returns(Task.CompletedTask);
+            _healthService.Setup(x => x.UpsertDailyActivities(It.IsAny<IEnumerable<ActivitySummary>>()));
 
             var dailyActivities = new List<ActivitySummary>
             {
@@ -76,7 +76,7 @@ namespace Migrators.Unit.Tests
         public async Task ShouldMigrateRestingHeartRateData()
         {
             _healthService.Setup(x => x.GetLatestRestingHeartRateDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertRestingHeartRates(It.IsAny<IEnumerable<RestingHeartRate>>())).Returns(Task.CompletedTask);
+            _healthService.Setup(x => x.UpsertRestingHeartRates(It.IsAny<IEnumerable<RestingHeartRate>>()));
 
             var restingHeartRates = new List<RestingHeartRate>
             {
@@ -95,7 +95,7 @@ namespace Migrators.Unit.Tests
         public async Task ShouldMigrateHeartZoneData()
         {
             _healthService.Setup(x => x.GetLatestHeartSummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertDailyHeartSummaries(It.IsAny<IEnumerable<HeartSummary>>())).Returns(Task.CompletedTask);
+            _healthService.Setup(x => x.UpsertDailyHeartSummaries(It.IsAny<IEnumerable<HeartSummary>>()));
 
             var heartZones = new List<HeartSummary>
             {
