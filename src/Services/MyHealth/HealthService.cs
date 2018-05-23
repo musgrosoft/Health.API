@@ -272,6 +272,25 @@ namespace Services.MyHealth
             _healthContext.SaveChanges();
         }
 
+        public void CalculateCumSumForStepCounts()
+        {
+            _logger.Log("STEP COUNTS : Calculate cum sum");
+            var stepCounts = _healthContext.StepCounts.OrderBy(x => x.DateTime).ToList();
+            for (int i = 0; i < stepCounts.Count(); i++)
+            {
+                if (i == 0)
+                {
+                    stepCounts[i].CumSumCount = stepCounts[i].Count;
+                }
+                else
+                {
+                    stepCounts[i].CumSumCount = stepCounts[i].Count + stepCounts[i - 1].CumSumCount;
+                }
+            }
+
+            _healthContext.SaveChanges();
+
+        }
 
 
 
