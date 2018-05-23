@@ -30,7 +30,8 @@ namespace HealthAPI.Controllers.Migration
             try
             {
                 //var logger = context.Logger;
-                
+
+                logger.Log("NOKIA : starting nokia migrate");
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
                 var healthService = HealthServiceFactory.Build( logger, _context);

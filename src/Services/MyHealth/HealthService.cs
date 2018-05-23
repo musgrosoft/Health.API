@@ -64,7 +64,7 @@ namespace Services.MyHealth
         {
             foreach (var weight in weights)
             {
-                _logger.Log($"About to save Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                _logger.Log($"WEIGHT : About to save Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                 
                 var existingWeight = await _healthRepository.FindAsync(weight);
 
@@ -76,10 +76,7 @@ namespace Services.MyHealth
                 {
                     _healthRepository.Update(existingWeight, weight);
                 }
-
             }
-            
-            
         }
 
 
@@ -88,7 +85,7 @@ namespace Services.MyHealth
         {
             foreach (var bloodPressure in bloodPressures)
             {
-                _logger.Log($"About to save Blood Pressure record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
+                _logger.Log($"BLOOD PRESSURE : About to save Blood Pressure record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
 
                 var existingBloodPressure = await _healthRepository.FindAsync(bloodPressure);
                 if (existingBloodPressure != null)
@@ -110,6 +107,7 @@ namespace Services.MyHealth
         {
             foreach (var stepCount in stepCounts)
             {
+                _logger.Log($"STEP COUNT : Saving Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
                 var existingStepCount = await _healthRepository.FindAsync(stepCount);
                 if (existingStepCount != null)
                 {
@@ -117,17 +115,17 @@ namespace Services.MyHealth
                 }
                 else
                 {
-                    _logger.Log($"Saving Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
+                    
                     _healthRepository.Insert(stepCount);
                 }
             }
-
         }
         
         public async Task UpsertDailyActivities(IEnumerable<ActivitySummary>  dailyActivities)
         {
             foreach (var dailyActivity in dailyActivities)
             {
+                _logger.Log($"ACTIVITY SUMMARY : Saving Activity Data for {dailyActivity.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailyActivity.SedentaryMinutes} sedentary minutes, {dailyActivity.LightlyActiveMinutes} lightly active minutes, {dailyActivity.FairlyActiveMinutes} fairly active minutes, {dailyActivity.VeryActiveMinutes} very active minutes.");
                 var existingDailyActivity = await _healthRepository.FindAsync(dailyActivity);
                 if (existingDailyActivity != null)
                 {
@@ -135,52 +133,48 @@ namespace Services.MyHealth
                 }
                 else
                 {
-                    _logger.Log($"Saving Activity Data for {dailyActivity.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailyActivity.SedentaryMinutes} sedentary minutes, {dailyActivity.LightlyActiveMinutes} lightly active minutes, {dailyActivity.FairlyActiveMinutes} fairly active minutes, {dailyActivity.VeryActiveMinutes} very active minutes.");
                     _healthRepository.Insert(dailyActivity);
                 }
             }
-
         }
         
         public async Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {
             foreach (var restingHeartRate in restingHeartRates)
             {
-                _logger.Log($"About to save Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
+                _logger.Log($"RESTING HEART RATE : About to save Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
                 var existingRestingHeartRate = await _healthRepository.FindAsync(restingHeartRate);
                 if (existingRestingHeartRate != null)
                 {
                     _healthRepository.Update(existingRestingHeartRate, restingHeartRate);
-                    
                 }
                 else
                 {
                     _healthRepository.Insert(restingHeartRate);
                 }
             }
-
         }
 
         public async Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
         {
             foreach (var heartSummary in heartSummaries)
             {
+                _logger.Log("HEART SUMMARY : saving thing");
                 var existingHeartSummary = await _healthRepository.FindAsync(heartSummary);
                 if (existingHeartSummary != null)
                 {
                     _healthRepository.Update(existingHeartSummary, heartSummary);
-
                 }
                 else
                 {
                     _healthRepository.Insert(heartSummary);
                 }
             }
-
         }
 
         public async Task AddMovingAveragesToWeights(int period = 10)
         {
+            _logger.Log("WEIGHT : Add moving averages");
             var orderedWeights = _healthContext.Weights.OrderBy(x => x.DateTime).ToList();
 
             for (int i = 0; i < orderedWeights.Count(); i++)
@@ -207,6 +201,7 @@ namespace Services.MyHealth
 
         public void AddMovingAveragesToBloodPressures(int period = 10)
         {
+            _logger.Log("BLOOD PRESSURE : Add moving averages");
             var bloodPressures = _healthContext.BloodPressures.OrderBy(x => x.DateTime).ToList();
 
             for (int i = 0; i < bloodPressures.Count(); i++)
@@ -237,6 +232,7 @@ namespace Services.MyHealth
 
         public async Task AddMovingAveragesToRestingHeartRates(int period = 10)
         {
+            _logger.Log("RESTING HEART RATE : Add moving averages");
             var heartRates = _healthContext.RestingHeartRates.OrderBy(x => x.DateTime).ToList();
 
             for (int i = 0; i < heartRates.Count(); i++)

@@ -33,14 +33,14 @@ namespace HealthAPI.Controllers.Migration
             try
             {
                 //var logger = context.Logger;
-                logger.Log("hello starting fitbit migrate");
+                logger.Log("FITBIT : starting fitbit migrate");
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
                 var healthService = HealthServiceFactory.Build( logger, _context);
 
                 var oAuthService = new OAuthService(new OAuthTokenRepository(new Config(), logger));
                 var v = await oAuthService.GetFitbitRefreshToken();
-                logger.Log("fitbit refresh token is " + v);
+                //logger.Log("fitbit refresh token is " + v);
               //  return Ok("fitbit refresh token is " + v);
 
                 var fitbitAuthenticator = new FitbitAuthenticator(oAuthService);
@@ -82,7 +82,6 @@ namespace HealthAPI.Controllers.Migration
                 //};
 
             }
-            return Ok();
         }
 
        
