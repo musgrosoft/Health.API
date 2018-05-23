@@ -29,10 +29,10 @@ namespace HealthAPI.Controllers.Migration
         public async Task<IActionResult> Migrate()
         {
 
+            var logger = new Logger();
             try
             {
                 //var logger = context.Logger;
-                var logger = new Logger();
                 logger.Log("hello starting fitbit migrate");
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
@@ -54,9 +54,9 @@ namespace HealthAPI.Controllers.Migration
 
                 var fitbitMigrator = new FitbitMigrator(healthService, logger, fitbitService, new Calendar());
 
-                await fitbitMigrator.MigrateHeartZoneData();
-                await fitbitMigrator.MigrateStepData();
-                await fitbitMigrator.MigrateActivity();
+                //await fitbitMigrator.MigrateHeartZoneData();
+                //await fitbitMigrator.MigrateStepData();
+                //await fitbitMigrator.MigrateActivity();
                 await fitbitMigrator.MigrateRestingHeartRateData();
                 
 
@@ -70,7 +70,9 @@ namespace HealthAPI.Controllers.Migration
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                
+                logger.Error(ex);
+                return NotFound(ex.ToString());
                 //LambdaLogger.Log(ex.ToString());
 
                 //return new APIGatewayProxyResponse
