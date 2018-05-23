@@ -70,10 +70,12 @@ namespace Services.Fitbit
             }
             else if (response.StatusCode == (HttpStatusCode)429)
             {
+                _logger.Log($"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
                 throw new Exception($"Too many requests made to Fitbit API.");
             }
             else
             {
+
                 throw new Exception($"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
                 //_logger.Log($"No FitbitDailyActivity found for date : {date}");
                 //return null;
