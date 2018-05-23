@@ -25,9 +25,6 @@ namespace Repositories.OAuth
         {
             try
             {
-                _logger.Log($"access is {_config.DyanmoDbAccessKey}");
-                _logger.Log($"secret is {_config.DynamoDbSecretKey}");
-
                 var dynamoDbClient = new AmazonDynamoDBClient(
                     new BasicAWSCredentials(_config.DyanmoDbAccessKey, _config.DynamoDbSecretKey),
                     new AmazonDynamoDBConfig

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Services.Fitbit.Domain;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -38,6 +39,10 @@ namespace Services.Fitbit
                 var content = await response.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<FitBitActivity>(content);
                 return data;
+            }
+            else if (response.StatusCode == (HttpStatusCode)429)
+            {
+                throw new Exception($"Too many requests made to Fitbit API.");
             }
             else
             {

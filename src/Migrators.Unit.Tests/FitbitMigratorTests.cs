@@ -47,7 +47,7 @@ namespace Migrators.Unit.Tests
 
             _fitbitClient.Setup(x => x.GetStepCounts(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS),It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<StepCount>)stepCounts));
 
-            await _fitbitMigrator.MigrateStepData();
+            await _fitbitMigrator.MigrateStepCounts();
 
             _healthService.Verify(x => x.UpsertStepCounts(stepCounts), Times.Once);
         }
@@ -67,7 +67,7 @@ namespace Migrators.Unit.Tests
 
             _fitbitClient.Setup(x => x.GetDailyActivities(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<ActivitySummary>)dailyActivities));
 
-            await _fitbitMigrator.MigrateActivity();
+            await _fitbitMigrator.MigrateActivitySummaries();
 
             _healthService.Verify(x => x.UpsertDailyActivities(dailyActivities), Times.Once);
         }
@@ -86,7 +86,7 @@ namespace Migrators.Unit.Tests
 
             _fitbitClient.Setup(x => x.GetRestingHeartRates(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<RestingHeartRate>)restingHeartRates));
 
-            await _fitbitMigrator.MigrateRestingHeartRateData();
+            await _fitbitMigrator.MigrateRestingHeartRates();
 
             _healthService.Verify(x => x.UpsertRestingHeartRates(restingHeartRates), Times.Once);
         }
@@ -105,7 +105,7 @@ namespace Migrators.Unit.Tests
 
             _fitbitClient.Setup(x => x.GetHeartSummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartSummary>)heartZones));
 
-            await _fitbitMigrator.MigrateHeartZoneData();
+            await _fitbitMigrator.MigrateHeartSummaries();
 
             _healthService.Verify(x => x.UpsertDailyHeartSummaries(heartZones), Times.Once);
         }
