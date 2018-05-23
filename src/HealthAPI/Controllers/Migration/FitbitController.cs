@@ -54,10 +54,10 @@ namespace HealthAPI.Controllers.Migration
 
                 var fitbitMigrator = new FitbitMigrator(healthService, logger, fitbitService, new Calendar());
 
-                await fitbitMigrator.MigrateHeartSummaries();
+                //await fitbitMigrator.MigrateHeartSummaries();
                 await fitbitMigrator.MigrateStepCounts();
-                await fitbitMigrator.MigrateActivitySummaries();
-                await fitbitMigrator.MigrateRestingHeartRates();
+                //await fitbitMigrator.MigrateActivitySummaries();
+                //await fitbitMigrator.MigrateRestingHeartRates();
 
                 logger.Log("FITBIT : finishing fitbit migrate");
 
