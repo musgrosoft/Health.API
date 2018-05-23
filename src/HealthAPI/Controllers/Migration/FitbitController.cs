@@ -58,8 +58,8 @@ namespace HealthAPI.Controllers.Migration
                 await fitbitMigrator.MigrateStepCounts();
                 await fitbitMigrator.MigrateActivitySummaries();
                 await fitbitMigrator.MigrateRestingHeartRates();
-                
 
+                logger.Log("FITBIT : finishing fitbit migrate");
 
                 return Ok();
                 //return new APIGatewayProxyResponse

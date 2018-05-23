@@ -41,6 +41,7 @@ namespace HealthAPI.Controllers.Migration
                 await nokiaMigrator.MigrateWeights();
                 await nokiaMigrator.MigrateBloodPressures();
 
+                logger.Log("NOKIA : finishing nokia migrate");
 
                 return Ok();
                 //return new APIGatewayProxyResponse

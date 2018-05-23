@@ -68,10 +68,15 @@ namespace Services.Fitbit
                 data.DateTime = date;
                 return data;
             }
+            else if (response.StatusCode == (HttpStatusCode)429)
+            {
+                throw new Exception($"Too many requests made to Fitbit API.");
+            }
             else
             {
-                _logger.Log("No FitbitDailyActivity found for date : {date}");
-                return null;
+                throw new Exception($"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+                //_logger.Log($"No FitbitDailyActivity found for date : {date}");
+                //return null;
             }
         }
 
