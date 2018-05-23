@@ -108,33 +108,40 @@ namespace Services.MyHealth
         {
             foreach (var stepCount in stepCounts)
             {
-                _logger.Log($"STEP COUNT : Saving Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
                 var existingStepCount = _healthRepository.Find(stepCount);
                 if (existingStepCount != null)
                 {
+                    _logger.Log($"STEP COUNT : Update Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
                     _healthRepository.Update(existingStepCount, stepCount);
                 }
                 else
                 {
-                    
+                    _logger.Log($"STEP COUNT : Insert Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
                     _healthRepository.Insert(stepCount);
                 }
             }
         }
         
-        public async Task UpsertDailyActivities(IEnumerable<ActivitySummary>  dailyActivities)
+        public async Task UpsertDailyActivities(IEnumerable<ActivitySummary>  activitySummaries)
         {
-            foreach (var dailyActivity in dailyActivities)
+            var logMessage = $"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary";
+            foreach (var activitySummary in activitySummaries.OrderBy(x=>x.DateTime))
             {
-                _logger.Log($"ACTIVITY SUMMARY : Saving Activity Data for {dailyActivity.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailyActivity.SedentaryMinutes} sedentary minutes, {dailyActivity.LightlyActiveMinutes} lightly active minutes, {dailyActivity.FairlyActiveMinutes} fairly active minutes, {dailyActivity.VeryActiveMinutes} very active minutes.");
-                var existingDailyActivity = await _healthRepository.FindAsync(dailyActivity);
+                logMessage += $"<br/>Saving Activity Summary for {activitySummary.DateTime:dd - MMM - yyyy HH: mm: ss(ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.";
+            }
+            _logger.Log(logMessage);
+
+            foreach (var activitySummary in activitySummaries)
+            {
+               // _logger.Log($"ACTIVITY SUMMARY : Saving Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
+                var existingDailyActivity = await _healthRepository.FindAsync(activitySummary);
                 if (existingDailyActivity != null)
                 {
-                    _healthRepository.Update(existingDailyActivity, dailyActivity);
+                    _healthRepository.Update(existingDailyActivity, activitySummary);
                 }
                 else
                 {
-                    _healthRepository.Insert(dailyActivity);
+                    _healthRepository.Insert(activitySummary);
                 }
             }
         }
