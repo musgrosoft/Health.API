@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Services.Fitbit;
 using Services.MyHealth;
 using Utils;
@@ -15,11 +16,8 @@ namespace Migrators
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
-        public FitbitMigrator(ILogger logger)
-        {
-            _logger = logger;
-        }
-        
+        private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
+
         public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitService fitbitService, ICalendar calendar)
         {
             _healthService = healthService;
@@ -30,7 +28,7 @@ namespace Migrators
         
         public async Task MigrateStepData()
         {
-            var latestStepDate = _healthService.GetLatestStepCountDate();
+            var latestStepDate = _healthService.GetLatestStepCountDate(MIN_FITBIT_DATE);
             _logger.Log($"Latest Step record has a date of : {latestStepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
@@ -43,7 +41,7 @@ namespace Migrators
         
         public async Task MigrateActivity()
         {
-            var latestActivityDate  = _healthService.GetLatestDailyActivityDate();
+            var latestActivityDate  = _healthService.GetLatestActivitySummaryDate(MIN_FITBIT_DATE);
             _logger.Log($"Latest Activity record has a date of : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestActivityDate.AddDays(-SEARCH_DAYS_PREVIOUS);
@@ -56,7 +54,7 @@ namespace Migrators
 
         public async Task MigrateRestingHeartRateData()
         {
-            var latestRestingHeartRateDate = _healthService.GetLatestRestingHeartRateDate();
+            var latestRestingHeartRateDate = _healthService.GetLatestRestingHeartRateDate(MIN_FITBIT_DATE);
             _logger.Log($"Latest Resting Heart Rate record has a date of : {latestRestingHeartRateDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var getDataFromDate = latestRestingHeartRateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
@@ -71,7 +69,7 @@ namespace Migrators
 
         public async Task MigrateHeartZoneData()
         {
-            var latestHeartZonesDate = _healthService.GetLatestHeartRateDailySummaryDate();
+            var latestHeartZonesDate = _healthService.GetLatestHeartSummaryDate(MIN_FITBIT_DATE);
             _logger.Log($"Latest Heart Zone Data has a date of : {latestHeartZonesDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var getDataFromDate = latestHeartZonesDate.AddDays(-SEARCH_DAYS_PREVIOUS);

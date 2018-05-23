@@ -10,16 +10,16 @@ namespace Services.MyHealth
         void AddMovingAveragesToBloodPressures(int period = 10);
         Task AddMovingAveragesToRestingHeartRates(int period = 10);
 
-        DateTime GetLatestBloodPressureDate();
-        DateTime GetLatestDailyActivityDate();
-        DateTime GetLatestHeartRateDailySummaryDate();
-        DateTime GetLatestRestingHeartRateDate();
-        DateTime GetLatestStepCountDate();
-        DateTime GetLatestWeightDate();
+        DateTime GetLatestBloodPressureDate(DateTime defaultDateTime);
+        DateTime GetLatestActivitySummaryDate(DateTime defaultDateTime);
+        DateTime GetLatestHeartSummaryDate(DateTime defaultDateTime);
+        DateTime GetLatestRestingHeartRateDate(DateTime defaultDateTime);
+        DateTime GetLatestStepCountDate(DateTime defaultDateTime);
+        DateTime GetLatestWeightDate(DateTime defaultDateTime);
 
-        void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
+        Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
         Task UpsertDailyActivities(IEnumerable<ActivitySummary> dailyActivity);
-        Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartZoneSummaries);
+        Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartSummaries);
         Task UpsertStepCounts(IEnumerable<StepCount> stepCount);
         Task UpsertWeights(IEnumerable<Weight> weights);
         Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);

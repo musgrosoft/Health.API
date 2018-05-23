@@ -14,18 +14,18 @@ namespace Services.Fitbit
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
 
         private IConfig _config { get; }
-        private IFitbitAggregator _fitbitAggregator;
+        private IFitbitClientAggregator _fitbitClientAggregator;
 
-        public FitbitService(IConfig config, ILogger logger, IFitbitAggregator fitbitAggregator)
+        public FitbitService(IConfig config, ILogger logger, IFitbitClientAggregator fitbitClientAggregator)
         {
             _logger = logger;
             _config = config;
-            _fitbitAggregator = fitbitAggregator;
+            _fitbitClientAggregator = fitbitClientAggregator;
         }
 
         public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
         {
-            var fitbitDailyActivities = await _fitbitAggregator.GetFitbitDailyActivities(fromDate, toDate);
+            var fitbitDailyActivities = await _fitbitClientAggregator.GetFitbitDailyActivities(fromDate, toDate);
 
             return fitbitDailyActivities.Select(x => new StepCount
             {
@@ -36,7 +36,7 @@ namespace Services.Fitbit
 
         public async Task<IEnumerable<ActivitySummary>> GetDailyActivities(DateTime fromDate, DateTime toDate)
         {
-            var fitbitDailyActivities = await _fitbitAggregator.GetFitbitDailyActivities(fromDate, toDate);
+            var fitbitDailyActivities = await _fitbitClientAggregator.GetFitbitDailyActivities(fromDate, toDate);
 
             return fitbitDailyActivities.Select(x => new ActivitySummary
             {
@@ -58,7 +58,7 @@ namespace Services.Fitbit
         
         public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
         {
-            var heartActivies = await _fitbitAggregator.GetFitbitHeartActivities(fromDate, toDate);
+            var heartActivies = await _fitbitClientAggregator.GetFitbitHeartActivities(fromDate, toDate);
 
             return heartActivies
                     .Where(a => a.value.restingHeartRate != 0)
@@ -71,7 +71,7 @@ namespace Services.Fitbit
         
         public async Task<IEnumerable<HeartSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate)
         {
-            var heartActivies = await _fitbitAggregator.GetFitbitHeartActivities(fromDate, toDate);
+            var heartActivies = await _fitbitClientAggregator.GetFitbitHeartActivities(fromDate, toDate);
 
             return heartActivies.Select(x => new HeartSummary
             {

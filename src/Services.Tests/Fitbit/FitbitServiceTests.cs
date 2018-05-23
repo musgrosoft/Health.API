@@ -16,7 +16,7 @@ namespace Services.Tests.Fitbit
         private FitbitService _fitbitService;
         private Mock<IConfig> _config;
         private Mock<ILogger> _logger;
-        private Mock<IFitbitAggregator> _fitbitAggregator;
+        private Mock<IFitbitClientAggregator> _fitbitAggregator;
 
         private DateTime fromDate = new DateTime(2017,1,1);
         private DateTime toDate = new DateTime(2018, 2, 2);
@@ -25,7 +25,7 @@ namespace Services.Tests.Fitbit
         {
             _config = new Mock<IConfig>();
             _logger = new Mock<ILogger>();
-            _fitbitAggregator = new Mock<IFitbitAggregator>();
+            _fitbitAggregator = new Mock<IFitbitClientAggregator>();
 
             _fitbitService = new FitbitService(_config.Object, _logger.Object, _fitbitAggregator.Object);
         }

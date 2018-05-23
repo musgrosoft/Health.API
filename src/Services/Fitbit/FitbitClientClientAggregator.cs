@@ -8,11 +8,11 @@ using Utils;
 
 namespace Services.Fitbit
 {
-    public class FitbitAggregator : IFitbitAggregator
+    public class FitbitClientClientAggregator : IFitbitClientAggregator
     {
-        private readonly FitbitClient _fitbitClient;
+        private readonly IFitbitClient _fitbitClient;
 
-        public FitbitAggregator(FitbitClient fitbitClient)
+        public FitbitClientClientAggregator(IFitbitClient fitbitClient)
         {
             _fitbitClient = fitbitClient;
         }
@@ -22,11 +22,11 @@ namespace Services.Fitbit
             var fitbitDailyActivities = new List<FitbitDailyActivity>();
 
             for (DateTime date = fromDate;
-                date < toDate;
+                date <= toDate;
                 date = date.AddDays(1))
             {
                 var fitbitDailyActivity = await _fitbitClient.GetFitbitDailyActivity(date);
-                if (fitbitDailyActivities != null)
+                if (fitbitDailyActivity != null)
                 {
                     fitbitDailyActivities.Add(fitbitDailyActivity);
                 }
@@ -40,7 +40,7 @@ namespace Services.Fitbit
             var heartActivities = new List<ActivitiesHeart>();
 
             for (DateTime date = fromDate.AddMonths(1);
-                date < toDate.AddMonths(1).AddDays(1);
+                date <= toDate.AddMonths(1).AddDays(1);
                 date = date.AddMonths(1))
             {
                 var fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(date);

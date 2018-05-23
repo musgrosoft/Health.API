@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Repositories;
 using Repositories.Health;
 using Repositories.Models;
@@ -19,11 +16,6 @@ namespace Services.MyHealth
         private readonly HealthContext _healthContext;
         private readonly IHealthRepository _healthRepository;
 
-        private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
-        private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
-
-        private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
-
         public HealthService(IConfig config, ILogger logger, HealthContext healthContext, IHealthRepository healthRepository)
         {
             _config = config;
@@ -32,40 +24,40 @@ namespace Services.MyHealth
             _healthRepository = healthRepository;
         }
 
-        public DateTime GetLatestWeightDate()
+        public DateTime GetLatestWeightDate(DateTime defaultDateTime)
         {
-            var latestWeightDate = _healthContext.Weights.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
-            return latestWeightDate ?? MIN_WEIGHT_DATE;
+            var latestWeightDate = _healthRepository.GetLatestWeightDate();
+            return latestWeightDate ?? defaultDateTime;
         }
 
-        public DateTime GetLatestBloodPressureDate()
+        public DateTime GetLatestBloodPressureDate(DateTime defaultDateTime)
         {
-            var latestBloodPressureDate = _healthContext.BloodPressures.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
-            return latestBloodPressureDate ?? MIN_BLOOD_PRESSURE_DATE;
+            var latestDate = _healthRepository.GetLatestBloodPressureDate();
+            return latestDate ?? defaultDateTime;
         }
         
-        public DateTime GetLatestStepCountDate()
+        public DateTime GetLatestStepCountDate(DateTime defaultDateTime)
         {
-            var latestDate = _healthContext.StepCounts.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
-            return latestDate ?? MIN_FITBIT_DATE;
+            var latestDate = _healthRepository.GetLatestStepCountDate();
+            return latestDate ?? defaultDateTime;
         }
         
-        public DateTime GetLatestDailyActivityDate()
+        public DateTime GetLatestActivitySummaryDate(DateTime defaultDateTime)
         {
-            var latestDate = _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
-            return latestDate ?? MIN_FITBIT_DATE;
+            var latestDate = _healthRepository.GetLatestActivitySummaryDate();
+            return latestDate ?? defaultDateTime;
         }
 
-        public DateTime GetLatestRestingHeartRateDate()
+        public DateTime GetLatestRestingHeartRateDate(DateTime defaultDateTime)
         {
-            var latestDate = _healthContext.RestingHeartRates.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
-            return latestDate ?? MIN_FITBIT_DATE;
+            var latestDate = _healthRepository.GetLatestRestingHeartRateDate();
+            return latestDate ?? defaultDateTime;
         }
 
-        public DateTime GetLatestHeartRateDailySummaryDate()
+        public DateTime GetLatestHeartSummaryDate(DateTime defaultDateTime)
         {
-            var latestDate = _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
-            return latestDate ?? MIN_FITBIT_DATE;
+            var latestDate = _healthRepository.GetLatestHeartSummaryDate();
+            return latestDate ?? defaultDateTime;
         }
         
         public async Task UpsertWeights(IEnumerable<Weight> weights)
@@ -76,10 +68,15 @@ namespace Services.MyHealth
                 
                 var existingWeight = await _healthRepository.FindAsync(weight);
 
-                existingWeight.Case(
-                    some : ew => _healthRepository.Update(ew,weight),
-                    none : () => _healthRepository.Insert(weight)
-                );
+                if (existingWeight == null)
+                {
+                    _healthRepository.Insert(weight);
+                }
+                else
+                {
+                    _healthRepository.Update(existingWeight, weight);
+                }
+
             }
             
             
@@ -87,26 +84,23 @@ namespace Services.MyHealth
 
 
 
-        public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
+        public async Task UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
             foreach (var bloodPressure in bloodPressures)
             {
                 _logger.Log($"About to save Blood Pressure record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
 
-                var existingBloodPressure = _healthContext.BloodPressures.Find(bloodPressure.DateTime);
+                var existingBloodPressure = await _healthRepository.FindAsync(bloodPressure);
                 if (existingBloodPressure != null)
                 {
-                    existingBloodPressure.Diastolic = bloodPressure.Diastolic;
-                    existingBloodPressure.Systolic = bloodPressure.Systolic;
+                    _healthRepository.Update(existingBloodPressure, bloodPressure);
                 }
                 else
                 {
-                    _healthContext.BloodPressures.Add(bloodPressure);
+                    _healthRepository.Insert(bloodPressure);
                 }
             }
-
-            _healthContext.SaveChanges();
-
+            
             AddMovingAveragesToBloodPressures();
 
             _healthContext.SaveChanges();
@@ -116,97 +110,73 @@ namespace Services.MyHealth
         {
             foreach (var stepCount in stepCounts)
             {
-                var existingStepCount = await _healthContext.StepCounts.FindAsync(stepCount.DateTime);
+                var existingStepCount = await _healthRepository.FindAsync(stepCount);
                 if (existingStepCount != null)
                 {
-                    existingStepCount.Count = stepCount.Count;
+                    _healthRepository.Update(existingStepCount, stepCount);
                 }
                 else
                 {
                     _logger.Log($"Saving Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
-                    _healthContext.StepCounts.Add(stepCount);
+                    _healthRepository.Insert(stepCount);
                 }
             }
 
-            await _healthContext.SaveChangesAsync();
         }
         
         public async Task UpsertDailyActivities(IEnumerable<ActivitySummary>  dailyActivities)
         {
             foreach (var dailyActivity in dailyActivities)
             {
-                var existingDailyActivity = await _healthContext.ActivitySummaries.FindAsync(dailyActivity.DateTime);
+                var existingDailyActivity = await _healthRepository.FindAsync(dailyActivity);
                 if (existingDailyActivity != null)
                 {
-                    existingDailyActivity.SedentaryMinutes = dailyActivity.SedentaryMinutes;
-                    existingDailyActivity.LightlyActiveMinutes = dailyActivity.LightlyActiveMinutes;
-                    existingDailyActivity.FairlyActiveMinutes = dailyActivity.FairlyActiveMinutes;
-                    existingDailyActivity.VeryActiveMinutes = dailyActivity.VeryActiveMinutes;
+                    _healthRepository.Update(existingDailyActivity, dailyActivity);
                 }
                 else
                 {
                     _logger.Log($"Saving Activity Data for {dailyActivity.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {dailyActivity.SedentaryMinutes} sedentary minutes, {dailyActivity.LightlyActiveMinutes} lightly active minutes, {dailyActivity.FairlyActiveMinutes} fairly active minutes, {dailyActivity.VeryActiveMinutes} very active minutes.");
-                    _healthContext.ActivitySummaries.Add(dailyActivity);
+                    _healthRepository.Insert(dailyActivity);
                 }
             }
 
-            await _healthContext.SaveChangesAsync();
         }
-
-
-        //public async Task UpsertRestingHeartRate(RestingHeartRate restingHeartRate)
-        //{
-        //    var existingRestingHeartRate = await _healthContext.RestingHeartRates.FindAsync(restingHeartRate.DateTime);
-        //    if (existingRestingHeartRate != null)
-        //    {
-        //        existingRestingHeartRate.Beats = restingHeartRate.Beats;
-        //    }
-        //    else
-        //    {
-        //        await _healthContext.RestingHeartRates.AddAsync(restingHeartRate);
-        //    }
-
-        //    await _healthContext.SaveChangesAsync();
-        //}
-
+        
         public async Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {
             foreach (var restingHeartRate in restingHeartRates)
             {
                 _logger.Log($"About to save Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
-                var existingRestingHeartRate = await _healthContext.RestingHeartRates.FindAsync(restingHeartRate.DateTime);
+                var existingRestingHeartRate = await _healthRepository.FindAsync(restingHeartRate);
                 if (existingRestingHeartRate != null)
                 {
-                    existingRestingHeartRate.Beats = restingHeartRate.Beats;
+                    _healthRepository.Update(existingRestingHeartRate, restingHeartRate);
+                    
                 }
                 else
                 {
-                    _healthContext.RestingHeartRates.Add(restingHeartRate);
+                    _healthRepository.Insert(restingHeartRate);
                 }
             }
 
-            await _healthContext.SaveChangesAsync();
         }
 
-        public async Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartZoneSummaries)
+        public async Task UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
         {
-            foreach (var heartRateZoneSummary in heartZoneSummaries)
+            foreach (var heartSummary in heartSummaries)
             {
-                 var existingHeartRateZoneSummary = await _healthContext.HeartSummaries.FindAsync(heartRateZoneSummary.DateTime);
-                if (existingHeartRateZoneSummary != null)
+                var existingHeartSummary = await _healthRepository.FindAsync(heartSummary);
+                if (existingHeartSummary != null)
                 {
-                    existingHeartRateZoneSummary.OutOfRangeMinutes = heartRateZoneSummary.OutOfRangeMinutes;
-                    existingHeartRateZoneSummary.FatBurnMinutes = heartRateZoneSummary.FatBurnMinutes;
-                    existingHeartRateZoneSummary.CardioMinutes = heartRateZoneSummary.CardioMinutes;
-                    existingHeartRateZoneSummary.PeakMinutes = heartRateZoneSummary.PeakMinutes;
+                    _healthRepository.Update(existingHeartSummary, heartSummary);
+
                 }
                 else
                 {
-                    _healthContext.HeartSummaries.Add(heartRateZoneSummary);
+                    _healthRepository.Insert(heartSummary);
                 }
             }
 
-            await _healthContext.SaveChangesAsync();
         }
 
         public async Task AddMovingAveragesToWeights(int period = 10)

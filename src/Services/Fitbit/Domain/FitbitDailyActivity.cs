@@ -28,18 +28,18 @@ namespace Services.Fitbit.Domain
         public int steps { get; set; }
     }
 
-    public class Distance
-    {
-        public string activity { get; set; }
-        public double distance { get; set; }
-    }
+//    public class Distance
+//    {
+//        public string activity { get; set; }
+//        public double distance { get; set; }
+//    }
 
     public class Summary
     {
         public int activityCalories { get; set; }
         public int caloriesBMR { get; set; }
         public int caloriesOut { get; set; }
-        public List<Distance> distances { get; set; }
+        //public List<Distance> distances { get; set; }
         public double elevation { get; set; }
         public int fairlyActiveMinutes { get; set; }
         public int floors { get; set; }

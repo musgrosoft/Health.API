@@ -27,13 +27,13 @@ namespace Services.Fitbit.Domain
             public Value value { get; set; }
         }
 
-        public class Dataset
-        {
-            public string time { get; set; }
-            public int value { get; set; }
-
-        public string theDateTime { get; set; }
-        }
+//        public class Dataset
+//        {
+//            public string time { get; set; }
+//            public int value { get; set; }
+//
+//        public string theDateTime { get; set; }
+//        }
 
 //        public class ActivitiesHeartIntraday
 //        {

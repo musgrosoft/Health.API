@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Repositories.Models;
 using Utils;
 
@@ -6,9 +8,28 @@ namespace Repositories.Health
 {
     public interface IHealthRepository
     {
-        Task<Maybe<Weight>> FindAsync(Weight weight);
-        void Insert(Weight weight);
+
+        void Insert<T>(T obj) where T : class;
         void Update(Weight existingWeight, Weight newWeight);
+
+        DateTime? GetLatestStepCountDate();
+        DateTime? GetLatestBloodPressureDate();
+        DateTime? GetLatestWeightDate();
+        DateTime? GetLatestActivitySummaryDate();
+        DateTime? GetLatestRestingHeartRateDate();
+        DateTime? GetLatestHeartSummaryDate();
+
+        Task<Weight> FindAsync(Weight weight);
+        Task<BloodPressure> FindAsync(BloodPressure bloodPressure);
+        Task<StepCount> FindAsync(StepCount stepCount);
+        Task<ActivitySummary> FindAsync(ActivitySummary activitySummary);
+        Task<RestingHeartRate> FindAsync(RestingHeartRate restingHeartRate);
+        Task<HeartSummary> FindAsync(HeartSummary heartSummary);
+        void Update(BloodPressure existingBloodPressure, BloodPressure bloodPressure);
+        void Update(StepCount existingStepCount, StepCount stepCount);
+        void Update(ActivitySummary existingDailyActivity, ActivitySummary dailyActivity);
+        void Update(RestingHeartRate existingRestingHeartRate, RestingHeartRate restingHeartRate);
+        void Update(HeartSummary existingHeartSummary, HeartSummary heartSummary);
     }
 
     public class HealthRepository : IHealthRepository
@@ -20,10 +41,73 @@ namespace Repositories.Health
             _healthContext = healthContext;
         }
 
-        public void Insert(Weight weight)
+        public void Insert<T>(T obj) where T : class
         {
-            _healthContext.Add(weight);
+            _healthContext.Add(obj);
             _healthContext.SaveChanges();
+        }
+
+
+
+        public DateTime? GetLatestStepCountDate()
+        {
+            return _healthContext.StepCounts.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
+        public DateTime? GetLatestBloodPressureDate()
+        {
+            return _healthContext.BloodPressures.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
+        public DateTime? GetLatestWeightDate()
+        {
+           return _healthContext.Weights.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
+        public DateTime? GetLatestActivitySummaryDate()
+        {
+            return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
+        public DateTime? GetLatestRestingHeartRateDate()
+        {
+            return _healthContext.RestingHeartRates.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
+        public DateTime? GetLatestHeartSummaryDate()
+        {
+            return _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
+
+        public async Task<Weight> FindAsync(Weight weight)
+        {
+            return await _healthContext.Weights.FindAsync(weight.DateTime);
+        }
+
+        public async Task<BloodPressure> FindAsync(BloodPressure bloodPressure)
+        {
+            return await _healthContext.BloodPressures.FindAsync(bloodPressure.DateTime);
+        }
+
+        public async Task<StepCount> FindAsync(StepCount stepCount)
+        {
+            return await _healthContext.StepCounts.FindAsync(stepCount.DateTime);
+        }
+
+        public async Task<ActivitySummary> FindAsync(ActivitySummary activitySummary)
+        {
+            return await _healthContext.ActivitySummaries.FindAsync(activitySummary.DateTime);
+        }
+
+        public async Task<RestingHeartRate> FindAsync(RestingHeartRate restingHeartRate)
+        {
+            return await _healthContext.RestingHeartRates.FindAsync(restingHeartRate.DateTime);
+        }
+
+        public async Task<HeartSummary> FindAsync(HeartSummary heartSummary)
+        {
+            return await _healthContext.HeartSummaries.FindAsync(heartSummary.DateTime);
         }
 
         public void Update(Weight existingWeight, Weight newWeight)
@@ -36,23 +120,46 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-
-        public async Task<Maybe<Weight>> FindAsync(Weight weight)
+        public void Update(BloodPressure existingBloodPressure, BloodPressure bloodPressure)
         {
-            var existingWeight = await _healthContext.Weights.FindAsync(weight.DateTime);
+            existingBloodPressure.Diastolic = bloodPressure.Diastolic;
+            existingBloodPressure.Systolic = bloodPressure.Systolic;
 
-            return Maybe<Weight>.CreateFrom(existingWeight);
+            _healthContext.SaveChanges();
 
-            //if (existingWeight != null)
-            //{
-            //    return Maybe<Weight>.Some(existingWeight);
-            //}
-            //else
-            //{
-            //    return Maybe<Weight>.None;
-            //}
+        }
 
-            
+        public void Update(StepCount existingStepCount, StepCount stepCount)
+        {
+            existingStepCount.Count = stepCount.Count;
+            _healthContext.SaveChanges();
+        }
+
+        public void Update(ActivitySummary existingDailyActivity, ActivitySummary dailyActivity)
+        {
+            existingDailyActivity.SedentaryMinutes = dailyActivity.SedentaryMinutes;
+            existingDailyActivity.LightlyActiveMinutes = dailyActivity.LightlyActiveMinutes;
+            existingDailyActivity.FairlyActiveMinutes = dailyActivity.FairlyActiveMinutes;
+            existingDailyActivity.VeryActiveMinutes = dailyActivity.VeryActiveMinutes;
+
+            _healthContext.SaveChanges();
+        }
+
+        public void Update(RestingHeartRate existingRestingHeartRate, RestingHeartRate restingHeartRate)
+        {
+            existingRestingHeartRate.Beats = restingHeartRate.Beats;
+
+            _healthContext.SaveChanges();
+        }
+
+        public void Update(HeartSummary existingHeartSummary, HeartSummary heartSummary)
+        {
+            existingHeartSummary.OutOfRangeMinutes = heartSummary.OutOfRangeMinutes;
+            existingHeartSummary.FatBurnMinutes = heartSummary.FatBurnMinutes;
+            existingHeartSummary.CardioMinutes = heartSummary.CardioMinutes;
+            existingHeartSummary.PeakMinutes = heartSummary.PeakMinutes;
+
+            _healthContext.SaveChanges();
         }
     }
 }

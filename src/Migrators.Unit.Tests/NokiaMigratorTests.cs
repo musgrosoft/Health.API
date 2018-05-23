@@ -33,7 +33,7 @@ namespace Migrators.Unit.Tests
         {
             var latestWeightDate = new DateTime(2010,12,1);
             
-            _healthService.Setup(x => x.GetLatestWeightDate()).Returns(latestWeightDate);
+            _healthService.Setup(x => x.GetLatestWeightDate(It.IsAny<DateTime>())).Returns(latestWeightDate);
 
             var weights = new List<Weight>()
             {
@@ -54,7 +54,7 @@ namespace Migrators.Unit.Tests
         {
             var latestBloodPressureDate = new DateTime(2011, 2, 3);
 
-            _healthService.Setup(x => x.GetLatestBloodPressureDate()).Returns(latestBloodPressureDate);
+            _healthService.Setup(x => x.GetLatestBloodPressureDate(It.IsAny<DateTime>())).Returns(latestBloodPressureDate);
 
             var bloodPressures = new List<BloodPressure>()
             {

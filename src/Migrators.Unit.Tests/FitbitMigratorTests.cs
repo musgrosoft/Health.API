@@ -36,7 +36,7 @@ namespace Migrators.Unit.Tests
         [Fact]
         public async Task ShouldMigrateStepCounts()
         {
-            _healthService.Setup(x => x.GetLatestStepCountDate()).Returns(latestDate);
+            _healthService.Setup(x => x.GetLatestStepCountDate(It.IsAny<DateTime>())).Returns(latestDate);
             _healthService.Setup(x => x.UpsertStepCounts(It.IsAny<IEnumerable<StepCount>>())).Returns(Task.CompletedTask);
             
             var stepCounts = new List<StepCount>
@@ -56,7 +56,7 @@ namespace Migrators.Unit.Tests
         [Fact]
         public async Task ShouldMigrateActivityData()
         {
-            _healthService.Setup(x => x.GetLatestDailyActivityDate()).Returns(latestDate);
+            _healthService.Setup(x => x.GetLatestActivitySummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
             _healthService.Setup(x => x.UpsertDailyActivities(It.IsAny<IEnumerable<ActivitySummary>>())).Returns(Task.CompletedTask);
 
             var dailyActivities = new List<ActivitySummary>
@@ -75,7 +75,7 @@ namespace Migrators.Unit.Tests
         [Fact]
         public async Task ShouldMigrateRestingHeartRateData()
         {
-            _healthService.Setup(x => x.GetLatestRestingHeartRateDate()).Returns(latestDate);
+            _healthService.Setup(x => x.GetLatestRestingHeartRateDate(It.IsAny<DateTime>())).Returns(latestDate);
             _healthService.Setup(x => x.UpsertRestingHeartRates(It.IsAny<IEnumerable<RestingHeartRate>>())).Returns(Task.CompletedTask);
 
             var restingHeartRates = new List<RestingHeartRate>
@@ -94,7 +94,7 @@ namespace Migrators.Unit.Tests
         [Fact]
         public async Task ShouldMigrateHeartZoneData()
         {
-            _healthService.Setup(x => x.GetLatestHeartRateDailySummaryDate()).Returns(latestDate);
+            _healthService.Setup(x => x.GetLatestHeartSummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
             _healthService.Setup(x => x.UpsertDailyHeartSummaries(It.IsAny<IEnumerable<HeartSummary>>())).Returns(Task.CompletedTask);
 
             var heartZones = new List<HeartSummary>

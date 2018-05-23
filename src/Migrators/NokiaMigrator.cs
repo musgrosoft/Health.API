@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Services.MyHealth;
 using Services.Nokia;
@@ -13,7 +14,10 @@ namespace Migrators
         private readonly INokiaClient _nokiaClient;
 
         private const int SEARCH_DAYS_PREVIOUS = 10;
-        
+
+        private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
+        private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
+
         public NokiaMigrator(IHealthService healthService, ILogger logger, INokiaClient nokiaClient)
         {
             _healthService = healthService;
@@ -23,7 +27,7 @@ namespace Migrators
         
         public async Task MigrateWeights()
         {
-            var latestWeightDate  = _healthService.GetLatestWeightDate();
+            var latestWeightDate  = _healthService.GetLatestWeightDate(MIN_WEIGHT_DATE);
             _logger.Log($"Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
@@ -38,7 +42,7 @@ namespace Migrators
 
         public async Task MigrateBloodPressures()
         {
-            var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate();
+            var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(MIN_BLOOD_PRESSURE_DATE);
             _logger.Log($"Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS);
@@ -47,7 +51,7 @@ namespace Migrators
             var bloodPressures = await _nokiaClient.GetBloodPressures(fromDate);
             _logger.Log($"Found {bloodPressures.Count()} Blood Pressure records.");
             
-            _healthService.UpsertBloodPressures(bloodPressures);
+            await _healthService.UpsertBloodPressures(bloodPressures);
         }
 
     }

@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Services.Fitbit.Domain;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Utils;
 
 namespace Services.Fitbit
 {
-    public class FitbitClient
+    public class FitbitClient : IFitbitClient
     {
         private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 
