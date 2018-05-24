@@ -12,7 +12,15 @@ namespace Repositories.Models
         public int? Count { get; set; }
         public int? CumSumCount { get; set; }
 
+        public double? Target
+        {
+            get
+            {
+                var days = DateTime.Now - new DateTime(2017, 5, 4);
 
+                return days.TotalDays * 10000;
+            }
+        }
 
         //[NotMapped]
         //public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
