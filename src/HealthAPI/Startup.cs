@@ -146,6 +146,11 @@ namespace HealthAPI
             builder.StructuralTypes.First(t => t.ClrType == typeof(Weight)).AddProperty(typeof(Weight).GetProperty("Target"));
             builder.StructuralTypes.First(t => t.ClrType == typeof(StepCount)).AddProperty(typeof(StepCount).GetProperty("Target"));
 
+            builder.StructuralTypes.First(t => t.ClrType == typeof(AlcoholIntake)).AddProperty(typeof(AlcoholIntake).GetProperty("Target"));
+            builder.StructuralTypes.First(t => t.ClrType == typeof(ActivitySummary)).AddProperty(typeof(ActivitySummary).GetProperty("Target"));
+
+            builder.StructuralTypes.First(t => t.ClrType == typeof(HeartSummary)).AddProperty(typeof(HeartSummary).GetProperty("FatBurnAndAboveTarget"));
+            builder.StructuralTypes.First(t => t.ClrType == typeof(HeartSummary)).AddProperty(typeof(HeartSummary).GetProperty("CardioAndAboveTarget"));
 
             //app.UseMvc(route =>
             //{

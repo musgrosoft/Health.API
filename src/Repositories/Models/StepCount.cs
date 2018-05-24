@@ -12,11 +12,12 @@ namespace Repositories.Models
         public int? Count { get; set; }
         public int? CumSumCount { get; set; }
 
+        [NotMapped]
         public double? Target
         {
             get
             {
-                var days = DateTime - new DateTime(2017, 5, 4);
+                var days = DateTime - new DateTime(2017, 5, 3);
 
                 return days.TotalDays * 10000;
             }

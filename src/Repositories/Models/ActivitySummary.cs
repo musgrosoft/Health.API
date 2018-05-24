@@ -17,6 +17,17 @@ namespace Repositories.Models
         [NotMapped]
         public int ActiveMinutes { get { return FairlyActiveMinutes + VeryActiveMinutes; } }
 
+        [NotMapped]
+        public double? Target
+        {
+            get
+            {
+                var days = DateTime - new DateTime(2017, 5, 3);
+
+                return days.TotalDays * 30;
+            }
+        }
+
         //[NotMapped]
         //public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
         //[NotMapped]

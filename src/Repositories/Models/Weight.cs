@@ -19,6 +19,7 @@ namespace Repositories.Models
         [Column(TypeName = "decimal(10, 5)")]
         public decimal? MovingAverageKg { get; set; }
 
+        [NotMapped]
         public double? Target { get {
 
                 //if (DateTime < new DateTime(2018, 5, 21))
