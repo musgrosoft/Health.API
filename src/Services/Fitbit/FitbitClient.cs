@@ -42,7 +42,7 @@ namespace Services.Fitbit
             }
             else if (response.StatusCode == (HttpStatusCode)429)
             {
-                throw new Exception($"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+                throw new TooManyRequestsException($"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
             }
             else
             {

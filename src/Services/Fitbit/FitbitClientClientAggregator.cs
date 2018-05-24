@@ -55,7 +55,16 @@ namespace Services.Fitbit
                 date <= toDate.AddMonths(1).AddDays(1);
                 date = date.AddMonths(1))
             {
-                var fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(date);
+                FitBitActivity fitbitActivity;
+                try
+                { 
+                    fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(date);
+                }
+                catch (TooManyRequestsException ex)
+                {
+                    _logger.Error(ex);
+                    break;
+                }
                 heartActivities.AddRange(fitbitActivity.activitiesHeart);
             }
 
