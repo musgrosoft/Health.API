@@ -37,6 +37,8 @@ namespace Migrators
             var dailySteps = await _fitbitService.GetStepCounts(fromDate, _calendar.Now());
 
             _healthService.UpsertStepCounts(dailySteps);
+
+            _healthService.CalculateCumSumForStepCounts();
         }
         
         public async Task MigrateActivitySummaries()
