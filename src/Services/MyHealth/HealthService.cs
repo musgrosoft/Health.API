@@ -209,10 +209,10 @@ namespace Services.MyHealth
                 {
                     orderedWeights[i].MovingAverageKg = null;
                 }
-
+_healthContext.SaveChanges();
             }
 
-            _healthContext.SaveChanges();
+            
         }
 
 
