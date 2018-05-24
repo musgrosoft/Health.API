@@ -15,6 +15,9 @@ namespace Repositories.Models
         public int? CardioMinutes { get; set; }
         public int? PeakMinutes { get; set; }
 
+        public int? CumSumFatBurnAndAbove { get; set; }
+        public int? CumSumCardioAndAbove { get; set; }
+
         [NotMapped]
         public double? TargetFatBurnAndAbove
         {

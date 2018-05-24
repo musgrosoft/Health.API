@@ -293,6 +293,64 @@ namespace Services.MyHealth
         }
 
 
+        public void CalculateCumSumForUnits()
+        {
+            _logger.Log("UNITS : Calculate cum sum");
+            var alcoholIntakes = _healthContext.AlcoholIntakes.OrderBy(x => x.DateTime).ToList();
+            for (int i = 0; i < alcoholIntakes.Count(); i++)
+            {
+                if (i == 0)
+                {
+                    alcoholIntakes[i].CumSumUnits = alcoholIntakes[i].Units;
+                }
+                else
+                {
+                    alcoholIntakes[i].CumSumUnits = alcoholIntakes[i].Units + alcoholIntakes[i - 1].CumSumUnits;
+                }
+            }
+
+            _healthContext.SaveChanges();
+        }
+
+        public void CalculateCumSumForActivitySummaries()
+        {
+            _logger.Log("ACTIVITY SUMMARY : Calculate cum sum");
+            var activitySummaries = _healthContext.ActivitySummaries.OrderBy(x => x.DateTime).ToList();
+            for (int i = 0; i < activitySummaries.Count(); i++)
+            {
+                if (i == 0)
+                {
+                    activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes;
+                }
+                else
+                {
+                    activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes + activitySummaries[i - 1].CumSumActiveMinutes;
+                }
+            }
+
+            _healthContext.SaveChanges();
+        }
+
+        public void CalculateCumSumForHeartSummaries()
+        {
+            _logger.Log("HEART SUMMARY : Calculate cum sum");
+            var heartSummaries = _healthContext.HeartSummaries.OrderBy(x => x.DateTime).ToList();
+            for (int i = 0; i < heartSummaries.Count(); i++)
+            {
+                if (i == 0)
+                {
+                    heartSummaries[i].CumSumFatBurnAndAbove = heartSummaries[i].FatBurnMinutes + heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes;
+                    heartSummaries[i].CumSumCardioAndAbove = heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes;
+                }
+                else
+                {
+                    heartSummaries[i].CumSumFatBurnAndAbove = heartSummaries[i].FatBurnMinutes + heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes + heartSummaries[i - 1].CumSumFatBurnAndAbove;
+                    heartSummaries[i].CumSumCardioAndAbove = heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes + heartSummaries[i - 1].CumSumCardioAndAbove;
+                }
+            }
+
+            _healthContext.SaveChanges();
+        }
 
     }
 }

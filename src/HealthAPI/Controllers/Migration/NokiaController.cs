@@ -40,6 +40,7 @@ namespace HealthAPI.Controllers.Migration
 
                 await nokiaMigrator.MigrateWeights();
                 await nokiaMigrator.MigrateBloodPressures();
+                healthService.CalculateCumSumForUnits();
 
                 logger.Log("NOKIA : finishing nokia migrate");
 

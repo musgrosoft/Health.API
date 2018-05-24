@@ -52,6 +52,8 @@ namespace Migrators
             var dailyActivites = await _fitbitService.GetDailyActivities(fromDate, _calendar.Now());
 
              _healthService.UpsertDailyActivities(dailyActivites);
+
+            _healthService.CalculateCumSumForActivitySummaries();
         }
 
         public async Task MigrateRestingHeartRates()
@@ -80,6 +82,8 @@ namespace Migrators
             var heartSummaries = await _fitbitService.GetHeartSummaries(getDataFromDate, _calendar.Now());
 
             _healthService.UpsertDailyHeartSummaries(heartSummaries);
+
+            _healthService.CalculateCumSumForHeartSummaries();
         }
 
         //        public async Task MigrateCalorieData()

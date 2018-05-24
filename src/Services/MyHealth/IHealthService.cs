@@ -25,6 +25,10 @@ namespace Services.MyHealth
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
 
         void AddMovingAveragesToWeights(int period = 10);
+
         void CalculateCumSumForStepCounts();
+        void CalculateCumSumForUnits();
+        void CalculateCumSumForActivitySummaries();
+        void CalculateCumSumForHeartSummaries();
     }
 }

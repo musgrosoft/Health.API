@@ -21,5 +21,7 @@ namespace Repositories.Models
                 return days.TotalDays * 4;
             }
         }
+
+        public int? CumSumUnits { get; set; }
     }
 }
