@@ -11,10 +11,12 @@ namespace Services.Fitbit
     public class FitbitClientClientAggregator : IFitbitClientAggregator
     {
         private readonly IFitbitClient _fitbitClient;
+        private readonly ILogger _logger;
 
-        public FitbitClientClientAggregator(IFitbitClient fitbitClient)
+        public FitbitClientClientAggregator(IFitbitClient fitbitClient, ILogger logger)
         {
             _fitbitClient = fitbitClient;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<FitbitDailyActivity>> GetFitbitDailyActivities(DateTime fromDate, DateTime toDate)
@@ -25,7 +27,17 @@ namespace Services.Fitbit
                 date <= toDate;
                 date = date.AddDays(1))
             {
-                var fitbitDailyActivity = await _fitbitClient.GetFitbitDailyActivity(date);
+                FitbitDailyActivity fitbitDailyActivity;
+                try
+                {
+                    fitbitDailyActivity = await _fitbitClient.GetFitbitDailyActivity(date);
+                }
+                catch (TooManyRequestsException ex)
+                {
+                    _logger.Error(ex);
+                    break;
+                }
+                
                 if (fitbitDailyActivity != null)
                 {
                     fitbitDailyActivities.Add(fitbitDailyActivity);

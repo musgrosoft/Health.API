@@ -6,18 +6,21 @@ using Moq;
 using Services.Fitbit;
 using Services.Fitbit.Domain;
 using Xunit;
+using Utils;
 
 namespace Services.Tests.Fitbit
 {
     public class FitbitClientAggregatorTests
     {
         private Mock<IFitbitClient> _fitbitClient;
+        private Mock<ILogger> _logger;
         private FitbitClientClientAggregator _fitbitClientClientAggregator;
 
         public FitbitClientAggregatorTests()
         {
             _fitbitClient = new Mock<IFitbitClient>();
-            _fitbitClientClientAggregator = new FitbitClientClientAggregator(_fitbitClient.Object);
+            _logger = new Mock<ILogger>();
+            _fitbitClientClientAggregator = new FitbitClientClientAggregator(_fitbitClient.Object, _logger.Object);
         }
 
         [Fact]
