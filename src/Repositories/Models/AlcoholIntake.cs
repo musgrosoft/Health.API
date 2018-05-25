@@ -18,7 +18,7 @@ namespace Repositories.Models
             {
                 var days = DateTime - new DateTime(2016, 1, 1);
 
-                return days.TotalDays * 5;
+                return days.TotalDays * 6;
             }
         }
 
