@@ -209,7 +209,7 @@ namespace Services.MyHealth
                 {
                     orderedWeights[i].MovingAverageKg = null;
                 }
-_healthContext.SaveChanges();
+                _healthContext.SaveChanges();
             }
 
             
@@ -242,6 +242,7 @@ _healthContext.SaveChanges();
                     bloodPressures[i].MovingAverageSystolic = null;
                     bloodPressures[i].MovingAverageDiastolic = null;
                 }
+                _healthContext.SaveChanges();
             }
 
         }
@@ -267,9 +268,10 @@ _healthContext.SaveChanges();
                 {
                     heartRates[i].MovingAverageBeats = null;
                 }
+                _healthContext.SaveChanges();
             }
 
-            _healthContext.SaveChanges();
+            
         }
 
         public void CalculateCumSumForStepCounts()
@@ -286,9 +288,10 @@ _healthContext.SaveChanges();
                 {
                     stepCounts[i].CumSumCount = stepCounts[i].Count + stepCounts[i - 1].CumSumCount;
                 }
+                _healthContext.SaveChanges();
             }
 
-            _healthContext.SaveChanges();
+            
 
         }
 
@@ -307,9 +310,10 @@ _healthContext.SaveChanges();
                 {
                     alcoholIntakes[i].CumSumUnits = alcoholIntakes[i].Units + alcoholIntakes[i - 1].CumSumUnits;
                 }
+                _healthContext.SaveChanges();
             }
 
-            _healthContext.SaveChanges();
+            
         }
 
         public void CalculateCumSumForActivitySummaries()
@@ -326,9 +330,10 @@ _healthContext.SaveChanges();
                 {
                     activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes + activitySummaries[i - 1].CumSumActiveMinutes;
                 }
+                _healthContext.SaveChanges();
             }
 
-            _healthContext.SaveChanges();
+            
         }
 
         public void CalculateCumSumForHeartSummaries()
@@ -347,9 +352,10 @@ _healthContext.SaveChanges();
                     heartSummaries[i].CumSumFatBurnAndAbove = heartSummaries[i].FatBurnMinutes + heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes + heartSummaries[i - 1].CumSumFatBurnAndAbove;
                     heartSummaries[i].CumSumCardioAndAbove = heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes + heartSummaries[i - 1].CumSumCardioAndAbove;
                 }
+                _healthContext.SaveChanges();
             }
 
-            _healthContext.SaveChanges();
+            
         }
 
     }
