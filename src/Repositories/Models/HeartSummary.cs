@@ -45,14 +45,14 @@ namespace Repositories.Models
         {
             get
             {
-                if (DateTime < new DateTime(2018, 5, 21))
+                if (DateTime < new DateTime(2018, 5, 19))
                 {
                     return null;
                 }
 
-                var days = DateTime - new DateTime(2018, 5, 20);
+                var days = DateTime - new DateTime(2018, 5, 19);
 
-                return 1810 + days.TotalDays * 8.6;
+                return 1775 + days.TotalDays * 8.6;
             }
         }
         //[NotMapped]
