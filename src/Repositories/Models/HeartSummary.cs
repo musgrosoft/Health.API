@@ -30,7 +30,7 @@ namespace Repositories.Models
         }
 
         [NotMapped]
-        public double? TargetCardioAndAbove
+        public double? TargetCardioAndAboveA
         {
             get
             {
@@ -40,6 +40,21 @@ namespace Repositories.Models
             }
         }
 
+        [NotMapped]
+        public double? TargetCardioAndAboveB
+        {
+            get
+            {
+                if (DateTime < new DateTime(2018, 5, 21))
+                {
+                    return null;
+                }
+
+                var days = DateTime - new DateTime(2018, 5, 20);
+
+                return 1810 + days.TotalDays * 8.6;
+            }
+        }
         //[NotMapped]
         //public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
     }
