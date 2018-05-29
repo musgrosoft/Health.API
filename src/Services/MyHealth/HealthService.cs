@@ -18,13 +18,20 @@ namespace Services.MyHealth
         private readonly ILogger _logger;
         private readonly HealthContext _healthContext;
         private readonly IHealthRepository _healthRepository;
+        private readonly AggregationCalculator _aggregationCalculator;
 
-        public HealthService(IConfig config, ILogger logger, HealthContext healthContext, IHealthRepository healthRepository)
+        public HealthService(
+            IConfig config, 
+            ILogger logger, 
+            HealthContext healthContext, 
+            IHealthRepository healthRepository,
+            AggregationCalculator aggregationCalculator)
         {
             _config = config;
             _logger = logger;
             _healthContext = healthContext;
             _healthRepository = healthRepository;
+            _aggregationCalculator = aggregationCalculator;
         }
 
         public DateTime GetLatestWeightDate(DateTime defaultDateTime)
@@ -191,46 +198,12 @@ namespace Services.MyHealth
         }
 
 
-        private void AddMovingAverageTo<T>(
-            DbSet<T> theList, 
-            Func<T, DateTime> dateTimeSelector,
-            Func<T,Decimal> GetValue,
-            Action<T,Decimal?> SetMovingAverage,
-            int period = 10
-            ) where  T : class
-        {  
-            var orderedList = theList.OrderBy(dateTimeSelector).ToList();
-
-            for (int i = 0; i < orderedList.Count(); i++)
-            {
-                if (i >= period - 1)
-                {
-                    Decimal total = 0;
-                    //to rewrite from i-period, ascending
-                    for (int x = i; x > (i - period); x--)
-                    {
-                        total += GetValue(orderedList[x]);
-                    }
-                        
-                    decimal average = total / period;
-
-                    SetMovingAverage(orderedList[i], average);
-                }
-                else
-                {
-                    SetMovingAverage(orderedList[i], null);
-                }
-
-                _healthContext.SaveChanges();
-            }
-
-        }
 
         public void AddMovingAveragesToWeights()
         {
             _logger.Log("WEIGHT : Add moving averages (using generic method)");
-            
-            AddMovingAverageTo(
+
+            _aggregationCalculator.AddMovingAverageTo(
                 _healthContext.Weights, 
                 w => w.DateTime, 
                 w => w.Kg, 
@@ -268,14 +241,14 @@ namespace Services.MyHealth
         {
             _logger.Log("BLOOD PRESSURE : Add moving averages (using generic method)");
 
-            AddMovingAverageTo(
+            _aggregationCalculator.AddMovingAverageTo(
                 _healthContext.BloodPressures,
                 w => w.DateTime,
                 w => w.Systolic,
                 (w, d) => w.MovingAverageSystolic = d
                 );
 
-            AddMovingAverageTo(
+            _aggregationCalculator.AddMovingAverageTo(
                 _healthContext.BloodPressures,
                 w => w.DateTime,
                 w => w.Diastolic,
@@ -314,7 +287,7 @@ namespace Services.MyHealth
         {
             _logger.Log("RESTING HEART RATE : Add moving averages (using generic method)");
 
-            AddMovingAverageTo(
+            _aggregationCalculator.AddMovingAverageTo(
                 _healthContext.RestingHeartRates,
                 w => w.DateTime,
                 w => w.Beats,
@@ -344,37 +317,12 @@ namespace Services.MyHealth
 
         }
 
-        private void CalculateCumSumFor<T>(
-            DbSet<T> theList,
-            Func<T, DateTime> dateTimeSelector,
-            Func<T, int?> GetValue,
-            Func<T, int?> GetCumSum,
-            Action<T, int?> SetCumSum
-            ) where T : class
-        {
-            var orderedList = theList.OrderBy(x => dateTimeSelector(x)).ToList();
-
-            for (int i = 0; i < orderedList.Count(); i++)
-            {
-                int? value = GetValue(orderedList[i]);
-
-                if (i > 0)
-                {
-                    value += GetCumSum(orderedList[i - 1]);
-                }
-                
-                SetCumSum(orderedList[i], value);
-                
-                _healthContext.SaveChanges();
-            }
-
-        }
 
         public void CalculateCumSumForStepCounts()
         {
             _logger.Log("STEP COUNTS : Calculate cum sum");
 
-            CalculateCumSumFor(
+            _aggregationCalculator.CalculateCumSumFor(
                 _healthContext.StepCounts,
                 sc => sc.DateTime,
                 sc => sc.Count,
@@ -406,7 +354,7 @@ namespace Services.MyHealth
         {
             _logger.Log("UNITS : Calculate cum sum");
 
-            CalculateCumSumFor(
+            _aggregationCalculator.CalculateCumSumFor(
                 _healthContext.AlcoholIntakes,
                 ai => ai.DateTime,
                 ai => ai.Units,
@@ -435,7 +383,7 @@ namespace Services.MyHealth
         {
             _logger.Log("ACTIVITY SUMMARY : Calculate cum sum");
 
-            CalculateCumSumFor(
+            _aggregationCalculator.CalculateCumSumFor(
                 _healthContext.ActivitySummaries,
                 ac => ac.DateTime,
                 ac => ac.ActiveMinutes,
@@ -464,7 +412,7 @@ namespace Services.MyHealth
         {
             _logger.Log("HEART SUMMARY : Calculate cum sum");
 
-            CalculateCumSumFor(
+            _aggregationCalculator.CalculateCumSumFor(
                 _healthContext.HeartSummaries,
                 hs => hs.DateTime,
                 hs => hs.FatBurnMinutes + hs.CardioMinutes + hs.PeakMinutes,
@@ -472,7 +420,7 @@ namespace Services.MyHealth
                 (hs, val) => hs.CumSumFatBurnAndAbove = val
                 );
 
-            CalculateCumSumFor(
+            _aggregationCalculator.CalculateCumSumFor(
                 _healthContext.HeartSummaries,
                 hs => hs.DateTime,
                 hs => hs.CardioMinutes + hs.PeakMinutes,

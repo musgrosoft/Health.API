@@ -15,13 +15,14 @@ namespace Services.Tests.MyHealth
         private HealthService _healthService;
         private Mock<IConfig> _config;
         private Mock<ILogger> _logger;
+        //private Mock<IAg>
 
         public HealthServiceTests()
         {
             _healthRepository = new Mock<IHealthRepository>();
             _config = new Mock<IConfig>();
             _logger = new Mock<ILogger>();
-            _healthService = new HealthService(_config.Object, _logger.Object, null, _healthRepository.Object);
+            _healthService = new HealthService(_config.Object, _logger.Object, null, _healthRepository.Object, null);
         }
 
         [Fact]
