@@ -11,7 +11,7 @@ namespace Repositories.Models
         public DateTime DateTime { get; set; }
         public int Diastolic { get; set; }
         public int Systolic { get; set; }
-        public int? MovingAverageSystolic { get; set; }
-        public int? MovingAverageDiastolic { get; set; }
+        public Decimal? MovingAverageSystolic { get; set; }
+        public Decimal? MovingAverageDiastolic { get; set; }
     }
 }

@@ -198,11 +198,7 @@ namespace Services.MyHealth
             Action<T,Decimal?> SetMovingAverage,
             int period = 10
             ) where  T : class
-        {
-            
-
-            //Func<T,T, int> sortFunc = (a, b) => (a.ToString()[0].CompareTo(b.ToString()[0]));
-           
+        {  
             var orderedList = theList.OrderBy(dateTimeSelector).ToList();
 
             for (int i = 0; i < orderedList.Count(); i++)
@@ -210,6 +206,7 @@ namespace Services.MyHealth
                 if (i >= period - 1)
                 {
                     Decimal total = 0;
+                    //to rewrite from i-period, ascending
                     for (int x = i; x > (i - period); x--)
                     {
                         total += GetValue(orderedList[x]);
@@ -218,26 +215,21 @@ namespace Services.MyHealth
                     decimal average = total / period;
 
                     SetMovingAverage(orderedList[i], average);
-
                 }
                 else
                 {
                     SetMovingAverage(orderedList[i], null);
-
                 }
+
                 _healthContext.SaveChanges();
             }
 
         }
 
-        public void AddMovingAveragesToWeights(int period = 10)
+        public void AddMovingAveragesToWeights()
         {
             _logger.Log("WEIGHT : Add moving averages (using generic method)");
-
-            Func<Weight, DateTime> DateTimeSelector = w => w.DateTime;
-            Func<Weight, Decimal> GetValue = w => w.Kg;
-            Action<Weight, Decimal?> SetMovingAverage = (w, d) => w.MovingAverageKg = d;
-
+            
             AddMovingAverageTo(
                 _healthContext.Weights, 
                 w => w.DateTime, 
@@ -272,82 +264,140 @@ namespace Services.MyHealth
         }
 
 
-        public void AddMovingAveragesToBloodPressures(int period = 10)
+        public void AddMovingAveragesToBloodPressures()
         {
-            _logger.Log("BLOOD PRESSURE : Add moving averages");
-            var bloodPressures = _healthContext.BloodPressures.OrderBy(x => x.DateTime).ToList();
+            _logger.Log("BLOOD PRESSURE : Add moving averages (using generic method)");
 
-            for (int i = 0; i < bloodPressures.Count(); i++)
-            {
-                if (i >= period - 1)
-                {
-                    int systolicTotal = 0;
-                    int diastolicTotal = 0;
-                    for (int x = i; x > (i - period); x--)
-                    {
-                        systolicTotal += bloodPressures[x].Systolic;
-                        diastolicTotal += bloodPressures[x].Diastolic;
-                    }
-                    int averageSystolic = systolicTotal / period;
-                    int averageDiastolic = diastolicTotal / period;
-                    bloodPressures[i].MovingAverageSystolic = averageSystolic;
-                    bloodPressures[i].MovingAverageDiastolic = averageDiastolic;
-                }
-                else
-                {
-                    bloodPressures[i].MovingAverageSystolic = null;
-                    bloodPressures[i].MovingAverageDiastolic = null;
-                }
-                _healthContext.SaveChanges();
-            }
+            AddMovingAverageTo(
+                _healthContext.BloodPressures,
+                w => w.DateTime,
+                w => w.Systolic,
+                (w, d) => w.MovingAverageSystolic = d
+                );
+
+            AddMovingAverageTo(
+                _healthContext.BloodPressures,
+                w => w.DateTime,
+                w => w.Diastolic,
+                (w, d) => w.MovingAverageDiastolic = d
+                );
+
+            //var bloodPressures = _healthContext.BloodPressures.OrderBy(x => x.DateTime).ToList();
+
+            //for (int i = 0; i < bloodPressures.Count(); i++)
+            //{
+            //    if (i >= period - 1)
+            //    {
+            //        int systolicTotal = 0;
+            //        int diastolicTotal = 0;
+            //        for (int x = i; x > (i - period); x--)
+            //        {
+            //            systolicTotal += bloodPressures[x].Systolic;
+            //            diastolicTotal += bloodPressures[x].Diastolic;
+            //        }
+            //        int averageSystolic = systolicTotal / period;
+            //        int averageDiastolic = diastolicTotal / period;
+            //        bloodPressures[i].MovingAverageSystolic = averageSystolic;
+            //        bloodPressures[i].MovingAverageDiastolic = averageDiastolic;
+            //    }
+            //    else
+            //    {
+            //        bloodPressures[i].MovingAverageSystolic = null;
+            //        bloodPressures[i].MovingAverageDiastolic = null;
+            //    }
+            //    _healthContext.SaveChanges();
+            //}
+
+        }
+        
+        public void AddMovingAveragesToRestingHeartRates()
+        {
+            _logger.Log("RESTING HEART RATE : Add moving averages (using generic method)");
+
+            AddMovingAverageTo(
+                _healthContext.RestingHeartRates,
+                w => w.DateTime,
+                w => w.Beats,
+                (w, d) => w.MovingAverageBeats = d
+                );
+
+            //var heartRates = _healthContext.RestingHeartRates.OrderBy(x => x.DateTime).ToList();
+
+            //for (int i = 0; i < heartRates.Count(); i++)
+            //{
+            //    if (i >= period - 1)
+            //    {
+            //        decimal total = 0;
+            //        for (int x = i; x > (i - period); x--)
+            //            total += heartRates[x].Beats;
+            //        decimal average = total / period;
+
+            //        heartRates[i].MovingAverageBeats = average;
+            //    }
+            //    else
+            //    {
+            //        heartRates[i].MovingAverageBeats = null;
+            //    }
+            //    _healthContext.SaveChanges();
+            //}
+
 
         }
 
-
-        public void AddMovingAveragesToRestingHeartRates(int period = 10)
+        private void CalculateCumSumFor<T>(
+            DbSet<T> theList,
+            Func<T, DateTime> dateTimeSelector,
+            Func<T, int?> GetValue,
+            Func<T, int?> GetCumSum,
+            Action<T, int?> SetCumSum
+            ) where T : class
         {
-            _logger.Log("RESTING HEART RATE : Add moving averages");
-            var heartRates = _healthContext.RestingHeartRates.OrderBy(x => x.DateTime).ToList();
+            var orderedList = theList.OrderBy(x => dateTimeSelector(x)).ToList();
 
-            for (int i = 0; i < heartRates.Count(); i++)
+            for (int i = 0; i < orderedList.Count(); i++)
             {
-                if (i >= period - 1)
-                {
-                    decimal total = 0;
-                    for (int x = i; x > (i - period); x--)
-                        total += heartRates[x].Beats;
-                    decimal average = total / period;
+                int? value = GetValue(orderedList[i]);
 
-                    heartRates[i].MovingAverageBeats = average;
-                }
-                else
+                if (i > 0)
                 {
-                    heartRates[i].MovingAverageBeats = null;
+                    value += GetCumSum(orderedList[i - 1]);
                 }
+                
+                SetCumSum(orderedList[i], value);
+                
                 _healthContext.SaveChanges();
             }
 
-            
         }
 
         public void CalculateCumSumForStepCounts()
         {
             _logger.Log("STEP COUNTS : Calculate cum sum");
-            var stepCounts = _healthContext.StepCounts.OrderBy(x => x.DateTime).ToList();
-            for (int i = 0; i < stepCounts.Count(); i++)
-            {
-                if (i == 0)
-                {
-                    stepCounts[i].CumSumCount = stepCounts[i].Count;
-                }
-                else
-                {
-                    stepCounts[i].CumSumCount = stepCounts[i].Count + stepCounts[i - 1].CumSumCount;
-                }
-                _healthContext.SaveChanges();
-            }
 
-            
+            CalculateCumSumFor(
+                _healthContext.StepCounts,
+                sc => sc.DateTime,
+                sc => sc.Count,
+                sc => sc.CumSumCount,
+                (sc, val) => sc.CumSumCount = val
+                );
+
+
+            //var stepCounts = _healthContext.StepCounts.OrderBy(x => x.DateTime).ToList();
+            //for (int i = 0; i < stepCounts.Count(); i++)
+            //{
+            //    if (i == 0)
+            //    {
+            //        stepCounts[i].CumSumCount = stepCounts[i].Count;
+            //    }
+            //    else
+            //    {
+            //        stepCounts[i].CumSumCount = stepCounts[i].Count + stepCounts[i - 1].CumSumCount;
+            //    }
+            //    _healthContext.SaveChanges();
+            //}
+
+
 
         }
 
@@ -355,19 +405,28 @@ namespace Services.MyHealth
         public void CalculateCumSumForUnits()
         {
             _logger.Log("UNITS : Calculate cum sum");
-            var alcoholIntakes = _healthContext.AlcoholIntakes.OrderBy(x => x.DateTime).ToList();
-            for (int i = 0; i < alcoholIntakes.Count(); i++)
-            {
-                if (i == 0)
-                {
-                    alcoholIntakes[i].CumSumUnits = alcoholIntakes[i].Units;
-                }
-                else
-                {
-                    alcoholIntakes[i].CumSumUnits = alcoholIntakes[i].Units + alcoholIntakes[i - 1].CumSumUnits;
-                }
-                _healthContext.SaveChanges();
-            }
+
+            CalculateCumSumFor(
+                _healthContext.AlcoholIntakes,
+                ai => ai.DateTime,
+                ai => ai.Units,
+                ai => ai.CumSumUnits,
+                (ai, val) => ai.CumSumUnits = val
+                );
+
+            //var alcoholIntakes = _healthContext.AlcoholIntakes.OrderBy(x => x.DateTime).ToList();
+            //for (int i = 0; i < alcoholIntakes.Count(); i++)
+            //{
+            //    if (i == 0)
+            //    {
+            //        alcoholIntakes[i].CumSumUnits = alcoholIntakes[i].Units;
+            //    }
+            //    else
+            //    {
+            //        alcoholIntakes[i].CumSumUnits = alcoholIntakes[i].Units + alcoholIntakes[i - 1].CumSumUnits;
+            //    }
+            //    _healthContext.SaveChanges();
+            //}
 
             
         }
@@ -375,41 +434,67 @@ namespace Services.MyHealth
         public void CalculateCumSumForActivitySummaries()
         {
             _logger.Log("ACTIVITY SUMMARY : Calculate cum sum");
-            var activitySummaries = _healthContext.ActivitySummaries.OrderBy(x => x.DateTime).ToList();
-            for (int i = 0; i < activitySummaries.Count(); i++)
-            {
-                if (i == 0)
-                {
-                    activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes;
-                }
-                else
-                {
-                    activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes + activitySummaries[i - 1].CumSumActiveMinutes;
-                }
-                _healthContext.SaveChanges();
-            }
 
-            
+            CalculateCumSumFor(
+                _healthContext.ActivitySummaries,
+                ac => ac.DateTime,
+                ac => ac.ActiveMinutes,
+                ac => ac.CumSumActiveMinutes,
+                (ac, val) => ac.CumSumActiveMinutes = val
+                );
+
+            //var activitySummaries = _healthContext.ActivitySummaries.OrderBy(x => x.DateTime).ToList();
+            //for (int i = 0; i < activitySummaries.Count(); i++)
+            //{
+            //    if (i == 0)
+            //    {
+            //        activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes;
+            //    }
+            //    else
+            //    {
+            //        activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes + activitySummaries[i - 1].CumSumActiveMinutes;
+            //    }
+            //    _healthContext.SaveChanges();
+            //}
+
+
         }
 
         public void CalculateCumSumForHeartSummaries()
         {
             _logger.Log("HEART SUMMARY : Calculate cum sum");
-            var heartSummaries = _healthContext.HeartSummaries.OrderBy(x => x.DateTime).ToList();
-            for (int i = 0; i < heartSummaries.Count(); i++)
-            {
-                if (i == 0)
-                {
-                    heartSummaries[i].CumSumFatBurnAndAbove = heartSummaries[i].FatBurnMinutes + heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes;
-                    heartSummaries[i].CumSumCardioAndAbove = heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes;
-                }
-                else
-                {
-                    heartSummaries[i].CumSumFatBurnAndAbove = heartSummaries[i].FatBurnMinutes + heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes + heartSummaries[i - 1].CumSumFatBurnAndAbove;
-                    heartSummaries[i].CumSumCardioAndAbove = heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes + heartSummaries[i - 1].CumSumCardioAndAbove;
-                }
-                _healthContext.SaveChanges();
-            }
+
+            CalculateCumSumFor(
+                _healthContext.HeartSummaries,
+                hs => hs.DateTime,
+                hs => hs.FatBurnMinutes + hs.CardioMinutes + hs.PeakMinutes,
+                hs => hs.CumSumFatBurnAndAbove,
+                (hs, val) => hs.CumSumFatBurnAndAbove = val
+                );
+
+            CalculateCumSumFor(
+                _healthContext.HeartSummaries,
+                hs => hs.DateTime,
+                hs => hs.CardioMinutes + hs.PeakMinutes,
+                hs => hs.CumSumCardioAndAbove,
+                (hs, val) => hs.CumSumCardioAndAbove = val
+                );
+
+            //var heartSummaries = _healthContext.HeartSummaries.OrderBy(x => x.DateTime).ToList();
+            //for (int i = 0; i < heartSummaries.Count(); i++)
+            //{
+            //    if (i == 0)
+            //    {
+            //        heartSummaries[i].CumSumFatBurnAndAbove = heartSummaries[i].FatBurnMinutes + heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes;
+            //        heartSummaries[i].CumSumCardioAndAbove = heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes;
+            //    }
+            //    else
+            //    {
+            //        heartSummaries[i].CumSumFatBurnAndAbove = heartSummaries[i].FatBurnMinutes + heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes + heartSummaries[i - 1].CumSumFatBurnAndAbove;
+            //        heartSummaries[i].CumSumCardioAndAbove = heartSummaries[i].CardioMinutes + heartSummaries[i].PeakMinutes + heartSummaries[i - 1].CumSumCardioAndAbove;
+            //    }
+            //    _healthContext.SaveChanges();
+            //}
 
             
         }
