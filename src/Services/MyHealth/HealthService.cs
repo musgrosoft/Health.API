@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Health;
 using Repositories.Models;
@@ -187,28 +190,83 @@ namespace Services.MyHealth
             }
         }
 
-        public void AddMovingAveragesToWeights(int period = 10)
-        {
-            _logger.Log("WEIGHT : Add moving averages");
-            var orderedWeights = _healthContext.Weights.OrderBy(x => x.DateTime).ToList();
 
-            for (int i = 0; i < orderedWeights.Count(); i++)
+        private void AddMovingAverageTo<T>(
+            DbSet<T> theList, 
+            Func<T, DateTime> dateTimeSelector,
+            Func<T,Decimal> GetValue,
+            Action<T,Decimal?> SetMovingAverage,
+            int period = 10
+            ) where  T : class
+        {
+            
+
+            //Func<T,T, int> sortFunc = (a, b) => (a.ToString()[0].CompareTo(b.ToString()[0]));
+           
+            var orderedList = theList.OrderBy(dateTimeSelector).ToList();
+
+            for (int i = 0; i < orderedList.Count(); i++)
             {
                 if (i >= period - 1)
                 {
-                    decimal total = 0;
+                    Decimal total = 0;
                     for (int x = i; x > (i - period); x--)
-                        total += orderedWeights[x].Kg;
+                    {
+                        total += GetValue(orderedList[x]);
+                    }
+                        
                     decimal average = total / period;
 
-                    orderedWeights[i].MovingAverageKg = average;
+                    SetMovingAverage(orderedList[i], average);
+
                 }
                 else
                 {
-                    orderedWeights[i].MovingAverageKg = null;
+                    SetMovingAverage(orderedList[i], null);
+
                 }
                 _healthContext.SaveChanges();
             }
+
+        }
+
+        public void AddMovingAveragesToWeights(int period = 10)
+        {
+            _logger.Log("WEIGHT : Add moving averages (using generic method)");
+
+            Func<Weight, DateTime> DateTimeSelector = w => w.DateTime;
+            Func<Weight, Decimal> GetValue = w => w.Kg;
+            Action<Weight, Decimal?> SetMovingAverage = (w, d) => w.MovingAverageKg = d;
+
+            AddMovingAverageTo(
+                _healthContext.Weights, 
+                w => w.DateTime, 
+                w => w.Kg, 
+                (w, d) => w.MovingAverageKg = d 
+                );
+
+            //--------------------------------------
+
+            //_logger.Log("WEIGHT : Add moving averages");
+            //var orderedWeights = _healthContext.Weights.OrderBy(x => x.DateTime).ToList();
+
+            //for (int i = 0; i < orderedWeights.Count(); i++)
+            //{
+            //    if (i >= period - 1)
+            //    {
+            //        decimal total = 0;
+            //        for (int x = i; x > (i - period); x--)
+            //            total += orderedWeights[x].Kg;
+            //        decimal average = total / period;
+
+            //        orderedWeights[i].MovingAverageKg = average;
+            //    }
+            //    else
+            //    {
+            //        orderedWeights[i].MovingAverageKg = null;
+            //    }
+            //    _healthContext.SaveChanges();
+            //}
 
             
         }
