@@ -49,9 +49,9 @@ namespace Migrators
             var fromDate = latestActivityDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             _logger.Log($"ACTIVITY SUMMARY : Retrieving Activity records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            var dailyActivites = await _fitbitService.GetDailyActivities(fromDate, _calendar.Now());
+            var dailyActivites = await _fitbitService.GetActivitySummaries(fromDate, _calendar.Now());
 
-             _healthService.UpsertDailyActivities(dailyActivites);
+             _healthService.UpsertActivitySummaries(dailyActivites);
 
             _healthService.CalculateCumSumForActivitySummaries();
         }
@@ -81,7 +81,7 @@ namespace Migrators
                 
             var heartSummaries = await _fitbitService.GetHeartSummaries(getDataFromDate, _calendar.Now());
 
-            _healthService.UpsertDailyHeartSummaries(heartSummaries);
+            _healthService.UpsertHeartSummaries(heartSummaries);
 
             _healthService.CalculateCumSumForHeartSummaries();
         }

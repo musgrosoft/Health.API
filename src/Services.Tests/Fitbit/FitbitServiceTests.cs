@@ -66,7 +66,7 @@ namespace Services.Tests.Fitbit
                 }));
 
             //When
-            var dailyActivities = await _fitbitService.GetDailyActivities(fromDate, toDate);
+            var dailyActivities = await _fitbitService.GetActivitySummaries(fromDate, toDate);
 
             //Then
             Assert.Equal(3, dailyActivities.Count());

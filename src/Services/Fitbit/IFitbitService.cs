@@ -7,7 +7,7 @@ namespace Services.Fitbit
 {
     public interface IFitbitService
     {
-        Task<IEnumerable<ActivitySummary>> GetDailyActivities(DateTime fromDate, DateTime toDate);
+        Task<IEnumerable<ActivitySummary>> GetActivitySummaries(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<HeartSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate);

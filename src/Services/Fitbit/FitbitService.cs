@@ -34,7 +34,7 @@ namespace Services.Fitbit
             });
         }
 
-        public async Task<IEnumerable<ActivitySummary>> GetDailyActivities(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<ActivitySummary>> GetActivitySummaries(DateTime fromDate, DateTime toDate)
         {
             var fitbitDailyActivities = await _fitbitClientAggregator.GetFitbitDailyActivities(fromDate, toDate);
 

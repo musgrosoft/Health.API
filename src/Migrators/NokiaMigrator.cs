@@ -51,6 +51,10 @@ namespace Migrators
             _logger.Log($"BLOOD PRESSURE : Found {bloodPressures.Count()} Blood Pressure records.");
             
             _healthService.UpsertBloodPressures(bloodPressures);
+
+            _healthService.AddMovingAveragesToBloodPressures();
+
+            
         }
 
     }

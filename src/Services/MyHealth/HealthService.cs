@@ -102,9 +102,7 @@ namespace Services.MyHealth
                 }
             }
             
-            AddMovingAveragesToBloodPressures();
-
-            _healthContext.SaveChanges();
+            
         }
 
         public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
@@ -127,7 +125,7 @@ namespace Services.MyHealth
             }
         }
         
-        public void UpsertDailyActivities(IEnumerable<ActivitySummary>  activitySummaries)
+        public void UpsertActivitySummaries(IEnumerable<ActivitySummary>  activitySummaries)
         {
             _logger.Log($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
 
@@ -168,7 +166,7 @@ namespace Services.MyHealth
             }
         }
 
-        public void UpsertDailyHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
+        public void UpsertHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
         {
             _logger.Log($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
 

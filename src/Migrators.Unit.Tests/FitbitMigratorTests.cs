@@ -57,7 +57,7 @@ namespace Migrators.Unit.Tests
         public async Task ShouldMigrateActivityData()
         {
             _healthService.Setup(x => x.GetLatestActivitySummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertDailyActivities(It.IsAny<IEnumerable<ActivitySummary>>()));
+            _healthService.Setup(x => x.UpsertActivitySummaries(It.IsAny<IEnumerable<ActivitySummary>>()));
 
             var dailyActivities = new List<ActivitySummary>
             {
@@ -65,11 +65,11 @@ namespace Migrators.Unit.Tests
                 new ActivitySummary{ DateTime = new DateTime(2010, 12, 1), VeryActiveMinutes = 222 }
             };
 
-            _fitbitClient.Setup(x => x.GetDailyActivities(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<ActivitySummary>)dailyActivities));
+            _fitbitClient.Setup(x => x.GetActivitySummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<ActivitySummary>)dailyActivities));
 
             await _fitbitMigrator.MigrateActivitySummaries();
 
-            _healthService.Verify(x => x.UpsertDailyActivities(dailyActivities), Times.Once);
+            _healthService.Verify(x => x.UpsertActivitySummaries(dailyActivities), Times.Once);
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace Migrators.Unit.Tests
         public async Task ShouldMigrateHeartZoneData()
         {
             _healthService.Setup(x => x.GetLatestHeartSummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertDailyHeartSummaries(It.IsAny<IEnumerable<HeartSummary>>()));
+            _healthService.Setup(x => x.UpsertHeartSummaries(It.IsAny<IEnumerable<HeartSummary>>()));
 
             var heartZones = new List<HeartSummary>
             {
@@ -107,7 +107,7 @@ namespace Migrators.Unit.Tests
 
             await _fitbitMigrator.MigrateHeartSummaries();
 
-            _healthService.Verify(x => x.UpsertDailyHeartSummaries(heartZones), Times.Once);
+            _healthService.Verify(x => x.UpsertHeartSummaries(heartZones), Times.Once);
         }
     }
 }
