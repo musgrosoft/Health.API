@@ -12,6 +12,7 @@ namespace Repositories
 
         public AggregationCalculator(HealthContext healthContext)
         {
+            _healthContext = healthContext;
         }
 
         public void AddMovingAverageTo<T>(
