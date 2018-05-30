@@ -52,7 +52,7 @@ namespace Repositories.Models
 
                 var days = DateTime - new DateTime(2018, 5, 19);
 
-                return 1775 + days.TotalDays * 8.6;
+                return 1775 + days.TotalDays * 11;
             }
         }
         //[NotMapped]
