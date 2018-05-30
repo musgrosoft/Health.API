@@ -8,10 +8,8 @@ namespace Repositories.Health
 {
     public interface IHealthRepository
     {
-
         void Insert<T>(T obj) where T : class;
-        void Update(Weight existingWeight, Weight newWeight);
-
+        
         DateTime? GetLatestStepCountDate();
         DateTime? GetLatestBloodPressureDate();
         DateTime? GetLatestWeightDate();
@@ -25,6 +23,8 @@ namespace Repositories.Health
         ActivitySummary Find(ActivitySummary activitySummary);
         RestingHeartRate Find(RestingHeartRate restingHeartRate);
         HeartSummary Find(HeartSummary heartSummary);
+
+        void Update(Weight existingWeight, Weight newWeight);
         void Update(BloodPressure existingBloodPressure, BloodPressure bloodPressure);
         void Update(StepCount existingStepCount, StepCount stepCount);
         void Update(ActivitySummary existingDailyActivity, ActivitySummary dailyActivity);
@@ -46,9 +46,7 @@ namespace Repositories.Health
             _healthContext.Add(obj);
             _healthContext.SaveChanges();
         }
-
-
-
+        
         public DateTime? GetLatestStepCountDate()
         {
             return _healthContext.StepCounts.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
@@ -78,8 +76,7 @@ namespace Repositories.Health
         {
             return _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
         }
-
-
+        
         public Weight Find(Weight weight)
         {
             return _healthContext.Weights.Find(weight.DateTime);
@@ -113,6 +110,10 @@ namespace Repositories.Health
         public void Update(Weight existingWeight, Weight newWeight)
         {
             //check if datetimes are equal ???
+            if (existingWeight.DateTime != newWeight.DateTime)
+            {
+                throw new Exception("DateTimes not equal on existing and new weights.");
+            }
 
             existingWeight.Kg = newWeight.Kg;
             existingWeight.FatRatioPercentage = newWeight.FatRatioPercentage;
