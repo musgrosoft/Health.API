@@ -29,14 +29,14 @@ namespace Repositories.Models
             //Mon May 21 2018
             get
             {
-                if (DateTime < new DateTime(2018, 5, 21))
+                if (DateTime < new DateTime(2018, 5, 29))
                 {
                     return null;
                 }
 
-                var days = DateTime - new DateTime(2018, 5, 20);
+                var days = DateTime - new DateTime(2018, 5, 28);
 
-                return 5086 + days.TotalDays * 4;
+                return 5130 + days.TotalDays * 4;
             }
         }
 
