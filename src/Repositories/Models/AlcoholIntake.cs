@@ -34,9 +34,9 @@ namespace Repositories.Models
                     return null;
                 }
 
-                var days = DateTime - new DateTime(2018, 5, 28);
+                var days = DateTime - new DateTime(2018, 5, 29);
 
-                return 5130 + days.TotalDays * 4;
+                return 5145 + days.TotalDays * 4;
             }
         }
 
