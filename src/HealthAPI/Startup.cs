@@ -143,7 +143,7 @@ namespace HealthAPI
 
             builder.StructuralTypes.First(t => t.ClrType == typeof(ActivitySummary)).AddProperty(typeof(ActivitySummary).GetProperty("ActiveMinutes"));
 
-            builder.StructuralTypes.First(t => t.ClrType == typeof(Weight)).AddProperty(typeof(Weight).GetProperty("Target"));
+           // builder.StructuralTypes.First(t => t.ClrType == typeof(Weight)).AddProperty(typeof(Weight).GetProperty("Target"));
             builder.StructuralTypes.First(t => t.ClrType == typeof(StepCount)).AddProperty(typeof(StepCount).GetProperty("Target"));
 
             builder.StructuralTypes.First(t => t.ClrType == typeof(AlcoholIntake)).AddProperty(typeof(AlcoholIntake).GetProperty("TargetA"));
