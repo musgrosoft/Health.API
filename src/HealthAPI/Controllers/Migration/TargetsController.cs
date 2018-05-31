@@ -31,7 +31,7 @@ namespace HealthAPI.Controllers.Migration
                 var target = new ActivitySummary
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    CumSumActiveMinutes = (int)(activeMinutesOnTargetStartDate - (i * targetDailyActiveMinutes))
+                    CumSumActiveMinutes = (int)(activeMinutesOnTargetStartDate + (i * targetDailyActiveMinutes))
                 };
 
                 targets.Add(target);
@@ -57,7 +57,7 @@ namespace HealthAPI.Controllers.Migration
                 var target = new AlcoholIntake
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    CumSumUnits = (int)(unitsOnTargetStartDate - (i * targetDailyUnits))
+                    CumSumUnits = (int)(unitsOnTargetStartDate + (i * targetDailyUnits))
                 };
 
                 targets.Add(target);
@@ -83,7 +83,7 @@ namespace HealthAPI.Controllers.Migration
                 var target = new HeartSummary
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    CumSumCardioAndAbove = (int)(minutesOnTargetStartDate - (i * targetDailyMinutes))
+                    CumSumCardioAndAbove = (int)(minutesOnTargetStartDate + (i * targetDailyMinutes))
                 };
 
                 targets.Add(target);
