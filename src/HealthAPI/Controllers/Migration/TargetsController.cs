@@ -129,7 +129,7 @@ namespace HealthAPI.Controllers.Migration
                 var target = new StepCount()
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    Count = stepsOnTargetStartDate + (i * targetDailySteps)
+                    CumSumCount = stepsOnTargetStartDate + (i * targetDailySteps)
                 };
 
                 targets.Add(target);
