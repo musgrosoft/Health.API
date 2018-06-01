@@ -18,44 +18,5 @@ namespace Repositories.Models
         public int? CumSumFatBurnAndAbove { get; set; }
         public int? CumSumCardioAndAbove { get; set; }
 
-        [NotMapped]
-        public double? TargetFatBurnAndAbove
-        {
-            get
-            {
-                var days = DateTime - new DateTime(2017, 5, 3);
-
-                return days.TotalDays * 100;
-            }
-        }
-
-        [NotMapped]
-        public double? TargetCardioAndAboveA
-        {
-            get
-            {
-                var days = DateTime - new DateTime(2017, 5, 3);
-
-                return days.TotalDays * 5;
-            }
-        }
-
-        [NotMapped]
-        public double? TargetCardioAndAboveB
-        {
-            get
-            {
-                if (DateTime < new DateTime(2018, 5, 19))
-                {
-                    return null;
-                }
-
-                var days = DateTime - new DateTime(2018, 5, 19);
-
-                return 1775 + days.TotalDays * 11;
-            }
-        }
-        //[NotMapped]
-        //public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
     }
 }

@@ -9,38 +9,8 @@ namespace Repositories.Models
         [Key]
         [Column(TypeName = "DateTime")]
         public DateTime DateTime { get; set; }
-        public int Units { get; set; }
+        public Decimal Units { get; set; }
         
-        [NotMapped]
-        public double? TargetA
-        {
-            get
-            {
-                var days = DateTime - new DateTime(2016, 1, 1);
-
-                return days.TotalDays * 6;
-            }
-        }
-
-        [NotMapped]
-        public double? TargetB
-        {
-            //5086
-            //Mon May 21 2018
-            get
-            {
-                if (DateTime < new DateTime(2018, 5, 29))
-                {
-                    return null;
-                }
-
-                var days = DateTime - new DateTime(2018, 5, 29);
-
-                return 5145 + days.TotalDays * 4;
-            }
-        }
-
-
-        public int? CumSumUnits { get; set; }
+        public Decimal? CumSumUnits { get; set; }
     }
 }

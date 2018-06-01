@@ -13,7 +13,5 @@ namespace Repositories.Models
         public DateTime DateTime { get; set; }
         public TimeSpan Time { get; set; }
         public Double Distance { get; set; }
-        //[NotMapped]
-        //public DateTime Week { get { return DateTime.AddDays(-(int)DateTime.DayOfWeek); } }
     }
 }
