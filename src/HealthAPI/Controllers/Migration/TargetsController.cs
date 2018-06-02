@@ -42,7 +42,7 @@ namespace HealthAPI.Controllers.Migration
             var targetEndDate = DateTime.Now.AddDays(100);
             var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
-            var unitsOnTargetStartDate = 5145;
+            var unitsOnTargetStartDate = 5148;
             var targetDailyUnits = 4;
 
             for (var i = 0; i <= totalDays; i++)
@@ -50,7 +50,7 @@ namespace HealthAPI.Controllers.Migration
                 var target = new AlcoholIntake
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    CumSumUnits = unitsOnTargetStartDate + (i * targetDailyUnits)
+                    CumSumUnits = (Decimal)(unitsOnTargetStartDate + (i * targetDailyUnits))
                 };
 
                 targets.Add(target);
