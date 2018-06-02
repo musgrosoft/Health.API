@@ -7,13 +7,6 @@ namespace HealthAPI.Controllers.Migration
 {
     public class TargetsController : Controller
     {
-        // GET
-        //public IActionResult Index()
-        //{
-        //    return
-        //    View();
-        //}
-
         [HttpGet]
         public IActionResult ActivitySummaries()
         {
@@ -57,7 +50,7 @@ namespace HealthAPI.Controllers.Migration
                 var target = new AlcoholIntake
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    CumSumUnits = (int)(unitsOnTargetStartDate + (i * targetDailyUnits))
+                    CumSumUnits = unitsOnTargetStartDate + (i * targetDailyUnits)
                 };
 
                 targets.Add(target);
@@ -110,6 +103,33 @@ namespace HealthAPI.Controllers.Migration
                 {
                     DateTime = targetStartDate.AddDays(i),
                     Kg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss))
+                };
+
+                targets.Add(target);
+            }
+
+            return Json(targets);
+        }
+
+
+        [HttpGet]
+        public IActionResult StepCounts()
+        {
+            var targets = new List<StepCount>();
+
+            var targetStartDate = new DateTime(2017, 5, 3);
+            var targetEndDate = DateTime.Now.AddDays(100);
+            var totalDays = (targetEndDate - targetStartDate).TotalDays;
+
+            var stepsOnTargetStartDate = 0;
+            var targetDailySteps = 10000;
+
+            for (var i = 0; i <= totalDays; i++)
+            {
+                var target = new StepCount()
+                {
+                    DateTime = targetStartDate.AddDays(i),
+                    CumSumCount = stepsOnTargetStartDate + (i * targetDailySteps)
                 };
 
                 targets.Add(target);

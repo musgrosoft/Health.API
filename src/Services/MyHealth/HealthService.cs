@@ -412,13 +412,13 @@ namespace Services.MyHealth
         {
             _logger.Log("HEART SUMMARY : Calculate cum sum");
 
-            _aggregationCalculator.CalculateCumSumFor(
-                _healthContext.HeartSummaries,
-                hs => hs.DateTime,
-                hs => hs.FatBurnMinutes + hs.CardioMinutes + hs.PeakMinutes,
-                hs => hs.CumSumFatBurnAndAbove,
-                (hs, val) => hs.CumSumFatBurnAndAbove = val
-                );
+            //_aggregationCalculator.CalculateCumSumFor(
+            //    _healthContext.HeartSummaries,
+            //    hs => hs.DateTime,
+            //    hs => hs.FatBurnMinutes + hs.CardioMinutes + hs.PeakMinutes,
+            //    hs => hs.CumSumFatBurnAndAbove,
+            //    (hs, val) => hs.CumSumFatBurnAndAbove = val
+            //    );
 
             _aggregationCalculator.CalculateCumSumFor(
                 _healthContext.HeartSummaries,

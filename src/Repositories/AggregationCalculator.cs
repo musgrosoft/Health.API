@@ -76,6 +76,31 @@ namespace Repositories
 
         }
 
+        public void CalculateCumSumFor<T>(
+            DbSet<T> theList,
+            Func<T, DateTime> dateTimeSelector,
+            Func<T, Decimal?> GetValue,
+            Func<T, Decimal?> GetCumSum,
+            Action<T, Decimal?> SetCumSum
+        ) where T : class
+        {
+            var orderedList = theList.OrderBy(x => dateTimeSelector(x)).ToList();
+
+            for (int i = 0; i < orderedList.Count(); i++)
+            {
+                Decimal? value = GetValue(orderedList[i]);
+
+                if (i > 0)
+                {
+                    value += GetCumSum(orderedList[i - 1]);
+                }
+
+                SetCumSum(orderedList[i], value);
+
+                _healthContext.SaveChanges();
+            }
+
+        }
 
 
 
