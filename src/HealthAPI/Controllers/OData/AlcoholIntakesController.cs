@@ -52,5 +52,28 @@ namespace HealthAPI.Controllers.OData
             return weeklyAlcoholIntakes.AsQueryable();
         }
 
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IEnumerable<AlcoholIntake> GetByMonth()
+        {
+            var dailyUnits = _context.AlcoholIntakes.OrderBy(x => x.DateTime).ToList();
+
+            var monthGroups = dailyUnits.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
+            
+            var monthlyUnits = new List<AlcoholIntake>();
+            foreach (var group in monthGroups)
+            {
+                var alcoholIntake = new AlcoholIntake
+                {
+                    DateTime = group.Key,
+                    Units = group.Average(x=>x.Units)
+                };
+
+                monthlyUnits.Add(alcoholIntake);
+            }
+
+            return monthlyUnits.AsQueryable();
+        }
+
+
     }
 }
