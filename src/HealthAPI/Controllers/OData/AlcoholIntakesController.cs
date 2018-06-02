@@ -52,6 +52,7 @@ namespace HealthAPI.Controllers.OData
             return weeklyAlcoholIntakes.AsQueryable();
         }
 
+        [Route("odata/AlcoholIntakes/GroupByMonth")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<AlcoholIntake> GetByMonth()
         {
@@ -73,6 +74,7 @@ namespace HealthAPI.Controllers.OData
 
             return monthlyUnits.AsQueryable();
         }
+        
 
 
     }
