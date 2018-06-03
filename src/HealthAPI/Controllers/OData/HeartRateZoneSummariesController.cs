@@ -57,5 +57,34 @@ namespace HealthAPI.Controllers.OData
         }
 
 
+        [HttpGet]
+        [Route("odata/HeartRateDailySummaries/GroupByMonth")]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IEnumerable<HeartSummary> GetByMonth()
+        {
+            var dailyHearts = _context.HeartSummaries.OrderBy(x => x.DateTime).ToList();
+
+            var monthGroups = dailyHearts.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
+
+
+            var monthlyHearts = new List<HeartSummary>();
+            foreach (var group in monthGroups)
+            {
+                var heart = new HeartSummary
+                {
+                    DateTime = group.Key,
+                    FatBurnMinutes = (int)group.Average(x => x.FatBurnMinutes),
+                    CardioMinutes = (int)group.Average(x => x.CardioMinutes),
+                    PeakMinutes = (int)group.Average(x => x.PeakMinutes)
+                };
+
+                monthlyHearts.Add(heart);
+            }
+
+            return monthlyHearts.AsQueryable();
+        }
+
+
+
     }
 }
