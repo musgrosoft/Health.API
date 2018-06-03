@@ -51,6 +51,31 @@ namespace HealthAPI.Controllers.OData
             return weeklyStepCounts.AsQueryable();
         }
 
+        [Route("odata/StepCounts/GroupByMonth")]
+        [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
+        public IEnumerable<StepCount> GetByMonth()
+        {
+            var dailySteps = _context.StepCounts.OrderBy(x => x.DateTime).ToList();
+
+            var monthGroups = dailySteps.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
+
+            var monthlySteps = new List<StepCount>();
+
+            foreach (var group in monthGroups)
+            {
+                var stepCount = new StepCount
+                {
+                    DateTime = group.Key,
+                    Count = (int)group.Average(x => x.Count)
+                };
+
+                monthlySteps.Add(stepCount);
+            }
+
+            return monthlySteps.AsQueryable();
+        }
+
+
 
     }
 }
