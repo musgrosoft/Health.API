@@ -20,13 +20,13 @@ namespace Services.Fitbit.Domain
         public int steps { get; set; }
     }
 
-    public class Goals
-    {
-        public int caloriesOut { get; set; }
-        public double distance { get; set; }
-        public int floors { get; set; }
-        public int steps { get; set; }
-    }
+//    public class Goals
+//    {
+//        public int caloriesOut { get; set; }
+//        public double distance { get; set; }
+//        public int floors { get; set; }
+//        public int steps { get; set; }
+//    }
 
 //    public class Distance
 //    {
@@ -53,7 +53,7 @@ namespace Services.Fitbit.Domain
     public class FitbitDailyActivity
     {
         public List<Activity> activities { get; set; }
-        public Goals goals { get; set; }
+        //public Goals goals { get; set; }
         public Summary summary { get; set; }
         public DateTime DateTime { get; set; }
     }
