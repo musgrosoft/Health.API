@@ -8,7 +8,7 @@ namespace Services.MyHealth
     {
         public static HealthService Build(ILogger logger, HealthContext healthContext) {
             
-            return new HealthService(new Config(), logger, healthContext, new HealthRepository(healthContext), new AggregationCalculator(healthContext));
+            return new HealthService(new Config(), logger, new HealthRepository(healthContext), new AggregationCalculator(healthContext));
         } 
     }
 }

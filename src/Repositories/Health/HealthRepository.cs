@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Repositories.Models;
@@ -6,32 +7,6 @@ using Utils;
 
 namespace Repositories.Health
 {
-    public interface IHealthRepository
-    {
-        void Insert<T>(T obj) where T : class;
-        
-        DateTime? GetLatestStepCountDate();
-        DateTime? GetLatestBloodPressureDate();
-        DateTime? GetLatestWeightDate();
-        DateTime? GetLatestActivitySummaryDate();
-        DateTime? GetLatestRestingHeartRateDate();
-        DateTime? GetLatestHeartSummaryDate();
-
-        Weight Find(Weight weight);
-        BloodPressure Find(BloodPressure bloodPressure);
-        StepCount Find(StepCount stepCount);
-        ActivitySummary Find(ActivitySummary activitySummary);
-        RestingHeartRate Find(RestingHeartRate restingHeartRate);
-        HeartSummary Find(HeartSummary heartSummary);
-
-        void Update(Weight existingWeight, Weight newWeight);
-        void Update(BloodPressure existingBloodPressure, BloodPressure bloodPressure);
-        void Update(StepCount existingStepCount, StepCount stepCount);
-        void Update(ActivitySummary existingDailyActivity, ActivitySummary dailyActivity);
-        void Update(RestingHeartRate existingRestingHeartRate, RestingHeartRate restingHeartRate);
-        void Update(HeartSummary existingHeartSummary, HeartSummary heartSummary);
-    }
-
     public class HealthRepository : IHealthRepository
     {
         private readonly HealthContext _healthContext;
@@ -62,6 +37,11 @@ namespace Repositories.Health
            return _healthContext.Weights.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
         }
 
+        public DateTime? GetLatestAlcoholIntakeDate()
+        {
+            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
         public DateTime? GetLatestActivitySummaryDate()
         {
             return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
@@ -76,7 +56,52 @@ namespace Repositories.Health
         {
             return _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
         }
-        
+
+        public DateTime? GetLatestRunDate()
+        {
+            return _healthContext.Runs.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
+        public IEnumerable<Weight> GetLatestWeights(int number)
+        {
+            return _healthContext.Weights.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<HeartSummary> GetLatestHeartSummaries(int number)
+        {
+            return _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<BloodPressure> GetLatestBloodPressures(int number)
+        {
+            return _healthContext.BloodPressures.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number)
+        {
+            return _healthContext.RestingHeartRates.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<StepCount> GetLatestStepCounts(int number)
+        {
+            return _healthContext.StepCounts.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<ActivitySummary> GetLatestActivitySummaries(int number)
+        {
+            return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<AlcoholIntake> GetAllAlcoholIntakes()
+        {
+            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime);
+        }
+
+        public void SaveChanges()
+        {
+            _healthContext.SaveChanges();
+        }
+
         public Weight Find(Weight weight)
         {
             return _healthContext.Weights.Find(weight.DateTime);
@@ -136,12 +161,12 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Update(ActivitySummary existingDailyActivity, ActivitySummary dailyActivity)
+        public void Update(ActivitySummary existingActivitySummary, ActivitySummary activitySummary)
         {
-            existingDailyActivity.SedentaryMinutes = dailyActivity.SedentaryMinutes;
-            existingDailyActivity.LightlyActiveMinutes = dailyActivity.LightlyActiveMinutes;
-            existingDailyActivity.FairlyActiveMinutes = dailyActivity.FairlyActiveMinutes;
-            existingDailyActivity.VeryActiveMinutes = dailyActivity.VeryActiveMinutes;
+            existingActivitySummary.SedentaryMinutes = activitySummary.SedentaryMinutes;
+            existingActivitySummary.LightlyActiveMinutes = activitySummary.LightlyActiveMinutes;
+            existingActivitySummary.FairlyActiveMinutes = activitySummary.FairlyActiveMinutes;
+            existingActivitySummary.VeryActiveMinutes = activitySummary.VeryActiveMinutes;
 
             _healthContext.SaveChanges();
         }
@@ -162,5 +187,7 @@ namespace Repositories.Health
 
             _healthContext.SaveChanges();
         }
+
+
     }
 }

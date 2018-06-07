@@ -36,7 +36,7 @@ namespace Migrators
             _logger.Log($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
 
             _healthService.UpsertWeights(weights);
-            _healthService.AddMovingAveragesToWeights();
+          //  _healthService.AddMovingAveragesToWeights();
         }
 
         public async Task MigrateBloodPressures()
@@ -52,7 +52,7 @@ namespace Migrators
             
             _healthService.UpsertBloodPressures(bloodPressures);
 
-            _healthService.AddMovingAveragesToBloodPressures();
+       //     _healthService.AddMovingAveragesToBloodPressures();
 
             
         }

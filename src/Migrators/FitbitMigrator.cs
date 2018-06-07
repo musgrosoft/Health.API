@@ -38,7 +38,7 @@ namespace Migrators
 
             _healthService.UpsertStepCounts(dailySteps);
 
-            _healthService.CalculateCumSumForStepCounts();
+            //_healthService.CalculateCumSumForStepCounts();
         }
         
         public async Task MigrateActivitySummaries()
@@ -53,7 +53,7 @@ namespace Migrators
 
              _healthService.UpsertActivitySummaries(dailyActivites);
 
-            _healthService.CalculateCumSumForActivitySummaries();
+            //_healthService.CalculateCumSumForActivitySummaries();
         }
 
         public async Task MigrateRestingHeartRates()
@@ -68,7 +68,7 @@ namespace Migrators
 
             _healthService.UpsertRestingHeartRates(restingHeartRates);
 
-            _healthService.AddMovingAveragesToRestingHeartRates();
+            //_healthService.AddMovingAveragesToRestingHeartRates();
         }
 
         public async Task MigrateHeartSummaries()
@@ -83,7 +83,7 @@ namespace Migrators
 
             _healthService.UpsertHeartSummaries(heartSummaries);
 
-            _healthService.CalculateCumSumForHeartSummaries();
+            //_healthService.CalculateCumSumForHeartSummaries();
         }
 
         //        public async Task MigrateCalorieData()

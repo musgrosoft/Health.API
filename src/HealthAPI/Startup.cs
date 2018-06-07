@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Repositories;
 using Repositories.Models;
 using Exceptionless;
+using Repositories.Health;
 
 namespace HealthAPI
 {
@@ -46,6 +47,8 @@ namespace HealthAPI
 
             services.AddOData();
             services.AddMvc();
+
+            services.AddScoped<IHealthRepository, HealthRepository>();
 
             //// ********************
             //// Setup CORS
@@ -143,17 +146,6 @@ namespace HealthAPI
 
             builder.StructuralTypes.First(t => t.ClrType == typeof(ActivitySummary)).AddProperty(typeof(ActivitySummary).GetProperty("ActiveMinutes"));
 
-           //// builder.StructuralTypes.First(t => t.ClrType == typeof(Weight)).AddProperty(typeof(Weight).GetProperty("Target"));
-           // builder.StructuralTypes.First(t => t.ClrType == typeof(StepCount)).AddProperty(typeof(StepCount).GetProperty("Target"));
-
-           // builder.StructuralTypes.First(t => t.ClrType == typeof(AlcoholIntake)).AddProperty(typeof(AlcoholIntake).GetProperty("TargetA"));
-           // builder.StructuralTypes.First(t => t.ClrType == typeof(AlcoholIntake)).AddProperty(typeof(AlcoholIntake).GetProperty("TargetB"));
-
-           // builder.StructuralTypes.First(t => t.ClrType == typeof(ActivitySummary)).AddProperty(typeof(ActivitySummary).GetProperty("Target"));
-
-           // builder.StructuralTypes.First(t => t.ClrType == typeof(HeartSummary)).AddProperty(typeof(HeartSummary).GetProperty("TargetFatBurnAndAbove"));
-           // builder.StructuralTypes.First(t => t.ClrType == typeof(HeartSummary)).AddProperty(typeof(HeartSummary).GetProperty("TargetCardioAndAboveA"));
-           // builder.StructuralTypes.First(t => t.ClrType == typeof(HeartSummary)).AddProperty(typeof(HeartSummary).GetProperty("TargetCardioAndAboveB"));
 
             //app.UseMvc(route =>
             //{
@@ -195,14 +187,3 @@ namespace HealthAPI
     }
 }
 
-/*
-
-drop table weights
-drop table bloodpressures
-drop table StepCounts
-drop table units
-drop table heartratedailysummaries
-drop table RestingHeartRates
-drop table DailyActivitySummaries
-
-*/

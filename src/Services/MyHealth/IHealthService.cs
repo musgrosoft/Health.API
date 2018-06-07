@@ -6,9 +6,9 @@ namespace Services.MyHealth
 {
     public interface IHealthService
     {
-        void AddMovingAveragesToBloodPressures();
-        void AddMovingAveragesToRestingHeartRates();
-        void AddMovingAveragesToWeights();
+        //void AddMovingAveragesToBloodPressures();
+        //void AddMovingAveragesToRestingHeartRates();
+        //void AddMovingAveragesToWeights();
 
         DateTime GetLatestBloodPressureDate(DateTime defaultDateTime);
         DateTime GetLatestActivitySummaryDate(DateTime defaultDateTime);
@@ -24,9 +24,9 @@ namespace Services.MyHealth
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
         
-        void CalculateCumSumForStepCounts();
-        void CalculateCumSumForUnits();
-        void CalculateCumSumForActivitySummaries();
-        void CalculateCumSumForHeartSummaries();
+        //void CalculateCumSumForStepCounts();
+        //void CalculateCumSumForUnits();
+        //void CalculateCumSumForActivitySummaries();
+        //void CalculateCumSumForHeartSummaries();
     }
 }

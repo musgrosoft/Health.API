@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Moq;
+using Repositories;
 using Repositories.Health;
 using Repositories.Models;
 using Services.MyHealth;
@@ -15,14 +16,18 @@ namespace Services.Tests.MyHealth
         private HealthService _healthService;
         private Mock<IConfig> _config;
         private Mock<ILogger> _logger;
-        //private Mock<IAg>
+
+        private Mock<IAggregationCalculator> _aggregationCalculator;
+        
 
         public HealthServiceTests()
         {
             _healthRepository = new Mock<IHealthRepository>();
             _config = new Mock<IConfig>();
             _logger = new Mock<ILogger>();
-            _healthService = new HealthService(_config.Object, _logger.Object, null, _healthRepository.Object, null);
+            _aggregationCalculator = new Mock<IAggregationCalculator>();
+
+            _healthService = new HealthService(_config.Object, _logger.Object, _healthRepository.Object, _aggregationCalculator.Object);
         }
 
         [Fact]
