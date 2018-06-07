@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Repositories
 {
-    public class AggregationCalculator
+    public class AggregationCalculator : IAggregationCalculator
     {
         private readonly HealthContext _healthContext;
 
@@ -16,12 +14,12 @@ namespace Repositories
         }
 
         public void AddMovingAverageTo<T>(
-            DbSet<T> theList,
+            IEnumerable<T> theList,
             Func<T, DateTime> dateTimeSelector,
             Func<T, Decimal> GetValue,
             Action<T, Decimal?> SetMovingAverage,
             int period = 10
-            ) where T : class
+        ) where T : class
         {
             var orderedList = theList.OrderBy(dateTimeSelector).ToList();
 
@@ -45,18 +43,17 @@ namespace Repositories
                     SetMovingAverage(orderedList[i], null);
                 }
 
-                _healthContext.SaveChanges();
             }
 
         }
-
+        
         public void CalculateCumSumFor<T>(
-            DbSet<T> theList,
+            IEnumerable<T> theList,
             Func<T, DateTime> dateTimeSelector,
             Func<T, int?> GetValue,
             Func<T, int?> GetCumSum,
             Action<T, int?> SetCumSum
-            ) where T : class
+        ) where T : class
         {
             var orderedList = theList.OrderBy(x => dateTimeSelector(x)).ToList();
 
@@ -67,17 +64,22 @@ namespace Repositories
                 if (i > 0)
                 {
                     value += GetCumSum(orderedList[i - 1]);
+                    SetCumSum(orderedList[i], value);
+                }
+                else
+                {
+                    if (GetCumSum(orderedList[i]) == null)
+                    {
+                        SetCumSum(orderedList[i], value);
+                    }
                 }
 
-                SetCumSum(orderedList[i], value);
-
-                _healthContext.SaveChanges();
             }
 
         }
-
+        
         public void CalculateCumSumFor<T>(
-            DbSet<T> theList,
+            IEnumerable<T> theList,
             Func<T, DateTime> dateTimeSelector,
             Func<T, Decimal?> GetValue,
             Func<T, Decimal?> GetCumSum,

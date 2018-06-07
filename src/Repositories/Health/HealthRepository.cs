@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Repositories.Models;
@@ -59,6 +60,46 @@ namespace Repositories.Health
         public DateTime? GetLatestRunDate()
         {
             return _healthContext.Runs.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+        }
+
+        public IEnumerable<Weight> GetLatestWeights(int number)
+        {
+            return _healthContext.Weights.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<HeartSummary> GetLatestHeartSummaries(int number)
+        {
+            return _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<BloodPressure> GetLatestBloodPressures(int number)
+        {
+            return _healthContext.BloodPressures.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number)
+        {
+            return _healthContext.RestingHeartRates.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<StepCount> GetLatestStepCounts(int number)
+        {
+            return _healthContext.StepCounts.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<ActivitySummary> GetLatestActivitySummaries(int number)
+        {
+            return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime).Take(number);
+        }
+
+        public IEnumerable<AlcoholIntake> GetAllAlcoholIntakes()
+        {
+            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime);
+        }
+
+        public void SaveChanges()
+        {
+            _healthContext.SaveChanges();
         }
 
         public Weight Find(Weight weight)

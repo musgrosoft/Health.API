@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Repositories.Models;
 
 namespace Repositories.Health
@@ -27,5 +28,13 @@ namespace Repositories.Health
         void Update(ActivitySummary existingActivitySummary, ActivitySummary activitySummary);
         void Update(RestingHeartRate existingRestingHeartRate, RestingHeartRate restingHeartRate);
         void Update(HeartSummary existingHeartSummary, HeartSummary heartSummary);
+        IEnumerable<Weight> GetLatestWeights(int number);
+        IEnumerable<HeartSummary> GetLatestHeartSummaries(int number);
+        IEnumerable<BloodPressure> GetLatestBloodPressures(int number);
+        IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number);
+        IEnumerable<StepCount> GetLatestStepCounts(int number);
+        IEnumerable<ActivitySummary> GetLatestActivitySummaries(int number);
+        IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
+        void SaveChanges();
     }
 }
