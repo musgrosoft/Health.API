@@ -28,8 +28,8 @@ namespace Repositories.Health
         void Update(ActivitySummary existingActivitySummary, ActivitySummary activitySummary);
         void Update(RestingHeartRate existingRestingHeartRate, RestingHeartRate restingHeartRate);
         void Update(HeartSummary existingHeartSummary, HeartSummary heartSummary);
-        IEnumerable<Weight> GetLatestWeights(int number);
-        IList<HeartSummary> GetLatestHeartSummaries(int number, DateTime beforeDateTime);
+        IList<Weight> GetLatestWeights(int number, DateTime beforeDate);
+        IList<HeartSummary> GetLatestHeartSummaries(int number, DateTime beforeDate);
         IEnumerable<BloodPressure> GetLatestBloodPressures(int number);
         IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number);
         IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate);

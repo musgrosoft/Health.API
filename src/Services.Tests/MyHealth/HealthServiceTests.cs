@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Moq;
 using Repositories;
 using Repositories.Health;
@@ -292,6 +293,52 @@ namespace Services.Tests.MyHealth
 
             //Then
             _healthRepository.Verify(x => x.Update(existingHeartSummary, myHeartSummary), Times.Once);
+        }
+
+        [Fact]
+        public void ShouldDoMovingAverages()
+        {
+            var kgs = new List<decimal> {8, 9, 10};
+            var orderedWeights = new List<Weight>
+            {
+                new Weight {Kg = 11},
+                new Weight {Kg = 12},
+                new Weight {Kg = 13},
+                new Weight {Kg = 14},
+                new Weight {Kg = 15},
+                //new Weight {Kg = 16},
+                //new Weight {Kg = 17},
+                //new Weight {Kg = 18},
+                //new Weight {Kg = 19},
+                //new Weight {Kg = 20},
+                //new Weight {Kg = 21},
+                //new Weight {Kg = 22},
+                //new Weight {Kg = 23},
+                //new Weight {Kg = 24},
+                //new Weight {Kg = 25},
+            };
+
+            _healthService.SetMovingAveragesForWeights(kgs,orderedWeights, 3);
+
+            Assert.Equal(5, orderedWeights.Count);
+
+            Assert.Equal(11, orderedWeights[0].Kg);
+            Assert.Equal(12, orderedWeights[1].Kg);
+            Assert.Equal(13, orderedWeights[2].Kg);
+            Assert.Equal(14, orderedWeights[3].Kg);
+            Assert.Equal(15, orderedWeights[4].Kg);
+
+
+            
+            Assert.Equal(10, orderedWeights[0].MovingAverageKg);
+            Assert.Equal(11, orderedWeights[1].MovingAverageKg);
+            Assert.Equal(12, orderedWeights[2].MovingAverageKg);
+            Assert.Equal(13, orderedWeights[3].MovingAverageKg);
+            Assert.Equal(14, orderedWeights[4].MovingAverageKg);
+            //            Assert.Equal(2, orderedWeights[2].MovingAverageKg);
+            //            Assert.Equal(2, orderedWeights[3].MovingAverageKg);
+            //            Assert.Equal(2, orderedWeights[4].MovingAverageKg);
+
         }
 
     }

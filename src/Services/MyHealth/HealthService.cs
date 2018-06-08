@@ -65,10 +65,14 @@ namespace Services.MyHealth
         
         public void UpsertWeights(IEnumerable<Weight> weights)
         {
-            var countWeights = weights.Count();
-
             _logger.Log($"WEIGHT : Saving {weights.Count()} weight");
-            
+
+            var orderedWeights = weights.OrderBy(x => x.DateTime).ToList();
+
+            var previousWeights = _healthRepository.GetLatestWeights(10, orderedWeights.Min(x => x.DateTime));
+
+            SetMovingAveragesForWeights(previousWeights.Select(x=>x.Kg).ToList(), orderedWeights);
+
             foreach (var weight in weights)
             {   
                 var existingWeight = _healthRepository.Find(weight);
@@ -85,15 +89,10 @@ namespace Services.MyHealth
                 }
             }
 
-            _logger.Log($"WEIGHT : moving averages");
-
-            var latestWeights = _healthRepository.GetLatestWeights(countWeights + 10).ToList();
-            
-            AddMovingAveragesToWeights(latestWeights);
-
-            _healthRepository.SaveChanges();
         }
-        
+
+
+
 
         public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
@@ -274,6 +273,41 @@ namespace Services.MyHealth
         }
 
 
+
+        public void AddMovingAverageTo<T>(
+            IEnumerable<T> theList,
+            Func<T, DateTime> dateTimeSelector,
+            Func<T, Decimal> GetValue,
+            Action<T, Decimal?> SetMovingAverage,
+            int period = 10
+        ) where T : class
+        {
+            var orderedList = theList.OrderBy(dateTimeSelector).ToList();
+
+            for (int i = 0; i < orderedList.Count(); i++)
+            {
+                if (i >= period - 1)
+                {
+                    Decimal total = 0;
+                    //to rewrite from i-period, ascending
+                    for (int x = i; x > (i - period); x--)
+                    {
+                        total += GetValue(orderedList[x]);
+                    }
+
+                    decimal average = total / period;
+
+                    SetMovingAverage(orderedList[i], average);
+                }
+                //else
+                //{
+                //    SetMovingAverage(orderedList[i], null);
+                //}
+
+            }
+
+        }
+
         public void AddMovingAveragesToBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
             _logger.Log("BLOOD PRESSURE : Add moving averages (using generic method)");
@@ -306,6 +340,39 @@ namespace Services.MyHealth
         }
 
 
+        public void SetMovingAveragesForWeights(List<decimal> kgs, List<Weight> orderedWeights, int period = 10)
+        {
+
+            for (int i = 0; i < orderedWeights.Count-1; i++)
+            {
+                Decimal total = 0;
+
+                if (i < period-1)
+                {
+                    for (int j = kgs.Count-1; j > i; j--)
+                    {
+                        total += kgs[j];
+                    }
+
+                    for (int j = 0; j <= i; j++)
+                    {
+                        total += orderedWeights[j].Kg;
+                    }
+
+                }
+                else 
+                {
+                    for (int j = i - period + 1; j <= i ; j++)
+                    {
+                        total += orderedWeights[j].Kg;
+                    }
+                }
+
+                decimal average = total / period;
+
+                orderedWeights[i].MovingAverageKg = average;
+            }
+        }
 
         private void SetCumSumsForStepCounts(int? seed, IList<StepCount> orderedStepCounts)
         {

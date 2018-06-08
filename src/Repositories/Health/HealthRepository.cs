@@ -62,9 +62,9 @@ namespace Repositories.Health
             return _healthContext.Runs.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
         }
 
-        public IEnumerable<Weight> GetLatestWeights(int number)
+        public IList<Weight> GetLatestWeights(int number, DateTime beforeDate)
         {
-            return _healthContext.Weights.OrderByDescending(x => x.DateTime).Take(number);
+            return _healthContext.Weights.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
         public IList<HeartSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
@@ -151,6 +151,8 @@ namespace Repositories.Health
         {
             existingBloodPressure.Diastolic = bloodPressure.Diastolic;
             existingBloodPressure.Systolic = bloodPressure.Systolic;
+            existingBloodPressure.MovingAverageDiastolic = bloodPressure.MovingAverageDiastolic;
+            existingBloodPressure.MovingAverageSystolic = bloodPressure.MovingAverageSystolic;
 
             _healthContext.SaveChanges();
 
@@ -159,6 +161,7 @@ namespace Repositories.Health
         public void Update(StepCount existingStepCount, StepCount stepCount)
         {
             existingStepCount.Count = stepCount.Count;
+            existingStepCount.CumSumCount = stepCount.CumSumCount;
             _healthContext.SaveChanges();
         }
 
@@ -169,12 +172,15 @@ namespace Repositories.Health
             existingActivitySummary.FairlyActiveMinutes = activitySummary.FairlyActiveMinutes;
             existingActivitySummary.VeryActiveMinutes = activitySummary.VeryActiveMinutes;
 
+            existingActivitySummary.CumSumActiveMinutes = activitySummary.CumSumActiveMinutes;
+
             _healthContext.SaveChanges();
         }
 
         public void Update(RestingHeartRate existingRestingHeartRate, RestingHeartRate restingHeartRate)
         {
             existingRestingHeartRate.Beats = restingHeartRate.Beats;
+            existingRestingHeartRate.MovingAverageBeats = restingHeartRate.MovingAverageBeats;
 
             _healthContext.SaveChanges();
         }
@@ -185,6 +191,8 @@ namespace Repositories.Health
             existingHeartSummary.FatBurnMinutes = heartSummary.FatBurnMinutes;
             existingHeartSummary.CardioMinutes = heartSummary.CardioMinutes;
             existingHeartSummary.PeakMinutes = heartSummary.PeakMinutes;
+
+            existingHeartSummary.CumSumCardioAndAbove = heartSummary.CumSumCardioAndAbove;
 
             _healthContext.SaveChanges();
         }
