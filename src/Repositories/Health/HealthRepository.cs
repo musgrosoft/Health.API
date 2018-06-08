@@ -142,6 +142,7 @@ namespace Repositories.Health
 
             existingWeight.Kg = newWeight.Kg;
             existingWeight.FatRatioPercentage = newWeight.FatRatioPercentage;
+            existingWeight.MovingAverageKg = newWeight.MovingAverageKg;
 
             _healthContext.SaveChanges();
         }

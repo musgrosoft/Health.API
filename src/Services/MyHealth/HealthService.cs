@@ -65,13 +65,10 @@ namespace Services.MyHealth
         
         public void UpsertWeights(IEnumerable<Weight> weights)
         {
+            var countWeights = weights.Count();
+
             _logger.Log($"WEIGHT : Saving {weights.Count()} weight");
-
-            var latestWeights = _healthRepository.GetLatestWeights(10).ToList();
-            latestWeights.AddRange(weights);
-
-            AddMovingAveragesToWeights(latestWeights);
-
+            
             foreach (var weight in weights)
             {   
                 var existingWeight = _healthRepository.Find(weight);
@@ -87,18 +84,23 @@ namespace Services.MyHealth
                     _healthRepository.Update(existingWeight, weight);
                 }
             }
+
+            _logger.Log($"WEIGHT : moving averages");
+
+            var latestWeights = _healthRepository.GetLatestWeights(countWeights + 10).ToList();
+            
+            AddMovingAveragesToWeights(latestWeights);
+
+            _healthRepository.SaveChanges();
         }
         
 
         public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
+            var countBloodPressures = bloodPressures.Count();
+
             _logger.Log($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
-
-            var latestBloodPressures = _healthRepository.GetLatestBloodPressures(10).ToList();
-            latestBloodPressures.AddRange(bloodPressures);
-
-            AddMovingAveragesToBloodPressures(latestBloodPressures);
-
+            
             foreach (var bloodPressure in bloodPressures)
             {
                 var existingBloodPressure = _healthRepository.Find(bloodPressure);
@@ -114,19 +116,23 @@ namespace Services.MyHealth
                     _healthRepository.Insert(bloodPressure);
                 }
             }
+
+            _logger.Log($"BLOOD PRESSURE : moving averages");
+
+            var latestBloodPressures = _healthRepository.GetLatestBloodPressures(countBloodPressures + 10).ToList();
             
-            
+            AddMovingAveragesToBloodPressures(latestBloodPressures);
+
+            _healthRepository.SaveChanges();
+
         }
 
         public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
         {
+            var countStepCounts = stepCounts.Count();
+
             _logger.Log($"STEP COUNT : Saving {stepCounts.Count()} Step Count");
-
-            var latestStepCounts = _healthRepository.GetLatestStepCounts(1).ToList();
-            latestStepCounts.AddRange(stepCounts);
-
-            AddCumSumsToStepCounts(latestStepCounts);
-
+            
             foreach (var stepCount in stepCounts)
             {
                 var existingStepCount = _healthRepository.Find(stepCount);
@@ -141,19 +147,24 @@ namespace Services.MyHealth
                     _healthRepository.Insert(stepCount);
                 }
             }
+
+            _logger.Log($"STEP COUNT : Cum sums");
+
+            var latestStepCounts = _healthRepository.GetLatestStepCounts(countStepCounts + 1).ToList();
+            
+            AddCumSumsToStepCounts(latestStepCounts);
+
+            _healthRepository.SaveChanges();
         }
 
 
 
         public void UpsertActivitySummaries(IEnumerable<ActivitySummary>  activitySummaries)
         {
+            var countActivitySummaries = activitySummaries.Count();
+
             _logger.Log($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
-
-            var latestActivitySummaries = _healthRepository.GetLatestActivitySummaries(1).ToList();
-            latestActivitySummaries.AddRange(activitySummaries);
-
-            AddCumSumsToActivitySummaries(latestActivitySummaries);
-
+            
             foreach (var activitySummary in activitySummaries)
             {
                
@@ -169,17 +180,22 @@ namespace Services.MyHealth
                     _healthRepository.Insert(activitySummary);
                 }
             }
+
+            _logger.Log($"ACTIVITY SUMMARY : Cum sums");
+
+            var latestActivitySummaries = _healthRepository.GetLatestActivitySummaries(countActivitySummaries + 1).ToList();
+            
+            AddCumSumsToActivitySummaries(latestActivitySummaries);
+
+            _healthRepository.SaveChanges();
         }
         
         public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {
+            var countRestingHeartRates = restingHeartRates.Count();
+
             _logger.Log($"RESTING HEART RATE : Saving {restingHeartRates.Count()} resting heart rates");
-
-            var latestRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(10).ToList();
-            latestRestingHeartRates.AddRange(restingHeartRates);
-
-            AddMovingAveragesToRestingHeartRates(latestRestingHeartRates);
-
+            
             foreach (var restingHeartRate in restingHeartRates)
             {
                 var existingRestingHeartRate = _healthRepository.Find(restingHeartRate);
@@ -194,17 +210,22 @@ namespace Services.MyHealth
                     _healthRepository.Insert(restingHeartRate);
                 }
             }
+
+            _logger.Log($"RESTING HEART RATE : Moving averages");
+
+            var latestRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(countRestingHeartRates + 10).ToList();
+            
+            AddMovingAveragesToRestingHeartRates(latestRestingHeartRates);
+
+            _healthRepository.SaveChanges();
         }
 
         public void UpsertHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
         {
+            var countHeartSummaries = heartSummaries.Count();
+
             _logger.Log($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
-
-            var latestHeartSummaries = _healthRepository.GetLatestHeartSummaries(1).ToList();
-            latestHeartSummaries.AddRange(heartSummaries);
-
-            AddCumSumsToHeartSummaries(latestHeartSummaries);
-
+            
             foreach (var heartSummary in heartSummaries)
             {
                 
@@ -220,6 +241,15 @@ namespace Services.MyHealth
                     _healthRepository.Insert(heartSummary);
                 }
             }
+
+            _logger.Log($"HEART SUMMARY : cum sums");
+
+            var latestHeartSummaries = _healthRepository.GetLatestHeartSummaries(countHeartSummaries + 1).ToList();
+            
+            AddCumSumsToHeartSummaries(latestHeartSummaries);
+
+            _healthRepository.SaveChanges();
+
         }
 
         public void UpsertAlcoholIntakes()

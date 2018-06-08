@@ -38,10 +38,10 @@ namespace Repositories
 
                     SetMovingAverage(orderedList[i], average);
                 }
-                else
-                {
-                    SetMovingAverage(orderedList[i], null);
-                }
+                //else
+                //{
+                //    SetMovingAverage(orderedList[i], null);
+                //}
 
             }
 
