@@ -82,9 +82,9 @@ namespace Repositories.Health
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.DateTime).Take(number);
         }
 
-        public IEnumerable<StepCount> GetLatestStepCounts(int number)
+        public IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate)
         {
-            return _healthContext.StepCounts.OrderByDescending(x => x.DateTime).Take(number);
+            return _healthContext.StepCounts.Where(x=>x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
         public IEnumerable<ActivitySummary> GetLatestActivitySummaries(int number)

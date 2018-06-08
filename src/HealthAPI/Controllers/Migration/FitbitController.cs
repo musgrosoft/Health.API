@@ -16,11 +16,11 @@ namespace HealthAPI.Controllers.Migration
     [Route("api/Fitbit")]
     public class FitbitController : Controller
     {
-        private readonly HealthContext _context;
+        private readonly IHealthService _healthService;
 
-        public FitbitController(HealthContext context)
+        public FitbitController(IHealthService healthService)
         {
-            _context = context;
+            _healthService = healthService;
         }
 
         // POST: api/AlcoholIntakes1
@@ -34,10 +34,7 @@ namespace HealthAPI.Controllers.Migration
             {
                 //var logger = context.Logger;
                 logger.Log("FITBIT : starting fitbit migrate");
-
-                //logger.Log("STARTING NOKIA MIGRATOR");
-                var healthService = HealthServiceFactory.Build( logger, _context);
-
+                
                 var oAuthService = new OAuthService(new OAuthTokenRepository(new Config(), logger));
                 var v = await oAuthService.GetFitbitRefreshToken();
                 //logger.Log("fitbit refresh token is " + v);
@@ -52,7 +49,7 @@ namespace HealthAPI.Controllers.Migration
                 var fitbitAggregator = new FitbitClientClientAggregator(fitbitClient, logger);
                 var fitbitService = new FitbitService(new Config(), logger, fitbitAggregator);
 
-                var fitbitMigrator = new FitbitMigrator(healthService, logger, fitbitService, new Calendar());
+                var fitbitMigrator = new FitbitMigrator(_healthService, logger, fitbitService, new Calendar());
 
                 await fitbitMigrator.MigrateHeartSummaries();
                 await fitbitMigrator.MigrateRestingHeartRates();

@@ -129,12 +129,18 @@ namespace Services.MyHealth
 
         public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
         {
-            var countStepCounts = stepCounts.Count();
-
             _logger.Log($"STEP COUNT : Saving {stepCounts.Count()} Step Count");
-            
-            foreach (var stepCount in stepCounts)
+
+            var orderedStepCounts = stepCounts.OrderBy(x => x.DateTime).ToList();
+
+            var previousStepCount = _healthRepository.GetLatestStepCounts(1, orderedStepCounts.Min(x=>x.DateTime)).FirstOrDefault();
+
+            SetCumSumsForStepCounts(previousStepCount?.CumSumCount, orderedStepCounts);
+
+            for (int i = 0; i < orderedStepCounts.Count; i++)
             {
+                var stepCount = orderedStepCounts[i];
+
                 var existingStepCount = _healthRepository.Find(stepCount);
                 if (existingStepCount != null)
                 {
@@ -147,14 +153,7 @@ namespace Services.MyHealth
                     _healthRepository.Insert(stepCount);
                 }
             }
-
-            _logger.Log($"STEP COUNT : Cum sums");
-
-            var latestStepCounts = _healthRepository.GetLatestStepCounts(countStepCounts + 1).ToList();
             
-            AddCumSumsToStepCounts(latestStepCounts);
-
-            _healthRepository.SaveChanges();
         }
 
 
@@ -322,6 +321,25 @@ namespace Services.MyHealth
                 (sc, val) => sc.CumSumCount = val
             );
         }
+
+        private void SetCumSumsForStepCounts(int? seed, IList<StepCount> orderedStepCounts)
+        {
+            for (int i = 0; i < orderedStepCounts.Count; i++)
+            {
+                int? previousCumSum;
+
+                if (i == 0)
+                {
+                    previousCumSum = (seed ?? 0);
+                }
+                else
+                {
+                    previousCumSum = orderedStepCounts[i - 1].CumSumCount;
+                }
+
+                orderedStepCounts[i].CumSumCount = (orderedStepCounts[i].Count ?? 0) + previousCumSum;
+            }
+       }
 
         public void AddCumSumsToActivitySummaries(IEnumerable<ActivitySummary> activitySummaries)
         {

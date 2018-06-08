@@ -171,6 +171,8 @@ namespace Services.Tests.MyHealth
             //Given
             var myStepCount = new StepCount();
             _healthRepository.Setup(x => x.Find(myStepCount)).Returns((StepCount)null);
+            _healthRepository.Setup(x => x.GetLatestStepCounts(It.IsAny<int>(), It.IsAny<DateTime>()))
+                .Returns(new List<StepCount>());
 
             //When
             _healthService.UpsertStepCounts(new List<StepCount> { myStepCount });
@@ -186,6 +188,8 @@ namespace Services.Tests.MyHealth
             var myStepCount = new StepCount();
             var existingStepCount = new StepCount();
             _healthRepository.Setup(x => x.Find(myStepCount)).Returns(existingStepCount);
+            _healthRepository.Setup(x => x.GetLatestStepCounts(It.IsAny<int>(), It.IsAny<DateTime>()))
+                .Returns(new List<StepCount>());
 
             //When
             _healthService.UpsertStepCounts(new List<StepCount> { myStepCount });

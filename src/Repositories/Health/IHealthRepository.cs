@@ -32,7 +32,7 @@ namespace Repositories.Health
         IEnumerable<HeartSummary> GetLatestHeartSummaries(int number);
         IEnumerable<BloodPressure> GetLatestBloodPressures(int number);
         IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number);
-        IEnumerable<StepCount> GetLatestStepCounts(int number);
+        IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate);
         IEnumerable<ActivitySummary> GetLatestActivitySummaries(int number);
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
         void SaveChanges();

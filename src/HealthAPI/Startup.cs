@@ -18,6 +18,8 @@ using Repositories;
 using Repositories.Models;
 using Exceptionless;
 using Repositories.Health;
+using Services.MyHealth;
+using Utils;
 
 namespace HealthAPI
 {
@@ -49,6 +51,10 @@ namespace HealthAPI
             services.AddMvc();
 
             services.AddScoped<IHealthRepository, HealthRepository>();
+            services.AddTransient<IHealthService, HealthService>();
+            services.AddTransient<IConfig, Config>();
+            services.AddTransient<Utils.ILogger, Logger>();
+            services.AddTransient<IAggregationCalculator, AggregationCalculator>();
 
             //// ********************
             //// Setup CORS

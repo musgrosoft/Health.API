@@ -28,5 +28,7 @@ namespace Repositories
             Func<T, Decimal?> GetCumSum,
             Action<T, Decimal?> SetCumSum
         ) where T : class;
+
+       // IList<int?> GenerateCumSums(object stepCounts, Func<object, object> func, Func<object, object> func1, Func<object, object> func2, Func<object, object, object> func3);
     }
 }
