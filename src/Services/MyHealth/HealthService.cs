@@ -160,10 +160,14 @@ namespace Services.MyHealth
 
         public void UpsertActivitySummaries(IEnumerable<ActivitySummary>  activitySummaries)
         {
-            var countActivitySummaries = activitySummaries.Count();
-
             _logger.Log($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
-            
+
+            var orderedActivitySummaries = activitySummaries.OrderBy(x => x.DateTime).ToList();
+
+            var previousActivitySummary = _healthRepository.GetLatestActivitySummaries(1, orderedActivitySummaries.Min(x => x.DateTime)).FirstOrDefault();
+
+            SetCumSumsForActivitySummaries(previousActivitySummary?.CumSumActiveMinutes, orderedActivitySummaries);
+
             foreach (var activitySummary in activitySummaries)
             {
                
@@ -180,13 +184,6 @@ namespace Services.MyHealth
                 }
             }
 
-            _logger.Log($"ACTIVITY SUMMARY : Cum sums");
-
-            var latestActivitySummaries = _healthRepository.GetLatestActivitySummaries(countActivitySummaries + 1).ToList();
-            
-            AddCumSumsToActivitySummaries(latestActivitySummaries);
-
-            _healthRepository.SaveChanges();
         }
         
         public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
@@ -221,10 +218,14 @@ namespace Services.MyHealth
 
         public void UpsertHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
         {
-            var countHeartSummaries = heartSummaries.Count();
-
             _logger.Log($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
-            
+
+            var orderedHeartSummaries = heartSummaries.OrderBy(x => x.DateTime).ToList();
+
+            var previousHeartSummary = _healthRepository.GetLatestHeartSummaries(1, orderedHeartSummaries.Min(x => x.DateTime)).FirstOrDefault();
+
+            SetCumSumsForHeartSummaries(previousHeartSummary?.CumSumCardioAndAbove , orderedHeartSummaries);
+
             foreach (var heartSummary in heartSummaries)
             {
                 
@@ -241,15 +242,8 @@ namespace Services.MyHealth
                 }
             }
 
-            _logger.Log($"HEART SUMMARY : cum sums");
-
-            var latestHeartSummaries = _healthRepository.GetLatestHeartSummaries(countHeartSummaries + 1).ToList();
-            
-            AddCumSumsToHeartSummaries(latestHeartSummaries);
-
-            _healthRepository.SaveChanges();
-
         }
+
 
         public void UpsertAlcoholIntakes()
         {
@@ -311,16 +305,7 @@ namespace Services.MyHealth
                 );
         }
 
-        private void AddCumSumsToStepCounts(List<StepCount> stepCounts)
-        {
-            _aggregationCalculator.CalculateCumSumFor(
-                stepCounts,
-                sc => sc.DateTime,
-                sc => sc.Count,
-                sc => sc.CumSumCount,
-                (sc, val) => sc.CumSumCount = val
-            );
-        }
+
 
         private void SetCumSumsForStepCounts(int? seed, IList<StepCount> orderedStepCounts)
         {
@@ -341,43 +326,44 @@ namespace Services.MyHealth
             }
        }
 
-        public void AddCumSumsToActivitySummaries(IEnumerable<ActivitySummary> activitySummaries)
+        private void SetCumSumsForActivitySummaries(int? seed, IList<ActivitySummary> orderedActivitySummaries)
         {
-            _aggregationCalculator.CalculateCumSumFor(
-                activitySummaries,
-                ac => ac.DateTime,
-                ac => ac.ActiveMinutes,
-                ac => ac.CumSumActiveMinutes,
-                (ac, val) => ac.CumSumActiveMinutes = val
-            );
+            for (int i = 0; i < orderedActivitySummaries.Count; i++)
+            {
+                int? previousCumSum;
 
-            //var activitySummaries = _healthContext.ActivitySummaries.OrderBy(x => x.DateTime).ToList();
-            //for (int i = 0; i < activitySummaries.Count(); i++)
-            //{
-            //    if (i == 0)
-            //    {
-            //        activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes;
-            //    }
-            //    else
-            //    {
-            //        activitySummaries[i].CumSumActiveMinutes = activitySummaries[i].ActiveMinutes + activitySummaries[i - 1].CumSumActiveMinutes;
-            //    }
-            //    _healthContext.SaveChanges();
-            //}
+                if (i == 0)
+                {
+                    previousCumSum = (seed ?? 0);
+                }
+                else
+                {
+                    previousCumSum = orderedActivitySummaries[i - 1].CumSumActiveMinutes;
+                }
 
-
+                orderedActivitySummaries[i].CumSumActiveMinutes = (orderedActivitySummaries[i].ActiveMinutes) + previousCumSum;
+            }
         }
 
-        public void AddCumSumsToHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
+        private void SetCumSumsForHeartSummaries(int? seed, List<HeartSummary> orderedHeartSummaries)
         {
-            _aggregationCalculator.CalculateCumSumFor(
-                heartSummaries,
-                hs => hs.DateTime,
-                hs => hs.CardioMinutes + hs.PeakMinutes,
-                hs => hs.CumSumCardioAndAbove,
-                (hs, val) => hs.CumSumCardioAndAbove = val
-            );
+            for (int i = 0; i < orderedHeartSummaries.Count; i++)
+            {
+                int? previousCumSum;
+
+                if (i == 0)
+                {
+                    previousCumSum = (seed ?? 0);
+                }
+                else
+                {
+                    previousCumSum = orderedHeartSummaries[i - 1].CumSumCardioAndAbove;
+                }
+
+                orderedHeartSummaries[i].CumSumCardioAndAbove = (orderedHeartSummaries[i].CardioMinutes) + previousCumSum;
+            }
         }
+
 
         public void AddCumSumsToAlcoholIntakes(IEnumerable<AlcoholIntake> alcoholIntakes)
         {

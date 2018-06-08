@@ -67,9 +67,9 @@ namespace Repositories.Health
             return _healthContext.Weights.OrderByDescending(x => x.DateTime).Take(number);
         }
 
-        public IEnumerable<HeartSummary> GetLatestHeartSummaries(int number)
+        public IList<HeartSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
         {
-            return _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).Take(number);
+            return _healthContext.HeartSummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
         public IEnumerable<BloodPressure> GetLatestBloodPressures(int number)
@@ -87,9 +87,9 @@ namespace Repositories.Health
             return _healthContext.StepCounts.Where(x=>x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
-        public IEnumerable<ActivitySummary> GetLatestActivitySummaries(int number)
+        public IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate)
         {
-            return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime).Take(number);
+            return _healthContext.ActivitySummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
         public IEnumerable<AlcoholIntake> GetAllAlcoholIntakes()

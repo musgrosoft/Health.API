@@ -205,6 +205,8 @@ namespace Services.Tests.MyHealth
             //Given
             var myActivitySummary = new ActivitySummary();
             _healthRepository.Setup(x => x.Find(myActivitySummary)).Returns((ActivitySummary)null);
+            _healthRepository.Setup(x => x.GetLatestActivitySummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
+                .Returns(new List<ActivitySummary>());
 
             //When
             _healthService.UpsertActivitySummaries(new List<ActivitySummary> { myActivitySummary });
@@ -220,6 +222,8 @@ namespace Services.Tests.MyHealth
             var myActivitySummary = new ActivitySummary();
             var existingActivitySummary = new ActivitySummary();
             _healthRepository.Setup(x => x.Find(myActivitySummary)).Returns(existingActivitySummary);
+            _healthRepository.Setup(x => x.GetLatestActivitySummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
+                .Returns(new List<ActivitySummary>());
 
             //When
             _healthService.UpsertActivitySummaries(new List<ActivitySummary> { myActivitySummary });
@@ -263,6 +267,8 @@ namespace Services.Tests.MyHealth
             //Given
             var myHeartSummary = new HeartSummary();
             _healthRepository.Setup(x => x.Find(myHeartSummary)).Returns((HeartSummary)null);
+            _healthRepository.Setup(x => x.GetLatestHeartSummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
+                .Returns(new List<HeartSummary>());
 
             //When
             _healthService.UpsertHeartSummaries(new List<HeartSummary> { myHeartSummary });
@@ -278,6 +284,8 @@ namespace Services.Tests.MyHealth
             var myHeartSummary = new HeartSummary();
             var existingHeartSummary = new HeartSummary();
             _healthRepository.Setup(x => x.Find(myHeartSummary)).Returns(existingHeartSummary);
+            _healthRepository.Setup(x => x.GetLatestHeartSummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
+                .Returns(new List<HeartSummary>());
 
             //When
             _healthService.UpsertHeartSummaries(new List<HeartSummary> { myHeartSummary });

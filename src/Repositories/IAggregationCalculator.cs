@@ -16,14 +16,6 @@ namespace Repositories
         void CalculateCumSumFor<T>(
             IEnumerable<T> theList,
             Func<T, DateTime> dateTimeSelector,
-            Func<T, int?> GetValue,
-            Func<T, int?> GetCumSum,
-            Action<T, int?> SetCumSum
-        ) where T : class;
-
-        void CalculateCumSumFor<T>(
-            IEnumerable<T> theList,
-            Func<T, DateTime> dateTimeSelector,
             Func<T, Decimal?> GetValue,
             Func<T, Decimal?> GetCumSum,
             Action<T, Decimal?> SetCumSum

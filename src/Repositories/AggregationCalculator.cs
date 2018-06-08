@@ -47,47 +47,6 @@ namespace Repositories
 
         }
         
-        public void CalculateCumSumFor<T>(
-            IEnumerable<T> theList,
-            Func<T, DateTime> dateTimeSelector,
-            Func<T, int?> GetValue,
-            Func<T, int?> GetCumSum,
-            Action<T, int?> SetCumSum
-        ) where T : class
-        {
-            var orderedList = theList.OrderBy(x => dateTimeSelector(x)).ToList();
-            var newList = new List<int?>();
-
-
-            //var firstT = orderedList.First();
-
-            //foreach (var t in orderedList.Skip(1))
-            //{
-            //    //if(t.)
-
-            //}
-
-            for (int i = 0; i < orderedList.Count(); i++)
-            {
-                int? value = GetValue(orderedList[i]);
-
-                if (i > 0)
-                {
-                    value += GetCumSum(orderedList[i - 1]);
-                    //newList.Add
-                    SetCumSum(orderedList[i], value);
-                }
-                else
-                {
-                    if (GetCumSum(orderedList[i]) == null)
-                    {
-                        SetCumSum(orderedList[i], value);
-                    }
-                }
-
-            }
-
-        }
         
         public void CalculateCumSumFor<T>(
             IEnumerable<T> theList,

@@ -29,11 +29,11 @@ namespace Repositories.Health
         void Update(RestingHeartRate existingRestingHeartRate, RestingHeartRate restingHeartRate);
         void Update(HeartSummary existingHeartSummary, HeartSummary heartSummary);
         IEnumerable<Weight> GetLatestWeights(int number);
-        IEnumerable<HeartSummary> GetLatestHeartSummaries(int number);
+        IList<HeartSummary> GetLatestHeartSummaries(int number, DateTime beforeDateTime);
         IEnumerable<BloodPressure> GetLatestBloodPressures(int number);
         IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number);
         IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate);
-        IEnumerable<ActivitySummary> GetLatestActivitySummaries(int number);
+        IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate);
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
         void SaveChanges();
     }
