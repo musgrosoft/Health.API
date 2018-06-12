@@ -69,9 +69,9 @@ namespace Services.MyHealth
 
             var orderedWeights = weights.OrderBy(x => x.DateTime).ToList();
 
-            var previousWeights = _healthRepository.GetLatestWeights(9, orderedWeights.Min(x => x.DateTime));
+            var previousWeights = _healthRepository.GetLatestWeights(9, orderedWeights.Min(x => x.DateTime)).ToList();
 
-            SetMovingAveragesForWeights(previousWeights.Select(x=>x.Kg).ToList(), orderedWeights);
+            SetMovingAveragesForWeights(previousWeights, orderedWeights);
 
             foreach (var weight in weights)
             {   
@@ -325,22 +325,59 @@ namespace Services.MyHealth
         }
 
 
-        public void SetMovingAveragesForWeights(List<decimal> seedKgs, List<Weight> orderedWeights, int period = 10)
-        {
-            List<decimal?> allKgs = seedKgs.Select(x => (decimal?)x).ToList();
-            allKgs.AddRange(orderedWeights.Select(x => (decimal?)x.Kg));
+        //public void SetMovingAveragesForWeights(List<decimal> seedKgs, List<Weight> orderedWeights, int period = 10)
+        //{
+        //    List<decimal?> allKgs = seedKgs.Select(x => (decimal?)x).ToList();
+        //    allKgs.AddRange(orderedWeights.Select(x => (decimal?)x.Kg));
 
-            if (seedKgs.Count < period - 1)
+        //    var numberOfMissingKgs = 0;
+        //    if (seedKgs.Count < period - 1)
+        //    {
+        //        numberOfMissingKgs = period - 1 - seedKgs.Count;
+        //        allKgs.InsertRange(0, Enumerable.Repeat<decimal?>(null, numberOfMissingKgs));
+        //    }
+
+        //    for (int i = 0; i < orderedWeights.Count; i++)
+        //    {
+        //        if (i < numberOfMissingKgs)
+        //        {
+        //            orderedWeights[i].MovingAverageKg = null;
+        //        }
+        //        else
+        //        {
+        //            orderedWeights[i].MovingAverageKg = allKgs.Skip(i).Take(period).Average();
+        //        }
+                
+        //    }
+            
+        //}
+
+
+        public void SetMovingAveragesForWeights(List<Weight> seedWeights, List<Weight> orderedWeights, int period = 10)
+        {
+            List<Weight> allWeights = seedWeights.ToList();
+            allWeights.AddRange(orderedWeights);
+
+            var numberOfMissingKgs = 0;
+            if (seedWeights.Count < period - 1)
             {
-                var numberOfMissingKgs = period - 1 - seedKgs.Count;
-                allKgs.InsertRange(0, Enumerable.Repeat<decimal?>(null, numberOfMissingKgs));
+                numberOfMissingKgs = period - 1 - seedWeights.Count;
+                //allWeights.InsertRange(0, Enumerable.Repeat<Weight>(null, numberOfMissingKgs));
             }
 
             for (int i = 0; i < orderedWeights.Count; i++)
             {
-                orderedWeights[i].MovingAverageKg = allKgs.Skip(i).Take(period).Average();
+                if (i < numberOfMissingKgs)
+                {
+                    orderedWeights[i].MovingAverageKg = null;
+                }
+                else
+                {
+                    orderedWeights[i].MovingAverageKg = allWeights.Skip(i - numberOfMissingKgs).Take(period).Average(x=>x.Kg);
+                }
+
             }
-            
+
         }
 
         private void SetCumSumsForStepCounts(int? seed, IList<StepCount> orderedStepCounts)

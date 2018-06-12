@@ -302,7 +302,20 @@ namespace Services.Tests.MyHealth
         [Fact]
         public void ShouldDoMovingAverages()
         {
-            var kgs = new List<decimal> {10, 20, 30, 40, 50, 60, 70, 80, 90};
+            var seedWeights = new List<Weight>
+            {
+                new Weight {Kg = 10},
+                new Weight {Kg = 20},
+                new Weight {Kg = 30},
+                new Weight {Kg = 40},
+                new Weight {Kg = 50},
+                new Weight {Kg = 60},
+                new Weight {Kg = 70},
+                new Weight {Kg = 80},
+                new Weight {Kg = 90},
+            };
+
+
             var orderedWeights = new List<Weight>
             {
                 new Weight {Kg = 100},
@@ -322,7 +335,7 @@ namespace Services.Tests.MyHealth
                 new Weight {Kg = 240},
             };
 
-            _healthService.SetMovingAveragesForWeights(kgs,orderedWeights, 10);
+            _healthService.SetMovingAveragesForWeights(seedWeights, orderedWeights, 10);
 
             Assert.Equal(15, orderedWeights.Count);
 
@@ -364,7 +377,17 @@ namespace Services.Tests.MyHealth
         [Fact]
         public void ShouldDoMovingAverages2()
         {
-            var kgs = new List<decimal> { 40, 50, 60, 70, 80, 90 };
+            var seedWeights = new List<Weight>
+            {
+                new Weight {Kg = 40},
+                new Weight {Kg = 50},
+                new Weight {Kg = 60},
+                new Weight {Kg = 70},
+                new Weight {Kg = 80},
+                new Weight {Kg = 90},
+
+            };
+
             var orderedWeights = new List<Weight>
             {
                 new Weight {Kg = 100},
@@ -384,7 +407,7 @@ namespace Services.Tests.MyHealth
                 new Weight {Kg = 240},
             };
 
-            _healthService.SetMovingAveragesForWeights(kgs, orderedWeights, 10);
+            _healthService.SetMovingAveragesForWeights(seedWeights, orderedWeights, 10);
 
             Assert.Equal(15, orderedWeights.Count);
 
