@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Services.Fitbit.Domain;
 
-namespace Services.Fitbit
+namespace Services
 {
     public interface IFitbitClientAggregator
     {

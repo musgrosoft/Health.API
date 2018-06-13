@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Repositories;
 using Repositories.Health;
 using Repositories.Models;
@@ -71,7 +72,7 @@ namespace Services.MyHealth
 
             var previousWeights = _healthRepository.GetLatestWeights(9, orderedWeights.Min(x => x.DateTime)).ToList();
 
-            SetMovingAveragesForWeights(previousWeights, orderedWeights);
+            _aggregationCalculator.SetMovingAveragesForWeights(previousWeights, orderedWeights);
 
             foreach (var weight in weights)
             {   
@@ -116,8 +117,8 @@ namespace Services.MyHealth
             _logger.Log($"BLOOD PRESSURE : moving averages");
 
             var latestBloodPressures = _healthRepository.GetLatestBloodPressures(countBloodPressures + 10).ToList();
-            
-            AddMovingAveragesToBloodPressures(latestBloodPressures);
+
+            _aggregationCalculator.AddMovingAveragesToBloodPressures(latestBloodPressures);
 
             _healthRepository.SaveChanges();
 
@@ -131,7 +132,7 @@ namespace Services.MyHealth
 
             var previousStepCount = _healthRepository.GetLatestStepCounts(1, orderedStepCounts.Min(x=>x.DateTime)).FirstOrDefault();
 
-            SetCumSumsForStepCounts(previousStepCount?.CumSumCount, orderedStepCounts);
+            _aggregationCalculator.SetCumSumsForStepCounts(previousStepCount?.CumSumCount, orderedStepCounts);
 
             for (int i = 0; i < orderedStepCounts.Count; i++)
             {
@@ -162,7 +163,7 @@ namespace Services.MyHealth
 
             var previousActivitySummary = _healthRepository.GetLatestActivitySummaries(1, orderedActivitySummaries.Min(x => x.DateTime)).FirstOrDefault();
 
-            SetCumSumsForActivitySummaries(previousActivitySummary?.CumSumActiveMinutes, orderedActivitySummaries);
+            _aggregationCalculator.SetCumSumsForActivitySummaries(previousActivitySummary?.CumSumActiveMinutes, orderedActivitySummaries);
 
             foreach (var activitySummary in activitySummaries)
             {
@@ -206,8 +207,8 @@ namespace Services.MyHealth
             _logger.Log($"RESTING HEART RATE : Moving averages");
 
             var latestRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(countRestingHeartRates + 10).ToList();
-            
-            AddMovingAveragesToRestingHeartRates(latestRestingHeartRates);
+
+            _aggregationCalculator.AddMovingAveragesToRestingHeartRates(latestRestingHeartRates);
 
             _healthRepository.SaveChanges();
         }
@@ -220,7 +221,7 @@ namespace Services.MyHealth
 
             var previousHeartSummary = _healthRepository.GetLatestHeartSummaries(1, orderedHeartSummaries.Min(x => x.DateTime)).FirstOrDefault();
 
-            SetCumSumsForHeartSummaries(previousHeartSummary?.CumSumCardioAndAbove , orderedHeartSummaries);
+            _aggregationCalculator.SetCumSumsForHeartSummaries(previousHeartSummary?.CumSumCardioAndAbove , orderedHeartSummaries);
 
             foreach (var heartSummary in heartSummaries)
             {
@@ -246,8 +247,8 @@ namespace Services.MyHealth
             _logger.Log("UNITS : Calculate cum sum");
 
             var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes();
-            
-            AddCumSumsToAlcoholIntakes(allAlcoholIntakes);
+
+            _aggregationCalculator.AddCumSumsToAlcoholIntakes(allAlcoholIntakes);
 
             _healthRepository.SaveChanges();
             
@@ -256,201 +257,6 @@ namespace Services.MyHealth
 
 
         
-
-
-
-        public void AddMovingAverageTo<T>(
-            IEnumerable<T> theList,
-            Func<T, DateTime> dateTimeSelector,
-            Func<T, Decimal> GetValue,
-            Action<T, Decimal?> SetMovingAverage,
-            int period = 10
-        ) where T : class
-        {
-            var orderedList = theList.OrderBy(dateTimeSelector).ToList();
-
-            for (int i = 0; i < orderedList.Count(); i++)
-            {
-                if (i >= period - 1)
-                {
-                    Decimal total = 0;
-                    //to rewrite from i-period, ascending
-                    for (int x = i; x > (i - period); x--)
-                    {
-                        total += GetValue(orderedList[x]);
-                    }
-
-                    decimal average = total / period;
-
-                    SetMovingAverage(orderedList[i], average);
-                }
-                //else
-                //{
-                //    SetMovingAverage(orderedList[i], null);
-                //}
-
-            }
-
-        }
-
-        public void AddMovingAveragesToBloodPressures(IEnumerable<BloodPressure> bloodPressures)
-        {
-            _logger.Log("BLOOD PRESSURE : Add moving averages (using generic method)");
-
-            _aggregationCalculator.AddMovingAverageTo(
-                bloodPressures,
-                w => w.DateTime,
-                w => w.Systolic,
-                (w, d) => w.MovingAverageSystolic = d
-                );
-
-            _aggregationCalculator.AddMovingAverageTo(
-                bloodPressures,
-                w => w.DateTime,
-                w => w.Diastolic,
-                (w, d) => w.MovingAverageDiastolic = d
-                );
-        }
-        
-        public void AddMovingAveragesToRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
-        {
-            _logger.Log("RESTING HEART RATE : Add moving averages (using generic method)");
-
-            _aggregationCalculator.AddMovingAverageTo(
-                restingHeartRates,
-                w => w.DateTime,
-                w => w.Beats,
-                (w, d) => w.MovingAverageBeats = d
-                );
-        }
-
-
-        //public void SetMovingAveragesForWeights(List<decimal> seedKgs, List<Weight> orderedWeights, int period = 10)
-        //{
-        //    List<decimal?> allKgs = seedKgs.Select(x => (decimal?)x).ToList();
-        //    allKgs.AddRange(orderedWeights.Select(x => (decimal?)x.Kg));
-
-        //    var numberOfMissingKgs = 0;
-        //    if (seedKgs.Count < period - 1)
-        //    {
-        //        numberOfMissingKgs = period - 1 - seedKgs.Count;
-        //        allKgs.InsertRange(0, Enumerable.Repeat<decimal?>(null, numberOfMissingKgs));
-        //    }
-
-        //    for (int i = 0; i < orderedWeights.Count; i++)
-        //    {
-        //        if (i < numberOfMissingKgs)
-        //        {
-        //            orderedWeights[i].MovingAverageKg = null;
-        //        }
-        //        else
-        //        {
-        //            orderedWeights[i].MovingAverageKg = allKgs.Skip(i).Take(period).Average();
-        //        }
-                
-        //    }
-            
-        //}
-
-
-        public void SetMovingAveragesForWeights(List<Weight> seedWeights, List<Weight> orderedWeights, int period = 10)
-        {
-            List<Weight> allWeights = seedWeights.ToList();
-            allWeights.AddRange(orderedWeights);
-
-            var numberOfMissingKgs = 0;
-            if (seedWeights.Count < period - 1)
-            {
-                numberOfMissingKgs = period - 1 - seedWeights.Count;
-                //allWeights.InsertRange(0, Enumerable.Repeat<Weight>(null, numberOfMissingKgs));
-            }
-
-            for (int i = 0; i < orderedWeights.Count; i++)
-            {
-                if (i < numberOfMissingKgs)
-                {
-                    orderedWeights[i].MovingAverageKg = null;
-                }
-                else
-                {
-                    orderedWeights[i].MovingAverageKg = allWeights.Skip(i - numberOfMissingKgs).Take(period).Average(x=>x.Kg);
-                }
-
-            }
-
-        }
-
-        private void SetCumSumsForStepCounts(int? seed, IList<StepCount> orderedStepCounts)
-        {
-            for (int i = 0; i < orderedStepCounts.Count; i++)
-            {
-                int? previousCumSum;
-
-                if (i == 0)
-                {
-                    previousCumSum = (seed ?? 0);
-                }
-                else
-                {
-                    previousCumSum = orderedStepCounts[i - 1].CumSumCount;
-                }
-
-                orderedStepCounts[i].CumSumCount = (orderedStepCounts[i].Count ?? 0) + previousCumSum;
-            }
-       }
-
-        private void SetCumSumsForActivitySummaries(int? seed, IList<ActivitySummary> orderedActivitySummaries)
-        {
-            for (int i = 0; i < orderedActivitySummaries.Count; i++)
-            {
-                int? previousCumSum;
-
-                if (i == 0)
-                {
-                    previousCumSum = (seed ?? 0);
-                }
-                else
-                {
-                    previousCumSum = orderedActivitySummaries[i - 1].CumSumActiveMinutes;
-                }
-
-                orderedActivitySummaries[i].CumSumActiveMinutes = (orderedActivitySummaries[i].ActiveMinutes) + previousCumSum;
-            }
-        }
-
-        private void SetCumSumsForHeartSummaries(int? seed, List<HeartSummary> orderedHeartSummaries)
-        {
-            for (int i = 0; i < orderedHeartSummaries.Count; i++)
-            {
-                int? previousCumSum;
-
-                if (i == 0)
-                {
-                    previousCumSum = (seed ?? 0);
-                }
-                else
-                {
-                    previousCumSum = orderedHeartSummaries[i - 1].CumSumCardioAndAbove;
-                }
-
-                orderedHeartSummaries[i].CumSumCardioAndAbove = (orderedHeartSummaries[i].CardioMinutes) + previousCumSum;
-            }
-        }
-
-
-        public void AddCumSumsToAlcoholIntakes(IEnumerable<AlcoholIntake> alcoholIntakes)
-        {
-            _logger.Log("UNITS : Calculate cum sum");
-
-            _aggregationCalculator.CalculateCumSumFor(
-                alcoholIntakes,
-                ai => ai.DateTime,
-                ai => ai.Units,
-                ai => ai.CumSumUnits,
-                (ai, val) => ai.CumSumUnits = val
-            );
-        }
-
 
 
 
