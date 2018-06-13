@@ -15,6 +15,7 @@ namespace Services.MyHealth
         private readonly ILogger _logger;
         private readonly IHealthRepository _healthRepository;
         private readonly IAggregationCalculator _aggregationCalculator;
+        private const int MOVING_AVERAGE_PERIOD = 10;
 
         public HealthService(
             IConfig config, 
@@ -70,24 +71,13 @@ namespace Services.MyHealth
 
             var orderedWeights = weights.OrderBy(x => x.DateTime).ToList();
 
-            var previousWeights = _healthRepository.GetLatestWeights(9, orderedWeights.Min(x => x.DateTime)).ToList();
+            var previousWeights = _healthRepository.GetLatestWeights(MOVING_AVERAGE_PERIOD - 1, orderedWeights.Min(x => x.DateTime)).ToList();
 
-            _aggregationCalculator.SetMovingAveragesForWeights(previousWeights, orderedWeights);
+            _aggregationCalculator.SetMovingAveragesForWeights(previousWeights, orderedWeights, MOVING_AVERAGE_PERIOD);
 
             foreach (var weight in weights)
-            {   
-                var existingWeight = _healthRepository.Find(weight);
-
-                if (existingWeight == null)
-                {
-                    _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                    _healthRepository.Insert(weight);
-                }
-                else
-                {
-                    _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                    _healthRepository.Update(existingWeight, weight);
-                }
+            {
+                _healthRepository.Upsert(weight);
             }
 
         }
@@ -97,7 +87,13 @@ namespace Services.MyHealth
             var countBloodPressures = bloodPressures.Count();
 
             _logger.Log($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
-            
+
+            var orderedBloodPressures = bloodPressures.OrderBy(x => x.DateTime).ToList();
+
+            var previousBloodPressures = _healthRepository.GetLatestBloodPressures(9, orderedBloodPressures.Min(x => x.DateTime)).ToList();
+
+            _aggregationCalculator.SetMovingAveragesForBloodPressures(previousBloodPressures, orderedBloodPressures);
+
             foreach (var bloodPressure in bloodPressures)
             {
                 var existingBloodPressure = _healthRepository.Find(bloodPressure);
@@ -114,13 +110,13 @@ namespace Services.MyHealth
                 }
             }
 
-            _logger.Log($"BLOOD PRESSURE : moving averages");
+            //_logger.Log($"BLOOD PRESSURE : moving averages");
 
-            var latestBloodPressures = _healthRepository.GetLatestBloodPressures(countBloodPressures + 10).ToList();
+            //var latestBloodPressures = _healthRepository.GetLatestBloodPressures(countBloodPressures + 10).ToList();
 
-            _aggregationCalculator.AddMovingAveragesToBloodPressures(latestBloodPressures);
+            //_aggregationCalculator.AddMovingAveragesToBloodPressures(latestBloodPressures);
 
-            _healthRepository.SaveChanges();
+            //_healthRepository.SaveChanges();
 
         }
 
@@ -210,7 +206,7 @@ namespace Services.MyHealth
 
             _aggregationCalculator.AddMovingAveragesToRestingHeartRates(latestRestingHeartRates);
 
-            _healthRepository.SaveChanges();
+            //_healthRepository.SaveChanges();
         }
 
         public void UpsertHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
@@ -250,7 +246,7 @@ namespace Services.MyHealth
 
             _aggregationCalculator.AddCumSumsToAlcoholIntakes(allAlcoholIntakes);
 
-            _healthRepository.SaveChanges();
+            //_healthRepository.SaveChanges();
             
 
         }

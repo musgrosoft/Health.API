@@ -72,9 +72,9 @@ namespace Repositories.Health
             return _healthContext.HeartSummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
-        public IEnumerable<BloodPressure> GetLatestBloodPressures(int number)
+        public IEnumerable<BloodPressure> GetLatestBloodPressures(int number, DateTime beforeDate)
         {
-            return _healthContext.BloodPressures.OrderByDescending(x => x.DateTime).Take(number);
+            return _healthContext.BloodPressures.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number);
         }
 
         public IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number)
@@ -97,15 +97,15 @@ namespace Repositories.Health
             return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime);
         }
 
-        public void SaveChanges()
+        private void SaveChanges()
         {
             _healthContext.SaveChanges();
         }
 
-        public Weight Find(Weight weight)
-        {
-            return _healthContext.Weights.Find(weight.DateTime);
-        }
+        //public Weight FindWeight(DateTime id)
+        //{
+        //    return _healthContext.Weights.Find(id);
+        //}
 
         public BloodPressure Find(BloodPressure bloodPressure)
         {
@@ -132,17 +132,37 @@ namespace Repositories.Health
             return _healthContext.HeartSummaries.Find(heartSummary.DateTime);
         }
 
-        public void Update(Weight existingWeight, Weight newWeight)
-        {
-            //check if datetimes are equal ???
-            if (existingWeight.DateTime != newWeight.DateTime)
-            {
-                throw new Exception("DateTimes not equal on existing and new weights.");
-            }
+        //public void Update(Weight existingWeight, Weight newWeight)
+        //{
+        //    //check if datetimes are equal ???
+        //    if (existingWeight.DateTime != newWeight.DateTime)
+        //    {
+        //        throw new Exception("DateTimes not equal on existing and new weights.");
+        //    }
 
-            existingWeight.Kg = newWeight.Kg;
-            existingWeight.FatRatioPercentage = newWeight.FatRatioPercentage;
-            existingWeight.MovingAverageKg = newWeight.MovingAverageKg;
+        //    existingWeight.Kg = newWeight.Kg;
+        //    existingWeight.FatRatioPercentage = newWeight.FatRatioPercentage;
+        //    existingWeight.MovingAverageKg = newWeight.MovingAverageKg;
+
+        //    _healthContext.SaveChanges();
+        //}
+
+        public void Upsert(Weight weight)
+        {
+            var existingWeight = _healthContext.Weights.Find(weight.DateTime);
+
+            if (existingWeight == null)
+            {
+              //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                _healthContext.Add(weight);
+            }
+            else
+            {
+               // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                existingWeight.Kg = weight.Kg;
+                existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
+                existingWeight.MovingAverageKg = weight.MovingAverageKg;
+            }
 
             _healthContext.SaveChanges();
         }

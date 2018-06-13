@@ -25,9 +25,9 @@ namespace Services.MyHealth
             Action<T, Decimal?> SetCumSum
         ) where T : class;
 
-        void AddMovingAveragesToBloodPressures(IEnumerable<BloodPressure> bloodPressures);
+        void SetMovingAveragesToBloodPressures(IEnumerable<BloodPressure> bloodPressures, List<Weight> orderedWeights, int period);
         void AddMovingAveragesToRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
-        void SetMovingAveragesForWeights(List<Weight> seedWeights, List<Weight> orderedWeights, int period = 10);
+        void SetMovingAveragesForWeights(List<Weight> seedWeights, List<Weight> orderedWeights, int period);
         void SetMovingAveragesFor<T>(List<T> seedTs, List<T> orderedTs, Func<T, Decimal?> getValue, Action<T, Decimal?> setValue, int period = 10);
         void SetCumSumsForStepCounts(int? seed, IList<StepCount> orderedStepCounts);
         void SetCumSumsForActivitySummaries(int? seed, IList<ActivitySummary> orderedActivitySummaries);
