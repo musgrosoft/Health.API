@@ -72,7 +72,7 @@ namespace Services.MyHealth
 
             var previousWeights = _healthRepository.GetLatestWeights(9, orderedWeights.Min(x => x.DateTime)).ToList();
 
-            _aggregationCalculator.SetMovingAveragesForWeights(previousWeights, orderedWeights);
+            _aggregationCalculator.SetMovingAveragesOnWeights(previousWeights, orderedWeights);
 
             foreach (var weight in weights)
             {   
@@ -118,7 +118,7 @@ namespace Services.MyHealth
 
             var latestBloodPressures = _healthRepository.GetLatestBloodPressures(countBloodPressures + 10).ToList();
 
-            _aggregationCalculator.AddMovingAveragesToBloodPressures(latestBloodPressures);
+            _aggregationCalculator.SetMovingAveragesOnBloodPressures(latestBloodPressures);
 
             _healthRepository.SaveChanges();
 
@@ -132,7 +132,7 @@ namespace Services.MyHealth
 
             var previousStepCount = _healthRepository.GetLatestStepCounts(1, orderedStepCounts.Min(x=>x.DateTime)).FirstOrDefault();
 
-            _aggregationCalculator.SetCumSumsForStepCounts(previousStepCount?.CumSumCount, orderedStepCounts);
+            _aggregationCalculator.SetCumSumsOnStepCounts(previousStepCount?.CumSumCount, orderedStepCounts);
 
             for (int i = 0; i < orderedStepCounts.Count; i++)
             {
@@ -163,7 +163,7 @@ namespace Services.MyHealth
 
             var previousActivitySummary = _healthRepository.GetLatestActivitySummaries(1, orderedActivitySummaries.Min(x => x.DateTime)).FirstOrDefault();
 
-            _aggregationCalculator.SetCumSumsForActivitySummaries(previousActivitySummary?.CumSumActiveMinutes, orderedActivitySummaries);
+            _aggregationCalculator.SetCumSumsOnActivitySummaries(previousActivitySummary?.CumSumActiveMinutes, orderedActivitySummaries);
 
             foreach (var activitySummary in activitySummaries)
             {
@@ -208,7 +208,7 @@ namespace Services.MyHealth
 
             var latestRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(countRestingHeartRates + 10).ToList();
 
-            _aggregationCalculator.AddMovingAveragesToRestingHeartRates(latestRestingHeartRates);
+            _aggregationCalculator.SetMovingAveragesOnRestingHeartRates(latestRestingHeartRates);
 
             _healthRepository.SaveChanges();
         }
@@ -221,7 +221,7 @@ namespace Services.MyHealth
 
             var previousHeartSummary = _healthRepository.GetLatestHeartSummaries(1, orderedHeartSummaries.Min(x => x.DateTime)).FirstOrDefault();
 
-            _aggregationCalculator.SetCumSumsForHeartSummaries(previousHeartSummary?.CumSumCardioAndAbove , orderedHeartSummaries);
+            _aggregationCalculator.SetCumSumsOnHeartSummaries(previousHeartSummary?.CumSumCardioAndAbove , orderedHeartSummaries);
 
             foreach (var heartSummary in heartSummaries)
             {
@@ -248,7 +248,7 @@ namespace Services.MyHealth
 
             var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes();
 
-            _aggregationCalculator.AddCumSumsToAlcoholIntakes(allAlcoholIntakes);
+            _aggregationCalculator.SetCumSumsOnAlcoholIntakes(allAlcoholIntakes);
 
             _healthRepository.SaveChanges();
             

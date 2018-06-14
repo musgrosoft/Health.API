@@ -50,7 +50,7 @@ namespace Services.Tests.MyHealth
                 new Weight {Kg = 240},
             };
 
-            _aggregationCalculator.SetMovingAveragesForWeights(seedWeights, orderedWeights, 10);
+            _aggregationCalculator.SetMovingAveragesOnWeights(seedWeights, orderedWeights);
 
             Assert.Equal(15, orderedWeights.Count);
 
@@ -122,7 +122,7 @@ namespace Services.Tests.MyHealth
                 new Weight {Kg = 240},
             };
 
-            _aggregationCalculator.SetMovingAveragesForWeights(seedWeights, orderedWeights, 10);
+            _aggregationCalculator.SetMovingAveragesOnWeights(seedWeights, orderedWeights);
 
             Assert.Equal(15, orderedWeights.Count);
 
