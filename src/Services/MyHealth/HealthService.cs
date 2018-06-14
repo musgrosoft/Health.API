@@ -73,7 +73,7 @@ namespace Services.MyHealth
 
             var previousWeights = _healthRepository.GetLatestWeights(MOVING_AVERAGE_PERIOD - 1, orderedWeights.Min(x => x.DateTime)).ToList();
 
-            _aggregationCalculator.SetMovingAveragesForWeights(previousWeights, orderedWeights, MOVING_AVERAGE_PERIOD);
+            _aggregationCalculator.SetMovingAveragesOnWeights(previousWeights, orderedWeights, MOVING_AVERAGE_PERIOD);
 
             foreach (var weight in weights)
             {
@@ -90,9 +90,9 @@ namespace Services.MyHealth
 
             var orderedBloodPressures = bloodPressures.OrderBy(x => x.DateTime).ToList();
 
-            var previousBloodPressures = _healthRepository.GetLatestBloodPressures(9, orderedBloodPressures.Min(x => x.DateTime)).ToList();
+            var previousBloodPressures = _healthRepository.GetLatestBloodPressures(MOVING_AVERAGE_PERIOD-1, orderedBloodPressures.Min(x => x.DateTime)).ToList();
 
-            _aggregationCalculator.SetMovingAveragesForBloodPressures(previousBloodPressures, orderedBloodPressures);
+            _aggregationCalculator.SetMovingAveragesOnBloodPressures(previousBloodPressures, orderedBloodPressures, MOVING_AVERAGE_PERIOD);
 
             foreach (var bloodPressure in bloodPressures)
             {
@@ -114,7 +114,7 @@ namespace Services.MyHealth
 
             //var latestBloodPressures = _healthRepository.GetLatestBloodPressures(countBloodPressures + 10).ToList();
 
-            _aggregationCalculator.AddMovingAveragesToBloodPressures(latestBloodPressures);
+            //_aggregationCalculator.AddMovingAveragesToBloodPressures(latestBloodPressures);
 
             //_healthRepository.SaveChanges();
 
@@ -242,7 +242,7 @@ namespace Services.MyHealth
         {
             _logger.Log("UNITS : Calculate cum sum");
 
-            var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes();
+            var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes().ToList();
 
             _aggregationCalculator.SetCumSumsOnAlcoholIntakes(allAlcoholIntakes);
 

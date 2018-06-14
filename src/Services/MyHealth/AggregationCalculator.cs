@@ -20,23 +20,40 @@ namespace Services.MyHealth
 
 
 
-        public void SetMovingAveragesOnBloodPressures(IEnumerable<BloodPressure> bloodPressures)
+        public void SetMovingAveragesOnBloodPressures(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period)
         {
             //_logger.Log("BLOOD PRESSURE : Add moving averages (using generic method)");
 
-            AddMovingAverageTo(
-                bloodPressures,
-                w => w.DateTime,
-                w => w.Systolic,
-                (w, d) => w.MovingAverageSystolic = d
-                );
+            SetMovingAveragesOn(
+                seedBloodPressures,
+                orderedBloodPressures,
+                period,
+                getValue: x => x.Systolic,
+                setValue: (x, val) => x.MovingAverageSystolic = val
+            );
 
-            AddMovingAverageTo(
-                bloodPressures,
-                w => w.DateTime,
-                w => w.Diastolic,
-                (w, d) => w.MovingAverageDiastolic = d
-                );
+            SetMovingAveragesOn(
+                seedBloodPressures,
+                orderedBloodPressures,
+                period,
+                getValue: x => x.Diastolic,
+                setValue: (x, val) => x.MovingAverageDiastolic = val
+            );
+
+
+            //AddMovingAverageTo(
+            //                bloodPressures,
+            //                w => w.DateTime,
+            //                w => w.Systolic,
+            //                (w, d) => w.MovingAverageSystolic = d
+            //                );
+
+            //            AddMovingAverageTo(
+            //                bloodPressures,
+            //                w => w.DateTime,
+            //                w => w.Diastolic,
+            //                (w, d) => w.MovingAverageDiastolic = d
+            //                );
         }
 
         public void SetMovingAveragesOnRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
@@ -51,28 +68,37 @@ namespace Services.MyHealth
                 );
         }
 
-        public void SetMovingAveragesOnRestingHeartRates(List<RestingHeartRate> seedRestingHeartRates, List<RestingHeartRate> orderedRestingHeartRates)
+        public void SetMovingAveragesOnRestingHeartRates(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period)
         {
-            AddMovingAverageTo(
-                restingHeartRates,
-                w => w.DateTime,
-                w => w.Beats,
-                (w, d) => w.MovingAverageBeats = d
+            //AddMovingAverageTo(
+            //    restingHeartRates,
+            //    w => w.DateTime,
+            //    w => w.Beats,
+            //    (w, d) => w.MovingAverageBeats = d
+            //);
+            SetMovingAveragesOn(
+                seedRestingHeartRates,
+                orderedRestingHeartRates,
+                period,
+                getValue: x => x.Beats,
+                setValue: (x, val) => x.MovingAverageBeats = val
             );
+
         }
 
-        public void SetMovingAveragesOnWeights(List<Weight> seedWeights, List<Weight> orderedWeights)
+        public void SetMovingAveragesOnWeights(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period)
         {
             SetMovingAveragesOn(
                 seedWeights,
                 orderedWeights,
+                period,
                 getValue: x => x.Kg,
                 setValue: (x, val) => x.MovingAverageKg = val
                 );
         }
 
         
-        private void SetMovingAveragesOn<T>(List<T> seedTs, List<T> orderedTs, Func<T, Decimal?> getValue, Action<T, Decimal?> setValue, int period = 10)
+        private void SetMovingAveragesOn<T>(IList<T> seedTs, IList<T> orderedTs, int period, Func<T, Decimal?> getValue, Action<T, Decimal?> setValue)
         {
             if (seedTs.Count > period - 1)
             {
@@ -196,7 +222,7 @@ namespace Services.MyHealth
             }
         }
 
-        public void SetCumSumsOnHeartSummaries(int? seed, List<HeartSummary> orderedHeartSummaries)
+        public void SetCumSumsOnHeartSummaries(int? seed, IList<HeartSummary> orderedHeartSummaries)
         {
             for (int i = 0; i < orderedHeartSummaries.Count; i++)
             {
@@ -216,7 +242,7 @@ namespace Services.MyHealth
         }
 
 
-        public void SetCumSumsOnAlcoholIntakes(IEnumerable<AlcoholIntake> alcoholIntakes)
+        public void SetCumSumsOnAlcoholIntakes(IList<AlcoholIntake> alcoholIntakes)
         {
             //  _logger.Log("UNITS : Calculate cum sum");
 
