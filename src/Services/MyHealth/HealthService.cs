@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Repositories;
 using Repositories.Health;
 using Repositories.Models;
 using Utils;
@@ -84,8 +82,6 @@ namespace Services.MyHealth
 
         public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
-            var countBloodPressures = bloodPressures.Count();
-
             _logger.Log($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
 
             var orderedBloodPressures = bloodPressures.OrderBy(x => x.DateTime).ToList();
@@ -96,27 +92,8 @@ namespace Services.MyHealth
 
             foreach (var bloodPressure in bloodPressures)
             {
-                var existingBloodPressure = _healthRepository.Find(bloodPressure);
-
-                if (existingBloodPressure != null)
-                {
-                    _logger.Log($"BLOOD PRESSURE : Updating record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
-                    _healthRepository.Update(existingBloodPressure, bloodPressure);
-                }
-                else
-                {
-                    _logger.Log($"BLOOD PRESSURE : Inserting record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
-                    _healthRepository.Insert(bloodPressure);
-                }
+                _healthRepository.Upsert(bloodPressure);
             }
-
-            //_logger.Log($"BLOOD PRESSURE : moving averages");
-
-            //var latestBloodPressures = _healthRepository.GetLatestBloodPressures(countBloodPressures + 10).ToList();
-
-            //_aggregationCalculator.AddMovingAveragesToBloodPressures(latestBloodPressures);
-
-            //_healthRepository.SaveChanges();
 
         }
 
@@ -130,21 +107,9 @@ namespace Services.MyHealth
 
             _aggregationCalculator.SetCumSumsOnStepCounts(previousStepCount?.CumSumCount, orderedStepCounts);
 
-            for (int i = 0; i < orderedStepCounts.Count; i++)
+            foreach (var stepCount in orderedStepCounts)
             {
-                var stepCount = orderedStepCounts[i];
-
-                var existingStepCount = _healthRepository.Find(stepCount);
-                if (existingStepCount != null)
-                {
-                    _logger.Log($"STEP COUNT : Update Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
-                    _healthRepository.Update(existingStepCount, stepCount);
-                }
-                else
-                {
-                    _logger.Log($"STEP COUNT : Insert Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
-                    _healthRepository.Insert(stepCount);
-                }
+                _healthRepository.Upsert(stepCount);
             }
             
         }
@@ -163,48 +128,29 @@ namespace Services.MyHealth
 
             foreach (var activitySummary in activitySummaries)
             {
-               
-                var existingDailyActivity = _healthRepository.Find(activitySummary);
-                if (existingDailyActivity != null)
-                {
-                     _logger.Log($"ACTIVITY SUMMARY : Update Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
-                    _healthRepository.Update(existingDailyActivity, activitySummary);
-                }
-                else
-                {
-                    _logger.Log($"ACTIVITY SUMMARY : Insert Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
-                    _healthRepository.Insert(activitySummary);
-                }
+                _healthRepository.Upsert(activitySummary);
             }
 
         }
         
         public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {
-            var countRestingHeartRates = restingHeartRates.Count();
+            
 
             _logger.Log($"RESTING HEART RATE : Saving {restingHeartRates.Count()} resting heart rates");
-            
-            foreach (var restingHeartRate in restingHeartRates)
-            {
-                var existingRestingHeartRate = _healthRepository.Find(restingHeartRate);
-                if (existingRestingHeartRate != null)
-                {
-                    _logger.Log($"RESTING HEART RATE : About to update Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
-                    _healthRepository.Update(existingRestingHeartRate, restingHeartRate);
-                }
-                else
-                {
-                    _logger.Log($"RESTING HEART RATE : About to insert Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
-                    _healthRepository.Insert(restingHeartRate);
-                }
-            }
 
             _logger.Log($"RESTING HEART RATE : Moving averages");
 
-            var latestRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(countRestingHeartRates + 10).ToList();
+            //var latestRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(countRestingHeartRates + 10).ToList();
 
-            _aggregationCalculator.SetMovingAveragesOnRestingHeartRates(latestRestingHeartRates);
+            //_aggregationCalculator.SetMovingAveragesOnRestingHeartRates(latestRestingHeartRates);
+
+            foreach (var restingHeartRate in restingHeartRates)
+            {
+                _healthRepository.Upsert(restingHeartRate);
+            }
+
+
 
             //_healthRepository.SaveChanges();
         }

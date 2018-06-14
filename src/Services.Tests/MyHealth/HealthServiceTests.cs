@@ -142,40 +142,40 @@ namespace Services.Tests.MyHealth
         //}
 
         [Fact]
-        public void ShouldInsertNewBloodPressure()
+        public void ShouldUpsertNewBloodPressure()
         {
             //Given
             var myBloodPressure = new BloodPressure();
-            _healthRepository.Setup(x => x.Find(myBloodPressure)).Returns((BloodPressure)null);
+         //   _healthRepository.Setup(x => x.Find(myBloodPressure)).Returns((BloodPressure)null);
 
             //When
             _healthService.UpsertBloodPressures(new List<BloodPressure> { myBloodPressure });
 
             //Then
-            _healthRepository.Verify(x => x.Insert(myBloodPressure), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(myBloodPressure), Times.Once);
         }
 
+        //[Fact]
+        //public void ShouldUpdateExistingBloodPressure()
+        //{
+        //    //Given
+        //    var myBloodPressure = new BloodPressure();
+        //    var existingBloodPressure = new BloodPressure();
+        //    _healthRepository.Setup(x => x.Find(myBloodPressure)).Returns(existingBloodPressure);
+
+        //    //When
+        //    _healthService.UpsertBloodPressures(new List<BloodPressure> { myBloodPressure });
+
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(myBloodPressure), Times.Once);
+        //}
+
         [Fact]
-        public void ShouldUpdateExistingBloodPressure()
-        {
-            //Given
-            var myBloodPressure = new BloodPressure();
-            var existingBloodPressure = new BloodPressure();
-            _healthRepository.Setup(x => x.Find(myBloodPressure)).Returns(existingBloodPressure);
-
-            //When
-            _healthService.UpsertBloodPressures(new List<BloodPressure> { myBloodPressure });
-
-            //Then
-            _healthRepository.Verify(x => x.Update(existingBloodPressure, myBloodPressure), Times.Once);
-        }
-
-        [Fact]
-        public void ShouldInsertNewStepCount()
+        public void ShouldUpsertNewStepCount()
         {
             //Given
             var myStepCount = new StepCount();
-            _healthRepository.Setup(x => x.Find(myStepCount)).Returns((StepCount)null);
+          //  _healthRepository.Setup(x => x.Find(myStepCount)).Returns((StepCount)null);
             _healthRepository.Setup(x => x.GetLatestStepCounts(It.IsAny<int>(), It.IsAny<DateTime>()))
                 .Returns(new List<StepCount>());
 
@@ -183,25 +183,25 @@ namespace Services.Tests.MyHealth
             _healthService.UpsertStepCounts(new List<StepCount> { myStepCount });
 
             //Then
-            _healthRepository.Verify(x => x.Insert(myStepCount), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(myStepCount), Times.Once);
         }
 
-        [Fact]
-        public void ShouldUpdateExistingStepCount()
-        {
-            //Given
-            var myStepCount = new StepCount();
-            var existingStepCount = new StepCount();
-            _healthRepository.Setup(x => x.Find(myStepCount)).Returns(existingStepCount);
-            _healthRepository.Setup(x => x.GetLatestStepCounts(It.IsAny<int>(), It.IsAny<DateTime>()))
-                .Returns(new List<StepCount>());
+        //[Fact]
+        //public void ShouldUpdateExistingStepCount()
+        //{
+        //    //Given
+        //    var myStepCount = new StepCount();
+        //    var existingStepCount = new StepCount();
+        //    _healthRepository.Setup(x => x.Find(myStepCount)).Returns(existingStepCount);
+        //    _healthRepository.Setup(x => x.GetLatestStepCounts(It.IsAny<int>(), It.IsAny<DateTime>()))
+        //        .Returns(new List<StepCount>());
 
-            //When
-            _healthService.UpsertStepCounts(new List<StepCount> { myStepCount });
+        //    //When
+        //    _healthService.UpsertStepCounts(new List<StepCount> { myStepCount });
 
-            //Then
-            _healthRepository.Verify(x => x.Update(existingStepCount, myStepCount), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Update(existingStepCount, myStepCount), Times.Once);
+        //}
 
 
         [Fact]
@@ -209,7 +209,7 @@ namespace Services.Tests.MyHealth
         {
             //Given
             var myActivitySummary = new ActivitySummary();
-            _healthRepository.Setup(x => x.Find(myActivitySummary)).Returns((ActivitySummary)null);
+          //  _healthRepository.Setup(x => x.Find(myActivitySummary)).Returns((ActivitySummary)null);
             _healthRepository.Setup(x => x.GetLatestActivitySummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
                 .Returns(new List<ActivitySummary>());
 
@@ -217,54 +217,54 @@ namespace Services.Tests.MyHealth
             _healthService.UpsertActivitySummaries(new List<ActivitySummary> { myActivitySummary });
 
             //Then
-            _healthRepository.Verify(x => x.Insert(myActivitySummary), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(myActivitySummary), Times.Once);
         }
 
-        [Fact]
-        public void ShouldUpdateExistingActivitySummary()
-        {
-            //Given
-            var myActivitySummary = new ActivitySummary();
-            var existingActivitySummary = new ActivitySummary();
-            _healthRepository.Setup(x => x.Find(myActivitySummary)).Returns(existingActivitySummary);
-            _healthRepository.Setup(x => x.GetLatestActivitySummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
-                .Returns(new List<ActivitySummary>());
+        //[Fact]
+        //public void ShouldUpdateExistingActivitySummary()
+        //{
+        //    //Given
+        //    var myActivitySummary = new ActivitySummary();
+        //    var existingActivitySummary = new ActivitySummary();
+        //    _healthRepository.Setup(x => x.Find(myActivitySummary)).Returns(existingActivitySummary);
+        //    _healthRepository.Setup(x => x.GetLatestActivitySummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
+        //        .Returns(new List<ActivitySummary>());
 
-            //When
-            _healthService.UpsertActivitySummaries(new List<ActivitySummary> { myActivitySummary });
+        //    //When
+        //    _healthService.UpsertActivitySummaries(new List<ActivitySummary> { myActivitySummary });
 
-            //Then
-            _healthRepository.Verify(x => x.Update(existingActivitySummary, myActivitySummary), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Update(existingActivitySummary, myActivitySummary), Times.Once);
+        //}
 
         [Fact]
         public void ShouldInsertNewRestingHeartRate()
         {
             //Given
             var myRestingHeartRate = new RestingHeartRate();
-            _healthRepository.Setup(x => x.Find(myRestingHeartRate)).Returns((RestingHeartRate)null);
+            //_healthRepository.Setup(x => x.Find(myRestingHeartRate)).Returns((RestingHeartRate)null);
 
             //When
             _healthService.UpsertRestingHeartRates(new List<RestingHeartRate> { myRestingHeartRate });
 
             //Then
-            _healthRepository.Verify(x => x.Insert(myRestingHeartRate), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(myRestingHeartRate), Times.Once);
         }
 
-        [Fact]
-        public void ShouldUpdateExistingRestingHeartRate()
-        {
-            //Given
-            var myRestingHeartRate = new RestingHeartRate();
-            var existingRestingHeartRate = new RestingHeartRate();
-            _healthRepository.Setup(x => x.Find(myRestingHeartRate)).Returns(existingRestingHeartRate);
+        //[Fact]
+        //public void ShouldUpdateExistingRestingHeartRate()
+        //{
+        //    //Given
+        //    var myRestingHeartRate = new RestingHeartRate();
+        //    var existingRestingHeartRate = new RestingHeartRate();
+        //    _healthRepository.Setup(x => x.Find(myRestingHeartRate)).Returns(existingRestingHeartRate);
 
-            //When
-            _healthService.UpsertRestingHeartRates(new List<RestingHeartRate> { myRestingHeartRate });
+        //    //When
+        //    _healthService.UpsertRestingHeartRates(new List<RestingHeartRate> { myRestingHeartRate });
 
-            //Then
-            _healthRepository.Verify(x => x.Update(existingRestingHeartRate, myRestingHeartRate), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Update(existingRestingHeartRate, myRestingHeartRate), Times.Once);
+        //}
 
         [Fact]
         public void ShouldInsertNewHeartSummary()

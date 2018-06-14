@@ -97,56 +97,12 @@ namespace Repositories.Health
             return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime);
         }
 
-        private void SaveChanges()
-        {
-            _healthContext.SaveChanges();
-        }
-
-        //public Weight FindWeight(DateTime id)
-        //{
-        //    return _healthContext.Weights.Find(id);
-        //}
-
-        public BloodPressure Find(BloodPressure bloodPressure)
-        {
-            return _healthContext.BloodPressures.Find(bloodPressure.DateTime);
-        }
-
-        public StepCount Find(StepCount stepCount)
-        {
-            return _healthContext.StepCounts.Find(stepCount.DateTime);
-        }
-
-        public ActivitySummary Find(ActivitySummary activitySummary)
-        {
-            return _healthContext.ActivitySummaries.Find(activitySummary.DateTime);
-        }
-
-        public RestingHeartRate Find(RestingHeartRate restingHeartRate)
-        {
-            return _healthContext.RestingHeartRates.Find(restingHeartRate.DateTime);
-        }
 
         public HeartSummary Find(HeartSummary heartSummary)
         {
             return _healthContext.HeartSummaries.Find(heartSummary.DateTime);
         }
-
-        //public void Update(Weight existingWeight, Weight newWeight)
-        //{
-        //    //check if datetimes are equal ???
-        //    if (existingWeight.DateTime != newWeight.DateTime)
-        //    {
-        //        throw new Exception("DateTimes not equal on existing and new weights.");
-        //    }
-
-        //    existingWeight.Kg = newWeight.Kg;
-        //    existingWeight.FatRatioPercentage = newWeight.FatRatioPercentage;
-        //    existingWeight.MovingAverageKg = newWeight.MovingAverageKg;
-
-        //    _healthContext.SaveChanges();
-        //}
-
+        
         public void Upsert(Weight weight)
         {
             var existingWeight = _healthContext.Weights.Find(weight.DateTime);
@@ -167,40 +123,97 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Update(BloodPressure existingBloodPressure, BloodPressure bloodPressure)
+        public void Upsert(BloodPressure bloodPressure)
         {
-            existingBloodPressure.Diastolic = bloodPressure.Diastolic;
-            existingBloodPressure.Systolic = bloodPressure.Systolic;
-            existingBloodPressure.MovingAverageDiastolic = bloodPressure.MovingAverageDiastolic;
-            existingBloodPressure.MovingAverageSystolic = bloodPressure.MovingAverageSystolic;
+            var existingBloodPressure = _healthContext.BloodPressures.Find(bloodPressure.DateTime);
+
+            if (existingBloodPressure != null)
+            {
+                existingBloodPressure.Diastolic = bloodPressure.Diastolic;
+                existingBloodPressure.Systolic = bloodPressure.Systolic;
+                existingBloodPressure.MovingAverageDiastolic = bloodPressure.MovingAverageDiastolic;
+                existingBloodPressure.MovingAverageSystolic = bloodPressure.MovingAverageSystolic;
+
+                // _logger.Log($"BLOOD PRESSURE : Updating record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
+                
+            }
+            else
+            {
+                //  _logger.Log($"BLOOD PRESSURE : Inserting record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
+                _healthContext.Add(bloodPressure);
+            }
 
             _healthContext.SaveChanges();
 
         }
 
-        public void Update(StepCount existingStepCount, StepCount stepCount)
+
+        public void Upsert(StepCount stepCount)
         {
-            existingStepCount.Count = stepCount.Count;
-            existingStepCount.CumSumCount = stepCount.CumSumCount;
+
+            var existingStepCount = _healthContext.StepCounts.Find(stepCount.DateTime);
+            if (existingStepCount != null)
+            {
+                // _logger.Log($"STEP COUNT : Update Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
+                existingStepCount.Count = stepCount.Count;
+                existingStepCount.CumSumCount = stepCount.CumSumCount;
+            }
+            else
+            {
+                // _logger.Log($"STEP COUNT : Insert Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
+                _healthContext.Add(stepCount);
+            }
+
             _healthContext.SaveChanges();
         }
 
-        public void Update(ActivitySummary existingActivitySummary, ActivitySummary activitySummary)
+        public void Upsert(ActivitySummary activitySummary)
         {
-            existingActivitySummary.SedentaryMinutes = activitySummary.SedentaryMinutes;
-            existingActivitySummary.LightlyActiveMinutes = activitySummary.LightlyActiveMinutes;
-            existingActivitySummary.FairlyActiveMinutes = activitySummary.FairlyActiveMinutes;
-            existingActivitySummary.VeryActiveMinutes = activitySummary.VeryActiveMinutes;
 
-            existingActivitySummary.CumSumActiveMinutes = activitySummary.CumSumActiveMinutes;
+            var existingActivitySummary = _healthContext.ActivitySummaries.Find(activitySummary.DateTime);
+            if (existingActivitySummary == null)
+            {
+                // _logger.Log($"ACTIVITY SUMMARY : Update Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
+                _healthContext.Add(activitySummary);
+            }
+            else
+            {
+
+                existingActivitySummary.SedentaryMinutes = activitySummary.SedentaryMinutes;
+                existingActivitySummary.LightlyActiveMinutes = activitySummary.LightlyActiveMinutes;
+                existingActivitySummary.FairlyActiveMinutes = activitySummary.FairlyActiveMinutes;
+                existingActivitySummary.VeryActiveMinutes = activitySummary.VeryActiveMinutes;
+
+                existingActivitySummary.CumSumActiveMinutes = activitySummary.CumSumActiveMinutes;
+                //_logger.Log($"ACTIVITY SUMMARY : Insert Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
+               
+            }
+
 
             _healthContext.SaveChanges();
         }
 
-        public void Update(RestingHeartRate existingRestingHeartRate, RestingHeartRate restingHeartRate)
+        public void Upsert(RestingHeartRate restingHeartRate)
         {
-            existingRestingHeartRate.Beats = restingHeartRate.Beats;
-            existingRestingHeartRate.MovingAverageBeats = restingHeartRate.MovingAverageBeats;
+
+
+            var existingRestingHeartRate = _healthContext.RestingHeartRates.Find(restingHeartRate.DateTime);
+            if (existingRestingHeartRate != null)
+            {
+                existingRestingHeartRate.Beats = restingHeartRate.Beats;
+                existingRestingHeartRate.MovingAverageBeats = restingHeartRate.MovingAverageBeats;
+             //   _logger.Log($"RESTING HEART RATE : About to update Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
+                //_healthRepository.Update(existingRestingHeartRate, restingHeartRate);
+            }
+            else
+            {
+                //   _logger.Log($"RESTING HEART RATE : About to insert Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
+                _healthContext.Add(restingHeartRate);
+            }
+
+
+
+
 
             _healthContext.SaveChanges();
         }
