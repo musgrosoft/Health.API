@@ -16,11 +16,11 @@ namespace Repositories.Health
             _healthContext = healthContext;
         }
 
-        public void Insert<T>(T obj) where T : class
-        {
-            _healthContext.Add(obj);
-            _healthContext.SaveChanges();
-        }
+        //public void Insert<T>(T obj) where T : class
+        //{
+        //    _healthContext.Add(obj);
+        //    _healthContext.SaveChanges();
+        //}
         
         public DateTime? GetLatestStepCountDate()
         {
@@ -97,11 +97,6 @@ namespace Repositories.Health
             return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime);
         }
 
-
-        public HeartSummary Find(HeartSummary heartSummary)
-        {
-            return _healthContext.HeartSummaries.Find(heartSummary.DateTime);
-        }
         
         public void Upsert(Weight weight)
         {
@@ -195,9 +190,8 @@ namespace Repositories.Health
 
         public void Upsert(RestingHeartRate restingHeartRate)
         {
-
-
             var existingRestingHeartRate = _healthContext.RestingHeartRates.Find(restingHeartRate.DateTime);
+
             if (existingRestingHeartRate != null)
             {
                 existingRestingHeartRate.Beats = restingHeartRate.Beats;
@@ -211,21 +205,31 @@ namespace Repositories.Health
                 _healthContext.Add(restingHeartRate);
             }
 
-
-
-
-
             _healthContext.SaveChanges();
         }
 
-        public void Update(HeartSummary existingHeartSummary, HeartSummary heartSummary)
+        public void Upsert(HeartSummary heartSummary)
         {
-            existingHeartSummary.OutOfRangeMinutes = heartSummary.OutOfRangeMinutes;
-            existingHeartSummary.FatBurnMinutes = heartSummary.FatBurnMinutes;
-            existingHeartSummary.CardioMinutes = heartSummary.CardioMinutes;
-            existingHeartSummary.PeakMinutes = heartSummary.PeakMinutes;
 
-            existingHeartSummary.CumSumCardioAndAbove = heartSummary.CumSumCardioAndAbove;
+            var existingHeartSummary = _healthContext.HeartSummaries.Find(heartSummary.DateTime);
+
+            if (existingHeartSummary != null)
+            {
+
+                existingHeartSummary.OutOfRangeMinutes = heartSummary.OutOfRangeMinutes;
+                existingHeartSummary.FatBurnMinutes = heartSummary.FatBurnMinutes;
+                existingHeartSummary.CardioMinutes = heartSummary.CardioMinutes;
+                existingHeartSummary.PeakMinutes = heartSummary.PeakMinutes;
+
+                existingHeartSummary.CumSumCardioAndAbove = heartSummary.CumSumCardioAndAbove;
+//                _logger.Log($"HEART SUMMARY : About to update Heart SUmmary Record : {heartSummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , ");
+  
+            }
+            else
+            {
+                //  _logger.Log("HEART SUMMARY : insert thing");
+                _healthContext.Add(heartSummary);
+            }
 
             _healthContext.SaveChanges();
         }

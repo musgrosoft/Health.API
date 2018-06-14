@@ -6,7 +6,7 @@ namespace Repositories.Health
 {
     public interface IHealthRepository
     {
-        void Insert<T>(T obj) where T : class;
+    //    void Insert<T>(T obj) where T : class;
         
         DateTime? GetLatestStepCountDate();
         DateTime? GetLatestBloodPressureDate();
@@ -14,17 +14,13 @@ namespace Repositories.Health
         DateTime? GetLatestActivitySummaryDate();
         DateTime? GetLatestRestingHeartRateDate();
         DateTime? GetLatestHeartSummaryDate();
-
-
-        HeartSummary Find(HeartSummary heartSummary);
-
-
+        
         void Upsert(Weight weight);
         void Upsert(BloodPressure bloodPressure);
         void Upsert(StepCount stepCount);
         void Upsert(ActivitySummary activitySummary);
         void Upsert(RestingHeartRate restingHeartRate);
-        void Update(HeartSummary existingHeartSummary, HeartSummary heartSummary);
+        void Upsert(HeartSummary heartSummary);
 
         IList<Weight> GetLatestWeights(int number, DateTime beforeDate);
         IList<HeartSummary> GetLatestHeartSummaries(int number, DateTime beforeDate);

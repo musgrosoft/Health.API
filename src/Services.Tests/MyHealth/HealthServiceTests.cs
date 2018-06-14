@@ -271,7 +271,7 @@ namespace Services.Tests.MyHealth
         {
             //Given
             var myHeartSummary = new HeartSummary();
-            _healthRepository.Setup(x => x.Find(myHeartSummary)).Returns((HeartSummary)null);
+            //_healthRepository.Setup(x => x.Find(myHeartSummary)).Returns((HeartSummary)null);
             _healthRepository.Setup(x => x.GetLatestHeartSummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
                 .Returns(new List<HeartSummary>());
 
@@ -279,24 +279,24 @@ namespace Services.Tests.MyHealth
             _healthService.UpsertHeartSummaries(new List<HeartSummary> { myHeartSummary });
 
             //Then
-            _healthRepository.Verify(x => x.Insert(myHeartSummary), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(myHeartSummary), Times.Once);
         }
 
         [Fact]
         public void ShouldUpdateExistingHeartSummary()
         {
             //Given
-            var myHeartSummary = new HeartSummary();
+            
             var existingHeartSummary = new HeartSummary();
-            _healthRepository.Setup(x => x.Find(myHeartSummary)).Returns(existingHeartSummary);
+            //_healthRepository.Setup(x => x.Find(myHeartSummary)).Returns(existingHeartSummary);
             _healthRepository.Setup(x => x.GetLatestHeartSummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
                 .Returns(new List<HeartSummary>());
 
             //When
-            _healthService.UpsertHeartSummaries(new List<HeartSummary> { myHeartSummary });
+            _healthService.UpsertHeartSummaries(new List<HeartSummary> { existingHeartSummary });
 
             //Then
-            _healthRepository.Verify(x => x.Update(existingHeartSummary, myHeartSummary), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(existingHeartSummary), Times.Once);
         }
 
         

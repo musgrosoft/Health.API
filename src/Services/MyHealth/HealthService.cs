@@ -167,18 +167,7 @@ namespace Services.MyHealth
 
             foreach (var heartSummary in heartSummaries)
             {
-                
-                var existingHeartSummary = _healthRepository.Find(heartSummary);
-                if (existingHeartSummary != null)
-                {
-                    _logger.Log($"HEART SUMMARY : About to update Heart SUmmary Record : {heartSummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , ");
-                    _healthRepository.Update(existingHeartSummary, heartSummary);
-                }
-                else
-                {
-                    _logger.Log("HEART SUMMARY : insert thing");
-                    _healthRepository.Insert(heartSummary);
-                }
+                _healthRepository.Upsert(heartSummary);
             }
 
         }
