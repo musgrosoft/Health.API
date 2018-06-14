@@ -109,11 +109,11 @@ namespace Services.Tests.MyHealth
         }
 
         [Fact]
-        public void ShouldInsertNewWeight()
+        public void ShouldUpsertNewWeight()
         {
             //Given
-            var myNewWeight = new Weight();
-            _healthRepository.Setup(x => x.Find(myNewWeight)).Returns((Weight)null);
+            var myNewWeight = new Weight { DateTime = new DateTime(1970,1,2)};
+//            _healthRepository.Setup(x => x.FindWeight( new DateTime(1970, 1, 2))).Returns((Weight)null);
             _healthRepository.Setup(x => x.GetLatestWeights(It.IsAny<int>(), It.IsAny<DateTime>()))
                 .Returns(new List<Weight>());
 
@@ -121,25 +121,25 @@ namespace Services.Tests.MyHealth
             _healthService.UpsertWeights(new List<Weight>{myNewWeight});
 
             //Then
-            _healthRepository.Verify(x=>x.Insert(myNewWeight), Times.Once);
+            _healthRepository.Verify(x=>x.Upsert(myNewWeight), Times.Once);
         }
 
-        [Fact]
-        public void ShouldUpdateExistingWeight()
-        {
-            //Given
-            var myWeight = new Weight();
-            var existingWeight = new Weight();
-            _healthRepository.Setup(x => x.Find(myWeight)).Returns(existingWeight);
-            _healthRepository.Setup(x => x.GetLatestWeights(It.IsAny<int>(), It.IsAny<DateTime>()))
-                .Returns(new List<Weight>());
+        //[Fact]
+        //public void ShouldUpdateExistingWeight()
+        //{
+        //    //Given
+        //    var myWeight = new Weight();
+        //    var existingWeight = new Weight();
+        //    _healthRepository.Setup(x => x.Find(myWeight)).Returns(existingWeight);
+        //    _healthRepository.Setup(x => x.GetLatestWeights(It.IsAny<int>(), It.IsAny<DateTime>()))
+        //        .Returns(new List<Weight>());
 
-            //When
-            _healthService.UpsertWeights(new List<Weight> { myWeight });
+        //    //When
+        //    _healthService.UpsertWeights(new List<Weight> { myWeight });
 
-            //Then
-            _healthRepository.Verify(x => x.Update(existingWeight, myWeight), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Update(existingWeight, myWeight), Times.Once);
+        //}
 
         [Fact]
         public void ShouldInsertNewBloodPressure()
