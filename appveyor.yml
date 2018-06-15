@@ -8,7 +8,7 @@ branches:
 build:
   verbosity: minimal
 after_test:
-- cmd: dotnet publish -c Release -o %appveyor_build_folder%\out
+- cmd: dotnet publish -c Release -o C:\out
 - docker build -t healthapi .
-- docker cp %appveyor_build_folder%/out/. healthapi:/app
+- docker cp C:/out/. healthapi:/app
 - docker run -d -p 8080:80 --name myapp healthapi
