@@ -9,6 +9,7 @@ build:
   verbosity: minimal
 after_test:
 - cmd: dotnet publish -c Release -o C:\out
+- cmd: cd\
 - docker build -t healthapi .
-- docker cp C:/out/. healthapi:/app
+- docker cp out/. healthapi:/app
 - docker run -d -p 8080:80 --name myapp healthapi
