@@ -68,7 +68,7 @@ build:
   verbosity: minimal
 after_build:
 - cmd: dotnet publish ./src/HealthAPI /p:OutDir="%appveyor_build_folder%\publish" /p:PackageLocation="%appveyor_build_folder%\publish" /p:PublishProfile=Release /p:WebPublishMethod=Package
-- docker FROM microsoft/dotnet:2.0-runtime
+- docker FROM microsoft/aspnetcore:2.0
 - docker WORKDIR /app
 - docker COPY --from=src/HealthAPI/obj/Release/netcoreapp2.0 .
 - docker ENTRYPOINT ["dotnet", "HealthAPI.dll"]
