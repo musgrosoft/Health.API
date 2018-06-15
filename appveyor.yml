@@ -42,8 +42,7 @@ after_build:
 artifacts:
 - path: publish\*.zip
   name: mypackage
-  type: WebDeployPackage
-  
+  type: WebDeployPackage  
 deploy:
   provider: S3
   access_key_id: 
