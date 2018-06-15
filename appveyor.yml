@@ -1,5 +1,5 @@
 version: 1.0.{build}
-image: Visual Studio 2017 Preview
+image: ubuntu
 services:
 - docker
 branches:
@@ -64,7 +64,6 @@ before_build:
     dotnet build ./src/Utils/Utils.csproj 
     
 build:
-  publish_wap: true
   verbosity: minimal
 after_build:
 - cmd: dotnet publish -c Release -o out
