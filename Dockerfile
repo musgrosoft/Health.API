@@ -1,8 +1,6 @@
 FROM microsoft/aspnetcore-build:2.0 AS build-env
 WORKDIR /app
 
-COPY nuget.config ./
-
 RUN mkdir /app/HealthAPI/
 COPY src/HealthAPI/*.csproj /app/HealthAPI/
 WORKDIR /app/HealthAPI/
