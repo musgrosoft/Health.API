@@ -7,7 +7,7 @@ branches:
     - master
 build:
   verbosity: minimal
-after_build:
+after_test:
 - cmd: dotnet publish -c Release -o out
 - docker build -t healthapi .
 - docker run -d -p 8080:80 --name myapp healthapi
