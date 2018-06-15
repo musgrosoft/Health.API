@@ -1,5 +1,8 @@
 version: 1.0.{build}
 image: Visual Studio 2017 Preview
+branches:
+    only:
+    - master
 before_build:
 - cmd: >-
     dotnet restore ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
@@ -41,7 +44,7 @@ artifacts:
   name: mypackage
   type: WebDeployPackage
   
-  deploy:
+deploy:
   provider: S3
   access_key_id: 
     secure: s5pnr2vdvrNNVyoNltgAgGhnm4gVGgVYFMcaK21Tfhw=
