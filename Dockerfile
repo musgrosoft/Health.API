@@ -1,11 +1,6 @@
 FROM microsoft/aspnetcore-build:2.0 AS build-env
 WORKDIR /app
 
-RUN mkdir /app/HealthAPI/
-COPY src/HealthAPI/*.csproj /app/HealthAPI/
-WORKDIR /app/HealthAPI/
-RUN dotnet restore
-
 RUN mkdir /app/Migrators/
 COPY src/Migrators/*.csproj /app/Migrators/
 WORKDIR /app/Migrators/
@@ -24,6 +19,11 @@ RUN dotnet restore
 RUN mkdir /app/Utils/
 COPY src/Utils/*.csproj /app/Utils/
 WORKDIR /app/Utils/
+RUN dotnet restore
+
+RUN mkdir /app/HealthAPI/
+COPY src/HealthAPI/*.csproj /app/HealthAPI/
+WORKDIR /app/HealthAPI/
 RUN dotnet restore
 
 COPY src/Migrators/. /app/Migrators/
