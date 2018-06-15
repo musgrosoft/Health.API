@@ -26,16 +26,16 @@ COPY src/Utils/*.csproj /app/Utils/
 WORKDIR /app/Utils/
 RUN dotnet restore
 
-COPY src/HealthAPI/. /app/HealthAPI/
 COPY src/Migrators/. /app/Migrators/
 COPY src/Repositories/. /app/Repositories/
 COPY src/Services/. /app/Services/
 COPY src/Utils/. /app/Utils/
+COPY src/HealthAPI/. /app/HealthAPI/
 
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM microsoft/aspnetcore:2.0
 WORKDIR /app
-COPY --from=build-env /out .
+COPY --from=build-env /app/HealthAPI/out .
 ENTRYPOINT ["dotnet", "HealthAPI.dll"]
