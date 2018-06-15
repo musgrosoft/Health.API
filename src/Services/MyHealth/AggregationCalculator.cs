@@ -8,18 +8,7 @@ namespace Services.MyHealth
 {
     public class AggregationCalculator : IAggregationCalculator
     {
-
-
-
-
-
-
-
-
-
-
-
-
+        
         public void SetMovingAveragesOnBloodPressures(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period)
         {
             //_logger.Log("BLOOD PRESSURE : Add moving averages (using generic method)");
@@ -56,17 +45,17 @@ namespace Services.MyHealth
             //                );
         }
 
-        public void SetMovingAveragesOnRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
-        {
-           // _logger.Log("RESTING HEART RATE : Add moving averages (using generic method)");
+        //public void SetMovingAveragesOnRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
+        //{
+        //   // _logger.Log("RESTING HEART RATE : Add moving averages (using generic method)");
 
-            AddMovingAverageTo(
-                restingHeartRates,
-                w => w.DateTime,
-                w => w.Beats,
-                (w, d) => w.MovingAverageBeats = d
-                );
-        }
+        //    AddMovingAverageTo(
+        //        restingHeartRates,
+        //        w => w.DateTime,
+        //        w => w.Beats,
+        //        (w, d) => w.MovingAverageBeats = d
+        //        );
+        //}
 
         public void SetMovingAveragesOnRestingHeartRates(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period)
         {
@@ -222,7 +211,7 @@ namespace Services.MyHealth
             }
         }
 
-        public void SetCumSumsOnHeartSummaries(int? seed, IList<HeartSummary> orderedHeartSummaries)
+        public void SetCumSumsOnHeartSummaries(HeartSummary seedHeartSummary, IList<HeartSummary> orderedHeartSummaries)
         {
             for (int i = 0; i < orderedHeartSummaries.Count; i++)
             {
@@ -230,14 +219,14 @@ namespace Services.MyHealth
 
                 if (i == 0)
                 {
-                    previousCumSum = (seed ?? 0);
+                    previousCumSum = (seedHeartSummary?.CumSumCardioAndAbove ?? 0);
                 }
                 else
                 {
                     previousCumSum = orderedHeartSummaries[i - 1].CumSumCardioAndAbove;
                 }
 
-                orderedHeartSummaries[i].CumSumCardioAndAbove = (orderedHeartSummaries[i].CardioMinutes) + previousCumSum;
+                orderedHeartSummaries[i].CumSumCardioAndAbove = (orderedHeartSummaries[i].CardioMinutes) + (orderedHeartSummaries[i].PeakMinutes) + previousCumSum;
             }
         }
 

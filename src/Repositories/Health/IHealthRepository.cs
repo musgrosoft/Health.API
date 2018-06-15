@@ -21,11 +21,12 @@ namespace Repositories.Health
         void Upsert(ActivitySummary activitySummary);
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(HeartSummary heartSummary);
+        void Upsert(AlcoholIntake alcoholIntake);
 
         IList<Weight> GetLatestWeights(int number, DateTime beforeDate);
         IList<HeartSummary> GetLatestHeartSummaries(int number, DateTime beforeDate);
         IEnumerable<BloodPressure> GetLatestBloodPressures(int number, DateTime beforeDate);
-        IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number);
+        IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number, DateTime beforeDate);
         IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate);
         IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate);
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();

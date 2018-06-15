@@ -77,9 +77,9 @@ namespace Repositories.Health
             return _healthContext.BloodPressures.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number);
         }
 
-        public IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number)
+        public IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number, DateTime beforeDate)
         {
-            return _healthContext.RestingHeartRates.OrderByDescending(x => x.DateTime).Take(number);
+            return _healthContext.RestingHeartRates.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number);
         }
 
         public IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate)
@@ -113,6 +113,25 @@ namespace Repositories.Health
                 existingWeight.Kg = weight.Kg;
                 existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
                 existingWeight.MovingAverageKg = weight.MovingAverageKg;
+            }
+
+            _healthContext.SaveChanges();
+        }
+
+        public void Upsert(AlcoholIntake alcoholIntake)
+        {
+            var existingAlcoholIntake = _healthContext.AlcoholIntakes.Find(alcoholIntake.DateTime);
+
+            if (existingAlcoholIntake == null)
+            {
+                //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                _healthContext.Add(alcoholIntake);
+            }
+            else
+            {
+                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                existingAlcoholIntake.Units = alcoholIntake.Units;
+                existingAlcoholIntake.CumSumUnits = alcoholIntake.CumSumUnits;
             }
 
             _healthContext.SaveChanges();
