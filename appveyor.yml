@@ -10,19 +10,4 @@ build:
 after_build:
 - cmd: dotnet publish -c Release -o out
 - docker build -t healthapi .
-artifacts:
-- path: publish\*.zip
-  name: mypackage
-  type: WebDeployPackage  
-deploy:
-  provider: S3
-  access_key_id: 
-    secure: s5pnr2vdvrNNVyoNltgAgGhnm4gVGgVYFMcaK21Tfhw=
-  secret_access_key:
-    secure: ZgEoIvDRFbURZ4qXfwusxwnnIWlmggVT6Ocf0waaZaw/e6rbzyXt2tClmshjONLl
-  bucket: health.api.bucket
-  region: eu-west-1
-  unzip: false
-  set_public: false
-  folder: publish
-  artifact: HealthAPI.zip
+- docker run -d -p 8080:80 --name myapp healthapi
