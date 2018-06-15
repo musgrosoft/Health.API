@@ -9,10 +9,8 @@ build:
   verbosity: minimal
 after_build:
 - cmd: dotnet publish -c Release -o out
-- docker FROM microsoft/aspnetcore:2.0
-- docker WORKDIR /app
-- docker COPY --from=out .
-- docker ENTRYPOINT ["dotnet", "HealthAPI.dll"]
+- docker build -t Health.API .
+- docker run -d -p 8080:80 --name myapp Health.API
 artifacts:
 - path: publish\*.zip
   name: mypackage
