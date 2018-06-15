@@ -3,60 +3,34 @@ image: Visual Studio 2017 Preview
 before_build:
 - cmd: >-
     dotnet restore ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
-
     dotnet restore ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
-
     dotnet restore ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
-
     dotnet restore ./src/Services.Tests/Services.Tests.csproj
-
     dotnet restore ./src/HealthAPI/HealthAPI.csproj
-
     dotnet restore ./src/Migrators/Migrators.csproj
-
     dotnet restore ./src/Repositories/Repositories.csproj
-
     dotnet restore ./src/Services/Services.csproj
-
     dotnet restore ./src/Utils/Utils.csproj
 
-
     dotnet clean ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
-
     dotnet clean ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
-
     dotnet clean ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
-
     dotnet clean ./src/Services.Tests/Services.Tests.csproj
-
     dotnet clean ./src/HealthAPI/HealthAPI.csproj
-
     dotnet clean ./src/Migrators/Migrators.csproj
-
     dotnet clean ./src/Repositories/Repositories.csproj
-
     dotnet clean ./src/Services/Services.csproj
-
     dotnet clean ./src/Utils/Utils.csproj
 
-
     dotnet build ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
-
     dotnet build ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
-
     dotnet build ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
-
     dotnet build ./src/Services.Tests/Services.Tests.csproj
-
     dotnet build ./src/HealthAPI/HealthAPI.csproj
-
     dotnet build ./src/Migrators/Migrators.csproj
-
     dotnet build ./src/Repositories/Repositories.csproj
-
     dotnet build ./src/Services/Services.csproj
-
-    dotnet build ./src/Utils/Utils.csproj
+    dotnet build ./src/Utils/Utils.csproj    
 build:
   publish_wap: true
   verbosity: minimal
@@ -66,3 +40,16 @@ artifacts:
 - path: publish\*.zip
   name: mypackage
   type: WebDeployPackage
+  
+  deploy:
+  provider: S3
+  access_key_id: 
+    secure: s5pnr2vdvrNNVyoNltgAgGhnm4gVGgVYFMcaK21Tfhw=
+  secret_access_key:
+    secure: ZgEoIvDRFbURZ4qXfwusxwnnIWlmggVT6Ocf0waaZaw/e6rbzyXt2tClmshjONLl
+  bucket: health.api.bucket
+  region: eu-west-1
+  unzip: false
+  set_public: false
+  folder: publish
+  artifact: HealthAPI.zip
