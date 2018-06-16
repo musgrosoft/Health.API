@@ -1,16 +1,39 @@
 version: 1.0.{build}
 image: ubuntu
-services:
-- docker
 branches:
     only:
     - master
 build:
   project: Health.API.sln
+  configuration: Release
   verbosity: minimal
+  publish_nuget: true
+  publish_aspnet_core: true
+  publish_core_console: true
 after_build:
 - sh: dotnet publish -c Release -o out -v minimal
-- docker build -t healthapi .
-- docker run -d -p 8080:80 --name myapp healthapi
 test: auto
 after_test:
+
+
+build:
+  publish_wap: true
+  verbosity: minimal
+after_build:
+- cmd: dotnet publish ./src/HealthAPI /p:OutDir="%appveyor_build_folder%\publish" /p:PackageLocation="%appveyor_build_folder%\publish" /p:PublishProfile=Release /p:WebPublishMethod=Package
+artifacts:
+- path: publish\*.zip
+  name: mypackage
+  type: WebDeployPackage
+deploy:
+- provider: WebDeploy
+  server: https://musgrosoft-health-api.scm.azurewebsites.net:443/msdeploy.axd?site=Musgrosoft-Health-API
+  website: Musgrosoft-Health-API
+  username: $Musgrosoft-Health-API
+  password:
+    secure: +Tef2W21z7HUxOIgJkYgHTkSozAEs7/Eb930gf7mSgGJAxwePhbwAm67F2waTMZPoxiBS/1Kt4VtsQKjlEX0kQ==
+  artifact: mypackage
+  aspnet_core: true
+  remove_files: true
+  app_offline: true
+  aspnet_core_force_restart: true
