@@ -3,7 +3,7 @@ image: Visual Studio 2017 Preview
 branches:
     only:
     - master
-build:
+before_build:
 - cmd: >-
     dotnet restore ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
 
@@ -60,6 +60,7 @@ build:
     dotnet build ./src/Services/Services.csproj
 
     dotnet build ./src/Utils/Utils.csproj
+build: off
 test: auto
 after_test:
 - cmd: dotnet publish ./src/HealthAPI /p:OutDir="%appveyor_build_folder%\publish" /p:PackageLocation="%appveyor_build_folder%\publish" /p:PublishProfile=Release /p:WebPublishMethod=Package
