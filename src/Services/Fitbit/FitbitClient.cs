@@ -15,23 +15,29 @@ namespace Services.Fitbit
 
         private readonly HttpClient _httpClient;
         private readonly IConfig _config;
-        private readonly string _accessToken;
+        private readonly IFitbitAuthenticator _fitbitAuthenticator;
+        //private readonly string _accessToken;
         private readonly ILogger _logger;
 
-        public FitbitClient(HttpClient httpClient, IConfig config, string accessToken, ILogger logger)
+        public FitbitClient(HttpClient httpClient, IConfig config, IFitbitAuthenticator fitbitAuthenticator, ILogger logger)
         {
             _httpClient = httpClient;
             _config = config;
-            _accessToken = accessToken;
+            _fitbitAuthenticator = fitbitAuthenticator;
             _logger = logger;
+
         }
 
         [NotNull]
         public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate)
         {
+
+
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
+
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/1m.json";
             _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _accessToken);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
             var response = await _httpClient.GetAsync(uri);
             if (response.IsSuccessStatusCode)
@@ -55,9 +61,12 @@ namespace Services.Fitbit
 
         public async Task<FitbitDailyActivity> GetFitbitDailyActivity(DateTime date)
         {
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
+
+
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/date/{date:yyyy-MM-dd}.json";
             _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _accessToken);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
             var response = await _httpClient.GetAsync(uri);
             if (response.IsSuccessStatusCode)

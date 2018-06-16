@@ -15,57 +15,41 @@ namespace HealthAPI.Controllers.Migration
     public class NokiaController : Controller
     {
         private readonly HealthContext _context;
+        private readonly ILogger _logger;
+        private readonly INokiaMigrator _nokiaMigrator;
 
-        public NokiaController(HealthContext context)
+        public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator)
         {
-            _context = context;
+            this._logger = logger;
+            this._nokiaMigrator = nokiaMigrator;
         }
-
-        // POST: api/AlcoholIntakes1
+        
+        //todo post
         [HttpGet]
-     //   [Route("api/Nokia/Migrate")]
         public async Task<IActionResult> Migrate()
         {
-            var logger = new Logger();
             try
             {
-                //var logger = context.Logger;
+                _logger.Log("NOKIA : starting nokia migrate");
+                
+                await _nokiaMigrator.MigrateWeights();
+                await _nokiaMigrator.MigrateBloodPressures();
 
-                logger.Log("NOKIA : starting nokia migrate");
 
-                //logger.Log("STARTING NOKIA MIGRATOR");
-                var healthService = HealthServiceFactory.Build( logger, _context);
-
-                var nokiaMigrator = new NokiaMigrator(healthService, logger, new NokiaClient(new HttpClient()));
-
-                await nokiaMigrator.MigrateWeights();
-                await nokiaMigrator.MigrateBloodPressures();
-
-                healthService.UpsertAlcoholIntakes();
-
-                logger.Log("NOKIA : finishing nokia migrate");
+                _logger.Log("NOKIA : finishing nokia migrate");
 
                 return Ok();
-                //return new APIGatewayProxyResponse
-                //{
-                //    StatusCode = (int)HttpStatusCode.OK
-                //};
 
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                _logger.Error(ex);
+                //todo error
                 return NotFound(ex.ToString());
-                //LambdaLogger.Log(ex.ToString());
-
-                //return new APIGatewayProxyResponse
-                //{
-                //    StatusCode = (int)HttpStatusCode.InternalServerError,
-                //    Body = $"Uh oh, {ex.ToString()}"
-                //};
+                
 
             }
-          //  return Ok();
+
         }
 
        

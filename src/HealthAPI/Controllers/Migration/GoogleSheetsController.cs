@@ -32,6 +32,7 @@ namespace HealthAPI.Controllers.Migration
      //   [Route("api/Nokia/Migrate")]
         public async Task<IActionResult> Migrate()
         {
+            //healthService.UpsertAlcoholIntakes();
 
             var logger = new Logger();
             try

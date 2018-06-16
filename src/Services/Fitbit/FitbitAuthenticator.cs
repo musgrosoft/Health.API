@@ -11,15 +11,13 @@ using Utils;
 
 namespace Services.Fitbit
 {
-    public class FitbitAuthenticator
+    public class FitbitAuthenticator : IFitbitAuthenticator
     {
-        private readonly OAuthService _oAuthService;
+        private readonly IOAuthService _oAuthService;
 //        private readonly ILambdaLogger _logger;
         private const string FITBIT_SERVER = "https://api.fitbit.com";
-
-
-
-        public FitbitAuthenticator(OAuthService oAuthService)
+        
+        public FitbitAuthenticator(IOAuthService oAuthService)
         {
             _oAuthService = oAuthService;
         }

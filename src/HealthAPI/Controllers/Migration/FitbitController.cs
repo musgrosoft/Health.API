@@ -9,6 +9,7 @@ using Services.MyHealth;
 using Services.Nokia;
 using Services.OAuth;
 using Utils;
+using Services;
 
 namespace HealthAPI.Controllers.Migration
 {
@@ -16,68 +17,48 @@ namespace HealthAPI.Controllers.Migration
     [Route("api/Fitbit")]
     public class FitbitController : Controller
     {
-        private readonly IHealthService _healthService;
+        private readonly ILogger _logger;
+        private readonly IOAuthService _oAuthService;
+        private readonly IFitbitMigrator _fitbitMigrator;
 
-        public FitbitController(IHealthService healthService)
+        public FitbitController(
+            ILogger logger, 
+            IOAuthService oAuthService, 
+            IFitbitMigrator fitbitMigrator)
         {
-            _healthService = healthService;
+            
+            _logger = logger;
+            _oAuthService = oAuthService;
+            _fitbitMigrator = fitbitMigrator;
         }
 
-        // POST: api/AlcoholIntakes1
+        //todo post
         [HttpGet]
-     //   [Route("api/Nokia/Migrate")]
         public async Task<IActionResult> Migrate()
-        {
-
-            var logger = new Logger();
+        {   
             try
             {
-                //var logger = context.Logger;
-                logger.Log("FITBIT : starting fitbit migrate");
+                _logger.Log("FITBIT : starting fitbit migrate");
                 
-                var oAuthService = new OAuthService(new OAuthTokenRepository(new Config(), logger));
-                var v = await oAuthService.GetFitbitRefreshToken();
-                //logger.Log("fitbit refresh token is " + v);
-              //  return Ok("fitbit refresh token is " + v);
-
-                var fitbitAuthenticator = new FitbitAuthenticator(oAuthService);
-                var fitbitAccessToken = await fitbitAuthenticator.GetAccessToken();
-
-               // var healthService = HealthServiceFactory.Build(logger);
-
-                var fitbitClient = new FitbitClient(new System.Net.Http.HttpClient(), new Config(), fitbitAccessToken, new Logger());
-                var fitbitAggregator = new FitbitClientClientAggregator(fitbitClient, logger);
-                var fitbitService = new FitbitService(new Config(), logger, fitbitAggregator);
-
-                var fitbitMigrator = new FitbitMigrator(_healthService, logger, fitbitService, new Calendar());
-
-                await fitbitMigrator.MigrateHeartSummaries();
-                await fitbitMigrator.MigrateRestingHeartRates();
-                await fitbitMigrator.MigrateStepCounts();
-                await fitbitMigrator.MigrateActivitySummaries();
-                
-
-                logger.Log("FITBIT : finishing fitbit migrate");
+                var v = await _oAuthService.GetFitbitRefreshToken();
+              
+                await _fitbitMigrator.MigrateHeartSummaries();
+                await _fitbitMigrator.MigrateRestingHeartRates();
+                await _fitbitMigrator.MigrateStepCounts();
+                await _fitbitMigrator.MigrateActivitySummaries();
+              
+                _logger.Log("FITBIT : finishing fitbit migrate");
 
                 return Ok();
-                //return new APIGatewayProxyResponse
-                //{
-                //    StatusCode = (int)HttpStatusCode.OK
-                //};
 
             }
             catch (Exception ex)
             {
                 
-                logger.Error(ex);
+                _logger.Error(ex);
+                //todo return error
                 return NotFound(ex.ToString());
-                //LambdaLogger.Log(ex.ToString());
-
-                //return new APIGatewayProxyResponse
-                //{
-                //    StatusCode = (int)HttpStatusCode.InternalServerError,
-                //    Body = $"Uh oh, {ex.ToString()}"
-                //};
+                
 
             }
         }

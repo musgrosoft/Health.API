@@ -6,7 +6,7 @@ using Utils;
 
 namespace Migrators
 {
-    public class FitbitMigrator
+    public class FitbitMigrator : IFitbitMigrator
     {
         private readonly ILogger _logger;
         private IHealthService _healthService;

@@ -8,12 +8,12 @@ using Utils;
 
 namespace Services.Fitbit
 {
-    public class FitbitClientClientAggregator : IFitbitClientAggregator
+    public class FitbitClientAggregator : IFitbitClientAggregator
     {
         private readonly IFitbitClient _fitbitClient;
         private readonly ILogger _logger;
 
-        public FitbitClientClientAggregator(IFitbitClient fitbitClient, ILogger logger)
+        public FitbitClientAggregator(IFitbitClient fitbitClient, ILogger logger)
         {
             _fitbitClient = fitbitClient;
             _logger = logger;

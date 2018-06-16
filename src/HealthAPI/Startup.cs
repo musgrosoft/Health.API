@@ -20,6 +20,13 @@ using Exceptionless;
 using Repositories.Health;
 using Services.MyHealth;
 using Utils;
+using Services.OAuth;
+using Repositories.OAuth;
+using Services.Fitbit;
+using System.Net.Http;
+using Services;
+using Migrators;
+using Services.Nokia;
 
 namespace HealthAPI
 {
@@ -51,10 +58,28 @@ namespace HealthAPI
             services.AddMvc();
 
             services.AddScoped<IHealthRepository, HealthRepository>();
+
+            services.AddSingleton<HttpClient, HttpClient>();
+
             services.AddTransient<IHealthService, HealthService>();
             services.AddTransient<IConfig, Config>();
             services.AddTransient<Utils.ILogger, Logger>();
             services.AddTransient<IAggregationCalculator, AggregationCalculator>();
+            services.AddTransient<IOAuthService, OAuthService>();
+
+            services.AddTransient<IOAuthTokenRepository, OAuthTokenRepository>();
+
+            services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
+            services.AddTransient<IFitbitClientAggregator, FitbitClientAggregator>();
+            services.AddTransient<IFitbitService, FitbitService>();
+            services.AddTransient<IFitbitMigrator, FitbitMigrator>();
+            services.AddTransient<ICalendar, Calendar>();
+
+            services.AddTransient<IOAuthTokenRepository, OAuthTokenRepository>();
+
+            services.AddTransient<INokiaMigrator, NokiaMigrator>();
+            services.AddTransient<INokiaClient, NokiaClient>();
+
 
             //// ********************
             //// Setup CORS

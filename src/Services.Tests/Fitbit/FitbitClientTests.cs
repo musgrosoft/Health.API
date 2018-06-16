@@ -23,6 +23,8 @@ namespace Services.Tests.Fitbit
         private Mock<ILogger> _logger;
         private HttpClient _httpClient;
         private FitbitClient _fitbitClient;
+
+        private Mock<IFitbitAuthenticator> _fitbitAuthenticator;
         private string _accessToken = "TEST_ACCESS_TOKEN";
 
         public FitbitClientTests()
@@ -37,10 +39,11 @@ namespace Services.Tests.Fitbit
 
             _config = new Mock<IConfig>();
             _logger = new Mock<ILogger>();
+            _fitbitAuthenticator = new Mock<IFitbitAuthenticator>();
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
 
-            _fitbitClient = new FitbitClient(_httpClient, _config.Object, _accessToken, _logger.Object);
+            _fitbitClient = new FitbitClient(_httpClient, _config.Object, _fitbitAuthenticator.Object, _logger.Object);
         }
 
         //[Fact]

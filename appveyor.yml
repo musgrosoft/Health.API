@@ -7,7 +7,6 @@ build:
   project: Health.API.sln
   verbosity: minimal
   publish_aspnet_core: true
-  publish_wap: true
 test: auto
 artifacts:
 - path: publish\*.zip

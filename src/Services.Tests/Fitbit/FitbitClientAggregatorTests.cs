@@ -14,13 +14,13 @@ namespace Services.Tests.Fitbit
     {
         private Mock<IFitbitClient> _fitbitClient;
         private Mock<ILogger> _logger;
-        private FitbitClientClientAggregator _fitbitClientClientAggregator;
+        private FitbitClientAggregator _fitbitClientClientAggregator;
 
         public FitbitClientAggregatorTests()
         {
             _fitbitClient = new Mock<IFitbitClient>();
             _logger = new Mock<ILogger>();
-            _fitbitClientClientAggregator = new FitbitClientClientAggregator(_fitbitClient.Object, _logger.Object);
+            _fitbitClientClientAggregator = new FitbitClientAggregator(_fitbitClient.Object, _logger.Object);
         }
 
         [Fact]

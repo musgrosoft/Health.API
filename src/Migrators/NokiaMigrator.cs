@@ -7,7 +7,7 @@ using Utils;
 
 namespace Migrators
 {   
-    public class NokiaMigrator
+    public class NokiaMigrator : INokiaMigrator
     {
         private readonly IHealthService _healthService;
         private readonly ILogger _logger;
