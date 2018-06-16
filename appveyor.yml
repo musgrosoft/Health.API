@@ -10,17 +10,8 @@ build:
   publish_nuget: true
   publish_aspnet_core: true
   publish_core_console: true
-after_build:
-- sh: dotnet publish -c Release -o out -v minimal
-test: auto
-after_test:
-
-
-build:
   publish_wap: true
-  verbosity: minimal
-after_build:
-- cmd: dotnet publish ./src/HealthAPI /p:OutDir="%appveyor_build_folder%\publish" /p:PackageLocation="%appveyor_build_folder%\publish" /p:PublishProfile=Release /p:WebPublishMethod=Package
+test: auto
 artifacts:
 - path: publish\*.zip
   name: mypackage
