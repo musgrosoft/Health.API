@@ -5,7 +5,6 @@ branches:
     - master
 build:
   project: Health.API.sln
-  configuration: Release
   verbosity: minimal
   publish_nuget: true
   publish_aspnet_core: true
