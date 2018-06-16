@@ -42,25 +42,10 @@ before_build:
 
     dotnet clean ./src/Utils/Utils.csproj
 
-
-    dotnet build ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
-
-    dotnet build ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
-
-    dotnet build ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
-
-    dotnet build ./src/Services.Tests/Services.Tests.csproj
-
-    dotnet build ./src/HealthAPI/HealthAPI.csproj
-
-    dotnet build ./src/Migrators/Migrators.csproj
-
-    dotnet build ./src/Repositories/Repositories.csproj
-
-    dotnet build ./src/Services/Services.csproj
-
-    dotnet build ./src/Utils/Utils.csproj
-build: off
+build:
+  project: Health.API.sln
+  publish_wap: true
+  verbosity: minimal
 test: auto
 after_test:
 - cmd: dotnet publish ./src/HealthAPI /p:OutDir="%appveyor_build_folder%\publish" /p:PackageLocation="%appveyor_build_folder%\publish" /p:PublishProfile=Release /p:WebPublishMethod=Package
