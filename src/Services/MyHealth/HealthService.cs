@@ -77,7 +77,6 @@ namespace Services.MyHealth
             {
                 _healthRepository.Upsert(weight);
             }
-
         }
 
         public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
@@ -94,7 +93,6 @@ namespace Services.MyHealth
             {
                 _healthRepository.Upsert(bloodPressure);
             }
-
         }
 
         public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
@@ -113,7 +111,6 @@ namespace Services.MyHealth
             {
                 _healthRepository.Upsert(restingHeartRate);
             }
-            
         }
 
         public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
@@ -129,12 +126,9 @@ namespace Services.MyHealth
             foreach (var stepCount in orderedStepCounts)
             {
                 _healthRepository.Upsert(stepCount);
-            }
-            
+            }            
         }
-
-
-
+        
         public void UpsertActivitySummaries(IEnumerable<ActivitySummary>  activitySummaries)
         {
             _logger.Log($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
@@ -149,11 +143,8 @@ namespace Services.MyHealth
             {
                 _healthRepository.Upsert(activitySummary);
             }
-
         }
         
-
-
         public void UpsertHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
         {
             _logger.Log($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
@@ -168,10 +159,8 @@ namespace Services.MyHealth
             {
                 _healthRepository.Upsert(heartSummary);
             }
-
         }
-
-
+        
         public void UpsertAlcoholIntakes()
         {
             _logger.Log("UNITS : Calculate cum sum");
@@ -184,17 +173,7 @@ namespace Services.MyHealth
             {
                 _healthRepository.Upsert(alcoholIntake);
             }
-
-            //_healthRepository.SaveChanges();
-
-
         }
-
-
         
-
-
-
-
     }
 }
