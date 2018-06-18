@@ -7,7 +7,6 @@
     <StartupObject>HealthAPI.Program</StartupObject>
   </PropertyGroup>
 
-
   <ItemGroup>
     <Folder Include="Areas\MigrationArea\Controllers\" />
     <Folder Include="Areas\MigrationArea\Data\" />

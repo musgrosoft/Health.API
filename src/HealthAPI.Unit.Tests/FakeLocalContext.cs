@@ -11,7 +11,7 @@ namespace HealthAPI.Unit.Tests
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseInMemoryDatabase(databaseName: "test");
+                optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
             }
         }
         

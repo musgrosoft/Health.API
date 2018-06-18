@@ -9,20 +9,6 @@ using Repositories.Models;
 using Xunit;
 
 
-//private IPersonRepository GetInMemoryPersonRepository()
-//{
-//DbContextOptions<PersonDataContext> options;
-//var builder = new DbContextOptionsBuilder<PersonDataContext>();
-//builder.UseInMemoryDatabase();
-//options = builder.Options;
-//PersonDataContext personDataContext = new PersonDataContext(options);
-//personDataContext.Database.EnsureDeleted();
-//personDataContext.Database.EnsureCreated();
-//return new PersonRepository(personDataContext);
-//}
-
-
-//    optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
 
 namespace HealthAPI.Unit.Tests.Controllers.OData
 {

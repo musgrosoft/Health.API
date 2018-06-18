@@ -9,7 +9,6 @@ using Utils;
 
 namespace HealthAPI.Controllers.OData
 {
-    //[Route("api/[controller]")]
     public class StepCountsController : ODataController
     {
         private readonly HealthContext _context;
@@ -18,8 +17,7 @@ namespace HealthAPI.Controllers.OData
         {
             _context = context;
         }
-
-        // GET api/Stepsx
+        
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<StepCount> Get()
