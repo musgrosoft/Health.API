@@ -103,7 +103,11 @@ namespace Services.MyHealth
 
             var orderedRestingHeartRates = restingHeartRates.OrderBy(x => x.DateTime).ToList();
 
+            _logger.Log($"RESTING HEART RATE : orderd RHR : {orderedRestingHeartRates.Count}");
+
             var previousRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(MOVING_AVERAGE_PERIOD - 1, orderedRestingHeartRates.Min(x=>x.DateTime)).ToList();
+
+            _logger.Log($"RESTING HEART RATE : previous RHR : {previousRestingHeartRates.Count}");
 
             _aggregationCalculator.SetMovingAveragesOnRestingHeartRates(previousRestingHeartRates, orderedRestingHeartRates, MOVING_AVERAGE_PERIOD);
 

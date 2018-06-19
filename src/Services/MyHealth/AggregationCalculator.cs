@@ -29,42 +29,10 @@ namespace Services.MyHealth
                 setValue: (x, val) => x.MovingAverageDiastolic = val
             );
 
-
-            //AddMovingAverageTo(
-            //                bloodPressures,
-            //                w => w.DateTime,
-            //                w => w.Systolic,
-            //                (w, d) => w.MovingAverageSystolic = d
-            //                );
-
-            //            AddMovingAverageTo(
-            //                bloodPressures,
-            //                w => w.DateTime,
-            //                w => w.Diastolic,
-            //                (w, d) => w.MovingAverageDiastolic = d
-            //                );
         }
-
-        //public void SetMovingAveragesOnRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
-        //{
-        //   // _logger.Log("RESTING HEART RATE : Add moving averages (using generic method)");
-
-        //    AddMovingAverageTo(
-        //        restingHeartRates,
-        //        w => w.DateTime,
-        //        w => w.Beats,
-        //        (w, d) => w.MovingAverageBeats = d
-        //        );
-        //}
 
         public void SetMovingAveragesOnRestingHeartRates(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period)
         {
-            //AddMovingAverageTo(
-            //    restingHeartRates,
-            //    w => w.DateTime,
-            //    w => w.Beats,
-            //    (w, d) => w.MovingAverageBeats = d
-            //);
             SetMovingAveragesOn(
                 seedRestingHeartRates,
                 orderedRestingHeartRates,
@@ -72,7 +40,6 @@ namespace Services.MyHealth
                 getValue: x => x.Beats,
                 setValue: (x, val) => x.MovingAverageBeats = val
             );
-
         }
 
         public void SetMovingAveragesOnWeights(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period)
@@ -96,8 +63,8 @@ namespace Services.MyHealth
 
             var numberOfMissingKgs = period - 1 - seedTs.Count;
 
-            List<T> allWeights = seedTs.ToList();
-            allWeights.AddRange(orderedTs);
+            List<T> allTs = seedTs.ToList();
+            allTs.AddRange(orderedTs);
 
             for (int i = 0; i < orderedTs.Count; i++)
             {
@@ -108,7 +75,7 @@ namespace Services.MyHealth
                 }
                 else
                 {
-                    var average = allWeights.Skip(i - numberOfMissingKgs).Take(period).Average(x => getValue(x));
+                    var average = allTs.Skip(i - numberOfMissingKgs).Take(period).Average(x => getValue(x));
                     setValue(orderedTs[i], average);
 
                     //orderedTs[i].MovingAverageKg = allWeights.Skip(i - numberOfMissingKgs).Take(period).Average(x => x.Kg);
@@ -117,59 +84,6 @@ namespace Services.MyHealth
             }
 
         }
-
-
-
-        private void AddMovingAverageTo<T>(
-            IEnumerable<T> theList,
-            Func<T, DateTime> dateTimeSelector,
-            Func<T, Decimal> GetValue,
-            Action<T, Decimal?> SetMovingAverage,
-            int period = 10
-        ) where T : class
-        {
-            var orderedList = theList.OrderBy(dateTimeSelector).ToList();
-
-            for (int i = 0; i < orderedList.Count(); i++)
-            {
-                if (i >= period - 1)
-                {
-                    Decimal total = 0;
-                    //to rewrite from i-period, ascending
-                    for (int x = i; x > (i - period); x--)
-                    {
-                        total += GetValue(orderedList[x]);
-                    }
-
-                    decimal average = total / period;
-
-                    SetMovingAverage(orderedList[i], average);
-                }
-                //else
-                //{
-                //    SetMovingAverage(orderedList[i], null);
-                //}
-
-            }
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
