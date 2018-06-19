@@ -6,13 +6,13 @@ namespace Services.MyHealth
 {
     public interface IAggregationCalculator
     {
-        void SetMovingAveragesOnBloodPressures(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period);
-        void SetMovingAveragesOnRestingHeartRates(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period);
-        void SetMovingAveragesOnWeights(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period);
+        IEnumerable<BloodPressure> GetMovingAverages(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period);
+        IEnumerable<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period);
+        IEnumerable<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period);
 
-        void SetCumSumsOnStepCounts(int? seed, IList<StepCount> orderedStepCounts);
-        void SetCumSumsOnActivitySummaries(int? seed, IList<ActivitySummary> orderedActivitySummaries);
-        void SetCumSumsOnHeartSummaries(HeartSummary seedHeartSummary, IList<HeartSummary> orderedHeartSummaries);
-        void SetCumSumsOnAlcoholIntakes(IList<AlcoholIntake> alcoholIntakes);
+        IEnumerable<StepCount> GetCumSums(StepCount seed, IList<StepCount> orderedStepCounts);
+        IEnumerable<ActivitySummary> GetCumSums(ActivitySummary seed, IList<ActivitySummary> orderedActivitySummaries);
+        IEnumerable<HeartSummary> GetCumSums(HeartSummary seedHeartSummary, IList<HeartSummary> orderedHeartSummaries);
+        IEnumerable<AlcoholIntake> GetCumSums(IList<AlcoholIntake> alcoholIntakes);
     }
 }

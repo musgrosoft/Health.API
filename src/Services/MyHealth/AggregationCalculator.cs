@@ -9,21 +9,22 @@ namespace Services.MyHealth
     public class AggregationCalculator : IAggregationCalculator
     {
         
-        public void SetMovingAveragesOnBloodPressures(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period)
+        public IEnumerable<BloodPressure> GetMovingAverages(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period)
         {
             //_logger.Log("BLOOD PRESSURE : Add moving averages (using generic method)");
-
-            SetMovingAveragesOn(
+            var bloodPressuresWithSystolicMovingAverage = 
+            GetMovingAverages(
                 seedBloodPressures,
                 orderedBloodPressures,
                 period,
                 getValue: x => x.Systolic,
                 setValue: (x, val) => x.MovingAverageSystolic = val
-            );
+            ).ToList();
 
-            SetMovingAveragesOn(
+            return
+            GetMovingAverages(
                 seedBloodPressures,
-                orderedBloodPressures,
+                bloodPressuresWithSystolicMovingAverage,
                 period,
                 getValue: x => x.Diastolic,
                 setValue: (x, val) => x.MovingAverageDiastolic = val
@@ -31,9 +32,9 @@ namespace Services.MyHealth
 
         }
 
-        public void SetMovingAveragesOnRestingHeartRates(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period)
+        public IEnumerable<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period)
         {
-            SetMovingAveragesOn(
+            return GetMovingAverages(
                 seedRestingHeartRates,
                 orderedRestingHeartRates,
                 period,
@@ -42,9 +43,9 @@ namespace Services.MyHealth
             );
         }
 
-        public void SetMovingAveragesOnWeights(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period)
+        public IEnumerable<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period)
         {
-            SetMovingAveragesOn(
+            return GetMovingAverages(
                 seedWeights,
                 orderedWeights,
                 period,
@@ -54,80 +55,94 @@ namespace Services.MyHealth
         }
 
         
-        private void SetMovingAveragesOn<T>(IList<T> seedTs, IList<T> orderedTs, int period, Func<T, Decimal?> getValue, Action<T, Decimal?> setValue)
+        private IEnumerable<T> GetMovingAverages<T>(IList<T> seedList, IList<T> orderedList, int period, Func<T, Decimal?> getValue, Action<T, Decimal?> setValue)
         {
-            if (seedTs.Count > period - 1)
+            var localOrderedList = orderedList.ToList();
+
+            if (seedList.Count > period - 1)
             {
-                seedTs = seedTs.TakeLast(period - 1).ToList();
+                seedList = seedList.TakeLast(period - 1).ToList();
             }
 
-            var numberOfMissingKgs = period - 1 - seedTs.Count;
+            var numberOfMissingKgs = period - 1 - seedList.Count;
 
-            List<T> allTs = seedTs.ToList();
-            allTs.AddRange(orderedTs);
+            List<T> all = seedList.ToList();
+            all.AddRange(localOrderedList);
 
-            for (int i = 0; i < orderedTs.Count; i++)
+            for (int i = 0; i < localOrderedList.Count(); i++)
             {
                 if (i < numberOfMissingKgs)
                 {
-                    setValue(orderedTs[i], null);
+                    setValue(localOrderedList[i], null);
                     //                    orderedTs[i].MovingAverageKg = null;
                 }
                 else
                 {
-                    var average = allTs.Skip(i - numberOfMissingKgs).Take(period).Average(x => getValue(x));
-                    setValue(orderedTs[i], average);
+                    var average = all.Skip(i - numberOfMissingKgs).Take(period).Average(x => getValue(x));
+                    setValue(localOrderedList[i], average);
 
                     //orderedTs[i].MovingAverageKg = allWeights.Skip(i - numberOfMissingKgs).Take(period).Average(x => x.Kg);
                 }
 
             }
 
+            return localOrderedList;
+
         }
 
 
 
-        public void SetCumSumsOnStepCounts(int? seed, IList<StepCount> orderedStepCounts)
+        public IEnumerable<StepCount> GetCumSums(StepCount seed, IList<StepCount> orderedStepCounts)
         {
-            for (int i = 0; i < orderedStepCounts.Count; i++)
+            var localStepCounts = orderedStepCounts.ToList();
+
+            for (int i = 0; i < localStepCounts.Count; i++)
             {
                 int? previousCumSum;
 
                 if (i == 0)
                 {
-                    previousCumSum = (seed ?? 0);
+                    previousCumSum = (seed?.Count ?? 0);
                 }
                 else
                 {
-                    previousCumSum = orderedStepCounts[i - 1].CumSumCount;
+                    previousCumSum = localStepCounts[i - 1].CumSumCount;
                 }
 
-                orderedStepCounts[i].CumSumCount = (orderedStepCounts[i].Count ?? 0) + previousCumSum;
+                localStepCounts[i].CumSumCount = (localStepCounts[i].Count ?? 0) + previousCumSum;
             }
+
+            return localStepCounts;
         }
 
-        public void SetCumSumsOnActivitySummaries(int? seed, IList<ActivitySummary> orderedActivitySummaries)
+        public IEnumerable<ActivitySummary> GetCumSums(ActivitySummary seed, IList<ActivitySummary> orderedActivitySummaries)
         {
-            for (int i = 0; i < orderedActivitySummaries.Count; i++)
+            var localActivitySummaries = orderedActivitySummaries.ToList();
+
+            for (int i = 0; i < localActivitySummaries.Count; i++)
             {
                 int? previousCumSum;
 
                 if (i == 0)
                 {
-                    previousCumSum = (seed ?? 0);
+                    previousCumSum = (seed?.ActiveMinutes ?? 0);
                 }
                 else
                 {
-                    previousCumSum = orderedActivitySummaries[i - 1].CumSumActiveMinutes;
+                    previousCumSum = localActivitySummaries[i - 1].CumSumActiveMinutes;
                 }
 
-                orderedActivitySummaries[i].CumSumActiveMinutes = (orderedActivitySummaries[i].ActiveMinutes) + previousCumSum;
+                localActivitySummaries[i].CumSumActiveMinutes = (localActivitySummaries[i].ActiveMinutes) + previousCumSum;
             }
+
+            return localActivitySummaries;
         }
 
-        public void SetCumSumsOnHeartSummaries(HeartSummary seedHeartSummary, IList<HeartSummary> orderedHeartSummaries)
+        public IEnumerable<HeartSummary> GetCumSums(HeartSummary seedHeartSummary, IList<HeartSummary> orderedHeartSummaries)
         {
-            for (int i = 0; i < orderedHeartSummaries.Count; i++)
+            var localHeartSummaries = orderedHeartSummaries.ToList();
+
+            for (int i = 0; i < localHeartSummaries.Count; i++)
             {
                 int? previousCumSum;
 
@@ -137,50 +152,48 @@ namespace Services.MyHealth
                 }
                 else
                 {
-                    previousCumSum = orderedHeartSummaries[i - 1].CumSumCardioAndAbove;
+                    previousCumSum = localHeartSummaries[i - 1].CumSumCardioAndAbove;
                 }
 
-                orderedHeartSummaries[i].CumSumCardioAndAbove = (orderedHeartSummaries[i].CardioMinutes) + (orderedHeartSummaries[i].PeakMinutes) + previousCumSum;
+                localHeartSummaries[i].CumSumCardioAndAbove = (localHeartSummaries[i].CardioMinutes) + (localHeartSummaries[i].PeakMinutes) + previousCumSum;
             }
+
+            return localHeartSummaries;
         }
-
-
-        public void SetCumSumsOnAlcoholIntakes(IList<AlcoholIntake> alcoholIntakes)
+        
+        public IEnumerable<AlcoholIntake> GetCumSums(IList<AlcoholIntake> orderedAlcoholIntakes)
         {
             //  _logger.Log("UNITS : Calculate cum sum");
-
-            CalculateCumSumFor(
-                alcoholIntakes,
-                ai => ai.DateTime,
+            return GetCumSums(
+                orderedAlcoholIntakes,
                 ai => ai.Units,
                 ai => ai.CumSumUnits,
                 (ai, val) => ai.CumSumUnits = val
             );
         }
 
-        private void CalculateCumSumFor<T>(
-            IEnumerable<T> theList,
-            Func<T, DateTime> dateTimeSelector,
+        private IEnumerable<T> GetCumSums<T>(
+            IList<T> orderedList,
             Func<T, Decimal?> GetValue,
             Func<T, Decimal?> GetCumSum,
             Action<T, Decimal?> SetCumSum
         ) where T : class
         {
-            var orderedList = theList.OrderBy(x => dateTimeSelector(x)).ToList();
+            var localList = orderedList.ToList();
 
-            for (int i = 0; i < orderedList.Count(); i++)
+            for (int i = 0; i < localList.Count(); i++)
             {
-                Decimal? value = GetValue(orderedList[i]);
+                Decimal? value = GetValue(localList[i]);
 
                 if (i > 0)
                 {
-                    value += GetCumSum(orderedList[i - 1]);
+                    value += GetCumSum(localList[i - 1]);
                 }
 
-                SetCumSum(orderedList[i], value);
-
-
+                SetCumSum(localList[i], value);
             }
+
+            return localList;
 
         }
 
