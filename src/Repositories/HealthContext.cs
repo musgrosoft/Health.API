@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories
 {
@@ -21,6 +22,14 @@ namespace Repositories
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
-        
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
+        //    }
+        //}
+
     }
 }

@@ -79,6 +79,7 @@ namespace HealthAPI
 
             services.AddTransient<INokiaMigrator, NokiaMigrator>();
             services.AddTransient<INokiaClient, NokiaClient>();
+            services.AddTransient<IFitbitClient, FitbitClient>();
 
 
             //// ********************
