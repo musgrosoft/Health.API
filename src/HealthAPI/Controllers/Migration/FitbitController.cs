@@ -41,9 +41,11 @@ namespace HealthAPI.Controllers.Migration
                 _logger.Log("FITBIT : starting fitbit migrate");
                 
                 var v = await _oAuthService.GetFitbitRefreshToken();
-              
-                await _fitbitMigrator.MigrateHeartSummaries();
+
+                //monthly gets
                 await _fitbitMigrator.MigrateRestingHeartRates();
+                await _fitbitMigrator.MigrateHeartSummaries();
+                //daily gets
                 await _fitbitMigrator.MigrateStepCounts();
                 await _fitbitMigrator.MigrateActivitySummaries();
               
