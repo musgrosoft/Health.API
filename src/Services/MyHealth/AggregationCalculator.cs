@@ -102,7 +102,7 @@ namespace Services.MyHealth
 
                 if (i == 0)
                 {
-                    previousCumSum = (seed?.Count ?? 0);
+                    previousCumSum = (seed?.CumSumCount ?? 0);
                 }
                 else
                 {
@@ -125,7 +125,7 @@ namespace Services.MyHealth
 
                 if (i == 0)
                 {
-                    previousCumSum = (seed?.ActiveMinutes ?? 0);
+                    previousCumSum = (seed?.CumSumActiveMinutes ?? 0);
                 }
                 else
                 {
