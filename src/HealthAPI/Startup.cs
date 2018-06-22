@@ -53,7 +53,7 @@ namespace HealthAPI
 
             services.AddTransient<IHealthService, HealthService>();
             services.AddTransient<IConfig, Config>();
-            services.AddTransient<Utils.ILogger, Logger>();
+            services.AddTransient<ILogger, Logger>();
             services.AddTransient<IAggregationCalculator, AggregationCalculator>();
             services.AddTransient<IOAuthService, OAuthService>();
 

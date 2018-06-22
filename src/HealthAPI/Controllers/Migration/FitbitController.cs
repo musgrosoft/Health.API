@@ -2,14 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
-using Repositories;
-using Repositories.OAuth;
-using Services.Fitbit;
-using Services.MyHealth;
-using Services.Nokia;
 using Services.OAuth;
 using Utils;
-using Services;
 
 namespace HealthAPI.Controllers.Migration
 {
