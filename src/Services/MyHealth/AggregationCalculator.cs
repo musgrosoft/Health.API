@@ -178,6 +178,7 @@ namespace Services.MyHealth
             Action<T, Decimal?> SetCumSum
         ) where T : class
         {
+            //there is no point in this local list, each item inside is still modified (they are not copied)
             var localList = orderedList.ToList();
 
             for (int i = 0; i < localList.Count(); i++)
