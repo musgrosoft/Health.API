@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrators.Unit.Tests", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Unit.Tests", "src\Repository.Unit.Tests\Repository.Unit.Tests.csproj", "{C19F834D-C348-43CA-8CB8-542ADC9BBBA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthAPI.Acceptance.Tests", "HealthAPI.Acceptance.Tests\HealthAPI.Acceptance.Tests.csproj", "{5BC00024-B585-42C5-878D-FCC411C37364}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Acceptance.Tests", "src\HealthAPI.Acceptance.Tests\HealthAPI.Acceptance.Tests.csproj", "{65E8C5F2-889C-44FA-816D-6B2380BFA10A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +67,10 @@ Global
 		{C19F834D-C348-43CA-8CB8-542ADC9BBBA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C19F834D-C348-43CA-8CB8-542ADC9BBBA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C19F834D-C348-43CA-8CB8-542ADC9BBBA6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BC00024-B585-42C5-878D-FCC411C37364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BC00024-B585-42C5-878D-FCC411C37364}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BC00024-B585-42C5-878D-FCC411C37364}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BC00024-B585-42C5-878D-FCC411C37364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65E8C5F2-889C-44FA-816D-6B2380BFA10A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65E8C5F2-889C-44FA-816D-6B2380BFA10A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65E8C5F2-889C-44FA-816D-6B2380BFA10A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65E8C5F2-889C-44FA-816D-6B2380BFA10A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,7 +80,7 @@ Global
 		{8C75D3FC-FA11-44BC-BBB5-CF83AE3B4486} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}
 		{09E298C5-9381-4C72-9B24-3172DF072EC0} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}
 		{C19F834D-C348-43CA-8CB8-542ADC9BBBA6} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}
-		{5BC00024-B585-42C5-878D-FCC411C37364} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}
+		{65E8C5F2-889C-44FA-816D-6B2380BFA10A} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57E8B505-0062-4C35-8F3C-BBCA3B5A5337}
