@@ -171,9 +171,12 @@ namespace Services.MyHealth
 
             var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes().ToList();
 
-            var alcoholIntakesWithSums = _aggregationCalculator.GetCumSums(allAlcoholIntakes);
+            //get these from sheet instead of my own db
+             var localAlc = allAlcoholIntakes.Select(x=>new AlcoholIntake {DateTime=x.DateTime,Units=x.Units,CumSumUnits=x.CumSumUnits }).OrderBy(x=>x.DateTime).ToList();
 
-            foreach (var alcoholIntake in alcoholIntakesWithSums)
+            var alcoholIntakesWithSums = _aggregationCalculator.GetCumSums(localAlc);
+
+            foreach (var alcoholIntake in localAlc)
             {
                 _healthRepository.Upsert(alcoholIntake);
             }
