@@ -5,42 +5,46 @@ branches:
     - master
 before_build:
 - cmd: >-
-    dotnet restore ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
+ dotnet restore ./src/HealthAPI.Acceptance.Tests/HealthAPI.Acceptance.Tests.csproj
+ 
+ dotnet restore ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
+ 
+ dotnet restore ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
+ 
+ dotnet restore ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
+ 
+ dotnet restore ./src/Services.Tests/Services.Tests.csproj
 
-    dotnet restore ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
+ dotnet restore ./src/HealthAPI/HealthAPI.csproj
 
-    dotnet restore ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
+ dotnet restore ./src/Migrators/Migrators.csproj
 
-    dotnet restore ./src/Services.Tests/Services.Tests.csproj
+ dotnet restore ./src/Repositories/Repositories.csproj
 
-    dotnet restore ./src/HealthAPI/HealthAPI.csproj
+ dotnet restore ./src/Services/Services.csproj
 
-    dotnet restore ./src/Migrators/Migrators.csproj
+ dotnet restore ./src/Utils/Utils.csproj
 
-    dotnet restore ./src/Repositories/Repositories.csproj
+ dotnet clean ./src/HealthAPI.Acceptance.Tests/HealthAPI.Acceptance.Tests.csproj
+    
 
-    dotnet restore ./src/Services/Services.csproj
-
-    dotnet restore ./src/Utils/Utils.csproj
-
-
-    dotnet clean ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
-
-    dotnet clean ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
-
-    dotnet clean ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
-
-    dotnet clean ./src/Services.Tests/Services.Tests.csproj
-
-    dotnet clean ./src/HealthAPI/HealthAPI.csproj
-
-    dotnet clean ./src/Migrators/Migrators.csproj
-
-    dotnet clean ./src/Repositories/Repositories.csproj
-
-    dotnet clean ./src/Services/Services.csproj
-
-    dotnet clean ./src/Utils/Utils.csproj
+ dotnet clean ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
+ 
+ dotnet clean ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
+ 
+ dotnet clean ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
+ 
+ dotnet clean ./src/Services.Tests/Services.Tests.csproj
+ 
+ dotnet clean ./src/HealthAPI/HealthAPI.csproj
+ 
+ dotnet clean ./src/Migrators/Migrators.csproj
+ 
+ dotnet clean ./src/Repositories/Repositories.csproj
+ 
+ dotnet clean ./src/Services/Services.csproj
+ 
+ dotnet clean ./src/Utils/Utils.csproj
 
 build:
   project: Health.API.sln
