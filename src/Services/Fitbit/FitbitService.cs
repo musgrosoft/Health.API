@@ -69,11 +69,11 @@ namespace Services.Fitbit
                     });
         }
         
-        public async Task<IEnumerable<HeartSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<HeartRateSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate)
         {
             var heartActivies = await _fitbitClientAggregator.GetFitbitHeartActivities(fromDate, toDate);
 
-            return heartActivies.Select(x => new HeartSummary
+            return heartActivies.Select(x => new HeartRateSummary
             {
                 DateTime = x.dateTime,
                 OutOfRangeMinutes = x.value.heartRateZones.First(y => y.name == "Out of Range").minutes,

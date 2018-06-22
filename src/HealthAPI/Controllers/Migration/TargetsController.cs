@@ -62,7 +62,7 @@ namespace HealthAPI.Controllers.Migration
         [HttpGet]
         public IActionResult HeartSummaries()
         {
-            var targets = new List<HeartSummary>();
+            var targets = new List<HeartRateSummary>();
 
             var targetStartDate = new DateTime(2018, 5, 19);
             var targetEndDate = DateTime.Now.AddDays(100);
@@ -73,7 +73,7 @@ namespace HealthAPI.Controllers.Migration
 
             for (var i = 0; i <= totalDays; i++)
             {
-                var target = new HeartSummary
+                var target = new HeartRateSummary
                 {
                     DateTime = targetStartDate.AddDays(i),
                     CumSumCardioAndAbove = (int)(minutesOnTargetStartDate + (i * targetDailyMinutes))

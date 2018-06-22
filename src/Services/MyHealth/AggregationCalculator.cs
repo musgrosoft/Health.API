@@ -137,7 +137,7 @@ namespace Services.MyHealth
             return localActivitySummaries;
         }
 
-        public IEnumerable<HeartSummary> GetCumSums(HeartSummary seedHeartSummary, IList<HeartSummary> orderedHeartSummaries)
+        public IEnumerable<HeartRateSummary> GetCumSums(HeartRateSummary seedHeartSummary, IList<HeartRateSummary> orderedHeartSummaries)
         {
             var localHeartSummaries = orderedHeartSummaries.ToList();
 

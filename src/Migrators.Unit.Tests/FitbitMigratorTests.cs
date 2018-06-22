@@ -95,15 +95,15 @@ namespace Migrators.Unit.Tests
         public async Task ShouldMigrateHeartZoneData()
         {
             _healthService.Setup(x => x.GetLatestHeartSummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertHeartSummaries(It.IsAny<IEnumerable<HeartSummary>>()));
+            _healthService.Setup(x => x.UpsertHeartSummaries(It.IsAny<IEnumerable<HeartRateSummary>>()));
 
-            var heartZones = new List<HeartSummary>
+            var heartZones = new List<HeartRateSummary>
             {
-                new HeartSummary(){ DateTime = new DateTime(2010, 12, 1), CardioMinutes = 111 },
-                new HeartSummary{ DateTime = new DateTime(2022, 12, 22), CardioMinutes = 222}
+                new HeartRateSummary(){ DateTime = new DateTime(2010, 12, 1), CardioMinutes = 111 },
+                new HeartRateSummary{ DateTime = new DateTime(2022, 12, 22), CardioMinutes = 222}
             };
 
-            _fitbitClient.Setup(x => x.GetHeartSummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartSummary>)heartZones));
+            _fitbitClient.Setup(x => x.GetHeartSummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartRateSummary>)heartZones));
 
             await _fitbitMigrator.MigrateHeartSummaries();
 

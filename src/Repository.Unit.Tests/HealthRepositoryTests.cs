@@ -62,7 +62,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldInsertHeartSummary()
         {
-            var heartSummary = new HeartSummary { CardioMinutes = 123 };
+            var heartSummary = new HeartRateSummary { CardioMinutes = 123 };
 
             _healthRepository.Upsert(heartSummary);
 
@@ -178,9 +178,9 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldGetLatestHeartSummaryDate()
         {
-            var firstHeartSummary = new HeartSummary { DateTime = new DateTime(2018, 5, 1) };
-            var secondHeartSummary = new HeartSummary { DateTime = new DateTime(2018, 5, 2) };
-            var thirdHeartSummary = new HeartSummary { DateTime = new DateTime(2018, 5, 3) };
+            var firstHeartSummary = new HeartRateSummary { DateTime = new DateTime(2018, 5, 1) };
+            var secondHeartSummary = new HeartRateSummary { DateTime = new DateTime(2018, 5, 2) };
+            var thirdHeartSummary = new HeartRateSummary { DateTime = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.HeartSummaries.Add(firstHeartSummary);
             _fakeLocalContext.HeartSummaries.Add(secondHeartSummary);
@@ -455,7 +455,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateHeartSummary()
         {
-            var existingHeartSummary = new HeartSummary() { DateTime = new DateTime(2017, 1, 1), OutOfRangeMinutes = 1 , FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4};
+            var existingHeartSummary = new HeartRateSummary() { DateTime = new DateTime(2017, 1, 1), OutOfRangeMinutes = 1 , FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4};
             _fakeLocalContext.HeartSummaries.Add(existingHeartSummary);
             _fakeLocalContext.SaveChanges();
 

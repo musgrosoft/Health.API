@@ -149,7 +149,7 @@ namespace Services.MyHealth
             }
         }
         
-        public void UpsertHeartSummaries(IEnumerable<HeartSummary> heartSummaries)
+        public void UpsertHeartSummaries(IEnumerable<HeartRateSummary> heartSummaries)
         {
             _logger.Log($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
 

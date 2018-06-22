@@ -265,23 +265,23 @@ namespace Services.Tests.MyHealth
         public void ShouldUpsertHeartSummaries()
         {
             //Given
-            var newHeartSummaries = new List<HeartSummary>
+            var newHeartSummaries = new List<HeartRateSummary>
             {
-                new HeartSummary { DateTime = new DateTime(2010,10,10) },
-                new HeartSummary { DateTime = new DateTime(2011,10,10) }
+                new HeartRateSummary { DateTime = new DateTime(2010,10,10) },
+                new HeartRateSummary { DateTime = new DateTime(2011,10,10) }
             };
 
-            var previousHeartSummary = new HeartSummary();
+            var previousHeartSummary = new HeartRateSummary();
 
-            var heartSummariesWithSums = new List<HeartSummary>
+            var heartSummariesWithSums = new List<HeartRateSummary>
             {
-                new HeartSummary {DateTime = new DateTime(2016,1,1), FatBurnMinutes = 2016},
-                new HeartSummary {DateTime = new DateTime(2017,1,1), FatBurnMinutes = 2017},
-                new HeartSummary {DateTime = new DateTime(2018,1,1), FatBurnMinutes = 2018}
+                new HeartRateSummary {DateTime = new DateTime(2016,1,1), FatBurnMinutes = 2016},
+                new HeartRateSummary {DateTime = new DateTime(2017,1,1), FatBurnMinutes = 2017},
+                new HeartRateSummary {DateTime = new DateTime(2018,1,1), FatBurnMinutes = 2018}
             };
 
-            _healthRepository.Setup(x => x.GetLatestHeartSummaries(1, new DateTime(2010, 10, 10))).Returns(new List<HeartSummary>{previousHeartSummary});
-            _aggregationCalculator.Setup(x => x.GetCumSums(previousHeartSummary, It.IsAny<IList<HeartSummary>>())).Returns(heartSummariesWithSums);
+            _healthRepository.Setup(x => x.GetLatestHeartSummaries(1, new DateTime(2010, 10, 10))).Returns(new List<HeartRateSummary>{previousHeartSummary});
+            _aggregationCalculator.Setup(x => x.GetCumSums(previousHeartSummary, It.IsAny<IList<HeartRateSummary>>())).Returns(heartSummariesWithSums);
 
             //When
             _healthService.UpsertHeartSummaries(newHeartSummaries);

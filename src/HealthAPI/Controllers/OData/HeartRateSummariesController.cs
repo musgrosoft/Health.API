@@ -10,11 +10,11 @@ using Utils;
 namespace HealthAPI.Controllers.OData
 {
     //[Route("api/[controller]")]
-    public class HeartRateZoneSummariesController : ODataController
+    public class HeartRateSummariesController : ODataController
     {
         private readonly HealthContext _context;
 
-        public HeartRateZoneSummariesController(HealthContext context)
+        public HeartRateSummariesController(HealthContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace HealthAPI.Controllers.OData
         // GET api/HeartRateDailySummaries
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<HeartSummary> Get()
+        public IEnumerable<HeartRateSummary> Get()
         {
             return _context.HeartSummaries.OrderBy(x=>x.DateTime);
         }
@@ -31,16 +31,16 @@ namespace HealthAPI.Controllers.OData
         [HttpGet]
         [Route("odata/HeartRateDailySummaries/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<HeartSummary> GetByWeek()
+        public IEnumerable<HeartRateSummary> GetByWeek()
         {   
             var dailyHeartZones = _context.HeartSummaries;
 
             var weekGroups = dailyHeartZones.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
 
-            var weeklyHeartZones = new List<HeartSummary>();
+            var weeklyHeartZones = new List<HeartRateSummary>();
             foreach (var group in weekGroups)
             {
-                var heartZone = new HeartSummary
+                var heartZone = new HeartRateSummary
                 {
                     DateTime = group.Key,
                     OutOfRangeMinutes = group.Sum(x => x.OutOfRangeMinutes),
@@ -60,17 +60,17 @@ namespace HealthAPI.Controllers.OData
         [HttpGet]
         [Route("odata/HeartRateDailySummaries/GroupByMonth")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
-        public IEnumerable<HeartSummary> GetByMonth()
+        public IEnumerable<HeartRateSummary> GetByMonth()
         {
             var dailyHearts = _context.HeartSummaries.OrderBy(x => x.DateTime).ToList();
 
             var monthGroups = dailyHearts.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
 
 
-            var monthlyHearts = new List<HeartSummary>();
+            var monthlyHearts = new List<HeartRateSummary>();
             foreach (var group in monthGroups)
             {
-                var heart = new HeartSummary
+                var heart = new HeartRateSummary
                 {
                     DateTime = group.Key,
                     FatBurnMinutes = (int)group.Average(x => x.FatBurnMinutes),

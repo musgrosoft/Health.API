@@ -139,7 +139,7 @@ namespace HealthAPI
                 .OrderBy() // Allow for the $orderby Command                
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
-            builder.EntitySet<HeartSummary>("HeartRateZoneSummaries").EntityType
+            builder.EntitySet<HeartRateSummary>("HeartRateZoneSummaries").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
@@ -148,7 +148,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.EntitySet<ActivitySummary>("DailyActivities").EntityType
+            builder.EntitySet<ActivitySummary>("ActivitySummaries").EntityType
                 .HasKey(e => new { e.DateTime })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command

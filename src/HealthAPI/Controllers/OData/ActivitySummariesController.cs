@@ -10,11 +10,11 @@ using Utils;
 namespace HealthAPI.Controllers.OData
 {
 //    [Route("api/[controller]")]
-    public class DailyActivitiesController : ODataController
+    public class ActivitySummariesController : ODataController
     {
         private readonly HealthContext _context;
 
-        public DailyActivitiesController(HealthContext context)
+        public ActivitySummariesController(HealthContext context)
         {
             _context = context;
         }

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Linq;
 using HealthAPI.Controllers.OData;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.TestHost;
 using Repositories.Models;
 using Xunit;
 
@@ -12,13 +8,13 @@ namespace HealthAPI.Unit.Tests.Controllers.OData
 {
     public class DailyActivitiesControllerTests : IDisposable
     {
-        private DailyActivitiesController _controller;
+        private ActivitySummariesController _controller;
         private FakeLocalContext _fakeLocalContext;
 
         public DailyActivitiesControllerTests()
         {
             _fakeLocalContext = new FakeLocalContext();
-            _controller = new DailyActivitiesController(_fakeLocalContext);
+            _controller = new ActivitySummariesController(_fakeLocalContext);
         }
 
         public void Dispose()

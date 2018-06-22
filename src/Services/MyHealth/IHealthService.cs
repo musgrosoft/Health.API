@@ -19,7 +19,7 @@ namespace Services.MyHealth
 
         void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
         void UpsertActivitySummaries(IEnumerable<ActivitySummary> activitySummaries);
-        void UpsertHeartSummaries(IEnumerable<HeartSummary> heartSummaries);
+        void UpsertHeartSummaries(IEnumerable<HeartRateSummary> heartSummaries);
         void UpsertStepCounts(IEnumerable<StepCount> stepCount);
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);

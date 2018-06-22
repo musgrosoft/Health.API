@@ -9,7 +9,7 @@ namespace Services.Fitbit
     {
         Task<IEnumerable<ActivitySummary>> GetActivitySummaries(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate);
-        Task<IEnumerable<HeartSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate);
+        Task<IEnumerable<HeartRateSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate);
     }
 }

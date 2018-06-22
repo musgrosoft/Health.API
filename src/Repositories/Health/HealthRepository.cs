@@ -67,7 +67,7 @@ namespace Repositories.Health
             return _healthContext.Weights.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
-        public IList<HeartSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
+        public IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
         {
             return _healthContext.HeartSummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
@@ -227,7 +227,7 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Upsert(HeartSummary heartSummary)
+        public void Upsert(HeartRateSummary heartSummary)
         {
 
             var existingHeartSummary = _healthContext.HeartSummaries.Find(heartSummary.DateTime);

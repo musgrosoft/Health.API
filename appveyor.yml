@@ -5,8 +5,6 @@ branches:
     - master
 before_build:
 - cmd: >-
-    dotnet restore ./src/HealthAPI.Acceptance.Tests/HealthAPI.Acceptance.Tests.csproj
-
     dotnet restore ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
 
     dotnet restore ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
@@ -26,8 +24,6 @@ before_build:
     dotnet restore ./src/Utils/Utils.csproj
 
 
-    dotnet clean ./src/HealthAPI.Acceptance.Tests/HealthAPI.Acceptance.Tests.csproj
-    
     dotnet clean ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
 
     dotnet clean ./src/Migrators.Unit.Tests/Migrators.Unit.Tests.csproj
