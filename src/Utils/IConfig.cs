@@ -5,5 +5,6 @@
         string DyanmoDbAccessKey { get; }
         string DynamoDbSecretKey { get; }
         string FitbitUserId { get; }
+        string HealthDbConnectionString { get; }
     }
 }

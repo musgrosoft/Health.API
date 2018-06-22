@@ -1,10 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Utils;
 
 namespace Repositories
 {
     public class HealthContext : DbContext
     {
+        private readonly IConfig _config;
         public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
         public virtual DbSet<Models.ActivitySummary> ActivitySummaries { get; set; }
         public virtual DbSet<Models.StepCount> StepCounts { get; set; }
@@ -14,11 +15,16 @@ namespace Repositories
         public virtual DbSet<Models.Weight> Weights { get; set; }
         public virtual DbSet<Models.Run> Runs { get; set; }
 
+        public HealthContext(IConfig config)
+        {
+            _config = config;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = "Server=tcp:musgrosoft.database.windows.net,1433;Initial Catalog=Health;Persist Security Info=False;User ID=timmusgrove;Password=Starbucks1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";// Environment.GetEnvironmentVariable("HealthDbConnectionString");
+                var connectionString = _config.HealthDbConnectionString;
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }

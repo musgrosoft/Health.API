@@ -11,7 +11,7 @@ namespace Utils
                 var value = Environment.GetEnvironmentVariable("DyanmoDbAccessKey");
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("lambda.json");
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
                     var config = builder.Build();
 
                     value = config["DyanmoDbAccessKey"];
@@ -28,7 +28,7 @@ namespace Utils
                 var value = Environment.GetEnvironmentVariable("DynamoDbSecretKey");
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("lambda.json");
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
                     var config = builder.Build();
 
                     value = config["DynamoDbSecretKey"];
@@ -46,10 +46,27 @@ namespace Utils
                 var value = Environment.GetEnvironmentVariable("FitbitUserId");
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("lambda.json");
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
                     var config = builder.Build();
 
                     value = config["FitbitUserId"];
+
+                }
+                return value;
+            }
+        }
+
+        public string HealthDbConnectionString
+        {
+            get
+            {
+                var value = Environment.GetEnvironmentVariable("HealthDbConnectionString");
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
+                    var config = builder.Build();
+
+                    value = config["HealthDbConnectionString"];
 
                 }
                 return value;
