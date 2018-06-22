@@ -41,7 +41,6 @@ namespace Services.Tests.MyHealth
 
             //then
             Assert.Equal(date, latestDate);
-
         }
 
 
@@ -107,177 +106,172 @@ namespace Services.Tests.MyHealth
         }
 
         [Fact]
-        public void ShouldUpsertNewWeight()
+        public void ShouldUpsertNewWeights()
         {
             //Given
-            var myNewWeight = new Weight { DateTime = new DateTime(1970,1,2)};
-//            _healthRepository.Setup(x => x.FindWeight( new DateTime(1970, 1, 2))).Returns((Weight)null);
-            _healthRepository.Setup(x => x.GetLatestWeights(It.IsAny<int>(), It.IsAny<DateTime>()))
-                .Returns(new List<Weight>());
+            var newWeights = new List<Weight>
+            {
+                new Weight { DateTime = new DateTime(2010,10,10) },
+                new Weight { DateTime = new DateTime(2011,10,10) }
+            };
+
+            var previousWeights = new List<Weight>();
+
+            var weightsWithAverages = new List<Weight>
+            {
+                new Weight {DateTime = new DateTime(2016,1,1), Kg = 2016},
+                new Weight {DateTime = new DateTime(2017,1,1), Kg = 2017},
+                new Weight {DateTime = new DateTime(2018,1,1), Kg = 2018}
+            };
+
+            _healthRepository.Setup(x => x.GetLatestWeights(9, new DateTime(2010, 10, 10))).Returns(previousWeights);
+            _aggregationCalculator.Setup(x => x.GetMovingAverages(previousWeights, It.IsAny<IList<Weight>>(), 10)).Returns(weightsWithAverages);
 
             //When
-            _healthService.UpsertWeights(new List<Weight>{myNewWeight});
+            _healthService.UpsertWeights(newWeights);
 
             //Then
-            _healthRepository.Verify(x=>x.Upsert(myNewWeight), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(weightsWithAverages[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(weightsWithAverages[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(weightsWithAverages[2]), Times.Once);
         }
 
-        //[Fact]
-        //public void ShouldUpdateExistingWeight()
-        //{
-        //    //Given
-        //    var myWeight = new Weight();
-        //    var existingWeight = new Weight();
-        //    _healthRepository.Setup(x => x.Find(myWeight)).Returns(existingWeight);
-        //    _healthRepository.Setup(x => x.GetLatestWeights(It.IsAny<int>(), It.IsAny<DateTime>()))
-        //        .Returns(new List<Weight>());
-
-        //    //When
-        //    _healthService.UpsertWeights(new List<Weight> { myWeight });
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Update(existingWeight, myWeight), Times.Once);
-        //}
-
         [Fact]
-        public void ShouldUpsertNewBloodPressure()
+        public void ShouldUpsertNewBloodPressures()
         {
             //Given
-            var myBloodPressure = new BloodPressure();
-         //   _healthRepository.Setup(x => x.Find(myBloodPressure)).Returns((BloodPressure)null);
+            var newBloodPressures = new List<BloodPressure>
+            {
+                new BloodPressure { DateTime = new DateTime(2010,10,10) },
+                new BloodPressure { DateTime = new DateTime(2011,10,10) }
+            };
+
+            var previousBloodPressures = new List<BloodPressure>();
+
+            var bloodPressuresWithAverages = new List<BloodPressure>
+            {
+                new BloodPressure {DateTime = new DateTime(2016,1,1), Systolic = 2016},
+                new BloodPressure {DateTime = new DateTime(2017,1,1), Systolic = 2017},
+                new BloodPressure {DateTime = new DateTime(2018,1,1), Systolic = 2018}
+            };
+
+            _healthRepository.Setup(x => x.GetLatestBloodPressures(9, new DateTime(2010, 10, 10))).Returns(previousBloodPressures);
+            _aggregationCalculator.Setup(x => x.GetMovingAverages(previousBloodPressures, It.IsAny<IList<BloodPressure>>(), 10)).Returns(bloodPressuresWithAverages);
 
             //When
-            _healthService.UpsertBloodPressures(new List<BloodPressure> { myBloodPressure });
+            _healthService.UpsertBloodPressures(newBloodPressures);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(myBloodPressure), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(bloodPressuresWithAverages[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(bloodPressuresWithAverages[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(bloodPressuresWithAverages[2]), Times.Once);
         }
 
-        //[Fact]
-        //public void ShouldUpdateExistingBloodPressure()
-        //{
-        //    //Given
-        //    var myBloodPressure = new BloodPressure();
-        //    var existingBloodPressure = new BloodPressure();
-        //    _healthRepository.Setup(x => x.Find(myBloodPressure)).Returns(existingBloodPressure);
-
-        //    //When
-        //    _healthService.UpsertBloodPressures(new List<BloodPressure> { myBloodPressure });
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(myBloodPressure), Times.Once);
-        //}
-
         [Fact]
-        public void ShouldUpsertNewStepCount()
+        public void ShouldUpsertNewStepCounts()
         {
             //Given
-            var myStepCount = new StepCount();
-          //  _healthRepository.Setup(x => x.Find(myStepCount)).Returns((StepCount)null);
-            _healthRepository.Setup(x => x.GetLatestStepCounts(It.IsAny<int>(), It.IsAny<DateTime>()))
-                .Returns(new List<StepCount>());
+            var newStepCounts = new List<StepCount>
+            {
+                new StepCount { DateTime = new DateTime(2010,10,10) },
+                new StepCount { DateTime = new DateTime(2011,10,10) }
+            };
+
+            var previousStepCount = new StepCount();
+
+            var stepCountsWithSums = new List<StepCount>
+            {
+                new StepCount {DateTime = new DateTime(2016,1,1), Count = 2016},
+                new StepCount {DateTime = new DateTime(2017,1,1), Count = 2017},
+                new StepCount {DateTime = new DateTime(2018,1,1), Count = 2018}
+            };
+
+            _healthRepository.Setup(x => x.GetLatestStepCounts(1, new DateTime(2010, 10, 10))).Returns(new List<StepCount> { previousStepCount });
+            _aggregationCalculator.Setup(x => x.GetCumSums(previousStepCount, It.IsAny<IList<StepCount>>())).Returns(stepCountsWithSums);
 
             //When
-            _healthService.UpsertStepCounts(new List<StepCount> { myStepCount });
+            _healthService.UpsertStepCounts(newStepCounts);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(myStepCount), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(stepCountsWithSums[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(stepCountsWithSums[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(stepCountsWithSums[2]), Times.Once);
         }
 
-        //[Fact]
-        //public void ShouldUpdateExistingStepCount()
-        //{
-        //    //Given
-        //    var myStepCount = new StepCount();
-        //    var existingStepCount = new StepCount();
-        //    _healthRepository.Setup(x => x.Find(myStepCount)).Returns(existingStepCount);
-        //    _healthRepository.Setup(x => x.GetLatestStepCounts(It.IsAny<int>(), It.IsAny<DateTime>()))
-        //        .Returns(new List<StepCount>());
-
-        //    //When
-        //    _healthService.UpsertStepCounts(new List<StepCount> { myStepCount });
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Update(existingStepCount, myStepCount), Times.Once);
-        //}
-
-
         [Fact]
-        public void ShouldUpsertNewActivitySummary()
+        public void ShouldUpsertNewActivitySummaries()
         {
             //Given
-            var myActivitySummary = new ActivitySummary();
-          //  _healthRepository.Setup(x => x.Find(myActivitySummary)).Returns((ActivitySummary)null);
-            _healthRepository.Setup(x => x.GetLatestActivitySummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
-                .Returns(new List<ActivitySummary>());
+            var newActivitySummaries = new List<ActivitySummary>
+            {
+                new ActivitySummary { DateTime = new DateTime(2010,10,10) },
+                new ActivitySummary { DateTime = new DateTime(2011,10,10) }
+            };
+
+            var previousActivitySummary = new ActivitySummary();
+            
+            var activitySummariesWithSums = new List<ActivitySummary>
+            {
+                new ActivitySummary {DateTime = new DateTime(2016,1,1), FairlyActiveMinutes = 2016},
+                new ActivitySummary {DateTime = new DateTime(2017,1,1), FairlyActiveMinutes = 2017},
+                new ActivitySummary {DateTime = new DateTime(2018,1,1), FairlyActiveMinutes = 2018}
+            };
+
+            _healthRepository.Setup(x => x.GetLatestActivitySummaries(1, new DateTime(2010, 10, 10))).Returns(new List<ActivitySummary> { previousActivitySummary });
+            _aggregationCalculator.Setup(x => x.GetCumSums(previousActivitySummary, It.IsAny<IList<ActivitySummary>>())).Returns(activitySummariesWithSums);
 
             //When
-            _healthService.UpsertActivitySummaries(new List<ActivitySummary> { myActivitySummary });
+            _healthService.UpsertActivitySummaries(newActivitySummaries);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(myActivitySummary), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(activitySummariesWithSums[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(activitySummariesWithSums[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(activitySummariesWithSums[2]), Times.Once);
         }
-
-        //[Fact]
-        //public void ShouldUpdateExistingActivitySummary()
-        //{
-        //    //Given
-        //    var myActivitySummary = new ActivitySummary();
-        //    var existingActivitySummary = new ActivitySummary();
-        //    _healthRepository.Setup(x => x.Find(myActivitySummary)).Returns(existingActivitySummary);
-        //    _healthRepository.Setup(x => x.GetLatestActivitySummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
-        //        .Returns(new List<ActivitySummary>());
-
-        //    //When
-        //    _healthService.UpsertActivitySummaries(new List<ActivitySummary> { myActivitySummary });
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Update(existingActivitySummary, myActivitySummary), Times.Once);
-        //}
-
+        
         [Fact]
-        public void ShouldUpsertNewRestingHeartRate()
+        public void ShouldUpsertNewRestingHeartRates()
         {
             //Given
-            var myRestingHeartRate = new RestingHeartRate();
-            //_healthRepository.Setup(x => x.Find(myRestingHeartRate)).Returns((RestingHeartRate)null);
+            var newHeartSummaries = new List<RestingHeartRate>
+            {
+                new RestingHeartRate { DateTime = new DateTime(2010,10,10) },
+                new RestingHeartRate { DateTime = new DateTime(2011,10,10) }
+            };
+
+            var previousRestingHeartRates = new List<RestingHeartRate>();
+            
+            var restingHeartRatesWithAverages = new List<RestingHeartRate>
+            {
+                new RestingHeartRate {DateTime = new DateTime(2016,1,1), Beats = 2016},
+                new RestingHeartRate {DateTime = new DateTime(2017,1,1), Beats = 2017},
+                new RestingHeartRate {DateTime = new DateTime(2018,1,1), Beats = 2018}
+            };
+
+            _healthRepository.Setup(x => x.GetLatestRestingHeartRates(9, new DateTime(2010, 10, 10))).Returns(previousRestingHeartRates );
+            _aggregationCalculator.Setup(x => x.GetMovingAverages(previousRestingHeartRates, It.IsAny<IList<RestingHeartRate>>(), 10)).Returns(restingHeartRatesWithAverages);
 
             //When
-            _healthService.UpsertRestingHeartRates(new List<RestingHeartRate> { myRestingHeartRate });
+            _healthService.UpsertRestingHeartRates(newHeartSummaries);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(myRestingHeartRate), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(restingHeartRatesWithAverages[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(restingHeartRatesWithAverages[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(restingHeartRatesWithAverages[2]), Times.Once);
+
         }
-
-        //[Fact]
-        //public void ShouldUpdateExistingRestingHeartRate()
-        //{
-        //    //Given
-        //    var myRestingHeartRate = new RestingHeartRate();
-        //    var existingRestingHeartRate = new RestingHeartRate();
-        //    _healthRepository.Setup(x => x.Find(myRestingHeartRate)).Returns(existingRestingHeartRate);
-
-        //    //When
-        //    _healthService.UpsertRestingHeartRates(new List<RestingHeartRate> { myRestingHeartRate });
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Update(existingRestingHeartRate, myRestingHeartRate), Times.Once);
-        //}
-
+        
         [Fact]
-        public void ShouldUpsertNewHeartSummary()
+        public void ShouldUpsertHeartSummaries()
         {
             //Given
             var newHeartSummaries = new List<HeartSummary>
             {
                 new HeartSummary { DateTime = new DateTime(2010,10,10) },
-                new HeartSummary
-                {
-                    DateTime = new DateTime(2011,10,10)
-                }
+                new HeartSummary { DateTime = new DateTime(2011,10,10) }
             };
-            var previousHeartSummary = new HeartSummary();
 
+            var previousHeartSummary = new HeartSummary();
 
             var heartSummariesWithSums = new List<HeartSummary>
             {
@@ -297,26 +291,6 @@ namespace Services.Tests.MyHealth
             _healthRepository.Verify(x => x.Upsert(heartSummariesWithSums[1]), Times.Once);
             _healthRepository.Verify(x => x.Upsert(heartSummariesWithSums[2]), Times.Once);
         }
-
-        [Fact]
-        public void ShouldUpdateExistingHeartSummary()
-        {
-            //Given
-            
-            var existingHeartSummary = new HeartSummary();
-            //_healthRepository.Setup(x => x.Find(myHeartSummary)).Returns(existingHeartSummary);
-            _healthRepository.Setup(x => x.GetLatestHeartSummaries(It.IsAny<int>(), It.IsAny<DateTime>()))
-                .Returns(new List<HeartSummary>());
-
-            //When
-            _healthService.UpsertHeartSummaries(new List<HeartSummary> { existingHeartSummary });
-
-            //Then
-            _healthRepository.Verify(x => x.Upsert(existingHeartSummary), Times.Once);
-        }
-
-        
-
 
 
     }

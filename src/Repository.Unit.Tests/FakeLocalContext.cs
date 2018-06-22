@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
+﻿using Microsoft.EntityFrameworkCore;
 using Repositories;
+using Utils;
 
 namespace Repository.Unit.Tests
 {
@@ -15,7 +14,10 @@ namespace Repository.Unit.Tests
                 optionsBuilder.UseInMemoryDatabase(databaseName: "test");
             }
         }
-        
-        
+
+
+        public FakeLocalContext() : base(new Config())
+        {
+        }
     }
 }

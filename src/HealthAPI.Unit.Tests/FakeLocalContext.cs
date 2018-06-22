@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
+using Utils;
 
 namespace HealthAPI.Unit.Tests
 {
@@ -14,7 +15,10 @@ namespace HealthAPI.Unit.Tests
                 optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
             }
         }
-        
-        
+
+
+        public FakeLocalContext() : base(new Config())
+        {
+        }
     }
 }
