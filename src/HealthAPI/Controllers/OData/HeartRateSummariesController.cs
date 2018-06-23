@@ -19,21 +19,20 @@ namespace HealthAPI.Controllers.OData
             _context = context;
         }
 
-        // GET api/HeartRateDailySummaries
+        // GET api/HeartRateSummaries
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateSummary> Get()
         {
-            return _context.HeartSummaries.OrderBy(x=>x.DateTime);
+            return _context.HeartRateSummaries.OrderBy(x=>x.DateTime);
         }
-
-        // GET api/HeartRateDailySummaries
+        
         [HttpGet]
-        [Route("odata/HeartRateDailySummaries/GroupByWeek")]
+        [Route("odata/HeartRateSummaries/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateSummary> GetByWeek()
         {   
-            var dailyHeartZones = _context.HeartSummaries;
+            var dailyHeartZones = _context.HeartRateSummaries;
 
             var weekGroups = dailyHeartZones.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
 
@@ -58,11 +57,11 @@ namespace HealthAPI.Controllers.OData
 
 
         [HttpGet]
-        [Route("odata/HeartRateDailySummaries/GroupByMonth")]
+        [Route("odata/HeartRateSummaries/GroupByMonth")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateSummary> GetByMonth()
         {
-            var dailyHearts = _context.HeartSummaries.OrderBy(x => x.DateTime).ToList();
+            var dailyHearts = _context.HeartRateSummaries.OrderBy(x => x.DateTime).ToList();
 
             var monthGroups = dailyHearts.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
 

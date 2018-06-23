@@ -66,7 +66,7 @@ namespace Repository.Unit.Tests
 
             _healthRepository.Upsert(heartSummary);
 
-            var heartSummaries = _fakeLocalContext.HeartSummaries;
+            var heartSummaries = _fakeLocalContext.HeartRateSummaries;
 
             Assert.Contains(heartSummary, heartSummaries);
         }
@@ -182,9 +182,9 @@ namespace Repository.Unit.Tests
             var secondHeartSummary = new HeartRateSummary { DateTime = new DateTime(2018, 5, 2) };
             var thirdHeartSummary = new HeartRateSummary { DateTime = new DateTime(2018, 5, 3) };
 
-            _fakeLocalContext.HeartSummaries.Add(firstHeartSummary);
-            _fakeLocalContext.HeartSummaries.Add(secondHeartSummary);
-            _fakeLocalContext.HeartSummaries.Add(thirdHeartSummary);
+            _fakeLocalContext.HeartRateSummaries.Add(firstHeartSummary);
+            _fakeLocalContext.HeartRateSummaries.Add(secondHeartSummary);
+            _fakeLocalContext.HeartRateSummaries.Add(thirdHeartSummary);
             _fakeLocalContext.SaveChanges();
 
             var latestHeartSummaryDate = _healthRepository.GetLatestHeartSummaryDate();
@@ -456,7 +456,7 @@ namespace Repository.Unit.Tests
         public void ShouldUpdateHeartSummary()
         {
             var existingHeartSummary = new HeartRateSummary() { DateTime = new DateTime(2017, 1, 1), OutOfRangeMinutes = 1 , FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4};
-            _fakeLocalContext.HeartSummaries.Add(existingHeartSummary);
+            _fakeLocalContext.HeartRateSummaries.Add(existingHeartSummary);
             _fakeLocalContext.SaveChanges();
 
             existingHeartSummary.OutOfRangeMinutes = 5;

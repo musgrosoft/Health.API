@@ -54,7 +54,7 @@ namespace Repositories.Health
 
         public DateTime? GetLatestHeartSummaryDate()
         {
-            return _healthContext.HeartSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return _healthContext.HeartRateSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
         }
 
         public DateTime? GetLatestRunDate()
@@ -69,7 +69,7 @@ namespace Repositories.Health
 
         public IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
         {
-            return _healthContext.HeartSummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
+            return _healthContext.HeartRateSummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
         public IEnumerable<BloodPressure> GetLatestBloodPressures(int number, DateTime beforeDate)
@@ -230,7 +230,7 @@ namespace Repositories.Health
         public void Upsert(HeartRateSummary heartSummary)
         {
 
-            var existingHeartSummary = _healthContext.HeartSummaries.Find(heartSummary.DateTime);
+            var existingHeartSummary = _healthContext.HeartRateSummaries.Find(heartSummary.DateTime);
 
             if (existingHeartSummary != null)
             {

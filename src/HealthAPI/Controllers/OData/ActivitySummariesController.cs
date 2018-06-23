@@ -19,7 +19,7 @@ namespace HealthAPI.Controllers.OData
             _context = context;
         }
 
-        // GET api/DailyActivities
+        // GET api/ActivitySummaries
         [HttpGet]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<ActivitySummary> Get()
@@ -29,7 +29,7 @@ namespace HealthAPI.Controllers.OData
 
 
         [HttpGet]
-        [Route("odata/DailyActivities/GroupByWeek")]
+        [Route("odata/ActivitySummaries/GroupByWeek")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<ActivitySummary> GetByWeek()
         {
@@ -57,7 +57,7 @@ namespace HealthAPI.Controllers.OData
         }
 
         [HttpGet]
-        [Route("odata/DailyActivities/GroupByMonth")]
+        [Route("odata/ActivitySummaries/GroupByMonth")]
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<ActivitySummary> GetByMonth()
         {

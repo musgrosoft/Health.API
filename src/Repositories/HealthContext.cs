@@ -9,7 +9,7 @@ namespace Repositories
         public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
         public virtual DbSet<Models.ActivitySummary> ActivitySummaries { get; set; }
         public virtual DbSet<Models.StepCount> StepCounts { get; set; }
-        public virtual DbSet<Models.HeartRateSummary> HeartSummaries { get; set; }
+        public virtual DbSet<Models.HeartRateSummary> HeartRateSummaries { get; set; }
         public virtual DbSet<Models.RestingHeartRate> RestingHeartRates { get; set; }
         public virtual DbSet<Models.AlcoholIntake> AlcoholIntakes { get; set; }
         public virtual DbSet<Models.Weight> Weights { get; set; }
