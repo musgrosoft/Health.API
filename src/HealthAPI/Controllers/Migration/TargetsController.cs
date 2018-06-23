@@ -60,7 +60,7 @@ namespace HealthAPI.Controllers.Migration
         }
 
         [HttpGet]
-        public IActionResult HeartSummaries()
+        public IActionResult HeartRateSummaries()
         {
             var targets = new List<HeartRateSummary>();
 
