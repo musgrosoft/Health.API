@@ -1,4 +1,4 @@
-﻿using HealthAPI.Acceptance.Tests.Domain;
+﻿using HealthAPI.Acceptance.Tests.OData;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Repositories.Models;
 
 namespace HealthAPI.Acceptance.Tests
 {

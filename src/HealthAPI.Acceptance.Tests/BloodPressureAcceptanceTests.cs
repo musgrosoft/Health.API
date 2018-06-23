@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using HealthAPI.Acceptance.Tests.Domain;
+using HealthAPI.Acceptance.Tests.OData;
 using Newtonsoft.Json;
 using Xunit;
+using Repositories.Models;
 
 namespace HealthAPI.Acceptance.Tests
 {

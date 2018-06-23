@@ -21,7 +21,14 @@ namespace Repositories.Health
         //    _healthContext.Add(obj);
         //    _healthContext.SaveChanges();
         //}
-        
+
+        public void Delete<T>(T obj) where T : class
+        {
+            _healthContext.Remove<T>(obj);
+            _healthContext.SaveChanges();
+        }
+
+
         public DateTime? GetLatestStepCountDate()
         {
             return _healthContext.StepCounts.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
@@ -52,6 +59,7 @@ namespace Repositories.Health
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
         }
 
+        
         public DateTime? GetLatestHeartSummaryDate()
         {
             return _healthContext.HeartRateSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
@@ -97,7 +105,11 @@ namespace Repositories.Health
             return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime);
         }
 
-        
+        public IEnumerable<ActivitySummary> GetAllActivitySummaries()
+        {
+            return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime);
+        }
+
         public void Upsert(Weight weight)
         {
             var existingWeight = _healthContext.Weights.Find(weight.DateTime);
