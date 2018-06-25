@@ -20,11 +20,11 @@ namespace HealthAPI.Controllers.Migration
     [Route("api/Google")]
     public class GoogleSheetsController : Controller
     {
-        private readonly HealthContext _context;
+        private readonly HealthService _healthService;
 
-        public GoogleSheetsController(HealthContext context)
+        public GoogleSheetsController(HealthService healthService)
         {
-            _context = context;
+            _healthService = healthService;
         }
 
         [HttpGet]
@@ -38,30 +38,30 @@ namespace HealthAPI.Controllers.Migration
                 logger.Log("GOOGLE SHEETS : starting fitbit migrate");
 
                 //logger.Log("STARTING NOKIA MIGRATOR");
-                var healthService = HealthServiceFactory.Build( logger, _context);
-                healthService.UpsertAlcoholIntakes();
+                
+                _healthService.UpsertAlcoholIntakes();
 
 
-                var oAuthService = new OAuthService(new OAuthTokenRepository(new Config(), logger));
+              //  var oAuthService = new OAuthService(new OAuthTokenRepository(new Config(), logger));
             //    oAuthService.SaveGoogleRefreshToken("1/KBHJU61ZfR3FS7Jx5RVbuqO3szkeU6ejDDjQquX7J7k");
 
-                var v = await oAuthService.GetGoogleRefreshToken();
+                //var v = await oAuthService.GetGoogleRefreshToken();
               
-                var googleAuthenticator = new GoogleAuthenticator(oAuthService);
-                var googleAccessToken = await googleAuthenticator.GetAccessToken();
+                //var googleAuthenticator = new GoogleAuthenticator(oAuthService);
+                //var googleAccessToken = await googleAuthenticator.GetAccessToken();
                 
-                var _httpClient = new HttpClient();
-                var uri = "https://sheets.googleapis.com/v4/spreadsheets/15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io/values/Sheet1!A1:I10";
-                _httpClient.DefaultRequestHeaders.Clear();
-                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + googleAccessToken);
+                //var _httpClient = new HttpClient();
+                //var uri = "https://sheets.googleapis.com/v4/spreadsheets/15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io/values/Sheet1!A1:I10";
+                //_httpClient.DefaultRequestHeaders.Clear();
+                //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + googleAccessToken);
 
-                var response = await _httpClient.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var data = JsonConvert.DeserializeObject<GResponse>(content);
-                    var a=1;
-                }
+                //var response = await _httpClient.GetAsync(uri);
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    var content = await response.Content.ReadAsStringAsync();
+                //    var data = JsonConvert.DeserializeObject<GResponse>(content);
+                //    var a=1;
+                //}
 
 
          
