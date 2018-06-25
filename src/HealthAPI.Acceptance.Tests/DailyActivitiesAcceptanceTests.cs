@@ -26,14 +26,14 @@ namespace HealthAPI.Acceptance.Tests
 
 
         [Fact]
-        public async Task ShouldGetDailyActivities()
+        public async Task ShouldGetActivitySummaries()
         {
             var config = new Config();
             var healthContext = new HealthContext(config);
             var healthRepository = new HealthRepository(healthContext);
 
-            var allDailyActivities = healthRepository.GetAllActivitySummaries();
-            var countDailyActivities = allDailyActivities.Count();
+            var allActivitySummaries = healthRepository.GetAllActivitySummaries();
+            var countDailyActivities = allActivitySummaries.Count();
 
             var activitySummaries = await GetActivitySummariesFromAPI();
 

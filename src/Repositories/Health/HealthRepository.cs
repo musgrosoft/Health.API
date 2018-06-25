@@ -34,6 +34,8 @@ namespace Repositories.Health
             return _healthContext.StepCounts.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
         }
 
+
+
         public DateTime? GetLatestBloodPressureDate()
         {
             return _healthContext.BloodPressures.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
@@ -108,6 +110,11 @@ namespace Repositories.Health
         public IEnumerable<ActivitySummary> GetAllActivitySummaries()
         {
             return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime);
+        }
+
+        public IEnumerable<HeartRateSummary> GetAllHeartRateSummaries()
+        {
+            return _healthContext.HeartRateSummaries.OrderByDescending(x => x.DateTime);
         }
 
         public void Upsert(Weight weight)
