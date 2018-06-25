@@ -20,9 +20,9 @@ namespace HealthAPI.Controllers.Migration
     [Route("api/Google")]
     public class GoogleSheetsController : Controller
     {
-        private readonly HealthService _healthService;
+        private readonly IHealthService _healthService;
 
-        public GoogleSheetsController(HealthService healthService)
+        public GoogleSheetsController(IHealthService healthService)
         {
             _healthService = healthService;
         }

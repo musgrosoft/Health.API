@@ -23,7 +23,8 @@ namespace Services.MyHealth
         void UpsertStepCounts(IEnumerable<StepCount> stepCount);
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
-        
+        void UpsertAlcoholIntakes();
+
         //void CalculateCumSumForStepCounts();
         //void CalculateCumSumForUnits();
         //void CalculateCumSumForActivitySummaries();
