@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Utils;
 
 namespace Repositories
@@ -25,7 +26,16 @@ namespace Repositories
             if (!optionsBuilder.IsConfigured)
             {
                 var connectionString = _config.HealthDbConnectionString;
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder.UseSqlServer(
+                    connectionString, 
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
+                    }
+                );
             }
         }
 
