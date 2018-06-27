@@ -28,7 +28,6 @@ namespace Services.Nokia
 
        
 
-        [NotNull]
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {
             //return null;

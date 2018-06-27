@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Amazon.Lambda.Core;
 using Newtonsoft.Json;
 using Services.Fitbit.Domain;
 using Services.OAuth;

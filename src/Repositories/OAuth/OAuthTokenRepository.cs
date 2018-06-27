@@ -6,7 +6,6 @@ using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.Runtime;
 using Utils;
-using Amazon.Lambda.Core;
 
 namespace Repositories.OAuth
 {

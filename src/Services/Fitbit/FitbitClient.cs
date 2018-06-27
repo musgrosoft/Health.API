@@ -28,7 +28,6 @@ namespace Services.Fitbit
 
         }
 
-        [NotNull]
         public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate)
         {
 
