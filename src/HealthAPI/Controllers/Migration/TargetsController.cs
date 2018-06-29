@@ -116,7 +116,8 @@ namespace HealthAPI.Controllers.Migration
                 {
                     DateTime = targetStartDate.AddDays(i),
                     TargetKg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss)),
-                    ActualKg = actualWeight?.Kg
+                    ActualKg = actualWeight?.Kg,
+                    ActualMovingAverageKg = actualWeight?.MovingAverageKg
                 };
 
                 targets.Add(target);

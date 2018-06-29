@@ -7,5 +7,6 @@ namespace HealthAPI.Controllers.Migration
         public DateTime DateTime { get; set; }
         public decimal TargetKg { get; set; }
         public decimal? ActualKg { get; set; }
+        public decimal? ActualMovingAverageKg { get; set; }
     }
 }
