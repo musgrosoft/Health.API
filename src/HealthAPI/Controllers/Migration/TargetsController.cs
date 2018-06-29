@@ -110,7 +110,7 @@ namespace HealthAPI.Controllers.Migration
 
             for (var i = 0 ; i <= totalDays ; i++)
             {
-                var actualWeight = allWeights.FirstOrDefault(x => x.DateTime == targetStartDate.AddDays(i));
+                var actualWeight = allWeights.FirstOrDefault(x => x.DateTime.Date == targetStartDate.AddDays(i).Date);
 
                 var target = new TargetWeight
                 {
