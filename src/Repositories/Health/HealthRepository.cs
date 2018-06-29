@@ -117,6 +117,11 @@ namespace Repositories.Health
             return _healthContext.HeartRateSummaries.OrderByDescending(x => x.DateTime);
         }
 
+        public IEnumerable<Weight> GetAllWeights()
+        {
+            return _healthContext.Weights.OrderByDescending(x => x.DateTime);
+        }
+
         public void Upsert(Weight weight)
         {
             var existingWeight = _healthContext.Weights.Find(weight.DateTime);

@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Health;
 using Repositories.Models;
 
 namespace HealthAPI.Controllers.Migration
 {
     public class TargetsController : Controller
     {
+        private readonly IHealthRepository _healthRepository;
+
+        public TargetsController(IHealthRepository healthRepository)
+        {
+            _healthRepository = healthRepository;
+        }
+
         [HttpGet]
         public IActionResult ActivitySummaries()
         {
@@ -88,7 +97,7 @@ namespace HealthAPI.Controllers.Migration
         [HttpGet]
         public IActionResult Weights()
         {
-            var targets = new List<Weight>();
+            var targets = new List<TargetWeight>();
 
             var targetStartDate = new DateTime(2018, 5, 1);
             var targetEndDate = DateTime.Now.AddDays(100);
@@ -97,12 +106,17 @@ namespace HealthAPI.Controllers.Migration
             var weightOnTargetStartDate = 90.74;
             var targetDailyWeightLoss = 0.5 / 30;
 
+            var allWeights = _healthRepository.GetAllWeights();
+
             for (var i = 0 ; i <= totalDays ; i++)
             {
-                var target = new Weight
+                var actualWeight = allWeights.FirstOrDefault(x => x.DateTime == targetStartDate.AddDays(i));
+
+                var target = new TargetWeight
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    Kg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss))
+                    TargetKg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss)),
+                    ActualKg = actualWeight?.Kg
                 };
 
                 targets.Add(target);
