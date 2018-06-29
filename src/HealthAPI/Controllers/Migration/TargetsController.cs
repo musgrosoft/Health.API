@@ -45,7 +45,7 @@ namespace HealthAPI.Controllers.Migration
         [HttpGet]
         public IActionResult AlcoholIntakes()
         {
-            var targets = new List<AlcoholIntake>();
+            var targets = new List<TargetAlcoholIntake>();
 
             var targetStartDate = new DateTime(2018, 5, 29);
             var targetEndDate = DateTime.Now.AddDays(100);
@@ -54,12 +54,17 @@ namespace HealthAPI.Controllers.Migration
             var unitsOnTargetStartDate = 5148;
             var targetDailyUnits = 4;
 
+            var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes();
+
             for (var i = 0; i <= totalDays; i++)
             {
-                var target = new AlcoholIntake
+                var actualAlcoholIntake = allAlcoholIntakes.FirstOrDefault(x => x.DateTime.Date == targetStartDate.AddDays(i).Date);
+
+                var target = new TargetAlcoholIntake
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    CumSumUnits = (Decimal)(unitsOnTargetStartDate + (i * targetDailyUnits))
+                    TargetCumSumUnits = (Decimal)(unitsOnTargetStartDate + (i * targetDailyUnits)),
+                    ActualCumSumUnits = actualAlcoholIntake?.CumSumUnits
                 };
 
                 targets.Add(target);
