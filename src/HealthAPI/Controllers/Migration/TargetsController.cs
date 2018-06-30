@@ -105,7 +105,7 @@ namespace HealthAPI.Controllers.Migration
             var targets = new List<TargetWeight>();
 
             var targetStartDate = new DateTime(2018, 5, 1);
-            var targetEndDate = DateTime.Now.AddDays(100);
+            var targetEndDate = DateTime.Now.AddDays(600);
             var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
             var weightOnTargetStartDate = 90.74;
