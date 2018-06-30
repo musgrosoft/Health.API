@@ -96,8 +96,11 @@ namespace HealthAPI.Controllers.Migration
 
             var weightOnTargetStartDate = 90.74;
             var targetDailyWeightLoss = 0.5 / 30;
+            var targetDailyWeightLoss2 = 0.25 / 30;
 
-            for (var i = 0 ; i <= totalDays ; i++)
+            var daysToHitHealthyWeight = 123;
+
+            for (var i = 0 ; i <= daysToHitHealthyWeight; i++)
             {
                 var target = new Weight
                 {
@@ -107,6 +110,18 @@ namespace HealthAPI.Controllers.Migration
 
                 targets.Add(target);
             }
+
+            for (var i = daysToHitHealthyWeight; i <= totalDays - daysToHitHealthyWeight; i++)
+            {
+                var target = new Weight
+                {
+                    DateTime = targetStartDate.AddDays(i),
+                    Kg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss2))
+                };
+
+                targets.Add(target);
+            }
+
 
             return Json(targets);
         }
