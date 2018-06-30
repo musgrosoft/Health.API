@@ -30,6 +30,7 @@ namespace Repositories.Health
         IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate);
         IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate);
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
-        
+
+        IEnumerable<Weight> GetAllWeights();
     }
 }

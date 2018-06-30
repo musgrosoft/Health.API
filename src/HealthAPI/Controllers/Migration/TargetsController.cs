@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Health;
 using Repositories.Models;
 
 namespace HealthAPI.Controllers.Migration
 {
     public class TargetsController : Controller
     {
+        private readonly IHealthRepository _healthRepository;
+
+        public TargetsController(IHealthRepository healthRepository)
+        {
+            _healthRepository = healthRepository;
+        }
+
         [HttpGet]
         public IActionResult ActivitySummaries()
         {
@@ -36,7 +45,7 @@ namespace HealthAPI.Controllers.Migration
         [HttpGet]
         public IActionResult AlcoholIntakes()
         {
-            var targets = new List<AlcoholIntake>();
+            var targets = new List<TargetAlcoholIntake>();
 
             var targetStartDate = new DateTime(2018, 5, 29);
             var targetEndDate = DateTime.Now.AddDays(100);
@@ -45,12 +54,17 @@ namespace HealthAPI.Controllers.Migration
             var unitsOnTargetStartDate = 5148;
             var targetDailyUnits = 4;
 
+            var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes();
+
             for (var i = 0; i <= totalDays; i++)
             {
-                var target = new AlcoholIntake
+                var actualAlcoholIntake = allAlcoholIntakes.FirstOrDefault(x => x.DateTime.Date == targetStartDate.AddDays(i).Date);
+
+                var target = new TargetAlcoholIntake
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    CumSumUnits = (Decimal)(unitsOnTargetStartDate + (i * targetDailyUnits))
+                    TargetCumSumUnits = (Decimal)(unitsOnTargetStartDate + (i * targetDailyUnits)),
+                    ActualCumSumUnits = actualAlcoholIntake?.CumSumUnits
                 };
 
                 targets.Add(target);
@@ -88,7 +102,7 @@ namespace HealthAPI.Controllers.Migration
         [HttpGet]
         public IActionResult Weights()
         {
-            var targets = new List<Weight>();
+            var targets = new List<TargetWeight>();
 
             var targetStartDate = new DateTime(2018, 5, 1);
             var targetEndDate = DateTime.Now.AddDays(100);
@@ -100,12 +114,18 @@ namespace HealthAPI.Controllers.Migration
 
             var daysToHitHealthyWeight = 123;
 
+            var allWeights = _healthRepository.GetAllWeights();
+
             for (var i = 0 ; i <= daysToHitHealthyWeight; i++)
             {
-                var target = new Weight
+                var actualWeight = allWeights.FirstOrDefault(x => x.DateTime.Date == targetStartDate.AddDays(i).Date);
+
+                var target = new TargetWeight
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    Kg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss))
+                    TargetKg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss)),
+                    ActualKg = actualWeight?.Kg,
+                    ActualMovingAverageKg = actualWeight?.MovingAverageKg
                 };
 
                 targets.Add(target);
@@ -113,10 +133,14 @@ namespace HealthAPI.Controllers.Migration
 
             for (var i = daysToHitHealthyWeight; i <= totalDays - daysToHitHealthyWeight; i++)
             {
-                var target = new Weight
+                var actualWeight = allWeights.FirstOrDefault(x => x.DateTime.Date == targetStartDate.AddDays(i).Date);
+
+                var target = new TargetWeight
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    Kg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss2))
+                    TargetKg = (Decimal)(weightOnTargetStartDate - (daysToHitHealthyWeight * targetDailyWeightLoss + (i- daysToHitHealthyWeight) * targetDailyWeightLoss2)),
+                    ActualKg = actualWeight?.Kg,
+                    ActualMovingAverageKg = actualWeight?.MovingAverageKg
                 };
 
                 targets.Add(target);
