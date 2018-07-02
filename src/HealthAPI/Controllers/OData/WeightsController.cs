@@ -24,6 +24,19 @@ namespace HealthAPI.Controllers.OData
         public IQueryable<Weight> Get()
         {
             return _context.Weights.AsQueryable();
+
+            //var allWeights = _healthRepository.GetAllWeights();
+            var allWeights = _context.Weights;
+            var groups = allWeights.GroupBy(x => x.DateTime.Date);
+
+             var allWeights2 = groups.Select(x => new Weight
+            {
+                DateTime = x.Key.Date,
+                Kg = x.Average(w => w.Kg),
+                MovingAverageKg = x.Average(w => w.MovingAverageKg)
+            });
+
+            return allWeights2.AsQueryable();
         }
         
         [HttpGet]
