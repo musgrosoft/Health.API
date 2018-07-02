@@ -4,16 +4,20 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Health;
 using Repositories.Models;
+using Services.Domain;
+using Services.MyHealth;
 
 namespace HealthAPI.Controllers.Migration
 {
     public class TargetsController : Controller
     {
         private readonly IHealthRepository _healthRepository;
+        private readonly ITargetService _targetService;
 
-        public TargetsController(IHealthRepository healthRepository)
+        public TargetsController(IHealthRepository healthRepository, ITargetService targetService)
         {
             _healthRepository = healthRepository;
+            _targetService = targetService;
         }
 
         [HttpGet]
@@ -102,52 +106,18 @@ namespace HealthAPI.Controllers.Migration
         [HttpGet]
         public IActionResult Weights()
         {
-            var targets = new List<TargetWeight>();
-
-            var targetStartDate = new DateTime(2018, 5, 1);
-            var targetEndDate = DateTime.Now.AddDays(600);
-            var totalDays = (targetEndDate - targetStartDate).TotalDays;
-
-            var weightOnTargetStartDate = 90.74;
-            var targetDailyWeightLoss = 0.5 / 30;
-            var targetDailyWeightLoss2 = 0.25 / 30;
-
-            var daysToHitHealthyWeight = 123;
-
             var allWeights = _healthRepository.GetAllWeights();
 
-            for (var i = 0 ; i <= daysToHitHealthyWeight; i++)
-            {
-                var actualWeight = allWeights.FirstOrDefault(x => x.DateTime.Date == targetStartDate.AddDays(i).Date);
+            var targetWeights = allWeights.Select(x => new TargetWeight {
+                DateTime = x.DateTime,
+                TargetKg = _targetService.GetTargetWeight(x.DateTime),
+                ActualKg = x.Kg,
+                ActualMovingAverageKg = x.MovingAverageKg
+            });
 
-                var target = new TargetWeight
-                {
-                    DateTime = targetStartDate.AddDays(i),
-                    TargetKg = (Decimal)(weightOnTargetStartDate - (i * targetDailyWeightLoss)),
-                    ActualKg = actualWeight?.Kg,
-                    ActualMovingAverageKg = actualWeight?.MovingAverageKg
-                };
+            targetWeights = targetWeights.Where(x => x.TargetKg != null);
 
-                targets.Add(target);
-            }
-
-            for (var i = daysToHitHealthyWeight; i <= totalDays - daysToHitHealthyWeight; i++)
-            {
-                var actualWeight = allWeights.FirstOrDefault(x => x.DateTime.Date == targetStartDate.AddDays(i).Date);
-
-                var target = new TargetWeight
-                {
-                    DateTime = targetStartDate.AddDays(i),
-                    TargetKg = (Decimal)(weightOnTargetStartDate - (daysToHitHealthyWeight * targetDailyWeightLoss + (i- daysToHitHealthyWeight) * targetDailyWeightLoss2)),
-                    ActualKg = actualWeight?.Kg,
-                    ActualMovingAverageKg = actualWeight?.MovingAverageKg
-                };
-
-                targets.Add(target);
-            }
-
-
-            return Json(targets);
+            return Json(targetWeights);
         }
 
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HealthAPI.Controllers.Migration
+namespace Services.Domain
 {
     public class TargetAlcoholIntake
     {
