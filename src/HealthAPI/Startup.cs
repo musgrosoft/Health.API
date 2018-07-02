@@ -71,6 +71,7 @@ namespace HealthAPI
             services.AddTransient<INokiaClient, NokiaClient>();
             services.AddTransient<IFitbitClient, FitbitClient>();
 
+            services.AddTransient<ITargetService, TargetService>();
 
             //// ********************
             //// Setup CORS
