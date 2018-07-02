@@ -32,5 +32,7 @@ namespace Repositories.Health
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
 
         IEnumerable<Weight> GetAllWeights();
+
+        IList<Weight> GetWeightsFromDate(DateTime afterDate);
     }
 }

@@ -23,7 +23,7 @@ namespace Services.MyHealth
             var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
 
-            var allWeights = _healthRepository.GetLatestWeights((int)((DateTime.Now - targetStartDate).TotalDays) , DateTime.Now);
+            var allWeights = _healthRepository.GetWeightsFromDate(targetStartDate);
             
             var groups = allWeights.GroupBy(x => x.DateTime.Date);
 
@@ -42,7 +42,7 @@ namespace Services.MyHealth
                 ActualMovingAverageKg = x.MovingAverageKg
             }).ToList();
 
-            var futuredays = (targetEndDate - DateTime.Now).TotalDays;
+            var futuredays = (targetEndDate - targetWeights.Min(x=>x.DateTime)).TotalDays;
 
             for (int i = 0; i < futuredays; i++)
             {
@@ -55,7 +55,9 @@ namespace Services.MyHealth
                 targetWeights.Add(target);
             }
 
-            return targetWeights.OrderBy(x=>x.DateTime).ToList();
+            targetWeights = targetWeights.OrderBy(x => x.DateTime).ToList();
+
+            return targetWeights;
         }
 
 

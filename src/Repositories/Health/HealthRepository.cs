@@ -77,6 +77,12 @@ namespace Repositories.Health
             return _healthContext.Weights.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
         }
 
+        public IList<Weight> GetWeightsFromDate(DateTime afterDate)
+        {
+            return _healthContext.Weights.Where(x => x.DateTime > afterDate).OrderByDescending(x => x.DateTime).ToList();
+        }
+
+
         public IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
         {
             return _healthContext.HeartRateSummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
