@@ -107,6 +107,8 @@ namespace HealthAPI.Controllers.Migration
         public IActionResult Weights()
         {
             var allWeights = _healthRepository.GetAllWeights();
+            allWeights = allWeights.Where(x => x.DateTime >= new DateTime(2018, 5, 1));
+
             var groups = allWeights.GroupBy(x => x.DateTime.Date);
 
             allWeights = groups.Select(x => new Weight {
