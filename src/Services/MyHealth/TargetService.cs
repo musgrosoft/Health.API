@@ -48,13 +48,14 @@ namespace Services.MyHealth
             {
                 var target = new TargetWeight
                 {
+                    DateTime = DateTime.Now.AddDays(i),
                     TargetKg = GetTargetWeight(DateTime.Now.AddDays(i))
                 };
 
                 targetWeights.Add(target);
             }
 
-            return targetWeights;
+            return targetWeights.OrderBy(x=>x.DateTime).ToList();
         }
 
 
