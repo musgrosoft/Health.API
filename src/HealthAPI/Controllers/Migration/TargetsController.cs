@@ -106,25 +106,7 @@ namespace HealthAPI.Controllers.Migration
         [HttpGet]
         public IActionResult Weights()
         {
-            var allWeights = _healthRepository.GetAllWeights();
-            allWeights = allWeights.Where(x => x.DateTime >= new DateTime(2018, 5, 1));
-
-            var groups = allWeights.GroupBy(x => x.DateTime.Date);
-
-            allWeights = groups.Select(x => new Weight {
-                DateTime = x.Key.Date,
-                Kg = x.Average(w=>w.Kg),
-                MovingAverageKg = x.Average(w=>w.MovingAverageKg)
-            });
-
-            var targetWeights = allWeights.Select(x => new TargetWeight {
-                DateTime = x.DateTime,
-                TargetKg = _targetService.GetTargetWeight(x.DateTime),
-                ActualKg = x.Kg,
-                ActualMovingAverageKg = x.MovingAverageKg
-            });
-
-            //targetWeights = targetWeights.Where(x => x.TargetKg != null);
+            var targetWeights = _targetService.GetTargetWeights();
 
             return Json(targetWeights);
         }

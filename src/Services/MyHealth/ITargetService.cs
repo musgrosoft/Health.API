@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Services.Domain;
+using System;
+using System.Collections.Generic;
 
 namespace Services.MyHealth
 {
     public interface ITargetService
     {
-        decimal? GetTargetWeight(DateTime dateTime);
+        List<TargetWeight> GetTargetWeights();
+//        decimal? GetTargetWeight(DateTime dateTime);
     }
 }
