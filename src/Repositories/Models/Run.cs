@@ -10,7 +10,7 @@ namespace Repositories.Models
     {
         [Key]
         [Column(TypeName = "DateTime")]
-        public DateTime DateTime { get; set; }
+        public DateTime CreatedDate { get; set; }
         public TimeSpan Time { get; set; }
         public Double Distance { get; set; }
     }

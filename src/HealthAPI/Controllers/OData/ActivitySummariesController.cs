@@ -33,9 +33,9 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<ActivitySummary> GetByWeek()
         {
-            var dailyActivities = _context.ActivitySummaries.OrderBy(x => x.DateTime).ToList();
+            var dailyActivities = _context.ActivitySummaries.OrderBy(x => x.CreatedDate).ToList();
 
-            var weekGroups = dailyActivities.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
+            var weekGroups = dailyActivities.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
 
 
             var weeklyActivities = new List<ActivitySummary>();
@@ -43,7 +43,7 @@ namespace HealthAPI.Controllers.OData
             {
                 var activity = new ActivitySummary
                 {
-                    DateTime = group.Key,
+                    CreatedDate = group.Key,
                     SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
                     LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
                     FairlyActiveMinutes = group.Sum(x => x.FairlyActiveMinutes),
@@ -61,9 +61,9 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<ActivitySummary> GetByMonth()
         {
-            var dailyActivities = _context.ActivitySummaries.OrderBy(x => x.DateTime).ToList();
+            var dailyActivities = _context.ActivitySummaries.OrderBy(x => x.CreatedDate).ToList();
 
-            var monthGroups = dailyActivities.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
+            var monthGroups = dailyActivities.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
 
 
             var monthlyActivities = new List<ActivitySummary>();
@@ -71,7 +71,7 @@ namespace HealthAPI.Controllers.OData
             {
                 var activity = new ActivitySummary
                 {
-                    DateTime = group.Key,
+                    CreatedDate = group.Key,
                     SedentaryMinutes = (int)group.Average(x => x.SedentaryMinutes),
                     LightlyActiveMinutes = (int)group.Average(x => x.LightlyActiveMinutes),
                     FairlyActiveMinutes = (int)group.Average(x => x.FairlyActiveMinutes),

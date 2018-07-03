@@ -116,7 +116,7 @@ namespace HealthAPI
 
             builder.EntitySet<BloodPressure>("BloodPressures")
                 .EntityType
-                .HasKey(e => new { e.DateTime })
+                .HasKey(e => new { e.CreatedDate })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
                 .Expand() // Allow for the $expand Command
@@ -125,7 +125,7 @@ namespace HealthAPI
                 .Select(); // Allow for the $select Command
 
             builder.EntitySet<AlcoholIntake>("AlcoholIntakes").EntityType
-                .HasKey(e => new { e.DateTime })
+                .HasKey(e => new { e.CreatedDate })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
                 .Expand() // Allow for the $expand Command
@@ -133,7 +133,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
             builder.EntitySet<RestingHeartRate>("RestingHeartRates").EntityType
-                .HasKey(e => new { e.DateTime })
+                .HasKey(e => new { e.CreatedDate })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
                 .Expand() // Allow for the $expand Command
@@ -141,7 +141,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
             builder.EntitySet<HeartRateSummary>("HeartRateSummaries").EntityType
-                .HasKey(e => new { e.DateTime })
+                .HasKey(e => new { e.CreatedDate })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
                 .Expand() // Allow for the $expand Command
@@ -150,7 +150,7 @@ namespace HealthAPI
                 .Select(); // Allow for the $select Command;
 
             builder.EntitySet<ActivitySummary>("ActivitySummaries").EntityType
-                .HasKey(e => new { e.DateTime })
+                .HasKey(e => new { e.CreatedDate })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
                 .Expand() // Allow for the $expand Command
@@ -159,7 +159,7 @@ namespace HealthAPI
                 .Select(); // Allow for the $select Command;
 
             builder.EntitySet<StepCount>("StepCounts").EntityType
-                .HasKey(e => new { e.DateTime })
+                .HasKey(e => new { e.CreatedDate })
                 .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
                 .Count() // Allow for the $count Command
                 .Expand() // Allow for the $expand Command

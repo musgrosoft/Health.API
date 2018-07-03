@@ -29,7 +29,7 @@ namespace Services.Fitbit
 
             return fitbitDailyActivities.Select(x => new StepCount
             {
-                DateTime = x.DateTime,
+                CreatedDate = x.DateTime,
                 Count = x.summary.steps
             });
         }
@@ -40,7 +40,7 @@ namespace Services.Fitbit
 
             return fitbitDailyActivities.Select(x => new ActivitySummary
             {
-                DateTime = x.DateTime,
+                CreatedDate = x.DateTime,
                 //activityCalories
                 //caloriesBMR
                 //caloriesOut
@@ -64,7 +64,7 @@ namespace Services.Fitbit
                     .Where(a => a.value.restingHeartRate != 0)
                     .Select(x => new RestingHeartRate
                     {
-                        DateTime = x.dateTime,
+                        CreatedDate = x.dateTime,
                         Beats = x.value.restingHeartRate
                     });
         }
@@ -75,7 +75,7 @@ namespace Services.Fitbit
 
             return heartActivies.Select(x => new HeartRateSummary
             {
-                DateTime = x.dateTime,
+                CreatedDate = x.dateTime,
                 OutOfRangeMinutes = x.value.heartRateZones.First(y => y.name == "Out of Range").minutes,
                 FatBurnMinutes = x.value.heartRateZones.First(y => y.name == "Fat Burn").minutes,
                 CardioMinutes = x.value.heartRateZones.First(y => y.name == "Cardio").minutes,

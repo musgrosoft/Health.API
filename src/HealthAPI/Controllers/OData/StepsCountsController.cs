@@ -32,14 +32,14 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyStepCounts = _context.StepCounts;
 
-            var weekGroups = dailyStepCounts.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
+            var weekGroups = dailyStepCounts.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
             
             var weeklyStepCounts = new List<StepCount>();
             foreach (var group in weekGroups)
             {
                 var stepCount = new StepCount
                 {
-                    DateTime = group.Key,
+                    CreatedDate = group.Key,
                     Count = group.Sum(x => x.Count)
                 };
 
@@ -53,9 +53,9 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<StepCount> GetByMonth()
         {
-            var dailySteps = _context.StepCounts.OrderBy(x => x.DateTime).ToList();
+            var dailySteps = _context.StepCounts.OrderBy(x => x.CreatedDate).ToList();
 
-            var monthGroups = dailySteps.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
+            var monthGroups = dailySteps.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
 
             var monthlySteps = new List<StepCount>();
 
@@ -63,7 +63,7 @@ namespace HealthAPI.Controllers.OData
             {
                 var stepCount = new StepCount
                 {
-                    DateTime = group.Key,
+                    CreatedDate = group.Key,
                     Count = (int)group.Average(x => x.Count)
                 };
 

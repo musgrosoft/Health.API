@@ -122,9 +122,9 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldGetLatestActivitySummaryDate()
         {
-            var firstActivitySummary = new ActivitySummary { DateTime = new DateTime(2018, 5, 1) };
-            var secondActivitySummary = new ActivitySummary { DateTime = new DateTime(2018, 5, 2) };
-            var thirdActivitySummary = new ActivitySummary { DateTime = new DateTime(2018, 5, 3) };
+            var firstActivitySummary = new ActivitySummary { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondActivitySummary = new ActivitySummary { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdActivitySummary = new ActivitySummary { CreatedDate = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.ActivitySummaries.Add(firstActivitySummary);
             _fakeLocalContext.ActivitySummaries.Add(secondActivitySummary);
@@ -133,16 +133,16 @@ namespace Repository.Unit.Tests
 
             var latestActivitySummary = _healthRepository.GetLatestActivitySummaryDate();
 
-            Assert.Equal(thirdActivitySummary.DateTime, latestActivitySummary);
+            Assert.Equal(thirdActivitySummary.CreatedDate, latestActivitySummary);
 
         }
 
         [Fact]
         public void ShouldGetLatestAlcoholIntakeDate()
         {
-            var firstAlcoholIntake = new AlcoholIntake { DateTime = new DateTime(2018, 5, 1) };
-            var secondAlcoholIntake = new AlcoholIntake { DateTime = new DateTime(2018, 5, 2) };
-            var thirdAlcoholIntake = new AlcoholIntake { DateTime = new DateTime(2018, 5, 3) };
+            var firstAlcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondAlcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdAlcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.AlcoholIntakes.Add(firstAlcoholIntake);
             _fakeLocalContext.AlcoholIntakes.Add(secondAlcoholIntake);
@@ -151,16 +151,16 @@ namespace Repository.Unit.Tests
 
             var latestAlcoholIntakeDate = _healthRepository.GetLatestAlcoholIntakeDate();
 
-            Assert.Equal(thirdAlcoholIntake.DateTime, latestAlcoholIntakeDate);
+            Assert.Equal(thirdAlcoholIntake.CreatedDate, latestAlcoholIntakeDate);
 
         }
 
         [Fact]
         public void ShouldGetLatestBloodPressureDate()
         {
-            var firstBloodPressure = new BloodPressure { DateTime = new DateTime(2018, 5, 1) };
-            var secondBloodPressure = new BloodPressure { DateTime = new DateTime(2018, 5, 2) };
-            var thirdBloodPressure = new BloodPressure { DateTime = new DateTime(2018, 5, 3) };
+            var firstBloodPressure = new BloodPressure { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondBloodPressure = new BloodPressure { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdBloodPressure = new BloodPressure { CreatedDate = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.BloodPressures.Add(firstBloodPressure);
             _fakeLocalContext.BloodPressures.Add(secondBloodPressure);
@@ -169,7 +169,7 @@ namespace Repository.Unit.Tests
 
             var latestBloodPressureDate = _healthRepository.GetLatestBloodPressureDate();
 
-            Assert.Equal(thirdBloodPressure.DateTime, latestBloodPressureDate);
+            Assert.Equal(thirdBloodPressure.CreatedDate, latestBloodPressureDate);
         }
 
 
@@ -178,9 +178,9 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldGetLatestHeartSummaryDate()
         {
-            var firstHeartSummary = new HeartRateSummary { DateTime = new DateTime(2018, 5, 1) };
-            var secondHeartSummary = new HeartRateSummary { DateTime = new DateTime(2018, 5, 2) };
-            var thirdHeartSummary = new HeartRateSummary { DateTime = new DateTime(2018, 5, 3) };
+            var firstHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.HeartRateSummaries.Add(firstHeartSummary);
             _fakeLocalContext.HeartRateSummaries.Add(secondHeartSummary);
@@ -189,15 +189,15 @@ namespace Repository.Unit.Tests
 
             var latestHeartSummaryDate = _healthRepository.GetLatestHeartSummaryDate();
 
-            Assert.Equal(thirdHeartSummary.DateTime, latestHeartSummaryDate);
+            Assert.Equal(thirdHeartSummary.CreatedDate, latestHeartSummaryDate);
         }
 
         [Fact]
         public void ShouldGetLatestRestingHeartRateDate()
         {
-            var firstRestingHeartRate = new RestingHeartRate { DateTime = new DateTime(2018, 5, 1) };
-            var secondRestingHeartRate = new RestingHeartRate { DateTime = new DateTime(2018, 5, 2) };
-            var thirdRestingHeartRate = new RestingHeartRate { DateTime = new DateTime(2018, 5, 3) };
+            var firstRestingHeartRate = new RestingHeartRate { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondRestingHeartRate = new RestingHeartRate { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdRestingHeartRate = new RestingHeartRate { CreatedDate = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.RestingHeartRates.Add(firstRestingHeartRate);
             _fakeLocalContext.RestingHeartRates.Add(secondRestingHeartRate);
@@ -206,15 +206,15 @@ namespace Repository.Unit.Tests
 
             var latestRestingHeartRateDate = _healthRepository.GetLatestRestingHeartRateDate();
 
-            Assert.Equal(thirdRestingHeartRate.DateTime, latestRestingHeartRateDate);
+            Assert.Equal(thirdRestingHeartRate.CreatedDate, latestRestingHeartRateDate);
         }
 
         [Fact]
         public void ShouldGetLatestRunDate()
         {
-            var firstRun = new Run { DateTime = new DateTime(2018, 5, 1) };
-            var secondRun = new Run { DateTime = new DateTime(2018, 5, 2) };
-            var thirdRun = new Run { DateTime = new DateTime(2018, 5, 3) };
+            var firstRun = new Run { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondRun = new Run { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdRun = new Run { CreatedDate = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.Runs.Add(firstRun);
             _fakeLocalContext.Runs.Add(secondRun);
@@ -223,15 +223,15 @@ namespace Repository.Unit.Tests
 
             var latestRunDate = _healthRepository.GetLatestRunDate();
 
-            Assert.Equal(thirdRun.DateTime, latestRunDate);
+            Assert.Equal(thirdRun.CreatedDate, latestRunDate);
         }
 
         [Fact]
         public void ShouldGetLatestStepCountDate()
         {
-            var firstStepCount = new StepCount { DateTime = new DateTime(2018, 5, 1) };
-            var secondStepCount = new StepCount { DateTime = new DateTime(2018, 5, 2) };
-            var thirdStepCount = new StepCount { DateTime = new DateTime(2018, 5, 3) };
+            var firstStepCount = new StepCount { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondStepCount = new StepCount { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdStepCount = new StepCount { CreatedDate = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.StepCounts.Add(firstStepCount);
             _fakeLocalContext.StepCounts.Add(secondStepCount);
@@ -240,15 +240,15 @@ namespace Repository.Unit.Tests
 
             var latestStepCountDate = _healthRepository.GetLatestStepCountDate();
 
-            Assert.Equal(thirdStepCount.DateTime, latestStepCountDate);
+            Assert.Equal(thirdStepCount.CreatedDate, latestStepCountDate);
         }
 
         [Fact]
         public void ShouldGetLatestWeightDate()
         {
-            var firstWeight = new Weight { DateTime = new DateTime(2018, 5, 1) };
-            var secondWeight = new Weight { DateTime = new DateTime(2018, 5, 2) };
-            var thirdWeight = new Weight { DateTime = new DateTime(2018, 5, 3) };
+            var firstWeight = new Weight { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondWeight = new Weight { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdWeight = new Weight { CreatedDate = new DateTime(2018, 5, 3) };
 
             _fakeLocalContext.Weights.Add(firstWeight);
             _fakeLocalContext.Weights.Add(secondWeight);
@@ -257,7 +257,7 @@ namespace Repository.Unit.Tests
 
             var latestWeightDate = _healthRepository.GetLatestWeightDate();
 
-            Assert.Equal(thirdWeight.DateTime, latestWeightDate);
+            Assert.Equal(thirdWeight.CreatedDate, latestWeightDate);
 
         }
 
@@ -373,7 +373,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateWeight()
         {
-            var existingWeight = new Weight {DateTime = new DateTime(2017, 1, 1), Kg = 1, FatRatioPercentage = 3};
+            var existingWeight = new Weight {CreatedDate = new DateTime(2017, 1, 1), Kg = 1, FatRatioPercentage = 3};
             _fakeLocalContext.Weights.Add(existingWeight);
             _fakeLocalContext.SaveChanges();
 
@@ -390,7 +390,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateBloodPressure()
         {
-            var existingBloodPressure = new BloodPressure() { DateTime = new DateTime(2017, 1, 1), Systolic = 1, Diastolic = 3};
+            var existingBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 1, Diastolic = 3};
             _fakeLocalContext.BloodPressures.Add(existingBloodPressure);
             _fakeLocalContext.SaveChanges();
 
@@ -407,7 +407,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateStepCount()
         {
-            var existingStepCount = new StepCount { DateTime = new DateTime(2017, 1, 1), Count = 1 };
+            var existingStepCount = new StepCount { CreatedDate = new DateTime(2017, 1, 1), Count = 1 };
             _fakeLocalContext.StepCounts.Add(existingStepCount);
             _fakeLocalContext.SaveChanges();
 
@@ -422,11 +422,11 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateActivitySummary()
         {
-            var existingActivitySummary = new ActivitySummary { DateTime = new DateTime(2017, 1, 1), SedentaryMinutes = 1 , LightlyActiveMinutes = 2, FairlyActiveMinutes = 3, VeryActiveMinutes = 4};
+            var existingActivitySummary = new ActivitySummary { CreatedDate = new DateTime(2017, 1, 1), SedentaryMinutes = 1 , LightlyActiveMinutes = 2, FairlyActiveMinutes = 3, VeryActiveMinutes = 4};
             _fakeLocalContext.ActivitySummaries.Add(existingActivitySummary);
             _fakeLocalContext.SaveChanges();
 
-            var newActivitySummary = new ActivitySummary() { DateTime = new DateTime(2017, 1, 1), SedentaryMinutes = 5, LightlyActiveMinutes = 6, FairlyActiveMinutes = 7, VeryActiveMinutes = 8 };
+            var newActivitySummary = new ActivitySummary() { CreatedDate = new DateTime(2017, 1, 1), SedentaryMinutes = 5, LightlyActiveMinutes = 6, FairlyActiveMinutes = 7, VeryActiveMinutes = 8 };
 
             _healthRepository.Upsert(newActivitySummary);
 
@@ -440,7 +440,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateRestingHeartRate()
         {
-            var existingRestingHeartRate = new RestingHeartRate() { DateTime = new DateTime(2017, 1, 1), Beats = 1 };
+            var existingRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 1 };
             _fakeLocalContext.RestingHeartRates.Add(existingRestingHeartRate);
             _fakeLocalContext.SaveChanges();
 
@@ -455,7 +455,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateHeartSummary()
         {
-            var existingHeartSummary = new HeartRateSummary() { DateTime = new DateTime(2017, 1, 1), OutOfRangeMinutes = 1 , FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4};
+            var existingHeartSummary = new HeartRateSummary() { CreatedDate = new DateTime(2017, 1, 1), OutOfRangeMinutes = 1 , FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4};
             _fakeLocalContext.HeartRateSummaries.Add(existingHeartSummary);
             _fakeLocalContext.SaveChanges();
 

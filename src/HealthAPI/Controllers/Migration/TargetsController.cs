@@ -36,7 +36,7 @@ namespace HealthAPI.Controllers.Migration
             {
                 var target = new ActivitySummary
                 {
-                    DateTime = targetStartDate.AddDays(i),
+                    CreatedDate = targetStartDate.AddDays(i),
                     CumSumActiveMinutes = (int)(activeMinutesOnTargetStartDate + (i * targetDailyActiveMinutes))
                 };
 
@@ -62,7 +62,7 @@ namespace HealthAPI.Controllers.Migration
 
             for (var i = 0; i <= totalDays; i++)
             {
-                var actualAlcoholIntake = allAlcoholIntakes.FirstOrDefault(x => x.DateTime.Date == targetStartDate.AddDays(i).Date);
+                var actualAlcoholIntake = allAlcoholIntakes.FirstOrDefault(x => x.CreatedDate.Date == targetStartDate.AddDays(i).Date);
 
                 var target = new TargetAlcoholIntake
                 {
@@ -93,7 +93,7 @@ namespace HealthAPI.Controllers.Migration
             {
                 var target = new HeartRateSummary
                 {
-                    DateTime = targetStartDate.AddDays(i),
+                    CreatedDate = targetStartDate.AddDays(i),
                     CumSumCardioAndAbove = (int)(minutesOnTargetStartDate + (i * targetDailyMinutes))
                 };
 
@@ -128,7 +128,7 @@ namespace HealthAPI.Controllers.Migration
             {
                 var target = new StepCount()
                 {
-                    DateTime = targetStartDate.AddDays(i),
+                    CreatedDate = targetStartDate.AddDays(i),
                     CumSumCount = stepsOnTargetStartDate + (i * targetDailySteps)
                 };
 

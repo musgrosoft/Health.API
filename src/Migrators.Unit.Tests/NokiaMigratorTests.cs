@@ -37,9 +37,9 @@ namespace Migrators.Unit.Tests
 
             var weights = new List<Weight>()
             {
-                new Weight { DateTime = new DateTime(2014,1,1), Kg = 123},
-                new Weight { DateTime = new DateTime(2015,1,1), Kg = 111},
-                new Weight { DateTime = new DateTime(2016,1,1), Kg = 234}
+                new Weight { CreatedDate = new DateTime(2014,1,1), Kg = 123},
+                new Weight { CreatedDate = new DateTime(2015,1,1), Kg = 111},
+                new Weight { CreatedDate = new DateTime(2016,1,1), Kg = 234}
             };
             
             _nokiaClient.Setup(x => x.GetWeights(latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<Weight>)weights));
@@ -58,9 +58,9 @@ namespace Migrators.Unit.Tests
 
             var bloodPressures = new List<BloodPressure>()
             {
-                new BloodPressure {DateTime = new DateTime(2014,1,1), Systolic = 123, Diastolic = 234},
-                new BloodPressure {DateTime = new DateTime(2015,1,1), Systolic = 111, Diastolic = 234},
-                new BloodPressure {DateTime = new DateTime(2016,1,1), Systolic = 222, Diastolic = 234}
+                new BloodPressure {CreatedDate = new DateTime(2014,1,1), Systolic = 123, Diastolic = 234},
+                new BloodPressure {CreatedDate = new DateTime(2015,1,1), Systolic = 111, Diastolic = 234},
+                new BloodPressure {CreatedDate = new DateTime(2016,1,1), Systolic = 222, Diastolic = 234}
             };
 
             _nokiaClient.Setup(x => x.GetBloodPressures(latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<BloodPressure>)bloodPressures));

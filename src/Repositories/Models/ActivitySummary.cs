@@ -8,7 +8,7 @@ namespace Repositories.Models
     {
         [Key]
         [Column(TypeName = "DateTime")]
-        public DateTime DateTime { get; set; }
+        public DateTime CreatedDate { get; set; }
         public int SedentaryMinutes { get; set; }
         public int LightlyActiveMinutes { get; set; }
         public int FairlyActiveMinutes { get; set; }

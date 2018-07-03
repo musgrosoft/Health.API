@@ -35,14 +35,14 @@ namespace HealthAPI.Controllers.OData
         {
             var dailyAlcoholIntakes = _context.AlcoholIntakes;
 
-            var weekGroups = dailyAlcoholIntakes.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
+            var weekGroups = dailyAlcoholIntakes.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
 
             var weeklyAlcoholIntakes = new List<AlcoholIntake>();
             foreach (var group in weekGroups)
             {
                 var alcoholIntake = new AlcoholIntake
                 {
-                    DateTime = group.Key,
+                    CreatedDate = group.Key,
                     Units = group.Sum(x => x.Units)
                 };
 
@@ -56,16 +56,16 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<AlcoholIntake> GetByMonth()
         {
-            var dailyUnits = _context.AlcoholIntakes.OrderBy(x => x.DateTime).ToList();
+            var dailyUnits = _context.AlcoholIntakes.OrderBy(x => x.CreatedDate).ToList();
 
-            var monthGroups = dailyUnits.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
+            var monthGroups = dailyUnits.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
             
             var monthlyUnits = new List<AlcoholIntake>();
             foreach (var group in monthGroups)
             {
                 var alcoholIntake = new AlcoholIntake
                 {
-                    DateTime = group.Key,
+                    CreatedDate = group.Key,
                     Units = group.Average(x=>x.Units)
                 };
 

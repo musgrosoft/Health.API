@@ -41,8 +41,8 @@ namespace Migrators.Unit.Tests
             
             var stepCounts = new List<StepCount>
             {
-                new StepCount{ DateTime = new DateTime(2010, 12, 1), Count = 111 },
-                new StepCount{ DateTime = new DateTime(2022, 12, 22), Count = 222}
+                new StepCount{ CreatedDate = new DateTime(2010, 12, 1), Count = 111 },
+                new StepCount{ CreatedDate = new DateTime(2022, 12, 22), Count = 222}
             };
 
             _fitbitClient.Setup(x => x.GetStepCounts(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS),It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<StepCount>)stepCounts));
@@ -61,8 +61,8 @@ namespace Migrators.Unit.Tests
 
             var dailyActivities = new List<ActivitySummary>
             {
-                new ActivitySummary{ DateTime = new DateTime(2010, 12, 1), VeryActiveMinutes = 111 },
-                new ActivitySummary{ DateTime = new DateTime(2010, 12, 1), VeryActiveMinutes = 222 }
+                new ActivitySummary{ CreatedDate = new DateTime(2010, 12, 1), VeryActiveMinutes = 111 },
+                new ActivitySummary{ CreatedDate = new DateTime(2010, 12, 1), VeryActiveMinutes = 222 }
             };
 
             _fitbitClient.Setup(x => x.GetActivitySummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<ActivitySummary>)dailyActivities));
@@ -80,8 +80,8 @@ namespace Migrators.Unit.Tests
 
             var restingHeartRates = new List<RestingHeartRate>
             {
-                new RestingHeartRate{ DateTime = new DateTime(2010, 12, 1), Beats = 111 },
-                new RestingHeartRate{ DateTime = new DateTime(2010, 12, 1), Beats = 222 }
+                new RestingHeartRate{ CreatedDate = new DateTime(2010, 12, 1), Beats = 111 },
+                new RestingHeartRate{ CreatedDate = new DateTime(2010, 12, 1), Beats = 222 }
             };
 
             _fitbitClient.Setup(x => x.GetRestingHeartRates(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<RestingHeartRate>)restingHeartRates));
@@ -99,8 +99,8 @@ namespace Migrators.Unit.Tests
 
             var heartZones = new List<HeartRateSummary>
             {
-                new HeartRateSummary(){ DateTime = new DateTime(2010, 12, 1), CardioMinutes = 111 },
-                new HeartRateSummary{ DateTime = new DateTime(2022, 12, 22), CardioMinutes = 222}
+                new HeartRateSummary(){ CreatedDate = new DateTime(2010, 12, 1), CardioMinutes = 111 },
+                new HeartRateSummary{ CreatedDate = new DateTime(2022, 12, 22), CardioMinutes = 222}
             };
 
             _fitbitClient.Setup(x => x.GetHeartSummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartRateSummary>)heartZones));

@@ -111,17 +111,17 @@ namespace Services.Tests.MyHealth
             //Given
             var newWeights = new List<Weight>
             {
-                new Weight { DateTime = new DateTime(2010,10,10) },
-                new Weight { DateTime = new DateTime(2011,10,10) }
+                new Weight { CreatedDate = new DateTime(2010,10,10) },
+                new Weight { CreatedDate = new DateTime(2011,10,10) }
             };
 
             var previousWeights = new List<Weight>();
 
             var weightsWithAverages = new List<Weight>
             {
-                new Weight {DateTime = new DateTime(2016,1,1), Kg = 2016},
-                new Weight {DateTime = new DateTime(2017,1,1), Kg = 2017},
-                new Weight {DateTime = new DateTime(2018,1,1), Kg = 2018}
+                new Weight {CreatedDate = new DateTime(2016,1,1), Kg = 2016},
+                new Weight {CreatedDate = new DateTime(2017,1,1), Kg = 2017},
+                new Weight {CreatedDate = new DateTime(2018,1,1), Kg = 2018}
             };
 
             _healthRepository.Setup(x => x.GetLatestWeights(9, new DateTime(2010, 10, 10))).Returns(previousWeights);
@@ -142,17 +142,17 @@ namespace Services.Tests.MyHealth
             //Given
             var newBloodPressures = new List<BloodPressure>
             {
-                new BloodPressure { DateTime = new DateTime(2010,10,10) },
-                new BloodPressure { DateTime = new DateTime(2011,10,10) }
+                new BloodPressure { CreatedDate = new DateTime(2010,10,10) },
+                new BloodPressure { CreatedDate = new DateTime(2011,10,10) }
             };
 
             var previousBloodPressures = new List<BloodPressure>();
 
             var bloodPressuresWithAverages = new List<BloodPressure>
             {
-                new BloodPressure {DateTime = new DateTime(2016,1,1), Systolic = 2016},
-                new BloodPressure {DateTime = new DateTime(2017,1,1), Systolic = 2017},
-                new BloodPressure {DateTime = new DateTime(2018,1,1), Systolic = 2018}
+                new BloodPressure {CreatedDate = new DateTime(2016,1,1), Systolic = 2016},
+                new BloodPressure {CreatedDate = new DateTime(2017,1,1), Systolic = 2017},
+                new BloodPressure {CreatedDate = new DateTime(2018,1,1), Systolic = 2018}
             };
 
             _healthRepository.Setup(x => x.GetLatestBloodPressures(9, new DateTime(2010, 10, 10))).Returns(previousBloodPressures);
@@ -173,17 +173,17 @@ namespace Services.Tests.MyHealth
             //Given
             var newStepCounts = new List<StepCount>
             {
-                new StepCount { DateTime = new DateTime(2010,10,10) },
-                new StepCount { DateTime = new DateTime(2011,10,10) }
+                new StepCount { CreatedDate = new DateTime(2010,10,10) },
+                new StepCount { CreatedDate = new DateTime(2011,10,10) }
             };
 
             var previousStepCount = new StepCount();
 
             var stepCountsWithSums = new List<StepCount>
             {
-                new StepCount {DateTime = new DateTime(2016,1,1), Count = 2016},
-                new StepCount {DateTime = new DateTime(2017,1,1), Count = 2017},
-                new StepCount {DateTime = new DateTime(2018,1,1), Count = 2018}
+                new StepCount {CreatedDate = new DateTime(2016,1,1), Count = 2016},
+                new StepCount {CreatedDate = new DateTime(2017,1,1), Count = 2017},
+                new StepCount {CreatedDate = new DateTime(2018,1,1), Count = 2018}
             };
 
             _healthRepository.Setup(x => x.GetLatestStepCounts(1, new DateTime(2010, 10, 10))).Returns(new List<StepCount> { previousStepCount });
@@ -204,17 +204,17 @@ namespace Services.Tests.MyHealth
             //Given
             var newActivitySummaries = new List<ActivitySummary>
             {
-                new ActivitySummary { DateTime = new DateTime(2010,10,10) },
-                new ActivitySummary { DateTime = new DateTime(2011,10,10) }
+                new ActivitySummary { CreatedDate = new DateTime(2010,10,10) },
+                new ActivitySummary { CreatedDate = new DateTime(2011,10,10) }
             };
 
             var previousActivitySummary = new ActivitySummary();
             
             var activitySummariesWithSums = new List<ActivitySummary>
             {
-                new ActivitySummary {DateTime = new DateTime(2016,1,1), FairlyActiveMinutes = 2016},
-                new ActivitySummary {DateTime = new DateTime(2017,1,1), FairlyActiveMinutes = 2017},
-                new ActivitySummary {DateTime = new DateTime(2018,1,1), FairlyActiveMinutes = 2018}
+                new ActivitySummary {CreatedDate = new DateTime(2016,1,1), FairlyActiveMinutes = 2016},
+                new ActivitySummary {CreatedDate = new DateTime(2017,1,1), FairlyActiveMinutes = 2017},
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,1), FairlyActiveMinutes = 2018}
             };
 
             _healthRepository.Setup(x => x.GetLatestActivitySummaries(1, new DateTime(2010, 10, 10))).Returns(new List<ActivitySummary> { previousActivitySummary });
@@ -235,17 +235,17 @@ namespace Services.Tests.MyHealth
             //Given
             var newHeartSummaries = new List<RestingHeartRate>
             {
-                new RestingHeartRate { DateTime = new DateTime(2010,10,10) },
-                new RestingHeartRate { DateTime = new DateTime(2011,10,10) }
+                new RestingHeartRate { CreatedDate = new DateTime(2010,10,10) },
+                new RestingHeartRate { CreatedDate = new DateTime(2011,10,10) }
             };
 
             var previousRestingHeartRates = new List<RestingHeartRate>();
             
             var restingHeartRatesWithAverages = new List<RestingHeartRate>
             {
-                new RestingHeartRate {DateTime = new DateTime(2016,1,1), Beats = 2016},
-                new RestingHeartRate {DateTime = new DateTime(2017,1,1), Beats = 2017},
-                new RestingHeartRate {DateTime = new DateTime(2018,1,1), Beats = 2018}
+                new RestingHeartRate {CreatedDate = new DateTime(2016,1,1), Beats = 2016},
+                new RestingHeartRate {CreatedDate = new DateTime(2017,1,1), Beats = 2017},
+                new RestingHeartRate {CreatedDate = new DateTime(2018,1,1), Beats = 2018}
             };
 
             _healthRepository.Setup(x => x.GetLatestRestingHeartRates(9, new DateTime(2010, 10, 10))).Returns(previousRestingHeartRates );
@@ -267,17 +267,17 @@ namespace Services.Tests.MyHealth
             //Given
             var newHeartSummaries = new List<HeartRateSummary>
             {
-                new HeartRateSummary { DateTime = new DateTime(2010,10,10) },
-                new HeartRateSummary { DateTime = new DateTime(2011,10,10) }
+                new HeartRateSummary { CreatedDate = new DateTime(2010,10,10) },
+                new HeartRateSummary { CreatedDate = new DateTime(2011,10,10) }
             };
 
             var previousHeartSummary = new HeartRateSummary();
 
             var heartSummariesWithSums = new List<HeartRateSummary>
             {
-                new HeartRateSummary {DateTime = new DateTime(2016,1,1), FatBurnMinutes = 2016},
-                new HeartRateSummary {DateTime = new DateTime(2017,1,1), FatBurnMinutes = 2017},
-                new HeartRateSummary {DateTime = new DateTime(2018,1,1), FatBurnMinutes = 2018}
+                new HeartRateSummary {CreatedDate = new DateTime(2016,1,1), FatBurnMinutes = 2016},
+                new HeartRateSummary {CreatedDate = new DateTime(2017,1,1), FatBurnMinutes = 2017},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), FatBurnMinutes = 2018}
             };
 
             _healthRepository.Setup(x => x.GetLatestHeartSummaries(1, new DateTime(2010, 10, 10))).Returns(new List<HeartRateSummary>{previousHeartSummary});

@@ -80,9 +80,9 @@ namespace Services.MyHealth
         {
             _logger.Log($"WEIGHT : Saving {weights.Count()} weight");
 
-            var orderedWeights = weights.OrderBy(x => x.DateTime).ToList();
+            var orderedWeights = weights.OrderBy(x => x.CreatedDate).ToList();
 
-            var previousWeights = _healthRepository.GetLatestWeights(MOVING_AVERAGE_PERIOD - 1, orderedWeights.Min(x => x.DateTime)).ToList();
+            var previousWeights = _healthRepository.GetLatestWeights(MOVING_AVERAGE_PERIOD - 1, orderedWeights.Min(x => x.CreatedDate)).ToList();
 
             var weightsWithAverages = _aggregationCalculator.GetMovingAverages(previousWeights, orderedWeights, MOVING_AVERAGE_PERIOD);
 
@@ -96,9 +96,9 @@ namespace Services.MyHealth
         {
             _logger.Log($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
 
-            var orderedBloodPressures = bloodPressures.OrderBy(x => x.DateTime).ToList();
+            var orderedBloodPressures = bloodPressures.OrderBy(x => x.CreatedDate).ToList();
 
-            var previousBloodPressures = _healthRepository.GetLatestBloodPressures(MOVING_AVERAGE_PERIOD-1, orderedBloodPressures.Min(x => x.DateTime)).ToList();
+            var previousBloodPressures = _healthRepository.GetLatestBloodPressures(MOVING_AVERAGE_PERIOD-1, orderedBloodPressures.Min(x => x.CreatedDate)).ToList();
 
             var bloodPressuresWithAverages = _aggregationCalculator.GetMovingAverages(previousBloodPressures, orderedBloodPressures, MOVING_AVERAGE_PERIOD);
 
@@ -114,11 +114,11 @@ namespace Services.MyHealth
 
             _logger.Log($"RESTING HEART RATE : Moving averages");
 
-            var orderedRestingHeartRates = restingHeartRates.OrderBy(x => x.DateTime).ToList();
+            var orderedRestingHeartRates = restingHeartRates.OrderBy(x => x.CreatedDate).ToList();
 
             _logger.Log($"RESTING HEART RATE : orderd RHR : {orderedRestingHeartRates.Count}");
 
-            var previousRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(MOVING_AVERAGE_PERIOD - 1, orderedRestingHeartRates.Min(x=>x.DateTime)).ToList();
+            var previousRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(MOVING_AVERAGE_PERIOD - 1, orderedRestingHeartRates.Min(x=>x.CreatedDate)).ToList();
 
             _logger.Log($"RESTING HEART RATE : previous RHR : {previousRestingHeartRates.Count}");
 
@@ -134,9 +134,9 @@ namespace Services.MyHealth
         {
             _logger.Log($"STEP COUNT : Saving {stepCounts.Count()} Step Count");
 
-            var orderedStepCounts = stepCounts.OrderBy(x => x.DateTime).ToList();
+            var orderedStepCounts = stepCounts.OrderBy(x => x.CreatedDate).ToList();
 
-            var previousStepCount = _healthRepository.GetLatestStepCounts(1, orderedStepCounts.Min(x=>x.DateTime)).FirstOrDefault();
+            var previousStepCount = _healthRepository.GetLatestStepCounts(1, orderedStepCounts.Min(x=>x.CreatedDate)).FirstOrDefault();
 
             var stepCountWithSums = _aggregationCalculator.GetCumSums(previousStepCount, orderedStepCounts);
 
@@ -150,9 +150,9 @@ namespace Services.MyHealth
         {
             _logger.Log($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
 
-            var orderedActivitySummaries = activitySummaries.OrderBy(x => x.DateTime).ToList();
+            var orderedActivitySummaries = activitySummaries.OrderBy(x => x.CreatedDate).ToList();
 
-            var previousActivitySummary = _healthRepository.GetLatestActivitySummaries(1, orderedActivitySummaries.Min(x => x.DateTime)).FirstOrDefault();
+            var previousActivitySummary = _healthRepository.GetLatestActivitySummaries(1, orderedActivitySummaries.Min(x => x.CreatedDate)).FirstOrDefault();
 
             var activitySummariesWithSums = _aggregationCalculator.GetCumSums(previousActivitySummary, orderedActivitySummaries);
 
@@ -166,9 +166,9 @@ namespace Services.MyHealth
         {
             _logger.Log($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
 
-            var orderedHeartSummaries = heartSummaries.OrderBy(x => x.DateTime).ToList();
+            var orderedHeartSummaries = heartSummaries.OrderBy(x => x.CreatedDate).ToList();
 
-            var previousHeartSummary = _healthRepository.GetLatestHeartSummaries(1, orderedHeartSummaries.Min(x => x.DateTime)).FirstOrDefault();
+            var previousHeartSummary = _healthRepository.GetLatestHeartSummaries(1, orderedHeartSummaries.Min(x => x.CreatedDate)).FirstOrDefault();
 
             var heartSummariesWithSums = _aggregationCalculator.GetCumSums(previousHeartSummary, orderedHeartSummaries);
 
@@ -185,7 +185,7 @@ namespace Services.MyHealth
             var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes().ToList();
 
             //get these from sheet instead of my own db
-             var localAlc = allAlcoholIntakes.Select(x=>new AlcoholIntake {DateTime=x.DateTime,Units=x.Units,CumSumUnits=x.CumSumUnits }).OrderBy(x=>x.DateTime).ToList();
+             var localAlc = allAlcoholIntakes.Select(x=>new AlcoholIntake {CreatedDate=x.CreatedDate,Units=x.Units,CumSumUnits=x.CumSumUnits }).OrderBy(x=>x.CreatedDate).ToList();
 
             var alcoholIntakesWithSums = _aggregationCalculator.GetCumSums(localAlc);
 

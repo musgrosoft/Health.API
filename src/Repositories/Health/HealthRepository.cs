@@ -31,116 +31,113 @@ namespace Repositories.Health
 
         public DateTime? GetLatestStepCountDate()
         {
-            return _healthContext.StepCounts.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return _healthContext.StepCounts.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
 
 
         public DateTime? GetLatestBloodPressureDate()
         {
-            return _healthContext.BloodPressures.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public DateTime? GetLatestWeightDate()
         {
-           return _healthContext.Weights.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+           return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public DateTime? GetLatestAlcoholIntakeDate()
         {
-            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public DateTime? GetLatestActivitySummaryDate()
         {
-            return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return _healthContext.ActivitySummaries.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public DateTime? GetLatestRestingHeartRateDate()
         {
-            return _healthContext.RestingHeartRates.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         
         public DateTime? GetLatestHeartSummaryDate()
         {
-            return _healthContext.HeartRateSummaries.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return _healthContext.HeartRateSummaries.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public DateTime? GetLatestRunDate()
         {
-            return _healthContext.Runs.OrderByDescending(x => x.DateTime).FirstOrDefault()?.DateTime;
+            return _healthContext.Runs.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public IList<Weight> GetLatestWeights(int number, DateTime beforeDate)
         {
-            return _healthContext.Weights.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
+            return _healthContext.Weights.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
         }
 
         public IList<Weight> GetWeightsFromDate(DateTime afterDate)
         {
-            return _healthContext.Weights.Where(x => x.DateTime > afterDate).OrderByDescending(x => x.DateTime).ToList();
+            return _healthContext.Weights.Where(x => x.CreatedDate > afterDate).OrderByDescending(x => x.CreatedDate).ToList();
         }
 
 
         public IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
         {
-            return _healthContext.HeartRateSummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
+            return _healthContext.HeartRateSummaries.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
         }
 
         public IEnumerable<BloodPressure> GetLatestBloodPressures(int number, DateTime beforeDate)
         {
-            return _healthContext.BloodPressures.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number);
+            return _healthContext.BloodPressures.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number);
         }
 
         public IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number, DateTime beforeDate)
         {
-            return _healthContext.RestingHeartRates.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number);
+            return _healthContext.RestingHeartRates.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number);
         }
 
         public IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate)
         {
-            return _healthContext.StepCounts.Where(x=>x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
+            return _healthContext.StepCounts.Where(x=>x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
         }
 
         public IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate)
         {
-            return _healthContext.ActivitySummaries.Where(x => x.DateTime < beforeDate).OrderByDescending(x => x.DateTime).Take(number).ToList();
+            return _healthContext.ActivitySummaries.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
         }
 
         public IEnumerable<AlcoholIntake> GetAllAlcoholIntakes()
         {
-            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.DateTime);
+            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.CreatedDate);
         }
 
         public IEnumerable<ActivitySummary> GetAllActivitySummaries()
         {
-            return _healthContext.ActivitySummaries.OrderByDescending(x => x.DateTime);
+            return _healthContext.ActivitySummaries.OrderByDescending(x => x.CreatedDate);
         }
 
         public IEnumerable<HeartRateSummary> GetAllHeartRateSummaries()
         {
-            return _healthContext.HeartRateSummaries.OrderByDescending(x => x.DateTime);
+            return _healthContext.HeartRateSummaries.OrderByDescending(x => x.CreatedDate);
         }
 
         public IList<Weight> GetAllWeights()
         {
-            var allWeights = _healthContext.Weights;//.OrderByDescending(x => x.DateTime);
-            var dailyGroups = allWeights.GroupBy(x => x.DateTime.Date);
-
-            var dailyAggregates = dailyGroups.Select(x => new Weight
-            {
-                DateTime = x.Key.Date,
-                Kg = x.Average(w => w.Kg),
-                MovingAverageKg = x.Average(w => w.MovingAverageKg)
-            });
-
-            return dailyAggregates.OrderBy(x=>x.DateTime).ToList();
+            return _healthContext.Weights
+                .GroupBy(x => x.CreatedDate.Date)
+                .Select(x => new Weight
+                {
+                    CreatedDate = x.Key.Date,
+                    Kg = x.Average(w => w.Kg)
+                })
+                .OrderBy(x=>x.CreatedDate).ToList();
         }
 
         public void Upsert(Weight weight)
         {
-            var existingWeight = _healthContext.Weights.Find(weight.DateTime);
+            var existingWeight = _healthContext.Weights.Find(weight.CreatedDate);
 
             if (existingWeight == null)
             {
@@ -160,7 +157,7 @@ namespace Repositories.Health
 
         public void Upsert(AlcoholIntake alcoholIntake)
         {
-            var existingAlcoholIntake = _healthContext.AlcoholIntakes.Find(alcoholIntake.DateTime);
+            var existingAlcoholIntake = _healthContext.AlcoholIntakes.Find(alcoholIntake.CreatedDate);
 
             if (existingAlcoholIntake == null)
             {
@@ -179,7 +176,7 @@ namespace Repositories.Health
 
         public void Upsert(BloodPressure bloodPressure)
         {
-            var existingBloodPressure = _healthContext.BloodPressures.Find(bloodPressure.DateTime);
+            var existingBloodPressure = _healthContext.BloodPressures.Find(bloodPressure.CreatedDate);
 
             if (existingBloodPressure != null)
             {
@@ -205,7 +202,7 @@ namespace Repositories.Health
         public void Upsert(StepCount stepCount)
         {
 
-            var existingStepCount = _healthContext.StepCounts.Find(stepCount.DateTime);
+            var existingStepCount = _healthContext.StepCounts.Find(stepCount.CreatedDate);
             if (existingStepCount != null)
             {
                 // _logger.Log($"STEP COUNT : Update Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
@@ -224,7 +221,7 @@ namespace Repositories.Health
         public void Upsert(ActivitySummary activitySummary)
         {
 
-            var existingActivitySummary = _healthContext.ActivitySummaries.Find(activitySummary.DateTime);
+            var existingActivitySummary = _healthContext.ActivitySummaries.Find(activitySummary.CreatedDate);
             if (existingActivitySummary == null)
             {
                 // _logger.Log($"ACTIVITY SUMMARY : Update Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
@@ -249,7 +246,7 @@ namespace Repositories.Health
 
         public void Upsert(RestingHeartRate restingHeartRate)
         {
-            var existingRestingHeartRate = _healthContext.RestingHeartRates.Find(restingHeartRate.DateTime);
+            var existingRestingHeartRate = _healthContext.RestingHeartRates.Find(restingHeartRate.CreatedDate);
 
             if (existingRestingHeartRate != null)
             {
@@ -270,7 +267,7 @@ namespace Repositories.Health
         public void Upsert(HeartRateSummary heartSummary)
         {
 
-            var existingHeartSummary = _healthContext.HeartRateSummaries.Find(heartSummary.DateTime);
+            var existingHeartSummary = _healthContext.HeartRateSummaries.Find(heartSummary.CreatedDate);
 
             if (existingHeartSummary != null)
             {

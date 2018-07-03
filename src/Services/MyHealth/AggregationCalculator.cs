@@ -55,7 +55,7 @@ namespace Services.MyHealth
 
         public IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period)
         {
-            return GetMovingAverages(orderedWeights.Take(9).ToList(), orderedWeights, period);
+            return GetMovingAverages(new List<Weight>(), orderedWeights, period);
         }
 
 

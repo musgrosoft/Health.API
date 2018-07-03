@@ -50,7 +50,7 @@ namespace Services.Nokia
                 {
                     weights.Add(new Weight
                     {
-                        DateTime = weightMeasure.date.ToDateFromUnixTime(),
+                        CreatedDate = weightMeasure.date.ToDateFromUnixTime(),
                         Kg = (Decimal)( weightMeasure.measures.First(x => x.type == WeightKgMeasureTypeId).value * Math.Pow(10, weightMeasure.measures.First(x => x.type == WeightKgMeasureTypeId).unit)),
 
                         //todo set if available
@@ -90,7 +90,7 @@ namespace Services.Nokia
                 {
                     bloodPressures.Add(new BloodPressure
                     {
-                        DateTime = bloodPressureMeasure.date.ToDateFromUnixTime(),
+                        CreatedDate = bloodPressureMeasure.date.ToDateFromUnixTime(),
                         Diastolic = (int)( bloodPressureMeasure.measures.First(x => x.type == DiastolicBloodPressureMeasureTypeId).value * Math.Pow(10, bloodPressureMeasure.measures.First(x => x.type == DiastolicBloodPressureMeasureTypeId).unit)),
                         Systolic = (int)( bloodPressureMeasure.measures.First(x => x.type == SystolicBloodPressureMeasureTypeId).value * Math.Pow(10, bloodPressureMeasure.measures.First(x => x.type == SystolicBloodPressureMeasureTypeId).unit)),
                     });

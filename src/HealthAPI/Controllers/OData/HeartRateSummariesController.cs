@@ -24,7 +24,7 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateSummary> Get()
         {
-            return _context.HeartRateSummaries.OrderBy(x=>x.DateTime);
+            return _context.HeartRateSummaries.OrderBy(x=>x.CreatedDate);
         }
         
         [HttpGet]
@@ -34,14 +34,14 @@ namespace HealthAPI.Controllers.OData
         {   
             var dailyHeartZones = _context.HeartRateSummaries;
 
-            var weekGroups = dailyHeartZones.GroupBy(x => x.DateTime.GetWeekStartingOnMonday());
+            var weekGroups = dailyHeartZones.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
 
             var weeklyHeartZones = new List<HeartRateSummary>();
             foreach (var group in weekGroups)
             {
                 var heartZone = new HeartRateSummary
                 {
-                    DateTime = group.Key,
+                    CreatedDate = group.Key,
                     OutOfRangeMinutes = group.Sum(x => x.OutOfRangeMinutes),
                     FatBurnMinutes = group.Sum(x => x.FatBurnMinutes),
                     CardioMinutes = group.Sum(x => x.CardioMinutes),
@@ -61,9 +61,9 @@ namespace HealthAPI.Controllers.OData
         [EnableQuery(AllowedQueryOptions = Microsoft.AspNet.OData.Query.AllowedQueryOptions.All)]
         public IEnumerable<HeartRateSummary> GetByMonth()
         {
-            var dailyHearts = _context.HeartRateSummaries.OrderBy(x => x.DateTime).ToList();
+            var dailyHearts = _context.HeartRateSummaries.OrderBy(x => x.CreatedDate).ToList();
 
-            var monthGroups = dailyHearts.GroupBy(x => x.DateTime.GetFirstDayOfMonth());
+            var monthGroups = dailyHearts.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
 
 
             var monthlyHearts = new List<HeartRateSummary>();
@@ -71,7 +71,7 @@ namespace HealthAPI.Controllers.OData
             {
                 var heart = new HeartRateSummary
                 {
-                    DateTime = group.Key,
+                    CreatedDate = group.Key,
                     FatBurnMinutes = (int)group.Average(x => x.FatBurnMinutes),
                     CardioMinutes = (int)group.Average(x => x.CardioMinutes),
                     PeakMinutes = (int)group.Average(x => x.PeakMinutes)

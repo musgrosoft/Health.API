@@ -8,7 +8,7 @@ namespace Repositories.Models
     {
         [Key]
         [Column(TypeName = "DateTime")]
-        public DateTime DateTime { get; set; }
+        public DateTime CreatedDate { get; set; }
         public int Beats { get; set; }
         public decimal? MovingAverageBeats { get; set; }
     }

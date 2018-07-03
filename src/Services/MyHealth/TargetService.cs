@@ -25,19 +25,19 @@ namespace Services.MyHealth
 
             var allWeights = _healthRepository.GetWeightsFromDate(targetStartDate);
             
-            var groups = allWeights.GroupBy(x => x.DateTime.Date);
+            var groups = allWeights.GroupBy(x => x.CreatedDate.Date);
 
             allWeights = groups.Select(x => new Weight
             {
-                DateTime = x.Key.Date,
+                CreatedDate = x.Key.Date,
                 Kg = x.Average(w => w.Kg),
                 MovingAverageKg = x.Average(w => w.MovingAverageKg)
             }).ToList();
 
             var targetWeights = allWeights.Select(x => new TargetWeight
             {
-                DateTime = x.DateTime,
-                TargetKg = GetTargetWeight(x.DateTime),
+                DateTime = x.CreatedDate,
+                TargetKg = GetTargetWeight(x.CreatedDate),
                 ActualKg = x.Kg,
                 ActualMovingAverageKg = x.MovingAverageKg
             }).ToList();
@@ -69,11 +69,11 @@ namespace Services.MyHealth
 
             //var allWeights = _healthRepository.GetWeightsFromDate(targetStartDate);
 
-            var groups = weights.GroupBy(x => x.DateTime.Date);
+            var groups = weights.GroupBy(x => x.CreatedDate.Date);
 
             weights = groups.Select(x => new Weight
             {
-                DateTime = x.Key.Date,
+                CreatedDate = x.Key.Date,
                 Kg = x.Average(w => w.Kg),
                 MovingAverageKg = x.Average(w => w.MovingAverageKg),
                 TargetKg = GetTargetWeight(x.Key.Date),
@@ -87,20 +87,20 @@ namespace Services.MyHealth
             //    ActualMovingAverageKg = x.MovingAverageKg
             //}).ToList();
 
-            var futuredays = (targetEndDate - weights.Min(x => x.DateTime)).TotalDays;
+            var futuredays = (targetEndDate - weights.Min(x => x.CreatedDate)).TotalDays;
 
             for (int i = 0; i < futuredays; i++)
             {
                 var target = new Weight
                 {
-                    DateTime = DateTime.Now.AddDays(i),
+                    CreatedDate = DateTime.Now.AddDays(i),
                     TargetKg = GetTargetWeight(DateTime.Now.AddDays(i))
                 };
 
                 weights.Add(target);
             }
 
-            weights = weights.OrderBy(x => x.DateTime).ToList();
+            weights = weights.OrderBy(x => x.CreatedDate).ToList();
 
             return weights;
         }

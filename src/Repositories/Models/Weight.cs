@@ -8,7 +8,7 @@ namespace Repositories.Models
     {
         [Key]
         [Column(TypeName = "DateTime")]
-        public DateTime DateTime { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         [Column(TypeName = "decimal(10, 5)")]
         public decimal Kg { get; set; }
@@ -16,7 +16,7 @@ namespace Repositories.Models
         [Column(TypeName = "decimal(10, 5)")]
         public decimal? FatRatioPercentage { get; set; }
 
-        [Column(TypeName = "decimal(10, 5)")]
+        [NotMapped]
         public decimal? MovingAverageKg { get; set; }
 
         [NotMapped]
