@@ -6,6 +6,8 @@ using Repositories.Models;
 
 namespace HealthAPI.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/Weights")]
     public class WeightsController : Controller
     {
         private readonly IHealthRepository _healthRepository;
