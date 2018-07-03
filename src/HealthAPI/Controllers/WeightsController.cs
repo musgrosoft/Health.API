@@ -18,9 +18,9 @@ namespace HealthAPI.Controllers
         }
 
         [HttpGet]
-        public IList<Weight> Get()
+        public IActionResult Get()
         {
-            return _healthRepository.GetAllWeights();
+            return Json(_healthRepository.GetAllWeights());
         }
 
 
