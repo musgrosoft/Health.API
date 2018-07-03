@@ -125,7 +125,14 @@ namespace Repositories.Health
 
         public IList<Weight> GetAllWeights()
         {
-            return _healthContext.Weights
+
+            var allWeights = _healthContext.Weights;
+            var copy = allWeights.Select(x => new Weight {
+                CreatedDate = x.CreatedDate,
+                Kg = x.Kg
+            });
+
+            return copy
                 .GroupBy(x => x.CreatedDate.Date)
                 .Select(x => new Weight
                 {
