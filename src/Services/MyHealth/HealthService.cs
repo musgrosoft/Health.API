@@ -13,18 +13,31 @@ namespace Services.MyHealth
         private readonly ILogger _logger;
         private readonly IHealthRepository _healthRepository;
         private readonly IAggregationCalculator _aggregationCalculator;
+        private readonly ITargetService _targetService;
         private const int MOVING_AVERAGE_PERIOD = 10;
 
         public HealthService(
             IConfig config, 
             ILogger logger, 
             IHealthRepository healthRepository,
-            IAggregationCalculator aggregationCalculator)
+            IAggregationCalculator aggregationCalculator, 
+            ITargetService targetService)
         {
             _config = config;
             _logger = logger;
             _healthRepository = healthRepository;
             _aggregationCalculator = aggregationCalculator;
+            _targetService = targetService;
+        }
+
+        public IList<Weight> GetAllWeights()
+        {
+            var allWeights = _healthRepository.GetAllWeights();
+            allWeights = _aggregationCalculator.GetMovingAverages(allWeights, 10);
+            allWeights = _targetService.SetTargetWeights(allWeights,365);
+            
+
+            return allWeights;
         }
 
         public DateTime GetLatestWeightDate(DateTime defaultDateTime)

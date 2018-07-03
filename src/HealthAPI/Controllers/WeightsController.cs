@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Health;
 using Repositories.Models;
+using Services.MyHealth;
 
 namespace HealthAPI.Controllers
 {
@@ -10,17 +11,17 @@ namespace HealthAPI.Controllers
     [Route("api/Weights")]
     public class WeightsController : Controller
     {
-        private readonly IHealthRepository _healthRepository;
+        private readonly IHealthService _healthService;
 
-        public WeightsController(IHealthRepository healthRepository)
+        public WeightsController(IHealthService healthService)
         {
-            _healthRepository = healthRepository;
+            _healthService = healthService;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(_healthRepository.GetAllWeights());
+            return Json(_healthService.GetAllWeights());
         }
 
 

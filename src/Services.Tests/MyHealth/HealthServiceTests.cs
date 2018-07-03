@@ -26,7 +26,7 @@ namespace Services.Tests.MyHealth
             _logger = new Mock<ILogger>();
             _aggregationCalculator = new Mock<IAggregationCalculator>();
 
-            _healthService = new HealthService(_config.Object, _logger.Object, _healthRepository.Object, _aggregationCalculator.Object);
+            _healthService = new HealthService(_config.Object, _logger.Object, _healthRepository.Object, _aggregationCalculator.Object, null);
         }
 
         [Fact]

@@ -42,7 +42,7 @@ namespace Services.MyHealth
             );
         }
 
-        public IEnumerable<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period)
+        public IList<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period)
         {
             return GetMovingAverages(
                 seedWeights,
@@ -53,8 +53,13 @@ namespace Services.MyHealth
                 );
         }
 
-        
-        private IEnumerable<T> GetMovingAverages<T>(IList<T> seedList, IList<T> orderedList, int period, Func<T, Decimal?> getValue, Action<T, Decimal?> setValue)
+        public IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period)
+        {
+            return GetMovingAverages(orderedWeights.Take(9).ToList(), orderedWeights, period);
+        }
+
+
+        private IList<T> GetMovingAverages<T>(IList<T> seedList, IList<T> orderedList, int period, Func<T, Decimal?> getValue, Action<T, Decimal?> setValue)
         {
             var localOrderedList = orderedList.ToList();
 

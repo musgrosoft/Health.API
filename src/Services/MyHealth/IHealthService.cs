@@ -29,5 +29,6 @@ namespace Services.MyHealth
         //void CalculateCumSumForUnits();
         //void CalculateCumSumForActivitySummaries();
         //void CalculateCumSumForHeartSummaries();
+        IList<Weight> GetAllWeights();
     }
 }

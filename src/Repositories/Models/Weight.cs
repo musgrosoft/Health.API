@@ -19,6 +19,9 @@ namespace Repositories.Models
         [Column(TypeName = "decimal(10, 5)")]
         public decimal? MovingAverageKg { get; set; }
 
-        
+        [NotMapped]
+        public decimal? TargetKg { get; set; }
+
+
     }
 }
