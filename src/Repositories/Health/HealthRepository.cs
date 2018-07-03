@@ -123,9 +123,19 @@ namespace Repositories.Health
             return _healthContext.HeartRateSummaries.OrderByDescending(x => x.DateTime);
         }
 
-        public IEnumerable<Weight> GetAllWeights()
+        public IList<Weight> GetAllWeights()
         {
-            return _healthContext.Weights.OrderByDescending(x => x.DateTime);
+            var allWeights = _healthContext.Weights;//.OrderByDescending(x => x.DateTime);
+            var dailyGroups = allWeights.GroupBy(x => x.DateTime.Date);
+
+            var dailyAggregates = dailyGroups.Select(x => new Weight
+            {
+                DateTime = x.Key.Date,
+                Kg = x.Average(w => w.Kg),
+                MovingAverageKg = x.Average(w => w.MovingAverageKg)
+            });
+
+            return dailyAggregates.OrderBy(x=>x.DateTime).ToList();
         }
 
         public void Upsert(Weight weight)
