@@ -112,28 +112,18 @@ namespace Services.Tests.MyHealth
             var newWeights = new List<Weight>
             {
                 new Weight { CreatedDate = new DateTime(2010,10,10) },
-                new Weight { CreatedDate = new DateTime(2011,10,10) }
+                new Weight { CreatedDate = new DateTime(2010,10,11) },
+                new Weight { CreatedDate = new DateTime(2010,10,12) }
+
             };
-
-            var previousWeights = new List<Weight>();
-
-            var weightsWithAverages = new List<Weight>
-            {
-                new Weight {CreatedDate = new DateTime(2016,1,1), Kg = 2016},
-                new Weight {CreatedDate = new DateTime(2017,1,1), Kg = 2017},
-                new Weight {CreatedDate = new DateTime(2018,1,1), Kg = 2018}
-            };
-
-            _healthRepository.Setup(x => x.GetLatestWeights(9, new DateTime(2010, 10, 10))).Returns(previousWeights);
-            _aggregationCalculator.Setup(x => x.GetMovingAverages(previousWeights, It.IsAny<IList<Weight>>(), 10)).Returns(weightsWithAverages);
 
             //When
             _healthService.UpsertWeights(newWeights);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(weightsWithAverages[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(weightsWithAverages[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(weightsWithAverages[2]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newWeights[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newWeights[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newWeights[2]), Times.Once);
         }
 
         [Fact]

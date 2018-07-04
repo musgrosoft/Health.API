@@ -67,7 +67,7 @@ namespace HealthAPI.Controllers.Migration
                 var target = new TargetAlcoholIntake
                 {
                     DateTime = targetStartDate.AddDays(i),
-                    TargetCumSumUnits = (Decimal)(unitsOnTargetStartDate + (i * targetDailyUnits)),
+                    TargetCumSumUnits = unitsOnTargetStartDate + (i * targetDailyUnits),
                     ActualCumSumUnits = actualAlcoholIntake?.CumSumUnits
                 };
 
@@ -103,13 +103,13 @@ namespace HealthAPI.Controllers.Migration
             return Json(targets);
         }
 
-        [HttpGet]
-        public IActionResult Weights()
-        {
-            var targetWeights = _targetService.GetTargetWeights();
+        //[HttpGet]
+        //public IActionResult Weights()
+        //{
+        //    var targetWeights = _targetService.GetTargetWeights();
 
-            return Json(targetWeights);
-        }
+        //    return Json(targetWeights);
+        //}
 
 
         [HttpGet]

@@ -7,11 +7,19 @@ namespace Repositories.Models
     public class BloodPressure
     {
         [Key]
-        [Column(TypeName = "DateTime")]
         public DateTime CreatedDate { get; set; }
-        public int Diastolic { get; set; }
-        public int Systolic { get; set; }
-        public Decimal? MovingAverageSystolic { get; set; }
-        public Decimal? MovingAverageDiastolic { get; set; }
+        public Double? Diastolic { get; set; }
+        public Double? Systolic { get; set; }
+
+        [NotMapped]
+        public Double? MovingAverageSystolic { get; set; }
+        [NotMapped]
+        public Double? MovingAverageDiastolic { get; set; }
+
+        [NotMapped]
+        public Double? TargetDiastolic { get; set; }
+        [NotMapped]
+        public Double? TargetSystolic { get; set; }
+
     }
 }

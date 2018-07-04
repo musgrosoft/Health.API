@@ -78,15 +78,11 @@ namespace Services.MyHealth
         
         public void UpsertWeights(IEnumerable<Weight> weights)
         {
-            _logger.Log($"WEIGHT : Saving {weights.Count()} weight");
+            var enumerable = weights.ToList();
 
-            var orderedWeights = weights.OrderBy(x => x.CreatedDate).ToList();
+            _logger.Log($"WEIGHT : Saving {enumerable.Count()} weight");
 
-            var previousWeights = _healthRepository.GetLatestWeights(MOVING_AVERAGE_PERIOD - 1, orderedWeights.Min(x => x.CreatedDate)).ToList();
-
-            var weightsWithAverages = _aggregationCalculator.GetMovingAverages(previousWeights, orderedWeights, MOVING_AVERAGE_PERIOD);
-
-            foreach (var weight in weightsWithAverages)
+            foreach (var weight in enumerable)
             {
                 _healthRepository.Upsert(weight);
             }

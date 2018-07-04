@@ -9,8 +9,8 @@ namespace Repositories.Models
         [Key]
         [Column(TypeName = "DateTime")]
         public DateTime CreatedDate { get; set; }
-        public Decimal Units { get; set; }
+        public Double Units { get; set; }
         
-        public Decimal? CumSumUnits { get; set; }
+        public Double? CumSumUnits { get; set; }
     }
 }

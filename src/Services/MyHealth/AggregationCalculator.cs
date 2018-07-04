@@ -59,7 +59,7 @@ namespace Services.MyHealth
         }
 
 
-        private IList<T> GetMovingAverages<T>(IList<T> seedList, IList<T> orderedList, int period, Func<T, Decimal?> getValue, Action<T, Decimal?> setValue)
+        private IList<T> GetMovingAverages<T>(IList<T> seedList, IList<T> orderedList, int period, Func<T, Double?> getValue, Action<T, Double?> setValue)
         {
             var localOrderedList = orderedList.ToList();
 
@@ -178,9 +178,9 @@ namespace Services.MyHealth
 
         private IEnumerable<T> GetCumSums<T>(
             IList<T> orderedList,
-            Func<T, Decimal?> GetValue,
-            Func<T, Decimal?> GetCumSum,
-            Action<T, Decimal?> SetCumSum
+            Func<T, Double?> GetValue,
+            Func<T, Double?> GetCumSum,
+            Action<T, Double?> SetCumSum
         ) where T : class
         {
             //there is no point in this local list, each item inside is still modified (they are not copied)
@@ -188,7 +188,7 @@ namespace Services.MyHealth
 
             for (int i = 0; i < localList.Count(); i++)
             {
-                Decimal? value = GetValue(localList[i]);
+                Double? value = GetValue(localList[i]);
 
                 if (i > 0)
                 {

@@ -43,8 +43,8 @@ namespace Services.Tests.Nokia
 
             Assert.Equal("http://api.health.nokia.com/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669", _capturedUri.AbsoluteUri);
             Assert.Equal(2, weights.Count());
-            Assert.Contains(weights, x => x.Kg == (Decimal)90.435 && x.CreatedDate == new DateTime(2018,5,11,4,57,27));
-            Assert.Contains(weights, x => x.Kg == (Decimal)90.261 && x.CreatedDate == new DateTime(2018,5,10,5,4,42));
+            Assert.Contains(weights, x => x.Kg == 90.435 && x.CreatedDate == new DateTime(2018,5,11,4,57,27));
+            Assert.Contains(weights, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018,5,10,5,4,42));
 
 //            { 11 / 05 / 2018 04:57:27}
 //            { 10 / 05 / 2018 05:04:42}

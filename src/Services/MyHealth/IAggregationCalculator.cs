@@ -8,7 +8,7 @@ namespace Services.MyHealth
     {
         IEnumerable<BloodPressure> GetMovingAverages(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period);
         IEnumerable<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period);
-        IList<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period);
+        //IList<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period);
         IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period);
 
         IEnumerable<StepCount> GetCumSums(StepCount seed, IList<StepCount> orderedStepCounts);

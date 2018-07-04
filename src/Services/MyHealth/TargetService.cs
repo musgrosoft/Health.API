@@ -15,50 +15,50 @@ namespace Services.MyHealth
             _healthRepository = healthRepository;
         }
 
-        public List<TargetWeight> GetTargetWeights()
-        {
+        //public List<TargetWeight> GetTargetWeights()
+        //{
 
-            var targetStartDate = new DateTime(2018, 5, 1);
-            var targetEndDate = DateTime.Now.AddDays(600);
-            var totalDays = (targetEndDate - targetStartDate).TotalDays;
+        //    var targetStartDate = new DateTime(2018, 5, 1);
+        //    var targetEndDate = DateTime.Now.AddDays(600);
+        //    var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
 
-            var allWeights = _healthRepository.GetWeightsFromDate(targetStartDate);
+        //    var allWeights = _healthRepository.GetWeightsFromDate(targetStartDate);
             
-            var groups = allWeights.GroupBy(x => x.CreatedDate.Date);
+        //    var groups = allWeights.GroupBy(x => x.CreatedDate.Date);
 
-            allWeights = groups.Select(x => new Weight
-            {
-                CreatedDate = x.Key.Date,
-                Kg = x.Average(w => w.Kg),
-                MovingAverageKg = x.Average(w => w.MovingAverageKg)
-            }).ToList();
+        //    allWeights = groups.Select(x => new Weight
+        //    {
+        //        CreatedDate = x.Key.Date,
+        //        Kg = x.Average(w => w.Kg),
+        //        MovingAverageKg = x.Average(w => w.MovingAverageKg)
+        //    }).ToList();
 
-            var targetWeights = allWeights.Select(x => new TargetWeight
-            {
-                DateTime = x.CreatedDate,
-                TargetKg = GetTargetWeight(x.CreatedDate),
-                ActualKg = x.Kg,
-                ActualMovingAverageKg = x.MovingAverageKg
-            }).ToList();
+        //    var targetWeights = allWeights.Select(x => new TargetWeight
+        //    {
+        //        DateTime = x.CreatedDate,
+        //        TargetKg = GetTargetWeight(x.CreatedDate),
+        //        ActualKg = x.Kg,
+        //        ActualMovingAverageKg = x.MovingAverageKg
+        //    }).ToList();
 
-            var futuredays = (targetEndDate - targetWeights.Min(x=>x.DateTime)).TotalDays;
+        //    var futuredays = (targetEndDate - targetWeights.Min(x=>x.DateTime)).TotalDays;
 
-            for (int i = 0; i < futuredays; i++)
-            {
-                var target = new TargetWeight
-                {
-                    DateTime = DateTime.Now.AddDays(i),
-                    TargetKg = GetTargetWeight(DateTime.Now.AddDays(i))
-                };
+        //    for (int i = 0; i < futuredays; i++)
+        //    {
+        //        var target = new TargetWeight
+        //        {
+        //            DateTime = DateTime.Now.AddDays(i),
+        //            TargetKg = GetTargetWeight(DateTime.Now.AddDays(i))
+        //        };
 
-                targetWeights.Add(target);
-            }
+        //        targetWeights.Add(target);
+        //    }
 
-            targetWeights = targetWeights.OrderBy(x => x.DateTime).ToList();
+        //    targetWeights = targetWeights.OrderBy(x => x.DateTime).ToList();
 
-            return targetWeights;
-        }
+        //    return targetWeights;
+        //}
 
         public IList<Weight> SetTargetWeights(IList<Weight> weights, int extraFutureDays)
         {
@@ -90,9 +90,9 @@ namespace Services.MyHealth
         }
 
 
-        public decimal? GetTargetWeight(DateTime dateTime)
+        private Double? GetTargetWeight(DateTime dateTime)
         {
-            var targets = new List<TargetWeight>();
+            
 
             var targetStartDate = new DateTime(2018, 5, 1);
             var targetEndDate = DateTime.Now.AddDays(600);
@@ -113,12 +113,12 @@ namespace Services.MyHealth
 
             if (daysDiff <= daysToHitHealthyWeight)
             {
-                return (decimal)(weightOnTargetStartDate - (daysDiff * targetDailyWeightLoss));
+                return weightOnTargetStartDate - (daysDiff * targetDailyWeightLoss);
             }
 
             if (daysDiff <= totalDays)
             {
-                return (decimal)((weightOnTargetStartDate - (daysToHitHealthyWeight * targetDailyWeightLoss + (daysDiff - daysToHitHealthyWeight) * targetDailyWeightLoss2)));
+                return weightOnTargetStartDate - (daysToHitHealthyWeight * targetDailyWeightLoss + (daysDiff - daysToHitHealthyWeight) * targetDailyWeightLoss2);
             }
 
             return null;

@@ -126,13 +126,13 @@ namespace Repositories.Health
         public IList<Weight> GetAllWeights()
         {
 
-            var allWeights = _healthContext.Weights;
-            var copy = allWeights.Select(x => new Weight {
-                CreatedDate = x.CreatedDate,
-                Kg = x.Kg
-            });
+            var allWeights = _healthContext.Weights.ToList();
+//            var copy = allWeights.Select(x => new Weight {
+//                CreatedDate = x.CreatedDate,
+//                Kg = x.Kg
+//            });
 
-            return copy
+            return allWeights
                 .GroupBy(x => x.CreatedDate.Date)
                 .Select(x => new Weight
                 {
@@ -140,6 +140,25 @@ namespace Repositories.Health
                     Kg = x.Average(w => w.Kg)
                 })
                 .OrderBy(x=>x.CreatedDate).ToList();
+        }
+
+        public IList<BloodPressure> GetAllBloodPressures()
+        {
+
+            var allBloodPressures = _healthContext.BloodPressures.ToList();
+            //            var copy = allWeights.Select(x => new Weight {
+            //                CreatedDate = x.CreatedDate,
+            //                Kg = x.Kg
+            //            });
+
+            return allBloodPressures
+                .GroupBy(x => x.CreatedDate.Date)
+                .Select(x => new BloodPressure
+                {
+                    CreatedDate = x.Key.Date,
+                    Systolic = x.Average(w => w.Systolic)
+                })
+                .OrderBy(x => x.CreatedDate).ToList();
         }
 
         public void Upsert(Weight weight)
