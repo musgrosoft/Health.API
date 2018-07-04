@@ -34,5 +34,6 @@ namespace Repositories.Health
         IList<Weight> GetAllWeights();
 
         IList<Weight> GetWeightsFromDate(DateTime afterDate);
+        IList<BloodPressure> GetAllBloodPressures();
     }
 }

@@ -8,7 +8,7 @@ namespace Services.MyHealth
     public class AggregationCalculator : IAggregationCalculator
     {
         
-        public IEnumerable<BloodPressure> GetMovingAverages(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period)
+        public IList<BloodPressure> GetMovingAverages(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period)
         {
             //_logger.Log("BLOOD PRESSURE : Add moving averages (using generic method)");
             var bloodPressuresWithSystolicMovingAverage = 
@@ -31,7 +31,7 @@ namespace Services.MyHealth
 
         }
 
-        public IEnumerable<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period)
+        public IList<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period)
         {
             return GetMovingAverages(
                 seedRestingHeartRates,
@@ -56,6 +56,11 @@ namespace Services.MyHealth
         public IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period)
         {
             return GetMovingAverages(new List<Weight>(), orderedWeights, period);
+        }
+
+        public IList<BloodPressure> GetMovingAverages(IList<BloodPressure> orderedBloodPressures, int period)
+        {
+            return GetMovingAverages(new List<BloodPressure>(), orderedBloodPressures, period);
         }
 
 
@@ -202,11 +207,9 @@ namespace Services.MyHealth
 
         }
 
-
-
-
-
-
-
+//        public IEnumerable<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> seedRestingHeartRates, IList<RestingHeartRate> orderedRestingHeartRates, int period)
+//        {
+//            return new List<RestingHeartRate>();
+//        }
     }
 }

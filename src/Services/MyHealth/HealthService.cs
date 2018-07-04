@@ -40,6 +40,15 @@ namespace Services.MyHealth
             return allWeights;
         }
 
+        public IList<BloodPressure> GetAllBloodPressures()
+        {
+            var allBloodPressures = _healthRepository.GetAllBloodPressures();
+            allBloodPressures = _aggregationCalculator.GetMovingAverages(allBloodPressures, 10);
+           // allBloodPressures = _targetService.SetTargetBloodPressures(allBloodPressures, 365);
+
+            return allBloodPressures;
+        }
+
         public DateTime GetLatestWeightDate(DateTime defaultDateTime)
         {
             var latestWeightDate = _healthRepository.GetLatestWeightDate();
@@ -92,13 +101,7 @@ namespace Services.MyHealth
         {
             _logger.Log($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
 
-            var orderedBloodPressures = bloodPressures.OrderBy(x => x.CreatedDate).ToList();
-
-            var previousBloodPressures = _healthRepository.GetLatestBloodPressures(MOVING_AVERAGE_PERIOD-1, orderedBloodPressures.Min(x => x.CreatedDate)).ToList();
-
-            var bloodPressuresWithAverages = _aggregationCalculator.GetMovingAverages(previousBloodPressures, orderedBloodPressures, MOVING_AVERAGE_PERIOD);
-
-            foreach (var bloodPressure in bloodPressuresWithAverages)
+            foreach (var bloodPressure in bloodPressures)
             {
                 _healthRepository.Upsert(bloodPressure);
             }

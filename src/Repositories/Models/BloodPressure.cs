@@ -16,10 +16,6 @@ namespace Repositories.Models
         [NotMapped]
         public Double? MovingAverageDiastolic { get; set; }
 
-        [NotMapped]
-        public Double? TargetDiastolic { get; set; }
-        [NotMapped]
-        public Double? TargetSystolic { get; set; }
 
     }
 }

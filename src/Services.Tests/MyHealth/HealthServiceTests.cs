@@ -133,28 +133,17 @@ namespace Services.Tests.MyHealth
             var newBloodPressures = new List<BloodPressure>
             {
                 new BloodPressure { CreatedDate = new DateTime(2010,10,10) },
-                new BloodPressure { CreatedDate = new DateTime(2011,10,10) }
+                new BloodPressure { CreatedDate = new DateTime(2010,10,11) },
+                new BloodPressure { CreatedDate = new DateTime(2010,10,12) }
             };
-
-            var previousBloodPressures = new List<BloodPressure>();
-
-            var bloodPressuresWithAverages = new List<BloodPressure>
-            {
-                new BloodPressure {CreatedDate = new DateTime(2016,1,1), Systolic = 2016},
-                new BloodPressure {CreatedDate = new DateTime(2017,1,1), Systolic = 2017},
-                new BloodPressure {CreatedDate = new DateTime(2018,1,1), Systolic = 2018}
-            };
-
-            _healthRepository.Setup(x => x.GetLatestBloodPressures(9, new DateTime(2010, 10, 10))).Returns(previousBloodPressures);
-            _aggregationCalculator.Setup(x => x.GetMovingAverages(previousBloodPressures, It.IsAny<IList<BloodPressure>>(), 10)).Returns(bloodPressuresWithAverages);
-
+            
             //When
             _healthService.UpsertBloodPressures(newBloodPressures);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(bloodPressuresWithAverages[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(bloodPressuresWithAverages[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(bloodPressuresWithAverages[2]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newBloodPressures[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newBloodPressures[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newBloodPressures[2]), Times.Once);
         }
 
         [Fact]

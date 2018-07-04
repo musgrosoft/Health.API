@@ -9,11 +9,7 @@ namespace Services.MyHealth
 {
     public class TargetService : ITargetService
     {
-        private IHealthRepository _healthRepository;
 
-        public TargetService(IHealthRepository healthRepository) {
-            _healthRepository = healthRepository;
-        }
 
         //public List<TargetWeight> GetTargetWeights()
         //{

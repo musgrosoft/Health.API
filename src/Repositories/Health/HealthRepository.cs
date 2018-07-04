@@ -144,19 +144,15 @@ namespace Repositories.Health
 
         public IList<BloodPressure> GetAllBloodPressures()
         {
-
             var allBloodPressures = _healthContext.BloodPressures.ToList();
-            //            var copy = allWeights.Select(x => new Weight {
-            //                CreatedDate = x.CreatedDate,
-            //                Kg = x.Kg
-            //            });
-
+            
             return allBloodPressures
                 .GroupBy(x => x.CreatedDate.Date)
                 .Select(x => new BloodPressure
                 {
                     CreatedDate = x.Key.Date,
-                    Systolic = x.Average(w => w.Systolic)
+                    Systolic = x.Average(w => w.Systolic),
+                    Diastolic = x.Average(w => w.Diastolic),
                 })
                 .OrderBy(x => x.CreatedDate).ToList();
         }
