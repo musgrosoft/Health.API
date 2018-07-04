@@ -32,10 +32,17 @@ namespace Services.MyHealth
 
         public IList<Weight> GetAllWeights()
         {
-            var allWeights = _healthRepository.GetAllWeights();
-            allWeights = _aggregationCalculator.GetMovingAverages(allWeights, 10);
-            allWeights = _targetService.SetTargetWeights(allWeights,365);
-            
+            var allWeights = _healthRepository.GetAllWeights()
+                                .GroupBy(x => x.CreatedDate.Date)
+                                .Select(g => new Weight
+                                {
+                                    CreatedDate = g.Key.Date,
+                                    Kg = g.Average(w => w.Kg)
+                                })
+                                .OrderBy(x => x.CreatedDate).ToList();
+
+            allWeights = _aggregationCalculator.GetMovingAverages(allWeights, 10).ToList();
+            allWeights = _targetService.SetTargetWeights(allWeights,365).ToList();            
 
             return allWeights;
         }
@@ -47,6 +54,14 @@ namespace Services.MyHealth
            // allBloodPressures = _targetService.SetTargetBloodPressures(allBloodPressures, 365);
 
             return allBloodPressures;
+        }
+
+        public IList<RestingHeartRate> GetAllRestingHeartRates()
+        {
+            var allRestingHeartRates = _healthRepository.GetAllRestingHeartRates().OrderBy(x=>x.CreatedDate).ToList();
+            allRestingHeartRates = _aggregationCalculator.GetMovingAverages(allRestingHeartRates, 10).ToList();
+            
+            return allRestingHeartRates;
         }
 
         public DateTime GetLatestWeightDate(DateTime defaultDateTime)
@@ -111,19 +126,7 @@ namespace Services.MyHealth
         {
             _logger.Log($"RESTING HEART RATE : Saving {restingHeartRates.Count()} resting heart rates");
 
-            _logger.Log($"RESTING HEART RATE : Moving averages");
-
-            var orderedRestingHeartRates = restingHeartRates.OrderBy(x => x.CreatedDate).ToList();
-
-            _logger.Log($"RESTING HEART RATE : orderd RHR : {orderedRestingHeartRates.Count}");
-
-            var previousRestingHeartRates = _healthRepository.GetLatestRestingHeartRates(MOVING_AVERAGE_PERIOD - 1, orderedRestingHeartRates.Min(x=>x.CreatedDate)).ToList();
-
-            _logger.Log($"RESTING HEART RATE : previous RHR : {previousRestingHeartRates.Count}");
-
-            var restingHeartRatesWithAverages = _aggregationCalculator.GetMovingAverages(previousRestingHeartRates, orderedRestingHeartRates, MOVING_AVERAGE_PERIOD);
-
-            foreach (var restingHeartRate in restingHeartRatesWithAverages)
+            foreach (var restingHeartRate in restingHeartRates)
             {
                 _healthRepository.Upsert(restingHeartRate);
             }

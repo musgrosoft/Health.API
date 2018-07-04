@@ -16,6 +16,7 @@ namespace Services.MyHealth
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
 
         void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
+        
         void UpsertActivitySummaries(IEnumerable<ActivitySummary> activitySummaries);
         void UpsertHeartSummaries(IEnumerable<HeartRateSummary> heartSummaries);
         void UpsertStepCounts(IEnumerable<StepCount> stepCount);
@@ -26,5 +27,6 @@ namespace Services.MyHealth
 
         IList<Weight> GetAllWeights();
         IList<BloodPressure> GetAllBloodPressures();
+        IList<RestingHeartRate> GetAllRestingHeartRates();
     }
 }

@@ -123,23 +123,16 @@ namespace Repositories.Health
             return _healthContext.HeartRateSummaries.OrderByDescending(x => x.CreatedDate);
         }
 
-        public IList<Weight> GetAllWeights()
+        public IEnumerable<RestingHeartRate> GetAllRestingHeartRates()
         {
+            //to list to materialize entities
+            return _healthContext.RestingHeartRates.ToList();
+        }
 
-            var allWeights = _healthContext.Weights.ToList();
-//            var copy = allWeights.Select(x => new Weight {
-//                CreatedDate = x.CreatedDate,
-//                Kg = x.Kg
-//            });
-
-            return allWeights
-                .GroupBy(x => x.CreatedDate.Date)
-                .Select(x => new Weight
-                {
-                    CreatedDate = x.Key.Date,
-                    Kg = x.Average(w => w.Kg)
-                })
-                .OrderBy(x=>x.CreatedDate).ToList();
+        public IEnumerable<Weight> GetAllWeights()
+        {
+            //to list to materialize entities
+            return _healthContext.Weights.ToList();
         }
 
         public IList<BloodPressure> GetAllBloodPressures()

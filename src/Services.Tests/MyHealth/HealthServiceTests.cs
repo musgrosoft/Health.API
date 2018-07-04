@@ -215,28 +215,17 @@ namespace Services.Tests.MyHealth
             var newHeartSummaries = new List<RestingHeartRate>
             {
                 new RestingHeartRate { CreatedDate = new DateTime(2010,10,10) },
-                new RestingHeartRate { CreatedDate = new DateTime(2011,10,10) }
+                new RestingHeartRate { CreatedDate = new DateTime(2010,10,11) },
+                new RestingHeartRate { CreatedDate = new DateTime(2010,10,12) }
             };
-
-            var previousRestingHeartRates = new List<RestingHeartRate>();
             
-            var restingHeartRatesWithAverages = new List<RestingHeartRate>
-            {
-                new RestingHeartRate {CreatedDate = new DateTime(2016,1,1), Beats = 2016},
-                new RestingHeartRate {CreatedDate = new DateTime(2017,1,1), Beats = 2017},
-                new RestingHeartRate {CreatedDate = new DateTime(2018,1,1), Beats = 2018}
-            };
-
-            _healthRepository.Setup(x => x.GetLatestRestingHeartRates(9, new DateTime(2010, 10, 10))).Returns(previousRestingHeartRates );
-            _aggregationCalculator.Setup(x => x.GetMovingAverages(previousRestingHeartRates, It.IsAny<IList<RestingHeartRate>>(), 10)).Returns(restingHeartRatesWithAverages);
-
             //When
             _healthService.UpsertRestingHeartRates(newHeartSummaries);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(restingHeartRatesWithAverages[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(restingHeartRatesWithAverages[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(restingHeartRatesWithAverages[2]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
 
         }
         

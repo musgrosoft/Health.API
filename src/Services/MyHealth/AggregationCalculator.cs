@@ -63,6 +63,10 @@ namespace Services.MyHealth
             return GetMovingAverages(new List<BloodPressure>(), orderedBloodPressures, period);
         }
 
+        public IList<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> orderedRestingHeartRates, int period)
+        {
+            return GetMovingAverages(new List<RestingHeartRate>(), orderedRestingHeartRates, period);
+        }
 
         private IList<T> GetMovingAverages<T>(IList<T> seedList, IList<T> orderedList, int period, Func<T, Double?> getValue, Action<T, Double?> setValue)
         {

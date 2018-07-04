@@ -31,9 +31,14 @@ namespace Repositories.Health
         IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate);
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
 
-        IList<Weight> GetAllWeights();
+
+
 
         IList<Weight> GetWeightsFromDate(DateTime afterDate);
+
+
+        IEnumerable<Weight> GetAllWeights();
         IList<BloodPressure> GetAllBloodPressures();
+        IEnumerable<RestingHeartRate> GetAllRestingHeartRates();
     }
 }
