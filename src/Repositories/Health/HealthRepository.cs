@@ -171,7 +171,6 @@ namespace Repositories.Health
                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                 existingWeight.Kg = weight.Kg;
                 existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
-                existingWeight.MovingAverageKg = weight.MovingAverageKg;
             }
 
             _healthContext.SaveChanges();
@@ -204,8 +203,6 @@ namespace Repositories.Health
             {
                 existingBloodPressure.Diastolic = bloodPressure.Diastolic;
                 existingBloodPressure.Systolic = bloodPressure.Systolic;
-                existingBloodPressure.MovingAverageDiastolic = bloodPressure.MovingAverageDiastolic;
-                existingBloodPressure.MovingAverageSystolic = bloodPressure.MovingAverageSystolic;
 
                 // _logger.Log($"BLOOD PRESSURE : Updating record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
                 
