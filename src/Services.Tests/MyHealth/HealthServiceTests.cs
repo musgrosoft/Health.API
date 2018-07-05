@@ -152,29 +152,18 @@ namespace Services.Tests.MyHealth
             //Given
             var newStepCounts = new List<StepCount>
             {
-                new StepCount { CreatedDate = new DateTime(2010,10,10) },
-                new StepCount { CreatedDate = new DateTime(2011,10,10) }
-            };
-
-            var previousStepCount = new StepCount();
-
-            var stepCountsWithSums = new List<StepCount>
-            {
                 new StepCount {CreatedDate = new DateTime(2016,1,1), Count = 2016},
                 new StepCount {CreatedDate = new DateTime(2017,1,1), Count = 2017},
                 new StepCount {CreatedDate = new DateTime(2018,1,1), Count = 2018}
             };
 
-            _healthRepository.Setup(x => x.GetLatestStepCounts(1, new DateTime(2010, 10, 10))).Returns(new List<StepCount> { previousStepCount });
-            _aggregationCalculator.Setup(x => x.GetCumSums(previousStepCount, It.IsAny<IList<StepCount>>())).Returns(stepCountsWithSums);
-
             //When
             _healthService.UpsertStepCounts(newStepCounts);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(stepCountsWithSums[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(stepCountsWithSums[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(stepCountsWithSums[2]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newStepCounts[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newStepCounts[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newStepCounts[2]), Times.Once);
         }
 
         [Fact]

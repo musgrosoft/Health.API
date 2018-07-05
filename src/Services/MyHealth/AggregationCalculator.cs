@@ -105,7 +105,7 @@ namespace Services.MyHealth
 
 
 
-        public IEnumerable<StepCount> GetCumSums(StepCount seed, IList<StepCount> orderedStepCounts)
+        public IEnumerable<StepCount> GetCumSums(IList<StepCount> orderedStepCounts)
         {
             var localStepCounts = orderedStepCounts.ToList();
 
@@ -115,7 +115,7 @@ namespace Services.MyHealth
 
                 if (i == 0)
                 {
-                    previousCumSum = (seed?.CumSumCount ?? 0);
+                    previousCumSum = 0;
                 }
                 else
                 {

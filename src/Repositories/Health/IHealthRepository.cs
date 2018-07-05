@@ -38,7 +38,8 @@ namespace Repositories.Health
 
 
         IEnumerable<Weight> GetAllWeights();
-        IList<BloodPressure> GetAllBloodPressures();
+        IEnumerable<BloodPressure> GetAllBloodPressures();
         IEnumerable<RestingHeartRate> GetAllRestingHeartRates();
+        IEnumerable<StepCount> GetAllStepCounts();
     }
 }

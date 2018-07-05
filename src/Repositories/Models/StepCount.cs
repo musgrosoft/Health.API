@@ -7,9 +7,10 @@ namespace Repositories.Models
     public class StepCount
     {
         [Key]
-        [Column(TypeName = "DateTime")]
         public DateTime CreatedDate { get; set; }
         public int? Count { get; set; }
+
+        [NotMapped]
         public int? CumSumCount { get; set; }
     }
 }

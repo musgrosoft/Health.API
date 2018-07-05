@@ -12,7 +12,7 @@ namespace Services.MyHealth
         IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period);
         IList<BloodPressure> GetMovingAverages(IList<BloodPressure> orderedBloodPressures, int period);
 
-        IEnumerable<StepCount> GetCumSums(StepCount seed, IList<StepCount> orderedStepCounts);
+        IEnumerable<StepCount> GetCumSums(IList<StepCount> orderedStepCounts);
         IEnumerable<ActivitySummary> GetCumSums(ActivitySummary seed, IList<ActivitySummary> orderedActivitySummaries);
         IEnumerable<HeartRateSummary> GetCumSums(HeartRateSummary seedHeartSummary, IList<HeartRateSummary> orderedHeartSummaries);
         IEnumerable<AlcoholIntake> GetCumSums(IList<AlcoholIntake> alcoholIntakes);

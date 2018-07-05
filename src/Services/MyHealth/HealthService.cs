@@ -49,9 +49,8 @@ namespace Services.MyHealth
 
         public IList<BloodPressure> GetAllBloodPressures()
         {
-            var allBloodPressures = _healthRepository.GetAllBloodPressures();
+            IList<BloodPressure> allBloodPressures = _healthRepository.GetAllBloodPressures().OrderBy(x=>x.CreatedDate).ToList();
             allBloodPressures = _aggregationCalculator.GetMovingAverages(allBloodPressures, 10);
-           // allBloodPressures = _targetService.SetTargetBloodPressures(allBloodPressures, 365);
 
             return allBloodPressures;
         }
@@ -62,6 +61,57 @@ namespace Services.MyHealth
             allRestingHeartRates = _aggregationCalculator.GetMovingAverages(allRestingHeartRates, 10).ToList();
             
             return allRestingHeartRates;
+        }
+
+        public IList<StepCount> GetAllStepCounts()
+        {
+            var allStepCounts = _healthRepository.GetAllStepCounts().OrderBy(x => x.CreatedDate).ToList();
+            allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
+
+            return allStepCounts;
+        }
+
+        public IList<StepCount> GetAllStepCountsByWeek()
+        {
+            var dailyStepCounts = GetAllStepCounts();
+
+            var weekGroups = dailyStepCounts.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
+
+            var weeklyStepCounts = new List<StepCount>();
+            foreach (var group in weekGroups)
+            {
+                var stepCount = new StepCount
+                {
+                    CreatedDate = group.Key,
+                    Count = group.Sum(x => x.Count)
+                };
+
+                weeklyStepCounts.Add(stepCount);
+            }
+
+            return weeklyStepCounts;
+        }
+
+        public IList<StepCount> GetAllStepCountsByMonth()
+        {
+            var dailySteps = GetAllStepCounts();
+
+            var monthGroups = dailySteps.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
+
+            var monthlySteps = new List<StepCount>();
+
+            foreach (var group in monthGroups)
+            {
+                var stepCount = new StepCount
+                {
+                    CreatedDate = group.Key,
+                    Count = (int)group.Average(x => x.Count)
+                };
+
+                monthlySteps.Add(stepCount);
+            }
+
+            return monthlySteps;
         }
 
         public DateTime GetLatestWeightDate(DateTime defaultDateTime)
@@ -135,14 +185,8 @@ namespace Services.MyHealth
         public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
         {
             _logger.Log($"STEP COUNT : Saving {stepCounts.Count()} Step Count");
-
-            var orderedStepCounts = stepCounts.OrderBy(x => x.CreatedDate).ToList();
-
-            var previousStepCount = _healthRepository.GetLatestStepCounts(1, orderedStepCounts.Min(x=>x.CreatedDate)).FirstOrDefault();
-
-            var stepCountWithSums = _aggregationCalculator.GetCumSums(previousStepCount, orderedStepCounts);
-
-            foreach (var stepCount in stepCountWithSums)
+            
+            foreach (var stepCount in stepCounts)
             {
                 _healthRepository.Upsert(stepCount);
             }            

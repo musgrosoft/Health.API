@@ -129,13 +129,19 @@ namespace Repositories.Health
             return _healthContext.RestingHeartRates.ToList();
         }
 
+        public IEnumerable<StepCount> GetAllStepCounts()
+        {
+            //to list to materialize entities
+            return _healthContext.StepCounts.ToList();
+        }
+
         public IEnumerable<Weight> GetAllWeights()
         {
             //to list to materialize entities
             return _healthContext.Weights.ToList();
         }
 
-        public IList<BloodPressure> GetAllBloodPressures()
+        public IEnumerable<BloodPressure> GetAllBloodPressures()
         {
             var allBloodPressures = _healthContext.BloodPressures.ToList();
             
