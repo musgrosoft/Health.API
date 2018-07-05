@@ -21,14 +21,14 @@ namespace HealthAPI.Controllers.Data
         }
 
         [HttpGet]
-        [Route("GetByWeek")]
+        [Route("GroupByWeek")]
         public IActionResult GetByWeek()
         {
             return Json(_healthService.GetAllStepCountsByWeek());
         }
 
         [HttpGet]
-        [Route("GetByMonth")]
+        [Route("GroupByMonth")]
         public IActionResult GetByMonth()
         {
             return Json(_healthService.GetAllStepCountsByMonth());
