@@ -67,6 +67,7 @@ namespace Services.MyHealth
         {
             var allStepCounts = _healthRepository.GetAllStepCounts().OrderBy(x => x.CreatedDate).ToList();
             allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
+            allStepCounts = _targetService.SetTargetStepCounts(allStepCounts, 30).ToList();
 
             return allStepCounts;
         }

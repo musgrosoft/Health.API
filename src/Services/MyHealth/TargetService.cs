@@ -86,6 +86,7 @@ namespace Services.MyHealth
         }
 
 
+
         private Double? GetTargetWeight(DateTime dateTime)
         {
             
@@ -121,6 +122,59 @@ namespace Services.MyHealth
 
 
         }
+
+
+
+        public IList<StepCount> SetTargetStepCounts(List<StepCount> stepCounts, int extraFutureDays)
+        {
+            foreach (var stepCount in stepCounts)
+            {
+                stepCount.TargetCumSum = GetTargetStepCountCumSum(stepCount.CreatedDate);
+            }
+
+            return stepCounts;
+        }
+
+        private double? GetTargetStepCountCumSum(DateTime dateTime)
+        {
+            var targetStartDate = new DateTime(2017, 5, 3);
+            //var targetEndDate = DateTime.Now.AddDays(100);
+            //var totalDays = (targetEndDate - targetStartDate).TotalDays;
+
+            var stepsOnTargetStartDate = 0;
+            var targetDailySteps = 10000;
+
+            var days = (dateTime - targetStartDate).TotalDays;
+
+            return stepsOnTargetStartDate + (days * targetDailySteps);
+        }
+
+
+        //[HttpGet]
+        //public IActionResult StepCounts()
+        //{
+        //    var targets = new List<StepCount>();
+
+        //    var targetStartDate = new DateTime(2017, 5, 3);
+        //    var targetEndDate = DateTime.Now.AddDays(100);
+        //    var totalDays = (targetEndDate - targetStartDate).TotalDays;
+
+        //    var stepsOnTargetStartDate = 0;
+        //    var targetDailySteps = 10000;
+
+        //    for (var i = 0; i <= totalDays; i++)
+        //    {
+        //        var target = new StepCount()
+        //        {
+        //            CreatedDate = targetStartDate.AddDays(i),
+        //            CumSumCount = stepsOnTargetStartDate + (i * targetDailySteps)
+        //        };
+
+        //        targets.Add(target);
+        //    }
+
+        //    return Json(targets);
+        //}
 
 
     }
