@@ -172,29 +172,18 @@ namespace Services.Tests.MyHealth
             //Given
             var newActivitySummaries = new List<ActivitySummary>
             {
-                new ActivitySummary { CreatedDate = new DateTime(2010,10,10) },
-                new ActivitySummary { CreatedDate = new DateTime(2011,10,10) }
-            };
-
-            var previousActivitySummary = new ActivitySummary();
-            
-            var activitySummariesWithSums = new List<ActivitySummary>
-            {
                 new ActivitySummary {CreatedDate = new DateTime(2016,1,1), FairlyActiveMinutes = 2016},
                 new ActivitySummary {CreatedDate = new DateTime(2017,1,1), FairlyActiveMinutes = 2017},
                 new ActivitySummary {CreatedDate = new DateTime(2018,1,1), FairlyActiveMinutes = 2018}
             };
-
-            _healthRepository.Setup(x => x.GetLatestActivitySummaries(1, new DateTime(2010, 10, 10))).Returns(new List<ActivitySummary> { previousActivitySummary });
-            _aggregationCalculator.Setup(x => x.GetCumSums(previousActivitySummary, It.IsAny<IList<ActivitySummary>>())).Returns(activitySummariesWithSums);
-
+            
             //When
             _healthService.UpsertActivitySummaries(newActivitySummaries);
 
             //Then
-            _healthRepository.Verify(x => x.Upsert(activitySummariesWithSums[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(activitySummariesWithSums[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(activitySummariesWithSums[2]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newActivitySummaries[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newActivitySummaries[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newActivitySummaries[2]), Times.Once);
         }
         
         [Fact]

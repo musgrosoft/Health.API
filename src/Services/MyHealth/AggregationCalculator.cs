@@ -128,7 +128,7 @@ namespace Services.MyHealth
             return localStepCounts;
         }
 
-        public IEnumerable<ActivitySummary> GetCumSums(ActivitySummary seed, IList<ActivitySummary> orderedActivitySummaries)
+        public IEnumerable<ActivitySummary> GetCumSums(IList<ActivitySummary> orderedActivitySummaries)
         {
             var localActivitySummaries = orderedActivitySummaries.ToList();
 
@@ -138,7 +138,7 @@ namespace Services.MyHealth
 
                 if (i == 0)
                 {
-                    previousCumSum = (seed?.CumSumActiveMinutes ?? 0);
+                    previousCumSum = 0;
                 }
                 else
                 {

@@ -119,7 +119,7 @@ namespace Services.MyHealth
         public IList<ActivitySummary> GetAllActivitySummaries()
         {
             var allActivitySummaries = _healthRepository.GetAllActivitySummaries().OrderBy(x => x.CreatedDate).ToList();
-            //allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
+            allActivitySummaries = _aggregationCalculator.GetCumSums(allActivitySummaries).ToList();
             //allStepCounts = _targetService.SetTargetStepCounts(allStepCounts, 30).ToList();
 
             return allActivitySummaries;
@@ -258,13 +258,7 @@ namespace Services.MyHealth
         {
             _logger.Log($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
 
-            var orderedActivitySummaries = activitySummaries.OrderBy(x => x.CreatedDate).ToList();
-
-            var previousActivitySummary = _healthRepository.GetLatestActivitySummaries(1, orderedActivitySummaries.Min(x => x.CreatedDate)).FirstOrDefault();
-
-            var activitySummariesWithSums = _aggregationCalculator.GetCumSums(previousActivitySummary, orderedActivitySummaries);
-
-            foreach (var activitySummary in activitySummariesWithSums)
+            foreach (var activitySummary in activitySummaries)
             {
                 _healthRepository.Upsert(activitySummary);
             }
