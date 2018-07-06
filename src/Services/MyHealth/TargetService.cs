@@ -136,7 +136,7 @@ namespace Services.MyHealth
         {
             foreach (var heartRateSummary in heartRateSummaries)
             {
-                heartRateSummary.TargetCumSumCardioAndAbove = GetTargetActivitySummaryCumSum(heartRateSummary.CreatedDate);
+                heartRateSummary.TargetCumSumCardioAndAbove = GetTargetCumSumCardioAndAbove(heartRateSummary.CreatedDate);
             }
 
             return heartRateSummaries;
