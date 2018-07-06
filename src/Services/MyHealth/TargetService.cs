@@ -146,8 +146,8 @@ namespace Services.MyHealth
         {
 
             var targetStartDate = new DateTime(2018, 5, 19);
-            var targetEndDate = DateTime.Now.AddDays(100);
-            var totalDays = (targetEndDate - targetStartDate).TotalDays;
+            //var targetEndDate = DateTime.Now.AddDays(100);
+            //var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
             var minutesOnTargetStartDate = 1775;
             var targetDailyMinutes = 11;
