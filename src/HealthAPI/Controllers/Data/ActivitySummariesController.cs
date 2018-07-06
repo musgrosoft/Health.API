@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Services.MyHealth;
 
 namespace HealthAPI.Controllers.Data
 {
@@ -10,5 +7,31 @@ namespace HealthAPI.Controllers.Data
     [Route("api/ActivitySummaries")]
     public class ActivitySummariesController : Controller
     {
+        private readonly IHealthService _healthService;
+
+        public ActivitySummariesController(IHealthService healthService)
+        {
+            _healthService = healthService;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Json(_healthService.GetAllActivitySummaries());
+        }
+
+        [HttpGet]
+        [Route("GroupByWeek")]
+        public IActionResult GetByWeek()
+        {
+            return Json(_healthService.GetAllActivitySummariesByWeek());
+        }
+
+        [HttpGet]
+        [Route("GroupByMonth")]
+        public IActionResult GetByMonth()
+        {
+            return Json(_healthService.GetAllActivitySummariesByMonth());
+        }
     }
 }

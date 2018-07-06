@@ -125,23 +125,7 @@ namespace HealthAPI
                 .Page() // Allow for the $top and $skip Commands                
                 .Select(); // Allow for the $select Command;
 
-            builder.EntitySet<ActivitySummary>("ActivitySummaries").EntityType
-                .HasKey(e => new { e.CreatedDate })
-                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
-                .Count() // Allow for the $count Command
-                .Expand() // Allow for the $expand Command
-                .OrderBy() // Allow for the $orderby Command                
-                .Page() // Allow for the $top and $skip Commands                
-                .Select(); // Allow for the $select Command;
 
-            builder.EntitySet<StepCount>("StepCounts").EntityType
-                .HasKey(e => new { e.CreatedDate })
-                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
-                .Count() // Allow for the $count Command
-                .Expand() // Allow for the $expand Command
-                .OrderBy() // Allow for the $orderby Command                
-                .Page() // Allow for the $top and $skip Commands                
-                .Select(); // Allow for the $select Command;
 
             builder.StructuralTypes.First(t => t.ClrType == typeof(ActivitySummary)).AddProperty(typeof(ActivitySummary).GetProperty("ActiveMinutes"));
 

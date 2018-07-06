@@ -122,7 +122,7 @@ namespace Repositories.Health
         {
             return _healthContext.HeartRateSummaries.OrderByDescending(x => x.CreatedDate);
         }
-
+        
         public IEnumerable<RestingHeartRate> GetAllRestingHeartRates()
         {
             //to list to materialize entities

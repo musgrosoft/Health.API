@@ -115,6 +115,67 @@ namespace Services.MyHealth
             return monthlySteps;
         }
 
+
+        public IList<ActivitySummary> GetAllActivitySummaries()
+        {
+            var allActivitySummaries = _healthRepository.GetAllActivitySummaries().OrderBy(x => x.CreatedDate).ToList();
+            //allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
+            //allStepCounts = _targetService.SetTargetStepCounts(allStepCounts, 30).ToList();
+
+            return allActivitySummaries;
+        }
+
+        public IList<ActivitySummary> GetAllActivitySummariesByWeek()
+        {
+            var dailyActivities = GetAllActivitySummaries();
+
+            var weekGroups = dailyActivities.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
+
+
+            var weeklyActivities = new List<ActivitySummary>();
+            foreach (var group in weekGroups)
+            {
+                var activity = new ActivitySummary
+                {
+                    CreatedDate = group.Key,
+                    SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
+                    LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
+                    FairlyActiveMinutes = group.Sum(x => x.FairlyActiveMinutes),
+                    VeryActiveMinutes = group.Sum(x => x.VeryActiveMinutes)
+                };
+
+                weeklyActivities.Add(activity);
+            }
+
+            return weeklyActivities;
+        }
+
+        public IList<ActivitySummary> GetAllActivitySummariesByMonth()
+        {
+            var dailyActivities = GetAllActivitySummaries();
+
+            var monthGroups = dailyActivities.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
+
+
+            var monthlyActivities = new List<ActivitySummary>();
+            foreach (var group in monthGroups)
+            {
+                var activity = new ActivitySummary
+                {
+                    CreatedDate = group.Key,
+                    SedentaryMinutes = (int)group.Average(x => x.SedentaryMinutes),
+                    LightlyActiveMinutes = (int)group.Average(x => x.LightlyActiveMinutes),
+                    FairlyActiveMinutes = (int)group.Average(x => x.FairlyActiveMinutes),
+                    VeryActiveMinutes = (int)group.Average(x => x.VeryActiveMinutes)
+                };
+
+                monthlyActivities.Add(activity);
+            }
+
+            return monthlyActivities;
+        }
+
+
         public DateTime GetLatestWeightDate(DateTime defaultDateTime)
         {
             var latestWeightDate = _healthRepository.GetLatestWeightDate();
@@ -241,6 +302,6 @@ namespace Services.MyHealth
                 _healthRepository.Upsert(alcoholIntake);
             }
         }
-        
+
     }
 }

@@ -13,6 +13,9 @@ namespace Services.MyHealth
         DateTime GetLatestStepCountDate(DateTime defaultDateTime);
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
 
+        IList<ActivitySummary> GetAllActivitySummaries();
+        IList<ActivitySummary> GetAllActivitySummariesByWeek();
+        IList<ActivitySummary> GetAllActivitySummariesByMonth();
 
         void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
         void UpsertActivitySummaries(IEnumerable<ActivitySummary> activitySummaries);

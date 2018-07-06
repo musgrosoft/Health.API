@@ -41,5 +41,6 @@ namespace Repositories.Health
         IEnumerable<BloodPressure> GetAllBloodPressures();
         IEnumerable<RestingHeartRate> GetAllRestingHeartRates();
         IEnumerable<StepCount> GetAllStepCounts();
+        IEnumerable<ActivitySummary> GetAllActivitySummaries();
     }
 }
