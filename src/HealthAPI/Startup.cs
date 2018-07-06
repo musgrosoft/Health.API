@@ -127,9 +127,6 @@ namespace HealthAPI
 
 
 
-            builder.StructuralTypes.First(t => t.ClrType == typeof(ActivitySummary)).AddProperty(typeof(ActivitySummary).GetProperty("ActiveMinutes"));
-
-
             //app.UseMvc(route =>
             //{
             //    route.MapRoute(
