@@ -23,7 +23,7 @@ namespace Services.MyHealth
         void UpsertStepCounts(IEnumerable<StepCount> stepCount);
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
-        void UpsertAlcoholIntakes();
+       // void UpsertAlcoholIntakes();
 
 
         IList<Weight> GetAllWeights();
@@ -32,5 +32,11 @@ namespace Services.MyHealth
         IList<StepCount> GetAllStepCounts();
         IList<StepCount> GetAllStepCountsByWeek();
         IList<StepCount> GetAllStepCountsByMonth();
+        IList<AlcoholIntake> GetAllAlcoholIntakes();
+        IList<AlcoholIntake> GetAllAlcoholIntakesByWeek();
+        IList<AlcoholIntake> GetAllAlcoholIntakesByMonth();
+        IList<HeartRateSummary> GetAllHeartRateSummaries();
+        IList<HeartRateSummary> GetAllHeartRateSummariessByWeek();
+        IList<HeartRateSummary> GetAllHeartRateSummariesByMonth();
     }
 }

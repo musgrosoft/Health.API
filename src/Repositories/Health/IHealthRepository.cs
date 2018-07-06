@@ -23,24 +23,20 @@ namespace Repositories.Health
         void Upsert(HeartRateSummary heartSummary);
         void Upsert(AlcoholIntake alcoholIntake);
 
-        IList<Weight> GetLatestWeights(int number, DateTime beforeDate);
-        IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate);
-        IEnumerable<BloodPressure> GetLatestBloodPressures(int number, DateTime beforeDate);
-        IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number, DateTime beforeDate);
-        IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate);
-        IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate);
+        //IList<Weight> GetLatestWeights(int number, DateTime beforeDate);
+        //IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate);
+        //IEnumerable<BloodPressure> GetLatestBloodPressures(int number, DateTime beforeDate);
+        //IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number, DateTime beforeDate);
+        //IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate);
+        //IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate);
+        
+
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
-
-
-
-
-        IList<Weight> GetWeightsFromDate(DateTime afterDate);
-
-
         IEnumerable<Weight> GetAllWeights();
         IEnumerable<BloodPressure> GetAllBloodPressures();
         IEnumerable<RestingHeartRate> GetAllRestingHeartRates();
         IEnumerable<StepCount> GetAllStepCounts();
         IEnumerable<ActivitySummary> GetAllActivitySummaries();
+        IEnumerable<HeartRateSummary> GetAllHeartRateSummaries();
     }
 }

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Repositories.Models;
-using Utils;
 
 namespace Repositories.Health
 {
@@ -72,55 +70,56 @@ namespace Repositories.Health
             return _healthContext.Runs.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        public IList<Weight> GetLatestWeights(int number, DateTime beforeDate)
-        {
-            return _healthContext.Weights.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
-        }
+        //public IList<Weight> GetLatestWeights(int number, DateTime beforeDate)
+        //{
+        //    return _healthContext.Weights.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
+        //}
 
-        public IList<Weight> GetWeightsFromDate(DateTime afterDate)
-        {
-            return _healthContext.Weights.Where(x => x.CreatedDate > afterDate).OrderByDescending(x => x.CreatedDate).ToList();
-        }
+        //public IList<Weight> GetWeightsFromDate(DateTime afterDate)
+        //{
+        //    return _healthContext.Weights.Where(x => x.CreatedDate > afterDate).OrderByDescending(x => x.CreatedDate).ToList();
+        //}
 
 
-        public IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
-        {
-            return _healthContext.HeartRateSummaries.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
-        }
+        //public IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate)
+        //{
+        //    return _healthContext.HeartRateSummaries.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
+        //}
 
-        public IEnumerable<BloodPressure> GetLatestBloodPressures(int number, DateTime beforeDate)
-        {
-            return _healthContext.BloodPressures.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number);
-        }
+        //public IEnumerable<BloodPressure> GetLatestBloodPressures(int number, DateTime beforeDate)
+        //{
+        //    return _healthContext.BloodPressures.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number);
+        //}
 
-        public IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number, DateTime beforeDate)
-        {
-            return _healthContext.RestingHeartRates.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number);
-        }
+        //public IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number, DateTime beforeDate)
+        //{
+        //    return _healthContext.RestingHeartRates.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number);
+        //}
 
-        public IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate)
-        {
-            return _healthContext.StepCounts.Where(x=>x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
-        }
+        //public IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate)
+        //{
+        //    return _healthContext.StepCounts.Where(x=>x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
+        //}
 
-        public IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate)
-        {
-            return _healthContext.ActivitySummaries.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
-        }
+        //public IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate)
+        //{
+        //    return _healthContext.ActivitySummaries.Where(x => x.CreatedDate < beforeDate).OrderByDescending(x => x.CreatedDate).Take(number).ToList();
+        //}
 
         public IEnumerable<AlcoholIntake> GetAllAlcoholIntakes()
         {
-            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.CreatedDate);
+            return _healthContext.AlcoholIntakes.ToList();
         }
+
 
         public IEnumerable<ActivitySummary> GetAllActivitySummaries()
         {
-            return _healthContext.ActivitySummaries.OrderByDescending(x => x.CreatedDate);
+            return _healthContext.ActivitySummaries.ToList();
         }
 
         public IEnumerable<HeartRateSummary> GetAllHeartRateSummaries()
         {
-            return _healthContext.HeartRateSummaries.OrderByDescending(x => x.CreatedDate);
+            return _healthContext.HeartRateSummaries.ToList();
         }
         
         public IEnumerable<RestingHeartRate> GetAllRestingHeartRates()
