@@ -1,6 +1,4 @@
-﻿using Repositories.Health;
-using Repositories.Models;
-using Services.Domain;
+﻿using Repositories.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

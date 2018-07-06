@@ -102,28 +102,6 @@ namespace HealthAPI
             app.UseMvc();
 
 
-            //Adding Model class to OData
-            var builder = new ODataConventionModelBuilder();
-
-
-            builder.EntitySet<AlcoholIntake>("AlcoholIntakes").EntityType
-                .HasKey(e => new { e.CreatedDate })
-                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
-                .Count() // Allow for the $count Command
-                .Expand() // Allow for the $expand Command
-                .OrderBy() // Allow for the $orderby Command                
-                .Page() // Allow for the $top and $skip Commands                
-                .Select(); // Allow for the $select Command;
-
-
-            builder.EntitySet<HeartRateSummary>("HeartRateSummaries").EntityType
-                .HasKey(e => new { e.CreatedDate })
-                .Filter(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed) // Allow for the $filter Command
-                .Count() // Allow for the $count Command
-                .Expand() // Allow for the $expand Command
-                .OrderBy() // Allow for the $orderby Command                
-                .Page() // Allow for the $top and $skip Commands                
-                .Select(); // Allow for the $select Command;
 
 
 
@@ -140,11 +118,9 @@ namespace HealthAPI
             //    //);
             //});
 
-            //Enabling OData routing.
             app.UseMvc(routeBuilder =>
                 {
-                    //routebuilder.Filter().Expand().Select().OrderBy().MaxTop(null).Count();
-                    routeBuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
+                    
                     routeBuilder.EnableDependencyInjection();
                     routeBuilder.MapRoute(
                   name: "api",
