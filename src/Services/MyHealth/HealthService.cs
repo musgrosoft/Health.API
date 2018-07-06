@@ -233,6 +233,9 @@ namespace Services.MyHealth
             allActivitySummaries = _aggregationCalculator.GetCumSums(allActivitySummaries).ToList();
             //allStepCounts = _targetService.SetTargetStepCounts(allStepCounts, 30).ToList();
 
+            //            allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
+            allActivitySummaries = _targetService.SetTargetActivitySummaries(allActivitySummaries, 30).ToList();
+
             return allActivitySummaries;
         }
 

@@ -20,31 +20,31 @@ namespace HealthAPI.Controllers.Migration
             _targetService = targetService;
         }
 
-        [HttpGet]
-        public IActionResult ActivitySummaries()
-        {
-            var targets = new List<ActivitySummary>();
+        //[HttpGet]
+        //public IActionResult ActivitySummaries()
+        //{
+        //    var targets = new List<ActivitySummary>();
 
-            var targetStartDate = new DateTime(2017, 5, 2);
-            var targetEndDate = DateTime.Now.AddDays(100);
-            var totalDays = (targetEndDate - targetStartDate).TotalDays;
+        //    var targetStartDate = new DateTime(2017, 5, 2);
+        //    var targetEndDate = DateTime.Now.AddDays(100);
+        //    var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
-            var activeMinutesOnTargetStartDate = 0;
-            var targetDailyActiveMinutes = 30;
+        //    var activeMinutesOnTargetStartDate = 0;
+        //    var targetDailyActiveMinutes = 30;
 
-            for (var i = 0; i <= totalDays; i++)
-            {
-                var target = new ActivitySummary
-                {
-                    CreatedDate = targetStartDate.AddDays(i),
-                    CumSumActiveMinutes = (int)(activeMinutesOnTargetStartDate + (i * targetDailyActiveMinutes))
-                };
+        //    for (var i = 0; i <= totalDays; i++)
+        //    {
+        //        var target = new ActivitySummary
+        //        {
+        //            CreatedDate = targetStartDate.AddDays(i),
+        //            CumSumActiveMinutes = (int)(activeMinutesOnTargetStartDate + (i * targetDailyActiveMinutes))
+        //        };
 
-                targets.Add(target);
-            }
+        //        targets.Add(target);
+        //    }
 
-            return Json(targets);
-        }
+        //    return Json(targets);
+        //}
 
         [HttpGet]
         public IActionResult AlcoholIntakes()

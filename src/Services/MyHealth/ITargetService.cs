@@ -11,5 +11,6 @@ namespace Services.MyHealth
 //        decimal? GetTargetWeight(DateTime dateTime);
         IList<Weight> SetTargetWeights(IList<Weight> weights, int extraFutureDays);
         IList<StepCount> SetTargetStepCounts(List<StepCount> stepCounts, int extraFutureDays);
+        IList<ActivitySummary> SetTargetActivitySummaries(List<ActivitySummary> allActivitySummaries, int extraFutureDays);
     }
 }

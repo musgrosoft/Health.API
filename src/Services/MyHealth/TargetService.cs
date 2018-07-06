@@ -149,6 +149,38 @@ namespace Services.MyHealth
             return stepsOnTargetStartDate + (days * targetDailySteps);
         }
 
+        public IList<ActivitySummary> SetTargetActivitySummaries(List<ActivitySummary> allActivitySummaries, int extraFutureDays)
+        {
+            foreach (var activitySummary in allActivitySummaries)
+            {
+                activitySummary.TargetCumSumActiveMinutes = GetTargetActivitySummaryCumSum(activitySummary.CreatedDate);
+            }
+
+            return allActivitySummaries;
+        }
+
+        private double? GetTargetActivitySummaryCumSum(DateTime createdDate)
+        {
+
+            var targetStartDate = new DateTime(2017, 5, 2);
+            var targetEndDate = DateTime.Now.AddDays(100);
+            var totalDays = (targetEndDate - targetStartDate).TotalDays;
+
+            var activeMinutesOnTargetStartDate = 0;
+            var targetDailyActiveMinutes = 30;
+
+
+            var daysDiff = (createdDate - targetStartDate).TotalDays;
+
+            if (daysDiff < 0)
+            {
+                return null;
+            }
+
+            return (activeMinutesOnTargetStartDate + (daysDiff * targetDailyActiveMinutes));
+
+        }
+
 
         //[HttpGet]
         //public IActionResult StepCounts()
