@@ -82,7 +82,7 @@ namespace Services.MyHealth
         {
             foreach (var stepCount in stepCounts)
             {
-                stepCount.TargetCumSum = GetTargetStepCountCumSum(stepCount.CreatedDate);
+                stepCount.TargetCumSumCount = GetTargetStepCountCumSum(stepCount.CreatedDate);
             }
 
             return stepCounts;
@@ -134,32 +134,70 @@ namespace Services.MyHealth
 
         }
 
+        public IList<HeartRateSummary> SetTargetHeartRateSummaries(List<HeartRateSummary> heartRateSummaries, int extraFutureDays)
+        {
+            foreach (var heartRateSummary in heartRateSummaries)
+            {
+                heartRateSummary.TargetCumSumCardioAndAbove = GetTargetActivitySummaryCumSum(heartRateSummary.CreatedDate);
+            }
 
-        //[HttpGet]
-        //public IActionResult StepCounts()
-        //{
-        //    var targets = new List<StepCount>();
+            return heartRateSummaries;
+        }
 
-        //    var targetStartDate = new DateTime(2017, 5, 3);
-        //    var targetEndDate = DateTime.Now.AddDays(100);
-        //    var totalDays = (targetEndDate - targetStartDate).TotalDays;
+        private double? GetTargetCumSumCardioAndAbove(DateTime dateTime)
+        {
 
-        //    var stepsOnTargetStartDate = 0;
-        //    var targetDailySteps = 10000;
+            var targetStartDate = new DateTime(2018, 5, 19);
+            var targetEndDate = DateTime.Now.AddDays(100);
+            var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
-        //    for (var i = 0; i <= totalDays; i++)
-        //    {
-        //        var target = new StepCount()
-        //        {
-        //            CreatedDate = targetStartDate.AddDays(i),
-        //            CumSumCount = stepsOnTargetStartDate + (i * targetDailySteps)
-        //        };
+            var minutesOnTargetStartDate = 1775;
+            var targetDailyMinutes = 11;
 
-        //        targets.Add(target);
-        //    }
+            var daysDiff = (dateTime - targetStartDate).TotalDays;
 
-        //    return Json(targets);
-        //}
+            if (daysDiff < 0)
+            {
+                return null;
+            }
+
+            return minutesOnTargetStartDate + (daysDiff * targetDailyMinutes);
+
+
+        }
+
+        public IList<AlcoholIntake> SetTargetAlcoholIntakes(List<AlcoholIntake> alcoholIntakes, int extraFutureDays)
+        {
+            foreach (var alcoholIntake in alcoholIntakes)
+            {
+                alcoholIntake.TargetCumSumUnits = GetTargetActivitySummaryCumSum(alcoholIntake.CreatedDate);
+            }
+
+            return alcoholIntakes;
+        }
+
+        private double? GetAlcoholIntakeTarget(DateTime dateTime)
+        {
+            var targetStartDate = new DateTime(2018, 5, 29);
+            var targetEndDate = DateTime.Now.AddDays(100);
+            var totalDays = (targetEndDate - targetStartDate).TotalDays;
+
+            var unitsOnTargetStartDate = 5148;
+            var targetDailyUnits = 4;
+
+            var daysDiff = (dateTime - targetStartDate).TotalDays;
+
+            if (daysDiff < 0)
+            {
+                return null;
+            }
+
+            return unitsOnTargetStartDate + (daysDiff * targetDailyUnits);
+
+
+         
+        }
+
 
 
     }

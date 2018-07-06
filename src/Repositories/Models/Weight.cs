@@ -13,9 +13,9 @@ namespace Repositories.Models
 
         [NotMapped]
         public Double? MovingAverageKg { get; set; }
-
         [NotMapped]
-        public Double? TargetKg { get; set; }// => Utils.TargetService.GetTargetWeight(CreatedDate);
+        public Double? TargetKg { get; set; }
+
     }
 
 }

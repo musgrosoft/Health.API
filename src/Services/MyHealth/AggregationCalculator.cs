@@ -151,7 +151,7 @@ namespace Services.MyHealth
             return localActivitySummaries;
         }
 
-        public IEnumerable<HeartRateSummary> GetCumSums(HeartRateSummary seedHeartSummary, IList<HeartRateSummary> orderedHeartSummaries)
+        public IEnumerable<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartSummaries)
         {
             var localHeartSummaries = orderedHeartSummaries.ToList();
 
@@ -161,7 +161,7 @@ namespace Services.MyHealth
 
                 if (i == 0)
                 {
-                    previousCumSum = (seedHeartSummary?.CumSumCardioAndAbove ?? 0);
+                    previousCumSum = 0;
                 }
                 else
                 {

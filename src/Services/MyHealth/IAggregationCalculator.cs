@@ -6,15 +6,13 @@ namespace Services.MyHealth
 {
     public interface IAggregationCalculator
     {
-        // IEnumerable<BloodPressure> GetMovingAverages(IList<BloodPressure> seedBloodPressures, IList<BloodPressure> orderedBloodPressures, int period);
         IList<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> orderedRestingHeartRates, int period);
-        //IList<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period);
         IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period);
         IList<BloodPressure> GetMovingAverages(IList<BloodPressure> orderedBloodPressures, int period);
 
         IEnumerable<StepCount> GetCumSums(IList<StepCount> orderedStepCounts);
         IEnumerable<ActivitySummary> GetCumSums(IList<ActivitySummary> orderedActivitySummaries);
-        IEnumerable<HeartRateSummary> GetCumSums(HeartRateSummary seedHeartSummary, IList<HeartRateSummary> orderedHeartSummaries);
+        IEnumerable<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartSummaries);
         IEnumerable<AlcoholIntake> GetCumSums(IList<AlcoholIntake> alcoholIntakes);
     }
 }

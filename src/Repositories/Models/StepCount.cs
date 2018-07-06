@@ -13,6 +13,6 @@ namespace Repositories.Models
         [NotMapped]
         public int? CumSumCount { get; set; }
         [NotMapped]
-        public double? TargetCumSum { get; set; }
+        public double? TargetCumSumCount { get; set; }
     }
 }

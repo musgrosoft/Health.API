@@ -171,8 +171,8 @@ namespace Services.MyHealth
         public IList<HeartRateSummary> GetAllHeartRateSummaries()
         {
             var allHeartRateSummaries = _healthRepository.GetAllHeartRateSummaries().OrderBy(x => x.CreatedDate).ToList();
-            //allAlcoholIntakes = _aggregationCalculator.GetCumSums(allAlcoholIntakes).ToList();
-            //allAlcoholIntakes = _targetService.SetTargetStepCounts(allAlcoholIntakes, 30).ToList();
+            allHeartRateSummaries = _aggregationCalculator.GetCumSums(allHeartRateSummaries).ToList();
+            allHeartRateSummaries = _targetService.SetTargetHeartRateSummaries(allHeartRateSummaries, 30).ToList();
 
             return allHeartRateSummaries;
         }

@@ -7,13 +7,15 @@ namespace Repositories.Models
     public class HeartRateSummary
     {
         [Key]
-        [Column(TypeName = "DateTime")]
         public DateTime CreatedDate { get; set; }
         public int? OutOfRangeMinutes { get; set; }
         public int? FatBurnMinutes { get; set; }
         public int? CardioMinutes { get; set; }
         public int? PeakMinutes { get; set; }
-        public int? CumSumCardioAndAbove { get; set; }
 
+        [NotMapped]
+        public int? CumSumCardioAndAbove { get; set; }
+        [NotMapped]
+        public double? TargetCumSumCardioAndAbove { get; set; }
     }
 }

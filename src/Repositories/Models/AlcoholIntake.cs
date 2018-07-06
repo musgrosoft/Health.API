@@ -11,6 +11,9 @@ namespace Repositories.Models
         public DateTime CreatedDate { get; set; }
         public Double Units { get; set; }
         
+        [NotMapped]
         public Double? CumSumUnits { get; set; }
+        [NotMapped]
+        public double? TargetCumSumUnits { get; set; }
     }
 }
