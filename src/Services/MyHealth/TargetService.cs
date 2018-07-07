@@ -95,6 +95,8 @@ namespace Services.MyHealth
             var stepsOnTargetStartDate = 0;
             var targetDailySteps = 10000;
 
+            var daysDiff = (dateTime - targetStartDate).TotalDays;
+
             if (daysDiff < 0)
             {
                 return null;

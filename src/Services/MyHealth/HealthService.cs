@@ -49,7 +49,16 @@ namespace Services.MyHealth
 
         public IList<BloodPressure> GetAllBloodPressures()
         {
-            IList<BloodPressure> allBloodPressures = _healthRepository.GetAllBloodPressures().OrderBy(x=>x.CreatedDate).ToList();
+            IList<BloodPressure> allBloodPressures = _healthRepository.GetAllBloodPressures()
+                .GroupBy(x => x.CreatedDate.Date)
+                .Select(x => new BloodPressure
+                {
+                    CreatedDate = x.Key.Date,
+                    Systolic = x.Average(w => w.Systolic),
+                    Diastolic = x.Average(w => w.Diastolic),
+                })
+                .OrderBy(x => x.CreatedDate).ToList();
+
             allBloodPressures = _aggregationCalculator.GetMovingAverages(allBloodPressures, 10);
 
             return allBloodPressures;
@@ -118,8 +127,8 @@ namespace Services.MyHealth
         public IList<AlcoholIntake> GetAllAlcoholIntakes()
         {
             var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes().OrderBy(x => x.CreatedDate).ToList();
-            //allAlcoholIntakes = _aggregationCalculator.GetCumSums(allAlcoholIntakes).ToList();
-            //allAlcoholIntakes = _targetService.SetTargetStepCounts(allAlcoholIntakes, 30).ToList();
+            allAlcoholIntakes = _aggregationCalculator.GetCumSums(allAlcoholIntakes).ToList();
+            allAlcoholIntakes = _targetService.SetTargetAlcoholIntakes(allAlcoholIntakes, 30).ToList();
 
             return allAlcoholIntakes;
         }

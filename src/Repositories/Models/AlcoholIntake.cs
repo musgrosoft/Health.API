@@ -7,7 +7,7 @@ namespace Repositories.Models
     public class AlcoholIntake
     {
         [Key]
-        public DateTime DateTime { get; set; }
+        public DateTime CreatedDate { get; set; }
         public Double Units { get; set; }
         
         [NotMapped]
