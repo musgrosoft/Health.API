@@ -88,12 +88,17 @@ namespace Services.MyHealth
 
         private double? GetTargetStepCountCumSum(DateTime dateTime)
         {
-            var targetStartDate = new DateTime(2017, 5, 3);
+            var targetStartDate = new DateTime(2017, 5, 2);
             //var targetEndDate = DateTime.Now.AddDays(100);
             //var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
             var stepsOnTargetStartDate = 0;
             var targetDailySteps = 10000;
+
+            if (daysDiff < 0)
+            {
+                return null;
+            }
 
             var days = (dateTime - targetStartDate).TotalDays;
 
@@ -145,7 +150,7 @@ namespace Services.MyHealth
         private double? GetTargetCumSumCardioAndAbove(DateTime dateTime)
         {
 
-            var targetStartDate = new DateTime(2018, 5, 19);
+            var targetStartDate = new DateTime(2018, 5, 20);
             //var targetEndDate = DateTime.Now.AddDays(100);
             //var totalDays = (targetEndDate - targetStartDate).TotalDays;
 
