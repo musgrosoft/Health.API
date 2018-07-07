@@ -175,7 +175,7 @@ namespace Services.MyHealth
         {
             foreach (var alcoholIntake in alcoholIntakes)
             {
-                alcoholIntake.TargetCumSumUnits = GetTargetActivitySummaryCumSum(alcoholIntake.CreatedDate);
+                alcoholIntake.TargetCumSumUnits = GetAlcoholIntakeTarget(alcoholIntake.CreatedDate);
             }
 
             return alcoholIntakes;
