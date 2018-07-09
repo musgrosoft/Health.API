@@ -25,7 +25,7 @@ namespace Services.Tests.Fitbit
         private FitbitClient _fitbitClient;
 
         private Mock<IFitbitAuthenticator> _fitbitAuthenticator;
-        private string _accessToken = "TEST_ACCESS_TOKEN";
+       // private string _accessToken;
 
         public FitbitClientTests()
         {

@@ -1,49 +1,54 @@
-﻿//using HealthAPI.Controllers.OData;
-//using Repositories.Models;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using Xunit;
+﻿using Repositories.Models;
+using System;
+using System.Collections.Generic;
+using HealthAPI.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Repositories.Health;
+using Services.MyHealth;
+using Xunit;
 
-//namespace HealthAPI.Unit.Tests.Controllers.OData
-//{
-//    public class WeightsControllerTests : IDisposable
-//    {
-//        private WeightsController _controller;
-//        private FakeLocalContext _fakeLocalContext;
+namespace HealthAPI.Unit.Tests.Controllers.OData
+{
+    public class WeightsControllerTests
+    {
+        private Mock<IHealthService> _healthService;
+        private WeightsController _controller;
 
-//        public WeightsControllerTests()
-//        {
-//            _fakeLocalContext = new FakeLocalContext();
-//            _controller = new WeightsController(_fakeLocalContext);
-//        }
+        public WeightsControllerTests()
+        {
+            _healthService = new Mock<IHealthService>();
 
-//        public void Dispose()
-//        {
-//            _fakeLocalContext.Database.EnsureDeleted();
-//        }
+            _controller = new WeightsController(_healthService.Object);
+        }
 
-//        [Fact]
-//        public void ShouldGetBloodPressures()
-//        {
 
-//            _fakeLocalContext.Add(new Weight { DateTime = new DateTime(2018, 6, 1), Kg = 1 });
-//            _fakeLocalContext.Add(new Weight { DateTime = new DateTime(2018, 6, 2), Kg = 2 });
-//            _fakeLocalContext.Add(new Weight { DateTime = new DateTime(2018, 6, 3), Kg = 3 });
-//            _fakeLocalContext.Add(new Weight { DateTime = new DateTime(2018, 6, 4), Kg = 4 });
-//            _fakeLocalContext.Add(new Weight { DateTime = new DateTime(2018, 6, 5), Kg = 5 });
-//            _fakeLocalContext.SaveChanges();
+        [Fact]
+        public void ShouldGetWeights()
+        {
 
-//            var weights = _controller.Get();
+            var someWeights = new List<Weight>
+            {
+                new Weight { CreatedDate = new DateTime(2018, 6, 1), Kg = 1 },
+                new Weight { CreatedDate = new DateTime(2018, 6, 2), Kg = 2 },
+                new Weight { CreatedDate = new DateTime(2018, 6, 3), Kg = 3 },
+                new Weight { CreatedDate = new DateTime(2018, 6, 4), Kg = 4 },
+                new Weight { CreatedDate = new DateTime(2018, 6, 5), Kg = 5 }
+            };
 
-//            Assert.Equal(5, weights.Count());
-//            Assert.Equal(1, weights.First(x => x.DateTime == new DateTime(2018, 6, 1)).Kg);
-//            Assert.Equal(2, weights.First(x => x.DateTime == new DateTime(2018, 6, 2)).Kg);
-//            Assert.Equal(3, weights.First(x => x.DateTime == new DateTime(2018, 6, 3)).Kg);
-//            Assert.Equal(4, weights.First(x => x.DateTime == new DateTime(2018, 6, 4)).Kg);
-//            Assert.Equal(5, weights.First(x => x.DateTime == new DateTime(2018, 6, 5)).Kg);
-//        }
+            _healthService.Setup(x => x.GetAllWeights()).Returns(someWeights);
 
-//    }
-//}
+            var result = (JsonResult)_controller.Get();
+
+            List<Weight> weights = (List<Weight>)result.Value;
+
+            Assert.Equal(5, weights.Count);
+            Assert.Equal(1, weights[0].Kg);
+            Assert.Equal(2, weights[1].Kg);
+            Assert.Equal(3, weights[2].Kg);
+            Assert.Equal(4, weights[3].Kg);
+            Assert.Equal(5, weights[4].Kg);
+        }
+
+    }
+}

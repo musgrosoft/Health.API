@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
-using Repositories;
 using Utils;
 
 namespace HealthAPI.Controllers.Migration
@@ -11,7 +10,6 @@ namespace HealthAPI.Controllers.Migration
     [Route("api/Nokia")]
     public class NokiaController : Controller
     {
-        private readonly HealthContext _context;
         private readonly ILogger _logger;
         private readonly INokiaMigrator _nokiaMigrator;
 
