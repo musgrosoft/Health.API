@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using HealthAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Repositories.Health;
 using Services.MyHealth;
 using Xunit;
 
