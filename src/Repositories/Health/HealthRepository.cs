@@ -13,27 +13,12 @@ namespace Repositories.Health
         {
             _healthContext = healthContext;
         }
-
-        //public void Insert<T>(T obj) where T : class
-        //{
-        //    _healthContext.Add(obj);
-        //    _healthContext.SaveChanges();
-        //}
-
-        public void Delete<T>(T obj) where T : class
-        {
-            _healthContext.Remove<T>(obj);
-            _healthContext.SaveChanges();
-        }
-
-
+        
         public DateTime? GetLatestStepCountDate()
         {
             return _healthContext.StepCounts.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
-
-
-
+        
         public DateTime? GetLatestBloodPressureDate()
         {
             return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
@@ -130,24 +115,24 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Upsert(AlcoholIntake alcoholIntake)
-        {
-            var existingAlcoholIntake = _healthContext.AlcoholIntakes.Find(alcoholIntake.CreatedDate);
+        //public void Upsert(AlcoholIntake alcoholIntake)
+        //{
+        //    var existingAlcoholIntake = _healthContext.AlcoholIntakes.Find(alcoholIntake.CreatedDate);
 
-            if (existingAlcoholIntake == null)
-            {
-                //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                _healthContext.Add(alcoholIntake);
-            }
-            else
-            {
-                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                existingAlcoholIntake.Units = alcoholIntake.Units;
-                existingAlcoholIntake.CumSumUnits = alcoholIntake.CumSumUnits;
-            }
+        //    if (existingAlcoholIntake == null)
+        //    {
+        //        //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+        //        _healthContext.Add(alcoholIntake);
+        //    }
+        //    else
+        //    {
+        //        // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+        //        existingAlcoholIntake.Units = alcoholIntake.Units;
+        //        existingAlcoholIntake.CumSumUnits = alcoholIntake.CumSumUnits;
+        //    }
 
-            _healthContext.SaveChanges();
-        }
+        //    _healthContext.SaveChanges();
+        //}
 
         public void Upsert(BloodPressure bloodPressure)
         {

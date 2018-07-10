@@ -1,120 +1,100 @@
-﻿//using System;
-//using System.Linq;
-//using HealthAPI.Controllers.OData;
-//using Microsoft.AspNetCore.Hosting;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.TestHost;
-//using Repositories.Models;
-//using Xunit;
+﻿using Repositories.Models;
+using System;
+using System.Collections.Generic;
+using HealthAPI.Controllers.Data;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Services.MyHealth;
+using Xunit;
 
-//namespace HealthAPI.Unit.Tests.Controllers.OData
-//{
-//    public class AlcoholIntakesControllerTests : IDisposable
-//    {
-//        private AlcoholIntakesController _controller;
-//        private FakeLocalContext _fakeLocalContext;
+namespace HealthAPI.Unit.Tests.Controllers.OData
+{
+    public class AlcoholIntakesControllerTests
+    {
+        private Mock<IHealthService> _healthService;
+        private AlcoholIntakesController _controller;
 
-//        public AlcoholIntakesControllerTests()
-//        {
-//            _fakeLocalContext = new FakeLocalContext();
-//            _controller = new AlcoholIntakesController(_fakeLocalContext);
-//        }
+        public AlcoholIntakesControllerTests()
+        {
+            _healthService = new Mock<IHealthService>();
 
-//        public void Dispose()
-//        {
-//            _fakeLocalContext.Database.EnsureDeleted();
-//        }
+            _controller = new AlcoholIntakesController(_healthService.Object);
+        }
 
-//        [Fact]
-//        public void ShouldGroupByMonth()
-//        {
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 1, 1), Units = 1 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 1, 2), Units = 2 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 1, 3), Units = 3 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 2, 1), Units = 4 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 2, 2), Units = 5 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 2, 3), Units = 6 });
-//            _fakeLocalContext.SaveChanges();
 
-//            var alcoholIntakes = _controller.GetByMonth();
+        [Fact]
+        public void ShouldGetAlcoholIntakes()
+        {
 
-//            // var alcoholIntakes = response as AlcoholIntake[] ?? response.ToArray();
-//            Assert.Equal(2, alcoholIntakes.Count());
-//            Assert.Equal(2, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 1, 1)).Units);
-//            Assert.Equal(5, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 2, 1)).Units);
+            var someAlcoholIntake = new List<AlcoholIntake>
+            {
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 1), Units = 1 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 2), Units = 2 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 3), Units = 3 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 4), Units = 4 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 5), Units = 5 }
+            };
 
-//        }
+            _healthService.Setup(x => x.GetAllAlcoholIntakes()).Returns(someAlcoholIntake);
 
-//        [Fact]
-//        public void ShouldGroupByWeek()
-//        {
+            var result = (JsonResult)_controller.Get();
 
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 11), Units = 1 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 12), Units = 2 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 13), Units = 3 });
+            List<AlcoholIntake> alcoholIntakes = (List<AlcoholIntake>)result.Value;
 
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 18), Units = 4 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 19), Units = 5 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 20), Units = 6 });
+            Assert.Equal(5, alcoholIntakes.Count);
+            Assert.Equal(1, alcoholIntakes[0].Units);
+            Assert.Equal(2, alcoholIntakes[1].Units);
+            Assert.Equal(3, alcoholIntakes[2].Units);
+            Assert.Equal(4, alcoholIntakes[3].Units);
+            Assert.Equal(5, alcoholIntakes[4].Units);
+        }
 
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 25), Units = 7 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 26), Units = 8 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 27), Units = 9 });
-//            _fakeLocalContext.SaveChanges();
-            
-//            var alcoholIntakes = _controller.GetByWeek();
+        [Fact]
+        public void ShouldGetAlcoholIntakesByWeek()
+        {
+            var someAlcoholIntake = new List<AlcoholIntake>
+            {
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 1), Units = 6 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 2), Units = 7 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 3), Units = 8 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 4), Units = 9 }
+            };
 
-//            Assert.Equal(3, alcoholIntakes.Count());
-//            Assert.Equal(6, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 6, 11)).Units);
-//            Assert.Equal(15, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 6, 18)).Units);
-//            Assert.Equal(24, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 6, 25)).Units);
+            _healthService.Setup(x => x.GetAllAlcoholIntakesByWeek()).Returns(someAlcoholIntake);
 
-//        }
+            var result = (JsonResult)_controller.GetByWeek();
 
-//        [Fact]
-//        public void ShouldGetAlcoholIntakes()
-//        {
+            List<AlcoholIntake> alcoholIntakes = (List<AlcoholIntake>)result.Value;
 
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 1), Units = 1 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 2), Units = 2 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 3), Units = 3 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 4), Units = 4 });
-//            _fakeLocalContext.Add(new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 5), Units = 5 });
-//            _fakeLocalContext.SaveChanges();
+            Assert.Equal(4, alcoholIntakes.Count);
+            Assert.Equal(6, alcoholIntakes[0].Units);
+            Assert.Equal(7, alcoholIntakes[1].Units);
+            Assert.Equal(8, alcoholIntakes[2].Units);
+            Assert.Equal(9, alcoholIntakes[3].Units);
 
-//            var alcoholIntakes = _controller.Get();
+        }
 
-//            Assert.Equal(5, alcoholIntakes.Count());
-//            Assert.Equal(1, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 6, 1)).Units);
-//            Assert.Equal(2, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 6, 2)).Units);
-//            Assert.Equal(3, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 6, 3)).Units);
-//            Assert.Equal(4, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 6, 4)).Units);
-//            Assert.Equal(5, alcoholIntakes.First(x => x.CreatedDate == new DateTime(2018, 6, 5)).Units);
+        [Fact]
+        public void ShouldGetAlcoholIntakesByMonth()
+        {
 
-//        }
+            var someAlcoholIntakes = new List<AlcoholIntake>
+            {
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 1), Units = 10 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 2), Units = 11 },
+                new AlcoholIntake { CreatedDate = new DateTime(2018, 6, 3), Units = 12 }
+            };
 
-//        //[Fact]
-//        //public void ShouldRunXXXXXXXXXXODataQuery()
-//        //{
-//        //    _fakeLocalContext.Add(new AlcoholIntake { DateTime = new DateTime(2016, 6, 1), Units = 1 });
-//        //    _fakeLocalContext.Add(new AlcoholIntake { DateTime = new DateTime(2016, 6, 2), Units = 2 });
-//        //    _fakeLocalContext.Add(new AlcoholIntake { DateTime = new DateTime(2017, 6, 3), Units = 3 });
-//        //    _fakeLocalContext.Add(new AlcoholIntake { DateTime = new DateTime(2017, 6, 4), Units = 4 });
-//        //    _fakeLocalContext.Add(new AlcoholIntake { DateTime = new DateTime(2018, 6, 5), Units = 5 });
-//        //    _fakeLocalContext.SaveChanges();
+            _healthService.Setup(x => x.GetAllAlcoholIntakesByMonth()).Returns(someAlcoholIntakes);
 
-//        //    _controller.ControllerContext = new ControllerContext();
-//        //    _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-//        //    _controller.ControllerContext.HttpContext.Request.Headers["device-id"] = "20317";
-//        //    _controller.ControllerContext.HttpContext.Request.QueryString = new QueryString("?$filter=year(DateTime)%20eq%202016");
+            var result = (JsonResult)_controller.GetByMonth();
 
-//        //    var alcoholIntakes = _controller.Get();
+            List<AlcoholIntake> alcoholIntakes = (List<AlcoholIntake>)result.Value;
 
-//        //    Assert.Equal(2, alcoholIntakes.Count());
-//        //    Assert.Equal(1, alcoholIntakes.First(x => x.DateTime == new DateTime(2016, 6, 1)).Units);
-//        //    Assert.Equal(2, alcoholIntakes.First(x => x.DateTime == new DateTime(2016, 6, 2)).Units);
-
-//        //}
-//    }
-//}
+            Assert.Equal(3, alcoholIntakes.Count);
+            Assert.Equal(10, alcoholIntakes[0].Units);
+            Assert.Equal(11, alcoholIntakes[1].Units);
+            Assert.Equal(12, alcoholIntakes[2].Units);
+        }
+    }
+}

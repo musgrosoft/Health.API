@@ -2,6 +2,7 @@
 using Repositories.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -261,115 +262,6 @@ namespace Repository.Unit.Tests
 
         }
 
-        //[Fact]
-        //public void ShouldFindWeight()
-        //{
-        //    var firstWeight = new Weight { DateTime = new DateTime(2018, 6, 1), Kg = 1};
-        //    var secondWeight = new Weight { DateTime = new DateTime(2018, 6, 2), Kg = 2 };
-        //    var thirdWeight = new Weight { DateTime = new DateTime(2018, 6, 3), Kg = 3 };
-
-        //    _fakeLocalContext.Weights.Add(firstWeight);
-        //    _fakeLocalContext.Weights.Add(secondWeight);
-        //    _fakeLocalContext.Weights.Add(thirdWeight);
-        //    _fakeLocalContext.SaveChanges();
-
-        //    var weight = _healthRepository.FindWeight(new DateTime(2018, 6, 2));
-
-        //    Assert.Equal(2, weight.Kg);
-
-        //}
-
-
-        //[Fact]
-        //public void ShouldFindBloodPressure()
-        //{
-        //    var firstBloodPressure = new BloodPressure { DateTime = new DateTime(2018, 6, 1), Systolic = 1 };
-        //    var secondBloodPressure = new BloodPressure { DateTime = new DateTime(2018, 6, 2), Systolic = 2 };
-        //    var thirdBloodPressure = new BloodPressure { DateTime = new DateTime(2018, 6, 3), Systolic = 3 };
-
-        //    _fakeLocalContext.BloodPressures.Add(firstBloodPressure);
-        //    _fakeLocalContext.BloodPressures.Add(secondBloodPressure);
-        //    _fakeLocalContext.BloodPressures.Add(thirdBloodPressure);
-        //    _fakeLocalContext.SaveChanges();
-
-        //    var bloodPressure = _healthRepository.Find(new BloodPressure { DateTime = new DateTime(2018, 6, 3) });
-
-        //    Assert.Equal(3, bloodPressure.Systolic);
-
-        //}
-
-        //[Fact]
-        //public void ShouldFindStepCount()
-        //{
-        //    var firstStepCount = new StepCount { DateTime = new DateTime(2018, 6, 1), Count = 1 };
-        //    var secondStepCount = new StepCount { DateTime = new DateTime(2018, 6, 2), Count = 2 };
-        //    var thirdStepCount = new StepCount { DateTime = new DateTime(2018, 6, 3), Count = 3 };
-
-        //    _fakeLocalContext.StepCounts.Add(firstStepCount);
-        //    _fakeLocalContext.StepCounts.Add(secondStepCount);
-        //    _fakeLocalContext.StepCounts.Add(thirdStepCount);
-        //    _fakeLocalContext.SaveChanges();
-
-        //    var stepCount = _healthRepository.Find(new StepCount { DateTime = new DateTime(2018, 6, 1) });
-
-        //    Assert.Equal(1, stepCount.Count);
-
-        //}
-
-        //[Fact]
-        //public void ShouldFindActivitySummary()
-        //{
-        //    var firstActivitySummary = new ActivitySummary { DateTime = new DateTime(2018, 6, 1), LightlyActiveMinutes = 1 };
-        //    var secondActivitySummary = new ActivitySummary { DateTime = new DateTime(2018, 6, 2), LightlyActiveMinutes = 2 };
-        //    var thirdActivitySummary = new ActivitySummary { DateTime = new DateTime(2018, 6, 3), LightlyActiveMinutes = 3 };
-
-        //    _fakeLocalContext.ActivitySummaries.Add(firstActivitySummary);
-        //    _fakeLocalContext.ActivitySummaries.Add(secondActivitySummary);
-        //    _fakeLocalContext.ActivitySummaries.Add(thirdActivitySummary);
-        //    _fakeLocalContext.SaveChanges();
-
-        //    var activitySummary = _healthRepository.Find(new ActivitySummary { DateTime = new DateTime(2018, 6, 3) });
-
-        //    Assert.Equal(3, activitySummary.LightlyActiveMinutes);
-
-        //}
-
-        //[Fact]
-        //public void ShouldFindRestingHeartRate()
-        //{
-        //    var firstRestingHeartRate = new RestingHeartRate { DateTime = new DateTime(2018, 6, 1), Beats = 1 };
-        //    var secondRestingHeartRate = new RestingHeartRate { DateTime = new DateTime(2018, 6, 2), Beats = 2 };
-        //    var thirdRestingHeartRate = new RestingHeartRate { DateTime = new DateTime(2018, 6, 3), Beats = 3 };
-
-        //    _fakeLocalContext.RestingHeartRates.Add(firstRestingHeartRate);
-        //    _fakeLocalContext.RestingHeartRates.Add(secondRestingHeartRate);
-        //    _fakeLocalContext.RestingHeartRates.Add(thirdRestingHeartRate);
-        //    _fakeLocalContext.SaveChanges();
-
-        //    var restingHeartRate = _healthRepository.Find(new RestingHeartRate { DateTime = new DateTime(2018, 6, 2) });
-
-        //    Assert.Equal(2, restingHeartRate.Beats);
-
-        //}
-
-        //[Fact]
-        //public void ShouldFindHeartSummary()
-        //{
-        //    var firstHeartSummary = new HeartSummary { DateTime = new DateTime(2018, 6, 1), FatBurnMinutes = 1 };
-        //    var secondHeartSummary = new HeartSummary { DateTime = new DateTime(2018, 6, 2), FatBurnMinutes = 2 };
-        //    var thirdHeartSummary = new HeartSummary { DateTime = new DateTime(2018, 6, 3), FatBurnMinutes = 3 };
-
-        //    _fakeLocalContext.HeartSummaries.Add(firstHeartSummary);
-        //    _fakeLocalContext.HeartSummaries.Add(secondHeartSummary);
-        //    _fakeLocalContext.HeartSummaries.Add(thirdHeartSummary);
-        //    _fakeLocalContext.SaveChanges();
-
-        //    var heartSummary = _healthRepository.Find(new HeartSummary { DateTime = new DateTime(2018, 6, 3) });
-
-        //    Assert.Equal(3, heartSummary.FatBurnMinutes);
-
-        //}
-
         [Fact]
         public void ShouldUpdateWeight()
         {
@@ -471,6 +363,189 @@ namespace Repository.Unit.Tests
             Assert.Equal(7, existingHeartSummary.CardioMinutes);
             Assert.Equal(8, existingHeartSummary.PeakMinutes);
 
+        }
+
+        [Fact]
+        public void ShouldGetAllActivitySummaries()
+        {
+            var activitySummaries = new List<ActivitySummary>
+            {
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,1), VeryActiveMinutes = 1},
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,2), VeryActiveMinutes = 2},
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,3), VeryActiveMinutes = 3}
+
+            };
+
+            foreach (var activitySummary in activitySummaries)
+            {
+                _fakeLocalContext.ActivitySummaries.Add(activitySummary);
+            }
+            
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllActivitySummaries().ToList();
+
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.VeryActiveMinutes == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.VeryActiveMinutes == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.VeryActiveMinutes == 3);
+        }
+
+        [Fact]
+        public void ShouldGetAllAlcoholIntakes()
+        {
+            var alcoholIntakes = new List<AlcoholIntake>
+            {
+                new AlcoholIntake {CreatedDate = new DateTime(2018,1,1), Units = 1},
+                new AlcoholIntake {CreatedDate = new DateTime(2018,1,2), Units = 2},
+                new AlcoholIntake {CreatedDate = new DateTime(2018,1,3), Units = 3}
+
+            };
+
+            foreach (var alcoholIntake in alcoholIntakes)
+            {
+                _fakeLocalContext.AlcoholIntakes.Add(alcoholIntake);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllAlcoholIntakes().ToList();
+
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Units == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Units == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Units == 3);
+        }
+
+        [Fact]
+        public void ShouldGetAllBloodPressures()
+        {
+            var bloodPressures = new List<BloodPressure>
+            {
+                new BloodPressure {CreatedDate = new DateTime(2018,1,1), Systolic = 1},
+                new BloodPressure {CreatedDate = new DateTime(2018,1,2), Systolic = 2},
+                new BloodPressure {CreatedDate = new DateTime(2018,1,3), Systolic = 3}
+
+            };
+
+            foreach (var bloodPressure in bloodPressures)
+            {
+                _fakeLocalContext.BloodPressures.Add(bloodPressure);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllBloodPressures().ToList();
+
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Systolic == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Systolic == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Systolic == 3);
+        }
+
+        [Fact]
+        public void ShouldGetAllHeartRateSummaries()
+        {
+            var heartRateSummaries = new List<HeartRateSummary>
+            {
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), CardioMinutes = 1},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,2), CardioMinutes = 2},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,3), CardioMinutes = 3}
+
+            };
+
+            foreach (var heartRateSummary in heartRateSummaries)
+            {
+                _fakeLocalContext.HeartRateSummaries.Add(heartRateSummary);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllHeartRateSummaries().ToList();
+
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.CardioMinutes == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.CardioMinutes == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.CardioMinutes == 3);
+        }
+
+
+        [Fact]
+        public void ShouldGetAllRestingHeartRates()
+        {
+            var restingHeartRates = new List<RestingHeartRate>
+            {
+                new RestingHeartRate {CreatedDate = new DateTime(2018,1,1), Beats = 1},
+                new RestingHeartRate {CreatedDate = new DateTime(2018,1,2), Beats = 2},
+                new RestingHeartRate {CreatedDate = new DateTime(2018,1,3), Beats = 3}
+
+            };
+
+            foreach (var restingHeartRate in restingHeartRates)
+            {
+                _fakeLocalContext.RestingHeartRates.Add(restingHeartRate);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllRestingHeartRates().ToList();
+
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Beats == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Beats == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Beats == 3);
+        }
+
+        [Fact]
+        public void ShouldGetAllStepCounts()
+        {
+            var stepCounts = new List<StepCount>
+            {
+                new StepCount {CreatedDate = new DateTime(2018,1,1), Count = 1},
+                new StepCount {CreatedDate = new DateTime(2018,1,2), Count = 2},
+                new StepCount {CreatedDate = new DateTime(2018,1,3), Count = 3}
+
+            };
+
+            foreach (var stepCount in stepCounts)
+            {
+                _fakeLocalContext.StepCounts.Add(stepCount);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllStepCounts().ToList();
+
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Count == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Count == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Count == 3);
+        }
+
+        [Fact]
+        public void ShouldGetAllWeights()
+        {
+            var weights = new List<Weight>
+            {
+                new Weight {CreatedDate = new DateTime(2018,1,1), Kg = 1},
+                new Weight {CreatedDate = new DateTime(2018,1,2), Kg = 2},
+                new Weight {CreatedDate = new DateTime(2018,1,3), Kg = 3}
+
+            };
+
+            foreach (var weight in weights)
+            {
+                _fakeLocalContext.Weights.Add(weight);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllWeights().ToList();
+
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Kg == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Kg == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Kg == 3);
         }
     }
 }

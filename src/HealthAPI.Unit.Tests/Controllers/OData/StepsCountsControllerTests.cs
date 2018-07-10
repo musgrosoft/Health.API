@@ -1,99 +1,100 @@
-﻿//using System;
-//using System.Linq;
-//using HealthAPI.Controllers.Data;
-//using HealthAPI.Controllers.OData;
-//using Microsoft.AspNetCore.Hosting;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.TestHost;
-//using Repositories.Models;
-//using Xunit;
-//
-//namespace HealthAPI.Unit.Tests.Controllers.OData
-//{
-//    public class StepCountsControllerTests : IDisposable
-//    {
-//        private StepCountsController _controller;
-//        private FakeLocalContext _fakeLocalContext;
-//
-//        public StepCountsControllerTests()
-//        {
-//            _fakeLocalContext = new FakeLocalContext();
-//            _controller = new StepCountsController(_fakeLocalContext);
-//        }
-//
-//        public void Dispose()
-//        {
-//            _fakeLocalContext.Database.EnsureDeleted();
-//        }
-//
-//        [Fact]
-//        public void ShouldGroupByMonth()
-//        {
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 1, 1), Count = 1 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 1, 2), Count = 2 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 1, 3), Count = 3 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 2, 1), Count = 4 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 2, 2), Count = 5 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 2, 3), Count = 6 });
-//            _fakeLocalContext.SaveChanges();
-//
-//            var stepCounts = _controller.GetByMonth();
-//
-//            // var alcoholIntakes = response as AlcoholIntake[] ?? response.ToArray();
-//            Assert.Equal(2, stepCounts.Count());
-//            Assert.Equal(2, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 1, 1)).Count);
-//            Assert.Equal(5, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 2, 1)).Count);
-//
-//        }
-//
-//        [Fact]
-//        public void ShouldGroupByWeek()
-//        {
-//
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 11), Count = 1 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 12), Count = 2 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 13), Count = 3 });
-//
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 18), Count = 4 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 19), Count = 5 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 20), Count = 6 });
-//
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 25), Count = 7 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 26), Count = 8 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 27), Count = 9 });
-//            _fakeLocalContext.SaveChanges();
-//            
-//            var stepCounts = _controller.GetByWeek();
-//
-//            Assert.Equal(3, stepCounts.Count());
-//            Assert.Equal(6, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 6, 11)).Count);
-//            Assert.Equal(15, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 6, 18)).Count);
-//            Assert.Equal(24, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 6, 25)).Count);
-//
-//        }
-//
-//        [Fact]
-//        public void ShouldGetStepCounts()
-//        {
-//
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 1), Count = 1 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 2), Count = 2 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 3), Count = 3 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 4), Count = 4 });
-//            _fakeLocalContext.Add(new StepCount { CreatedDate = new DateTime(2018, 6, 5), Count = 5 });
-//            _fakeLocalContext.SaveChanges();
-//
-//            var stepCounts = _controller.Get();
-//
-//            Assert.Equal(5, stepCounts.Count());
-//            Assert.Equal(1, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 6, 1)).Count);
-//            Assert.Equal(2, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 6, 2)).Count);
-//            Assert.Equal(3, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 6, 3)).Count);
-//            Assert.Equal(4, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 6, 4)).Count);
-//            Assert.Equal(5, stepCounts.First(x => x.CreatedDate == new DateTime(2018, 6, 5)).Count);
-//
-//        }
-//
-//    }
-//}
+﻿using Repositories.Models;
+using System;
+using System.Collections.Generic;
+using HealthAPI.Controllers.Data;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Services.MyHealth;
+using Xunit;
+
+namespace HealthAPI.Unit.Tests.Controllers.OData
+{
+    public class StepCountsControllerTests
+    {
+        private Mock<IHealthService> _healthService;
+        private StepCountsController _controller;
+
+        public StepCountsControllerTests()
+        {
+            _healthService = new Mock<IHealthService>();
+
+            _controller = new StepCountsController(_healthService.Object);
+        }
+
+
+        [Fact]
+        public void ShouldGetStepCounts()
+        {
+
+            var someStepCounts = new List<StepCount>
+            {
+                new StepCount { CreatedDate = new DateTime(2018, 6, 1), Count = 1 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 2), Count = 2 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 3), Count = 3 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 4), Count = 4 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 5), Count = 5 }
+            };
+
+            _healthService.Setup(x => x.GetAllStepCounts()).Returns(someStepCounts);
+
+            var result = (JsonResult)_controller.Get();
+
+            List<StepCount> stepCounts = (List<StepCount>)result.Value;
+
+            Assert.Equal(5, stepCounts.Count);
+            Assert.Equal(1, stepCounts[0].Count);
+            Assert.Equal(2, stepCounts[1].Count);
+            Assert.Equal(3, stepCounts[2].Count);
+            Assert.Equal(4, stepCounts[3].Count);
+            Assert.Equal(5, stepCounts[4].Count);
+        }
+
+        [Fact]
+        public void ShouldGetStepCountsByWeek()
+        {
+            var someStepCounts = new List<StepCount>
+            {
+                new StepCount { CreatedDate = new DateTime(2018, 6, 1), Count = 6 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 2), Count = 7 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 3), Count = 8 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 4), Count = 9 }
+            };
+
+            _healthService.Setup(x => x.GetAllStepCountsByWeek()).Returns(someStepCounts);
+
+            var result = (JsonResult)_controller.GetByWeek();
+
+            List<StepCount> alcoholIntakes = (List<StepCount>)result.Value;
+
+            Assert.Equal(4, alcoholIntakes.Count);
+            Assert.Equal(6, alcoholIntakes[0].Count);
+            Assert.Equal(7, alcoholIntakes[1].Count);
+            Assert.Equal(8, alcoholIntakes[2].Count);
+            Assert.Equal(9, alcoholIntakes[3].Count);
+
+        }
+
+        [Fact]
+        public void ShouldGetStepCountsByMonth()
+        {
+
+            var someStepCounts = new List<StepCount>
+            {
+                new StepCount { CreatedDate = new DateTime(2018, 6, 1), Count = 10 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 2), Count = 11 },
+                new StepCount { CreatedDate = new DateTime(2018, 6, 3), Count = 12 }
+            };
+
+            _healthService.Setup(x => x.GetAllStepCountsByMonth()).Returns(someStepCounts);
+
+            var result = (JsonResult)_controller.GetByMonth();
+
+            List<StepCount> alcoholIntakes = (List<StepCount>)result.Value;
+
+            Assert.Equal(3, alcoholIntakes.Count);
+            Assert.Equal(10, alcoholIntakes[0].Count);
+            Assert.Equal(11, alcoholIntakes[1].Count);
+            Assert.Equal(12, alcoholIntakes[2].Count);
+        }
+    }
+}

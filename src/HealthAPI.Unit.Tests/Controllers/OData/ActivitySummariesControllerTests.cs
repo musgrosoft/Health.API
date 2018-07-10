@@ -23,7 +23,7 @@ namespace HealthAPI.Unit.Tests.Controllers.OData
 
 
         [Fact]
-        public void ShouldGetBloodPressures()
+        public void ShouldGetActivitySummaries()
         {
 
             var someActivitySummaries = new List<ActivitySummary>
@@ -50,7 +50,7 @@ namespace HealthAPI.Unit.Tests.Controllers.OData
         }
 
         [Fact]
-        public void ShouldGetBloodPressuresByWeek()
+        public void ShouldGetActivitySummariesByWeek()
         {
             var someActivitySummaries = new List<ActivitySummary>
             {
@@ -75,7 +75,7 @@ namespace HealthAPI.Unit.Tests.Controllers.OData
         }
 
         [Fact]
-        public void ShouldGetBloodPressuresByMonth()
+        public void ShouldGetActivitySummariesByMonth()
         {
 
             var someActivitySummaries = new List<ActivitySummary>

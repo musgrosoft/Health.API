@@ -36,7 +36,7 @@ namespace Services.MyHealth
         IList<AlcoholIntake> GetAllAlcoholIntakesByWeek();
         IList<AlcoholIntake> GetAllAlcoholIntakesByMonth();
         IList<HeartRateSummary> GetAllHeartRateSummaries();
-        IList<HeartRateSummary> GetAllHeartRateSummariessByWeek();
+        IList<HeartRateSummary> GetAllHeartRateSummariesByWeek();
         IList<HeartRateSummary> GetAllHeartRateSummariesByMonth();
     }
 }

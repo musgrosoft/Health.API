@@ -24,7 +24,7 @@ namespace HealthAPI.Controllers.Data
         [Route("GroupByWeek")]
         public IActionResult GetByWeek()
         {
-            return Json(_healthService.GetAllHeartRateSummariessByWeek());
+            return Json(_healthService.GetAllHeartRateSummariesByWeek());
         }
 
         [HttpGet]

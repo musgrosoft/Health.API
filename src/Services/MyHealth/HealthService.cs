@@ -186,7 +186,7 @@ namespace Services.MyHealth
             return allHeartRateSummaries;
         }
 
-        public IList<HeartRateSummary> GetAllHeartRateSummariessByWeek()
+        public IList<HeartRateSummary> GetAllHeartRateSummariesByWeek()
         {
             var dailyHeartZones = GetAllHeartRateSummaries();
 
