@@ -370,9 +370,9 @@ namespace Repository.Unit.Tests
         {
             var activitySummaries = new List<ActivitySummary>
             {
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,1), VeryActiveMinutes = 1},
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,2), VeryActiveMinutes = 2},
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,3), VeryActiveMinutes = 3}
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,1), TargetCumSumActiveMinutes = 1},
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,2), TargetCumSumActiveMinutes = 2},
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,3), TargetCumSumActiveMinutes = 3}
 
             };
 
@@ -386,9 +386,9 @@ namespace Repository.Unit.Tests
             var result = _healthRepository.GetAllActivitySummaries().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.VeryActiveMinutes == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.VeryActiveMinutes == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.VeryActiveMinutes == 3);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetCumSumActiveMinutes == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetCumSumActiveMinutes == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetCumSumActiveMinutes == 3);
         }
 
         [Fact]
@@ -448,9 +448,9 @@ namespace Repository.Unit.Tests
         {
             var heartRateSummaries = new List<HeartRateSummary>
             {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), CardioMinutes = 1},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,2), CardioMinutes = 2},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,3), CardioMinutes = 3}
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), TargetCumSumCardioAndAbove = 1},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,2), TargetCumSumCardioAndAbove = 2},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,3), TargetCumSumCardioAndAbove = 3}
 
             };
 
@@ -464,9 +464,9 @@ namespace Repository.Unit.Tests
             var result = _healthRepository.GetAllHeartRateSummaries().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.CardioMinutes == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.CardioMinutes == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.CardioMinutes == 3);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetCumSumCardioAndAbove == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetCumSumCardioAndAbove == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetCumSumCardioAndAbove == 3);
         }
 
 
@@ -501,9 +501,9 @@ namespace Repository.Unit.Tests
         {
             var stepCounts = new List<StepCount>
             {
-                new StepCount {CreatedDate = new DateTime(2018,1,1), Count = 1},
-                new StepCount {CreatedDate = new DateTime(2018,1,2), Count = 2},
-                new StepCount {CreatedDate = new DateTime(2018,1,3), Count = 3}
+                new StepCount {CreatedDate = new DateTime(2018,1,1), TargetCumSumCount = 1},
+                new StepCount {CreatedDate = new DateTime(2018,1,2), TargetCumSumCount = 2},
+                new StepCount {CreatedDate = new DateTime(2018,1,3), TargetCumSumCount = 3}
 
             };
 
@@ -517,9 +517,9 @@ namespace Repository.Unit.Tests
             var result = _healthRepository.GetAllStepCounts().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Count == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Count == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Count == 3);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetCumSumCount == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetCumSumCount == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetCumSumCount == 3);
         }
 
         [Fact]
@@ -527,9 +527,9 @@ namespace Repository.Unit.Tests
         {
             var weights = new List<Weight>
             {
-                new Weight {CreatedDate = new DateTime(2018,1,1), Kg = 1},
-                new Weight {CreatedDate = new DateTime(2018,1,2), Kg = 2},
-                new Weight {CreatedDate = new DateTime(2018,1,3), Kg = 3}
+                new Weight {CreatedDate = new DateTime(2018,1,1), TargetKg = 1},
+                new Weight {CreatedDate = new DateTime(2018,1,2), TargetKg = 2},
+                new Weight {CreatedDate = new DateTime(2018,1,3), TargetKg = 3}
 
             };
 
@@ -543,9 +543,9 @@ namespace Repository.Unit.Tests
             var result = _healthRepository.GetAllWeights().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Kg == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Kg == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Kg == 3);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetKg == 1);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetKg == 2);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetKg == 3);
         }
     }
 }
