@@ -11,7 +11,7 @@ namespace Repositories.Models
         public int? Count { get; set; }
 
         [NotMapped]
-        public int? CumSumCount { get; set; }
+        public double? CumSumCount { get; set; }
         [NotMapped]
         public double? TargetCumSumCount { get; set; }
     }

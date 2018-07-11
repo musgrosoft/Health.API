@@ -3,6 +3,7 @@ using Repositories.Models;
 using Services.MyHealth;
 using Xunit;
 using System.Linq;
+using System;
 
 namespace Services.Tests.MyHealth
 {
@@ -14,6 +15,51 @@ namespace Services.Tests.MyHealth
         {
             _aggregationCalculator = new AggregationCalculator();
         }
+
+        [Fact]
+        public void ShouldGetCumSumForStepCounts()
+        {
+            var stepCounts = new List<StepCount> {
+                new StepCount{CreatedDate = new DateTime(2017,1,1), Count = 1},
+                new StepCount{CreatedDate = new DateTime(2017,1,2), Count = 2},
+                new StepCount{CreatedDate = new DateTime(2017,1,3), Count = 3},
+                new StepCount{CreatedDate = new DateTime(2017,1,4), Count = 4},
+                new StepCount{CreatedDate = new DateTime(2017,1,5), Count = 5}
+            };
+
+            var result = _aggregationCalculator.GetCumSums(stepCounts).ToList();
+
+            Assert.Equal(5, result.Count());
+            Assert.Equal(1, result[0].CumSumCount);
+            Assert.Equal(3, result[1].CumSumCount);
+            Assert.Equal(6, result[2].CumSumCount);
+            Assert.Equal(10, result[3].CumSumCount);
+            Assert.Equal(15, result[4].CumSumCount);
+
+        }
+
+        [Fact]
+        public void ShouldGetCumSumForActivitySummaries()
+        {
+            var activitySummaries = new List<ActivitySummary> {
+                new ActivitySummary{CreatedDate = new DateTime(2017,1,1), VeryActiveMinutes = 1},
+                new ActivitySummary{CreatedDate = new DateTime(2017,1,2), VeryActiveMinutes = 2},
+                new ActivitySummary{CreatedDate = new DateTime(2017,1,3), VeryActiveMinutes = 3},
+                new ActivitySummary{CreatedDate = new DateTime(2017,1,4), VeryActiveMinutes = 4},
+                new ActivitySummary{CreatedDate = new DateTime(2017,1,5), VeryActiveMinutes = 5}
+            };
+
+            var result = _aggregationCalculator.GetCumSums(activitySummaries).ToList();
+
+            Assert.Equal(5, result.Count());
+            Assert.Equal(1, result[0].CumSumActiveMinutes);
+            Assert.Equal(3, result[1].CumSumActiveMinutes);
+            Assert.Equal(6, result[2].CumSumActiveMinutes);
+            Assert.Equal(10, result[3].CumSumActiveMinutes);
+            Assert.Equal(15, result[4].CumSumActiveMinutes);
+
+        }
+
 
         [Fact]
         public void ShouldSetMovingAveragesOnWeights()

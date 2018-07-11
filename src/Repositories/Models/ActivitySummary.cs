@@ -14,7 +14,7 @@ namespace Repositories.Models
         public int VeryActiveMinutes { get; set; }
 
         [NotMapped]
-        public int? CumSumActiveMinutes { get; set; }
+        public double? CumSumActiveMinutes { get; set; }
         [NotMapped]
         public int ActiveMinutes => FairlyActiveMinutes + VeryActiveMinutes;
 

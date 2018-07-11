@@ -72,71 +72,32 @@ namespace Services.MyHealth
 
         public IEnumerable<StepCount> GetCumSums(IList<StepCount> orderedStepCounts)
         {
-            var localStepCounts = orderedStepCounts.ToList();
-
-            for (int i = 0; i < localStepCounts.Count; i++)
-            {
-                int? previousCumSum;
-
-                if (i == 0)
-                {
-                    previousCumSum = 0;
-                }
-                else
-                {
-                    previousCumSum = localStepCounts[i - 1].CumSumCount;
-                }
-
-                localStepCounts[i].CumSumCount = (localStepCounts[i].Count ?? 0) + previousCumSum;
-            }
-
-            return localStepCounts;
+            return GetCumSums(
+                orderedStepCounts,
+                sc => sc.Count,
+                sc => sc.CumSumCount,
+                (sc, val) => sc.CumSumCount = val
+            );
         }
 
         public IEnumerable<ActivitySummary> GetCumSums(IList<ActivitySummary> orderedActivitySummaries)
         {
-            var localActivitySummaries = orderedActivitySummaries.ToList();
-
-            for (int i = 0; i < localActivitySummaries.Count; i++)
-            {
-                int? previousCumSum;
-
-                if (i == 0)
-                {
-                    previousCumSum = 0;
-                }
-                else
-                {
-                    previousCumSum = localActivitySummaries[i - 1].CumSumActiveMinutes;
-                }
-
-                localActivitySummaries[i].CumSumActiveMinutes = (localActivitySummaries[i].ActiveMinutes) + previousCumSum;
-            }
-
-            return localActivitySummaries;
+            return GetCumSums(
+                orderedActivitySummaries,
+                act => act.ActiveMinutes,
+                act => act.CumSumActiveMinutes,
+                (act, val) => act.CumSumActiveMinutes = val
+            );
         }
 
         public IEnumerable<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartSummaries)
         {
-            var localHeartSummaries = orderedHeartSummaries.ToList();
-
-            for (int i = 0; i < localHeartSummaries.Count; i++)
-            {
-                int? previousCumSum;
-
-                if (i == 0)
-                {
-                    previousCumSum = 0;
-                }
-                else
-                {
-                    previousCumSum = localHeartSummaries[i - 1].CumSumCardioAndAbove;
-                }
-
-                localHeartSummaries[i].CumSumCardioAndAbove = (localHeartSummaries[i].CardioMinutes) + (localHeartSummaries[i].PeakMinutes) + previousCumSum;
-            }
-
-            return localHeartSummaries;
+            return GetCumSums(
+                orderedHeartSummaries,
+                hs => hs.CardioAndAbove,
+                hs => hs.CumSumCardioAndAbove,
+                (hs, val) => hs.CumSumCardioAndAbove = val
+            );
         }
         
         public IEnumerable<AlcoholIntake> GetCumSums(IList<AlcoholIntake> orderedAlcoholIntakes)
@@ -157,23 +118,19 @@ namespace Services.MyHealth
             Action<T, Double?> SetCumSum
         ) where T : class
         {
-            //there is no point in this local list, each item inside is still modified (they are not copied)
-            var localList = orderedList.ToList();
-
-            for (int i = 0; i < localList.Count(); i++)
+            for (int i = 0; i < orderedList.Count(); i++)
             {
-                Double? value = GetValue(localList[i]);
+                Double? value = GetValue(orderedList[i]);
 
                 if (i > 0)
                 {
-                    value += GetCumSum(localList[i - 1]);
+                    value += GetCumSum(orderedList[i - 1]);
                 }
 
-                SetCumSum(localList[i], value);
+                SetCumSum(orderedList[i], value);
             }
 
-            return localList;
-
+            return orderedList;
         }
 
     }
