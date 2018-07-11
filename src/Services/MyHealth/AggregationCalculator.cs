@@ -42,20 +42,28 @@ namespace Services.MyHealth
             );
         }
 
-        public IList<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period)
+//        public IList<Weight> GetMovingAverages(IList<Weight> seedWeights, IList<Weight> orderedWeights, int period)
+//        {
+//            return GetMovingAverages(
+//                seedWeights,
+//                orderedWeights,
+//                period,
+//                getValue: x => x.Kg,
+//                setValue: (x, val) => x.MovingAverageKg = val
+//                );
+//        }
+
+        public IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period)
         {
+           // return GetMovingAverages(new List<Weight>(), orderedWeights, period);
+
             return GetMovingAverages(
-                seedWeights,
+                new List<Weight>(),
                 orderedWeights,
                 period,
                 getValue: x => x.Kg,
                 setValue: (x, val) => x.MovingAverageKg = val
-                );
-        }
-
-        public IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period)
-        {
-            return GetMovingAverages(new List<Weight>(), orderedWeights, period);
+            );
         }
 
         public IList<BloodPressure> GetMovingAverages(IList<BloodPressure> orderedBloodPressures, int period)
@@ -71,12 +79,7 @@ namespace Services.MyHealth
         private IList<T> GetMovingAverages<T>(IList<T> seedList, IList<T> orderedList, int period, Func<T, Double?> getValue, Action<T, Double?> setValue)
         {
             var localOrderedList = orderedList.ToList();
-
-            if (seedList.Count > period - 1)
-            {
-                seedList = seedList.TakeLast(period - 1).ToList();
-            }
-
+            
             var numberOfMissingKgs = period - 1 - seedList.Count;
 
             List<T> all = seedList.ToList();

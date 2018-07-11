@@ -6,5 +6,6 @@
         string DynamoDbSecretKey { get; }
         string FitbitUserId { get; }
         string HealthDbConnectionString { get; }
+        string LogzIoToken { get; }
     }
 }
