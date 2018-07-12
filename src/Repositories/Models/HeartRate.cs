@@ -7,6 +7,6 @@ namespace Repositories.Models
     {
         [Key]
         public DateTime CreatedDate { get; set; }
-        public Double Bpm { get; set; }
+        public Double? Bpm { get; set; }
     }
 }
