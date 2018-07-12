@@ -103,7 +103,7 @@ namespace Repositories.Health
             if (existingHeartRate == null)
             {
                 //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                _healthContext.Add(existingHeartRate);
+                _healthContext.Add(heartRate);
             }
             else
             {
