@@ -60,6 +60,50 @@ namespace Services.Tests.MyHealth
 
         }
 
+        [Fact]
+        public void ShouldGetCumSumForHeartRateSummaries()
+        {
+            var heartSummaries = new List<HeartRateSummary> {
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,1), CardioMinutes = 1, PeakMinutes = 0},
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,2), CardioMinutes = 2, PeakMinutes = 0},
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,3), CardioMinutes = 3, PeakMinutes = 0},
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,4), CardioMinutes = 4, PeakMinutes = 0},
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,5), CardioMinutes = 5, PeakMinutes = 0}
+            };
+
+            var result = _aggregationCalculator.GetCumSums(heartSummaries).ToList();
+
+            Assert.Equal(5, result.Count());
+            Assert.Equal(1, result[0].CumSumCardioAndAbove);
+            Assert.Equal(3, result[1].CumSumCardioAndAbove);
+            Assert.Equal(6, result[2].CumSumCardioAndAbove);
+            Assert.Equal(10, result[3].CumSumCardioAndAbove);
+            Assert.Equal(15, result[4].CumSumCardioAndAbove);
+
+        }
+
+        [Fact]
+        public void ShouldGetCumSumForAlcoholIntakes()
+        {
+            var alcoholIntakes = new List<AlcoholIntake> {
+                new AlcoholIntake{CreatedDate = new DateTime(2017,1,1), Units = 1},
+                new AlcoholIntake{CreatedDate = new DateTime(2017,1,2), Units = 2},
+                new AlcoholIntake{CreatedDate = new DateTime(2017,1,3), Units = 3},
+                new AlcoholIntake{CreatedDate = new DateTime(2017,1,4), Units = 4},
+                new AlcoholIntake{CreatedDate = new DateTime(2017,1,5), Units = 5}
+            };
+
+            var result = _aggregationCalculator.GetCumSums(alcoholIntakes).ToList();
+
+            Assert.Equal(5, result.Count());
+            Assert.Equal(1, result[0].CumSumUnits);
+            Assert.Equal(3, result[1].CumSumUnits);
+            Assert.Equal(6, result[2].CumSumUnits);
+            Assert.Equal(10, result[3].CumSumUnits);
+            Assert.Equal(15, result[4].CumSumUnits);
+
+        }
+
 
         [Fact]
         public void ShouldSetMovingAveragesOnWeights()

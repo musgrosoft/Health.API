@@ -90,10 +90,10 @@ namespace Services.MyHealth
             );
         }
 
-        public IEnumerable<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartSummaries)
+        public IEnumerable<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartRateSummaries)
         {
             return GetCumSums(
-                orderedHeartSummaries,
+                orderedHeartRateSummaries,
                 hs => hs.CardioAndAbove,
                 hs => hs.CumSumCardioAndAbove,
                 (hs, val) => hs.CumSumCardioAndAbove = val
