@@ -42,31 +42,31 @@ namespace HealthAPI.Controllers.Migration
                 
                 var v = await _oAuthService.GetFitbitRefreshToken();
 
-                var fitbitClient = new FitbitClient(new HttpClient(), new Config(),
-                    new FitbitAuthenticator(
-                        new OAuthService(new OAuthTokenRepository(new Config(), new Logger(new Config())))),
-                    new Logger(new Config()));
+                //var fitbitClient = new FitbitClient(new HttpClient(), new Config(),
+                //    new FitbitAuthenticator(
+                //        new OAuthService(new OAuthTokenRepository(new Config(), new Logger(new Config())))),
+                //    new Logger(new Config()));
 
-                var repo = new HealthRepository(new HealthContext(new Config()));
-
-
-                    var now = DateTime.Now;
+                //var repo = new HealthRepository(new HealthContext(new Config()));
 
 
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        var data = await fitbitClient.GetDetailedHeartRates(now.AddDays(-i));
-
-                        foreach (var dataset in data)
-                        {
-                            var heartRate = new HeartRate { CreatedDate = dataset.time, Bpm = dataset.value};
+                //    var now = DateTime.Now;
 
 
-                            repo.Upsert(heartRate);
-                        }
 
-                    }
+                //    for (int i = 0; i < 10; i++)
+                //    {
+                //        var data = await fitbitClient.GetDetailedHeartRates(now.AddDays(-i));
+
+                //        foreach (var dataset in data)
+                //        {
+                //            var heartRate = new HeartRate { CreatedDate = dataset.time, Bpm = dataset.value};
+
+
+                //            repo.Upsert(heartRate);
+                //        }
+
+                //    }
 
 
                 //monthly gets
