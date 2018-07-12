@@ -96,6 +96,25 @@ namespace Repositories.Health
             return _healthContext.BloodPressures.ToList();
         }
 
+        public void Upsert(HeartRate heartRate)
+        {
+            var existingHeartRate = _healthContext.HeartRates.Find(heartRate.CreatedDate);
+
+            if (existingHeartRate == null)
+            {
+                //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                _healthContext.Add(existingHeartRate);
+            }
+            else
+            {
+                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                existingHeartRate.Bpm = heartRate.Bpm;
+
+            }
+
+            _healthContext.SaveChanges();
+        }
+
         public void Upsert(Weight weight)
         {
             var existingWeight = _healthContext.Weights.Find(weight.CreatedDate);

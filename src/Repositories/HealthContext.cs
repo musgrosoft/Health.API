@@ -16,6 +16,8 @@ namespace Repositories
         public virtual DbSet<Models.Weight> Weights { get; set; }
         public virtual DbSet<Models.Run> Runs { get; set; }
 
+        public virtual DbSet<Models.HeartRate> HeartRates { get; set; }
+
         public HealthContext(IConfig config)
         {
             _config = config;

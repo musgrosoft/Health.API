@@ -38,5 +38,6 @@ namespace Repositories.Health
         IEnumerable<StepCount> GetAllStepCounts();
         IEnumerable<ActivitySummary> GetAllActivitySummaries();
         IEnumerable<HeartRateSummary> GetAllHeartRateSummaries();
+        void Upsert(HeartRate heartRate);
     }
 }
