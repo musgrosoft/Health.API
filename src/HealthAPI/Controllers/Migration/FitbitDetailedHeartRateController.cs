@@ -15,13 +15,13 @@ namespace HealthAPI.Controllers.Migration
 {
     [Produces("application/json")]
     [Route("api/FitbitHeartRate")]
-    public class FitbitDetailedHeartRate : Controller
+    public class FitbitDetailedHeartRateController : Controller
     {
         private ILogger _logger;
         private IOAuthService _oAuthService;
         private IFitbitMigrator _fitbitMigrator;
 
-        public FitbitDetailedHeartRate(
+        public FitbitDetailedHeartRateController(
             ILogger logger,
             IOAuthService oAuthService,
             IFitbitMigrator fitbitMigrator)
