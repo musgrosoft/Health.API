@@ -50,17 +50,24 @@ namespace HealthAPI.Controllers.Migration
                 var repo = new HealthRepository(new HealthContext(new Config()));
 
 
-                    var data = await fitbitClient.GetDetailedHeartRates(DateTime.Now);
+                var date = DateTime.Now;
+
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var data = await fitbitClient.GetDetailedHeartRates(date.AddDays(-i));
 
                     foreach (var dataset in data)
                     {
-                        var heartRate = new HeartRate {CreatedDate = dataset.time, Bpm = dataset.value};
+                        var heartRate = new HeartRate { CreatedDate = dataset.time, Bpm = dataset.value };
 
 
                         repo.Upsert(heartRate);
                     }
 
-                
+                }
+
+
 
                 return Ok();
 
