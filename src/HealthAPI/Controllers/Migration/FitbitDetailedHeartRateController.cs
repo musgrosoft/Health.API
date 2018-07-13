@@ -34,7 +34,8 @@ namespace HealthAPI.Controllers.Migration
 
         //todo post
         [HttpGet]
-        public async Task<IActionResult> Migrate()
+        [Route("/{offset}")]
+        public async Task<IActionResult> Migrate(int offset)
         {
             try
             {
@@ -53,9 +54,8 @@ namespace HealthAPI.Controllers.Migration
                 var date = DateTime.Now;
 
 
-                for (int i = 0; i < 10; i++)
-                {
-                    var data = await fitbitClient.GetDetailedHeartRates(date.AddDays(-i));
+                
+                    var data = await fitbitClient.GetDetailedHeartRates(date.AddDays(-offset));
 
                     foreach (var dataset in data)
                     {
@@ -65,7 +65,7 @@ namespace HealthAPI.Controllers.Migration
                         repo.Upsert(heartRate);
                     }
 
-                }
+                
 
 
 
