@@ -75,7 +75,7 @@ namespace Repositories.Health
         public IEnumerable<RestingHeartRate> GetAllRestingHeartRates()
         {
             //to list to materialize entities
-            return _healthContext.RestingHeartRates.ToList();
+            return _healthContext.RestingHeartRates.OrderBy(x=>x.CreatedDate).ToList();
         }
 
         public IEnumerable<StepCount> GetAllStepCounts()

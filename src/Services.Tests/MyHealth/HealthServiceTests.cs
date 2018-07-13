@@ -227,6 +227,32 @@ namespace Services.Tests.MyHealth
             _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
         }
 
+        [Fact]
+        public void ShouldGetAllRestingHeartRates()
+        {
+
+            //Given
+            var restingHeartRates = new List<RestingHeartRate>
+            {
+                new RestingHeartRate {CreatedDate = new DateTime(2018,6,6), Beats = 123}
+            };
+
+            var listWithMovingAverages = new List<RestingHeartRate>
+            {
+                new RestingHeartRate{CreatedDate = new DateTime(2000,1,1), Beats = 2000},
+            };
+
+            _healthRepository.Setup(x => x.GetAllRestingHeartRates()).Returns(restingHeartRates);
+
+            _aggregationCalculator.Setup(x => x.GetMovingAverages(restingHeartRates, 10)).Returns(listWithMovingAverages);
+            
+            //when
+            var result = _healthService.GetAllRestingHeartRates();
+
+            //then
+            Assert.Equal(listWithMovingAverages, result);
+
+        }
 
     }
 }

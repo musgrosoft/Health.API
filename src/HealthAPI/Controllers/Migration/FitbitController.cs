@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
-using Repositories;
-using Repositories.Health;
-using Repositories.Models;
-using Repositories.OAuth;
-using Services.Fitbit;
 using Services.OAuth;
 using Utils;
 
@@ -41,33 +35,6 @@ namespace HealthAPI.Controllers.Migration
                 _logger.Log("FITBIT : starting fitbit migrate");
                 
                 var v = await _oAuthService.GetFitbitRefreshToken();
-
-                //var fitbitClient = new FitbitClient(new HttpClient(), new Config(),
-                //    new FitbitAuthenticator(
-                //        new OAuthService(new OAuthTokenRepository(new Config(), new Logger(new Config())))),
-                //    new Logger(new Config()));
-
-                //var repo = new HealthRepository(new HealthContext(new Config()));
-
-
-                //    var now = DateTime.Now;
-
-
-
-                //    for (int i = 0; i < 10; i++)
-                //    {
-                //        var data = await fitbitClient.GetDetailedHeartRates(now.AddDays(-i));
-
-                //        foreach (var dataset in data)
-                //        {
-                //            var heartRate = new HeartRate { CreatedDate = dataset.time, Bpm = dataset.value};
-
-
-                //            repo.Upsert(heartRate);
-                //        }
-
-                //    }
-
 
                 //monthly gets
                 await _fitbitMigrator.MigrateRestingHeartRates();

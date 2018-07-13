@@ -473,27 +473,27 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldGetAllRestingHeartRates()
         {
-            var restingHeartRates = new List<RestingHeartRate>
+            var unorderedRestingHeartRates = new List<RestingHeartRate>
             {
-                new RestingHeartRate {CreatedDate = new DateTime(2018,1,1), Beats = 1},
+                new RestingHeartRate {CreatedDate = new DateTime(2018,1,3), Beats = 1},
                 new RestingHeartRate {CreatedDate = new DateTime(2018,1,2), Beats = 2},
-                new RestingHeartRate {CreatedDate = new DateTime(2018,1,3), Beats = 3}
+                new RestingHeartRate {CreatedDate = new DateTime(2018,1,1), Beats = 3}
 
             };
 
-            foreach (var restingHeartRate in restingHeartRates)
+            foreach (var restingHeartRate in unorderedRestingHeartRates)
             {
                 _fakeLocalContext.RestingHeartRates.Add(restingHeartRate);
             }
 
             _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllRestingHeartRates().ToList();
+            var orderedRestingHeartRates = _healthRepository.GetAllRestingHeartRates().ToList();
 
-            Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Beats == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Beats == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Beats == 3);
+            Assert.Equal(3, orderedRestingHeartRates.Count());
+            Assert.Contains(orderedRestingHeartRates, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Beats == 3);
+            Assert.Contains(orderedRestingHeartRates, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Beats == 2);
+            Assert.Contains(orderedRestingHeartRates, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Beats == 1);
         }
 
         [Fact]
