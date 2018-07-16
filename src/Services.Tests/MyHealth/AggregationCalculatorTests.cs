@@ -168,15 +168,15 @@ namespace Services.Tests.MyHealth
             Assert.Equal(230, resultWeights[22].Kg);
             Assert.Equal(240, resultWeights[23].Kg);
 
-            Assert.Equal(null, resultWeights[0].MovingAverageKg);
-            Assert.Equal(null, resultWeights[1].MovingAverageKg);
-            Assert.Equal(null, resultWeights[2].MovingAverageKg);
-            Assert.Equal(null, resultWeights[3].MovingAverageKg);
-            Assert.Equal(null, resultWeights[4].MovingAverageKg);
-            Assert.Equal(null, resultWeights[5].MovingAverageKg);
-            Assert.Equal(null, resultWeights[6].MovingAverageKg);
-            Assert.Equal(null, resultWeights[7].MovingAverageKg);
-            Assert.Equal(null, resultWeights[8].MovingAverageKg);
+            Assert.Null(resultWeights[0].MovingAverageKg);
+            Assert.Null(resultWeights[1].MovingAverageKg);
+            Assert.Null(resultWeights[2].MovingAverageKg);
+            Assert.Null(resultWeights[3].MovingAverageKg);
+            Assert.Null(resultWeights[4].MovingAverageKg);
+            Assert.Null(resultWeights[5].MovingAverageKg);
+            Assert.Null(resultWeights[6].MovingAverageKg);
+            Assert.Null(resultWeights[7].MovingAverageKg);
+            Assert.Null(resultWeights[8].MovingAverageKg);
 
             Assert.Equal(55, resultWeights[9].MovingAverageKg);
             Assert.Equal(65, resultWeights[10].MovingAverageKg);
@@ -641,15 +641,15 @@ namespace Services.Tests.MyHealth
 
 
 
-            Assert.Equal(null, resultBloodPressures[0].MovingAverageSystolic);
-            Assert.Equal(null, resultBloodPressures[1].MovingAverageSystolic);
-            Assert.Equal(null, resultBloodPressures[2].MovingAverageSystolic);
-            Assert.Equal(null, resultBloodPressures[3].MovingAverageSystolic);
-            Assert.Equal(null, resultBloodPressures[4].MovingAverageSystolic);
-            Assert.Equal(null, resultBloodPressures[5].MovingAverageSystolic);
-            Assert.Equal(null, resultBloodPressures[6].MovingAverageSystolic);
-            Assert.Equal(null, resultBloodPressures[7].MovingAverageSystolic);
-            Assert.Equal(null, resultBloodPressures[8].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[0].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[1].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[2].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[3].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[4].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[5].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[6].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[7].MovingAverageSystolic);
+            Assert.Null(resultBloodPressures[8].MovingAverageSystolic);
 
             Assert.Equal(55,   resultBloodPressures[9].MovingAverageSystolic);
             Assert.Equal(65,   resultBloodPressures[10].MovingAverageSystolic);
@@ -668,15 +668,15 @@ namespace Services.Tests.MyHealth
             Assert.Equal(195, resultBloodPressures[23].MovingAverageSystolic);
 
 
-            Assert.Equal(null, resultBloodPressures[0].MovingAverageDiastolic);
-            Assert.Equal(null, resultBloodPressures[1].MovingAverageDiastolic);
-            Assert.Equal(null, resultBloodPressures[2].MovingAverageDiastolic);
-            Assert.Equal(null, resultBloodPressures[3].MovingAverageDiastolic);
-            Assert.Equal(null, resultBloodPressures[4].MovingAverageDiastolic);
-            Assert.Equal(null, resultBloodPressures[5].MovingAverageDiastolic);
-            Assert.Equal(null, resultBloodPressures[6].MovingAverageDiastolic);
-            Assert.Equal(null, resultBloodPressures[7].MovingAverageDiastolic);
-            Assert.Equal(null, resultBloodPressures[8].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[0].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[1].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[2].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[3].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[4].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[5].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[6].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[7].MovingAverageDiastolic);
+            Assert.Null(resultBloodPressures[8].MovingAverageDiastolic);
 
             Assert.Equal(60,   resultBloodPressures[9].MovingAverageDiastolic);
             Assert.Equal(70,   resultBloodPressures[10].MovingAverageDiastolic);

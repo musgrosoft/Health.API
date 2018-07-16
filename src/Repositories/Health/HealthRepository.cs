@@ -90,10 +90,18 @@ namespace Repositories.Health
             return _healthContext.Weights.ToList();
         }
 
-        public IEnumerable<BloodPressure> GetAllBloodPressures()
+        public IList<BloodPressure> GetAllBloodPressures()
         {
             //to list to materialize entities
-            return _healthContext.BloodPressures.ToList();
+            return _healthContext.BloodPressures
+                .GroupBy(x => x.CreatedDate.Date)
+                .Select(x => new BloodPressure
+                {
+                    CreatedDate = x.Key.Date,
+                    Systolic = x.Average(w => w.Systolic),
+                    Diastolic = x.Average(w => w.Diastolic)
+                })
+                .OrderBy(x => x.CreatedDate).ToList();
         }
 
         public void Upsert(HeartRate heartRate)
