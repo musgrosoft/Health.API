@@ -28,7 +28,7 @@ namespace Services.Tests.MyHealth
             _aggregationCalculator = new Mock<IAggregationCalculator>();
             _targetService = new Mock<ITargetService>();
 
-            _healthService = new HealthService(_config.Object, _logger.Object, _healthRepository.Object, _aggregationCalculator.Object, null);
+            _healthService = new HealthService(_config.Object, _logger.Object, _healthRepository.Object, _aggregationCalculator.Object, _targetService.Object);
         }
 
         [Fact]
@@ -284,6 +284,39 @@ namespace Services.Tests.MyHealth
         }
 
         [Fact]
+        public void ShouldGetAllWeights()
+        {
+            //Given
+            var weights = new List<Weight>
+            {
+                new Weight {CreatedDate = new DateTime(2018,6,6), Kg = 123}
+            };
+
+            var listWithMovingAverages = new List<Weight>
+            {
+                new Weight{CreatedDate = new DateTime(2000,1,1), MovingAverageKg = 2000},
+            };
+
+            var listWithTargets = new List<Weight>
+            {
+                new Weight{CreatedDate = new DateTime(2000,1,1), TargetKg = 2001}
+            };
+
+            _healthRepository.Setup(x => x.GetAllWeights()).Returns(weights);
+
+            _aggregationCalculator.Setup(x => x.GetMovingAverages(weights, 10)).Returns(listWithMovingAverages);
+
+            _targetService.Setup(x => x.SetTargets(listWithMovingAverages, 365)).Returns(listWithTargets);
+
+            //when
+            var result = _healthService.GetAllWeights();
+
+            //then
+            Assert.Equal(listWithTargets, result);
+
+        }
+
+        [Fact]
         public void ShouldGetAllStepCounts()
         {
 
@@ -307,7 +340,7 @@ namespace Services.Tests.MyHealth
 
             _aggregationCalculator.Setup(x => x.GetCumSums(stepCounts)).Returns(listWithCumSums);
 
-            _targetService.Setup(x => x.SetTargetStepCounts(listWithCumSums)).Returns(listWithTargets);
+            _targetService.Setup(x => x.SetTargets(listWithCumSums)).Returns(listWithTargets);
 
             //when
             var result = _healthService.GetAllStepCounts();
@@ -332,15 +365,56 @@ namespace Services.Tests.MyHealth
                 new AlcoholIntake(){CreatedDate = new DateTime(2000,1,1), CumSumUnits = 2000},
             };
 
+            var listWithTargets = new List<AlcoholIntake>
+            {
+                new AlcoholIntake() {CreatedDate = new DateTime(2000, 1, 1), TargetCumSumUnits = 2001},
+            };
+
             _healthRepository.Setup(x => x.GetAllAlcoholIntakes()).Returns(alcoholIntakes);
 
             _aggregationCalculator.Setup(x => x.GetCumSums(alcoholIntakes)).Returns(listWithCumSums);
+
+            _targetService.Setup(x => x.SetTargets(listWithCumSums)).Returns(listWithTargets);
 
             //when
             var result = _healthService.GetAllAlcoholIntakes();
 
             //then
-            Assert.Equal(listWithCumSums, result);
+            Assert.Equal(listWithTargets, result);
+
+        }
+
+        [Fact]
+        public void ShouldGetAllHeartRateSummaries()
+        {
+
+            //Given
+            var heartRateSummaries = new List<HeartRateSummary>
+            {
+                new HeartRateSummary {CreatedDate = new DateTime(2018,6,6), CardioMinutes = 123}
+            };
+
+            var listWithCumSums = new List<HeartRateSummary>
+            {
+                new HeartRateSummary{CreatedDate = new DateTime(2000,1,1), CumSumCardioAndAbove = 2000},
+            };
+
+            var listWithTargets = new List<HeartRateSummary>
+            {
+                new HeartRateSummary{CreatedDate = new DateTime(2000,1,1), TargetCumSumCardioAndAbove = 2001},
+            };
+
+            _healthRepository.Setup(x => x.GetAllHeartRateSummaries()).Returns(heartRateSummaries);
+
+            _aggregationCalculator.Setup(x => x.GetCumSums(heartRateSummaries)).Returns(listWithCumSums);
+
+            _targetService.Setup(x => x.SetTargets(listWithCumSums)).Returns(listWithTargets);
+
+            //when
+            var result = _healthService.GetAllHeartRateSummaries();
+
+            //then
+            Assert.Equal(listWithTargets, result);
 
         }
 

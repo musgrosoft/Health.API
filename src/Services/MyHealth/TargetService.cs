@@ -7,7 +7,7 @@ namespace Services.MyHealth
 {
     public class TargetService : ITargetService
     {
-        public IList<Weight> SetTargetWeights(IList<Weight> weights, int extraFutureDays)
+        public IList<Weight> SetTargets(IList<Weight> weights, int extraFutureDays)
         {
             var targetEndDate = DateTime.Now.AddDays(extraFutureDays);
             var futuredays = (targetEndDate - weights.Max(x => x.CreatedDate)).TotalDays;
@@ -64,7 +64,7 @@ namespace Services.MyHealth
 
 
 
-        public IList<StepCount> SetTargetStepCounts(List<StepCount> stepCounts)
+        public IList<StepCount> SetTargets(List<StepCount> stepCounts)
         {
             foreach (var stepCount in stepCounts)
             {
@@ -93,7 +93,7 @@ namespace Services.MyHealth
             return stepsOnTargetStartDate + (days * targetDailySteps);
         }
 
-        public IList<ActivitySummary> SetTargetActivitySummaries(List<ActivitySummary> allActivitySummaries, int extraFutureDays)
+        public IList<ActivitySummary> SetTargets(List<ActivitySummary> allActivitySummaries, int extraFutureDays)
         {
             foreach (var activitySummary in allActivitySummaries)
             {
@@ -119,7 +119,7 @@ namespace Services.MyHealth
             return (activeMinutesOnTargetStartDate + (daysDiff * targetDailyActiveMinutes));
         }
 
-        public IList<HeartRateSummary> SetTargetHeartRateSummaries(List<HeartRateSummary> heartRateSummaries, int extraFutureDays)
+        public IList<HeartRateSummary> SetTargets(List<HeartRateSummary> heartRateSummaries)
         {
             foreach (var heartRateSummary in heartRateSummaries)
             {
@@ -145,7 +145,7 @@ namespace Services.MyHealth
             return minutesOnTargetStartDate + (daysDiff * targetDailyMinutes);
         }
 
-        public IList<AlcoholIntake> SetTargetAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
+        public IList<AlcoholIntake> SetTargets(List<AlcoholIntake> alcoholIntakes)
         {
             foreach (var alcoholIntake in alcoholIntakes)
             {

@@ -34,7 +34,7 @@ namespace Services.MyHealth
         {
             var allWeights = _healthRepository.GetAllWeights();
             allWeights = _aggregationCalculator.GetMovingAverages(allWeights, 10).ToList();
-            allWeights = _targetService.SetTargetWeights(allWeights,365).ToList();            
+            allWeights = _targetService.SetTargets(allWeights,365).ToList();            
 
             return allWeights;
         }
@@ -59,7 +59,7 @@ namespace Services.MyHealth
         {
             var allStepCounts = _healthRepository.GetAllStepCounts().ToList();
             allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
-            allStepCounts = _targetService.SetTargetStepCounts(allStepCounts).ToList();
+            allStepCounts = _targetService.SetTargets(allStepCounts).ToList();
 
             return allStepCounts;
         }
@@ -111,7 +111,7 @@ namespace Services.MyHealth
         {
             var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes().ToList();
             allAlcoholIntakes = _aggregationCalculator.GetCumSums(allAlcoholIntakes).ToList();
-            allAlcoholIntakes = _targetService.SetTargetAlcoholIntakes(allAlcoholIntakes).ToList();
+            allAlcoholIntakes = _targetService.SetTargets(allAlcoholIntakes).ToList();
 
             return allAlcoholIntakes;
         }
@@ -164,7 +164,7 @@ namespace Services.MyHealth
         {
             var allHeartRateSummaries = _healthRepository.GetAllHeartRateSummaries().ToList();
             allHeartRateSummaries = _aggregationCalculator.GetCumSums(allHeartRateSummaries).ToList();
-            allHeartRateSummaries = _targetService.SetTargetHeartRateSummaries(allHeartRateSummaries, 30).ToList();
+            allHeartRateSummaries = _targetService.SetTargets(allHeartRateSummaries).ToList();
 
             return allHeartRateSummaries;
         }
@@ -223,7 +223,7 @@ namespace Services.MyHealth
         {
             var allActivitySummaries = _healthRepository.GetAllActivitySummaries().ToList();
             allActivitySummaries = _aggregationCalculator.GetCumSums(allActivitySummaries).ToList();
-            allActivitySummaries = _targetService.SetTargetActivitySummaries(allActivitySummaries, 30).ToList();
+            allActivitySummaries = _targetService.SetTargets(allActivitySummaries, 30).ToList();
 
             return allActivitySummaries;
         }
