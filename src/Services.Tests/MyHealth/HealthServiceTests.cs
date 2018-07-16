@@ -17,7 +17,8 @@ namespace Services.Tests.MyHealth
         private Mock<ILogger> _logger;
 
         private Mock<IAggregationCalculator> _aggregationCalculator;
-        
+        private Mock<ITargetService> _targetService;
+
 
         public HealthServiceTests()
         {
@@ -25,6 +26,7 @@ namespace Services.Tests.MyHealth
             _config = new Mock<IConfig>();
             _logger = new Mock<ILogger>();
             _aggregationCalculator = new Mock<IAggregationCalculator>();
+            _targetService = new Mock<ITargetService>();
 
             _healthService = new HealthService(_config.Object, _logger.Object, _healthRepository.Object, _aggregationCalculator.Object, null);
         }
@@ -251,6 +253,94 @@ namespace Services.Tests.MyHealth
 
             //then
             Assert.Equal(listWithMovingAverages, result);
+
+        }
+
+        [Fact]
+        public void ShouldGetAllBloodPressures()
+        {
+
+            //Given
+            var bloodPressures = new List<BloodPressure>
+            {
+                new BloodPressure {CreatedDate = new DateTime(2018,6,6), Systolic = 123}
+            };
+
+            var listWithMovingAverages = new List<BloodPressure>
+            {
+                new BloodPressure{CreatedDate = new DateTime(2000,1,1), MovingAverageSystolic = 2000},
+            };
+
+            _healthRepository.Setup(x => x.GetAllBloodPressures()).Returns(bloodPressures);
+
+            _aggregationCalculator.Setup(x => x.GetMovingAverages(bloodPressures, 10)).Returns(listWithMovingAverages);
+
+            //when
+            var result = _healthService.GetAllBloodPressures();
+
+            //then
+            Assert.Equal(listWithMovingAverages, result);
+
+        }
+
+        [Fact]
+        public void ShouldGetAllStepCounts()
+        {
+
+            //Given
+            var stepCounts = new List<StepCount>
+            {
+                new StepCount {CreatedDate = new DateTime(2018,6,6), Count = 123}
+            };
+
+            var listWithCumSums = new List<StepCount>
+            {
+                new StepCount{CreatedDate = new DateTime(2000,1,1), CumSumCount = 2000},
+            };
+
+            var listWithTargets = new List<StepCount>
+            {
+                new StepCount{CreatedDate = new DateTime(2000,1,1), TargetCumSumCount = 2001},
+            };
+
+            _healthRepository.Setup(x => x.GetAllStepCounts()).Returns(stepCounts);
+
+            _aggregationCalculator.Setup(x => x.GetCumSums(stepCounts)).Returns(listWithCumSums);
+
+            _targetService.Setup(x => x.SetTargetStepCounts(listWithCumSums)).Returns(listWithTargets);
+
+            //when
+            var result = _healthService.GetAllStepCounts();
+
+            //then
+            Assert.Equal(listWithTargets, result);
+
+        }
+
+        [Fact]
+        public void ShouldGetAllAlcoholIntakes()
+        {
+
+            //Given
+            var alcoholIntakes = new List<AlcoholIntake>
+            {
+                new AlcoholIntake {CreatedDate = new DateTime(2018,6,6), Units = 123}
+            };
+
+            var listWithCumSums = new List<AlcoholIntake>
+            {
+                new AlcoholIntake(){CreatedDate = new DateTime(2000,1,1), CumSumUnits = 2000},
+            };
+
+            _healthRepository.Setup(x => x.GetAllAlcoholIntakes()).Returns(alcoholIntakes);
+
+            _aggregationCalculator.Setup(x => x.GetCumSums(alcoholIntakes)).Returns(listWithCumSums);
+
+            //when
+            var result = _healthService.GetAllAlcoholIntakes();
+
+            //then
+            Assert.Equal(listWithCumSums, result);
 
         }
 

@@ -370,9 +370,9 @@ namespace Repository.Unit.Tests
         {
             var activitySummaries = new List<ActivitySummary>
             {
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,1), TargetCumSumActiveMinutes = 1},
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,1), TargetCumSumActiveMinutes = 3},
                 new ActivitySummary {CreatedDate = new DateTime(2018,1,2), TargetCumSumActiveMinutes = 2},
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,3), TargetCumSumActiveMinutes = 3}
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,3), TargetCumSumActiveMinutes = 1}
 
             };
 
@@ -386,9 +386,15 @@ namespace Repository.Unit.Tests
             var result = _healthRepository.GetAllActivitySummaries().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetCumSumActiveMinutes == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetCumSumActiveMinutes == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetCumSumActiveMinutes == 3);
+
+            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+            Assert.Equal(3, result[0].TargetCumSumActiveMinutes);
+
+            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+            Assert.Equal(2, result[1].TargetCumSumActiveMinutes);
+
+            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+            Assert.Equal(1, result[2].TargetCumSumActiveMinutes);
         }
 
         [Fact]
@@ -396,9 +402,9 @@ namespace Repository.Unit.Tests
         {
             var alcoholIntakes = new List<AlcoholIntake>
             {
-                new AlcoholIntake {CreatedDate = new DateTime(2018,1,1), Units = 1},
+                new AlcoholIntake {CreatedDate = new DateTime(2018,1,3), Units = 1},
                 new AlcoholIntake {CreatedDate = new DateTime(2018,1,2), Units = 2},
-                new AlcoholIntake {CreatedDate = new DateTime(2018,1,3), Units = 3}
+                new AlcoholIntake {CreatedDate = new DateTime(2018,1,1), Units = 3}
 
             };
 
@@ -412,45 +418,50 @@ namespace Repository.Unit.Tests
             var result = _healthRepository.GetAllAlcoholIntakes().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Units == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Units == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Units == 3);
+            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+            Assert.Equal(3, result[0].Units);
+
+            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+            Assert.Equal(2, result[1].Units);
+
+            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+            Assert.Equal(1, result[2].Units);
         }
 
-        [Fact]
-        public void ShouldGetAllBloodPressures()
-        {
-            var bloodPressures = new List<BloodPressure>
-            {
-                new BloodPressure {CreatedDate = new DateTime(2018,1,1), Systolic = 1},
-                new BloodPressure {CreatedDate = new DateTime(2018,1,2), Systolic = 2},
-                new BloodPressure {CreatedDate = new DateTime(2018,1,3), Systolic = 3}
-
-            };
-
-            foreach (var bloodPressure in bloodPressures)
-            {
-                _fakeLocalContext.BloodPressures.Add(bloodPressure);
-            }
-
-            _fakeLocalContext.SaveChanges();
-
-            var result = _healthRepository.GetAllBloodPressures().ToList();
-
-            Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Systolic == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Systolic == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Systolic == 3);
-        }
+//        [Fact]
+//        public void ShouldGetAllBloodPressures()
+//        {
+//            var bloodPressures = new List<BloodPressure>
+//            {
+//                new BloodPressure {CreatedDate = new DateTime(2018,1,1), Systolic = 1},
+//                new BloodPressure {CreatedDate = new DateTime(2018,1,2), Systolic = 2},
+//                new BloodPressure {CreatedDate = new DateTime(2018,1,3), Systolic = 3}
+//
+//            };
+//
+//            foreach (var bloodPressure in bloodPressures)
+//            {
+//                _fakeLocalContext.BloodPressures.Add(bloodPressure);
+//            }
+//
+//            _fakeLocalContext.SaveChanges();
+//
+//            var result = _healthRepository.GetAllBloodPressures().ToList();
+//
+//            Assert.Equal(3, result.Count());
+//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Systolic == 1);
+//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Systolic == 2);
+//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Systolic == 3);
+//        }
 
         [Fact]
         public void ShouldGetAllHeartRateSummaries()
         {
             var heartRateSummaries = new List<HeartRateSummary>
             {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), TargetCumSumCardioAndAbove = 1},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,3), TargetCumSumCardioAndAbove = 1},
                 new HeartRateSummary {CreatedDate = new DateTime(2018,1,2), TargetCumSumCardioAndAbove = 2},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,3), TargetCumSumCardioAndAbove = 3}
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), TargetCumSumCardioAndAbove = 3}
 
             };
 
@@ -464,9 +475,15 @@ namespace Repository.Unit.Tests
             var result = _healthRepository.GetAllHeartRateSummaries().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetCumSumCardioAndAbove == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetCumSumCardioAndAbove == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetCumSumCardioAndAbove == 3);
+
+            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+            Assert.Equal(3, result[0].TargetCumSumCardioAndAbove);
+
+            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+            Assert.Equal(2, result[1].TargetCumSumCardioAndAbove);
+
+            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+            Assert.Equal(1, result[2].TargetCumSumCardioAndAbove);
         }
 
 
@@ -491,9 +508,15 @@ namespace Repository.Unit.Tests
             var orderedRestingHeartRates = _healthRepository.GetAllRestingHeartRates().ToList();
 
             Assert.Equal(3, orderedRestingHeartRates.Count());
-            Assert.Contains(orderedRestingHeartRates, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Beats == 3);
-            Assert.Contains(orderedRestingHeartRates, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Beats == 2);
-            Assert.Contains(orderedRestingHeartRates, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Beats == 1);
+
+            Assert.Equal(new DateTime(2018, 1, 1), orderedRestingHeartRates[0].CreatedDate);
+            Assert.Equal(3, orderedRestingHeartRates[0].Beats);
+
+            Assert.Equal(new DateTime(2018, 1, 2), orderedRestingHeartRates[1].CreatedDate);
+            Assert.Equal(2, orderedRestingHeartRates[1].Beats);
+            
+            Assert.Equal(new DateTime(2018, 1, 3), orderedRestingHeartRates[2].CreatedDate);
+            Assert.Equal(1, orderedRestingHeartRates[2].Beats);
         }
 
         [Fact]
@@ -501,9 +524,9 @@ namespace Repository.Unit.Tests
         {
             var stepCounts = new List<StepCount>
             {
-                new StepCount {CreatedDate = new DateTime(2018,1,1), TargetCumSumCount = 1},
-                new StepCount {CreatedDate = new DateTime(2018,1,2), TargetCumSumCount = 2},
-                new StepCount {CreatedDate = new DateTime(2018,1,3), TargetCumSumCount = 3}
+                new StepCount {CreatedDate = new DateTime(2018,1,3), TargetCumSumCount = 1},
+                new StepCount {CreatedDate = new DateTime(2018,1,1), TargetCumSumCount = 2},
+                new StepCount {CreatedDate = new DateTime(2018,1,2), TargetCumSumCount = 3}
 
             };
 
@@ -517,35 +540,41 @@ namespace Repository.Unit.Tests
             var result = _healthRepository.GetAllStepCounts().ToList();
 
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetCumSumCount == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetCumSumCount == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetCumSumCount == 3);
+
+            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+            Assert.Equal(2, result[0].TargetCumSumCount);
+
+            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+            Assert.Equal(3, result[1].TargetCumSumCount);
+
+            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+            Assert.Equal(1, result[2].TargetCumSumCount);
         }
 
-        [Fact]
-        public void ShouldGetAllWeights()
-        {
-            var weights = new List<Weight>
-            {
-                new Weight {CreatedDate = new DateTime(2018,1,1), TargetKg = 1},
-                new Weight {CreatedDate = new DateTime(2018,1,2), TargetKg = 2},
-                new Weight {CreatedDate = new DateTime(2018,1,3), TargetKg = 3}
-
-            };
-
-            foreach (var weight in weights)
-            {
-                _fakeLocalContext.Weights.Add(weight);
-            }
-
-            _fakeLocalContext.SaveChanges();
-
-            var result = _healthRepository.GetAllWeights().ToList();
-
-            Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetKg == 1);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetKg == 2);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetKg == 3);
-        }
+//        [Fact]
+//        public void ShouldGetAllWeights()
+//        {
+//            var weights = new List<Weight>
+//            {
+//                new Weight {CreatedDate = new DateTime(2018,1,1), TargetKg = 1},
+//                new Weight {CreatedDate = new DateTime(2018,1,2), TargetKg = 2},
+//                new Weight {CreatedDate = new DateTime(2018,1,3), TargetKg = 3}
+//
+//            };
+//
+//            foreach (var weight in weights)
+//            {
+//                _fakeLocalContext.Weights.Add(weight);
+//            }
+//
+//            _fakeLocalContext.SaveChanges();
+//
+//            var result = _healthRepository.GetAllWeights().ToList();
+//
+//            Assert.Equal(3, result.Count());
+//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetKg == 1);
+//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetKg == 2);
+//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetKg == 3);
+//        }
     }
 }
