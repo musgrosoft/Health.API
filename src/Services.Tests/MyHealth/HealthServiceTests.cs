@@ -47,6 +47,21 @@ namespace Services.Tests.MyHealth
 
 
         [Fact]
+        public void ShouldGetLatestBloodPressureDate()
+        {
+            //Given 
+            var date = new DateTime(2018, 1, 4);
+            _healthRepository.Setup(x => x.GetLatestBloodPressureDate()).Returns(date);
+
+            //when
+            var latestDate = _healthService.GetLatestBloodPressureDate(DateTime.MinValue);
+
+            //then
+            Assert.Equal(date, latestDate);
+
+        }
+
+        [Fact]
         public void ShouldGetLatestStepCountDate()
         {
             //Given 
@@ -418,5 +433,39 @@ namespace Services.Tests.MyHealth
 
         }
 
+
+        [Fact]
+        public void ShouldGetAllActivitySummaries()
+        {
+
+            //Given
+            var activitySummaries = new List<ActivitySummary>
+            {
+                new ActivitySummary {CreatedDate = new DateTime(2018,6,6), VeryActiveMinutes = 123}
+            };
+
+            var listWithCumSums = new List<ActivitySummary>
+            {
+                new ActivitySummary{CreatedDate = new DateTime(2000,1,1), CumSumActiveMinutes = 2000},
+            };
+
+            var listWithTargets = new List<ActivitySummary>
+            {
+                new ActivitySummary{CreatedDate = new DateTime(2000,1,1), TargetCumSumActiveMinutes = 2001},
+            };
+
+            _healthRepository.Setup(x => x.GetAllActivitySummaries()).Returns(activitySummaries);
+
+            _aggregationCalculator.Setup(x => x.GetCumSums(activitySummaries)).Returns(listWithCumSums);
+
+            _targetService.Setup(x => x.SetTargets(listWithCumSums)).Returns(listWithTargets);
+
+            //when
+            var result = _healthService.GetAllActivitySummaries();
+
+            //then
+            Assert.Equal(listWithTargets, result);
+
+        }
     }
 }

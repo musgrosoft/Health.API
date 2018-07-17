@@ -93,7 +93,7 @@ namespace Services.MyHealth
             return stepsOnTargetStartDate + (days * targetDailySteps);
         }
 
-        public IList<ActivitySummary> SetTargets(List<ActivitySummary> allActivitySummaries, int extraFutureDays)
+        public IList<ActivitySummary> SetTargets(List<ActivitySummary> allActivitySummaries)
         {
             foreach (var activitySummary in allActivitySummaries)
             {

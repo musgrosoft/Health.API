@@ -223,7 +223,7 @@ namespace Services.MyHealth
         {
             var allActivitySummaries = _healthRepository.GetAllActivitySummaries().ToList();
             allActivitySummaries = _aggregationCalculator.GetCumSums(allActivitySummaries).ToList();
-            allActivitySummaries = _targetService.SetTargets(allActivitySummaries, 30).ToList();
+            allActivitySummaries = _targetService.SetTargets(allActivitySummaries).ToList();
 
             return allActivitySummaries;
         }
@@ -233,7 +233,6 @@ namespace Services.MyHealth
             var dailyActivities = GetAllActivitySummaries();
 
             var weekGroups = dailyActivities.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
-
 
             var weeklyActivities = new List<ActivitySummary>();
             foreach (var group in weekGroups)
