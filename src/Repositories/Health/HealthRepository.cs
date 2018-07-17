@@ -86,8 +86,19 @@ namespace Repositories.Health
 
         public IList<Weight> GetAllWeights()
         {
-            //to list to materialize entities
-            return _healthContext.Weights
+            ////to list to materialize entities
+            //return _healthContext.Weights
+            //    .GroupBy(x => x.CreatedDate.Date)
+            //    .Select(g => new Weight
+            //    {
+            //        CreatedDate = g.Key.Date,
+            //        Kg = g.Average(w => w.Kg)
+            //    })
+            //    .OrderBy(x => x.CreatedDate).ToList();
+
+            var allWeights = _healthContext.Weights.ToList();
+
+            return allWeights
                 .GroupBy(x => x.CreatedDate.Date)
                 .Select(g => new Weight
                 {
@@ -95,12 +106,15 @@ namespace Repositories.Health
                     Kg = g.Average(w => w.Kg)
                 })
                 .OrderBy(x => x.CreatedDate).ToList();
+
         }
 
         public IList<BloodPressure> GetAllBloodPressures()
         {
             //to list to materialize entities
-            return _healthContext.BloodPressures
+            var allBloodPressures = _healthContext.BloodPressures.ToList();
+
+            return allBloodPressures
                 .GroupBy(x => x.CreatedDate.Date)
                 .Select(x => new BloodPressure
                 {
