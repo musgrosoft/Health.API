@@ -32,9 +32,9 @@ namespace Repositories.Health
         
 
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
-        IEnumerable<Weight> GetAllWeights();
-        IEnumerable<BloodPressure> GetAllBloodPressures();
-        IEnumerable<RestingHeartRate> GetAllRestingHeartRates();
+        IList<Weight> GetAllWeights();
+        IList<BloodPressure> GetAllBloodPressures();
+        IList<RestingHeartRate> GetAllRestingHeartRates();
         IEnumerable<StepCount> GetAllStepCounts();
         IEnumerable<ActivitySummary> GetAllActivitySummaries();
         IEnumerable<HeartRateSummary> GetAllHeartRateSummaries();

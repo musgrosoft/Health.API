@@ -32,33 +32,16 @@ namespace Services.MyHealth
 
         public IList<Weight> GetAllWeights()
         {
-            var allWeights = _healthRepository.GetAllWeights()
-                                .GroupBy(x => x.CreatedDate.Date)
-                                .Select(g => new Weight
-                                {
-                                    CreatedDate = g.Key.Date,
-                                    Kg = g.Average(w => w.Kg)
-                                })
-                                .OrderBy(x => x.CreatedDate).ToList();
-
+            var allWeights = _healthRepository.GetAllWeights();
             allWeights = _aggregationCalculator.GetMovingAverages(allWeights, 10).ToList();
-            allWeights = _targetService.SetTargetWeights(allWeights,365).ToList();            
+            allWeights = _targetService.SetTargets(allWeights,365).ToList();            
 
             return allWeights;
         }
 
         public IList<BloodPressure> GetAllBloodPressures()
         {
-            IList<BloodPressure> allBloodPressures = _healthRepository.GetAllBloodPressures()
-                .GroupBy(x => x.CreatedDate.Date)
-                .Select(x => new BloodPressure
-                {
-                    CreatedDate = x.Key.Date,
-                    Systolic = x.Average(w => w.Systolic),
-                    Diastolic = x.Average(w => w.Diastolic),
-                })
-                .OrderBy(x => x.CreatedDate).ToList();
-
+            var allBloodPressures = _healthRepository.GetAllBloodPressures();
             allBloodPressures = _aggregationCalculator.GetMovingAverages(allBloodPressures, 10);
 
             return allBloodPressures;
@@ -66,7 +49,7 @@ namespace Services.MyHealth
 
         public IList<RestingHeartRate> GetAllRestingHeartRates()
         {
-            var allRestingHeartRates = _healthRepository.GetAllRestingHeartRates().OrderBy(x=>x.CreatedDate).ToList();
+            var allRestingHeartRates = _healthRepository.GetAllRestingHeartRates();
             allRestingHeartRates = _aggregationCalculator.GetMovingAverages(allRestingHeartRates, 10).ToList();
             
             return allRestingHeartRates;
@@ -74,9 +57,9 @@ namespace Services.MyHealth
 
         public IList<StepCount> GetAllStepCounts()
         {
-            var allStepCounts = _healthRepository.GetAllStepCounts().OrderBy(x => x.CreatedDate).ToList();
+            var allStepCounts = _healthRepository.GetAllStepCounts().ToList();
             allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
-            allStepCounts = _targetService.SetTargetStepCounts(allStepCounts, 30).ToList();
+            allStepCounts = _targetService.SetTargets(allStepCounts).ToList();
 
             return allStepCounts;
         }
@@ -126,9 +109,9 @@ namespace Services.MyHealth
 
         public IList<AlcoholIntake> GetAllAlcoholIntakes()
         {
-            var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes().OrderBy(x => x.CreatedDate).ToList();
+            var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes().ToList();
             allAlcoholIntakes = _aggregationCalculator.GetCumSums(allAlcoholIntakes).ToList();
-            allAlcoholIntakes = _targetService.SetTargetAlcoholIntakes(allAlcoholIntakes, 30).ToList();
+            allAlcoholIntakes = _targetService.SetTargets(allAlcoholIntakes).ToList();
 
             return allAlcoholIntakes;
         }
@@ -179,9 +162,9 @@ namespace Services.MyHealth
 
         public IList<HeartRateSummary> GetAllHeartRateSummaries()
         {
-            var allHeartRateSummaries = _healthRepository.GetAllHeartRateSummaries().OrderBy(x => x.CreatedDate).ToList();
+            var allHeartRateSummaries = _healthRepository.GetAllHeartRateSummaries().ToList();
             allHeartRateSummaries = _aggregationCalculator.GetCumSums(allHeartRateSummaries).ToList();
-            allHeartRateSummaries = _targetService.SetTargetHeartRateSummaries(allHeartRateSummaries, 30).ToList();
+            allHeartRateSummaries = _targetService.SetTargets(allHeartRateSummaries).ToList();
 
             return allHeartRateSummaries;
         }
@@ -238,12 +221,9 @@ namespace Services.MyHealth
 
         public IList<ActivitySummary> GetAllActivitySummaries()
         {
-            var allActivitySummaries = _healthRepository.GetAllActivitySummaries().OrderBy(x => x.CreatedDate).ToList();
+            var allActivitySummaries = _healthRepository.GetAllActivitySummaries().ToList();
             allActivitySummaries = _aggregationCalculator.GetCumSums(allActivitySummaries).ToList();
-            //allStepCounts = _targetService.SetTargetStepCounts(allStepCounts, 30).ToList();
-
-            //            allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
-            allActivitySummaries = _targetService.SetTargetActivitySummaries(allActivitySummaries, 30).ToList();
+            allActivitySummaries = _targetService.SetTargets(allActivitySummaries, 30).ToList();
 
             return allActivitySummaries;
         }

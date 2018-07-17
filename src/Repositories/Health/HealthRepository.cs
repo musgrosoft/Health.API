@@ -57,22 +57,22 @@ namespace Repositories.Health
         public IEnumerable<AlcoholIntake> GetAllAlcoholIntakes()
         {
             //to list to materialize entities
-            return _healthContext.AlcoholIntakes.ToList();
+            return _healthContext.AlcoholIntakes.OrderBy(x => x.CreatedDate).ToList();
         }
 
         public IEnumerable<ActivitySummary> GetAllActivitySummaries()
         {
             //to list to materialize entities
-            return _healthContext.ActivitySummaries.ToList();
+            return _healthContext.ActivitySummaries.OrderBy(x => x.CreatedDate).ToList();
         }
 
         public IEnumerable<HeartRateSummary> GetAllHeartRateSummaries()
         {
             //to list to materialize entities
-            return _healthContext.HeartRateSummaries.ToList();
+            return _healthContext.HeartRateSummaries.OrderBy(x => x.CreatedDate).ToList();
         }
         
-        public IEnumerable<RestingHeartRate> GetAllRestingHeartRates()
+        public IList<RestingHeartRate> GetAllRestingHeartRates()
         {
             //to list to materialize entities
             return _healthContext.RestingHeartRates.OrderBy(x=>x.CreatedDate).ToList();
@@ -81,19 +81,34 @@ namespace Repositories.Health
         public IEnumerable<StepCount> GetAllStepCounts()
         {
             //to list to materialize entities
-            return _healthContext.StepCounts.ToList();
+            return _healthContext.StepCounts.OrderBy(x => x.CreatedDate).ToList();
         }
 
-        public IEnumerable<Weight> GetAllWeights()
+        public IList<Weight> GetAllWeights()
         {
             //to list to materialize entities
-            return _healthContext.Weights.ToList();
+            return _healthContext.Weights
+                .GroupBy(x => x.CreatedDate.Date)
+                .Select(g => new Weight
+                {
+                    CreatedDate = g.Key.Date,
+                    Kg = g.Average(w => w.Kg)
+                })
+                .OrderBy(x => x.CreatedDate).ToList();
         }
 
-        public IEnumerable<BloodPressure> GetAllBloodPressures()
+        public IList<BloodPressure> GetAllBloodPressures()
         {
             //to list to materialize entities
-            return _healthContext.BloodPressures.ToList();
+            return _healthContext.BloodPressures
+                .GroupBy(x => x.CreatedDate.Date)
+                .Select(x => new BloodPressure
+                {
+                    CreatedDate = x.Key.Date,
+                    Systolic = x.Average(w => w.Systolic),
+                    Diastolic = x.Average(w => w.Diastolic)
+                })
+                .OrderBy(x => x.CreatedDate).ToList();
         }
 
         public void Upsert(HeartRate heartRate)

@@ -70,37 +70,37 @@ namespace Services.MyHealth
 
 
 
-        public IEnumerable<StepCount> GetCumSums(IList<StepCount> orderedStepCounts)
+        public IList<StepCount> GetCumSums(IList<StepCount> orderedStepCounts)
         {
             return GetCumSums(
                 orderedStepCounts,
                 sc => sc.Count,
                 sc => sc.CumSumCount,
                 (sc, val) => sc.CumSumCount = val
-            );
+            ).ToList();
         }
 
-        public IEnumerable<ActivitySummary> GetCumSums(IList<ActivitySummary> orderedActivitySummaries)
+        public IList<ActivitySummary> GetCumSums(IList<ActivitySummary> orderedActivitySummaries)
         {
             return GetCumSums(
                 orderedActivitySummaries,
                 act => act.ActiveMinutes,
                 act => act.CumSumActiveMinutes,
                 (act, val) => act.CumSumActiveMinutes = val
-            );
+            ).ToList();
         }
 
-        public IEnumerable<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartRateSummaries)
+        public IList<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartRateSummaries)
         {
             return GetCumSums(
                 orderedHeartRateSummaries,
                 hs => hs.CardioAndAbove,
                 hs => hs.CumSumCardioAndAbove,
                 (hs, val) => hs.CumSumCardioAndAbove = val
-            );
+            ).ToList();
         }
         
-        public IEnumerable<AlcoholIntake> GetCumSums(IList<AlcoholIntake> orderedAlcoholIntakes)
+        public IList<AlcoholIntake> GetCumSums(IList<AlcoholIntake> orderedAlcoholIntakes)
         {
             //  _logger.Log("UNITS : Calculate cum sum");
             return GetCumSums(
@@ -108,10 +108,10 @@ namespace Services.MyHealth
                 ai => ai.Units,
                 ai => ai.CumSumUnits,
                 (ai, val) => ai.CumSumUnits = val
-            );
+            ).ToList();
         }
 
-        private IEnumerable<T> GetCumSums<T>(
+        private IList<T> GetCumSums<T>(
             IList<T> orderedList,
             Func<T, Double?> GetValue,
             Func<T, Double?> GetCumSum,

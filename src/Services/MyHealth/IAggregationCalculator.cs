@@ -10,9 +10,9 @@ namespace Services.MyHealth
         IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period);
         IList<BloodPressure> GetMovingAverages(IList<BloodPressure> orderedBloodPressures, int period);
 
-        IEnumerable<StepCount> GetCumSums(IList<StepCount> orderedStepCounts);
-        IEnumerable<ActivitySummary> GetCumSums(IList<ActivitySummary> orderedActivitySummaries);
-        IEnumerable<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartSummaries);
-        IEnumerable<AlcoholIntake> GetCumSums(IList<AlcoholIntake> alcoholIntakes);
+        IList<StepCount> GetCumSums(IList<StepCount> orderedStepCounts);
+        IList<ActivitySummary> GetCumSums(IList<ActivitySummary> orderedActivitySummaries);
+        IList<HeartRateSummary> GetCumSums(IList<HeartRateSummary> orderedHeartSummaries);
+        IList<AlcoholIntake> GetCumSums(IList<AlcoholIntake> alcoholIntakes);
     }
 }

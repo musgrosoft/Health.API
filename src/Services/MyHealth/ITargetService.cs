@@ -5,10 +5,10 @@ namespace Services.MyHealth
 {
     public interface ITargetService
     {
-        IList<Weight> SetTargetWeights(IList<Weight> weights, int extraFutureDays);
-        IList<StepCount> SetTargetStepCounts(List<StepCount> stepCounts, int extraFutureDays);
-        IList<ActivitySummary> SetTargetActivitySummaries(List<ActivitySummary> allActivitySummaries, int extraFutureDays);
-        IList<HeartRateSummary> SetTargetHeartRateSummaries(List<HeartRateSummary> allHeartRateSummaries, int extraFutureDays);
-        IList<AlcoholIntake> SetTargetAlcoholIntakes(List<AlcoholIntake> allAlcoholIntakes, int extraFutureDays);
+        IList<Weight> SetTargets(IList<Weight> weights, int extraFutureDays);
+        IList<StepCount> SetTargets(List<StepCount> stepCounts);
+        IList<ActivitySummary> SetTargets(List<ActivitySummary> allActivitySummaries, int extraFutureDays);
+        IList<HeartRateSummary> SetTargets(List<HeartRateSummary> allHeartRateSummaries);
+        IList<AlcoholIntake> SetTargets(List<AlcoholIntake> allAlcoholIntakes);
     }
 }
