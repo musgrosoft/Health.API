@@ -34,7 +34,7 @@ namespace HealthAPI.Controllers.Migration
 
         //todo post
         [HttpGet]
-        [Route("/{offset}")]
+        [Route("{offset}")]
         public async Task<IActionResult> Migrate(int offset)
         {
             try
