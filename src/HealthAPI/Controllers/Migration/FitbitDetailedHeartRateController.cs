@@ -45,8 +45,8 @@ namespace HealthAPI.Controllers.Migration
 
                 var fitbitClient = new FitbitClient(new HttpClient(), new Config(),
                     new FitbitAuthenticator(
-                        new OAuthService(new OAuthTokenRepository(new Config(), new Logger(new Config())))),
-                    new Logger(new Config()));
+                        new OAuthService(new OAuthTokenRepository(new Config(), new Logger(new Config(), new HttpClient())))),
+                    new Logger(new Config(), new HttpClient()));
 
                 var repo = new HealthRepository(new HealthContext(new Config()));
 
