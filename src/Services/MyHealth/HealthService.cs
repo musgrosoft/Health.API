@@ -12,269 +12,128 @@ namespace Services.MyHealth
         private readonly IConfig _config;
         private readonly ILogger _logger;
         private readonly IHealthRepository _healthRepository;
-        private readonly IAggregationCalculator _aggregationCalculator;
-        private readonly ITargetService _targetService;
+        private readonly IEntityAggregator _entityAggregator;
+        private readonly IEntityDecorator _entityDecorator;
         private const int MOVING_AVERAGE_PERIOD = 10;
 
-        public HealthService(
-            IConfig config, 
-            ILogger logger, 
+        public HealthService(IConfig config,
+            ILogger logger,
             IHealthRepository healthRepository,
-            IAggregationCalculator aggregationCalculator, 
-            ITargetService targetService)
+            IEntityAggregator entityAggregator, IEntityDecorator entityDecorator)
         {
             _config = config;
             _logger = logger;
             _healthRepository = healthRepository;
-            _aggregationCalculator = aggregationCalculator;
-            _targetService = targetService;
+            _entityAggregator = entityAggregator;
+            _entityDecorator = entityDecorator;
         }
 
         public IList<Weight> GetAllWeights()
         {
-            var allWeights = _healthRepository.GetAllWeights();
-            allWeights = _aggregationCalculator.GetMovingAverages(allWeights, 10).ToList();
-            allWeights = _targetService.SetTargets(allWeights,365).ToList();            
-
-            return allWeights;
+            return _entityDecorator.GetAllWeights();
         }
 
         public IList<BloodPressure> GetAllBloodPressures()
         {
-            var allBloodPressures = _healthRepository.GetAllBloodPressures();
-            allBloodPressures = _aggregationCalculator.GetMovingAverages(allBloodPressures, 10);
-
-            return allBloodPressures;
+            return _entityDecorator.GetAllBloodPressures();
         }
 
         public IList<RestingHeartRate> GetAllRestingHeartRates()
         {
-            var allRestingHeartRates = _healthRepository.GetAllRestingHeartRates();
-            allRestingHeartRates = _aggregationCalculator.GetMovingAverages(allRestingHeartRates, 10).ToList();
-            
-            return allRestingHeartRates;
+            return _entityDecorator.GetAllRestingHeartRates();
         }
 
         public IList<StepCount> GetAllStepCounts()
         {
-            var allStepCounts = _healthRepository.GetAllStepCounts().ToList();
-            allStepCounts = _aggregationCalculator.GetCumSums(allStepCounts).ToList();
-            allStepCounts = _targetService.SetTargets(allStepCounts).ToList();
-
-            return allStepCounts;
+            return _entityDecorator.GetAllStepCounts();
         }
 
         public IList<StepCount> GetAllStepCountsByWeek()
         {
-            var dailyStepCounts = GetAllStepCounts();
+            var dailyStepCounts = _entityDecorator.GetAllStepCounts();
 
-            var weekGroups = dailyStepCounts.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
-
-            var weeklyStepCounts = new List<StepCount>();
-            foreach (var group in weekGroups)
-            {
-                var stepCount = new StepCount
-                {
-                    CreatedDate = group.Key,
-                    Count = group.Sum(x => x.Count)
-                };
-
-                weeklyStepCounts.Add(stepCount);
-            }
+            var weeklyStepCounts = _entityAggregator.GroupByWeek(dailyStepCounts);
 
             return weeklyStepCounts;
         }
 
         public IList<StepCount> GetAllStepCountsByMonth()
         {
-            var dailySteps = GetAllStepCounts();
+            var dailyStepCounts = _entityDecorator.GetAllStepCounts();
 
-            var monthGroups = dailySteps.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
+            var monthlyStepCounts = _entityAggregator.GroupByMonth(dailyStepCounts);
 
-            var monthlySteps = new List<StepCount>();
-
-            foreach (var group in monthGroups)
-            {
-                var stepCount = new StepCount
-                {
-                    CreatedDate = group.Key,
-                    Count = (int)group.Average(x => x.Count)
-                };
-
-                monthlySteps.Add(stepCount);
-            }
-
-            return monthlySteps;
+            return monthlyStepCounts;
         }
 
         public IList<AlcoholIntake> GetAllAlcoholIntakes()
         {
-            var allAlcoholIntakes = _healthRepository.GetAllAlcoholIntakes().ToList();
-            allAlcoholIntakes = _aggregationCalculator.GetCumSums(allAlcoholIntakes).ToList();
-            allAlcoholIntakes = _targetService.SetTargets(allAlcoholIntakes).ToList();
-
-            return allAlcoholIntakes;
+            return _entityDecorator.GetAllAlcoholIntakes();
         }
 
         public IList<AlcoholIntake> GetAllAlcoholIntakesByWeek()
         {
-            
-            var dailyAlcoholIntakes = GetAllAlcoholIntakes();
+            var dailyAlcoholIntakes = _entityDecorator.GetAllAlcoholIntakes();
 
-            var weekGroups = dailyAlcoholIntakes.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
-
-            var weeklyAlcoholIntakes = new List<AlcoholIntake>();
-            foreach (var group in weekGroups)
-            {
-                var alcoholIntake = new AlcoholIntake
-                {
-                    CreatedDate = group.Key,
-                    Units = group.Sum(x => x.Units)
-                };
-
-                weeklyAlcoholIntakes.Add(alcoholIntake);
-            }
+            var weeklyAlcoholIntakes = _entityAggregator.GroupByWeek(dailyAlcoholIntakes);
 
             return weeklyAlcoholIntakes;
         }
 
         public IList<AlcoholIntake> GetAllAlcoholIntakesByMonth()
         {
+            var dailyAlcoholIntakes = _entityDecorator.GetAllAlcoholIntakes();
 
-            var dailyUnits = GetAllAlcoholIntakes();
+            var monthlyAlcoholIntakes = _entityAggregator.GroupByMonth(dailyAlcoholIntakes);
 
-            var monthGroups = dailyUnits.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
-
-            var monthlyUnits = new List<AlcoholIntake>();
-            foreach (var group in monthGroups)
-            {
-                var alcoholIntake = new AlcoholIntake
-                {
-                    CreatedDate = group.Key,
-                    Units = group.Average(x => x.Units)
-                };
-
-                monthlyUnits.Add(alcoholIntake);
-            }
-
-            return monthlyUnits;
+            return monthlyAlcoholIntakes;
         }
 
         public IList<HeartRateSummary> GetAllHeartRateSummaries()
         {
-            var allHeartRateSummaries = _healthRepository.GetAllHeartRateSummaries().ToList();
-            allHeartRateSummaries = _aggregationCalculator.GetCumSums(allHeartRateSummaries).ToList();
-            allHeartRateSummaries = _targetService.SetTargets(allHeartRateSummaries).ToList();
-
-            return allHeartRateSummaries;
+            return _entityDecorator.GetAllHeartRateSummaries();
         }
 
         public IList<HeartRateSummary> GetAllHeartRateSummariesByWeek()
         {
-            var dailyHeartZones = GetAllHeartRateSummaries();
+            var dailyHeartRateSummaries = _entityDecorator.GetAllHeartRateSummaries();
 
-            var weekGroups = dailyHeartZones.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
+            var weeklyHeartRateSummaries = _entityAggregator.GroupByWeek(dailyHeartRateSummaries);
 
-            var weeklyHeartZones = new List<HeartRateSummary>();
-            foreach (var group in weekGroups)
-            {
-                var heartZone = new HeartRateSummary
-                {
-                    CreatedDate = group.Key,
-                    OutOfRangeMinutes = group.Sum(x => x.OutOfRangeMinutes),
-                    FatBurnMinutes = group.Sum(x => x.FatBurnMinutes),
-                    CardioMinutes = group.Sum(x => x.CardioMinutes),
-                    PeakMinutes = group.Sum(x => x.PeakMinutes)
-
-                };
-
-                weeklyHeartZones.Add(heartZone);
-            }
-
-            return weeklyHeartZones;
+            return weeklyHeartRateSummaries;
         }
 
         public IList<HeartRateSummary> GetAllHeartRateSummariesByMonth()
         {
-            var dailyHearts = GetAllHeartRateSummaries();
+            var dailyHeartRateSummaries = _entityDecorator.GetAllHeartRateSummaries();
 
-            var monthGroups = dailyHearts.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
+            var monthlyHeartRateSummaries = _entityAggregator.GroupByMonth(dailyHeartRateSummaries);
 
-
-            var monthlyHearts = new List<HeartRateSummary>();
-            foreach (var group in monthGroups)
-            {
-                var heart = new HeartRateSummary
-                {
-                    CreatedDate = group.Key,
-                    FatBurnMinutes = (int)group.Average(x => x.FatBurnMinutes),
-                    CardioMinutes = (int)group.Average(x => x.CardioMinutes),
-                    PeakMinutes = (int)group.Average(x => x.PeakMinutes)
-                };
-
-                monthlyHearts.Add(heart);
-            }
-
-            return monthlyHearts;
+            return monthlyHeartRateSummaries;
         }
 
 
         public IList<ActivitySummary> GetAllActivitySummaries()
         {
-            var allActivitySummaries = _healthRepository.GetAllActivitySummaries().ToList();
-            allActivitySummaries = _aggregationCalculator.GetCumSums(allActivitySummaries).ToList();
-            allActivitySummaries = _targetService.SetTargets(allActivitySummaries).ToList();
-
-            return allActivitySummaries;
+            return _entityDecorator.GetAllActivitySummaries();
         }
 
         public IList<ActivitySummary> GetAllActivitySummariesByWeek()
         {
-            var dailyActivities = GetAllActivitySummaries();
+            var dailyActivitySummaries = _entityDecorator.GetAllActivitySummaries();
 
-            var weekGroups = dailyActivities.GroupBy(x => x.CreatedDate.GetWeekStartingOnMonday());
+            var weeklyActivitySummaries = _entityAggregator.GroupByWeek(dailyActivitySummaries);
 
-            var weeklyActivities = new List<ActivitySummary>();
-            foreach (var group in weekGroups)
-            {
-                var activity = new ActivitySummary
-                {
-                    CreatedDate = group.Key,
-                    SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
-                    LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
-                    FairlyActiveMinutes = group.Sum(x => x.FairlyActiveMinutes),
-                    VeryActiveMinutes = group.Sum(x => x.VeryActiveMinutes)
-                };
-
-                weeklyActivities.Add(activity);
-            }
-
-            return weeklyActivities;
+            return weeklyActivitySummaries;
         }
 
         public IList<ActivitySummary> GetAllActivitySummariesByMonth()
         {
-            var dailyActivities = GetAllActivitySummaries();
+            var dailyActivitySummaries = _entityDecorator.GetAllActivitySummaries();
 
-            var monthGroups = dailyActivities.GroupBy(x => x.CreatedDate.GetFirstDayOfMonth());
+            var monthlyActivitySummaries = _entityAggregator.GroupByMonth(dailyActivitySummaries);
 
-
-            var monthlyActivities = new List<ActivitySummary>();
-            foreach (var group in monthGroups)
-            {
-                var activity = new ActivitySummary
-                {
-                    CreatedDate = group.Key,
-                    SedentaryMinutes = (int)group.Average(x => x.SedentaryMinutes),
-                    LightlyActiveMinutes = (int)group.Average(x => x.LightlyActiveMinutes),
-                    FairlyActiveMinutes = (int)group.Average(x => x.FairlyActiveMinutes),
-                    VeryActiveMinutes = (int)group.Average(x => x.VeryActiveMinutes)
-                };
-
-                monthlyActivities.Add(activity);
-            }
-
-            return monthlyActivities;
+            return monthlyActivitySummaries;
         }
 
 
@@ -375,7 +234,8 @@ namespace Services.MyHealth
                 _healthRepository.Upsert(heartSummary);
             }
         }
-        
+
+
         //public void UpsertAlcoholIntakes()
         //{
         //    _logger.Log("UNITS : Calculate cum sum");

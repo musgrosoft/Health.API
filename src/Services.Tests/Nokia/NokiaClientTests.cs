@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
-using Repositories.Models;
 using Services.Nokia;
 using Xunit;
 
@@ -45,19 +42,8 @@ namespace Services.Tests.Nokia
             Assert.Equal(2, weights.Count());
             Assert.Contains(weights, x => x.Kg == 90.435 && x.CreatedDate == new DateTime(2018,5,11,4,57,27));
             Assert.Contains(weights, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018,5,10,5,4,42));
-
-//            { 11 / 05 / 2018 04:57:27}
-//            { 10 / 05 / 2018 05:04:42}
-
         }
 
-        //[Fact]
-        //public void FodyShouldThrowNullExceptionIfSinceDateaTimeIsNull()
-        //{
-
-        //    Assert.Throws<InvalidOperationException>(() =>  _nokiaClient.GetThing());
-           
-        //}
 
         [Fact]
         public async Task ShouldGetBloodPressureMeasures()
@@ -69,11 +55,6 @@ namespace Services.Tests.Nokia
             Assert.Contains(bps, x => x.Systolic == 130 && x.Diastolic == 83 && x.CreatedDate == new DateTime(2018, 5, 11, 5, 8, 52));
             Assert.Contains(bps, x => x.Systolic == 127 && x.Diastolic == 80 && x.CreatedDate == new DateTime(2018, 5, 10, 5, 20, 43));
             Assert.Contains(bps, x => x.Systolic == 134 && x.Diastolic == 81 && x.CreatedDate == new DateTime(2018, 5, 9, 5, 12, 41));
-
-            //            {11/05/2018 05:08:52}
-            //            {10/05/2018 05:20:43}
-            //          {09/05/2018 05:12:41}
-
         }
 
         private string nokiaContent = @"{

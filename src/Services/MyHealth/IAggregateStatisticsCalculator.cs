@@ -4,7 +4,7 @@ using Repositories.Models;
 
 namespace Services.MyHealth
 {
-    public interface IAggregationCalculator
+    public interface IAggregateStatisticsCalculator
     {
         IList<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> orderedRestingHeartRates, int period);
         IList<Weight> GetMovingAverages(IList<Weight> orderedWeights, int period);

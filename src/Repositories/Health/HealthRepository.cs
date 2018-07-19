@@ -114,6 +114,7 @@ namespace Repositories.Health
             //to list to materialize entities
             var allBloodPressures = _healthContext.BloodPressures.ToList();
 
+            //todo why does groupby generate invalid sql
             return allBloodPressures
                 .GroupBy(x => x.CreatedDate.Date)
                 .Select(x => new BloodPressure

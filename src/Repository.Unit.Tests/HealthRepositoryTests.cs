@@ -428,31 +428,41 @@ namespace Repository.Unit.Tests
             Assert.Equal(1, result[2].Units);
         }
 
-//        [Fact]
-//        public void ShouldGetAllBloodPressures()
-//        {
-//            var bloodPressures = new List<BloodPressure>
-//            {
-//                new BloodPressure {CreatedDate = new DateTime(2018,1,1), Systolic = 1},
-//                new BloodPressure {CreatedDate = new DateTime(2018,1,2), Systolic = 2},
-//                new BloodPressure {CreatedDate = new DateTime(2018,1,3), Systolic = 3}
-//
-//            };
-//
-//            foreach (var bloodPressure in bloodPressures)
-//            {
-//                _fakeLocalContext.BloodPressures.Add(bloodPressure);
-//            }
-//
-//            _fakeLocalContext.SaveChanges();
-//
-//            var result = _healthRepository.GetAllBloodPressures().ToList();
-//
-//            Assert.Equal(3, result.Count());
-//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Systolic == 1);
-//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Systolic == 2);
-//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Systolic == 3);
-//        }
+        [Fact]
+        public void ShouldGetAllBloodPressures()
+        {
+            var bloodPressures = new List<BloodPressure>
+            {
+                
+                new BloodPressure {CreatedDate = new DateTime(2018,1,2), Systolic = 2},
+                new BloodPressure {CreatedDate = new DateTime(2018,1,1,1,0,0), Systolic = 10},
+                new BloodPressure {CreatedDate = new DateTime(2018,1,1,2,0,0), Systolic = 20},
+                new BloodPressure {CreatedDate = new DateTime(2018,1,1,3,0,0), Systolic = 30},
+                new BloodPressure {CreatedDate = new DateTime(2018,1,3), Systolic = 3}
+
+            };
+
+            foreach (var bloodPressure in bloodPressures)
+            {
+                _fakeLocalContext.BloodPressures.Add(bloodPressure);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllBloodPressures().ToList();
+
+            Assert.Equal(3, result.Count());
+
+            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+            Assert.Equal(20, result[0].Systolic);
+
+            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+            Assert.Equal(2, result[1].Systolic);
+
+            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+            Assert.Equal(3, result[2].Systolic);
+
+        }
 
         [Fact]
         public void ShouldGetAllHeartRateSummaries()
@@ -551,30 +561,42 @@ namespace Repository.Unit.Tests
             Assert.Equal(1, result[2].TargetCumSumCount);
         }
 
-//        [Fact]
-//        public void ShouldGetAllWeights()
-//        {
-//            var weights = new List<Weight>
-//            {
-//                new Weight {CreatedDate = new DateTime(2018,1,1), TargetKg = 1},
-//                new Weight {CreatedDate = new DateTime(2018,1,2), TargetKg = 2},
-//                new Weight {CreatedDate = new DateTime(2018,1,3), TargetKg = 3}
-//
-//            };
-//
-//            foreach (var weight in weights)
-//            {
-//                _fakeLocalContext.Weights.Add(weight);
-//            }
-//
-//            _fakeLocalContext.SaveChanges();
-//
-//            var result = _healthRepository.GetAllWeights().ToList();
-//
-//            Assert.Equal(3, result.Count());
-//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.TargetKg == 1);
-//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.TargetKg == 2);
-//            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.TargetKg == 3);
-//        }
+        [Fact]
+        public void ShouldGetAllWeights()
+        {
+            var weights = new List<Weight>
+            {
+
+                new Weight {CreatedDate = new DateTime(2018,1,2), Kg = 2},
+                new Weight {CreatedDate = new DateTime(2018,1,1,1,0,0), Kg = 10},
+                new Weight {CreatedDate = new DateTime(2018,1,1,2,0,0), Kg = 20},
+                new Weight {CreatedDate = new DateTime(2018,1,1,3,0,0), Kg = 30},
+                new Weight {CreatedDate = new DateTime(2018,1,3), Kg = 3}
+
+            };
+
+            foreach (var weight in weights)
+            {
+                _fakeLocalContext.Weights.Add(weight);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllWeights().ToList();
+
+            Assert.Equal(3, result.Count());
+
+            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+            Assert.Equal(20, result[0].Kg);
+
+            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+            Assert.Equal(2, result[1].Kg);
+
+            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+            Assert.Equal(3, result[2].Kg);
+        }
+
+
+
     }
 }

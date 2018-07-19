@@ -9,11 +9,11 @@ namespace Services.Tests.MyHealth
 {
     public class AggregationCalculatorTests
     {
-        private AggregationCalculator _aggregationCalculator;
+        private AggregateStatisticsCalculator _aggregateStatisticsCalculator;
 
         public AggregationCalculatorTests()
         {
-            _aggregationCalculator = new AggregationCalculator();
+            _aggregateStatisticsCalculator = new AggregateStatisticsCalculator();
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace Services.Tests.MyHealth
                 new StepCount{CreatedDate = new DateTime(2017,1,5), Count = 5}
             };
 
-            var result = _aggregationCalculator.GetCumSums(stepCounts).ToList();
+            var result = _aggregateStatisticsCalculator.GetCumSums(stepCounts).ToList();
 
             Assert.Equal(5, result.Count());
             Assert.Equal(1, result[0].CumSumCount);
@@ -49,7 +49,7 @@ namespace Services.Tests.MyHealth
                 new ActivitySummary{CreatedDate = new DateTime(2017,1,5), VeryActiveMinutes = 5}
             };
 
-            var result = _aggregationCalculator.GetCumSums(activitySummaries).ToList();
+            var result = _aggregateStatisticsCalculator.GetCumSums(activitySummaries).ToList();
 
             Assert.Equal(5, result.Count());
             Assert.Equal(1, result[0].CumSumActiveMinutes);
@@ -71,7 +71,7 @@ namespace Services.Tests.MyHealth
                 new HeartRateSummary{CreatedDate = new DateTime(2017,1,5), CardioMinutes = 5, PeakMinutes = 0}
             };
 
-            var result = _aggregationCalculator.GetCumSums(heartSummaries).ToList();
+            var result = _aggregateStatisticsCalculator.GetCumSums(heartSummaries).ToList();
 
             Assert.Equal(5, result.Count());
             Assert.Equal(1, result[0].CumSumCardioAndAbove);
@@ -93,7 +93,7 @@ namespace Services.Tests.MyHealth
                 new AlcoholIntake{CreatedDate = new DateTime(2017,1,5), Units = 5}
             };
 
-            var result = _aggregationCalculator.GetCumSums(alcoholIntakes).ToList();
+            var result = _aggregateStatisticsCalculator.GetCumSums(alcoholIntakes).ToList();
 
             Assert.Equal(5, result.Count());
             Assert.Equal(1, result[0].CumSumUnits);
@@ -138,7 +138,7 @@ namespace Services.Tests.MyHealth
                 new Weight {Kg = 240},
             };
 
-            var resultWeights = _aggregationCalculator.GetMovingAverages( orderedWeights,10).ToList();
+            var resultWeights = _aggregateStatisticsCalculator.GetMovingAverages( orderedWeights,10).ToList();
 
             Assert.Equal(24, resultWeights.Count());
 
@@ -502,7 +502,7 @@ namespace Services.Tests.MyHealth
                 new RestingHeartRate {Beats = 240},
             };
 
-            var resultRestingHeartRates = _aggregationCalculator.GetMovingAverages(orderedRestingHeartRates, 10).ToList();
+            var resultRestingHeartRates = _aggregateStatisticsCalculator.GetMovingAverages(orderedRestingHeartRates, 10).ToList();
 
             Assert.Equal(15, resultRestingHeartRates.Count);
 
@@ -584,7 +584,7 @@ namespace Services.Tests.MyHealth
                 new BloodPressure {Systolic = 240, Diastolic = 245},
             };
 
-            var resultBloodPressures = _aggregationCalculator.GetMovingAverages(orderedBloodPressures, 10).ToList();
+            var resultBloodPressures = _aggregateStatisticsCalculator.GetMovingAverages(orderedBloodPressures, 10).ToList();
 
             Assert.Equal(24, resultBloodPressures.Count);
 

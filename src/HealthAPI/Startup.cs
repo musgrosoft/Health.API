@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using Microsoft.AspNet.OData.Builder;
-using Microsoft.AspNet.OData.Extensions;
+﻿using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repositories;
-using Repositories.Models;
 using Repositories.Health;
 using Services.MyHealth;
 using Utils;
@@ -54,7 +51,7 @@ namespace HealthAPI
             services.AddTransient<IHealthService, HealthService>();
             services.AddTransient<IConfig, Config>();
             services.AddTransient<ILogger, Logger>();
-            services.AddTransient<IAggregationCalculator, AggregationCalculator>();
+            services.AddTransient<IAggregateStatisticsCalculator, AggregateStatisticsCalculator>();
             services.AddTransient<IOAuthService, OAuthService>();
 
             services.AddTransient<IOAuthTokenRepository, OAuthTokenRepository>();
@@ -72,6 +69,9 @@ namespace HealthAPI
             services.AddTransient<IFitbitClient, FitbitClient>();
 
             services.AddTransient<ITargetService, TargetService>();
+            services.AddTransient<IEntityAggregator, EntityAggregator>();
+            
+            services.AddTransient<IEntityDecorator, EntityDecorator>();
 
             //// ********************
             //// Setup CORS

@@ -5,7 +5,7 @@ using Repositories.Models;
 
 namespace Services.MyHealth
 {
-    public class AggregationCalculator : IAggregationCalculator
+    public class AggregateStatisticsCalculator : IAggregateStatisticsCalculator
     {
         public IList<RestingHeartRate> GetMovingAverages(IList<RestingHeartRate> orderedRestingHeartRates, int period)
         {
