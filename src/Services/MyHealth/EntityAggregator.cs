@@ -140,8 +140,8 @@ namespace Services.MyHealth
                 var activity = new ActivitySummary
                 {
                     CreatedDate = group.Key,
-                    SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
-                    LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
+                    //SedentaryMinutes = group.Sum(x => x.SedentaryMinutes),
+                    //LightlyActiveMinutes = group.Sum(x => x.LightlyActiveMinutes),
                     FairlyActiveMinutes = group.Sum(x => x.FairlyActiveMinutes),
                     VeryActiveMinutes = group.Sum(x => x.VeryActiveMinutes)
                 };
@@ -162,8 +162,8 @@ namespace Services.MyHealth
                 var activity = new ActivitySummary
                 {
                     CreatedDate = group.Key,
-                    SedentaryMinutes = (int)group.Average(x => x.SedentaryMinutes),
-                    LightlyActiveMinutes = (int)group.Average(x => x.LightlyActiveMinutes),
+                    //SedentaryMinutes = (int)group.Average(x => x.SedentaryMinutes),
+                    //LightlyActiveMinutes = (int)group.Average(x => x.LightlyActiveMinutes),
                     FairlyActiveMinutes = (int)group.Average(x => x.FairlyActiveMinutes),
                     VeryActiveMinutes = (int)group.Average(x => x.VeryActiveMinutes)
                 };
