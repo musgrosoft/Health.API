@@ -117,7 +117,7 @@ namespace Utils
                     value = config["GoogleClientSecret"];
 
                 }
-                return value;
+                return value.Replace(@"\\n",@"\n");
             }
         }
     }
