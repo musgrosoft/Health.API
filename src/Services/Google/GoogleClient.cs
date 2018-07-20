@@ -37,7 +37,7 @@ namespace Services.Google
                 var credential = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(id)
                 {
                     Scopes = Scopes
-                }.FromPrivateKey($"{secret}"));
+                }.FromPrivateKey(secret));
 
                 var service = new SheetsService(new BaseClientService.Initializer()
                 {
