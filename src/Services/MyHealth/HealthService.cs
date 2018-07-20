@@ -248,9 +248,8 @@ namespace Services.MyHealth
 
         public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
         {
-            _logger.Log("UNITS : Calculate cum sum");
-
-
+            _logger.Log($"UNITS : Saving {alcoholIntakes.Count} alcohol intakes");
+            
             foreach (var alcoholIntake in alcoholIntakes)
             {
                 _healthRepository.Upsert(alcoholIntake);
