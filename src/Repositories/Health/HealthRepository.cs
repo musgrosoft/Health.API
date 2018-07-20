@@ -54,6 +54,8 @@ namespace Repositories.Health
             return _healthContext.Runs.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
+
+
         public IEnumerable<AlcoholIntake> GetAllAlcoholIntakes()
         {
             //to list to materialize entities
@@ -297,6 +299,24 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
+        public void Upsert(Run run)
+        {
+            var existingRun = _healthContext.Runs.Find(run.CreatedDate);
+
+            if (existingRun != null)
+            {
+
+                existingRun.Distance = run.Distance;
+                existingRun.Time = run.Time;
+            }
+            else
+            {
+                //  _logger.Log("HEART SUMMARY : insert thing");
+                _healthContext.Add(run);
+            }
+
+            _healthContext.SaveChanges();
+        }
 
     }
 }

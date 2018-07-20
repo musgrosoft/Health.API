@@ -13,6 +13,7 @@ using Services.Fitbit;
 using System.Net.Http;
 using Services;
 using Migrators;
+using Services.Google;
 using Services.Nokia;
 
 namespace HealthAPI
@@ -72,6 +73,9 @@ namespace HealthAPI
             services.AddTransient<IEntityAggregator, EntityAggregator>();
             
             services.AddTransient<IEntityDecorator, EntityDecorator>();
+
+            services.AddTransient<IGoogleClient, GoogleClient>();
+            services.AddTransient<IGoogleMigrator, GoogleMigrator>();
 
             //// ********************
             //// Setup CORS

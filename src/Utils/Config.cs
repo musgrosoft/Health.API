@@ -89,5 +89,36 @@ namespace Utils
                 return value;
             }
         }
+
+        public string GoogleClientId {
+            get
+            {
+                var value = Environment.GetEnvironmentVariable("GoogleClientId");
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
+                    var config = builder.Build();
+
+                    value = config["GoogleClientId"];
+
+                }
+                return value;
+            }
+        }
+        public string GoogleClientSecret {
+            get
+            {
+                var value = Environment.GetEnvironmentVariable("GoogleClientSecret");
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
+                    var config = builder.Build();
+
+                    value = config["GoogleClientSecret"];
+
+                }
+                return value;
+            }
+        }
     }
 }

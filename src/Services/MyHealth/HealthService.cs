@@ -28,6 +28,8 @@ namespace Services.MyHealth
             _entityDecorator = entityDecorator;
         }
 
+
+
         public IList<Weight> GetAllWeights()
         {
             return _entityDecorator.GetAllWeights();
@@ -235,6 +237,15 @@ namespace Services.MyHealth
             }
         }
 
+        public void UpsertRuns(List<Run> runs)
+        {
+            _logger.Log($"RUN : Saving {runs.Count()} runs");
+
+            foreach (var run in runs)
+            {
+                _healthRepository.Upsert(run);
+            }
+        }
 
         //public void UpsertAlcoholIntakes()
         //{

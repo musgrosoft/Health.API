@@ -21,6 +21,10 @@ namespace Repositories.Health
         void Upsert(ActivitySummary activitySummary);
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(HeartRateSummary heartSummary);
+
+        void Upsert(HeartRate heartRate);
+        void Upsert(Run run);
+
         //void Upsert(AlcoholIntake alcoholIntake);
 
         //IList<Weight> GetLatestWeights(int number, DateTime beforeDate);
@@ -29,7 +33,7 @@ namespace Repositories.Health
         //IEnumerable<RestingHeartRate> GetLatestRestingHeartRates(int number, DateTime beforeDate);
         //IList<StepCount> GetLatestStepCounts(int number, DateTime beforeDate);
         //IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate);
-        
+
 
         IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
         IList<Weight> GetAllWeights();
@@ -38,6 +42,6 @@ namespace Repositories.Health
         IEnumerable<StepCount> GetAllStepCounts();
         IEnumerable<ActivitySummary> GetAllActivitySummaries();
         IEnumerable<HeartRateSummary> GetAllHeartRateSummaries();
-        void Upsert(HeartRate heartRate);
+
     }
 }
