@@ -29,7 +29,6 @@ namespace Services.MyHealth
         }
 
 
-
         public IList<Weight> GetAllWeights()
         {
             return _entityDecorator.GetAllWeights();
@@ -247,16 +246,16 @@ namespace Services.MyHealth
             }
         }
 
-        //public void UpsertAlcoholIntakes()
-        //{
-        //    _logger.Log("UNITS : Calculate cum sum");
+        public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
+        {
+            _logger.Log("UNITS : Calculate cum sum");
 
 
-        //    foreach (var alcoholIntake in localAlc)
-        //    {
-        //        _healthRepository.Upsert(alcoholIntake);
-        //    }
-        //}
+            foreach (var alcoholIntake in alcoholIntakes)
+            {
+                _healthRepository.Upsert(alcoholIntake);
+            }
+        }
 
     }
 }

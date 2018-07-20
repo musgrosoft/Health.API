@@ -25,6 +25,7 @@ namespace Services.MyHealth
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
         // void UpsertAlcoholIntakes();
         void UpsertRuns(List<Run> runs);
+        void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes);
 
 
         IList<Weight> GetAllWeights();
@@ -39,6 +40,7 @@ namespace Services.MyHealth
         IList<HeartRateSummary> GetAllHeartRateSummaries();
         IList<HeartRateSummary> GetAllHeartRateSummariesByWeek();
         IList<HeartRateSummary> GetAllHeartRateSummariesByMonth();
+
         
     }
 }

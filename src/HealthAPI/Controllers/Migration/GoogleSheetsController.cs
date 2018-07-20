@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
-using Services.MyHealth;
 using Utils;
 
 namespace HealthAPI.Controllers.Migration
@@ -10,16 +9,13 @@ namespace HealthAPI.Controllers.Migration
     [Route("api/Google")]
     public class GoogleSheetsController : Controller
     {
-        private readonly IHealthService _healthService;
         private readonly ILogger _logger;
-        private readonly IConfig _config;
+        
         private readonly IGoogleMigrator _googleMigrator;
 
-        public GoogleSheetsController(IHealthService healthService, ILogger logger, IConfig config, IGoogleMigrator googleMigrator)
+        public GoogleSheetsController(ILogger logger, IGoogleMigrator googleMigrator)
         {
-            _healthService = healthService;
             _logger = logger;
-            _config = config;
             _googleMigrator = googleMigrator;
         }
 
@@ -34,6 +30,7 @@ namespace HealthAPI.Controllers.Migration
                 _logger.Log("GOOGLE SHEETS : starting google migrate");
 
                 _googleMigrator.MigrateRuns();
+                _googleMigrator.MigrateAlcoholIntakes();
 
                 return Ok();
             }

@@ -6,5 +6,6 @@ namespace Services.Google
     public interface IGoogleClient
     {
         List<Run> GetRuns();
+        List<AlcoholIntake> GetAlcoholIntakes();
     }
 }

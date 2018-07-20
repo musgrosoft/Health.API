@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
-using Google.Apis.Sheets.v4.Data;
-using Google.Apis.Util.Store;
-using Repositories.Models;
 using Services.Google;
 using Services.MyHealth;
 
@@ -31,6 +23,12 @@ namespace Migrators
             var runs = _googleClient.GetRuns();
             _healthService.UpsertRuns(runs);
 
+        }
+
+        public void MigrateAlcoholIntakes()
+        {
+            var alcoholIntakes = _googleClient.GetAlcoholIntakes();
+            _healthService.UpsertAlcoholIntakes(alcoholIntakes);
         }
 
         //public IEnumerable<AlcoholIntake> GetAlcoholIntakes(DateTime fromDate, DateTime toDate)

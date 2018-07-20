@@ -25,7 +25,7 @@ namespace Repositories.Health
         void Upsert(HeartRate heartRate);
         void Upsert(Run run);
 
-        //void Upsert(AlcoholIntake alcoholIntake);
+        void Upsert(AlcoholIntake alcoholIntake);
 
         //IList<Weight> GetLatestWeights(int number, DateTime beforeDate);
         //IList<HeartRateSummary> GetLatestHeartSummaries(int number, DateTime beforeDate);
