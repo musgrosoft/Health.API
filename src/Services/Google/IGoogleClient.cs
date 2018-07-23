@@ -7,5 +7,6 @@ namespace Services.Google
     {
         List<Run> GetRuns();
         List<AlcoholIntake> GetAlcoholIntakes();
+        List<Ergo> GetRows();
     }
 }

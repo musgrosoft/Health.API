@@ -13,6 +13,9 @@ namespace Services.Google
     {
         private readonly IConfig _config;
         private readonly ILogger _logger;
+        private String RunSpreadsheetId = "1-S-oI6M61po-TIvBu0JQwDMjzNkarl3SXqiNKUdusfg";
+        private String AlcoholSpreadsheetId = "15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io";
+        private String RowSpreadsheetId = "1QL-RYs8STqWCzg_ck4rD_py93l8CzhOpeu58qXFhoXA";
 
         static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "sheetreader";
@@ -23,45 +26,47 @@ namespace Services.Google
             _logger = logger;
         }
 
+        private IList<IList<Object>> GetRows(string sheetId, string range)
+        {
+            var id = _config.GoogleClientId;
+            var secret = _config.GoogleClientSecret;
+
+            _logger.Log($"secret is {secret}");
+
+            var credential = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(id)
+            {
+                Scopes = Scopes
+            }.FromPrivateKey(secret));
+
+            var service = new SheetsService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
+
+            SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(sheetId, range);
+
+            ValueRange response = request.Execute();
+            IList<IList<Object>> values = response.Values;
+
+            return values;
+        }
+
         public List<AlcoholIntake> GetAlcoholIntakes()
         {
             var alcoholIntakes = new List<AlcoholIntake>();
 
             try
             {
-                var id = _config.GoogleClientId;
-                var secret = _config.GoogleClientSecret;
-
-                _logger.Log($"secret is {secret}");
-
-                var credential = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(id)
+                var rows = GetRows(AlcoholSpreadsheetId, "Sheet1!B2:F");
+                if (rows != null && rows.Count > 0)
                 {
-                    Scopes = Scopes
-                }.FromPrivateKey(secret));
-
-                var service = new SheetsService(new BaseClientService.Initializer()
-                {
-                    HttpClientInitializer = credential,
-                    ApplicationName = ApplicationName,
-                });
-
-                String spreadsheetId = "15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io";
-                String range = "Sheet1!E2:F";
-                SpreadsheetsResource.ValuesResource.GetRequest request =
-                    service.Spreadsheets.Values.Get(spreadsheetId, range);
-
-                // Prints the names and majors of students in a sample spreadsheet:
-                // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-                ValueRange response = request.Execute();
-                IList<IList<Object>> values = response.Values;
-                if (values != null && values.Count > 0)
-                {
-                    foreach (var row in values)
+                    foreach (var row in rows)
                     {
                         try
                         {
-                            var date = DateTime.Parse(row[0].ToString());
-                            var units = double.Parse(row[1].ToString());
+                            var date = DateTime.Parse((string)row[0]);
+                            var units = double.Parse((string)row[1]);
 
                             alcoholIntakes.Add(new AlcoholIntake()
                             {
@@ -89,42 +94,62 @@ namespace Services.Google
             return alcoholIntakes;
         }
 
+        public List<Ergo> GetRows()
+        {
+            var ergos = new List<Ergo>();
+
+            try
+            {
+                var rows = GetRows(RowSpreadsheetId, "Sheet1!A2:C");
+                if (rows != null && rows.Count > 0)
+                {
+                    foreach (var row in rows)
+                    {
+                        try
+                        {
+                            var date = DateTime.Parse(row[0].ToString());
+                            var km = int.Parse(row[1].ToString());
+                            var time = TimeSpan.Parse(row[2].ToString());
+
+                            ergos.Add(new Ergo
+                            {
+                                CreatedDate = date,
+                                Distance = km,
+                                Time = time
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Error(ex);
+                        }
+
+                    }
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
+
+            return ergos;
+        }
+
         public List<Run> GetRuns()
         {
             var runs = new List<Run>();
 
             try
             {
-                var id = _config.GoogleClientId;
-                var secret = _config.GoogleClientSecret;
-
-                _logger.Log($"secret is {secret}");
-
-                var credential = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(id)
+                var rows = GetRows(RunSpreadsheetId, "Sheet1!A2:C");
+                if (rows != null && rows.Count > 0)
                 {
-                    Scopes = Scopes
-                }.FromPrivateKey(secret));
-
-                var service = new SheetsService(new BaseClientService.Initializer()
-                {
-                    HttpClientInitializer = credential,
-                    ApplicationName = ApplicationName,
-                });
-
-                String spreadsheetId = "1-S-oI6M61po-TIvBu0JQwDMjzNkarl3SXqiNKUdusfg";
-                String range = "Sheet1!A2:C";
-                SpreadsheetsResource.ValuesResource.GetRequest request =
-                    service.Spreadsheets.Values.Get(spreadsheetId, range);
-
-                // Prints the names and majors of students in a sample spreadsheet:
-                // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-                ValueRange response = request.Execute();
-                IList<IList<Object>> values = response.Values;
-                if (values != null && values.Count > 0)
-                {
-                    foreach (var row in values)
+                    foreach (var row in rows)
                     {
-                        try { 
+                        try
+                        { 
                             var date = DateTime.Parse(row[0].ToString());
                             var km = int.Parse(row[1].ToString());
                             var time = TimeSpan.Parse(row[2].ToString());

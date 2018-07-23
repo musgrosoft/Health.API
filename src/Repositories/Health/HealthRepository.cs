@@ -166,6 +166,8 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
+
+
         public void Upsert(AlcoholIntake alcoholIntake)
         {
             var existingAlcoholIntake = _healthContext.AlcoholIntakes.Find(alcoholIntake.CreatedDate);
@@ -312,6 +314,25 @@ namespace Repositories.Health
             {
                 //  _logger.Log("HEART SUMMARY : insert thing");
                 _healthContext.Add(run);
+            }
+
+            _healthContext.SaveChanges();
+        }
+
+        public void Upsert(Ergo ergo)
+        {
+            var existingErgo = _healthContext.Ergos.Find(ergo.CreatedDate);
+
+            if (existingErgo == null)
+            {
+                //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                _healthContext.Add(ergo);
+            }
+            else
+            {
+                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+                existingErgo.Distance = ergo.Distance;
+                existingErgo.Time = ergo.Time;
             }
 
             _healthContext.SaveChanges();

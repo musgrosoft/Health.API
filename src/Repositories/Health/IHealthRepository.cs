@@ -43,5 +43,6 @@ namespace Repositories.Health
         IEnumerable<ActivitySummary> GetAllActivitySummaries();
         IEnumerable<HeartRateSummary> GetAllHeartRateSummaries();
 
+        void Upsert(Ergo ergo);
     }
 }

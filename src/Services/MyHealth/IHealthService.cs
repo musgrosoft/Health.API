@@ -41,6 +41,7 @@ namespace Services.MyHealth
         IList<HeartRateSummary> GetAllHeartRateSummariesByWeek();
         IList<HeartRateSummary> GetAllHeartRateSummariesByMonth();
 
-        
+
+        void UpsertRows(List<Ergo> rows);
     }
 }

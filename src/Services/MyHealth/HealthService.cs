@@ -246,6 +246,16 @@ namespace Services.MyHealth
             }
         }
 
+        public void UpsertRows(List<Ergo> rows)
+        {
+            _logger.Log($"ROWS : Saving {rows.Count()} rows");
+
+            foreach (var row in rows)
+            {
+                _healthRepository.Upsert(row);
+            }
+        }
+
         public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
         {
             _logger.Log($"UNITS : Saving {alcoholIntakes.Count} alcohol intakes");

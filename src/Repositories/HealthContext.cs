@@ -15,6 +15,7 @@ namespace Repositories
         public virtual DbSet<Models.AlcoholIntake> AlcoholIntakes { get; set; }
         public virtual DbSet<Models.Weight> Weights { get; set; }
         public virtual DbSet<Models.Run> Runs { get; set; }
+        public virtual DbSet<Models.Ergo> Ergos { get; set; }
 
         public virtual DbSet<Models.HeartRate> HeartRates { get; set; }
 

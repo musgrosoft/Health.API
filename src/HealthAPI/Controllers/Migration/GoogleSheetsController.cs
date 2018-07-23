@@ -30,6 +30,7 @@ namespace HealthAPI.Controllers.Migration
                 _logger.Log("GOOGLE SHEETS : starting google migrate");
 
                 _googleMigrator.MigrateRuns();
+                _googleMigrator.MigrateRows();
                 _googleMigrator.MigrateAlcoholIntakes();
 
                 return Ok();

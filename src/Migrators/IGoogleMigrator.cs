@@ -4,5 +4,6 @@
     {
         void MigrateRuns();
         void MigrateAlcoholIntakes();
+        void MigrateRows();
     }
 }
