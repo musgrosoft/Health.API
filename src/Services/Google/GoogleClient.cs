@@ -26,7 +26,7 @@ namespace Services.Google
             _logger = logger;
         }
 
-        private IList<IList<Object>> GetRows(string sheetId, string range)
+        private IList<IList<string>> GetRows(string sheetId, string range)
         {
             var id = _config.GoogleClientId;
             var secret = _config.GoogleClientSecret;
@@ -49,7 +49,7 @@ namespace Services.Google
             ValueRange response = request.Execute();
             IList<IList<Object>> values = response.Values;
 
-            return values;
+            return (IList<IList<string>>)values;
         }
 
         public List<AlcoholIntake> GetAlcoholIntakes()
@@ -65,8 +65,8 @@ namespace Services.Google
                     {
                         try
                         {
-                            var date = (DateTime)row[0];
-                            var units = (Double)row[1];
+                            var date = DateTime.Parse(row[0]);
+                            var units = Double.Parse(row[1]);
 
                             alcoholIntakes.Add(new AlcoholIntake()
                             {
@@ -107,9 +107,9 @@ namespace Services.Google
                     {
                         try
                         {
-                            var date = (DateTime)row[0];
-                            var m = (int)row[1];
-                            var time = (TimeSpan)row[2];
+                            var date = DateTime.Parse(row[0]);
+                            var m = int.Parse(row[1]);
+                            var time = TimeSpan.Parse(row[2]);
 
                             ergos.Add(new Ergo
                             {
@@ -150,9 +150,9 @@ namespace Services.Google
                     {
                         try
                         {
-                            var date = (DateTime)row[0];
-                            var m = (int)row[1];
-                            var time = (TimeSpan)row[2];
+                            var date = DateTime.Parse(row[0]);
+                            var m = int.Parse(row[1]);
+                            var time = TimeSpan.Parse(row[2]);
 
                             runs.Add(new Run
                             {
