@@ -84,17 +84,29 @@ namespace Repository.Unit.Tests
             Assert.Contains(restingHeartRate, restingHeartRates);
         }
 
-        //[Fact]
-        //public void ShouldInsertRun()
-        //{
-        //    var run = new Run { Distance = 123 };
+        [Fact]
+        public void ShouldInsertRun()
+        {
+            var run = new Run { Metres = 123 };
 
-        //    _healthRepository.Upsert(run);
+            _healthRepository.Upsert(run);
 
-        //    var runs = _fakeLocalContext.Runs;
+            var runs = _fakeLocalContext.Runs;
 
-        //    Assert.Contains(run, runs);
-        //}
+            Assert.Contains(run, runs);
+        }
+
+        [Fact]
+        public void ShouldInsertErgo()
+        {
+            var ergo = new Ergo() { Metres = 123 };
+
+            _healthRepository.Upsert(ergo);
+
+            var ergos = _fakeLocalContext.Ergos;
+
+            Assert.Contains(ergo, ergos);
+        }
 
         [Fact]
         public void ShouldInsertStepCount()
@@ -118,6 +130,18 @@ namespace Repository.Unit.Tests
             var weights = _fakeLocalContext.Weights;
 
             Assert.Contains(weight, weights);
+        }
+
+        [Fact]
+        public void ShouldInsertAlcoholIntake()
+        {
+            var alcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2018,1,1) , Units = 123 };
+
+            _healthRepository.Upsert(alcoholIntake);
+
+            var alcoholIntakes = _fakeLocalContext.AlcoholIntakes;
+
+            Assert.Contains(alcoholIntake, alcoholIntakes);
         }
 
         [Fact]
@@ -269,10 +293,9 @@ namespace Repository.Unit.Tests
             _fakeLocalContext.Weights.Add(existingWeight);
             _fakeLocalContext.SaveChanges();
 
-            existingWeight.Kg = 2;
-            existingWeight.FatRatioPercentage = 4;
+            var newWeight = new Weight { CreatedDate = new DateTime(2017, 1, 1), Kg = 2, FatRatioPercentage = 4 };
 
-            _healthRepository.Upsert(existingWeight);
+            _healthRepository.Upsert(newWeight);
 
             Assert.Equal(2,existingWeight.Kg);
             Assert.Equal(4, existingWeight.FatRatioPercentage);
@@ -286,14 +309,12 @@ namespace Repository.Unit.Tests
             _fakeLocalContext.BloodPressures.Add(existingBloodPressure);
             _fakeLocalContext.SaveChanges();
 
-            existingBloodPressure.Systolic = 2;
-            existingBloodPressure.Diastolic = 4;
+            var newBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 2, Diastolic = 4 };
 
-            _healthRepository.Upsert(existingBloodPressure);
+            _healthRepository.Upsert(newBloodPressure);
 
             Assert.Equal(2, existingBloodPressure.Systolic);
             Assert.Equal(4, existingBloodPressure.Diastolic);
-
         }
 
         [Fact]
@@ -303,12 +324,56 @@ namespace Repository.Unit.Tests
             _fakeLocalContext.StepCounts.Add(existingStepCount);
             _fakeLocalContext.SaveChanges();
 
-            existingStepCount.Count = 2;
-
-            _healthRepository.Upsert(existingStepCount);
+            var newStepCount = new StepCount { CreatedDate = new DateTime(2017, 1, 1), Count = 2 };
+            
+            _healthRepository.Upsert(newStepCount);
 
             Assert.Equal(2, existingStepCount.Count);
+        }
 
+        [Fact]
+        public void ShouldUpdateRun()
+        {
+            var existingRun = new Run{ CreatedDate = new DateTime(2017, 1, 1), Metres = 1234, Time = new TimeSpan(1,2,3)};
+            _fakeLocalContext.Runs.Add(existingRun);
+            _fakeLocalContext.SaveChanges();
+
+            var newRun = new Run { CreatedDate = new DateTime(2017, 1, 1), Metres = 2222, Time = new TimeSpan(2, 3, 4) };
+
+            _healthRepository.Upsert(newRun);
+
+            Assert.Equal(2222, existingRun.Metres);
+            Assert.Equal(new TimeSpan(2, 3, 4), existingRun.Time);
+
+        }
+
+        [Fact]
+        public void ShouldUpdateErgo()
+        {
+            var existingErgo = new Ergo{ CreatedDate = new DateTime(2017, 1, 1), Metres = 1234, Time = new TimeSpan(1, 2, 3) };
+            _fakeLocalContext.Ergos.Add(existingErgo);
+            _fakeLocalContext.SaveChanges();
+
+            var newErgo = new Ergo { CreatedDate = new DateTime(2017, 1, 1), Metres = 2222, Time = new TimeSpan(2, 3, 4) };
+
+            _healthRepository.Upsert(newErgo);
+
+            Assert.Equal(2222, existingErgo.Metres);
+            Assert.Equal(new TimeSpan(2, 3, 4), existingErgo.Time);
+        }
+
+        [Fact]
+        public void ShouldUpdateAlcoholIntake()
+        {
+            var existingAlcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2017, 1, 1), Units = 1234};
+            _fakeLocalContext.AlcoholIntakes.Add(existingAlcoholIntake);
+            _fakeLocalContext.SaveChanges();
+
+            var newAlcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2017, 1, 1), Units = 2345 };
+
+            _healthRepository.Upsert(newAlcoholIntake);
+
+            Assert.Equal(2345, existingAlcoholIntake.Units);
         }
 
         [Fact]
@@ -336,12 +401,11 @@ namespace Repository.Unit.Tests
             _fakeLocalContext.RestingHeartRates.Add(existingRestingHeartRate);
             _fakeLocalContext.SaveChanges();
 
-            existingRestingHeartRate.Beats = 2;
+            var newRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 2 };
 
-            _healthRepository.Upsert(existingRestingHeartRate);
+            _healthRepository.Upsert(newRestingHeartRate);
 
             Assert.Equal(2, existingRestingHeartRate.Beats);
-
         }
 
         [Fact]
@@ -351,18 +415,14 @@ namespace Repository.Unit.Tests
             _fakeLocalContext.HeartRateSummaries.Add(existingHeartSummary);
             _fakeLocalContext.SaveChanges();
 
-            existingHeartSummary.OutOfRangeMinutes = 5;
-            existingHeartSummary.FatBurnMinutes = 6;
-            existingHeartSummary.CardioMinutes = 7;
-            existingHeartSummary.PeakMinutes = 8;
+            var newHeartSummary = new HeartRateSummary() { CreatedDate = new DateTime(2017, 1, 1), OutOfRangeMinutes = 5, FatBurnMinutes = 6, CardioMinutes = 7, PeakMinutes = 8 };
 
-            _healthRepository.Upsert(existingHeartSummary);
+            _healthRepository.Upsert(newHeartSummary);
 
             Assert.Equal(5, existingHeartSummary.OutOfRangeMinutes);
             Assert.Equal(6, existingHeartSummary.FatBurnMinutes);
             Assert.Equal(7, existingHeartSummary.CardioMinutes);
             Assert.Equal(8, existingHeartSummary.PeakMinutes);
-
         }
 
         [Fact]
