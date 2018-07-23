@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.MyHealth;
 
-namespace HealthAPI.Controllers
+namespace HealthAPI.Controllers.Data
 {
     [Produces("application/json")]
     [Route("api/Ergos")]

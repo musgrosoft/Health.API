@@ -1,13 +1,13 @@
-﻿using Repositories.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using HealthAPI.Controllers.Data;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Repositories.Models;
 using Services.MyHealth;
 using Xunit;
 
-namespace HealthAPI.Unit.Tests.Controllers.OData
+namespace HealthAPI.Unit.Tests.Controllers.Data
 {
     public class StepCountsControllerTests
     {

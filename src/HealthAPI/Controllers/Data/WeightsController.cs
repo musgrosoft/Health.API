@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Repositories.Health;
-using Repositories.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using Services.MyHealth;
 
-namespace HealthAPI.Controllers
+namespace HealthAPI.Controllers.Data
 {
     [Produces("application/json")]
     [Route("api/Weights")]
