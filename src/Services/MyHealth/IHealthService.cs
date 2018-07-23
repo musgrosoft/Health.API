@@ -43,5 +43,7 @@ namespace Services.MyHealth
 
 
         void UpsertRows(List<Ergo> rows);
+        IList<Run> GetAllRuns();
+        IList<Ergo> GetAllErgos();
     }
 }

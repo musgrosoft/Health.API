@@ -29,6 +29,16 @@ namespace Services.MyHealth
         }
 
 
+        public IList<Run> GetAllRuns()
+        {
+            return _healthRepository.GetAllRuns();
+        }
+
+        public IList<Ergo> GetAllErgos()
+        {
+            return _healthRepository.GetAllErgos();
+        }
+
         public IList<Weight> GetAllWeights()
         {
             return _entityDecorator.GetAllWeights();

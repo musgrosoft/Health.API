@@ -35,14 +35,16 @@ namespace Repositories.Health
         //IList<ActivitySummary> GetLatestActivitySummaries(int number, DateTime beforeDate);
 
 
-        IEnumerable<AlcoholIntake> GetAllAlcoholIntakes();
+        IList<AlcoholIntake> GetAllAlcoholIntakes();
         IList<Weight> GetAllWeights();
         IList<BloodPressure> GetAllBloodPressures();
         IList<RestingHeartRate> GetAllRestingHeartRates();
-        IEnumerable<StepCount> GetAllStepCounts();
-        IEnumerable<ActivitySummary> GetAllActivitySummaries();
-        IEnumerable<HeartRateSummary> GetAllHeartRateSummaries();
+        IList<StepCount> GetAllStepCounts();
+        IList<ActivitySummary> GetAllActivitySummaries();
+        IList<HeartRateSummary> GetAllHeartRateSummaries();
 
         void Upsert(Ergo ergo);
+        IList<Run> GetAllRuns();
+        IList<Ergo> GetAllErgos();
     }
 }

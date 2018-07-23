@@ -56,19 +56,19 @@ namespace Repositories.Health
 
 
 
-        public IEnumerable<AlcoholIntake> GetAllAlcoholIntakes()
+        public IList<AlcoholIntake> GetAllAlcoholIntakes()
         {
             //to list to materialize entities
             return _healthContext.AlcoholIntakes.OrderBy(x => x.CreatedDate).ToList();
         }
 
-        public IEnumerable<ActivitySummary> GetAllActivitySummaries()
+        public IList<ActivitySummary> GetAllActivitySummaries()
         {
             //to list to materialize entities
             return _healthContext.ActivitySummaries.OrderBy(x => x.CreatedDate).ToList();
         }
 
-        public IEnumerable<HeartRateSummary> GetAllHeartRateSummaries()
+        public IList<HeartRateSummary> GetAllHeartRateSummaries()
         {
             //to list to materialize entities
             return _healthContext.HeartRateSummaries.OrderBy(x => x.CreatedDate).ToList();
@@ -80,10 +80,22 @@ namespace Repositories.Health
             return _healthContext.RestingHeartRates.OrderBy(x=>x.CreatedDate).ToList();
         }
 
-        public IEnumerable<StepCount> GetAllStepCounts()
+        public IList<StepCount> GetAllStepCounts()
         {
             //to list to materialize entities
             return _healthContext.StepCounts.OrderBy(x => x.CreatedDate).ToList();
+        }
+
+        public IList<Run> GetAllRuns()
+        {
+            //to list to materialize entities
+            return _healthContext.Runs.OrderBy(x => x.CreatedDate).ToList();
+        }
+
+        public IList<Ergo> GetAllErgos()
+        {
+            //to list to materialize entities
+            return _healthContext.Ergos.OrderBy(x => x.CreatedDate).ToList();
         }
 
         public IList<Weight> GetAllWeights()
