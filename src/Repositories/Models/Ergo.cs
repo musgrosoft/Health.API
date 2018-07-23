@@ -9,6 +9,6 @@ namespace Repositories.Models
         [Key]
         public DateTime CreatedDate { get; set; }
         public TimeSpan Time { get; set; }
-        public Double Distance { get; set; }
+        public Double Metres { get; set; }
     }
 }

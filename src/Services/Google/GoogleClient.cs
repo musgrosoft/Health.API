@@ -65,8 +65,8 @@ namespace Services.Google
                     {
                         try
                         {
-                            var date = DateTime.Parse((string)row[0]);
-                            var units = double.Parse((string)row[1]);
+                            var date = (DateTime)row[0];
+                            var units = (Double)row[1];
 
                             alcoholIntakes.Add(new AlcoholIntake()
                             {
@@ -107,14 +107,14 @@ namespace Services.Google
                     {
                         try
                         {
-                            var date = DateTime.Parse(row[0].ToString());
-                            var km = int.Parse(row[1].ToString());
-                            var time = TimeSpan.Parse(row[2].ToString());
+                            var date = (DateTime)row[0];
+                            var m = (int)row[1];
+                            var time = (TimeSpan)row[2];
 
                             ergos.Add(new Ergo
                             {
                                 CreatedDate = date,
-                                Distance = km,
+                                Metres = m,
                                 Time = time
                             });
                         }
@@ -149,15 +149,15 @@ namespace Services.Google
                     foreach (var row in rows)
                     {
                         try
-                        { 
-                            var date = DateTime.Parse(row[0].ToString());
-                            var km = int.Parse(row[1].ToString());
-                            var time = TimeSpan.Parse(row[2].ToString());
+                        {
+                            var date = (DateTime)row[0];
+                            var m = (int)row[1];
+                            var time = (TimeSpan)row[2];
 
                             runs.Add(new Run
                             {
                                 CreatedDate = date,
-                                Distance = km,
+                                Metres = m,
                                 Time = time
                             });
                         }

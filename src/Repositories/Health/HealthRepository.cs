@@ -307,7 +307,7 @@ namespace Repositories.Health
             if (existingRun != null)
             {
 
-                existingRun.Distance = run.Distance;
+                existingRun.Metres = run.Metres;
                 existingRun.Time = run.Time;
             }
             else
@@ -331,7 +331,7 @@ namespace Repositories.Health
             else
             {
                 // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                existingErgo.Distance = ergo.Distance;
+                existingErgo.Metres = ergo.Metres;
                 existingErgo.Time = ergo.Time;
             }
 
