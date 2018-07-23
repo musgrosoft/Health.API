@@ -13,6 +13,6 @@ namespace Repositories.Models
         [NotMapped]
         public Double PaceKmPerHour => (60 / Time.TotalMinutes) * (Metres / 1000);
         [NotMapped]
-        public TimeSpan PaceTimeFor1Km =>  (Time * Metres) / 1000;
+        public TimeSpan PaceTimeFor1Km =>  (Time * 1000) / Metres;
     }
 }
