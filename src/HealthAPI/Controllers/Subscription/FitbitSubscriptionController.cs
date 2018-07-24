@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HealthAPI.Controllers.Subscription
 {
     [Produces("application/json")]
-    [Route("api/FitbitSubscription")]
+    [Route("api/Fitbit/Notification")]
     public class FitbitSubscriptionController : Controller
     {
         [HttpPost]
@@ -16,5 +16,22 @@ namespace HealthAPI.Controllers.Subscription
         {
             return (NoContent());
         }
+
+
+        [HttpGet]
+        public IActionResult Verify(string verify)
+        {
+            if (verify == "1")
+            {
+                return (NoContent());
+            }
+            else
+            {
+                return (NotFound());
+            }
+        }
+
+
+
     }
 }
