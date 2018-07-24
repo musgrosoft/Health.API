@@ -19,7 +19,8 @@ namespace Services.MyHealth
         public HealthService(IConfig config,
             ILogger logger,
             IHealthRepository healthRepository,
-            IEntityAggregator entityAggregator, IEntityDecorator entityDecorator)
+            IEntityAggregator entityAggregator, 
+            IEntityDecorator entityDecorator)
         {
             _config = config;
             _logger = logger;

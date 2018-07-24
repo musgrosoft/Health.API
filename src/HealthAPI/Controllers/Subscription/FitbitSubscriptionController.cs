@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
+using Migrators;
 using Newtonsoft.Json;
 using Services.Fitbit;
 using Utils;
@@ -13,25 +16,41 @@ namespace HealthAPI.Controllers.Subscription
         private readonly ILogger _logger;
         private readonly IConfig _config;
         private readonly IFitbitClient _fitbitClient;
+        private readonly IFitbitMigrator _fitbitMigrator;
 
-        public FitbitSubscriptionController(ILogger logger, IConfig config, IFitbitClient fitbitClient)
+        public FitbitSubscriptionController(ILogger logger, IConfig config, IFitbitClient fitbitClient, IFitbitMigrator fitbitMigrator)
         {
             _logger = logger;
             _config = config;
             _fitbitClient = fitbitClient;
+            _fitbitMigrator = fitbitMigrator;
         }
 
         [HttpPost]
         public IActionResult Notify([FromBody] List<Note> notifications)
         {
-            _logger.Log("hello 234");
+            _logger.Log("Fitbit Notification");
             _logger.Log(notifications.ToString());
             _logger.Log(JsonConvert.SerializeObject(notifications));
-          
+
+            BackgroundJob.Enqueue(() => MigrateAllTheThings());
 
             return (NoContent());
         }
 
+        private async Task MigrateAllTheThings()
+        {
+            //var v = await _oAuthService.GetFitbitRefreshToken();
+
+            //monthly gets
+            await _fitbitMigrator.MigrateRestingHeartRates();
+            await _fitbitMigrator.MigrateHeartSummaries();
+            //daily gets
+            await _fitbitMigrator.MigrateStepCounts();
+            await _fitbitMigrator.MigrateActivitySummaries();
+
+
+        }
 
         [HttpGet]
         public IActionResult Verify(string verify)

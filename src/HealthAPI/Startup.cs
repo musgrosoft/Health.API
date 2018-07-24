@@ -15,6 +15,8 @@ using Services;
 using Migrators;
 using Services.Google;
 using Services.Nokia;
+using Hangfire.MemoryStorage;
+using Hangfire;
 
 namespace HealthAPI
 {
@@ -96,6 +98,11 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
+
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
