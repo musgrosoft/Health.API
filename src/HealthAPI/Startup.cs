@@ -32,6 +32,8 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHangfire(x => x.UseMemoryStorage());
+
             services.AddDbContext<HealthContext>();
 
             // Add service and create Policy with options
@@ -98,7 +100,7 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
+            //Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
