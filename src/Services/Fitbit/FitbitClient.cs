@@ -35,35 +35,21 @@ namespace Services.Fitbit
 
         //POST https://api.fitbit.com/1/user/-/apiSubscriptions/123.json
 
-        //public async Task Subscribe(DateTime startDate)
-        //{
+        public async Task Subscribe()
+        {
 
-        //    var accessToken = await _fitbitAuthenticator.GetAccessToken();
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
 
-        //    var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/apiSubscriptions/123.json";
-        //    _httpClient.DefaultRequestHeaders.Clear();
-        //    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/apiSubscriptions/123.json";
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
-        //    var response = await _httpClient.GetAsync(uri);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var content = await response.Content.ReadAsStringAsync();
-        //        var data = JsonConvert.DeserializeObject<FitBitActivity>(content);
-        //        return data;
-        //    }
-        //    else if (response.StatusCode == (HttpStatusCode)429)
-        //    {
-        //        throw new TooManyRequestsException(
-        //            $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-        //    }
-        //    else
-        //    {
-        //        throw new Exception(
-        //            $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-        //        //                _logger.Log($"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-        //        //                return Maybe<FitBitActivity>.None;
-        //    }
-        //}
+            var response = await _httpClient.PostAsync(uri,null);
+
+            _logger.Log("Status code ::: " + response.StatusCode);
+            _logger.Log("content ::: " + response.Content);
+
+        }
 
         public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate)
         {

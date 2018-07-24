@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Services.Fitbit;
 using Utils;
 
 namespace HealthAPI.Controllers.Subscription
@@ -11,11 +12,13 @@ namespace HealthAPI.Controllers.Subscription
     {
         private readonly ILogger _logger;
         private readonly IConfig _config;
+        private readonly IFitbitClient _fitbitClient;
 
-        public FitbitSubscriptionController(ILogger logger, IConfig config)
+        public FitbitSubscriptionController(ILogger logger, IConfig config, IFitbitClient fitbitClient)
         {
             _logger = logger;
             _config = config;
+            _fitbitClient = fitbitClient;
         }
 
         [HttpPost]
@@ -43,7 +46,13 @@ namespace HealthAPI.Controllers.Subscription
             }
         }
 
-
+        [HttpGet]
+        [Route("Subscribe")]
+        public IActionResult Subscribe(string verify)
+        {
+            _fitbitClient.Subscribe();
+            return Ok();
+        }
 
     }
 }
