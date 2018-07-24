@@ -40,7 +40,7 @@ namespace HealthAPI.Controllers.Subscription
             return (NoContent());
         }
 
-        private async Task MigrateAllTheThings()
+        public async Task MigrateAllTheThings()
         {
             //var v = await _oAuthService.GetFitbitRefreshToken();
 
@@ -55,7 +55,7 @@ namespace HealthAPI.Controllers.Subscription
         }
 
         [HttpGet]
-        public IActionResult Verify(string verify)
+        public IActionResult Verify([FromQuery]string verify)
         {
             if (verify == _config.FitbitVerificationCode)
             {
