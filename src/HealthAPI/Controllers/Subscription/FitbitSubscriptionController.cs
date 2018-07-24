@@ -17,6 +17,7 @@ namespace HealthAPI.Controllers.Subscription
         [HttpPost]
         public IActionResult Notify([FromBody] string content)
         {
+            _logger.Log("hello 234");
             _logger.Log(content);
             return (NoContent());
         }
