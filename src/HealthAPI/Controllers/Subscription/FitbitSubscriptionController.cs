@@ -10,10 +10,12 @@ namespace HealthAPI.Controllers.Subscription
     public class FitbitSubscriptionController : Controller
     {
         private readonly ILogger _logger;
+        private readonly IConfig _config;
 
-        public FitbitSubscriptionController(ILogger logger)
+        public FitbitSubscriptionController(ILogger logger, IConfig config)
         {
             _logger = logger;
+            _config = config;
         }
 
         [HttpPost]
@@ -31,7 +33,7 @@ namespace HealthAPI.Controllers.Subscription
         [HttpGet]
         public IActionResult Verify(string verify)
         {
-            if (verify == "ba1e1d3d6fac4f835763e8d38bbce744309d8aa691e001b22004274d5e354444")
+            if (verify == _config.FitbitVerificationCode)
             {
                 return (NoContent());
             }

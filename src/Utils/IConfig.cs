@@ -10,5 +10,6 @@
 
         string GoogleClientId { get; }
         string GoogleClientSecret { get; }
+        string FitbitVerificationCode { get; }
     }
 }
