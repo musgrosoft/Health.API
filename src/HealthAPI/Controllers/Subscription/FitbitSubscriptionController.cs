@@ -47,7 +47,7 @@ namespace HealthAPI.Controllers.Subscription
         }
 
         [HttpGet]
-        [Route("api/Fitbit/Notification/Subscribe")]
+        [Route("/Subscribe")]
         public IActionResult Subscribe(string verify)
         {
             _fitbitClient.Subscribe();
