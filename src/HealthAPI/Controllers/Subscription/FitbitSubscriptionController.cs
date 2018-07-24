@@ -31,7 +31,7 @@ namespace HealthAPI.Controllers.Subscription
         [HttpGet]
         public IActionResult Verify(string verify)
         {
-            if (verify == "123")
+            if (verify == "ba1e1d3d6fac4f835763e8d38bbce744309d8aa691e001b22004274d5e354444")
             {
                 return (NoContent());
             }
