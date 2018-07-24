@@ -27,11 +27,13 @@ namespace HealthAPI.Controllers.Subscription
         }
 
         [HttpPost]
-        public IActionResult Notify([FromBody] List<Note> notifications)
+        // public IActionResult Notify([FromBody] List<Note> notifications)
+        public IActionResult Notify()
         {
             _logger.Log("Fitbit Notification");
-            _logger.Log(notifications.ToString());
-            _logger.Log(JsonConvert.SerializeObject(notifications));
+
+//            _logger.Log(notifications.ToString());
+//            _logger.Log(JsonConvert.SerializeObject(notifications));
 
             BackgroundJob.Enqueue(() => MigrateAllTheThings());
 
