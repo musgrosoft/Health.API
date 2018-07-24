@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Utils;
 
 namespace HealthAPI.Controllers.Subscription
 {
@@ -11,9 +7,17 @@ namespace HealthAPI.Controllers.Subscription
     [Route("api/Fitbit/Notification")]
     public class FitbitSubscriptionController : Controller
     {
-        [HttpPost]
-        public IActionResult Notify()
+        private readonly ILogger _logger;
+
+        public FitbitSubscriptionController(ILogger logger)
         {
+            _logger = logger;
+        }
+
+        [HttpPost]
+        public IActionResult Notify([FromBody] string content)
+        {
+            _logger.Log(content);
             return (NoContent());
         }
 
@@ -21,7 +25,7 @@ namespace HealthAPI.Controllers.Subscription
         [HttpGet]
         public IActionResult Verify(string verify)
         {
-            if (verify == "1")
+            if (verify == "123")
             {
                 return (NoContent());
             }
