@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Utils;
 
 namespace HealthAPI.Controllers.Subscription
@@ -15,10 +17,13 @@ namespace HealthAPI.Controllers.Subscription
         }
 
         [HttpPost]
-        public IActionResult Notify([FromBody] string content)
+        public IActionResult Notify([FromBody] List<Note> notifications)
         {
             _logger.Log("hello 234");
-            _logger.Log(content);
+            _logger.Log(notifications.ToString());
+            _logger.Log(JsonConvert.SerializeObject(notifications));
+          
+
             return (NoContent());
         }
 
