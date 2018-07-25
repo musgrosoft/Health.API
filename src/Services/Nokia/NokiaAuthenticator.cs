@@ -44,7 +44,7 @@ namespace Services.Nokia
         {
 
             var client = new HttpClient();
-            var uri = FITBIT_SERVER + "/oauth2/token";
+            var uri = NOKIA_BASE_URL + "/oauth2/token";
             client.DefaultRequestHeaders.Add("Authorization", "Basic " + "MjI4UFI4OjAyZjIyODBkOTY2MWQwMWFiNDlkY2Q1NWJhMjE4OTFh");
             //    client.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
 
