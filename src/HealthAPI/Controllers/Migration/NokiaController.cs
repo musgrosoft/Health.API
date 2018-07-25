@@ -49,6 +49,7 @@ namespace HealthAPI.Controllers.Migration
 
 
         //https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&state=hello&scope=user.metrics&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Fnokia%2Foauth
+//        https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id=xxxxxxxxxxxxxxxxxx&client_secret=xxxxxxxxxxxxx&code=xxxxxxxxxxxxxxx&redirect_uri=xxxxxxxxxxxxxxx
         [HttpGet]
         [Route("OAuth")]
         public async Task<IActionResult> OAuth()
