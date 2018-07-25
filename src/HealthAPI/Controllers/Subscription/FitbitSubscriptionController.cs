@@ -69,7 +69,7 @@ namespace HealthAPI.Controllers.Subscription
 
         [HttpGet]
         [Route("Subscribe")]
-        public IActionResult Subscribe(string verify)
+        public IActionResult Subscribe()
         {
             _fitbitClient.Subscribe();
             return Ok();
