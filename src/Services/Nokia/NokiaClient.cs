@@ -14,6 +14,7 @@ namespace Services.Nokia
     public class NokiaClient : INokiaClient
     {
         private readonly HttpClient _httpClient;
+        private readonly ILogger _logger;
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
         private const int DiastolicBloodPressureMeasureTypeId = 9;
@@ -21,12 +22,29 @@ namespace Services.Nokia
 
         private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
 
-        public NokiaClient(HttpClient httpClient)
+        public NokiaClient(HttpClient httpClient, ILogger logger)
         {
             _httpClient = httpClient;
+            _logger = logger;
         }
 
-       
+        public async Task SubscribeWeight()
+        {
+            var accessToken = "7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f";
+            var callback = "";
+
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+
+            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={callback}&appli={WeightKgMeasureTypeId}";
+            //_httpClient.DefaultRequestHeaders.Clear();
+            //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+
+            var response = await _httpClient.GetAsync(uri);
+
+            _logger.Log("Status code ::: " + response.StatusCode);
+            _logger.Log("content ::: " + response.Content);
+        }
 
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {

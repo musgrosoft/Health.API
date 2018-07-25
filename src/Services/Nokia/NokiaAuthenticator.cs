@@ -8,15 +8,17 @@ using Services.Fitbit.Domain;
 using Services.OAuth;
 using Utils;
 
-namespace Services.Fitbit
+namespace Services.Nokia
 {
-    public class FitbitAuthenticator : IFitbitAuthenticator
+    public class NokiaAuthenticator : INokiaAuthenticator
     {
         private readonly IOAuthService _oAuthService;
 //        private readonly ILambdaLogger _logger;
-        private const string FITBIT_SERVER = "https://api.fitbit.com";
-        
-        public FitbitAuthenticator(IOAuthService oAuthService)
+        //private const string FITBIT_SERVER = "https://api.fitbit.com";
+
+        private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
+
+        public NokiaAuthenticator(IOAuthService oAuthService)
         {
             _oAuthService = oAuthService;
         }
@@ -24,15 +26,15 @@ namespace Services.Fitbit
         public async Task<string> GetAccessToken()
         {
             
-                var refreshToken = await _oAuthService.GetFitbitRefreshToken();
+                var refreshToken = await _oAuthService.GetNokiaRefreshToken();
 
                 var newTokens = await GetTokens(refreshToken);
 
                 var newAccessToken = newTokens.access_token;
                 var newRefreshToken = newTokens.refresh_token;
             
-                await _oAuthService.SaveFitbitAccessToken(newAccessToken);
-                await _oAuthService.SaveFitbitRefreshToken(newRefreshToken);
+                await _oAuthService.SaveNokiaAccessToken(newAccessToken);
+                await _oAuthService.SaveNokiaRefreshToken(newRefreshToken);
 
 
             return newAccessToken;

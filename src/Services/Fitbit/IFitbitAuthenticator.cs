@@ -6,6 +6,6 @@ namespace Services.Fitbit
     public interface IFitbitAuthenticator
     {
         Task<string> GetAccessToken();
-        Task<FitbitRefreshTokenResponse> GetTokens(string refreshToken);
+       // Task<FitbitRefreshTokenResponse> GetTokens(string refreshToken);
     }
 }
