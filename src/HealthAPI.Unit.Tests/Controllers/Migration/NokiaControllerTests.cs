@@ -15,7 +15,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             var _logger = new Mock<ILogger>();
             var _nokiaMigrator = new Mock<INokiaMigrator>();
 
-            var _fitbitController = new NokiaController(_logger.Object, _nokiaMigrator.Object);
+            var _fitbitController = new NokiaController(_logger.Object, _nokiaMigrator.Object,null);
 
             //When
             await _fitbitController.Migrate();
