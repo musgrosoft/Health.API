@@ -15,6 +15,7 @@ namespace HealthAPI.Controllers.Migration
         private readonly INokiaMigrator _nokiaMigrator;
         private readonly INokiaAuthenticator _nokiaAuthenticator;
 
+        
         public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator, INokiaAuthenticator nokiaAuthenticator)
         {
             _logger = logger;

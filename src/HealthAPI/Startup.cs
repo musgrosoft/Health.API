@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.OData.Extensions;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +45,6 @@ namespace HealthAPI
                         .AllowCredentials());
             });
 
-            services.AddOData();
             services.AddMvc();
 
             services.AddScoped<IHealthRepository, HealthRepository>();
@@ -71,6 +69,9 @@ namespace HealthAPI
 
             services.AddTransient<INokiaMigrator, NokiaMigrator>();
             services.AddTransient<INokiaClient, NokiaClient>();
+            services.AddTransient<INokiaAuthenticator, NokiaAuthenticator>();
+            
+
             services.AddTransient<IFitbitClient, FitbitClient>();
 
             services.AddTransient<ITargetService, TargetService>();
@@ -134,7 +135,7 @@ namespace HealthAPI
             app.UseMvc(routeBuilder =>
                 {
                     
-                    routeBuilder.EnableDependencyInjection();
+                 //   routeBuilder.EnableDependencyInjection();
                     routeBuilder.MapRoute(
                   name: "api",
                   template: "api/{controller=Home}/{action=Index}/{id?}"
