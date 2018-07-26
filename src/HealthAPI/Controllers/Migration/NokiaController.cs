@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
+using Services.Nokia;
 using Utils;
 
 namespace HealthAPI.Controllers.Migration
@@ -12,11 +13,13 @@ namespace HealthAPI.Controllers.Migration
     {
         private readonly ILogger _logger;
         private readonly INokiaMigrator _nokiaMigrator;
+        private readonly INokiaAuthenticator _nokiaAuthenticator;
 
-        public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator)
+        public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator, INokiaAuthenticator nokiaAuthenticator)
         {
-            this._logger = logger;
-            this._nokiaMigrator = nokiaMigrator;
+            _logger = logger;
+            _nokiaMigrator = nokiaMigrator;
+            _nokiaAuthenticator = nokiaAuthenticator;
         }
         
         //todo post
@@ -46,14 +49,21 @@ namespace HealthAPI.Controllers.Migration
             }
 
         }
+        //****
+        // https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&redirect_uri=http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&scope=user.info,user.metrics,user.activity&state=768uyFys
+        //****
 
+        //https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&redirect_uri=http://www.musgrosoft.co.uk/&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&scope=user.info,user.metrics,user.activity&state=768uyFys
+
+        //https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&redirect_uri=http://www.musgrosoft.co.uk/&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&scope=user.info,user.metrics,user.activity&state=768uyFys
 
         //https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&state=hello&scope=user.metrics&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Fnokia%2Foauth
-//        https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id=xxxxxxxxxxxxxxxxxx&client_secret=xxxxxxxxxxxxx&code=xxxxxxxxxxxxxxx&redirect_uri=xxxxxxxxxxxxxxx
+        //        https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id=xxxxxxxxxxxxxxxxxx&client_secret=xxxxxxxxxxxxx&code=xxxxxxxxxxxxxxx&redirect_uri=xxxxxxxxxxxxxxx
         [HttpGet]
         [Route("OAuth")]
-        public async Task<IActionResult> OAuth()
+        public async Task<IActionResult> OAuth([FromQuery]string code)
         {
+            await _nokiaAuthenticator.SetTokens(code);
             return Ok("Helllo");
         }
         //[HttpGet]

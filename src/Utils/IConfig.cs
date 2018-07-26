@@ -11,5 +11,7 @@
         string GoogleClientId { get; }
         string GoogleClientSecret { get; }
         string FitbitVerificationCode { get; }
+        string NokiaClientId { get; }
+        string NokiaClientSecret { get; }
     }
 }

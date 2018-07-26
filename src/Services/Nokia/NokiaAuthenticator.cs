@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Services.Fitbit.Domain;
+using Services.Nokia.Domain;
 using Services.OAuth;
+using Services.OAuthDomain;
 using Utils;
 
 namespace Services.Nokia
@@ -13,55 +15,86 @@ namespace Services.Nokia
     public class NokiaAuthenticator : INokiaAuthenticator
     {
         private readonly IOAuthService _oAuthService;
+
+        private readonly IConfig _config;
+
+        private readonly HttpClient _httpClient;
+
+        private readonly Logger _logger;
 //        private readonly ILambdaLogger _logger;
         //private const string FITBIT_SERVER = "https://api.fitbit.com";
 
         private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
 
-        public NokiaAuthenticator(IOAuthService oAuthService)
+        public NokiaAuthenticator(IOAuthService oAuthService, IConfig config, HttpClient httpClient, Logger logger)
         {
             _oAuthService = oAuthService;
+            _config = config;
+            _httpClient = httpClient;
+            _logger = logger;
+        }
+
+        public async Task SetTokens(string authorizationCode)
+        {
+            try
+            {
+                var url = $"https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&code={authorizationCode}";
+
+                var response = await _httpClient.PostAsync(url, null);
+
+                _logger.Log($"Nokia SetAccessToken status:{response.StatusCode} and content:{response.Content}");
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
+
+                var tokenResponseAccessToken = tokenResponse.access_token;
+                var tokenResponseRefreshToken = tokenResponse.refresh_token;
+
+                await _oAuthService.SaveNokiaAccessToken(tokenResponseAccessToken);
+                await _oAuthService.SaveNokiaRefreshToken(tokenResponseRefreshToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
+
         }
 
         public async Task<string> GetAccessToken()
         {
+            var refreshToken = await _oAuthService.GetNokiaRefreshToken();
+
+            var newTokens = await GetTokens(refreshToken);
+
+            var newAccessToken = newTokens.AccessToken;
+            var newRefreshToken = newTokens.RefreshToken;
+
+            await _oAuthService.SaveNokiaAccessToken(newAccessToken);
+            await _oAuthService.SaveNokiaRefreshToken(newRefreshToken);
             
-                var refreshToken = await _oAuthService.GetNokiaRefreshToken();
-
-                var newTokens = await GetTokens(refreshToken);
-
-                var newAccessToken = newTokens.access_token;
-                var newRefreshToken = newTokens.refresh_token;
-            
-                await _oAuthService.SaveNokiaAccessToken(newAccessToken);
-                await _oAuthService.SaveNokiaRefreshToken(newRefreshToken);
-
-
             return newAccessToken;
         }
 
-        private async Task<FitbitRefreshTokenResponse> GetTokens(string refreshToken)
+        private async Task<Tokens> GetTokens(string refreshToken)
         {
 
-            var client = new HttpClient();
-            var uri = NOKIA_BASE_URL + "/oauth2/token";
-            client.DefaultRequestHeaders.Add("Authorization", "Basic " + "MjI4UFI4OjAyZjIyODBkOTY2MWQwMWFiNDlkY2Q1NWJhMjE4OTFh");
-            //    client.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
+            var url = $"https://account.health.nokia.como/auth2/token?grant_type=refresh_token&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&refresh_token={refreshToken}";
 
-            var nvc = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("grant_type", "refresh_token"),
-                new KeyValuePair<string, string>("refresh_token", refreshToken)
-            };
+            var response = await _httpClient.PostAsync(url, null);
 
-            var response = await client.PostAsync(uri, new FormUrlEncodedContent(nvc));
+            _logger.Log($"Nokia SetAccessToken status:{response.StatusCode} and content:{response.Content}");
 
-
-            //            response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
+            var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
 
-            return JsonConvert.DeserializeObject<FitbitRefreshTokenResponse>(responseBody);
+            var tokenResponseAccessToken = tokenResponse.access_token;
+            var tokenResponseRefreshToken = tokenResponse.refresh_token;
+
+            var tokens = new Tokens {AccessToken = tokenResponseAccessToken, RefreshToken = tokenResponseRefreshToken};
+
+            return tokens;
         }
 
 

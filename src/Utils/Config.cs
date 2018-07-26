@@ -138,5 +138,38 @@ namespace Utils
                 return value;
             }
         }
+
+        public string NokiaClientId
+        {
+            get
+            {
+                var value = Environment.GetEnvironmentVariable("NokiaClientId");
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
+                    var config = builder.Build();
+
+                    value = config["NokiaClientId"];
+
+                }
+                return value;
+            }
+        }
+        public string NokiaClientSecret
+        {
+            get
+            {
+                var value = Environment.GetEnvironmentVariable("NokiaClientSecret");
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
+                    var config = builder.Build();
+
+                    value = config["NokiaClientSecret"];
+
+                }
+                return value;
+            }
+        }
     }
 }
