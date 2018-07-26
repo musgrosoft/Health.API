@@ -20,13 +20,11 @@ namespace Services.Nokia
 
         private readonly HttpClient _httpClient;
 
-        private readonly Logger _logger;
-//        private readonly ILambdaLogger _logger;
-        //private const string FITBIT_SERVER = "https://api.fitbit.com";
+        private readonly ILogger _logger;
 
         private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
 
-        public NokiaAuthenticator(IOAuthService oAuthService, IConfig config, HttpClient httpClient, Logger logger)
+        public NokiaAuthenticator(IOAuthService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
         {
             _oAuthService = oAuthService;
             _config = config;
