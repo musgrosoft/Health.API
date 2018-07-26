@@ -63,8 +63,8 @@ namespace HealthAPI.Controllers.Migration
         [Route("OAuth")]
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {
-            await _nokiaAuthenticator.SetTokens(code);
-            return Ok("Helllo");
+           // await _nokiaAuthenticator.SetTokens(code);
+            return Ok("Helllo123");
         }
         //[HttpGet]
             //public async Task<IActionResult> SubscribeWeight()
