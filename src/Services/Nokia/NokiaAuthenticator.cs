@@ -103,10 +103,10 @@ namespace Services.Nokia
 
             var response = await _httpClient.PostAsync(url, null);
 
-            _logger.Log($"Nokia SetAccessToken status:{response.StatusCode} and content:{response.Content}");
-
             string responseBody = await response.Content.ReadAsStringAsync();
 
+            _logger.Log($"Nokia GetAccessToken status:{response.StatusCode} and content:{responseBody}");
+            
             var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
 
             var tokenResponseAccessToken = tokenResponse.access_token;
