@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json;
 using Repositories.Models;
 using Services.Nokia.Domain;
@@ -39,22 +40,27 @@ namespace Services.Nokia
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
 
-            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={callback}&appli={WeightKgMeasureTypeId}";
+            // var uri = NOKIA_BASE_URL + $"/notify?action=revoke&access_token={accessToken}&callback={HttpUtility.UrlEncode(callback)}&appli={WeightKgMeasureTypeId}";
+
+
+            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={HttpUtility.UrlEncode(callback)}&appli={WeightKgMeasureTypeId}";
 
             var response = await _httpClient.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
 
             _logger.Log("Status code ::: " + response.StatusCode);
-            _logger.Log("content ::: " + response.Content);
+            _logger.Log("content ::: " + content);
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
 
-             uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={callback}&appli={SubscribeBloodPressureId}";
+             uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={HttpUtility.UrlEncode(callback)}&appli={SubscribeBloodPressureId}";
 
              response = await _httpClient.GetAsync(uri);
+            content = await response.Content.ReadAsStringAsync();
 
             _logger.Log("Status code ::: " + response.StatusCode);
-            _logger.Log("content ::: " + response.Content);
+            _logger.Log("content ::: " + content);
 
         }
 
