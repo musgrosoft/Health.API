@@ -44,7 +44,7 @@ namespace Services.Nokia
             // var uri = NOKIA_BASE_URL + $"/notify?action=revoke&access_token={accessToken}&callback={HttpUtility.UrlEncode(callback)}&appli={WeightKgMeasureTypeId}";
 
 
-            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={HttpUtility.UrlEncode(callback)}&appli={WeightKgMeasureTypeId}";
+            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(callback)}&appli={WeightKgMeasureTypeId}";
 
             var response = await _httpClient.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
@@ -55,7 +55,7 @@ namespace Services.Nokia
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
 
-             uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={HttpUtility.UrlEncode(callback)}&appli={SubscribeBloodPressureId}";
+             uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(callback)}&appli={SubscribeBloodPressureId}";
 
              response = await _httpClient.GetAsync(uri);
             content = await response.Content.ReadAsStringAsync();
