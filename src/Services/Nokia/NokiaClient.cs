@@ -34,7 +34,7 @@ namespace Services.Nokia
 
         public async Task Subscribe()
         {
-            var accessToken = _nokiaAuthenticator.GetAccessToken();
+            var accessToken = await _nokiaAuthenticator.GetAccessToken();
             _logger.Log($"GetWeights accesstoken is ::: {accessToken}");
             var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
 
@@ -67,7 +67,7 @@ namespace Services.Nokia
 
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {
-            var accessToken = _nokiaAuthenticator.GetAccessToken();
+            var accessToken = await _nokiaAuthenticator.GetAccessToken();
 
             _logger.Log($"GetWeights accesstoken is ::: {accessToken}");
 
@@ -115,7 +115,7 @@ namespace Services.Nokia
 
         public  async Task<IEnumerable<BloodPressure>> GetBloodPressures(DateTime sinceDateTime)
         {
-            var accessToken = _nokiaAuthenticator.GetAccessToken();
+            var accessToken = await _nokiaAuthenticator.GetAccessToken();
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
