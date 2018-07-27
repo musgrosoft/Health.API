@@ -35,7 +35,7 @@ namespace HealthAPI.Controllers.Migration
             {
                 _logger.Log("NOKIA : starting nokia migrate");
 
-                await _nokiaClient.LogSubscriptions();
+                
 
                 await _nokiaMigrator.MigrateWeights();
                 await _nokiaMigrator.MigrateBloodPressures();
@@ -72,6 +72,15 @@ namespace HealthAPI.Controllers.Migration
         {
             await _nokiaClient.Subscribe();
             return Ok("Helllo234");
+        }
+
+        [HttpGet]
+        [Route("ListSubscriptions")]
+        public async Task<IActionResult> ListSubscriptions()
+        {
+            var subscriptions = await _nokiaClient.GetSubscriptions();
+
+            return Ok(subscriptions);
         }
 
     }

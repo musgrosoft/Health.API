@@ -65,8 +65,10 @@ namespace Services.Nokia
 
         }
 
-        public async Task LogSubscriptions()
+        public async Task<string> GetSubscriptions()
         {
+            string subscriptions;
+
             var accessToken = await _nokiaAuthenticator.GetAccessToken();
             
             //return null;
@@ -76,14 +78,14 @@ namespace Services.Nokia
             var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={WeightKgMeasureTypeId}");
             var content = await response.Content.ReadAsStringAsync();
 
-            _logger.Log($"Subscription Weight ::: {response.StatusCode} , {content}");
+            subscriptions = $"Subscription Weight ::: {response.StatusCode} , {content} <br/>" ;
 
             response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={SubscribeBloodPressureId}");
             content = await response.Content.ReadAsStringAsync();
 
-            _logger.Log($"Subscription Weight ::: {response.StatusCode} , {content}");
+            subscriptions += $"Subscription blood pressure ::: {response.StatusCode} , {content}";
 
-
+            return subscriptions;
         }
 
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
