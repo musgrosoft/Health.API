@@ -36,11 +36,22 @@ namespace Services.Nokia
         {
             try
             {
-                var url = $"https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&code={authorizationCode}";
+                //var url = $"https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&code={authorizationCode}";
+                var url = $"https://account.health.nokia.com/oauth2/token";
 
                 _logger.Log($"Nokia url is {url}");
 
-                var response = await _httpClient.PostAsync(url, null);
+                var nvc = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                    new KeyValuePair<string, string>("client_id", _config.NokiaClientId),
+                    new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
+                    new KeyValuePair<string, string>("code", authorizationCode)
+                };
+
+                var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
+
+               // var response = await _httpClient.PostAsync(url, null);
                 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
