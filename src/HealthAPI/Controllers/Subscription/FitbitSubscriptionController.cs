@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
@@ -43,13 +44,19 @@ namespace HealthAPI.Controllers.Subscription
         public async Task MigrateAllTheThings()
         {
             //var v = await _oAuthService.GetFitbitRefreshToken();
-
-            //monthly gets
-            await _fitbitMigrator.MigrateRestingHeartRates();
-            await _fitbitMigrator.MigrateHeartSummaries();
-            //daily gets
-            await _fitbitMigrator.MigrateStepCounts();
-            await _fitbitMigrator.MigrateActivitySummaries();
+            try
+            {
+                //monthly gets
+                await _fitbitMigrator.MigrateRestingHeartRates();
+                await _fitbitMigrator.MigrateHeartSummaries();
+                //daily gets
+                await _fitbitMigrator.MigrateStepCounts();
+                await _fitbitMigrator.MigrateActivitySummaries();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
 
 
         }

@@ -39,10 +39,10 @@ namespace Services.Nokia
                 var url = $"https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&code={authorizationCode}";
 
                 var response = await _httpClient.PostAsync(url, null);
-
-                _logger.Log($"Nokia SetAccessToken status:{response.StatusCode} and content:{response.Content}");
-
+                
                 string responseBody = await response.Content.ReadAsStringAsync();
+
+                _logger.Log($"Nokia SetAccessToken status:{response.StatusCode} and content:{responseBody}");
 
                 var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
 

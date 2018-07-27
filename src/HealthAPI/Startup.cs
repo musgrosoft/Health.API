@@ -45,7 +45,8 @@ namespace HealthAPI
                         .AllowCredentials());
             });
 
-            services.AddMvc();
+            //services.AddMvc();
+            services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
 
             services.AddScoped<IHealthRepository, HealthRepository>();
 
