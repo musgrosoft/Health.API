@@ -38,6 +38,8 @@ namespace Services.Nokia
             {
                 var url = $"https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&code={authorizationCode}";
 
+                _logger.Log($"Nokia url is {url}");
+
                 var response = await _httpClient.PostAsync(url, null);
                 
                 string responseBody = await response.Content.ReadAsStringAsync();
