@@ -20,6 +20,7 @@ namespace Services.Nokia
         private const int FatRatioPercentageMeasureTypeId = 6;
         private const int DiastolicBloodPressureMeasureTypeId = 9;
         private const int SystolicBloodPressureMeasureTypeId = 10;
+        private const int SubscribeBloodPressureId = 4;
 
         private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
 
@@ -30,23 +31,32 @@ namespace Services.Nokia
             _nokiaAuthenticator = nokiaAuthenticator;
         }
 
-        //public async Task SubscribeWeight()
-        //{
-        //    var accessToken = "7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f";
-        //    var callback = "";
+        public async Task Subscribe()
+        {
+            var accessToken = _nokiaAuthenticator.GetAccessToken();
+            var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
 
-        //    _httpClient.DefaultRequestHeaders.Clear();
-        //    _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
 
-        //    var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={callback}&appli={WeightKgMeasureTypeId}";
-        //    //_httpClient.DefaultRequestHeaders.Clear();
-        //    //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={callback}&appli={WeightKgMeasureTypeId}";
 
-        //    var response = await _httpClient.GetAsync(uri);
+            var response = await _httpClient.GetAsync(uri);
 
-        //    _logger.Log("Status code ::: " + response.StatusCode);
-        //    _logger.Log("content ::: " + response.Content);
-        //}
+            _logger.Log("Status code ::: " + response.StatusCode);
+            _logger.Log("content ::: " + response.Content);
+
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+
+             uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={callback}&appli={SubscribeBloodPressureId}";
+
+             response = await _httpClient.GetAsync(uri);
+
+            _logger.Log("Status code ::: " + response.StatusCode);
+            _logger.Log("content ::: " + response.Content);
+
+        }
 
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {

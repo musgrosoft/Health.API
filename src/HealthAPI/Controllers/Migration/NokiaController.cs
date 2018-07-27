@@ -14,13 +14,15 @@ namespace HealthAPI.Controllers.Migration
         private readonly ILogger _logger;
         private readonly INokiaMigrator _nokiaMigrator;
         private readonly INokiaAuthenticator _nokiaAuthenticator;
+        private readonly INokiaClient _nokiaClient;
 
-        
-        public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator, INokiaAuthenticator nokiaAuthenticator)
+
+        public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator, INokiaAuthenticator nokiaAuthenticator, INokiaClient nokiaClient)
         {
             _logger = logger;
             _nokiaMigrator = nokiaMigrator;
             _nokiaAuthenticator = nokiaAuthenticator;
+            _nokiaClient = nokiaClient;
         }
         
         //todo post
@@ -68,10 +70,19 @@ namespace HealthAPI.Controllers.Migration
             return Ok("Helllo123");
         }
         //[HttpGet]
-            //public async Task<IActionResult> SubscribeWeight()
-            //{
+        //public async Task<IActionResult> SubscribeWeight()
+        //{
 
-            //}
+        //}
 
+
+        [HttpGet]
+        [Route("Subscribe")]
+        public async Task<IActionResult> Subscribe()
+        {
+            await _nokiaClient.Subscribe();
+            return Ok("Helllo234");
         }
+
+    }
 }
