@@ -111,7 +111,7 @@ namespace Services.Nokia
                 new KeyValuePair<string, string>("client_id", _config.NokiaClientId),
                 new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
                 new KeyValuePair<string, string>("refresh_token", refreshToken),
-//                new KeyValuePair<string, string>("redirect_uri", NOKIA_RECIRECT_URL)
+                new KeyValuePair<string, string>("redirect_uri", NOKIA_RECIRECT_URL)
 
 
             };
