@@ -63,13 +63,16 @@ namespace Services.Nokia
 
                 _logger.Log($"Nokia SetAccessToken status:{response.StatusCode} and content:{responseBody}");
 
-                var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
+                if (response.IsSuccessStatusCode)
+                {
+                    var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
 
-                var tokenResponseAccessToken = tokenResponse.access_token;
-                var tokenResponseRefreshToken = tokenResponse.refresh_token;
+                    var tokenResponseAccessToken = tokenResponse.access_token;
+                    var tokenResponseRefreshToken = tokenResponse.refresh_token;
 
-                await _oAuthService.SaveNokiaAccessToken(tokenResponseAccessToken);
-                await _oAuthService.SaveNokiaRefreshToken(tokenResponseRefreshToken);
+                    await _oAuthService.SaveNokiaAccessToken(tokenResponseAccessToken);
+                    await _oAuthService.SaveNokiaRefreshToken(tokenResponseRefreshToken);
+                }
             }
             catch (Exception ex)
             {
