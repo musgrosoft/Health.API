@@ -99,7 +99,7 @@ namespace Services.Nokia
         private async Task<Tokens> GetTokens(string refreshToken)
         {
 
-            var url = $"https://account.health.nokia.como/auth2/token?grant_type=refresh_token&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&refresh_token={refreshToken}";
+            var url = $"https://account.health.nokia.com/oauth2/token?grant_type=refresh_token&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&refresh_token={refreshToken}";
 
             var response = await _httpClient.PostAsync(url, null);
 
