@@ -26,9 +26,11 @@ namespace HealthAPI.Controllers.Migration
         }
         
         //todo post
-        [HttpGet]
+       // [HttpGet]
         public async Task<IActionResult> Migrate()
         {
+            //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
+
             try
             {
                 _logger.Log("NOKIA : starting nokia migrate");
