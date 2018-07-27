@@ -65,6 +65,27 @@ namespace Services.Nokia
 
         }
 
+        public async Task LogSubscriptions()
+        {
+            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+            
+            //return null;
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+
+            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={WeightKgMeasureTypeId}");
+            var content = await response.Content.ReadAsStringAsync();
+
+            _logger.Log($"Subscription Weight ::: {response.StatusCode} , {content}");
+
+            response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={SubscribeBloodPressureId}");
+            content = await response.Content.ReadAsStringAsync();
+
+            _logger.Log($"Subscription Weight ::: {response.StatusCode} , {content}");
+
+
+        }
+
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {
             var accessToken = await _nokiaAuthenticator.GetAccessToken();

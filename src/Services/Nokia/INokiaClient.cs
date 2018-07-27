@@ -10,5 +10,6 @@ namespace Services.Nokia
         Task<IEnumerable<BloodPressure>> GetBloodPressures(DateTime sinceDateTime);
         Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime);
         Task Subscribe();
+        Task LogSubscriptions();
     }
 }
