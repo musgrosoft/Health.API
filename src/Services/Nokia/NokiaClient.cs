@@ -15,6 +15,7 @@ namespace Services.Nokia
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
+        private readonly INokiaAuthenticator _nokiaAuthenticator;
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
         private const int DiastolicBloodPressureMeasureTypeId = 9;
@@ -22,41 +23,48 @@ namespace Services.Nokia
 
         private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
 
-        public NokiaClient(HttpClient httpClient, ILogger logger)
+        public NokiaClient(HttpClient httpClient, ILogger logger, INokiaAuthenticator nokiaAuthenticator)
         {
             _httpClient = httpClient;
             _logger = logger;
+            _nokiaAuthenticator = nokiaAuthenticator;
         }
 
-        public async Task SubscribeWeight()
-        {
-            var accessToken = "7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f";
-            var callback = "";
+        //public async Task SubscribeWeight()
+        //{
+        //    var accessToken = "7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f";
+        //    var callback = "";
 
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
+        //    _httpClient.DefaultRequestHeaders.Clear();
+        //    _httpClient.DefaultRequestHeaders.Accept.Clear();
 
-            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={callback}&appli={WeightKgMeasureTypeId}";
-            //_httpClient.DefaultRequestHeaders.Clear();
-            //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+        //    var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callback={callback}&appli={WeightKgMeasureTypeId}";
+        //    //_httpClient.DefaultRequestHeaders.Clear();
+        //    //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
-            var response = await _httpClient.GetAsync(uri);
+        //    var response = await _httpClient.GetAsync(uri);
 
-            _logger.Log("Status code ::: " + response.StatusCode);
-            _logger.Log("content ::: " + response.Content);
-        }
+        //    _logger.Log("Status code ::: " + response.StatusCode);
+        //    _logger.Log("content ::: " + response.Content);
+        //}
 
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {
+            var accessToken = _nokiaAuthenticator.GetAccessToken();
+
             //return null;
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
 
-            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669");
+            //https://api.health.nokia.com/measure?action=getmeas&access_token = YOUR - ACCESS - TOKEN
+
+            //var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669");
+            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
+            var content = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
+                
                 var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
                 
                 var weights = new List<Weight>();
@@ -80,7 +88,7 @@ namespace Services.Nokia
             }
             else
             {
-                throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
+                throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {content}");
             }
         }
 

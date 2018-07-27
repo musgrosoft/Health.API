@@ -30,7 +30,7 @@ namespace Services.Tests.Nokia
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
 
-            _nokiaClient = new NokiaClient(_httpClient, null);
+            _nokiaClient = new NokiaClient(_httpClient, null, null);
         }
 
         [Fact]
