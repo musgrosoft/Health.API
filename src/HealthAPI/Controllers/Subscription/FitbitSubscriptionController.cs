@@ -11,7 +11,7 @@ using Utils;
 namespace HealthAPI.Controllers.Subscription
 {
     [Produces("application/json")]
-    [Route("api/Fitbit/Notification")]
+    [Route("api/Fitbit")]
     public class FitbitSubscriptionController : Controller
     {
         private readonly ILogger _logger;
@@ -28,6 +28,7 @@ namespace HealthAPI.Controllers.Subscription
         }
 
         [HttpPost]
+        [Route("Notification")]
         //public IActionResult Notify([FromBody] List<Note> notifications)
         public IActionResult Notify()
         {
@@ -38,27 +39,8 @@ namespace HealthAPI.Controllers.Subscription
             return (NoContent());
         }
 
-        public async Task MigrateAllTheThings()
-        {
-            //var v = await _oAuthService.GetFitbitRefreshToken();
-            try
-            {
-                //monthly gets
-                await _fitbitMigrator.MigrateRestingHeartRates();
-                await _fitbitMigrator.MigrateHeartSummaries();
-                //daily gets
-                await _fitbitMigrator.MigrateStepCounts();
-                await _fitbitMigrator.MigrateActivitySummaries();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-            }
-
-
-        }
-
         [HttpGet]
+        [Route("Notification")]
         public IActionResult Verify([FromQuery]string verify)
         {
             if (verify == _config.FitbitVerificationCode)
@@ -77,6 +59,19 @@ namespace HealthAPI.Controllers.Subscription
         {
             _fitbitClient.Subscribe();
             return Ok();
+        }
+
+
+        public async Task MigrateAllTheThings()
+        {
+            try
+            {
+                await _fitbitMigrator.MigrateAll();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
         }
 
     }

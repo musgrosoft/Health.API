@@ -25,6 +25,17 @@ namespace Migrators
             _fitbitService = fitbitService;
             _calendar = calendar;
         }
+
+        public async Task MigrateAll()
+        {
+            //monthly gets
+            await MigrateRestingHeartRates();
+            await MigrateHeartSummaries();
+            //daily gets
+            await MigrateStepCounts();
+            await MigrateActivitySummaries();
+
+        }
         
         public async Task MigrateStepCounts()
         {
@@ -37,8 +48,6 @@ namespace Migrators
             var dailySteps = await _fitbitService.GetStepCounts(fromDate, _calendar.Now());
 
             _healthService.UpsertStepCounts(dailySteps);
-
-            //_healthService.CalculateCumSumForStepCounts();
         }
         
         public async Task MigrateActivitySummaries()
@@ -52,8 +61,6 @@ namespace Migrators
             var dailyActivites = await _fitbitService.GetActivitySummaries(fromDate, _calendar.Now());
 
              _healthService.UpsertActivitySummaries(dailyActivites);
-
-            //_healthService.CalculateCumSumForActivitySummaries();
         }
 
         public async Task MigrateRestingHeartRates()
@@ -67,8 +74,6 @@ namespace Migrators
             var restingHeartRates = await _fitbitService.GetRestingHeartRates(getDataFromDate, _calendar.Now());
 
             _healthService.UpsertRestingHeartRates(restingHeartRates);
-
-            //_healthService.AddMovingAveragesToRestingHeartRates();
         }
 
         public async Task MigrateHeartSummaries()
@@ -82,13 +87,7 @@ namespace Migrators
             var heartSummaries = await _fitbitService.GetHeartSummaries(getDataFromDate, _calendar.Now());
 
             _healthService.UpsertHeartSummaries(heartSummaries);
-
-            //_healthService.CalculateCumSumForHeartSummaries();
         }
-
-        //        public async Task MigrateCalorieData()
-        //        {
-        //        }
 
     }
 }
