@@ -16,6 +16,12 @@ namespace HealthAPI.Controllers.Migration
         private readonly INokiaAuthenticator _nokiaAuthenticator;
         private readonly INokiaClient _nokiaClient;
 
+        private const int WeightKgMeasureTypeId = 1;
+        private const int FatRatioPercentageMeasureTypeId = 6;
+        private const int DiastolicBloodPressureMeasureTypeId = 9;
+        private const int SystolicBloodPressureMeasureTypeId = 10;
+        private const int SubscribeBloodPressureId = 4;
+
 
         public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator, INokiaAuthenticator nokiaAuthenticator, INokiaClient nokiaClient)
         {
@@ -25,9 +31,11 @@ namespace HealthAPI.Controllers.Migration
             _nokiaClient = nokiaClient;
         }
         
+
+
         //todo post
        // [HttpGet]
-        public async Task<IActionResult> Migrate()
+        public async Task<IActionResult> Migrate([FromQuery]int? appli)
         {
             //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
 
@@ -35,12 +43,28 @@ namespace HealthAPI.Controllers.Migration
             {
                 _logger.Log("NOKIA : starting nokia migrate");
 
+                if (!appli.HasValue)
+                {
+                    _logger.Log("NOKIA : Migrating both Weights and Bloodpressures");
+                    await _nokiaMigrator.MigrateWeights();
+                    await _nokiaMigrator.MigrateBloodPressures();
+                }
+                else
+                {
+                    if (appli == WeightKgMeasureTypeId)
+                    {
+                        _logger.Log("NOKIA : Migrating just weights");
+                        await _nokiaMigrator.MigrateWeights();
+                    }
+
+                    if (appli == SubscribeBloodPressureId)
+                    {
+                        _logger.Log("NOKIA : Migrating just blood pressures");
+                        await _nokiaMigrator.MigrateBloodPressures();
+                    }
+
+                }
                 
-
-                await _nokiaMigrator.MigrateWeights();
-                await _nokiaMigrator.MigrateBloodPressures();
-
-
                 _logger.Log("NOKIA : finishing nokia migrate");
 
                 return Ok();
@@ -49,13 +73,39 @@ namespace HealthAPI.Controllers.Migration
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                //todo error
                 return NotFound(ex.ToString());
-                
-
             }
 
         }
+
+        [Route("Notify/Weights")]
+        public async Task<IActionResult> MigrateWeights()
+        {
+            //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
+
+            _logger.Log("NOKIA : Migrating just weights");
+
+            await _nokiaMigrator.MigrateWeights();
+
+            _logger.Log("NOKIA : Finished Migrating just weights");
+
+            return Ok();
+        }
+
+        [Route("Notify/BloodPressures")]
+        public async Task<IActionResult> MigrateBloodPressures()
+        {
+            //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
+
+            _logger.Log("NOKIA : Migrating just blood pressures");
+
+            await _nokiaMigrator.MigrateBloodPressures();
+
+            _logger.Log("NOKIA : Finished Migrating just blood pressures");
+
+            return Ok();
+        }
+
 
         [HttpGet]
         [Route("OAuth")]

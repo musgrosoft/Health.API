@@ -39,11 +39,8 @@ namespace Services.Nokia
         {
             try
             {
-                //var url = $"https://account.health.nokia.com/oauth2/token?grant_type=authorization_code&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&code={authorizationCode}";
                 var url = $"https://account.health.nokia.com/oauth2/token";
-
-                _logger.Log($"Nokia url is {url}");
-
+                
                 var nvc = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("grant_type", "authorization_code"),
@@ -57,11 +54,7 @@ namespace Services.Nokia
 
                 var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
 
-               // var response = await _httpClient.PostAsync(url, null);
-                
                 string responseBody = await response.Content.ReadAsStringAsync();
-
-                _logger.Log($"Nokia SetAccessToken status:{response.StatusCode} and content:{responseBody}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -72,6 +65,10 @@ namespace Services.Nokia
 
                     await _oAuthService.SaveNokiaAccessToken(tokenResponseAccessToken);
                     await _oAuthService.SaveNokiaRefreshToken(tokenResponseRefreshToken);
+                }
+                else
+                {
+                    _logger.Log($"non success status code : {response.StatusCode} , content: {responseBody}");
                 }
             }
             catch (Exception ex)
@@ -98,12 +95,7 @@ namespace Services.Nokia
 
         private async Task<Tokens> GetTokens(string refreshToken)
         {
-
-           // var url = $"https://account.health.nokia.com/oauth2/token?grant_type=refresh_token&client_id={_config.NokiaClientId}&client_secret={_config.NokiaClientSecret}&refresh_token={refreshToken}";
-
             var url = $"https://account.health.nokia.com/oauth2/token";
-
-            _logger.Log($"Nokia url is {url}");
 
             var nvc = new List<KeyValuePair<string, string>>
             {
@@ -112,18 +104,12 @@ namespace Services.Nokia
                 new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
                 new KeyValuePair<string, string>("refresh_token", refreshToken),
                 new KeyValuePair<string, string>("redirect_uri", NOKIA_RECIRECT_URL)
-
-
             };
-
-
 
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
 
             string responseBody = await response.Content.ReadAsStringAsync();
-
-            _logger.Log($"Nokia GetAccessToken status:{response.StatusCode} and content:{responseBody}");
-            
+                        
             var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
 
             var tokenResponseAccessToken = tokenResponse.access_token;

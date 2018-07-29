@@ -28,7 +28,7 @@ namespace Migrators
             _healthService.UpsertAlcoholIntakes(alcoholIntakes);
         }
 
-        public void MigrateRows()
+        public void MigrateErgos()
         {
             var rows = _googleClient.GetRows();
             _healthService.UpsertRows(rows);
