@@ -52,7 +52,7 @@ namespace Services.Fitbit
             }
             else
             {
-                _logger.Log($"non success status code : {response.StatusCode} , content: {responseBody}");
+              //  _logger.Log($"non success status code : {response.StatusCode} , content: {responseBody}");
             }
 
         }
