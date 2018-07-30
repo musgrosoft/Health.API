@@ -74,5 +74,21 @@ namespace HealthAPI.Controllers.Subscription
             }
         }
 
+
+        [HttpGet]
+        [Route("OAuth")]
+        public async Task<IActionResult> OAuth([FromQuery]string access_token)
+        {
+            var redirectUrl = "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
+
+            var thing = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8C&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate";
+
+
+
+            await _fitbitClient.SetTokens(access_token);
+            // await _nokiaAuthenticator.SetTokens(code);
+            return Ok("Helllo123");
+        }
+
     }
 }

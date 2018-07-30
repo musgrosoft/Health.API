@@ -171,5 +171,39 @@ namespace Utils
                 return value;
             }
         }
+
+        public string FitbitClientId
+        {
+            get
+            {
+                var value = Environment.GetEnvironmentVariable("FitbitClientId");
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
+                    var config = builder.Build();
+
+                    value = config["FitbitClientId"];
+
+                }
+                return value;
+            }
+        }
+
+        public string FitbitClientSecret
+        {
+            get
+            {
+                var value = Environment.GetEnvironmentVariable("FitbitClientSecret");
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
+                    var config = builder.Build();
+
+                    value = config["FitbitClientSecret"];
+
+                }
+                return value;
+            }
+        }
     }
 }

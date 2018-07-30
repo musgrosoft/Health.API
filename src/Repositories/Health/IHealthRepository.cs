@@ -22,7 +22,7 @@ namespace Repositories.Health
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(HeartRateSummary heartSummary);
 
-        void Upsert(HeartRate heartRate);
+//        void Upsert(HeartRate heartRate);
         void Upsert(Run run);
 
         void Upsert(AlcoholIntake alcoholIntake);

@@ -13,5 +13,8 @@
         string FitbitVerificationCode { get; }
         string NokiaClientId { get; }
         string NokiaClientSecret { get; }
+
+        string FitbitClientId { get; }
+        string FitbitClientSecret { get; }
     }
 }

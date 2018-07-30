@@ -7,5 +7,6 @@ namespace Services.Fitbit
     {
         Task<string> GetAccessToken();
        // Task<FitbitRefreshTokenResponse> GetTokens(string refreshToken);
+        Task SetTokens(string accessToken);
     }
 }

@@ -140,24 +140,24 @@ namespace Repositories.Health
                 .OrderBy(x => x.CreatedDate).ToList();
         }
 
-        public void Upsert(HeartRate heartRate)
-        {
-            var existingHeartRate = _healthContext.HeartRates.Find(heartRate.CreatedDate);
+        //public void Upsert(HeartRate heartRate)
+        //{
+        //    var existingHeartRate = _healthContext.HeartRates.Find(heartRate.CreatedDate);
 
-            if (existingHeartRate == null)
-            {
-                //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                _healthContext.Add(heartRate);
-            }
-            else
-            {
-                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                existingHeartRate.Bpm = heartRate.Bpm;
+        //    if (existingHeartRate == null)
+        //    {
+        //        //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+        //        _healthContext.Add(heartRate);
+        //    }
+        //    else
+        //    {
+        //        // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+        //        existingHeartRate.Bpm = heartRate.Bpm;
 
-            }
+        //    }
 
-            _healthContext.SaveChanges();
-        }
+        //    _healthContext.SaveChanges();
+        //}
 
         public void Upsert(Weight weight)
         {

@@ -622,6 +622,70 @@ namespace Repository.Unit.Tests
         }
 
         [Fact]
+        public void ShouldGetAllRuns()
+        {
+            var runs = new List<Run>
+            {
+                new Run {CreatedDate = new DateTime(2018,1,3), Metres = 1},
+                new Run {CreatedDate = new DateTime(2018,1,1), Metres = 2},
+                new Run {CreatedDate = new DateTime(2018,1,2), Metres = 3}
+
+            };
+
+            foreach (var run in runs)
+            {
+                _fakeLocalContext.Runs.Add(run);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllRuns().ToList();
+
+            Assert.Equal(3, result.Count());
+
+            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+            Assert.Equal(2, result[0].Metres);
+
+            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+            Assert.Equal(3, result[1].Metres);
+
+            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+            Assert.Equal(1, result[2].Metres);
+        }
+
+        [Fact]
+        public void ShouldGetAllErgos()
+        {
+            var ergos = new List<Ergo>
+            {
+                new Ergo {CreatedDate = new DateTime(2018,1,3), Metres = 1},
+                new Ergo {CreatedDate = new DateTime(2018,1,1), Metres = 2},
+                new Ergo {CreatedDate = new DateTime(2018,1,2), Metres = 3}
+
+            };
+
+            foreach (var ergo in ergos)
+            {
+                _fakeLocalContext.Ergos.Add(ergo);
+            }
+
+            _fakeLocalContext.SaveChanges();
+
+            var result = _healthRepository.GetAllErgos().ToList();
+
+            Assert.Equal(3, result.Count());
+
+            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+            Assert.Equal(2, result[0].Metres);
+
+            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+            Assert.Equal(3, result[1].Metres);
+
+            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+            Assert.Equal(1, result[2].Metres);
+        }
+
+        [Fact]
         public void ShouldGetAllWeights()
         {
             var weights = new List<Weight>
