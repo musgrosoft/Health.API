@@ -53,10 +53,10 @@ namespace Services.Fitbit
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
                 new KeyValuePair<string, string>("client_id", _config.FitbitClientId),
                 new KeyValuePair<string, string>("code", authorizationCode),
-                new KeyValuePair<string, string>("redirect_uri", "http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F"),
+                new KeyValuePair<string, string>("redirect_uri", "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/"),
             };
 
-            var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
+            var response = await _httpClient.PostAsync(url, (HttpContent) new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)nvc));
 
             //var response = await _httpClient.PostAsync(url, null);
 
