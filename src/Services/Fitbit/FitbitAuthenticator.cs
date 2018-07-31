@@ -42,11 +42,17 @@ namespace Services.Fitbit
             //application/x-www-form-urlencoded
 
 
+
+
+
+
+
+
             var nvc = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("code", authorizationCode),
-                new KeyValuePair<string, string>("client_id", _config.FitbitClientId),
+            {   
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                new KeyValuePair<string, string>("client_id", _config.FitbitClientId),
+                new KeyValuePair<string, string>("code", authorizationCode),
                 new KeyValuePair<string, string>("redirect_uri", "http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F"),
             };
 
