@@ -31,10 +31,16 @@ namespace Services.Fitbit
 
         public async Task SetTokens(string authorizationCode)
         {
-            var url = $"{FITBIT_SERVER}/oauth2/token?code={authorizationCode}&client_id=228PR8C&grant_type=authorization_code&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F";
+            var url = $"{FITBIT_SERVER}/oauth2/token?code={authorizationCode}&client_id=228PR8&grant_type=authorization_code&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F";
             
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + Base64Encode($"{_config.FitbitClientId}:{_config.FitbitClientSecret}"));
+
+            //req.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded");
+
+            //application/x-www-form-urlencoded
+
 
             var response = await _httpClient.PostAsync(url, null);
 
