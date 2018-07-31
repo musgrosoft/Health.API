@@ -12,6 +12,6 @@ namespace Services.Fitbit
         Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate);
         Task<List<Dataset>> GetDetailedHeartRates(DateTime date);
         Task Subscribe();
-        Task SetTokens(string accessToken);
+        Task SetTokens(string code);
     }
 }
