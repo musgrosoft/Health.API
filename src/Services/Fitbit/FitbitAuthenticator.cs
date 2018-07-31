@@ -16,20 +16,22 @@ namespace Services.Fitbit
 
         private readonly HttpClient _httpClient;
         private readonly IConfig _config;
+        private readonly ILogger _logger;
 
 //        private readonly ILambdaLogger _logger;
         private const string FITBIT_SERVER = "https://api.fitbit.com";
         
-        public FitbitAuthenticator(IOAuthService oAuthService, HttpClient httpClient, IConfig config)
+        public FitbitAuthenticator(IOAuthService oAuthService, HttpClient httpClient, IConfig config, ILogger logger)
         {
             _oAuthService = oAuthService;
             _httpClient = httpClient;
             _config = config;
+            _logger = logger;
         }
 
         public async Task SetTokens(string authorizationCode)
         {
-            var url = $"https://api.fitbit.com/oauth2/token?code={authorizationCode}&client_id=228PR8C&grant_type=authorization_code&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F";
+            var url = $"{FITBIT_SERVER}/oauth2/token?code={authorizationCode}&client_id=228PR8C&grant_type=authorization_code&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F";
             
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + Base64Encode($"{_config.FitbitClientId}:{_config.FitbitClientSecret}"));
@@ -41,6 +43,7 @@ namespace Services.Fitbit
 
             if (response.IsSuccessStatusCode)
             {
+                _logger.Log($"Fitbit SetTokens SUCCESS status code : {response.StatusCode} , content: {responseBody}");
                 var tokenResponse = JsonConvert.DeserializeObject<FitbitAuthTokensResponse>(responseBody);
                 //var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
 
@@ -52,7 +55,7 @@ namespace Services.Fitbit
             }
             else
             {
-              //  _logger.Log($"non success status code : {response.StatusCode} , content: {responseBody}");
+              _logger.Log($"Fitbit SetTokens FAIL  non success status code : {response.StatusCode} , content: {responseBody}");
             }
 
         }
