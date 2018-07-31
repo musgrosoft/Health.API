@@ -44,7 +44,7 @@ namespace Services.Fitbit
 
 
 
-
+            _logger.Log($"************************************ : code : {authorizationCode}");
 
 
 
