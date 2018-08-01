@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
-using Newtonsoft.Json;
 using Services.Fitbit;
 using Utils;
 
@@ -12,14 +10,14 @@ namespace HealthAPI.Controllers.Subscription
 {
     [Produces("application/json")]
     [Route("api/Fitbit")]
-    public class FitbitSubscriptionController : Controller
+    public class FitbitController : Controller
     {
         private readonly ILogger _logger;
         private readonly IConfig _config;
         private readonly IFitbitClient _fitbitClient;
         private readonly IFitbitMigrator _fitbitMigrator;
 
-        public FitbitSubscriptionController(ILogger logger, IConfig config, IFitbitClient fitbitClient, IFitbitMigrator fitbitMigrator)
+        public FitbitController(ILogger logger, IConfig config, IFitbitClient fitbitClient, IFitbitMigrator fitbitMigrator)
         {
             _logger = logger;
             _config = config;
@@ -29,7 +27,6 @@ namespace HealthAPI.Controllers.Subscription
 
         [HttpPost]
         [Route("Notification")]
-        //public IActionResult Notify([FromBody] List<Note> notifications)
         public IActionResult Notify()
         {
             _logger.Log("Fitbit Notification : migrating all the things");
@@ -66,7 +63,7 @@ namespace HealthAPI.Controllers.Subscription
         {
             try
             {
-                await _fitbitMigrator.MigrateAll();
+                await MigrateAll();
             }
             catch (Exception ex)
             {
@@ -74,6 +71,16 @@ namespace HealthAPI.Controllers.Subscription
             }
         }
 
+        public async Task MigrateAll()
+        {
+            //monthly gets
+            await _fitbitMigrator.MigrateRestingHeartRates();
+            await _fitbitMigrator.MigrateHeartSummaries();
+            //daily gets
+            await _fitbitMigrator.MigrateStepCounts();
+            await _fitbitMigrator.MigrateActivitySummaries();
+
+        }
 
         [HttpGet]
         [Route("OAuth")]

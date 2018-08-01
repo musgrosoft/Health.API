@@ -12,7 +12,7 @@ namespace Repositories.OAuth
             _healthContext = healthContext;
         }
 
-        public async Task SaveToken(string tokenName, string tokenValue)
+        public async Task UpsertToken(string tokenName, string tokenValue)
         {
             var existingToken = _healthContext.Tokens.Find(tokenName);
 

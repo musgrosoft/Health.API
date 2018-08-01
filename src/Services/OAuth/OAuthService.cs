@@ -23,12 +23,12 @@ namespace Services.OAuth
 
         public async Task SaveFitbitAccessToken(string token)
         {
-            await _tokenRepository.SaveToken(FITBIT_ACCESS_TOKEN_KEY, token);
+            await _tokenRepository.UpsertToken(FITBIT_ACCESS_TOKEN_KEY, token);
         }
 
         public async Task SaveFitbitRefreshToken(string token)
         {
-            await _tokenRepository.SaveToken(FITBIT_REFRESH_TOKEN_KEY, token);
+            await _tokenRepository.UpsertToken(FITBIT_REFRESH_TOKEN_KEY, token);
         }
         
         public async Task<string> GetFitbitRefreshToken()
@@ -44,12 +44,12 @@ namespace Services.OAuth
 
         public async Task SaveNokiaAccessToken(string token)
         {
-            await _tokenRepository.SaveToken(NOKIA_ACCESS_TOKEN_KEY, token);
+            await _tokenRepository.UpsertToken(NOKIA_ACCESS_TOKEN_KEY, token);
         }
 
         public async Task SaveNokiaRefreshToken(string token)
         {
-            await _tokenRepository.SaveToken(NOKIA_REFRESH_TOKEN_KEY, token);
+            await _tokenRepository.UpsertToken(NOKIA_REFRESH_TOKEN_KEY, token);
         }
 
 

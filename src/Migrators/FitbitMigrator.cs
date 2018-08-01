@@ -25,17 +25,6 @@ namespace Migrators
             _fitbitService = fitbitService;
             _calendar = calendar;
         }
-
-        public async Task MigrateAll()
-        {
-            //monthly gets
-            await MigrateRestingHeartRates();
-            await MigrateHeartSummaries();
-            //daily gets
-            await MigrateStepCounts();
-            await MigrateActivitySummaries();
-
-        }
         
         public async Task MigrateStepCounts()
         {

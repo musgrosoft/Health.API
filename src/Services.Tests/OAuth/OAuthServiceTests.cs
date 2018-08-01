@@ -34,13 +34,13 @@ namespace Services.Tests.OAuth
         public async Task ShouldSaveFitbitRefreshToken()
         {
             //Given
-            _repo.Setup(x => x.SaveToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
+            _repo.Setup(x => x.UpsertToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
 
             //When
             await _oAuthService.SaveFitbitRefreshToken("Amazing Token");
 
             //Then
-            _repo.Verify(x=>x.SaveToken("fitbit_refresh_token", "Amazing Token"),Times.Once);
+            _repo.Verify(x=>x.UpsertToken("fitbit_refresh_token", "Amazing Token"),Times.Once);
 
         }
 
@@ -48,13 +48,13 @@ namespace Services.Tests.OAuth
         public async Task ShouldSaveFitbitAccessToken()
         {
             //Given
-            _repo.Setup(x => x.SaveToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
+            _repo.Setup(x => x.UpsertToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
 
             //When
             await _oAuthService.SaveFitbitAccessToken("Good Token");
 
             //Then
-            _repo.Verify(x => x.SaveToken("fitbit_access_token", "Good Token"), Times.Once);
+            _repo.Verify(x => x.UpsertToken("fitbit_access_token", "Good Token"), Times.Once);
 
         }
 

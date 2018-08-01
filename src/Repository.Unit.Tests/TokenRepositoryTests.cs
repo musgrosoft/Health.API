@@ -41,9 +41,9 @@ namespace Repository.Unit.Tests
         }
 
         [Fact]
-        public async Task ShouldSaveToken()
+        public async Task ShouldInsertToken()
         {
-            await _tokenRepository.SaveToken("AsdaName", "AsdaValue");
+            await _tokenRepository.UpsertToken("AsdaName", "AsdaValue");
 
             var token = _fakeLocalContext.Tokens.Find("AsdaName");
 
@@ -51,5 +51,23 @@ namespace Repository.Unit.Tests
 
 
         }
+
+        [Fact]
+        public async Task ShouldUpdateToken()
+        {
+            await _tokenRepository.UpsertToken("AsdaName", "AsdaValue");
+
+            var token = _fakeLocalContext.Tokens.Find("AsdaName");
+
+            Assert.Equal("AsdaValue", token.Value);
+
+            await _tokenRepository.UpsertToken("AsdaName", "AsdaValue2");
+
+            var token2 = _fakeLocalContext.Tokens.Find("AsdaName");
+
+            Assert.Equal("AsdaValue2", token2.Value);
+
+        }
+
     }
 }
