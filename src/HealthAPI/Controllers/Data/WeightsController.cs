@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Repositories.Models;
 using Services.MyHealth;
 
 namespace HealthAPI.Controllers.Data
@@ -14,12 +16,17 @@ namespace HealthAPI.Controllers.Data
             _healthService = healthService;
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Json(_healthService.GetAllWeights());
-        }
+        //[HttpGet]
+        //public IActionResult Get()
+        //{
+        //    return Json(_healthService.GetAllWeights());
+        //}
 
+        [HttpGet]
+        public IList<Weight> Get()
+        {
+            return _healthService.GetAllWeights();
+        }
 
     }
 }
