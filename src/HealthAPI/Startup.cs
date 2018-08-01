@@ -16,6 +16,7 @@ using Services.Google;
 using Services.Nokia;
 using Hangfire.MemoryStorage;
 using Hangfire;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace HealthAPI
 {
@@ -47,6 +48,11 @@ namespace HealthAPI
 
             //services.AddMvc();
             services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
 
             services.AddScoped<IHealthRepository, HealthRepository>();
 
@@ -114,7 +120,7 @@ namespace HealthAPI
 
             app.UseMvc();
 
-
+            app.UseSwagger();
 
 
 
@@ -131,15 +137,15 @@ namespace HealthAPI
             //    //);
             //});
 
-            app.UseMvc(routeBuilder =>
-                {
-                    
-                 //   routeBuilder.EnableDependencyInjection();
-                    routeBuilder.MapRoute(
-                  name: "api",
-                  template: "api/{controller=Home}/{action=Index}/{id?}"
-                );
-                });
+            //app.UseMvc(routeBuilder =>
+            //    {
+
+            //     //   routeBuilder.EnableDependencyInjection();
+            //        routeBuilder.MapRoute(
+            //      name: "api",
+            //      template: "api/{controller=Home}/{action=Index}/{id?}"
+            //    );
+            //    });
 
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
