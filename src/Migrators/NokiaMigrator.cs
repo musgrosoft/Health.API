@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Services.MyHealth;
+using Services.Health;
 using Services.Nokia;
 using Utils;
 

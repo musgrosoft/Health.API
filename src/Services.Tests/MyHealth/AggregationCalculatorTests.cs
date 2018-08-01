@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Repositories.Models;
-using Services.MyHealth;
 using Xunit;
 using System.Linq;
 using System;
+using Services.Health;
 
 namespace Services.Tests.MyHealth
 {

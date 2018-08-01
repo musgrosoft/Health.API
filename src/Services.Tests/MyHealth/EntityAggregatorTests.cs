@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Repositories.Models;
-using Services.MyHealth;
+using Services.Health;
 using Xunit;
 
 namespace Services.Tests.MyHealth

@@ -4,7 +4,7 @@ using HealthAPI.Controllers.Data;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Repositories.Models;
-using Services.MyHealth;
+using Services.Health;
 using Xunit;
 
 namespace HealthAPI.Unit.Tests.Controllers.Data

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Repositories.Models;
 
-namespace Services.MyHealth
+namespace Services.Health
 {
     public interface IHealthService
     {
@@ -42,7 +42,7 @@ namespace Services.MyHealth
         IList<HeartRateSummary> GetAllHeartRateSummariesByMonth();
 
 
-        void UpsertRows(List<Ergo> rows);
+        void UpsertErgos(List<Ergo> rows);
         IList<Run> GetAllRuns();
         IList<Ergo> GetAllErgos();
     }

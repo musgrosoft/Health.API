@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Services.Fitbit.Domain;
 using Services.Nokia.Domain;
+using Services.Nokia.Domain.OAuthDomain;
 using Services.OAuth;
-using Services.OAuthDomain;
 using Utils;
 
 namespace Services.Nokia
 {
     public class NokiaAuthenticator : INokiaAuthenticator
     {
-        private readonly IOAuthService _oAuthService;
+        private readonly ITokenService _oAuthService;
 
         private readonly IConfig _config;
 
@@ -26,7 +26,7 @@ namespace Services.Nokia
 
         private const string NOKIA_RECIRECT_URL = "http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
 
-        public NokiaAuthenticator(IOAuthService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
+        public NokiaAuthenticator(ITokenService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
         {
             _oAuthService = oAuthService;
             _config = config;

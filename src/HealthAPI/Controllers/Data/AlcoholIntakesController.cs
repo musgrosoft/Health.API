@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services.MyHealth;
+using Services.Health;
 
 namespace HealthAPI.Controllers.Data
 {

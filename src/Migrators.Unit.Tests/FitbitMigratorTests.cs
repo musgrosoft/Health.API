@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Moq;
 using Repositories.Models;
 using Services.Fitbit;
-using Services.MyHealth;
+using Services.Health;
 using Utils;
 using Xunit;
 

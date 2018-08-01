@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
 using Repositories.Models;
-using Services.MyHealth;
+using Services.Health;
 using Services.Nokia;
 using Utils;
 using Xunit;

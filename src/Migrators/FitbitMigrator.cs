@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Services.Fitbit;
-using Services.MyHealth;
+using Services.Health;
 using Utils;
 
 namespace Migrators

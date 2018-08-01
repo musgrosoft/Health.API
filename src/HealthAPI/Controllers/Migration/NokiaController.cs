@@ -112,7 +112,7 @@ namespace HealthAPI.Controllers.Migration
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {
             await _nokiaAuthenticator.SetTokens(code);
-            return Ok("Helllo123");
+            return Ok("Helllo123 change to useful message");
         }
         
 
@@ -121,7 +121,7 @@ namespace HealthAPI.Controllers.Migration
         public async Task<IActionResult> Subscribe()
         {
             await _nokiaClient.Subscribe();
-            return Ok("Helllo234");
+            return Ok("Helllo123 change to useful message");
         }
 
         [HttpGet]

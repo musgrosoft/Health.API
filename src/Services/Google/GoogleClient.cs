@@ -94,7 +94,7 @@ namespace Services.Google
             return alcoholIntakes;
         }
 
-        public List<Ergo> GetRows()
+        public List<Ergo> GetErgos()
         {
             var ergos = new List<Ergo>();
 

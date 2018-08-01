@@ -5,7 +5,7 @@ using Repositories.Health;
 using Repositories.Models;
 using Utils;
 
-namespace Services.MyHealth
+namespace Services.Health
 {
     public class HealthService : IHealthService
     {   
@@ -257,7 +257,7 @@ namespace Services.MyHealth
             }
         }
 
-        public void UpsertRows(List<Ergo> rows)
+        public void UpsertErgos(List<Ergo> rows)
         {
             _logger.Log($"ROWS : Saving {rows.Count()} rows");
 

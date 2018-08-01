@@ -9,12 +9,12 @@ namespace Services.Tests.OAuth
     public class OAuthServiceTests
     {
         private readonly Mock<ITokenRepository> _repo;
-        private readonly OAuthService _oAuthService;
+        private readonly TokenService _oAuthService;
 
         public OAuthServiceTests()
         {
             _repo = new Mock<ITokenRepository>();
-            _oAuthService = new OAuthService(_repo.Object);
+            _oAuthService = new TokenService(_repo.Object);
         }
 
         [Fact]

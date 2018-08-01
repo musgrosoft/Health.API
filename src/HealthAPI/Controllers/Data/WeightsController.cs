@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Models;
-using Services.MyHealth;
+using Services.Health;
 
 namespace HealthAPI.Controllers.Data
 {

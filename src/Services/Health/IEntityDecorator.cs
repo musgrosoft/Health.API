@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Repositories.Models;
 
-namespace Services.MyHealth
+namespace Services.Health
 {
     public interface IEntityDecorator
     {

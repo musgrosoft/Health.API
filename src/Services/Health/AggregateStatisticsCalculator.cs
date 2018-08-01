@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Repositories.Models;
 
-namespace Services.MyHealth
+namespace Services.Health
 {
     public class AggregateStatisticsCalculator : IAggregateStatisticsCalculator
     {

@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repositories;
 using Repositories.Health;
-using Services.MyHealth;
 using Utils;
 using Services.OAuth;
 using Repositories.OAuth;
@@ -16,6 +15,7 @@ using Services.Google;
 using Services.Nokia;
 using Hangfire.MemoryStorage;
 using Hangfire;
+using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace HealthAPI
@@ -62,7 +62,7 @@ namespace HealthAPI
             services.AddTransient<IConfig, Config>();
             services.AddTransient<ILogger, Logger>();
             services.AddTransient<IAggregateStatisticsCalculator, AggregateStatisticsCalculator>();
-            services.AddTransient<IOAuthService, OAuthService>();
+            services.AddTransient<ITokenService, TokenService>();
 
             services.AddTransient<ITokenRepository, TokenRepository>();
 

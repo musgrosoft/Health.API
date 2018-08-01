@@ -12,7 +12,7 @@ namespace Services.Fitbit
 {
     public class FitbitAuthenticator : IFitbitAuthenticator
     {
-        private readonly IOAuthService _oAuthService;
+        private readonly ITokenService _oAuthService;
 
         private readonly HttpClient _httpClient;
         private readonly IConfig _config;
@@ -21,7 +21,7 @@ namespace Services.Fitbit
 //        private readonly ILambdaLogger _logger;
         private const string FITBIT_SERVER = "https://api.fitbit.com";
         
-        public FitbitAuthenticator(IOAuthService oAuthService, HttpClient httpClient, IConfig config, ILogger logger)
+        public FitbitAuthenticator(ITokenService oAuthService, HttpClient httpClient, IConfig config, ILogger logger)
         {
             _oAuthService = oAuthService;
             _httpClient = httpClient;

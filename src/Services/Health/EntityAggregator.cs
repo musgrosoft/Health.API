@@ -3,7 +3,7 @@ using System.Linq;
 using Repositories.Models;
 using Utils;
 
-namespace Services.MyHealth
+namespace Services.Health
 {
     public class EntityAggregator : IEntityAggregator
     {

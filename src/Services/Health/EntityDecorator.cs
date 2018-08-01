@@ -3,7 +3,7 @@ using System.Linq;
 using Repositories.Health;
 using Repositories.Models;
 
-namespace Services.MyHealth
+namespace Services.Health
 {
     public class EntityDecorator : IEntityDecorator
     {

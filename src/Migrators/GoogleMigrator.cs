@@ -1,7 +1,7 @@
 ﻿using System;
 using Google.Apis.Sheets.v4;
 using Services.Google;
-using Services.MyHealth;
+using Services.Health;
 
 namespace Migrators
 {
@@ -30,8 +30,8 @@ namespace Migrators
 
         public void MigrateErgos()
         {
-            var rows = _googleClient.GetRows();
-            _healthService.UpsertRows(rows);
+            var rows = _googleClient.GetErgos();
+            _healthService.UpsertErgos(rows);
         }
 
 

@@ -2,7 +2,7 @@
 
 namespace Services.OAuth
 {
-    public interface IOAuthService
+    public interface ITokenService
     {
         Task<string> GetFitbitRefreshToken();
         Task SaveFitbitAccessToken(string token);
@@ -11,12 +11,5 @@ namespace Services.OAuth
         Task<string> GetNokiaRefreshToken();
         Task SaveNokiaAccessToken(string token);
         Task SaveNokiaRefreshToken(string token);
-
-
-        //Task<string> GetGoogleRefreshToken();
-        //        Task SaveGoogleAccessToken(string token);
-        //        Task SaveGoogleRefreshToken(string token);
-
-
     }
 }

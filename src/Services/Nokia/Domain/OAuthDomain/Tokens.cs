@@ -1,4 +1,4 @@
-﻿namespace Services.OAuthDomain
+﻿namespace Services.Nokia.Domain.OAuthDomain
 {
     public class Tokens
     {

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Repositories.Models;
 
-namespace Services.MyHealth
+namespace Services.Health
 {
     public interface IAggregateStatisticsCalculator
     {

@@ -55,7 +55,7 @@ namespace HealthAPI.Controllers.Subscription
         public IActionResult Subscribe()
         {
             _fitbitClient.Subscribe();
-            return Ok();
+            return Ok("useful message");
         }
 
 
@@ -89,7 +89,7 @@ namespace HealthAPI.Controllers.Subscription
             
             await _fitbitClient.SetTokens(code);
             // await _nokiaAuthenticator.SetTokens(code);
-            return Ok("Helllo123");
+            return Ok("Helllo123 change to useful message");
         }
 
     }

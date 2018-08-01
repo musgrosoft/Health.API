@@ -3,7 +3,7 @@ using Repositories.OAuth;
 
 namespace Services.OAuth
 {
-    public class OAuthService : IOAuthService
+    public class TokenService : ITokenService
     {
         private const string FITBIT_ACCESS_TOKEN_KEY = "fitbit_access_token";
         private const string FITBIT_REFRESH_TOKEN_KEY = "fitbit_refresh_token";
@@ -16,7 +16,7 @@ namespace Services.OAuth
 
         private readonly ITokenRepository _tokenRepository;
         
-        public OAuthService(ITokenRepository tokenRepository )
+        public TokenService(ITokenRepository tokenRepository )
         {
             _tokenRepository = tokenRepository;
         }
