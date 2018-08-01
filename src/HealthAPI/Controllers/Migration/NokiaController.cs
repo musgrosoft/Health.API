@@ -30,11 +30,12 @@ namespace HealthAPI.Controllers.Migration
             _nokiaAuthenticator = nokiaAuthenticator;
             _nokiaClient = nokiaClient;
         }
-        
+
 
 
         //todo post
-       // [HttpGet]
+        //[HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Migrate([FromQuery]int? appli)
         {
             //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
@@ -78,6 +79,7 @@ namespace HealthAPI.Controllers.Migration
 
         }
 
+        [HttpPost]
         [Route("Notify/Weights")]
         public async Task<IActionResult> MigrateWeights()
         {
@@ -92,6 +94,7 @@ namespace HealthAPI.Controllers.Migration
             return Ok();
         }
 
+        [HttpPost]
         [Route("Notify/BloodPressures")]
         public async Task<IActionResult> MigrateBloodPressures()
         {

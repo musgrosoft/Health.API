@@ -31,7 +31,7 @@ namespace HealthAPI.Controllers.Subscription
         {
             _logger.Log("Fitbit Notification : migrating all the things");
 
-            BackgroundJob.Enqueue(() => MigrateAllTheThings());
+            BackgroundJob.Enqueue(() => _fitbitMigrator.MigrateAllTheThings());
 
             return (NoContent());
         }
@@ -59,28 +59,6 @@ namespace HealthAPI.Controllers.Subscription
         }
 
 
-        public async Task MigrateAllTheThings()
-        {
-            try
-            {
-                await MigrateAll();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-            }
-        }
-
-        public async Task MigrateAll()
-        {
-            //monthly gets
-            await _fitbitMigrator.MigrateRestingHeartRates();
-            await _fitbitMigrator.MigrateHeartSummaries();
-            //daily gets
-            await _fitbitMigrator.MigrateStepCounts();
-            await _fitbitMigrator.MigrateActivitySummaries();
-
-        }
 
         [HttpGet]
         [Route("OAuth")]

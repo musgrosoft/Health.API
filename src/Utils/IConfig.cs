@@ -1,20 +1,22 @@
 ﻿namespace Utils
 {
     public interface IConfig
-    {
-        string DyanmoDbAccessKey { get; }
-        string DynamoDbSecretKey { get; }
-        string FitbitUserId { get; }
+    {   
         string HealthDbConnectionString { get; }
+
         string LogzIoToken { get; }
 
         string GoogleClientId { get; }
         string GoogleClientSecret { get; }
-        string FitbitVerificationCode { get; }
+        
         string NokiaClientId { get; }
         string NokiaClientSecret { get; }
 
         string FitbitClientId { get; }
         string FitbitClientSecret { get; }
+
+        string FitbitUserId { get; }
+
+        string FitbitVerificationCode { get; }
     }
 }
