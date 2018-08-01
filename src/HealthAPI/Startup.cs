@@ -58,15 +58,13 @@ namespace HealthAPI
             services.AddTransient<IAggregateStatisticsCalculator, AggregateStatisticsCalculator>();
             services.AddTransient<IOAuthService, OAuthService>();
 
-            services.AddTransient<IOAuthTokenRepository, OAuthTokenRepository>();
+            services.AddTransient<IOAuthTokenRepository, TokenRepository>();
 
             services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
             services.AddTransient<IFitbitClientAggregator, FitbitClientAggregator>();
             services.AddTransient<IFitbitService, FitbitService>();
             services.AddTransient<IFitbitMigrator, FitbitMigrator>();
             services.AddTransient<ICalendar, Calendar>();
-
-            services.AddTransient<IOAuthTokenRepository, OAuthTokenRepository>();
 
             services.AddTransient<INokiaMigrator, NokiaMigrator>();
             services.AddTransient<INokiaClient, NokiaClient>();
