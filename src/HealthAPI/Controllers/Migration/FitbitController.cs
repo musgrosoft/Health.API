@@ -70,5 +70,17 @@ namespace HealthAPI.Controllers.Subscription
             return Ok("Helllo123 change to useful message");
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(String), 200)]
+        [Route("OAuthUrl")]
+        public IActionResult OAuthUrl()
+        {
+            var redirectUrl = "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
+
+            return Json("https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate");
+        }
+
+
     }
 }

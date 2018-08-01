@@ -136,5 +136,17 @@ namespace HealthAPI.Controllers.Migration
             return Ok(subscriptions);
         }
 
+        
+        [HttpGet]
+        [ProducesResponseType(typeof(String), 200)]
+        [Route("OAuthUrl")]
+        public IActionResult OAuthUrl()
+        {
+            var redirectUrl = "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
+
+            return Json("https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&redirect_uri=http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&scope=user.info,user.metrics,user.activity&state=768uyFys");
+        }
+        
+
     }
 }

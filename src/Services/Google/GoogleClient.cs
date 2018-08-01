@@ -30,9 +30,7 @@ namespace Services.Google
         {
             var id = _config.GoogleClientId;
             var secret = _config.GoogleClientSecret;
-
-            _logger.Log($"secret is {secret}");
-
+            
             var credential = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(id)
             {
                 Scopes = Scopes

@@ -46,7 +46,6 @@ namespace HealthAPI
                         .AllowCredentials());
             });
 
-            //services.AddMvc();
             services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
 
             services.AddSwaggerGen(c =>
@@ -63,27 +62,19 @@ namespace HealthAPI
             services.AddTransient<ILogger, Logger>();
             services.AddTransient<IAggregateStatisticsCalculator, AggregateStatisticsCalculator>();
             services.AddTransient<ITokenService, TokenService>();
-
             services.AddTransient<ITokenRepository, TokenRepository>();
-
             services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
             services.AddTransient<IFitbitClientAggregator, FitbitClientAggregator>();
             services.AddTransient<IFitbitService, FitbitService>();
             services.AddTransient<IFitbitMigrator, FitbitMigrator>();
             services.AddTransient<ICalendar, Calendar>();
-
             services.AddTransient<INokiaMigrator, NokiaMigrator>();
             services.AddTransient<INokiaClient, NokiaClient>();
             services.AddTransient<INokiaAuthenticator, NokiaAuthenticator>();
-            
-
             services.AddTransient<IFitbitClient, FitbitClient>();
-
             services.AddTransient<ITargetService, TargetService>();
             services.AddTransient<IEntityAggregator, EntityAggregator>();
-            
             services.AddTransient<IEntityDecorator, EntityDecorator>();
-
             services.AddTransient<IGoogleClient, GoogleClient>();
             services.AddTransient<IGoogleMigrator, GoogleMigrator>();
 
@@ -127,28 +118,6 @@ namespace HealthAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            //app.UseMvc(route =>
-            //{
-            //    route.MapRoute(
-            //      name: "api",
-            //      template: "api/{controller=Home}/{action=Index}/{id?}"
-            //    );
-
-            //    //route.MapRoute(
-            //    //  name: "areas",
-            //    //  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-            //    //);
-            //});
-
-            //app.UseMvc(routeBuilder =>
-            //    {
-
-            //     //   routeBuilder.EnableDependencyInjection();
-            //        routeBuilder.MapRoute(
-            //      name: "api",
-            //      template: "api/{controller=Home}/{action=Index}/{id?}"
-            //    );
-            //    });
 
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
