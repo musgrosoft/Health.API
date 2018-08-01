@@ -3,7 +3,7 @@ using Repositories.Models;
 
 namespace Repositories.OAuth
 {
-    public class TokenRepository : IOAuthTokenRepository
+    public class TokenRepository : ITokenRepository
     {
         private readonly HealthContext _healthContext;
 

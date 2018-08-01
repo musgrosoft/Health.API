@@ -14,42 +14,42 @@ namespace Services.OAuth
         //private const string GOOGLE_ACCESS_TOKEN_KEY = "google_access_token";
         //private const string GOOGLE_REFRESH_TOKEN_KEY = "google_refresh_token";
 
-        private readonly IOAuthTokenRepository _oAuthTokenRepository;
+        private readonly ITokenRepository _tokenRepository;
         
-        public OAuthService(IOAuthTokenRepository oAuthTokenRepository )
+        public OAuthService(ITokenRepository tokenRepository )
         {
-            _oAuthTokenRepository = oAuthTokenRepository;
+            _tokenRepository = tokenRepository;
         }
 
         public async Task SaveFitbitAccessToken(string token)
         {
-            await _oAuthTokenRepository.SaveToken(FITBIT_ACCESS_TOKEN_KEY, token);
+            await _tokenRepository.SaveToken(FITBIT_ACCESS_TOKEN_KEY, token);
         }
 
         public async Task SaveFitbitRefreshToken(string token)
         {
-            await _oAuthTokenRepository.SaveToken(FITBIT_REFRESH_TOKEN_KEY, token);
+            await _tokenRepository.SaveToken(FITBIT_REFRESH_TOKEN_KEY, token);
         }
         
         public async Task<string> GetFitbitRefreshToken()
         {
-            return await _oAuthTokenRepository.ReadToken(FITBIT_REFRESH_TOKEN_KEY);
+            return await _tokenRepository.ReadToken(FITBIT_REFRESH_TOKEN_KEY);
         }
 
 
         public async Task<string> GetNokiaRefreshToken()
         {
-            return await _oAuthTokenRepository.ReadToken(NOKIA_REFRESH_TOKEN_KEY);
+            return await _tokenRepository.ReadToken(NOKIA_REFRESH_TOKEN_KEY);
         }
 
         public async Task SaveNokiaAccessToken(string token)
         {
-            await _oAuthTokenRepository.SaveToken(NOKIA_ACCESS_TOKEN_KEY, token);
+            await _tokenRepository.SaveToken(NOKIA_ACCESS_TOKEN_KEY, token);
         }
 
         public async Task SaveNokiaRefreshToken(string token)
         {
-            await _oAuthTokenRepository.SaveToken(NOKIA_REFRESH_TOKEN_KEY, token);
+            await _tokenRepository.SaveToken(NOKIA_REFRESH_TOKEN_KEY, token);
         }
 
 

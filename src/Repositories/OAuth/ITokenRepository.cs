@@ -2,7 +2,7 @@
 
 namespace Repositories.OAuth
 {
-    public interface IOAuthTokenRepository
+    public interface ITokenRepository
     {
         Task SaveToken(string tokenName, string tokenValue);
         Task<string> ReadToken(string tokenName);

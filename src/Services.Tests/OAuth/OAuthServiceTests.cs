@@ -8,12 +8,12 @@ namespace Services.Tests.OAuth
 {
     public class OAuthServiceTests
     {
-        private readonly Mock<IOAuthTokenRepository> _repo;
+        private readonly Mock<ITokenRepository> _repo;
         private readonly OAuthService _oAuthService;
 
         public OAuthServiceTests()
         {
-            _repo = new Mock<IOAuthTokenRepository>();
+            _repo = new Mock<ITokenRepository>();
             _oAuthService = new OAuthService(_repo.Object);
         }
 

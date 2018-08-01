@@ -24,7 +24,6 @@ namespace Services.Nokia
 
         private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
 
-        //"https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&redirect_uri=http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&scope=user.info,user.metrics,user.activity&state=768uyFys"
         private const string NOKIA_RECIRECT_URL = "http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
 
         public NokiaAuthenticator(IOAuthService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)

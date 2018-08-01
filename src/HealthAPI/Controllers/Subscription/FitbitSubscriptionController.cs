@@ -79,12 +79,7 @@ namespace HealthAPI.Controllers.Subscription
         [Route("OAuth")]
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {
-            var redirectUrl = "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
-
-            var thing = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate";
-            //var thang = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate%20social&expires_in=604800";
-
-
+            
             await _fitbitClient.SetTokens(code);
             // await _nokiaAuthenticator.SetTokens(code);
             return Ok("Helllo123");
