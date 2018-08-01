@@ -16,17 +16,18 @@ namespace HealthAPI.Controllers.Data
             _healthService = healthService;
         }
 
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    return Json(_healthService.GetAllWeights());
-        //}
-
         [HttpGet]
-        public IList<Weight> Get()
+        [ProducesResponseType(typeof(IList<Weight>), 200)]
+        public IActionResult Get()
         {
-            return _healthService.GetAllWeights();
+            return Json(_healthService.GetAllWeights());
         }
+
+        //[HttpGet]
+        //public IList<Weight> Get()
+        //{
+        //    return _healthService.GetAllWeights();
+        //}
 
     }
 }
