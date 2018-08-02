@@ -13,7 +13,7 @@ namespace Migrators.Unit.Tests
     public class NokiaMigratorTests
     {
         private Mock<IHealthService> _healthService;
-        private Mock<INokiaClient> _nokiaClient;
+        private Mock<INokiaService> _nokiaService;
         private Mock<ILogger> _logger;
         private NokiaMigrator _nokiaMigrator;
 
@@ -22,10 +22,10 @@ namespace Migrators.Unit.Tests
         public NokiaMigratorTests()
         {
             _healthService = new Mock<IHealthService>();
-            _nokiaClient = new Mock<INokiaClient>();
+            _nokiaService = new Mock<INokiaService>();
             _logger = new Mock<ILogger>();
 
-            _nokiaMigrator = new NokiaMigrator(_healthService.Object, _logger.Object, _nokiaClient.Object);
+            _nokiaMigrator = new NokiaMigrator(_healthService.Object, _logger.Object, _nokiaService.Object);
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace Migrators.Unit.Tests
                 new Weight { CreatedDate = new DateTime(2016,1,1), Kg = 234}
             };
             
-            _nokiaClient.Setup(x => x.GetWeights(latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<Weight>)weights));
+            _nokiaService.Setup(x => x.GetWeights(latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<Weight>)weights));
 
             await _nokiaMigrator.MigrateWeights();
 
@@ -63,7 +63,7 @@ namespace Migrators.Unit.Tests
                 new BloodPressure {CreatedDate = new DateTime(2016,1,1), Systolic = 222, Diastolic = 234}
             };
 
-            _nokiaClient.Setup(x => x.GetBloodPressures(latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<BloodPressure>)bloodPressures));
+            _nokiaService.Setup(x => x.GetBloodPressures(latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<BloodPressure>)bloodPressures));
 
             await _nokiaMigrator.MigrateBloodPressures();
 

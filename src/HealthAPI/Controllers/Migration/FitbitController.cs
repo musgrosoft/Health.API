@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
 using Services.Fitbit;
@@ -15,23 +14,25 @@ namespace HealthAPI.Controllers.Subscription
         private readonly ILogger _logger;
         private readonly IConfig _config;
         private readonly IFitbitClient _fitbitClient;
-        private readonly IFitbitMigrator _fitbitMigrator;
+        private readonly IHangfireUtility _hangfireUtility;
+        private readonly IHangfireWork _hangfireWork;
 
-        public FitbitController(ILogger logger, IConfig config, IFitbitClient fitbitClient, IFitbitMigrator fitbitMigrator)
+        public FitbitController(ILogger logger, IConfig config, IFitbitClient fitbitClient, IHangfireUtility hangfireUtility, IHangfireWork hangfireWork)
         {
             _logger = logger;
             _config = config;
             _fitbitClient = fitbitClient;
-            _fitbitMigrator = fitbitMigrator;
+            _hangfireUtility = hangfireUtility;
+            _hangfireWork = hangfireWork;
         }
 
         [HttpPost]
         [Route("Notification")]
         public IActionResult Notify()
         {
-            _logger.Log("Fitbit Notification : migrating all the things");
+            _logger.Log("Fitbit Notification : MIGRATING ALL FITBIT DATA");
 
-            BackgroundJob.Enqueue(() => _fitbitMigrator.MigrateAllTheThings());
+            _hangfireUtility.Enqueue(_hangfireWork.MigrateAllFitbitData);
 
             return (NoContent());
         }
@@ -58,18 +59,14 @@ namespace HealthAPI.Controllers.Subscription
             return Ok("useful message");
         }
 
-
-
         [HttpGet]
         [Route("OAuth")]
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {
             
             await _fitbitClient.SetTokens(code);
-            // await _nokiaAuthenticator.SetTokens(code);
             return Ok("Helllo123 change to useful message");
         }
-
 
         [HttpGet]
         [ProducesResponseType(typeof(String), 200)]

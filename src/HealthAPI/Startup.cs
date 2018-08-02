@@ -77,6 +77,11 @@ namespace HealthAPI
             services.AddTransient<IEntityDecorator, EntityDecorator>();
             services.AddTransient<IGoogleClient, GoogleClient>();
             services.AddTransient<IGoogleMigrator, GoogleMigrator>();
+            services.AddTransient<IHangfireUtility, HangfireUtility>();
+            services.AddTransient<IHangfireWork, HangfireWork>();
+            services.AddTransient<INokiaService, NokiaService>();
+
+
 
             //// ********************
             //// Setup CORS

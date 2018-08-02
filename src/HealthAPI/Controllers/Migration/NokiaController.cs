@@ -13,8 +13,7 @@ namespace HealthAPI.Controllers.Migration
     {
         private readonly ILogger _logger;
         private readonly INokiaMigrator _nokiaMigrator;
-        private readonly INokiaAuthenticator _nokiaAuthenticator;
-        private readonly INokiaClient _nokiaClient;
+        private readonly INokiaService _nokiaService;
 
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
@@ -23,12 +22,11 @@ namespace HealthAPI.Controllers.Migration
         private const int SubscribeBloodPressureId = 4;
 
 
-        public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator, INokiaAuthenticator nokiaAuthenticator, INokiaClient nokiaClient)
+        public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator, INokiaService nokiaService)
         {
             _logger = logger;
             _nokiaMigrator = nokiaMigrator;
-            _nokiaAuthenticator = nokiaAuthenticator;
-            _nokiaClient = nokiaClient;
+            _nokiaService = nokiaService;
         }
 
 
@@ -114,7 +112,7 @@ namespace HealthAPI.Controllers.Migration
         [Route("OAuth")]
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {
-            await _nokiaAuthenticator.SetTokens(code);
+            await _nokiaService.SetTokens(code);
             return Ok("Helllo123 change to useful message");
         }
         
@@ -123,7 +121,7 @@ namespace HealthAPI.Controllers.Migration
         [Route("Subscribe")]
         public async Task<IActionResult> Subscribe()
         {
-            await _nokiaClient.Subscribe();
+            await _nokiaService.Subscribe();
             return Ok("Helllo123 change to useful message");
         }
 
@@ -131,7 +129,7 @@ namespace HealthAPI.Controllers.Migration
         [Route("ListSubscriptions")]
         public async Task<IActionResult> ListSubscriptions()
         {
-            var subscriptions = await _nokiaClient.GetSubscriptions();
+            var subscriptions = await _nokiaService.GetSubscriptions();
 
             return Ok(subscriptions);
         }
