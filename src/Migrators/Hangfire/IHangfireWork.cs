@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Migrators
+namespace Migrators.Hangfire
 {
     public interface IHangfireWork
     {

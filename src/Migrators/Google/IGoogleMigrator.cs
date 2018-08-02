@@ -1,4 +1,4 @@
-﻿namespace Migrators
+﻿namespace Migrators.Google
 {
     public interface IGoogleMigrator
     {

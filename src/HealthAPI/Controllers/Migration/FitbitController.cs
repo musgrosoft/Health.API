@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
+using Migrators.Hangfire;
 using Services.Fitbit;
 using Utils;
 

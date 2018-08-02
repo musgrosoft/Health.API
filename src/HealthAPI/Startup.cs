@@ -15,6 +15,9 @@ using Services.Google;
 using Services.Nokia;
 using Hangfire.MemoryStorage;
 using Hangfire;
+using Migrators.Google;
+using Migrators.Hangfire;
+using Migrators.Nokia;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
+using Migrators.Google;
 using Utils;
 
 namespace HealthAPI.Controllers.Migration

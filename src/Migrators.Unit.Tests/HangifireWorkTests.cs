@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Migrators.Hangfire;
 using Moq;
 using Utils;
 using Xunit;

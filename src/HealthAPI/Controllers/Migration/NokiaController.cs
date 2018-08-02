@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
+using Migrators.Nokia;
 using Services.Nokia;
 using Utils;
 

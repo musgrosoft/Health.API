@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Utils;
 
-namespace Migrators
+namespace Migrators.Hangfire
 {
     public class HangfireWork : IHangfireWork
     {
