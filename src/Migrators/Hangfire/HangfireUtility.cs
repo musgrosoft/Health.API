@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hangfire;
 using Utils;
@@ -16,11 +17,22 @@ namespace Migrators
             _logger = logger;
         }
         
-        public void Enqueue(Func<Task> func)
+        //public void Enqueue(Func<Task> func)
+        //{
+        //    BackgroundJob.Enqueue(() => func());
+        //}
+
+        //public int Enqueue<T>(Expression<Action<T>> methodCall)
+        //{
+        //    var enqueue = BackgroundJob.Enqueue(methodCall);
+        //    var queueId = int.Parse(enqueue);
+        //    return queueId;
+        //}
+
+        public void Enqueue(Expression<Action> methodCall)
         {
-            BackgroundJob.Enqueue(() => func());
+            BackgroundJob.Enqueue(methodCall);
         }
-               
 
     }
 }

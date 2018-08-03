@@ -33,7 +33,7 @@ namespace HealthAPI.Controllers.Subscription
         {
             _logger.Log("Fitbit Notification : MIGRATING ALL FITBIT DATA");
 
-            _hangfireUtility.Enqueue(_hangfireWork.MigrateAllFitbitData);
+            _hangfireUtility.Enqueue(() => _hangfireWork.MigrateAllFitbitData());
 
             return (NoContent());
         }
