@@ -10,10 +10,7 @@ namespace Services.OAuth
 
         private const string NOKIA_ACCESS_TOKEN_KEY = "nokia_access_token";
         private const string NOKIA_REFRESH_TOKEN_KEY = "nokia_refresh_token";
-
-        //private const string GOOGLE_ACCESS_TOKEN_KEY = "google_access_token";
-        //private const string GOOGLE_REFRESH_TOKEN_KEY = "google_refresh_token";
-
+        
         private readonly ITokenRepository _tokenRepository;
         
         public TokenService(ITokenRepository tokenRepository )
@@ -52,25 +49,5 @@ namespace Services.OAuth
             await _tokenRepository.UpsertToken(NOKIA_REFRESH_TOKEN_KEY, token);
         }
 
-
-        //public async Task<string> GetGoogleRefreshToken()
-        //{
-        //    return await _oAuthTokenRepository.ReadToken(GOOGLE_REFRESH_TOKEN_KEY);
-        //}
-
-        //public async Task SaveGoogleAccessToken(string token)
-        //{
-        //    await _oAuthTokenRepository.SaveToken(GOOGLE_ACCESS_TOKEN_KEY, token);
-        //}
-
-        //public async Task SaveGoogleRefreshToken(string token)
-        //{
-        //    await _oAuthTokenRepository.SaveToken(GOOGLE_REFRESH_TOKEN_KEY, token);
-        //}
-
-        //public string GetFitbitAccessToken()
-        //{
-        //    return _oAuthTokenRepository.ReadToken(FITBIT_ACCESS_TOKEN_KEY);
-        //}
     }
 }

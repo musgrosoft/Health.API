@@ -35,19 +35,7 @@ namespace Services.Fitbit
             
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + Base64Encode($"{_config.FitbitClientId}:{_config.FitbitClientSecret}"));
-
-            //req.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            //_httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded");
-
-            //application/x-www-form-urlencoded
-
-
-
-
-            _logger.Log($"************************************ : code : {authorizationCode}");
-
-
-
+            
             var nvc = new List<KeyValuePair<string, string>>
             {   
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
@@ -56,11 +44,8 @@ namespace Services.Fitbit
                 new KeyValuePair<string, string>("redirect_uri", "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/"),
             };
 
-            var response = await _httpClient.PostAsync(url, (HttpContent) new FormUrlEncodedContent((IEnumerable<KeyValuePair<string, string>>)nvc));
+            var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
 
-            //var response = await _httpClient.PostAsync(url, null);
-
-            //            response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)

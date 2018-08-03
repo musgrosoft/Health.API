@@ -154,6 +154,69 @@ namespace Services.Tests.MyHealth
         }
 
         [Fact]
+        public void ShouldUpsertNewRuns()
+        {
+            //Given
+            var newRuns = new List<Run>
+            {
+                new Run { CreatedDate = new DateTime(2010,10,10) },
+                new Run { CreatedDate = new DateTime(2010,10,11) },
+                new Run { CreatedDate = new DateTime(2010,10,12) }
+
+            };
+
+            //When
+            _healthService.UpsertRuns(newRuns);
+
+            //Then
+            _healthRepository.Verify(x => x.Upsert(newRuns[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newRuns[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newRuns[2]), Times.Once);
+        }
+
+        [Fact]
+        public void ShouldUpsertNewErgos()
+        {
+            //Given
+            var newErgos = new List<Ergo>
+            {
+                new Ergo { CreatedDate = new DateTime(2010,10,10) },
+                new Ergo { CreatedDate = new DateTime(2010,10,11) },
+                new Ergo { CreatedDate = new DateTime(2010,10,12) }
+
+            };
+
+            //When
+            _healthService.UpsertErgos(newErgos);
+
+            //Then
+            _healthRepository.Verify(x => x.Upsert(newErgos[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newErgos[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newErgos[2]), Times.Once);
+        }
+
+        [Fact]
+        public void ShouldUpsertNewAlcoholIntakes()
+        {
+            //Given
+            var newAlcoholIntake = new List<AlcoholIntake>
+            {
+                new AlcoholIntake { CreatedDate = new DateTime(2010,10,10) },
+                new AlcoholIntake { CreatedDate = new DateTime(2010,10,11) },
+                new AlcoholIntake { CreatedDate = new DateTime(2010,10,12) }
+
+            };
+
+            //When
+            _healthService.UpsertAlcoholIntakes(newAlcoholIntake);
+
+            //Then
+            _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[2]), Times.Once);
+        }
+
+        [Fact]
         public void ShouldUpsertNewBloodPressures()
         {
             //Given
@@ -289,6 +352,44 @@ namespace Services.Tests.MyHealth
 
             //then
             Assert.Equal(bloodPressures, result);
+
+        }
+
+        [Fact]
+        public void ShouldGetAllRuns()
+        {
+            //Given
+            var runs = new List<Run>
+            {
+                new Run {CreatedDate = new DateTime(2018,6,6), Metres = 123}
+            };
+
+            _healthRepository.Setup(x => x.GetAllRuns()).Returns(runs);
+
+            //when
+            var result = _healthService.GetAllRuns();
+
+            //then
+            Assert.Equal(runs, result);
+
+        }
+
+        [Fact]
+        public void ShouldGetAllErgos()
+        {
+            //Given
+            var ergos = new List<Ergo>
+            {
+                new Ergo {CreatedDate = new DateTime(2018,6,6), Metres = 123}
+            };
+
+            _healthRepository.Setup(x => x.GetAllErgos()).Returns(ergos);
+
+            //when
+            var result = _healthService.GetAllErgos();
+
+            //then
+            Assert.Equal(ergos, result);
 
         }
 

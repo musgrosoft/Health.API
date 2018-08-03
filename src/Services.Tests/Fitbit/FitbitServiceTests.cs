@@ -27,7 +27,7 @@ namespace Services.Tests.Fitbit
             _logger = new Mock<ILogger>();
             _fitbitAggregator = new Mock<IFitbitClientAggregator>();
 
-            _fitbitService = new FitbitService(_config.Object, _logger.Object, _fitbitAggregator.Object);
+            _fitbitService = new FitbitService(_config.Object, _logger.Object, _fitbitAggregator.Object, null, null);
         }
 
         [Fact]

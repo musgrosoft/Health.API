@@ -51,10 +51,7 @@ namespace Services.Fitbit
 
         }
 
-        public async Task SetTokens(string code)
-        {
-            await _fitbitAuthenticator.SetTokens(code);
-        }
+
 
         public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate)
         {

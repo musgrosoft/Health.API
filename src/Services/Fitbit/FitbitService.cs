@@ -14,13 +14,17 @@ namespace Services.Fitbit
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
 
         private IConfig _config { get; }
-        private IFitbitClientAggregator _fitbitClientAggregator;
+        private readonly IFitbitClientAggregator _fitbitClientAggregator;
+        private readonly IFitbitClient _fitbitClient;
+        private readonly IFitbitAuthenticator _fitbitAuthenticator;
 
-        public FitbitService(IConfig config, ILogger logger, IFitbitClientAggregator fitbitClientAggregator)
+        public FitbitService(IConfig config, ILogger logger, IFitbitClientAggregator fitbitClientAggregator, IFitbitClient fitbitClient, IFitbitAuthenticator fitbitAuthenticator)
         {
             _logger = logger;
             _config = config;
             _fitbitClientAggregator = fitbitClientAggregator;
+            _fitbitClient = fitbitClient;
+            _fitbitAuthenticator = fitbitAuthenticator;
         }
 
         public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
@@ -68,7 +72,17 @@ namespace Services.Fitbit
                         Beats = x.value.restingHeartRate
                     });
         }
-        
+
+        public void Subscribe()
+        {
+            _fitbitClient.Subscribe();
+        }
+
+        public async Task SetTokens(string code)
+        {
+            await _fitbitAuthenticator.SetTokens(code);
+        }
+
         public async Task<IEnumerable<HeartRateSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate)
         {
             var heartActivies = await _fitbitClientAggregator.GetFitbitHeartActivities(fromDate, toDate);

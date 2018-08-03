@@ -14,15 +14,15 @@ namespace HealthAPI.Controllers.Subscription
     {
         private readonly ILogger _logger;
         private readonly IConfig _config;
-        private readonly IFitbitClient _fitbitClient;
+        private readonly IFitbitService _fitbitService;
         private readonly IHangfireUtility _hangfireUtility;
         private readonly IHangfireWork _hangfireWork;
 
-        public FitbitController(ILogger logger, IConfig config, IFitbitClient fitbitClient, IHangfireUtility hangfireUtility, IHangfireWork hangfireWork)
+        public FitbitController(ILogger logger, IConfig config, IFitbitService fitbitService, IHangfireUtility hangfireUtility, IHangfireWork hangfireWork)
         {
             _logger = logger;
             _config = config;
-            _fitbitClient = fitbitClient;
+            _fitbitService = fitbitService;
             _hangfireUtility = hangfireUtility;
             _hangfireWork = hangfireWork;
         }
@@ -56,7 +56,7 @@ namespace HealthAPI.Controllers.Subscription
         [Route("Subscribe")]
         public IActionResult Subscribe()
         {
-            _fitbitClient.Subscribe();
+            _fitbitService.Subscribe();
             return Ok("useful message");
         }
 
@@ -65,7 +65,7 @@ namespace HealthAPI.Controllers.Subscription
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {
             
-            await _fitbitClient.SetTokens(code);
+            await _fitbitService.SetTokens(code);
             return Ok("Helllo123 change to useful message");
         }
 

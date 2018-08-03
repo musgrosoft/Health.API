@@ -6,12 +6,12 @@ using Xunit;
 
 namespace Services.Tests.OAuth
 {
-    public class OAuthServiceTests
+    public class TokenServiceTests
     {
         private readonly Mock<ITokenRepository> _repo;
         private readonly TokenService _oAuthService;
 
-        public OAuthServiceTests()
+        public TokenServiceTests()
         {
             _repo = new Mock<ITokenRepository>();
             _oAuthService = new TokenService(_repo.Object);
@@ -55,6 +55,47 @@ namespace Services.Tests.OAuth
 
             //Then
             _repo.Verify(x => x.UpsertToken("fitbit_access_token", "Good Token"), Times.Once);
+
+        }
+
+        [Fact]
+        public async Task ShouldReadNokiaRefreshToken()
+        {
+            //Given
+            _repo.Setup(x => x.ReadToken("nokia_refresh_token")).Returns(Task.FromResult("Tremendous Token"));
+
+            //When
+            var token = await _oAuthService.GetNokiaRefreshToken();
+
+            //Then
+            Assert.Equal("Tremendous Token", token);
+        }
+
+        [Fact]
+        public async Task ShouldSaveNokiaRefreshToken()
+        {
+            //Given
+            _repo.Setup(x => x.UpsertToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
+
+            //When
+            await _oAuthService.SaveNokiaRefreshToken("Amazing Token");
+
+            //Then
+            _repo.Verify(x => x.UpsertToken("nokia_refresh_token", "Amazing Token"), Times.Once);
+
+        }
+
+        [Fact]
+        public async Task ShouldSaveNokiaAccessToken()
+        {
+            //Given
+            _repo.Setup(x => x.UpsertToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
+
+            //When
+            await _oAuthService.SaveNokiaAccessToken("Good Token");
+
+            //Then
+            _repo.Verify(x => x.UpsertToken("nokia_access_token", "Good Token"), Times.Once);
 
         }
 
