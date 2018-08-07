@@ -9,8 +9,10 @@ namespace Repositories.Models
         [Key]
         public DateTime CreatedDate { get; set; }
         public TimeSpan Time { get; set; }
-        public Double TimeInMinutes => Time.TotalMinutes;
         public Double Metres { get; set; }
+
+        [NotMapped]
+        public Double TimeInMinutes => Time.TotalMinutes;
         [NotMapped]
         public Double PaceKmPerHour => (60 / Time.TotalMinutes) * (Metres / 1000);
         [NotMapped]

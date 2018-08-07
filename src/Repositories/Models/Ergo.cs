@@ -13,6 +13,8 @@ namespace Repositories.Models
         public Double Metres { get; set; }
 
         [NotMapped]
+        public Double TimeInMinutes => Time.TotalMinutes;
+        [NotMapped]
         public TimeSpan Split500m => (Time * 500) / (Metres);
     }
 }
