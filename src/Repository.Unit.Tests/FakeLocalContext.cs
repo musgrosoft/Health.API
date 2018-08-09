@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Utils;
 
@@ -11,7 +12,7 @@ namespace Repository.Unit.Tests
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseInMemoryDatabase(databaseName: "test");
+                optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
             }
         }
 
