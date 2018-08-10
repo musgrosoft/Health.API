@@ -83,6 +83,7 @@ namespace HealthAPI
             services.AddTransient<IHangfireUtility, HangfireUtility>();
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<INokiaService, NokiaService>();
+            services.AddTransient<ITargetCalculator, TargetCalculator>();
 
 
 
