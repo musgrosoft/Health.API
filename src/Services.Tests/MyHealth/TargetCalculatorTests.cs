@@ -27,6 +27,19 @@ namespace Services.Tests.MyHealth
             Assert.Equal(expectedTargetStepCounts,targetStepCounts);
         }
 
+        [Theory]
+        [InlineData(2017, 1, 1, null)]
+        [InlineData(2019, 1, 1, 6016)]
+        [InlineData(2019, 1, 2, 6020)]
+        [InlineData(2019, 1, 3, 6024)]
+        public void ShoulCalculateTargetAlcoholIntakes(int year, int month, int day, double? expectedTargetUnits)
+        {
+            var dateTime = new DateTime(year, month, day);
+
+            var targetUnits = _targetCalculator.GetAlcoholIntakeTarget(dateTime);
+
+            Assert.Equal(expectedTargetUnits, targetUnits);
+        }
 
 
     }
