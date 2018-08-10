@@ -2,28 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using Repositories.Models;
+using Utils;
 
 namespace Services.Health
 {
     public class TargetService : ITargetService
     {
         private readonly ITargetCalculator _targetCalculator;
+        private readonly ICalendar _calendar;
 
-        public TargetService(ITargetCalculator targetCalculator)
+        public TargetService(ITargetCalculator targetCalculator, ICalendar  calendar)
         {
             _targetCalculator = targetCalculator;
+            _calendar = calendar;
         }
 
         public IList<Weight> SetTargets(IList<Weight> weights, int extraFutureDays)
         {
-            var targetEndDate = DateTime.Now.AddDays(extraFutureDays);
-            var futuredays = (targetEndDate - weights.Max(x => x.CreatedDate)).TotalDays;
+            var targetEndDate = _calendar.Now().AddDays(extraFutureDays);
+            var currentMaxDate = weights.Max(x => x.CreatedDate);
+            var futuredays = (targetEndDate - currentMaxDate).TotalDays;
 
-            for (int i = 0; i < futuredays; i++)
+            for (int i = 1; i < futuredays+1; i++)
             {
                 weights.Add(new Weight
                 {
-                    CreatedDate = DateTime.Now.AddDays(i)
+                    CreatedDate = currentMaxDate.AddDays(i)
                 });
             }
 
