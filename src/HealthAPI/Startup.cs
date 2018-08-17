@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ using Migrators.Hangfire;
 using Migrators.Nokia;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthAPI
 {
@@ -35,7 +37,27 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<HealthContext>();
+            var config = new Config();
+
+            services.AddDbContext<HealthContext>(dboptions =>
+            {
+                dboptions.UseSqlServer(
+                    config.HealthDbConnectionString,
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
+                    }
+                );
+            });
+
+            //services.AddDbContext<HealthContext>(options =>
+            //{
+            //    options.UseInMemoryDatabase(Guid.NewGuid().ToString());
+            //});
+
 
             services.AddHangfire(x => x.UseMemoryStorage());
 

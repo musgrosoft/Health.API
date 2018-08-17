@@ -25,29 +25,29 @@ namespace Repositories
         //    _config = config;
         //}
 
-        public HealthContext(DbContextOptions<HealthContext> options) : base (options)
+        public HealthContext(DbContextOptions<HealthContext> options) : base(options)
         {
-            
+
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                _config = new Config();
-                var connectionString = _config.HealthDbConnectionString;
-                optionsBuilder.UseSqlServer(
-                    connectionString,
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                            maxRetryCount: 5,
-                            maxRetryDelay: TimeSpan.FromSeconds(30),
-                            errorNumbersToAdd: null);
-                    }
-                );
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        _config = new Config();
+        //        var connectionString = _config.HealthDbConnectionString;
+        //        optionsBuilder.UseSqlServer(
+        //            connectionString,
+        //            sqlServerOptionsAction: sqlOptions =>
+        //            {
+        //                sqlOptions.EnableRetryOnFailure(
+        //                    maxRetryCount: 5,
+        //                    maxRetryDelay: TimeSpan.FromSeconds(30),
+        //                    errorNumbersToAdd: null);
+        //            }
+        //        );
+        //    }
+        //}
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
