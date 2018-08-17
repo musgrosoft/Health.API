@@ -17,7 +17,11 @@ namespace Repository.Unit.Tests
         }
 
 
-        public FakeLocalContext() : base(new Config())
+        //public FakeLocalContext() : base(new Config())
+        //{
+        //}
+
+        public FakeLocalContext() : base(new DbContextOptions<HealthContext>())
         {
         }
     }

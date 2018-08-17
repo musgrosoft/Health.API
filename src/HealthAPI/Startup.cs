@@ -35,9 +35,9 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHangfire(x => x.UseMemoryStorage());
-
             services.AddDbContext<HealthContext>();
+
+            services.AddHangfire(x => x.UseMemoryStorage());
 
             // Add service and create Policy with options
             services.AddCors(options =>
@@ -67,7 +67,7 @@ namespace HealthAPI
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ITokenRepository, TokenRepository>();
             services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
-            services.AddTransient<IFitbitClientAggregator, FitbitClientAggregator>();
+            services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
             services.AddTransient<IFitbitService, FitbitService>();
             services.AddTransient<IFitbitMigrator, FitbitMigrator>();
             services.AddTransient<ICalendar, Calendar>();

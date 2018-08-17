@@ -19,24 +19,27 @@ namespace Services.Health
 
         public IList<Weight> SetTargets(IList<Weight> weights, int extraFutureDays)
         {
-            var targetEndDate = _calendar.Now().AddDays(extraFutureDays);
-            var currentMaxDate = weights.Max(x => x.CreatedDate);
-            var futuredays = (targetEndDate - currentMaxDate).TotalDays;
-
-            for (int i = 1; i < futuredays+1; i++)
+            if (weights.Any())
             {
-                weights.Add(new Weight
+                var targetEndDate = _calendar.Now().AddDays(extraFutureDays);
+                var currentMaxDate = weights.Max(x => x.CreatedDate);
+                var futuredays = (targetEndDate - currentMaxDate).TotalDays;
+
+                for (int i = 1; i < futuredays + 1; i++)
                 {
-                    CreatedDate = currentMaxDate.AddDays(i)
-                });
-            }
+                    weights.Add(new Weight
+                    {
+                        CreatedDate = currentMaxDate.AddDays(i)
+                    });
+                }
 
-            foreach (var weight in weights)
-            {
-                weight.TargetKg = _targetCalculator.GetTargetWeight(weight.CreatedDate);
-            }
+                foreach (var weight in weights)
+                {
+                    weight.TargetKg = _targetCalculator.GetTargetWeight(weight.CreatedDate);
+                }
 
-            weights = weights.OrderBy(x => x.CreatedDate).ToList();
+                weights = weights.OrderBy(x => x.CreatedDate).ToList();
+            }
 
             return weights;
         }

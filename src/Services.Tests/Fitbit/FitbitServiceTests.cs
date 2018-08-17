@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Castle.DynamicProxy.Contributors;
 using Moq;
+using Repositories.Models;
 using Services.Fitbit;
 using Services.Fitbit.Domain;
 using Utils;
@@ -16,40 +17,49 @@ namespace Services.Tests.Fitbit
         private FitbitService _fitbitService;
         private Mock<IConfig> _config;
         private Mock<ILogger> _logger;
-        private Mock<IFitbitClientAggregator> _fitbitAggregator;
+        private Mock<IFitbitClientQueryAdapter> _fitbitClientQueryAdapter;
 
         private DateTime fromDate = new DateTime(2017,1,1);
         private DateTime toDate = new DateTime(2018, 2, 2);
+        private Mock<IFitbitMapper> _fitbitMapper;
 
         public FitbitServiceTests() 
         {
             _config = new Mock<IConfig>();
             _logger = new Mock<ILogger>();
-            _fitbitAggregator = new Mock<IFitbitClientAggregator>();
+            _fitbitClientQueryAdapter = new Mock<IFitbitClientQueryAdapter>();
+            _fitbitMapper = new Mock<IFitbitMapper>();
 
-            _fitbitService = new FitbitService(_config.Object, _logger.Object, _fitbitAggregator.Object, null, null);
+            _fitbitService = new FitbitService(_config.Object, _logger.Object, _fitbitClientQueryAdapter.Object, null, null, _fitbitMapper.Object);
         }
 
         [Fact]
         public async Task ShouldGetStepCounts()
         {
             //Given
-            _fitbitAggregator.Setup(x => x.GetFitbitDailyActivities(fromDate, toDate))
-                .Returns(Task.FromResult((IEnumerable<FitbitDailyActivity>) new List<FitbitDailyActivity>
-                {
-                    new FitbitDailyActivity{DateTime = new DateTime(2017,1,1), summary = new Summary {steps = 111}},
-                    new FitbitDailyActivity{DateTime = new DateTime(2017,1,2), summary = new Summary {steps = 222}},
-                    new FitbitDailyActivity{DateTime = new DateTime(2017,1,3), summary = new Summary {steps = 333}},
-                }));
+            var fitbitDailyActivities = new List<FitbitDailyActivity>
+            {
+                new FitbitDailyActivity {DateTime = new DateTime(2017, 1, 1)}
+            };
+
+            var stepCounts = new List<StepCount>
+            {
+                new StepCount{CreatedDate = new DateTime(2017, 1, 1), Count = 111},
+                new StepCount{CreatedDate = new DateTime(2017, 1, 2), Count = 222},
+                new StepCount{CreatedDate = new DateTime(2017, 1, 3), Count = 333}
+            };
+
+            _fitbitClientQueryAdapter.Setup(x => x.GetFitbitDailyActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<FitbitDailyActivity>)fitbitDailyActivities));
+            _fitbitMapper.Setup(x => x.MapToStepCounts(fitbitDailyActivities)).Returns(stepCounts);
 
             //When
-            var stepCounts = await _fitbitService.GetStepCounts(fromDate, toDate);
+            var result = await _fitbitService.GetStepCounts(fromDate, toDate);
 
             //Then
-            Assert.Equal(3,stepCounts.Count());
-            Assert.Contains(stepCounts, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Count == 111);
-            Assert.Contains(stepCounts, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.Count == 222);
-            Assert.Contains(stepCounts, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.Count == 333);
+            Assert.Equal(3,result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Count == 111);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.Count == 222);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.Count == 333);
 
         }
 
@@ -57,22 +67,29 @@ namespace Services.Tests.Fitbit
         public async Task ShouldGetDailyActivities()
         {
             //Given
-            _fitbitAggregator.Setup(x => x.GetFitbitDailyActivities(fromDate, toDate))
-                .Returns(Task.FromResult((IEnumerable<FitbitDailyActivity>)new List<FitbitDailyActivity>
-                {
-                    new FitbitDailyActivity{DateTime = new DateTime(2017,1,1), summary = new Summary {fairlyActiveMinutes = 101, lightlyActiveMinutes = 201, sedentaryMinutes = 301, veryActiveMinutes = 401}},
-                    new FitbitDailyActivity{DateTime = new DateTime(2017,1,2), summary = new Summary {fairlyActiveMinutes = 102, lightlyActiveMinutes = 202, sedentaryMinutes = 302, veryActiveMinutes = 402}},
-                    new FitbitDailyActivity{DateTime = new DateTime(2017,1,3), summary = new Summary {fairlyActiveMinutes = 103, lightlyActiveMinutes = 203, sedentaryMinutes = 303, veryActiveMinutes = 403}},
-                }));
+            var fitbitDailyActivities = new List<FitbitDailyActivity>
+            {
+                new FitbitDailyActivity{DateTime = new DateTime(2017,1,1)}
+            };
+
+            var activitySummaries = new List<ActivitySummary>
+            {
+                new ActivitySummary {CreatedDate = new DateTime(2017,1,1), FairlyActiveMinutes = 101, LightlyActiveMinutes = 201, SedentaryMinutes = 301, VeryActiveMinutes = 401},
+                new ActivitySummary {CreatedDate = new DateTime(2017,1,2), FairlyActiveMinutes = 102, LightlyActiveMinutes = 202, SedentaryMinutes = 302, VeryActiveMinutes = 402},
+                new ActivitySummary {CreatedDate = new DateTime(2017,1,3), FairlyActiveMinutes = 103, LightlyActiveMinutes = 203, SedentaryMinutes = 303, VeryActiveMinutes = 403},
+            };
+
+            _fitbitClientQueryAdapter.Setup(x => x.GetFitbitDailyActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<FitbitDailyActivity>)fitbitDailyActivities));
+            _fitbitMapper.Setup(x => x.MapFitbitDailyActivitiesToActivitySummaries(fitbitDailyActivities)).Returns(activitySummaries);
 
             //When
-            var dailyActivities = await _fitbitService.GetActivitySummaries(fromDate, toDate);
+            var result = await _fitbitService.GetActivitySummaries(fromDate, toDate);
 
             //Then
-            Assert.Equal(3, dailyActivities.Count());
-            Assert.Contains(dailyActivities, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.FairlyActiveMinutes == 101 && x.LightlyActiveMinutes == 201 && x.SedentaryMinutes == 301 && x.VeryActiveMinutes == 401);
-            Assert.Contains(dailyActivities, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.FairlyActiveMinutes == 102 && x.LightlyActiveMinutes == 202 && x.SedentaryMinutes == 302 && x.VeryActiveMinutes == 402);
-            Assert.Contains(dailyActivities, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.FairlyActiveMinutes == 103 && x.LightlyActiveMinutes == 203 && x.SedentaryMinutes == 303 && x.VeryActiveMinutes == 403);
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.FairlyActiveMinutes == 101 && x.LightlyActiveMinutes == 201 && x.SedentaryMinutes == 301 && x.VeryActiveMinutes == 401);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.FairlyActiveMinutes == 102 && x.LightlyActiveMinutes == 202 && x.SedentaryMinutes == 302 && x.VeryActiveMinutes == 402);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.FairlyActiveMinutes == 103 && x.LightlyActiveMinutes == 203 && x.SedentaryMinutes == 303 && x.VeryActiveMinutes == 403);
 
         }
 
@@ -80,22 +97,30 @@ namespace Services.Tests.Fitbit
         public async Task ShouldGetRestingHeartRates()
         {
             //Given
-            _fitbitAggregator.Setup(x=>x.GetFitbitHeartActivities(fromDate, toDate))
-                .Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)new List<ActivitiesHeart>
-                {
-                    new ActivitiesHeart{dateTime = new DateTime(2017,1,1), value = new Value {restingHeartRate = 111}},
-                    new ActivitiesHeart{dateTime = new DateTime(2017,1,2), value = new Value {restingHeartRate = 222}},
-                    new ActivitiesHeart{dateTime = new DateTime(2017,1,3), value = new Value {restingHeartRate = 333}},
-                }));
+            var activitiesHearts = new List<ActivitiesHeart>
+            {
+                new ActivitiesHeart{dateTime = new DateTime(2017,1,1)}
+            };
+
+            _fitbitClientQueryAdapter.Setup(x=>x.GetFitbitHeartActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)activitiesHearts));
+
+            var restingHeartRates = new List<RestingHeartRate>
+            {
+                new RestingHeartRate{CreatedDate = new DateTime(2017,1,1), Beats = 111},
+                new RestingHeartRate{CreatedDate = new DateTime(2017,1,2), Beats = 222},
+                new RestingHeartRate{CreatedDate = new DateTime(2017,1,3), Beats = 333},
+            };
+
+            _fitbitMapper.Setup(x => x.MapActivitiesHeartToRestingHeartRates(activitiesHearts)).Returns(restingHeartRates);
 
             //When
-            var restingHeartRates = await _fitbitService.GetRestingHeartRates(fromDate, toDate);
+            var result = await _fitbitService.GetRestingHeartRates(fromDate, toDate);
 
             //Then
-            Assert.Equal(3, restingHeartRates.Count());
-            Assert.Contains(restingHeartRates, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Beats == 111);
-            Assert.Contains(restingHeartRates, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.Beats == 222);
-            Assert.Contains(restingHeartRates, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.Beats == 333);
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Beats == 111);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.Beats == 222);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.Beats == 333);
 
         }
 
@@ -103,40 +128,31 @@ namespace Services.Tests.Fitbit
         public async Task ShouldGetHeartSummaries()
         {
             //Given
-            _fitbitAggregator.Setup(x => x.GetFitbitHeartActivities(fromDate, toDate))
-                .Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)new List<ActivitiesHeart>
-                {
-                    new ActivitiesHeart{dateTime = new DateTime(2017,1,1), value = new Value {heartRateZones = new List<HeartRateZone>
-                    {
-                        new HeartRateZone{name = "Out of Range", minutes = 1},
-                        new HeartRateZone{name = "Fat Burn", minutes = 2},
-                        new HeartRateZone{name = "Cardio", minutes = 3},
-                        new HeartRateZone{name = "Peak", minutes = 4},
-                    }}},
-                    new ActivitiesHeart{dateTime = new DateTime(2017,1,2), value = new Value {heartRateZones = new List<HeartRateZone>
-                    {
-                        new HeartRateZone{name = "Out of Range", minutes = 5},
-                        new HeartRateZone{name = "Fat Burn", minutes = 6},
-                        new HeartRateZone{name = "Cardio", minutes = 7},
-                        new HeartRateZone{name = "Peak", minutes = 8},
-                    }}},
-                    new ActivitiesHeart{dateTime = new DateTime(2017,1,3), value = new Value {heartRateZones = new List<HeartRateZone>
-                    {
-                        new HeartRateZone{name = "Out of Range", minutes = 9},
-                        new HeartRateZone{name = "Fat Burn", minutes = 10},
-                        new HeartRateZone{name = "Cardio", minutes = 11},
-                        new HeartRateZone{name = "Peak", minutes = 12},
-                    }}},
-                }));
+            var activitiesHearts = new List<ActivitiesHeart>
+            {
+                new ActivitiesHeart{dateTime = new DateTime(2017,1,1)}
+            };
+
+            _fitbitClientQueryAdapter.Setup(x => x.GetFitbitHeartActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)activitiesHearts));
+
+            var heartRateSummaries = new List<HeartRateSummary>
+            {
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,1), OutOfRangeMinutes = 1, FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4},
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,2), OutOfRangeMinutes = 5, FatBurnMinutes = 6, CardioMinutes = 7, PeakMinutes = 8},
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,3), OutOfRangeMinutes = 9, FatBurnMinutes = 10, CardioMinutes = 11, PeakMinutes = 12}
+            };
+
+            _fitbitMapper.Setup(x => x.MapActivitiesHeartToHeartRateSummaries(activitiesHearts))
+                .Returns(heartRateSummaries);
 
             //When
-            var heartSummaries = await _fitbitService.GetHeartSummaries(fromDate, toDate);
+            var result = await _fitbitService.GetHeartSummaries(fromDate, toDate);
 
             //Then
-            Assert.Equal(3, heartSummaries.Count());
-            Assert.Contains(heartSummaries, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.OutOfRangeMinutes == 1 && x.FatBurnMinutes == 2 && x.CardioMinutes == 3 && x.PeakMinutes == 4);
-            Assert.Contains(heartSummaries, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.OutOfRangeMinutes == 5 && x.FatBurnMinutes == 6 && x.CardioMinutes == 7 && x.PeakMinutes == 8);
-            Assert.Contains(heartSummaries, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.OutOfRangeMinutes == 9 && x.FatBurnMinutes == 10 && x.CardioMinutes == 11 && x.PeakMinutes == 12);
+            Assert.Equal(3, result.Count());
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.OutOfRangeMinutes == 1 && x.FatBurnMinutes == 2 && x.CardioMinutes == 3 && x.PeakMinutes == 4);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.OutOfRangeMinutes == 5 && x.FatBurnMinutes == 6 && x.CardioMinutes == 7 && x.PeakMinutes == 8);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.OutOfRangeMinutes == 9 && x.FatBurnMinutes == 10 && x.CardioMinutes == 11 && x.PeakMinutes == 12);
 
 
         }

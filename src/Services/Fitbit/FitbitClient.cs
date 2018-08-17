@@ -1,12 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Services.Fitbit.Domain;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
-//using Services.Fitbit.Domain.Detailed;
 using Utils;
 
 namespace Services.Fitbit

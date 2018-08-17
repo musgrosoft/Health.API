@@ -10,17 +10,17 @@ using Utils;
 
 namespace Services.Tests.Fitbit
 {
-    public class FitbitClientAggregatorTests
+    public class FitbitClientQueryHelperTests
     {
         private Mock<IFitbitClient> _fitbitClient;
         private Mock<ILogger> _logger;
-        private FitbitClientAggregator _fitbitClientClientAggregator;
+        private FitbitClientQueryAdapter _fitbitClientClientQueryAdapter;
 
-        public FitbitClientAggregatorTests()
+        public FitbitClientQueryHelperTests()
         {
             _fitbitClient = new Mock<IFitbitClient>();
             _logger = new Mock<ILogger>();
-            _fitbitClientClientAggregator = new FitbitClientAggregator(_fitbitClient.Object, _logger.Object);
+            _fitbitClientClientQueryAdapter = new FitbitClientQueryAdapter(_fitbitClient.Object, _logger.Object);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Services.Tests.Fitbit
             _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day5)).Returns(Task.FromResult(new FitbitDailyActivity { DateTime = day5, summary = new Summary { steps = 5 } }));
 
             //When
-            var fitbitDailyActivities = await _fitbitClientClientAggregator.GetFitbitDailyActivities(day1, day5);
+            var fitbitDailyActivities = await _fitbitClientClientQueryAdapter.GetFitbitDailyActivities(day1, day5);
 
             //Then
             Assert.Equal(5, fitbitDailyActivities.Count());
@@ -87,7 +87,7 @@ namespace Services.Tests.Fitbit
             }));
 
             //When
-            var heartActivities = await _fitbitClientClientAggregator.GetFitbitHeartActivities(fromDate, toDate);
+            var heartActivities = await _fitbitClientClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate);
 
             Assert.Equal(5, heartActivities.Count());
             Assert.Contains(heartActivities, x => x.value.restingHeartRate == 11);

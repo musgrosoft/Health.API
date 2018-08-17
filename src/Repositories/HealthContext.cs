@@ -6,7 +6,7 @@ namespace Repositories
 {
     public class HealthContext : DbContext
     {
-        private readonly IConfig _config;
+        private  IConfig _config;
         public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
         public virtual DbSet<Models.ActivitySummary> ActivitySummaries { get; set; }
         public virtual DbSet<Models.StepCount> StepCounts { get; set; }
@@ -20,18 +20,24 @@ namespace Repositories
 
         //  public virtual DbSet<Models.HeartRate> HeartRates { get; set; }
 
-        public HealthContext(IConfig config)
+        //public HealthContext(IConfig config)
+        //{
+        //    _config = config;
+        //}
+
+        public HealthContext(DbContextOptions<HealthContext> options) : base (options)
         {
-            _config = config;
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+                _config = new Config();
                 var connectionString = _config.HealthDbConnectionString;
                 optionsBuilder.UseSqlServer(
-                    connectionString, 
+                    connectionString,
                     sqlServerOptionsAction: sqlOptions =>
                     {
                         sqlOptions.EnableRetryOnFailure(
