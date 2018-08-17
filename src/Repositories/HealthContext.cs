@@ -30,6 +30,12 @@ namespace Repositories
 
         }
 
+        public void EnsureSeedData()
+        {
+            this.Weights.Add(new Repositories.Models.Weight { CreatedDate = new DateTime(2017, 1, 1), Kg = 123 });
+            this.SaveChanges();
+        }
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    if (!optionsBuilder.IsConfigured)

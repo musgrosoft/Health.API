@@ -11,6 +11,7 @@ using Repositories;
 using Xunit;
 using Repositories.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace HealthAPI.Acceptance.Tests
 {
@@ -20,20 +21,14 @@ namespace HealthAPI.Acceptance.Tests
 
         public WeightAcceptanceTests(WebApplicationFactory<HealthAPI.Startup> factory)
         {
-            _factory = factory;
+            _factory = factory.WithWebHostBuilder(builder => builder.UseStartup<TestStartup>());
         }
 
         [Fact]
         public async Task ShouldGetWeights()
         {
-            var client = _factory.WithWebHostBuilder(builder =>
-                {
-                    builder.ConfigureTestServices(services =>
-                    {
-                        services.AddScoped<HealthContext, FakeLocalContext>();
-                    });
-                })
-                .CreateClient();
+            var client = _factory.CreateClient();
+
 
 
             var response = await client.GetAsync("/api/Weights");
@@ -41,10 +36,8 @@ namespace HealthAPI.Acceptance.Tests
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<List<Weight>>(content);
 
-            Assert.Equal(3, data.Count);
-            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Kg == 101);
-            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Kg == 102);
-            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Kg == 103);
+            Assert.Equal(960, data.Count);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Kg == 123);
 
         }
 
@@ -73,6 +66,7 @@ namespace HealthAPI.Acceptance.Tests
             {
                 optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
             }
+
         }
 
 
@@ -82,6 +76,9 @@ namespace HealthAPI.Acceptance.Tests
 
         public FakeLocalContext() : base(new DbContextOptions<HealthContext>())
         {
+
+            this.Weights.Add(new Weight { CreatedDate = new DateTime(2018, 1, 1), Kg = 123 });
+            this.SaveChanges();
         }
     }
 }
