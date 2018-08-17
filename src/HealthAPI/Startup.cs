@@ -22,6 +22,7 @@ using Migrators.Nokia;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
+using Services.Fitbit.Domain;
 
 namespace HealthAPI
 {
@@ -106,6 +107,7 @@ namespace HealthAPI
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<INokiaService, NokiaService>();
             services.AddTransient<ITargetCalculator, TargetCalculator>();
+            services.AddTransient<IFitbitMapper, FitbitMapper>();
 
 
 
