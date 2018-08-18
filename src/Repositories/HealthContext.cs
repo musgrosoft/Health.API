@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Models;
 using Utils;
 
 namespace Repositories
@@ -33,6 +35,14 @@ namespace Repositories
         public void EnsureSeedData()
         {
             this.Weights.Add(new Repositories.Models.Weight { CreatedDate = new DateTime(2017, 1, 1), Kg = 123 });
+
+            this.StepCounts.AddRange(new List<StepCount> {
+                new StepCount{ CreatedDate = new DateTime(2018,1,1), Count = 1111},
+                new StepCount{ CreatedDate = new DateTime(2018,1,2), Count = 2222},
+                new StepCount{ CreatedDate = new DateTime(2018,1,3), Count = 3333},
+
+            });
+
             this.SaveChanges();
         }
 

@@ -1,43 +1,46 @@
-﻿//using System.Linq;
-//using System.Net.Http;
-//using System.Threading.Tasks;
-//using HealthAPI.Acceptance.Tests.OData;
-//using Newtonsoft.Json;
-//using Xunit;
-//using Repositories.Models;
+﻿using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Xunit;
+using Repositories.Models;
+using Microsoft.AspNetCore.Mvc.Testing;
+using System.Collections.Generic;
+using System;
+using Microsoft.AspNetCore.Hosting;
 
-//namespace HealthAPI.Acceptance.Tests
-//{
-//    public class StepCountAcceptanceTests
-//    {
-//        private HttpClient _httpClient;
+namespace HealthAPI.Acceptance.Tests
+{
+    public class StepCountAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>
+    {
+        private readonly WebApplicationFactory<Startup> _factory;
 
-//        public StepCountAcceptanceTests()
-//        {
-//            _httpClient = new HttpClient();
-//        }
+        public StepCountAcceptanceTests(WebApplicationFactory<HealthAPI.Startup> factory)
+        {
+            _factory = factory.WithWebHostBuilder(builder => builder.UseStartup<TestStartup>());
+        }
 
-//        [Fact]
-//        public async Task ShouldGetStepCounts()
-//        {
-//            var uri = "http://musgrosoft-health-api.azurewebsites.net/odata/StepCounts";
-//            _httpClient.DefaultRequestHeaders.Clear();
+        [Fact]
+        public async Task ShouldGetStepCounts()
+        {
+            var client = _factory.CreateClient();
 
-//            var response = await _httpClient.GetAsync(uri);
-//            Assert.True(response.IsSuccessStatusCode);
+            var response = await client.GetAsync("/api/StepCounts");
+            Assert.True(response.IsSuccessStatusCode);
 
-//            var content = await response.Content.ReadAsStringAsync();
-//            var data = JsonConvert.DeserializeObject<ODataResponse<StepCount>>(content);
-//            Assert.NotNull(data);
-//            Assert.True(data.value.Count > 100);
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<List<StepCount>>(content);
 
-//            var lastStepCount = data.value.OrderByDescending(x => x.DateTime).FirstOrDefault();
-//            Assert.True(lastStepCount.Count < 30000);
-//            Assert.True(lastStepCount.Count > 10);
-//        }
+            Assert.NotNull(data);
+            Assert.True(data.Count == 3);
+
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Count == 1111);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Count == 2222);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Count == 3333);
+        }
 
 
-////'http://musgrosoft-health-api.azurewebsites.net/odata/StepCounts/GroupByMonth';
-////'http://musgrosoft-health-api.azurewebsites.net/odata/StepCounts/GroupByWeek';
-//    }
-//}
+        //'http://musgrosoft-health-api.azurewebsites.net/odata/StepCounts/GroupByMonth';
+        //'http://musgrosoft-health-api.azurewebsites.net/odata/StepCounts/GroupByWeek';
+    }
+}
