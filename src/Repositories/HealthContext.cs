@@ -64,6 +64,20 @@ namespace Repositories
 
             });
 
+            this.AlcoholIntakes.AddRange(new List<AlcoholIntake> {
+                new AlcoholIntake{ CreatedDate = new DateTime(2018,1,1), Units = 1},
+                new AlcoholIntake{ CreatedDate = new DateTime(2018,1,2), Units = 2},
+                new AlcoholIntake{ CreatedDate = new DateTime(2018,1,3), Units = 3},
+
+            });
+
+            this.BloodPressures.AddRange(new List<BloodPressure> {
+                new BloodPressure{ CreatedDate = new DateTime(2018,1,1), Diastolic = 81},
+                new BloodPressure{ CreatedDate = new DateTime(2018,1,2), Diastolic = 82},
+                new BloodPressure{ CreatedDate = new DateTime(2018,1,3), Diastolic = 83},
+
+            });
+
             this.SaveChanges();
         }
 

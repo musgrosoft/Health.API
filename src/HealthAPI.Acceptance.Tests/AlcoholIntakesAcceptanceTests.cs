@@ -1,47 +1,44 @@
-﻿//using System.Linq;
-//using System.Net.Http;
-//using System.Threading.Tasks;
-//using HealthAPI.Acceptance.Tests.OData;
-//using Newtonsoft.Json;
-//using Xunit;
-//using Repositories.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
+using Xunit;
+using Repositories.Models;
 
-//namespace HealthAPI.Acceptance.Tests
-//{
-//    public class AlcoholIntakesAcceptanceTests
-//    {
-//        private HttpClient _httpClient;
+namespace HealthAPI.Acceptance.Tests
+{
+    public class AlcoholIntakesAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>
+    {
+        private WebApplicationFactory<Startup> _factory;
 
-//        public AlcoholIntakesAcceptanceTests()
-//        {
-//            _httpClient = new HttpClient();
-//        }
+        public AlcoholIntakesAcceptanceTests(WebApplicationFactory<HealthAPI.Startup> factory)
+        {
+            _factory = factory.WithWebHostBuilder(builder => builder.UseStartup<TestStartup>());
+        }
 
-//        [Fact]
-//        public async Task ShouldGetAlcoholIntakes()
-//        {
-//            var uri = "http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes";
-//            _httpClient.DefaultRequestHeaders.Clear();
+        [Fact]
+        public async Task ShouldGetAlcoholIntakes()
+        {
+            var client = _factory.CreateClient();
+            
+            var response = await client.GetAsync("/api/AlcoholIntakes");
 
-//            var response = await _httpClient.GetAsync(uri);
-//            Assert.True(response.IsSuccessStatusCode);
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<List<AlcoholIntake>>(content);
 
-//            var content = await response.Content.ReadAsStringAsync();
-//            var data = JsonConvert.DeserializeObject<ODataResponse<AlcoholIntake>>(content);
-//            Assert.NotNull(data);
-////            Assert.True(data.value.Count > 100);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Units == 1);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Units == 2);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Units == 3);
+        }
 
-//            var lastAlcoholIntake = data.value.OrderByDescending(x => x.DateTime).FirstOrDefault();
-//        //    Assert.True(lastAlcoholIntake.Units < 100);
-//        //    Assert.True(lastAlcoholIntake.Units > -1);
-//        }
+        //'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes?$filter=year(DateTime)%20eq%202016';
+        //'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes?$filter=year(DateTime)%20eq%202017';
+        //'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes?$filter=year(DateTime)%20eq%202018';
+        //'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes/GroupByMonth';
+        //'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes/GroupByWeek';
 
-////'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes?$filter=year(DateTime)%20eq%202016';
-////'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes?$filter=year(DateTime)%20eq%202017';
-////'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes?$filter=year(DateTime)%20eq%202018';
-////'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes/GroupByMonth';
-////'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes/GroupByWeek';
 
-        
-//    }
-//}
+    }
+}

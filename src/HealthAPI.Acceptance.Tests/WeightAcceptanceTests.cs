@@ -36,19 +36,6 @@ namespace HealthAPI.Acceptance.Tests
 
         }
 
-        private void InitializeDbForTests(HealthContext db)
-        {
-            db.AddRange(new List<Weight>
-            {
-                new Weight {CreatedDate = new DateTime(2018,1,1), Kg = 101},
-                new Weight {CreatedDate = new DateTime(2018,1,2), Kg = 102},
-                new Weight {CreatedDate = new DateTime(2018,1,3), Kg = 103},
-            });
-
-            //db.Add(new Weight {CreatedDate = new DateTime(2018,1,1), Kg = 101});
-
-            db.SaveChanges();
-        }
 
     }
 
