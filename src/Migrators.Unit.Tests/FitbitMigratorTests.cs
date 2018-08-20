@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Migrators.Fitbit;
 using Moq;
 using Repositories.Models;
 using Services.Fitbit;

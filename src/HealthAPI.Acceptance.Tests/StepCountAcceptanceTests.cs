@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using System.Collections.Generic;
 using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Repositories;
 
 namespace HealthAPI.Acceptance.Tests
 {
@@ -23,6 +25,9 @@ namespace HealthAPI.Acceptance.Tests
         {
             var client = _factory.CreateClient();
 
+
+            SeedData();
+
             var response = await client.GetAsync("/api/StepCounts");
             Assert.True(response.IsSuccessStatusCode);
 
@@ -37,5 +42,26 @@ namespace HealthAPI.Acceptance.Tests
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Count == 3333);
         }
 
+
+        private void SeedData()
+        {
+            using (var scope = _factory.Server.Host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var db = (HealthContext)services.GetRequiredService(typeof(HealthContext));
+
+
+
+                db.StepCounts.AddRange(new List<StepCount> {
+                    new StepCount{ CreatedDate = new DateTime(2018,1,1), Count = 1111},
+                    new StepCount{ CreatedDate = new DateTime(2018,1,2), Count = 2222},
+                    new StepCount{ CreatedDate = new DateTime(2018,1,3), Count = 3333},
+
+                });
+
+                db.SaveChanges();
+            }
+        }
     }
 }

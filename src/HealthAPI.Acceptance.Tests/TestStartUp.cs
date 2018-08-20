@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Migrators;
+using Migrators.Fitbit;
 using Migrators.Google;
 using Migrators.Hangfire;
 using Migrators.Nokia;
@@ -146,17 +147,17 @@ namespace HealthAPI.Acceptance.Tests
 
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<HealthContext>();
-                //context.Database.Migrate();
+            //using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            //{
+            //    var context = serviceScope.ServiceProvider.GetService<HealthContext>();
+            //    //context.Database.Migrate();
                 
-                //context.Database.EnsureCreated();
-                context.EnsureSeedData();
+            //    //context.Database.EnsureCreated();
+                
 
 
 
-            }
+            //}
 
             //var db = new HealthContext(new DbContextOptionsBuilder<HealthContext>()
             //    .UseInMemoryDatabase(databaseName: "fake")

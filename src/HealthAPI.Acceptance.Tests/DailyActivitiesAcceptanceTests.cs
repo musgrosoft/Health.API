@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Xunit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Repositories;
 
 namespace HealthAPI.Acceptance.Tests
 {
@@ -24,6 +26,8 @@ namespace HealthAPI.Acceptance.Tests
         {
             var client = _factory.CreateClient();
 
+            SeedData();
+
             var response = await client.GetAsync("/api/ActivitySummaries");
 
             var content = await response.Content.ReadAsStringAsync();
@@ -35,6 +39,26 @@ namespace HealthAPI.Acceptance.Tests
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.VeryActiveMinutes == 13);
         }
 
+        private void SeedData()
+        {
+            using (var scope = _factory.Server.Host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var db = (HealthContext)services.GetRequiredService(typeof(HealthContext));
+
+
+
+                db.ActivitySummaries.AddRange(new List<ActivitySummary> {
+                    new ActivitySummary{ CreatedDate = new DateTime(2018,1,1), VeryActiveMinutes = 11},
+                    new ActivitySummary{ CreatedDate = new DateTime(2018,1,2), VeryActiveMinutes = 12},
+                    new ActivitySummary{ CreatedDate = new DateTime(2018,1,3), VeryActiveMinutes = 13},
+
+                });
+
+                db.SaveChanges();
+            }
+        }
 
 
     }

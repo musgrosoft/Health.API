@@ -1,10 +1,7 @@
-﻿using System;
-using Google.Apis.Sheets.v4;
-using Migrators.Google;
-using Services.Google;
+﻿using Services.Google;
 using Services.Health;
 
-namespace Migrators
+namespace Migrators.Google
 {
     public class GoogleMigrator : IGoogleMigrator
     {

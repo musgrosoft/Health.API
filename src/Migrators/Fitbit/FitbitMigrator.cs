@@ -4,7 +4,7 @@ using Services.Fitbit;
 using Services.Health;
 using Utils;
 
-namespace Migrators
+namespace Migrators.Fitbit
 {
     public class FitbitMigrator : IFitbitMigrator
     {

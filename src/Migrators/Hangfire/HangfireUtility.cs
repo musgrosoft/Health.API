@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Hangfire;
+using Migrators.Fitbit;
 using Utils;
 
-namespace Migrators
+namespace Migrators.Hangfire
 {
     public class HangfireUtility : IHangfireUtility
     {

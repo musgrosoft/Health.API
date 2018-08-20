@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using Xunit;
 using Repositories.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Repositories;
 
 namespace HealthAPI.Acceptance.Tests
 {
@@ -16,6 +18,8 @@ namespace HealthAPI.Acceptance.Tests
         public WeightAcceptanceTests(WebApplicationFactory<HealthAPI.Startup> factory)
         {
             _factory = factory.WithWebHostBuilder(builder => builder.UseStartup<TestStartup>());
+
+
         }
 
         [Fact]
@@ -23,7 +27,7 @@ namespace HealthAPI.Acceptance.Tests
         {
             var client = _factory.CreateClient();
 
-
+            SeedData();
 
             var response = await client.GetAsync("/api/Weights");
 
@@ -34,6 +38,18 @@ namespace HealthAPI.Acceptance.Tests
             response.EnsureSuccessStatusCode();
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Kg == 123);
 
+        }
+
+        private void SeedData()
+        {
+            using (var scope = _factory.Server.Host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var db = (HealthContext)services.GetRequiredService(typeof(HealthContext));
+                db.Weights.Add(new Weight { CreatedDate = new DateTime(2017, 1, 1), Kg = 123 });
+                db.SaveChanges();
+            }
         }
 
 

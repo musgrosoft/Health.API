@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Migrators.Fitbit;
 using Utils;
 
 namespace Migrators.Hangfire

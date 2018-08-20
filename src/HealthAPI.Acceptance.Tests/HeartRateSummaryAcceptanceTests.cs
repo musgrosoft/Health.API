@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Repositories;
 using Xunit;
 
 namespace HealthAPI.Acceptance.Tests
@@ -22,6 +24,8 @@ namespace HealthAPI.Acceptance.Tests
         public async Task ShouldGetHeartRateSummaries()
         {
             var client = _factory.CreateClient();
+
+            SeedData();
             
             var response = await client.GetAsync("/api/HeartRateSummaries");
 
@@ -35,5 +39,26 @@ namespace HealthAPI.Acceptance.Tests
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.CardioMinutes == 333);
         }
 
+
+        private void SeedData()
+        {
+            using (var scope = _factory.Server.Host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var db = (HealthContext)services.GetRequiredService(typeof(HealthContext));
+
+
+
+                db.HeartRateSummaries.AddRange(new List<HeartRateSummary> {
+                    new HeartRateSummary{ CreatedDate = new DateTime(2018,1,1), CardioMinutes = 111},
+                    new HeartRateSummary{ CreatedDate = new DateTime(2018,1,2), CardioMinutes = 222},
+                    new HeartRateSummary{ CreatedDate = new DateTime(2018,1,3), CardioMinutes = 333},
+
+                });
+
+                db.SaveChanges();
+            }
+        }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
 
-namespace Migrators
+namespace Migrators.Hangfire
 {
     public interface IHangfireUtility
     {

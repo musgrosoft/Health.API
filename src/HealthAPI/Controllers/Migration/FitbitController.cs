@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Migrators;
 using Migrators.Hangfire;
 using Services.Fitbit;
 using Utils;
 
-namespace HealthAPI.Controllers.Subscription
+namespace HealthAPI.Controllers.Migration
 {
     [Produces("application/json")]
     [Route("api/Fitbit")]

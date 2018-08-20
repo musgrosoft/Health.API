@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Repositories;
 using Xunit;
 using Repositories.Models;
 
@@ -22,6 +24,8 @@ namespace HealthAPI.Acceptance.Tests
         public async Task ShouldGetAlcoholIntakes()
         {
             var client = _factory.CreateClient();
+
+            SeedData();
             
             var response = await client.GetAsync("/api/AlcoholIntakes");
 
@@ -39,7 +43,26 @@ namespace HealthAPI.Acceptance.Tests
         //'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes?$filter=year(DateTime)%20eq%202018';
         //'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes/GroupByMonth';
         //'http://musgrosoft-health-api.azurewebsites.net/odata/AlcoholIntakes/GroupByWeek';
+        private void SeedData()
+        {
+            using (var scope = _factory.Server.Host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
 
+                var db = (HealthContext)services.GetRequiredService(typeof(HealthContext));
+
+                
+
+                db.AlcoholIntakes.AddRange(new List<AlcoholIntake> {
+                    new AlcoholIntake{ CreatedDate = new DateTime(2018,1,1), Units = 1},
+                    new AlcoholIntake{ CreatedDate = new DateTime(2018,1,2), Units = 2},
+                    new AlcoholIntake{ CreatedDate = new DateTime(2018,1,3), Units = 3},
+
+                });
+
+                db.SaveChanges();
+            }
+        }
 
     }
 }

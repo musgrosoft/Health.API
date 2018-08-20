@@ -22,6 +22,7 @@ using Migrators.Nokia;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
+using Migrators.Fitbit;
 using Services.Fitbit.Domain;
 
 namespace HealthAPI

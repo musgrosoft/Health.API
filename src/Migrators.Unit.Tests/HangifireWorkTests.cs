@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Migrators.Fitbit;
 using Migrators.Hangfire;
 using Moq;
 using Utils;

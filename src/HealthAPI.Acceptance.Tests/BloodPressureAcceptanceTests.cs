@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Repositories;
 using Xunit;
 using Repositories.Models;
 
@@ -24,7 +26,7 @@ namespace HealthAPI.Acceptance.Tests
         {
             var client = _factory.CreateClient();
 
-
+            SeedData();
 
             var response = await client.GetAsync("/api/BloodPressures");
 
@@ -40,6 +42,29 @@ namespace HealthAPI.Acceptance.Tests
 
         //'http://musgrosoft-health-api.azurewebsites.net/odata/BloodPressures';
         //"http://musgrosoft-health-api.azurewebsites.net/odata/BloodPressures?$top=1&$orderby=DateTime%20desc";
+
+    
+
+        private void SeedData()
+        {
+            using (var scope = _factory.Server.Host.Services.CreateScope())
+            {
+            var services = scope.ServiceProvider;
+
+            var db = (HealthContext)services.GetRequiredService(typeof(HealthContext));
+
+
+
+            db.BloodPressures.AddRange(new List<BloodPressure> {
+                    new BloodPressure{ CreatedDate = new DateTime(2018,1,1), Diastolic = 81},
+                    new BloodPressure{ CreatedDate = new DateTime(2018,1,2), Diastolic = 82},
+                    new BloodPressure{ CreatedDate = new DateTime(2018,1,3), Diastolic = 83},
+
+                });
+
+                db.SaveChanges();
+            }
+        }
 
     }
 }
