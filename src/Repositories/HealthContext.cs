@@ -43,6 +43,27 @@ namespace Repositories
 
             });
 
+            this.HeartRateSummaries.AddRange(new List<HeartRateSummary> {
+                new HeartRateSummary{ CreatedDate = new DateTime(2018,1,1), CardioMinutes = 111},
+                new HeartRateSummary{ CreatedDate = new DateTime(2018,1,2), CardioMinutes = 222},
+                new HeartRateSummary{ CreatedDate = new DateTime(2018,1,3), CardioMinutes = 333},
+
+            });
+
+            this.RestingHeartRates.AddRange(new List<RestingHeartRate> {
+                new RestingHeartRate{ CreatedDate = new DateTime(2018,1,1), Beats = 101},
+                new RestingHeartRate{ CreatedDate = new DateTime(2018,1,2), Beats = 102},
+                new RestingHeartRate{ CreatedDate = new DateTime(2018,1,3), Beats = 103},
+
+            });
+
+            this.ActivitySummaries.AddRange(new List<ActivitySummary> {
+                new ActivitySummary{ CreatedDate = new DateTime(2018,1,1), VeryActiveMinutes = 11},
+                new ActivitySummary{ CreatedDate = new DateTime(2018,1,2), VeryActiveMinutes = 12},
+                new ActivitySummary{ CreatedDate = new DateTime(2018,1,3), VeryActiveMinutes = 13},
+
+            });
+
             this.SaveChanges();
         }
 

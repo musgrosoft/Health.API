@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Repositories;
 using Xunit;
 using Repositories.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace HealthAPI.Acceptance.Tests

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xunit;
 using Repositories.Models;
@@ -39,8 +37,5 @@ namespace HealthAPI.Acceptance.Tests
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Count == 3333);
         }
 
-
-        //'http://musgrosoft-health-api.azurewebsites.net/odata/StepCounts/GroupByMonth';
-        //'http://musgrosoft-health-api.azurewebsites.net/odata/StepCounts/GroupByWeek';
     }
 }

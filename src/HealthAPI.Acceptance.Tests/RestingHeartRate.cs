@@ -1,42 +1,37 @@
-﻿//using HealthAPI.Acceptance.Tests.OData;
-//using Newtonsoft.Json;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Net.Http;
-//using System.Text;
-//using System.Threading.Tasks;
-//using Xunit;
-//using Repositories.Models;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Xunit;
+using Repositories.Models;
 
-//namespace HealthAPI.Acceptance.Tests
-//{
-//    public class RestingHeartRateAcceptanceTests
-//    {
-//        private HttpClient _httpClient;
+namespace HealthAPI.Acceptance.Tests
+{
+    public class RestingHeartRateAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>
+    {
+        private WebApplicationFactory<Startup> _factory;
 
-//        public RestingHeartRateAcceptanceTests()
-//        {
-//            _httpClient = new HttpClient();
-//        }
+        public RestingHeartRateAcceptanceTests(WebApplicationFactory<HealthAPI.Startup> factory)
+        {
+            _factory = factory.WithWebHostBuilder(builder => builder.UseStartup<TestStartup>());
+        }
 
-//        [Fact]
-//        public async Task ShouldGetRestingHeartRates()
-//        {
-//            var uri = "http://musgrosoft-health-api.azurewebsites.net/odata/RestingHeartRates";
-//            _httpClient.DefaultRequestHeaders.Clear();
+        [Fact]
+        public async Task ShouldGetRestingHeartRates()
+        {
+            var client = _factory.CreateClient();
 
-//            var response = await _httpClient.GetAsync(uri);
-//            Assert.True(response.IsSuccessStatusCode);
+            var response = await client.GetAsync("/api/RestingHeartRates");
 
-//            var content = await response.Content.ReadAsStringAsync();
-//            var data = JsonConvert.DeserializeObject<ODataResponse<RestingHeartRate>>(content);
-//            Assert.NotNull(data);
-//            Assert.True(data.value.Count > 100);
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<List<RestingHeartRate>>(content);
 
-//            var lastRestingHeartRate = data.value.OrderByDescending(x => x.DateTime).FirstOrDefault();
-//            Assert.True(lastRestingHeartRate.Beats < 80);
-//            Assert.True(lastRestingHeartRate.Beats > 40);
-//        }
-//    }
-//}
+            //  Assert.Equal(960, data.Count);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Beats == 101);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Beats == 102);
+            Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Beats == 103);
+        }
+    }
+}
