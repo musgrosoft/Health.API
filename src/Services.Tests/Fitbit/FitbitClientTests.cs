@@ -26,6 +26,19 @@ namespace Services.Tests.Fitbit
 
         public FitbitClientTests()
         {
+
+
+            //_httpMessageHandler = new Mock<HttpMessageHandler>();
+            //_httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            //    .Returns(Task.FromResult(new HttpResponseMessage
+            //    {
+            //        StatusCode = HttpStatusCode.OK,
+            //        Content = new StringContent(fitbitDailyActivityContent)
+            //    })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
+
+            //_httpClient = new HttpClient(_httpMessageHandler.Object);
+
+
             _httpMessageHandler = new Mock<HttpMessageHandler>();
 
 
@@ -63,12 +76,15 @@ namespace Services.Tests.Fitbit
         public async Task ShouldGetFitbitMonthlyActivity()
         {
             Uri _capturedUri = new Uri("http://www.null.com");
+
             _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.FromResult(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(fitbitMonthlyActivityContent)
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
+
+
 
             var fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(new DateTime());
 
@@ -79,9 +95,38 @@ namespace Services.Tests.Fitbit
 
         }
 
+        [Fact]
+        public async Task ShouldSubscribe()
+        {
+            //Given
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent("wibble")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
+
+
+            _config.Setup(x => x.FitbitUserId).Returns("USER_ID_123");
+
+            _fitbitAuthenticator.Setup(x => x.GetAccessToken()).Returns(Task.FromResult("I am a token"));
+
+            //When
+            await _fitbitClient.Subscribe();
+
+            //Then
+
+            Assert.Equal("https://api.fitbit.com/1/user/USER_ID_123/apiSubscriptions/123.json", _capturedUri.AbsoluteUri);
+            Assert.Equal("I am a token", _httpClient.DefaultRequestHeaders.Authorization.Parameter);
+            //also verify bearer token
+
+
+        }
+
         private readonly string fitbitDailyActivityContent = "";
 
         private readonly string fitbitMonthlyActivityContent = "";
-
+        private Uri _capturedUri
+            ;
     }
 }

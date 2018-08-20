@@ -22,6 +22,7 @@ namespace Services.Tests.Fitbit
         private DateTime fromDate = new DateTime(2017,1,1);
         private DateTime toDate = new DateTime(2018, 2, 2);
         private Mock<IFitbitMapper> _fitbitMapper;
+        private Mock<IFitbitClient> _fitbitClient;
 
         public FitbitServiceTests() 
         {
@@ -29,8 +30,19 @@ namespace Services.Tests.Fitbit
             _logger = new Mock<ILogger>();
             _fitbitClientQueryAdapter = new Mock<IFitbitClientQueryAdapter>();
             _fitbitMapper = new Mock<IFitbitMapper>();
+            _fitbitClient = new Mock<IFitbitClient>();
 
-            _fitbitService = new FitbitService(_config.Object, _logger.Object, _fitbitClientQueryAdapter.Object, null, null, _fitbitMapper.Object);
+            _fitbitService = new FitbitService(_config.Object, _logger.Object, _fitbitClientQueryAdapter.Object, _fitbitClient.Object, null, _fitbitMapper.Object);
+        }
+
+        [Fact]
+        public async Task ShouldSubscribe()
+        {
+            //When
+            _fitbitService.Subscribe();
+
+            //Then
+            _fitbitClient.Verify(x=>x.Subscribe(), Times.Once);
         }
 
         [Fact]
