@@ -57,28 +57,4 @@ namespace HealthAPI.Acceptance.Tests
 
     }
 
-    public class FakeLocalContext : HealthContext
-    {
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
-            }
-
-        }
-
-
-        //public FakeLocalContext() : base(new Config())
-        //{
-        //}
-
-        public FakeLocalContext() : base(new DbContextOptions<HealthContext>())
-        {
-
-            this.Weights.Add(new Weight { CreatedDate = new DateTime(2018, 1, 1), Kg = 123 });
-            this.SaveChanges();
-        }
-    }
 }
