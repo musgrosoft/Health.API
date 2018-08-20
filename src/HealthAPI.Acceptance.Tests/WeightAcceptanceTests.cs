@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
-using Repositories;
 using Xunit;
 using Repositories.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +30,8 @@ namespace HealthAPI.Acceptance.Tests
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<List<Weight>>(content);
 
-          //  Assert.Equal(960, data.Count);
+            //  Assert.Equal(960, data.Count);
+            response.EnsureSuccessStatusCode();
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Kg == 123);
 
         }

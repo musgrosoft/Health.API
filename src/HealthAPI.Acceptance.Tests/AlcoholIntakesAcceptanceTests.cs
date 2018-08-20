@@ -28,6 +28,7 @@ namespace HealthAPI.Acceptance.Tests
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<List<AlcoholIntake>>(content);
 
+            response.EnsureSuccessStatusCode();
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Units == 1);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Units == 2);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Units == 3);

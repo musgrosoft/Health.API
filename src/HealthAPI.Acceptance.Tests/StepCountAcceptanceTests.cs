@@ -29,9 +29,9 @@ namespace HealthAPI.Acceptance.Tests
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<List<StepCount>>(content);
 
+            response.EnsureSuccessStatusCode();
             Assert.NotNull(data);
             Assert.True(data.Count == 3);
-
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Count == 1111);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Count == 2222);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Count == 3333);

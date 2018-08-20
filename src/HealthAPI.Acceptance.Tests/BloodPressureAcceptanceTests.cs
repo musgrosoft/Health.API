@@ -31,7 +31,7 @@ namespace HealthAPI.Acceptance.Tests
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<List<BloodPressure>>(content);
 
-            //  Assert.Equal(960, data.Count);
+            response.EnsureSuccessStatusCode();
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Diastolic == 81);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Diastolic == 82);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Diastolic == 83);

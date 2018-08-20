@@ -28,7 +28,8 @@ namespace HealthAPI.Acceptance.Tests
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<List<RestingHeartRate>>(content);
 
-            //  Assert.Equal(960, data.Count);
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(3, data.Count);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Beats == 101);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Beats == 102);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Beats == 103);

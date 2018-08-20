@@ -29,7 +29,7 @@ namespace HealthAPI.Acceptance.Tests
             var content = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<List<ActivitySummary>>(content);
 
-            //  Assert.Equal(960, data.Count);
+            response.EnsureSuccessStatusCode();
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.VeryActiveMinutes == 11);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.VeryActiveMinutes == 12);
             Assert.Contains(data, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.VeryActiveMinutes == 13);
