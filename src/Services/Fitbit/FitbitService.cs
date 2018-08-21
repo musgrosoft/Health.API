@@ -13,16 +13,14 @@ namespace Services.Fitbit
 
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
 
-        private IConfig _config { get; }
         private readonly IFitbitClientQueryAdapter _fitbitClientQueryAdapter;
         private readonly IFitbitClient _fitbitClient;
         private readonly IFitbitAuthenticator _fitbitAuthenticator;
         private readonly IFitbitMapper _fitbitMapper;
 
-        public FitbitService(IConfig config, ILogger logger, IFitbitClientQueryAdapter fitbitClientQueryAdapter, IFitbitClient fitbitClient, IFitbitAuthenticator fitbitAuthenticator, IFitbitMapper fitbitMapper)
+        public FitbitService(ILogger logger, IFitbitClientQueryAdapter fitbitClientQueryAdapter, IFitbitClient fitbitClient, IFitbitAuthenticator fitbitAuthenticator, IFitbitMapper fitbitMapper)
         {
             _logger = logger;
-            _config = config;
             _fitbitClientQueryAdapter = fitbitClientQueryAdapter;
             _fitbitClient = fitbitClient;
             _fitbitAuthenticator = fitbitAuthenticator;
@@ -57,9 +55,9 @@ namespace Services.Fitbit
             return _fitbitMapper.MapActivitiesHeartToHeartRateSummaries(heartActivies);
         }
 
-        public void Subscribe()
+        public async Task Subscribe()
         {
-            _fitbitClient.Subscribe();
+            await _fitbitClient.Subscribe();
         }
 
         public async Task SetTokens(string code)

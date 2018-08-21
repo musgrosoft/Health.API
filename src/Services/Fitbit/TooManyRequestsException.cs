@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Services.Fitbit
 {
     [Serializable]
-    internal class TooManyRequestsException : Exception
+    public class TooManyRequestsException : Exception
     {
         public TooManyRequestsException()
         {

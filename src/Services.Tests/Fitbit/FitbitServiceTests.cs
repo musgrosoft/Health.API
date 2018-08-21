@@ -15,7 +15,6 @@ namespace Services.Tests.Fitbit
     public class FitbitServiceTests
     {
         private FitbitService _fitbitService;
-        private Mock<IConfig> _config;
         private Mock<ILogger> _logger;
         private Mock<IFitbitClientQueryAdapter> _fitbitClientQueryAdapter;
 
@@ -23,26 +22,42 @@ namespace Services.Tests.Fitbit
         private DateTime toDate = new DateTime(2018, 2, 2);
         private Mock<IFitbitMapper> _fitbitMapper;
         private Mock<IFitbitClient> _fitbitClient;
+        private Mock<IFitbitAuthenticator> _fitbitAuthenticator;
 
         public FitbitServiceTests() 
         {
-            _config = new Mock<IConfig>();
             _logger = new Mock<ILogger>();
             _fitbitClientQueryAdapter = new Mock<IFitbitClientQueryAdapter>();
             _fitbitMapper = new Mock<IFitbitMapper>();
             _fitbitClient = new Mock<IFitbitClient>();
+            _fitbitAuthenticator = new Mock<IFitbitAuthenticator>();
 
-            _fitbitService = new FitbitService(_config.Object, _logger.Object, _fitbitClientQueryAdapter.Object, _fitbitClient.Object, null, _fitbitMapper.Object);
+            _fitbitService = new FitbitService(
+                _logger.Object, 
+                _fitbitClientQueryAdapter.Object, 
+                _fitbitClient.Object, 
+                _fitbitAuthenticator.Object, 
+                _fitbitMapper.Object);
         }
 
         [Fact]
         public async Task ShouldSubscribe()
         {
             //When
-            _fitbitService.Subscribe();
+            await _fitbitService.Subscribe();
 
             //Then
             _fitbitClient.Verify(x=>x.Subscribe(), Times.Once);
+        }
+
+        [Fact]
+        public async Task ShouldSetTokens()
+        {
+            //When
+            await _fitbitService.SetTokens("I am an authorization code");
+
+            //Then
+            _fitbitAuthenticator.Verify(x => x.SetTokens("I am an authorization code"), Times.Once);
         }
 
         [Fact]
