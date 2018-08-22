@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using Migrators;
 using Migrators.Google;
 using Utils;
 

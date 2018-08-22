@@ -53,9 +53,9 @@ namespace HealthAPI.Controllers.Migration
 
         [HttpGet]
         [Route("Subscribe")]
-        public IActionResult Subscribe()
+        public async Task<IActionResult> Subscribe()
         {
-            _fitbitService.Subscribe();
+            await _fitbitService.Subscribe();
             return Ok("useful message");
         }
 
