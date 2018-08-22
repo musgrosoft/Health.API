@@ -60,5 +60,14 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             _nokiaService.Verify(x=>x.Subscribe(), Times.Once);
 
         }
+
+        [Fact]
+        public void ShouldReturnOAuthUrl()
+        {
+            var response = (JsonResult) _nokiaController.OAuthUrl();
+
+            Assert.Equal("https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&redirect_uri=http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&scope=user.info,user.metrics,user.activity&state=768uyFys", response.Value);
+
+        }
     }
 }
