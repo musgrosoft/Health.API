@@ -5,6 +5,7 @@ using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Migrators;
@@ -25,6 +26,7 @@ using Services.Nokia;
 using Services.OAuth;
 using Swashbuckle.AspNetCore.Swagger;
 using Utils;
+using Moq;
 
 namespace HealthAPI.Acceptance.Tests
 {
@@ -84,7 +86,12 @@ namespace HealthAPI.Acceptance.Tests
             services.AddTransient<ITokenRepository, TokenRepository>();
             services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
             services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
-            services.AddTransient<IFitbitService, FitbitService>();
+
+            //services.AddTransient<IFitbitService, FitbitService>();
+
+            services.AddSingleton<IFitbitService, FitbitServiceStub>();
+
+
             services.AddTransient<IFitbitMigrator, FitbitMigrator>();
             services.AddTransient<ICalendar, Calendar>();
             services.AddTransient<INokiaMigrator, NokiaMigrator>();
@@ -96,11 +103,13 @@ namespace HealthAPI.Acceptance.Tests
             services.AddTransient<IEntityDecorator, EntityDecorator>();
             services.AddTransient<IGoogleClient, GoogleClient>();
             services.AddTransient<IGoogleMigrator, GoogleMigrator>();
-            services.AddTransient<IHangfireUtility, HangfireUtility>();
+           // services.AddTransient<IHangfireUtility, HangfireUtility>();
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<INokiaService, NokiaService>();
             services.AddTransient<ITargetCalculator, TargetCalculator>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();
+            services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
+
 
 
 

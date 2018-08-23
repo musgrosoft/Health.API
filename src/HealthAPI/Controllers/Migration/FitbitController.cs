@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Migrators.Hangfire;
 using Services.Fitbit;
@@ -14,15 +15,19 @@ namespace HealthAPI.Controllers.Migration
         private readonly ILogger _logger;
         private readonly IConfig _config;
         private readonly IFitbitService _fitbitService;
-        private readonly IHangfireUtility _hangfireUtility;
+       // private readonly IHangfireUtility _hangfireUtility;
         private readonly IHangfireWork _hangfireWork;
 
-        public FitbitController(ILogger logger, IConfig config, IFitbitService fitbitService, IHangfireUtility hangfireUtility, IHangfireWork hangfireWork)
+        private readonly IBackgroundJobClient _backgroundJobClient;
+
+        public FitbitController(ILogger logger, IConfig config, IFitbitService fitbitService, IBackgroundJobClient backgroundJobClient, IHangfireWork hangfireWork)
         {
+             
             _logger = logger;
             _config = config;
             _fitbitService = fitbitService;
-            _hangfireUtility = hangfireUtility;
+            _backgroundJobClient = backgroundJobClient;
+            //_hangfireUtility = hangfireUtility;
             _hangfireWork = hangfireWork;
         }
 
@@ -32,7 +37,8 @@ namespace HealthAPI.Controllers.Migration
         {
             _logger.Log("Fitbit Notification : MIGRATING ALL FITBIT DATA");
 
-            _hangfireUtility.Enqueue(() => _hangfireWork.MigrateAllFitbitData());
+            //_hangfireUtility.Enqueue(() => _hangfireWork.MigrateAllFitbitData());
+            _backgroundJobClient.Enqueue(() => _hangfireWork.MigrateAllFitbitData());
 
             return (NoContent());
         }
@@ -43,11 +49,11 @@ namespace HealthAPI.Controllers.Migration
         {
             if (verify == _config.FitbitVerificationCode)
             {
-                return (NoContent());
+                return NoContent();
             }
             else
             {
-                return (NotFound());
+                return NotFound();
             }
         }
 
@@ -56,16 +62,15 @@ namespace HealthAPI.Controllers.Migration
         public async Task<IActionResult> Subscribe()
         {
             await _fitbitService.Subscribe();
-            return Ok("useful message");
+            return Ok();
         }
 
         [HttpGet]
         [Route("OAuth")]
         public async Task<IActionResult> OAuth([FromQuery]string code)
-        {
-            
+        {   
             await _fitbitService.SetTokens(code);
-            return Ok("Helllo123 change to useful message");
+            return Ok();
         }
 
         [HttpGet]

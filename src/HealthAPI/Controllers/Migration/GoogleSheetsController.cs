@@ -19,27 +19,27 @@ namespace HealthAPI.Controllers.Migration
             _googleMigrator = googleMigrator;
         }
 
-        [HttpGet]
-        //public async Task<IActionResult> Migrate()
-        public IActionResult Migrate()
-        {
+        //[HttpGet]
+        ////public async Task<IActionResult> Migrate()
+        //public IActionResult Migrate()
+        //{
 
-            try
-            {
-                _logger.Log("GOOGLE SHEETS : starting google migrate");
+        //    try
+        //    {
+        //        _logger.Log("GOOGLE SHEETS : starting google migrate");
 
-                _googleMigrator.MigrateRuns();
-                _googleMigrator.MigrateErgos();
-                _googleMigrator.MigrateAlcoholIntakes();
+        //        _googleMigrator.MigrateRuns();
+        //        _googleMigrator.MigrateErgos();
+        //        _googleMigrator.MigrateAlcoholIntakes();
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-                return NotFound(ex.ToString());
-            }
-        }
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.Error(ex);
+        //        return NotFound(ex.ToString());
+        //    }
+        //}
 
 
         [HttpGet]
