@@ -57,6 +57,23 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
         }
 
         [Fact]
+        public async Task ShouldSetTokens()
+        {
+            await _fitbitController.OAuth("qwerty111");
+
+            _fitbitService.Verify(x=>x.SetTokens("qwerty111"), Times.Once);
+        }
+
+        [Fact]
+        public void ShouldReturnOAuthUrl()
+        {
+            var response = (JsonResult)_fitbitController.OAuthUrl();
+
+            Assert.Equal("https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate", response.Value);
+
+        }
+
+        [Fact]
         public void ShouldVerifyFitbitCode()
         {
             _config.Setup(x => x.FitbitVerificationCode).Returns("ABC123");
