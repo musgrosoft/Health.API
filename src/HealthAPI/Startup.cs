@@ -10,8 +10,6 @@ using Services.OAuth;
 using Repositories.OAuth;
 using Services.Fitbit;
 using System.Net.Http;
-using Services;
-using Migrators;
 using Services.Google;
 using Services.Nokia;
 using Hangfire.MemoryStorage;
@@ -36,12 +34,13 @@ namespace HealthAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void SetUpDataBase(IServiceCollection services)
         {
             var config = new Config();
 
-            services.AddDbContext<HealthContext>(dboptions =>
+            services
+                .AddEntityFrameworkSqlServer()
+                .AddDbContext<HealthContext>(dboptions =>
             {
                 dboptions.UseSqlServer(
                     config.HealthDbConnectionString,
@@ -54,12 +53,12 @@ namespace HealthAPI
                     }
                 );
             });
+        }
 
-            //services.AddDbContext<HealthContext>(options =>
-            //{
-            //    options.UseInMemoryDatabase(Guid.NewGuid().ToString());
-            //});
-
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public virtual void ConfigureServices(IServiceCollection services)
+        {
+            SetUpDataBase(services);
 
             services.AddHangfire(x => x.UseMemoryStorage());
 
