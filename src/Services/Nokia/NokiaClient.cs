@@ -32,8 +32,29 @@ namespace Services.Nokia
             _nokiaAuthenticator = nokiaAuthenticator;
         }
 
+        private async Task Revoke()
+        {
+            //    var url1 = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify";
+            //    var url2 = "http://musgrosoft-health-api.azurewebsites.net/api/NokiaNotify/Weights";
+            //    var url3 = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify/Weights";
+            //    var url4 = "http://musgrosoft-health-api.azurewebsites.net/api/NokiaNotify/BloodPressures";
+            //    var url5 = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify/BloodPressures";
+
+            //    var accessToken = await _nokiaAuthenticator.GetAccessToken();
+
+            //    _httpClient.DefaultRequestHeaders.Clear();
+            //    _httpClient.DefaultRequestHeaders.Accept.Clear();
+
+            //    var uri = NOKIA_BASE_URL + $"/notify?action=revoke&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(weightsCallback)}&appli={WeightKgMeasureTypeId}";
+
+            //    var response = await _httpClient.GetAsync(uri);
+
+        }
+
         public async Task Subscribe()
         {
+            await Revoke();
+
             var accessToken = await _nokiaAuthenticator.GetAccessToken();
             //var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
 
