@@ -37,7 +37,7 @@ namespace Services.Nokia
             var accessToken = await _nokiaAuthenticator.GetAccessToken();
             //var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
 
-            var weightsCallback = "http://musgrosoft-health-api.azurewebsites.net/api/NokiaNotify/Weights";
+            var weightsCallback = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify/Weights";
             var bloodPressuresCallback = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify/BloodPressures";
 
             _httpClient.DefaultRequestHeaders.Clear();
