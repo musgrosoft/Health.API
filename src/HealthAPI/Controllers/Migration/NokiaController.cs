@@ -84,7 +84,7 @@ namespace HealthAPI.Controllers.Migration
         {
             //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
 
-            _logger.Log("NOKIA : Migrating just weights");
+            _logger.Log("NOKIA NEW : Migrating just weights");
 
             await _nokiaMigrator.MigrateWeights();
 
@@ -99,7 +99,7 @@ namespace HealthAPI.Controllers.Migration
         {
             //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
 
-            _logger.Log("NOKIA : Migrating just blood pressures");
+            _logger.Log("NOKIA NEW : Migrating just blood pressures");
 
             await _nokiaMigrator.MigrateBloodPressures();
 
