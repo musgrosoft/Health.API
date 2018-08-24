@@ -35,7 +35,10 @@ namespace Services.Nokia
         public async Task Subscribe()
         {
             var accessToken = await _nokiaAuthenticator.GetAccessToken();
-            var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
+            //var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
+
+            var weightsCallback = "http://musgrosoft-health-api.azurewebsites.net/api/NokiaNotify/Weights";
+            var bloodPressuresCallback = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify/BloodPressures";
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -43,7 +46,8 @@ namespace Services.Nokia
             // var uri = NOKIA_BASE_URL + $"/notify?action=revoke&access_token={accessToken}&callback={HttpUtility.UrlEncode(callback)}&appli={WeightKgMeasureTypeId}";
 
 
-            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(callback)}&appli={WeightKgMeasureTypeId}";
+            //var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(callback)}&appli={WeightKgMeasureTypeId}";
+            var uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(weightsCallback)}&appli={WeightKgMeasureTypeId}";
 
             var response = await _httpClient.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
@@ -54,9 +58,10 @@ namespace Services.Nokia
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
 
-             uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(callback)}&appli={SubscribeBloodPressureId}";
+            //uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(callback)}&appli={SubscribeBloodPressureId}";
+            uri = NOKIA_BASE_URL + $"/notify?action=subscribe&access_token={accessToken}&callbackurl={HttpUtility.UrlEncode(bloodPressuresCallback)}&appli={SubscribeBloodPressureId}";
 
-             response = await _httpClient.GetAsync(uri);
+            response = await _httpClient.GetAsync(uri);
             content = await response.Content.ReadAsStringAsync();
 
             _logger.Log("Status code ::: " + response.StatusCode);
