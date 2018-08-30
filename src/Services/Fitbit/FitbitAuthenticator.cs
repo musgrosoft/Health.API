@@ -48,7 +48,7 @@ namespace Services.Fitbit
 
             if (response.IsSuccessStatusCode)
             {
-                _logger.Log($"Fitbit SetTokens SUCCESS status code : {response.StatusCode} , content: {responseBody}");
+                await _logger.LogAsync($"Fitbit SetTokens SUCCESS status code : {response.StatusCode} , content: {responseBody}");
                 var tokenResponse = JsonConvert.DeserializeObject<FitbitAuthTokensResponse>(responseBody);
                 //var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
 
@@ -60,7 +60,7 @@ namespace Services.Fitbit
             }
             else
             {
-              _logger.Log($"Fitbit SetTokens FAIL  non success status code : {response.StatusCode} , content: {responseBody}");
+              await _logger.LogAsync($"Fitbit SetTokens FAIL  non success status code : {response.StatusCode} , content: {responseBody}");
             }
 
         }

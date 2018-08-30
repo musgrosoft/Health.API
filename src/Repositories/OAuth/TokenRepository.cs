@@ -14,7 +14,7 @@ namespace Repositories.OAuth
 
         public async Task UpsertToken(string tokenName, string tokenValue)
         {
-            var existingToken = _healthContext.Tokens.Find(tokenName);
+            var existingToken = await _healthContext.Tokens.FindAsync(tokenName);
 
             if (existingToken != null)
             {

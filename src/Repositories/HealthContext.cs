@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Repositories.Models;
-using Utils;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Repositories
 {
     public class HealthContext : DbContext
     {
-        private  IConfig _config;
         public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
         public virtual DbSet<Models.ActivitySummary> ActivitySummaries { get; set; }
         public virtual DbSet<Models.StepCount> StepCounts { get; set; }

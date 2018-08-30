@@ -37,10 +37,10 @@ namespace Services.Tests.Fitbit
 
         }
 
-        public void SHouldMapFromActivitiesHeartToRestingHeartRates()
-        {
+        //public void ShouldMapFromActivitiesHeartToRestingHeartRates()
+        //{
 
-        }
+        //}
 
     }
 }

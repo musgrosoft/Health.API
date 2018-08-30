@@ -24,7 +24,7 @@ namespace HealthAPI.Controllers.Migration
         //public async Task<IActionResult> Migrate()
         public IActionResult MigrateRuns()
         {
-            _logger.Log("GOOGLE SHEETS : Migrate Runs");
+            _logger.LogAsync("GOOGLE SHEETS : Migrate Runs");
 
             _googleMigrator.MigrateRuns();
 
@@ -36,7 +36,7 @@ namespace HealthAPI.Controllers.Migration
         //public async Task<IActionResult> Migrate()
         public IActionResult MigrateErgos()
         {
-            _logger.Log("GOOGLE SHEETS : Migrate Ergos");
+            _logger.LogAsync("GOOGLE SHEETS : Migrate Ergos");
 
             _googleMigrator.MigrateErgos();
 
@@ -48,7 +48,7 @@ namespace HealthAPI.Controllers.Migration
         //public async Task<IActionResult> Migrate()
         public IActionResult MigrateUnits()
         {
-            _logger.Log("GOOGLE SHEETS : Migrate Units");
+            _logger.LogAsync("GOOGLE SHEETS : Migrate Units");
 
             _googleMigrator.MigrateAlcoholIntakes();
 

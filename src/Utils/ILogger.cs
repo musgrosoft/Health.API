@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Utils
 {
     public interface ILogger
     {
-        void Log(string message);
-        void Error(Exception ex);
+        Task LogAsync(string message);
+        Task ErrorAsync(Exception ex);
     }
 }

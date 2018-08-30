@@ -73,8 +73,8 @@ namespace Services.Nokia
             var response = await _httpClient.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
 
-            _logger.Log("Status code ::: " + response.StatusCode);
-            _logger.Log("content ::: " + content);
+            await _logger.LogAsync("Status code ::: " + response.StatusCode);
+            await _logger.LogAsync("content ::: " + content);
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -85,8 +85,8 @@ namespace Services.Nokia
             response = await _httpClient.GetAsync(uri);
             content = await response.Content.ReadAsStringAsync();
 
-            _logger.Log("Status code ::: " + response.StatusCode);
-            _logger.Log("content ::: " + content);
+            await _logger.LogAsync("Status code ::: " + response.StatusCode);
+            await _logger.LogAsync("content ::: " + content);
 
         }
 
@@ -129,7 +129,7 @@ namespace Services.Nokia
             var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
             var content = await response.Content.ReadAsStringAsync();
 
-            _logger.Log($"GetWeights ::: {response.StatusCode} , {content}");
+            await _logger.LogAsync($"GetWeights ::: {response.StatusCode} , {content}");
 
             if (response.IsSuccessStatusCode)
             {

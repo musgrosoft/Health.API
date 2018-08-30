@@ -28,12 +28,12 @@ namespace Migrators.Nokia
         public async Task MigrateWeights()
         {
             var latestWeightDate  = _healthService.GetLatestWeightDate(MIN_WEIGHT_DATE);
-            _logger.Log($"WEIGHT : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogAsync($"WEIGHT : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             
             var weights = await _nokiaService.GetWeights(fromDate);
-            _logger.Log($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
+            await _logger.LogAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
 
             _healthService.UpsertWeights(weights);
         }
@@ -41,13 +41,13 @@ namespace Migrators.Nokia
         public async Task MigrateBloodPressures()
         {
             var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(MIN_BLOOD_PRESSURE_DATE);
-            _logger.Log($"BLOOD PRESSURE : Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogAsync($"BLOOD PRESSURE : Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            _logger.Log($"BLOOD PRESSURE : Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogAsync($"BLOOD PRESSURE : Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var bloodPressures = await _nokiaService.GetBloodPressures(fromDate);
-            _logger.Log($"BLOOD PRESSURE : Found {bloodPressures.Count()} Blood Pressure records.");
+            await _logger.LogAsync($"BLOOD PRESSURE : Found {bloodPressures.Count()} Blood Pressure records.");
             
             _healthService.UpsertBloodPressures(bloodPressures);
         }

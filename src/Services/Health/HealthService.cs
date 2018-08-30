@@ -189,7 +189,7 @@ namespace Services.Health
         {
             var enumerable = weights.ToList();
 
-            _logger.Log($"WEIGHT : Saving {enumerable.Count()} weight");
+            _logger.LogAsync($"WEIGHT : Saving {enumerable.Count()} weight");
 
             foreach (var weight in enumerable)
             {
@@ -199,7 +199,7 @@ namespace Services.Health
 
         public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
-            _logger.Log($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
+            _logger.LogAsync($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
 
             foreach (var bloodPressure in bloodPressures)
             {
@@ -209,7 +209,7 @@ namespace Services.Health
 
         public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {
-            _logger.Log($"RESTING HEART RATE : Saving {restingHeartRates.Count()} resting heart rates");
+            _logger.LogAsync($"RESTING HEART RATE : Saving {restingHeartRates.Count()} resting heart rates");
 
             foreach (var restingHeartRate in restingHeartRates)
             {
@@ -219,7 +219,7 @@ namespace Services.Health
 
         public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
         {
-            _logger.Log($"STEP COUNT : Saving {stepCounts.Count()} Step Count");
+            _logger.LogAsync($"STEP COUNT : Saving {stepCounts.Count()} Step Count");
             
             foreach (var stepCount in stepCounts)
             {
@@ -229,7 +229,7 @@ namespace Services.Health
         
         public void UpsertActivitySummaries(IEnumerable<ActivitySummary>  activitySummaries)
         {
-            _logger.Log($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
+            _logger.LogAsync($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
 
             foreach (var activitySummary in activitySummaries)
             {
@@ -239,7 +239,7 @@ namespace Services.Health
         
         public void UpsertHeartSummaries(IEnumerable<HeartRateSummary> heartSummaries)
         {
-            _logger.Log($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
+            _logger.LogAsync($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
 
             foreach (var heartSummary in heartSummaries)
             {
@@ -249,7 +249,7 @@ namespace Services.Health
 
         public void UpsertRuns(List<Run> runs)
         {
-            _logger.Log($"RUN : Saving {runs.Count()} runs");
+            _logger.LogAsync($"RUN : Saving {runs.Count()} runs");
 
             foreach (var run in runs)
             {
@@ -259,7 +259,7 @@ namespace Services.Health
 
         public void UpsertErgos(List<Ergo> rows)
         {
-            _logger.Log($"ROWS : Saving {rows.Count()} rows");
+            _logger.LogAsync($"ROWS : Saving {rows.Count()} rows");
 
             foreach (var row in rows)
             {
@@ -269,7 +269,7 @@ namespace Services.Health
 
         public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
         {
-            _logger.Log($"UNITS : Saving {alcoholIntakes.Count} alcohol intakes");
+            _logger.LogAsync($"UNITS : Saving {alcoholIntakes.Count} alcohol intakes");
             
             foreach (var alcoholIntake in alcoholIntakes)
             {

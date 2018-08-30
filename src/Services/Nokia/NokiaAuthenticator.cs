@@ -24,7 +24,7 @@ namespace Services.Nokia
 
         private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
 
-        private const string NOKIA_RECIRECT_URL = "http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
+        private const string NOKIA_REDIRECT_URL = "http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
 
         public NokiaAuthenticator(ITokenService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
         {
@@ -46,7 +46,7 @@ namespace Services.Nokia
                     new KeyValuePair<string, string>("client_id", _config.NokiaClientId),
                     new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
                     new KeyValuePair<string, string>("code", authorizationCode),
-                    new KeyValuePair<string, string>("redirect_uri", NOKIA_RECIRECT_URL)
+                    new KeyValuePair<string, string>("redirect_uri", NOKIA_REDIRECT_URL)
 
                     
                 };
@@ -67,12 +67,12 @@ namespace Services.Nokia
                 }
                 else
                 {
-                    _logger.Log($"non success status code : {response.StatusCode} , content: {responseBody}");
+                    await _logger.LogAsync($"non success status code : {response.StatusCode} , content: {responseBody}");
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                await _logger.ErrorAsync(ex);
             }
 
         }
@@ -102,7 +102,7 @@ namespace Services.Nokia
                 new KeyValuePair<string, string>("client_id", _config.NokiaClientId),
                 new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
                 new KeyValuePair<string, string>("refresh_token", refreshToken),
-                new KeyValuePair<string, string>("redirect_uri", NOKIA_RECIRECT_URL)
+                new KeyValuePair<string, string>("redirect_uri", NOKIA_REDIRECT_URL)
             };
 
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));

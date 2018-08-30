@@ -5,83 +5,38 @@ namespace Utils
 {
     public class Config : IConfig
     {
+        private readonly IConfigurationRoot _config;
 
-        public string FitbitUserId
+        public Config()
         {
-            get
-            {
-                var value = Environment.GetEnvironmentVariable("FitbitUserId");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
-
-                    value = config["FitbitUserId"];
-
-                }
-                return value;
-            }
+            _config = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json").Build();
         }
 
-        public string HealthDbConnectionString
+        private string GetConfigValue(string name)
         {
-            get
+            var value = Environment.GetEnvironmentVariable(name);
+            if (string.IsNullOrWhiteSpace(value))
             {
-                var value = Environment.GetEnvironmentVariable("HealthDbConnectionString");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
-
-                    value = config["HealthDbConnectionString"];
-
-                }
-                return value;
+                value = _config[name];
             }
+            return value;
         }
 
-        public string LogzIoToken
-        {
-            get
-            {
-                var value = Environment.GetEnvironmentVariable("LogzIoToken");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
+        public string FitbitUserId => GetConfigValue("FitbitUserId");
 
-                    value = config["LogzIoToken"];
+        public string HealthDbConnectionString => GetConfigValue("HealthDbConnectionString");
 
-                }
-                return value;
-            }
-        }
+        public string LogzIoToken => GetConfigValue("LogzIoToken");
 
-        public string GoogleClientId {
-            get
-            {
-                var value = Environment.GetEnvironmentVariable("GoogleClientId");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
-
-                    value = config["GoogleClientId"];
-
-                }
-                return value;
-            }
-        }
+        public string GoogleClientId => GetConfigValue("GoogleClientId");
         public string GoogleClientSecret {
             get
             {
                 var value = Environment.GetEnvironmentVariable("GoogleClientSecret");
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
 
-                    value = config["GoogleClientSecret"];
+                    value = _config["GoogleClientSecret"];
 
                 }
                 //
@@ -89,88 +44,15 @@ namespace Utils
             }
         }
 
-        public string FitbitVerificationCode
-        {
-            get
-            {
-                var value = Environment.GetEnvironmentVariable("FitbitVerificationCode");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
+        public string FitbitVerificationCode => GetConfigValue("FitbitVerificationCode");
 
-                    value = config["FitbitVerificationCode"];
+        public string NokiaClientId => GetConfigValue("NokiaClientId");
 
-                }
-                return value;
-            }
-        }
+        public string NokiaClientSecret => GetConfigValue("NokiaClientSecret");
+       
+        public string FitbitClientId => GetConfigValue("FitbitClientId");
 
-        public string NokiaClientId
-        {
-            get
-            {
-                var value = Environment.GetEnvironmentVariable("NokiaClientId");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
+        public string FitbitClientSecret => GetConfigValue("FitbitClientSecret");
 
-                    value = config["NokiaClientId"];
-
-                }
-                return value;
-            }
-        }
-        public string NokiaClientSecret
-        {
-            get
-            {
-                var value = Environment.GetEnvironmentVariable("NokiaClientSecret");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
-
-                    value = config["NokiaClientSecret"];
-
-                }
-                return value;
-            }
-        }
-
-        public string FitbitClientId
-        {
-            get
-            {
-                var value = Environment.GetEnvironmentVariable("FitbitClientId");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
-
-                    value = config["FitbitClientId"];
-
-                }
-                return value;
-            }
-        }
-
-        public string FitbitClientSecret
-        {
-            get
-            {
-                var value = Environment.GetEnvironmentVariable("FitbitClientSecret");
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    var builder = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json");
-                    var config = builder.Build();
-
-                    value = config["FitbitClientSecret"];
-
-                }
-                return value;
-            }
-        }
     }
 }
