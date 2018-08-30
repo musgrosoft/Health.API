@@ -24,19 +24,11 @@ namespace HealthAPI.Controllers.Migration
         //public async Task<IActionResult> Migrate()
         public IActionResult MigrateRuns()
         {
-            try
-            {
-                _logger.Log("GOOGLE SHEETS : Migrate Runs");
+            _logger.Log("GOOGLE SHEETS : Migrate Runs");
 
-                _googleMigrator.MigrateRuns();
+            _googleMigrator.MigrateRuns();
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-                return NotFound(ex.ToString());
-            }
+            return Ok();
         }
 
         [HttpGet]
@@ -44,19 +36,11 @@ namespace HealthAPI.Controllers.Migration
         //public async Task<IActionResult> Migrate()
         public IActionResult MigrateErgos()
         {
-            try
-            {
-                _logger.Log("GOOGLE SHEETS : Migrate Ergos");
+            _logger.Log("GOOGLE SHEETS : Migrate Ergos");
 
-                _googleMigrator.MigrateErgos();
+            _googleMigrator.MigrateErgos();
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-                return NotFound(ex.ToString());
-            }
+            return Ok();
         }
 
         [HttpGet]
@@ -64,19 +48,11 @@ namespace HealthAPI.Controllers.Migration
         //public async Task<IActionResult> Migrate()
         public IActionResult MigrateUnits()
         {
-            try
-            {
-                _logger.Log("GOOGLE SHEETS : Migrate Units");
+            _logger.Log("GOOGLE SHEETS : Migrate Units");
 
-                _googleMigrator.MigrateAlcoholIntakes();
+            _googleMigrator.MigrateAlcoholIntakes();
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-                return NotFound(ex.ToString());
-            }
+            return Ok();
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using HealthAPI.Controllers.Migration;
 using Microsoft.AspNetCore.Mvc;
 using Migrators;
@@ -26,22 +27,26 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             _nokiaController = new NokiaController(_logger.Object, _nokiaMigrator.Object, _nokiaService.Object);
         }
 
-        //[Fact]
-        //public async Task ShouldMigrateNokiaData()
-        //{
-        //    var _logger = new Mock<ILogger>();
-        //    var _nokiaMigrator = new Mock<INokiaMigrator>();
+        [Fact]
+        public async Task ShouldMigrateWeights()
+        {
+           var response = (OkResult)(await _nokiaController.MigrateWeights());
 
-        //    var _fitbitController = new NokiaController(_logger.Object, _nokiaMigrator.Object,null,null);
+            _nokiaMigrator.Verify(x=>x.MigrateWeights(), Times.Once);
 
-        //    //When
-        //    await _fitbitController.Migrate();
+            Assert.Equal( 200, response.StatusCode);
+        }
 
-        //    //Then
-        //    _nokiaMigrator.Verify(x => x.MigrateWeights(), Times.Once);
-        //    _nokiaMigrator.Verify(x => x.MigrateBloodPressures(), Times.Once);
-        //}
+        [Fact]
+        public async Task ShouldMigrateBloodPressures()
+        {
+            var response = (OkResult)(await _nokiaController.MigrateBloodPressures());
 
+            _nokiaMigrator.Verify(x => x.MigrateBloodPressures(), Times.Once);
+
+            Assert.Equal(200, response.StatusCode);
+        }
+        
         [Fact]
         public async Task ShouldListSubscriptions()
         {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Migrators;
 using Migrators.Nokia;
 using Services.Nokia;
 using Utils;
@@ -28,54 +27,6 @@ namespace HealthAPI.Controllers.Migration
             _logger = logger;
             _nokiaMigrator = nokiaMigrator;
             _nokiaService = nokiaService;
-        }
-
-
-
-        //todo post
-        //[HttpGet]
-        [HttpPost]
-        public async Task<IActionResult> Migrate([FromQuery]int? appli)
-        {
-            //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
-
-            try
-            {
-                _logger.Log("NOKIA : starting nokia migrate");
-
-                if (!appli.HasValue)
-                {
-                    _logger.Log("NOKIA : Migrating both Weights and Bloodpressures");
-                    await _nokiaMigrator.MigrateWeights();
-                    await _nokiaMigrator.MigrateBloodPressures();
-                }
-                else
-                {
-                    if (appli == WeightKgMeasureTypeId)
-                    {
-                        _logger.Log("NOKIA : Migrating just weights");
-                        await _nokiaMigrator.MigrateWeights();
-                    }
-
-                    if (appli == SubscribeBloodPressureId)
-                    {
-                        _logger.Log("NOKIA : Migrating just blood pressures");
-                        await _nokiaMigrator.MigrateBloodPressures();
-                    }
-
-                }
-                
-                _logger.Log("NOKIA : finishing nokia migrate");
-
-                return Ok();
-
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-                return NotFound(ex.ToString());
-            }
-
         }
 
         [HttpPost]
@@ -107,7 +58,6 @@ namespace HealthAPI.Controllers.Migration
 
             return Ok();
         }
-
 
         [HttpGet]
         [Route("OAuth")]
