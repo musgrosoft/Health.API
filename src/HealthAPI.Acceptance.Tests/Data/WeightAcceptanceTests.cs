@@ -27,9 +27,9 @@ namespace HealthAPI.Acceptance.Tests
         public async Task ShouldGetWeights()
         {
             var client = _factory.CreateClient();
-            client.DefaultRequestHeaders
-                .Accept
-                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //client.DefaultRequestHeaders
+            //    .Accept
+            //    .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             SeedData();
 
