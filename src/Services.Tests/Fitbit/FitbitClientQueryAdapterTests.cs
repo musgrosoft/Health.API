@@ -86,7 +86,7 @@ namespace Services.Tests.Fitbit
             Assert.Equal(2, fitbitDailyActivities.Count());
             Assert.Contains(fitbitDailyActivities, x => x.DateTime == day1 && x.summary.steps == 1);
             Assert.Contains(fitbitDailyActivities, x => x.DateTime == day2 && x.summary.steps == 2);
-            _logger.Verify(x => x.ErrorAsync(tooManyRequests), Times.Once);
+            _logger.Verify(x => x.LogErrorAsync(tooManyRequests), Times.Once);
         }
 
         [Fact]
@@ -216,7 +216,7 @@ namespace Services.Tests.Fitbit
             Assert.Equal(2, heartActivities.Count());
             Assert.Contains(heartActivities, x => x.value.restingHeartRate == 11);
             Assert.Contains(heartActivities, x => x.value.restingHeartRate == 12);
-            _logger.Verify(x => x.ErrorAsync(tooManyRequests), Times.Once);
+            _logger.Verify(x => x.LogErrorAsync(tooManyRequests), Times.Once);
 
         }
 

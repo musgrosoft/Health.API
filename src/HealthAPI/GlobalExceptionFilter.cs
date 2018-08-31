@@ -18,7 +18,7 @@ namespace HealthAPI
         {
             // log the exception
             //logger.LogError(0, context.Exception.GetBaseException(), "Exception occurred.");
-            _logger.ErrorAsync(context.Exception.GetBaseException());
+            _logger.LogErrorAsync(context.Exception.GetBaseException());
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Utils.Unit.Tests
             var message = "This is my message";
 
             //When
-            await _logger.LogAsync(message);
+            await _logger.LogMessageAsync(message);
 
             Assert.Equal("http://listener.logz.io:8070/?token=&type=LOG", _capturedUri.AbsoluteUri);
             Assert.Equal(
@@ -65,7 +65,7 @@ namespace Utils.Unit.Tests
             var exception = new Exception("This is my exception", new Exception("And this is its inner exception"));
 
             //When
-            await _logger.ErrorAsync(exception);
+            await _logger.LogErrorAsync(exception);
 
             Assert.Equal("http://listener.logz.io:8070/?token=&type=ERROR", _capturedUri.AbsoluteUri);
             Assert.Equal(

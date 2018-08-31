@@ -29,7 +29,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             _googleSheetsController.MigrateRuns();
 
             _googleMigrator.Verify(x => x.MigrateRuns(), Times.Once);
-            _logger.Verify(x => x.LogAsync("GOOGLE SHEETS : Migrate Runs"));
+            _logger.Verify(x => x.LogMessageAsync("GOOGLE SHEETS : Migrate Runs"));
 
         }
 
@@ -39,7 +39,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             _googleSheetsController.MigrateErgos();
 
             _googleMigrator.Verify(x => x.MigrateErgos(), Times.Once);
-            _logger.Verify(x => x.LogAsync("GOOGLE SHEETS : Migrate Ergos"));
+            _logger.Verify(x => x.LogMessageAsync("GOOGLE SHEETS : Migrate Ergos"));
 
         }
 
@@ -49,7 +49,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             _googleSheetsController.MigrateUnits();
 
             _googleMigrator.Verify(x=>x.MigrateAlcoholIntakes(), Times.Once);
-            _logger.Verify(x=>x.LogAsync("GOOGLE SHEETS : Migrate Units"));
+            _logger.Verify(x=>x.LogMessageAsync("GOOGLE SHEETS : Migrate Units"));
 
         }
     }

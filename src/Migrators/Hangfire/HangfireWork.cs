@@ -29,7 +29,7 @@ namespace Migrators.Hangfire
             }
             catch (Exception ex)
             {
-                await _logger.ErrorAsync(ex);
+                await _logger.LogErrorAsync(ex);
             }
         }
     }

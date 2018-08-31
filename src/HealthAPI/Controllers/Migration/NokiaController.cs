@@ -35,11 +35,11 @@ namespace HealthAPI.Controllers.Migration
         {
             //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
 
-            await _logger.LogAsync("NOKIA NEW : Migrating just weights");
+            await _logger.LogMessageAsync("NOKIA NEW : Migrating just weights");
 
             await _nokiaMigrator.MigrateWeights();
 
-            await _logger.LogAsync("NOKIA : Finished Migrating just weights");
+            await _logger.LogMessageAsync("NOKIA : Finished Migrating just weights");
 
             return Ok();
         }
@@ -50,11 +50,11 @@ namespace HealthAPI.Controllers.Migration
         {
             //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
 
-            await _logger.LogAsync("NOKIA NEW : Migrating just blood pressures");
+            await _logger.LogMessageAsync("NOKIA NEW : Migrating just blood pressures");
 
             await _nokiaMigrator.MigrateBloodPressures();
 
-            await _logger.LogAsync("NOKIA : Finished Migrating just blood pressures");
+            await _logger.LogMessageAsync("NOKIA : Finished Migrating just blood pressures");
 
             return Ok();
         }

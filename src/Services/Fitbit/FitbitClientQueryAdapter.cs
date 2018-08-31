@@ -33,7 +33,7 @@ namespace Services.Fitbit
                 }
                 catch (TooManyRequestsException ex)
                 {
-                    await _logger.ErrorAsync(ex);
+                    await _logger.LogErrorAsync(ex);
                     break;
                 }
                 
@@ -61,7 +61,7 @@ namespace Services.Fitbit
                 }
                 catch (TooManyRequestsException ex)
                 {
-                    await _logger.ErrorAsync(ex);
+                    await _logger.LogErrorAsync(ex);
                     break;
                 }
                 heartActivities.AddRange(fitbitActivity.activitiesHeart);

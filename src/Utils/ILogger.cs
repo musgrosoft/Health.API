@@ -5,7 +5,7 @@ namespace Utils
 {
     public interface ILogger
     {
-        Task LogAsync(string message);
-        Task ErrorAsync(Exception ex);
+        Task LogMessageAsync(string message);
+        Task LogErrorAsync(Exception ex);
     }
 }

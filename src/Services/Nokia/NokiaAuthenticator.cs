@@ -67,12 +67,12 @@ namespace Services.Nokia
                 }
                 else
                 {
-                    await _logger.LogAsync($"non success status code : {response.StatusCode} , content: {responseBody}");
+                    await _logger.LogMessageAsync($"non success status code : {response.StatusCode} , content: {responseBody}");
                 }
             }
             catch (Exception ex)
             {
-                await _logger.ErrorAsync(ex);
+                await _logger.LogErrorAsync(ex);
             }
 
         }

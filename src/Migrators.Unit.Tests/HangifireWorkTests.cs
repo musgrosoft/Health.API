@@ -47,7 +47,7 @@ namespace Migrators.Unit.Tests
             await _hangfireWork.MigrateAllFitbitData();
 
             //then
-            _logger.Verify(x => x.ErrorAsync(ex), Times.Once);
+            _logger.Verify(x => x.LogErrorAsync(ex), Times.Once);
             
         }
 

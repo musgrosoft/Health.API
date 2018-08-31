@@ -75,7 +75,7 @@ namespace Services.Google
                         }
                         catch (Exception ex)
                         {
-                            _logger.ErrorAsync(ex);
+                            _logger.LogErrorAsync(ex);
                         }
 
                     }
@@ -86,7 +86,7 @@ namespace Services.Google
             }
             catch (Exception ex)
             {
-                _logger.ErrorAsync(ex);
+                _logger.LogErrorAsync(ex);
             }
 
             return alcoholIntakes;
@@ -118,7 +118,7 @@ namespace Services.Google
                         }
                         catch (Exception ex)
                         {
-                            _logger.ErrorAsync(ex);
+                            _logger.LogErrorAsync(ex);
                         }
 
                     }
@@ -129,7 +129,7 @@ namespace Services.Google
             }
             catch (Exception ex)
             {
-                _logger.ErrorAsync(ex);
+                _logger.LogErrorAsync(ex);
             }
 
             return ergos;
@@ -161,7 +161,7 @@ namespace Services.Google
                         }
                         catch (Exception ex)
                         {
-                            _logger.ErrorAsync(ex);
+                            _logger.LogErrorAsync(ex);
                         }
 
                     }
@@ -172,7 +172,7 @@ namespace Services.Google
             }
             catch (Exception ex)
             {
-                _logger.ErrorAsync(ex);
+                _logger.LogErrorAsync(ex);
             }
 
             return runs;

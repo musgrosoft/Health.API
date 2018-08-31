@@ -43,8 +43,8 @@ namespace Services.Fitbit
 
             var response = await _httpClient.PostAsync(uri,null);
 
-            await _logger.LogAsync("Status code ::: " + response.StatusCode);
-            await _logger.LogAsync("content ::: " + response.Content);
+            await _logger.LogMessageAsync("Status code ::: " + response.StatusCode);
+            await _logger.LogMessageAsync("content ::: " + response.Content);
 
         }
 

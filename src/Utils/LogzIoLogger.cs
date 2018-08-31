@@ -18,7 +18,7 @@ namespace Utils
             _calendar = calendar;
         }
 
-        public async Task ErrorAsync(Exception ex)
+        public async Task LogErrorAsync(Exception ex)
         {
             var token = _config.LogzIoToken;
             var requestUri = $"{LOGZ_IO_BASE_URL}/?token={token}&type=ERROR";
@@ -26,7 +26,7 @@ namespace Utils
             await _httpClient.PostAsync(requestUri, content);
         }
 
-        public async Task LogAsync(string message)
+        public async Task LogMessageAsync(string message)
         {
             var token = _config.LogzIoToken;
             var requestUri = $"{LOGZ_IO_BASE_URL}/?token={token}&type=LOG";
