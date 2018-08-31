@@ -5,6 +5,7 @@ using Repositories.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Collections.Generic;
 using System;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Repositories;
@@ -24,6 +25,9 @@ namespace HealthAPI.Acceptance.Tests
         public async Task ShouldGetStepCounts()
         {
             var client = _factory.CreateClient();
+            client.DefaultRequestHeaders
+                .Accept
+                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
             SeedData();

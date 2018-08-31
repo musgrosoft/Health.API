@@ -2,6 +2,7 @@
 using Repositories.Models;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,9 @@ namespace HealthAPI.Acceptance.Tests
         public async Task ShouldGetActivitySummaries()
         {
             var client = _factory.CreateClient();
+            client.DefaultRequestHeaders
+                .Accept
+                .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             SeedData();
 

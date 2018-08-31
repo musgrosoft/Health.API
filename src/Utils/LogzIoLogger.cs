@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace Utils
 {
-    public class Logger : ILogger
+    public class LogzIoLogger : ILogger
     {
         private readonly IConfig _config;
         private readonly HttpClient _httpClient;
         private const string LOGZ_IO_BASE_URL = "http://listener.logz.io:8070";
 
-        public Logger(IConfig config, HttpClient httpClient)
+        public LogzIoLogger(IConfig config, HttpClient httpClient)
         {
             _config = config;
             _httpClient = httpClient;
