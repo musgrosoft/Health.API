@@ -5,11 +5,18 @@ namespace Utils
 {
     public class Config : IConfig
     {
-        private readonly IConfigurationRoot _config;
-
-        public Config()
+        private IConfigurationRoot _configurationRoot;
+        private IConfigurationRoot ConfigurationRoot
         {
-            _config = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json").Build();
+            get
+            {
+                if (_configurationRoot == null)
+                {
+                    _configurationRoot = new ConfigurationBuilder().SetBasePath("C:\\config").AddJsonFile("HealthAPI.json").Build();
+                }
+
+                return _configurationRoot;
+            }
         }
 
         private string GetConfigValue(string name)
@@ -17,7 +24,7 @@ namespace Utils
             var value = Environment.GetEnvironmentVariable(name);
             if (string.IsNullOrWhiteSpace(value))
             {
-                value = _config[name];
+                value = ConfigurationRoot[name];
             }
             return value;
         }
@@ -36,7 +43,7 @@ namespace Utils
                 if (string.IsNullOrWhiteSpace(value))
                 {
 
-                    value = _config["GoogleClientSecret"];
+                    value = ConfigurationRoot["GoogleClientSecret"];
 
                 }
                 //
