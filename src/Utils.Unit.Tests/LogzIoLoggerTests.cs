@@ -55,5 +55,23 @@ namespace Utils.Unit.Tests
                 await _capturedContent.ReadAsStringAsync()
                 );
         }
+
+
+        [Fact]
+        public async Task ShouldLogError()
+        {
+            //Given
+            _calendar.Setup(x => x.Now()).Returns(new DateTime(2018, 12, 25, 12, 15, 59));
+            var exception = new Exception("This is my exception", new Exception("And this is its inner exception"));
+
+            //When
+            await _logger.ErrorAsync(exception);
+
+            Assert.Equal("http://listener.logz.io:8070/?token=&type=ERROR", _capturedUri.AbsoluteUri);
+            Assert.Equal(
+                $"{{\"message\": \"{System.Web.HttpUtility.JavaScriptStringEncode(exception.ToString())}\", \"timestamp\" : \"" + DateTime.Now.ToString("2018-12-25T12:15:59.000Z") + "\"}",
+                await _capturedContent.ReadAsStringAsync()
+            );
+        }
     }
 }
