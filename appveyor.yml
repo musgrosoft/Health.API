@@ -18,7 +18,7 @@ before_build:
 
     dotnet restore ./src/Services.Tests/Services.Tests.csproj
     
-    dotnet restore ./src/Utils.Unit.Tests/Utils.Tests.csproj
+    dotnet restore ./src/Utils.Unit.Tests/Utils.Unit.Tests.csproj
 
     dotnet restore ./src/HealthAPI/HealthAPI.csproj
 
@@ -41,7 +41,7 @@ before_build:
 
     dotnet clean ./src/Services.Tests/Services.Tests.csproj
     
-    dotnet clean ./src/Utils.Unit.Tests/Utils.Tests.csproj
+    dotnet clean ./src/Utils.Unit.Tests/Utils.Unit.Tests.csproj
 
     dotnet clean ./src/HealthAPI/HealthAPI.csproj
 
