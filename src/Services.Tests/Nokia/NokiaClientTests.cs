@@ -24,7 +24,7 @@ namespace Services.Tests.Nokia
                 {
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(nokiaContent)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); 
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
 
