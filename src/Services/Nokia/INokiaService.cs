@@ -9,7 +9,7 @@ namespace Services.Nokia
     {
         Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime);
         Task<IEnumerable<BloodPressure>> GetBloodPressures(DateTime sinceDateTime);
-        Task<string> GetSubscriptions();
+        Task<List<string>> GetSubscriptions();
         Task Subscribe();
         Task SetTokens(string authorizationCode);
     }

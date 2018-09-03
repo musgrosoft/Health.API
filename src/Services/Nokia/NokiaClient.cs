@@ -87,12 +87,34 @@ namespace Services.Nokia
 
         }
 
-        public async Task<string> GetSubscriptions()
-        {
-            string subscriptions;
+        //public async Task<string> GetSubscriptions()
+        //{
+        //    string subscriptions;
 
-            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+        //    var accessToken = await _nokiaAuthenticator.GetAccessToken();
             
+        //    //return null;
+        //    _httpClient.DefaultRequestHeaders.Clear();
+        //    _httpClient.DefaultRequestHeaders.Accept.Clear();
+
+        //    var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={WeightKgMeasureTypeId}");
+        //    var content = await response.Content.ReadAsStringAsync();
+
+        //    subscriptions = $"Subscription Weight ::: {response.StatusCode} , {content} <br/>" ;
+
+        //    response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={SubscribeBloodPressureId}");
+        //    content = await response.Content.ReadAsStringAsync();
+
+        //    subscriptions += $"Subscription blood pressure ::: {response.StatusCode} , {content}";
+
+        //    return subscriptions;
+        //}
+
+        public async Task<string> GetWeightSubscription()
+        {
+            
+            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+
             //return null;
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -100,76 +122,87 @@ namespace Services.Nokia
             var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={WeightKgMeasureTypeId}");
             var content = await response.Content.ReadAsStringAsync();
 
-            subscriptions = $"Subscription Weight ::: {response.StatusCode} , {content} <br/>" ;
-
-            response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={SubscribeBloodPressureId}");
-            content = await response.Content.ReadAsStringAsync();
-
-            subscriptions += $"Subscription blood pressure ::: {response.StatusCode} , {content}";
-
-            return subscriptions;
+            return $"Subscription Weight ::: {response.StatusCode} , {content} <br/>";
+            
         }
 
-//        public async Task<IEnumerable<Response.Measuregrp>> GetWeightMeasureGroups(DateTime sinceDateTime)
-//        {
-//            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+        public async Task<string> GetBloodPressureSubscription()
+        {
+            
+            var accessToken = await _nokiaAuthenticator.GetAccessToken();
 
-////            _logger.Log($"GetWeights accesstoken is ::: {accessToken}");
-
-//            _httpClient.DefaultRequestHeaders.Clear();
-//            _httpClient.DefaultRequestHeaders.Accept.Clear();
-
-//            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
-//            var content = await response.Content.ReadAsStringAsync();
-
-//            await _logger.LogMessageAsync($"GetWeights ::: {response.StatusCode} , {content}");
-
-//            if (response.IsSuccessStatusCode)
-//            {   
-//                var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
-                
-//                var dateFilteredMeasures = data.body.measuregrps.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
-//                var weightMeasures = dateFilteredMeasures.Where(x => x.measures.Any(y => y.type == WeightKgMeasureTypeId)).ToList();
-
-//                return weightMeasures;
-//            }
-//            else
-//            {
-//                throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {content}");
-//            }
-//        }
-
-//        public  async Task<IEnumerable<Response.Measuregrp>> GetBloodPressuresMeasureGroups(DateTime sinceDateTime)
-//        {
-//            var accessToken = await _nokiaAuthenticator.GetAccessToken();
-
-//            _httpClient.DefaultRequestHeaders.Clear();
-//            _httpClient.DefaultRequestHeaders.Accept.Clear();
-
-//            //var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669");
-
-//            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
+            //return null;
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
 
 
-//            if (response.IsSuccessStatusCode)
-//            {
-//                var content = await response.Content.ReadAsStringAsync();
-//                var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
+            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/notify?action=list&access_token={accessToken}&appli={SubscribeBloodPressureId}");
+            var content = await response.Content.ReadAsStringAsync();
+
+            return $"Subscription blood pressure ::: {response.StatusCode} , {content}";
+            
+        }
+
+        //        public async Task<IEnumerable<Response.Measuregrp>> GetWeightMeasureGroups(DateTime sinceDateTime)
+        //        {
+        //            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+
+        ////            _logger.Log($"GetWeights accesstoken is ::: {accessToken}");
+
+        //            _httpClient.DefaultRequestHeaders.Clear();
+        //            _httpClient.DefaultRequestHeaders.Accept.Clear();
+
+        //            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
+        //            var content = await response.Content.ReadAsStringAsync();
+
+        //            await _logger.LogMessageAsync($"GetWeights ::: {response.StatusCode} , {content}");
+
+        //            if (response.IsSuccessStatusCode)
+        //            {   
+        //                var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
+
+        //                var dateFilteredMeasures = data.body.measuregrps.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
+        //                var weightMeasures = dateFilteredMeasures.Where(x => x.measures.Any(y => y.type == WeightKgMeasureTypeId)).ToList();
+
+        //                return weightMeasures;
+        //            }
+        //            else
+        //            {
+        //                throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {content}");
+        //            }
+        //        }
+
+        //        public  async Task<IEnumerable<Response.Measuregrp>> GetBloodPressuresMeasureGroups(DateTime sinceDateTime)
+        //        {
+        //            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+
+        //            _httpClient.DefaultRequestHeaders.Clear();
+        //            _httpClient.DefaultRequestHeaders.Accept.Clear();
+
+        //            //var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669");
+
+        //            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
 
 
-//                var dateFilteredMeasures = data.body.measuregrps.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
+        //            if (response.IsSuccessStatusCode)
+        //            {
+        //                var content = await response.Content.ReadAsStringAsync();
+        //                var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
 
-//                var bloodPressureMeasures = dateFilteredMeasures.Where(x =>
-//                    x.measures.Any(y => y.type == DiastolicBloodPressureMeasureTypeId) &&
-//                    x.measures.Any(y => y.type == SystolicBloodPressureMeasureTypeId)).ToList();
 
-//                return bloodPressureMeasures;
-//            }
-//            else
-//            {
-//                throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
-//            }
-//        }
+        //                var dateFilteredMeasures = data.body.measuregrps.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
+
+        //                var bloodPressureMeasures = dateFilteredMeasures.Where(x =>
+        //                    x.measures.Any(y => y.type == DiastolicBloodPressureMeasureTypeId) &&
+        //                    x.measures.Any(y => y.type == SystolicBloodPressureMeasureTypeId)).ToList();
+
+        //                return bloodPressureMeasures;
+        //            }
+        //            else
+        //            {
+        //                throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
+        //            }
+        //        }
 
         public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups()
         {

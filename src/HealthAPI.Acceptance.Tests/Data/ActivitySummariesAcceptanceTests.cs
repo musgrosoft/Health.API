@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Repositories.Models;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using HealthAPI.Controllers.Migration;
 using Microsoft.AspNetCore.Mvc;
@@ -50,11 +51,17 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
         [Fact]
         public async Task ShouldListSubscriptions()
         {
-            _nokiaService.Setup(x => x.GetSubscriptions()).Returns(Task.FromResult("All the subscriptions"));
+            var subscriptions = new List<string>
+            {
+                "subscript one",
+                "subscription two"
+            };
+
+            _nokiaService.Setup(x => x.GetSubscriptions()).Returns(Task.FromResult(subscriptions));
 
             var response = (OkObjectResult) (await _nokiaController.ListSubscriptions());
 
-            Assert.Equal("All the subscriptions", response.Value);
+            Assert.Equal(subscriptions, response.Value);
         }
 
         [Fact]

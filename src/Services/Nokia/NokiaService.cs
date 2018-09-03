@@ -34,9 +34,18 @@ namespace Services.Nokia
             return _nokiaMapper.MapMeasuresGroupsToBloodPressures(measureGroups);
         }
 
-        public async Task<string> GetSubscriptions()
+        public async Task<List<string>> GetSubscriptions()
         {
-            return await _nokiaClient.GetSubscriptions();
+            var weightSubscription = await _nokiaClient.GetWeightSubscription();
+            var bloodPressureSubscription = await _nokiaClient.GetBloodPressureSubscription();
+
+            var subscriptions = new List<string>
+            {
+                weightSubscription,
+                bloodPressureSubscription
+            };
+
+            return subscriptions;
         }
 
         public async Task Subscribe()

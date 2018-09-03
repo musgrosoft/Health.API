@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Fitbit;
 using Services.Fitbit.Domain;
 using Xunit;
 
