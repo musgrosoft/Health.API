@@ -109,6 +109,9 @@ namespace HealthAPI
             services.AddTransient<ITargetCalculator, TargetCalculator>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();
 
+            services.AddTransient<INokiaMapper, NokiaMapper>();
+            services.AddTransient<INokiaClientQueryAdapter, NokiaClientQueryAdapter>();
+
             services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
 
 

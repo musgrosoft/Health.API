@@ -9,21 +9,29 @@ namespace Services.Nokia
     {
         private readonly INokiaClient _nokiaClient;
         private readonly INokiaAuthenticator _nokiaAuthenticator;
+        private readonly INokiaMapper _nokiaMapper;
+        private readonly INokiaClientQueryAdapter _nokiaClientQueryAdapter;
 
-        public NokiaService(INokiaClient nokiaClient, INokiaAuthenticator nokiaAuthenticator)
+        public NokiaService(INokiaClient nokiaClient, INokiaAuthenticator nokiaAuthenticator, INokiaMapper nokiaMapper, INokiaClientQueryAdapter nokiaClientQueryAdapter)
         {
             _nokiaClient = nokiaClient;
             _nokiaAuthenticator = nokiaAuthenticator;
+            _nokiaMapper = nokiaMapper;
+            _nokiaClientQueryAdapter = nokiaClientQueryAdapter;
         }
 
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {
-            return await _nokiaClient.GetWeights(sinceDateTime);
+            var measureGroups = await _nokiaClientQueryAdapter.GetMeasureGroups(sinceDateTime);
+
+            return _nokiaMapper.MapMeasuresGroupsToWeights(measureGroups);
         }
 
         public async Task<IEnumerable<BloodPressure>> GetBloodPressures(DateTime sinceDateTime)
         {
-            return await _nokiaClient.GetBloodPressures(sinceDateTime);
+            var measureGroups = await _nokiaClientQueryAdapter.GetMeasureGroups(sinceDateTime);
+
+            return _nokiaMapper.MapMeasuresGroupsToBloodPressures(measureGroups);
         }
 
         public async Task<string> GetSubscriptions()
