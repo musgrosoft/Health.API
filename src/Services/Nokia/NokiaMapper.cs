@@ -18,7 +18,9 @@ namespace Services.Nokia
 
         public IEnumerable<Weight> MapMeasuresGroupsToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups)
         {
-            return weightMeasuresGroups.Select(x => new Weight
+            return weightMeasuresGroups
+                .Where(x=>x.measures.Any(y=>y.type == WeightKgMeasureTypeId))
+                .Select(x => new Weight
             {
                 CreatedDate = x.date.ToDateFromUnixTime(),
                 Kg = x.measures.First(w => w.type == WeightKgMeasureTypeId).value * Math.Pow(10, x.measures.First(w => w.type == WeightKgMeasureTypeId).unit),
@@ -30,7 +32,9 @@ namespace Services.Nokia
 
         public IEnumerable<BloodPressure> MapMeasuresGroupsToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups)
         {
-            return bloodPressureMeasuresGroups.Select(x => new BloodPressure
+            return bloodPressureMeasuresGroups
+                .Where(x => x.measures.Any(y => y.type == DiastolicBloodPressureMeasureTypeId))
+                .Select(x => new BloodPressure
             {
                 CreatedDate = x.date.ToDateFromUnixTime(),
                 Diastolic = (int)(x.measures.First(bp => bp.type == DiastolicBloodPressureMeasureTypeId).value * Math.Pow(10, x.measures.First(bp => bp.type == DiastolicBloodPressureMeasureTypeId).unit)),
