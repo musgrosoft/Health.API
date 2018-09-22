@@ -75,7 +75,7 @@ namespace Services.Fitbit
             else
             {
                 throw new Exception(
-                    $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+                    $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content.ReadAsStringAsync()}");
 //                _logger.Log($"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
 //                return Maybe<FitBitActivity>.None;
             }
@@ -109,7 +109,7 @@ namespace Services.Fitbit
             {
 
                 throw new Exception(
-                    $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+                    $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content.ReadAsStringAsync()}");
                 //_logger.Log($"No FitbitDailyActivity found for date : {date}");
                 //return null;
             }
