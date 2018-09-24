@@ -9,5 +9,7 @@ namespace Services.Fitbit
         Task<FitbitDailyActivity> GetFitbitDailyActivity(DateTime date);
         Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate);
         Task Subscribe();
+        Task<FitbitRefreshTokenResponse> GetTokensWithRefreshToken(string refreshToken);
+        Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode);
     }
 }

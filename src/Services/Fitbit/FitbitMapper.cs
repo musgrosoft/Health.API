@@ -7,7 +7,7 @@ namespace Services.Fitbit
 {
     public class FitbitMapper : IFitbitMapper
     {
-        public IEnumerable<RestingHeartRate> MapActivitiesHeartToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts)
+        public IEnumerable<RestingHeartRate> MapActivitiesHeartsToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts)
         {
             return activitiesHearts
                 .Where(a => a.value.restingHeartRate != 0)
@@ -18,7 +18,7 @@ namespace Services.Fitbit
                 });
         }
 
-        public IEnumerable<HeartRateSummary> MapActivitiesHeartToHeartRateSummaries(IEnumerable<ActivitiesHeart> activitiesHearts)
+        public IEnumerable<HeartRateSummary> MapActivitiesHeartsToHeartRateSummaries(IEnumerable<ActivitiesHeart> activitiesHearts)
         {
             return activitiesHearts.Select(x => new HeartRateSummary
             {
@@ -42,7 +42,7 @@ namespace Services.Fitbit
             });
         }
 
-        public IEnumerable<StepCount> MapToStepCounts(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
+        public IEnumerable<StepCount> MapFitbitDailyActivitiesToStepCounts(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
         {
             return fitbitDailyActivities.Select(x => new StepCount
             {

@@ -31,7 +31,7 @@ namespace Services.Fitbit
         {
             var fitbitDailyActivities = await _fitbitClientQueryAdapter.GetFitbitDailyActivities(fromDate, toDate);
 
-            return _fitbitMapper.MapToStepCounts(fitbitDailyActivities);
+            return _fitbitMapper.MapFitbitDailyActivitiesToStepCounts(fitbitDailyActivities);
         }
 
         public async Task<IEnumerable<ActivitySummary>> GetActivitySummaries(DateTime fromDate, DateTime toDate)
@@ -45,14 +45,14 @@ namespace Services.Fitbit
         {
             var heartActivies = await _fitbitClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate);
 
-            return _fitbitMapper.MapActivitiesHeartToRestingHeartRates(heartActivies);
+            return _fitbitMapper.MapActivitiesHeartsToRestingHeartRates(heartActivies);
         }
 
         public async Task<IEnumerable<HeartRateSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate)
         {
             var heartActivies = await _fitbitClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate);
 
-            return _fitbitMapper.MapActivitiesHeartToHeartRateSummaries(heartActivies);
+            return _fitbitMapper.MapActivitiesHeartsToHeartRateSummaries(heartActivies);
         }
 
         public async Task Subscribe()

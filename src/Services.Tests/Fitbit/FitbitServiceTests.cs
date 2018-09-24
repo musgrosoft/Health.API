@@ -77,7 +77,7 @@ namespace Services.Tests.Fitbit
             };
 
             _fitbitClientQueryAdapter.Setup(x => x.GetFitbitDailyActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<FitbitDailyActivity>)fitbitDailyActivities));
-            _fitbitMapper.Setup(x => x.MapToStepCounts(fitbitDailyActivities)).Returns(stepCounts);
+            _fitbitMapper.Setup(x => x.MapFitbitDailyActivitiesToStepCounts(fitbitDailyActivities)).Returns(stepCounts);
 
             //When
             var result = await _fitbitService.GetStepCounts(fromDate, toDate);
@@ -138,7 +138,7 @@ namespace Services.Tests.Fitbit
                 new RestingHeartRate{CreatedDate = new DateTime(2017,1,3), Beats = 333},
             };
 
-            _fitbitMapper.Setup(x => x.MapActivitiesHeartToRestingHeartRates(activitiesHearts)).Returns(restingHeartRates);
+            _fitbitMapper.Setup(x => x.MapActivitiesHeartsToRestingHeartRates(activitiesHearts)).Returns(restingHeartRates);
 
             //When
             var result = await _fitbitService.GetRestingHeartRates(fromDate, toDate);
@@ -169,7 +169,7 @@ namespace Services.Tests.Fitbit
                 new HeartRateSummary{CreatedDate = new DateTime(2017,1,3), OutOfRangeMinutes = 9, FatBurnMinutes = 10, CardioMinutes = 11, PeakMinutes = 12}
             };
 
-            _fitbitMapper.Setup(x => x.MapActivitiesHeartToHeartRateSummaries(activitiesHearts))
+            _fitbitMapper.Setup(x => x.MapActivitiesHeartsToHeartRateSummaries(activitiesHearts))
                 .Returns(heartRateSummaries);
 
             //When

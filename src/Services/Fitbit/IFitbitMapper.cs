@@ -5,9 +5,9 @@ namespace Services.Fitbit.Domain
 {
     public interface IFitbitMapper
     {
-        IEnumerable<RestingHeartRate> MapActivitiesHeartToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts);
-        IEnumerable<HeartRateSummary> MapActivitiesHeartToHeartRateSummaries(IEnumerable<ActivitiesHeart> activitiesHearts);
+        IEnumerable<RestingHeartRate> MapActivitiesHeartsToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts);
+        IEnumerable<HeartRateSummary> MapActivitiesHeartsToHeartRateSummaries(IEnumerable<ActivitiesHeart> activitiesHearts);
         IEnumerable<ActivitySummary> MapFitbitDailyActivitiesToActivitySummaries(IEnumerable<FitbitDailyActivity> fitbitDailyActivities);
-        IEnumerable<StepCount> MapToStepCounts(IEnumerable<FitbitDailyActivity> fitbitDailyActivities);
+        IEnumerable<StepCount> MapFitbitDailyActivitiesToStepCounts(IEnumerable<FitbitDailyActivity> fitbitDailyActivities);
     }
 }

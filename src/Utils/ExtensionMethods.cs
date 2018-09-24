@@ -16,6 +16,12 @@ namespace Utils
             return epoch.AddSeconds(val);
         }
 
+        public static double ToUnixTimeFromDate(this DateTime dateTime)
+        {
+            return (dateTime - epoch).TotalSeconds;
+        }
+
+
         public static DateTime GetWeekStartingOnMonday(this DateTime val)
         {
             //set Monday as first day of week
