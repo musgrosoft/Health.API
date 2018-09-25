@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using Nokia.Domain;
 using Repositories.Models;
-using Services.Nokia.Domain;
 
-namespace Services.Nokia
+namespace Nokia.Services
 {
     public interface INokiaMapper
     {

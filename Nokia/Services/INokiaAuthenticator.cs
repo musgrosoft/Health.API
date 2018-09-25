@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Services.Nokia
+namespace Nokia.Services
 {
     public interface INokiaAuthenticator
     {

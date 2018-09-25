@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Services.Nokia.Domain;
+using Nokia.Domain;
 
-namespace Services.Nokia
+namespace Nokia.Services
 {
     public interface INokiaClientQueryAdapter
     {

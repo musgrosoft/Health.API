@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
-using Services.Nokia;
+using Nokia.Services;
 
 namespace Services.Tests.Nokia
 {

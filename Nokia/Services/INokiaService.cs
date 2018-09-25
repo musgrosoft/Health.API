@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Repositories.Models;
 
-namespace Services.Nokia
+namespace Nokia.Services
 {
     public interface INokiaService
     {

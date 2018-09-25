@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Migrators.Nokia;
-using Services.Nokia;
+using Nokia.Migrator;
+using Nokia.Services;
 using Utils;
 
 namespace HealthAPI.Controllers.Migration

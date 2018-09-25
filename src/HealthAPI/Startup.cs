@@ -12,15 +12,16 @@ using System.Net.Http;
 using Fitbit.Migrator;
 using Fitbit.Services;
 using Services.Google;
-using Services.Nokia;
+using Nokia;
 using Hangfire.MemoryStorage;
 using Hangfire;
 using Migrators.Google;
 using Migrators.Hangfire;
-using Migrators.Nokia;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
+using Nokia.Migrator;
+using Nokia.Services;
 
 namespace HealthAPI
 {

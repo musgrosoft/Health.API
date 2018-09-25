@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Services.Nokia.Domain;
+using Nokia.Domain;
 using Utils;
 
-namespace Services.Nokia
+namespace Nokia.Services
 {
     public class NokiaClientQueryAdapter : INokiaClientQueryAdapter
     {

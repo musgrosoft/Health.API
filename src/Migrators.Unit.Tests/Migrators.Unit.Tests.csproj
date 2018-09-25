@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Nokia\Nokia.csproj" />
     <ProjectReference Include="..\Migrators\Migrators.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>

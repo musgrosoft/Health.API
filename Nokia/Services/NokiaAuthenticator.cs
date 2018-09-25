@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Services.Nokia.Domain;
-using Services.Nokia.Domain.OAuthDomain;
+using Nokia.Domain;
+using Nokia.Domain.OAuthDomain;
 using Services.OAuth;
 using Utils;
 
-namespace Services.Nokia
+namespace Nokia.Services
 {
     public class NokiaAuthenticator : INokiaAuthenticator
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Nokia.Services;
 using Services.Health;
-using Services.Nokia;
 using Utils;
 
-namespace Migrators.Nokia
+namespace Nokia.Migrator
 {   
     public class NokiaMigrator : INokiaMigrator
     {

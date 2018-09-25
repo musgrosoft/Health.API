@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Migrators.Nokia;
 using Moq;
+using Nokia.Migrator;
+using Nokia.Services;
 using Repositories.Models;
 using Services.Health;
-using Services.Nokia;
 using Utils;
 using Xunit;
 

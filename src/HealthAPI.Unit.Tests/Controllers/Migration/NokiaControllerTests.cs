@@ -3,10 +3,9 @@ using System.Net;
 using System.Threading.Tasks;
 using HealthAPI.Controllers.Migration;
 using Microsoft.AspNetCore.Mvc;
-using Migrators;
-using Migrators.Nokia;
 using Moq;
-using Services.Nokia;
+using Nokia.Migrator;
+using Nokia.Services;
 using Utils;
 using Xunit;
 

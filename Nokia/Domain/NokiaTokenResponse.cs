@@ -1,4 +1,4 @@
-﻿namespace Services.Nokia.Domain
+﻿namespace Nokia.Domain
 {
     public class NokiaTokenResponse
     {
