@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Migrators.Fitbit
+namespace Fitbit.Migrator
 {
     public interface IFitbitMigrator
     {

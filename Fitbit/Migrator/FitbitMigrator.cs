@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Services.Fitbit;
+using Fitbit.Services;
 using Services.Health;
 using Utils;
 
-namespace Migrators.Fitbit
+namespace Fitbit.Migrator
 {
     public class FitbitMigrator : IFitbitMigrator
     {

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Repositories.Models;
-using Services.Fitbit.Domain;
 using Utils;
 
-namespace Services.Fitbit
+namespace Fitbit.Services
 {
     public class FitbitService : IFitbitService
     {

@@ -8,8 +8,9 @@ using Repositories.Health;
 using Utils;
 using Services.OAuth;
 using Repositories.OAuth;
-using Services.Fitbit;
 using System.Net.Http;
+using Fitbit.Migrator;
+using Fitbit.Services;
 using Services.Google;
 using Services.Nokia;
 using Hangfire.MemoryStorage;
@@ -20,8 +21,6 @@ using Migrators.Nokia;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
-using Migrators.Fitbit;
-using Services.Fitbit.Domain;
 
 namespace HealthAPI
 {

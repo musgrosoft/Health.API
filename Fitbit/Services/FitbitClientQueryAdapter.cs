@@ -1,11 +1,11 @@
-﻿using Services.Fitbit.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fitbit.Domain;
 using Utils;
 
-namespace Services.Fitbit
+namespace Fitbit.Services
 {
     public class FitbitClientQueryAdapter : IFitbitClientQueryAdapter
     {

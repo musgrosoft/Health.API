@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Migrators.Fitbit;
+using Fitbit.Migrator;
 using Migrators.Hangfire;
 using Moq;
 using Utils;

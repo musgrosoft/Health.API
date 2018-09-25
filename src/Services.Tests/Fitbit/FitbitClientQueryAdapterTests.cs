@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fitbit.Domain;
+using Fitbit.Services;
 using Moq;
-using Services.Fitbit;
-using Services.Fitbit.Domain;
 using Xunit;
 using Utils;
 

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Castle.DynamicProxy.Contributors;
+using Fitbit.Domain;
+using Fitbit.Services;
 using Moq;
 using Repositories.Models;
-using Services.Fitbit;
-using Services.Fitbit.Domain;
 using Utils;
 using Xunit;
 

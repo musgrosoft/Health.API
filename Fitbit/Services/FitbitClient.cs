@@ -1,13 +1,12 @@
-﻿using Newtonsoft.Json;
-using Services.Fitbit.Domain;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Fitbit.Domain;
+using Newtonsoft.Json;
 using Utils;
 
-namespace Services.Fitbit
+namespace Fitbit.Services
 {
     public class FitbitClient : IFitbitClient
     {

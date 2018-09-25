@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Services.Fitbit.Domain;
 using Services.Nokia.Domain;
 using Services.Nokia.Domain.OAuthDomain;
 using Services.OAuth;

@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
+using Fitbit.Services;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Services.Fitbit;
 
 namespace HealthAPI.Acceptance.Tests
 {

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Fitbit.Domain;
 using Repositories.Models;
 
-namespace Services.Fitbit.Domain
+namespace Fitbit.Services
 {
     public interface IFitbitMapper
     {

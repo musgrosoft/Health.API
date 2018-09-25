@@ -3,7 +3,6 @@ using HealthAPI.Controllers.Migration;
 using Migrators.Google;
 using Migrators.Hangfire;
 using Moq;
-using Services.Fitbit;
 using Utils;
 using Xunit;
 

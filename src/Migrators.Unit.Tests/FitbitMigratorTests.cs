@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Migrators.Fitbit;
+using Fitbit.Migrator;
+using Fitbit.Services;
 using Moq;
 using Repositories.Models;
-using Services.Fitbit;
 using Services.Health;
 using Utils;
 using Xunit;
