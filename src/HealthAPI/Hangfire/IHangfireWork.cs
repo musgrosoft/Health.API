@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Migrators.Hangfire
+namespace HealthAPI.Hangfire
 {
     public interface IHangfireWork
     {

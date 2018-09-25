@@ -10,7 +10,7 @@ using Repositories;
 using Repositories.Models;
 using Xunit;
 
-namespace HealthAPI.Acceptance.Tests
+namespace HealthAPI.Acceptance.Tests.Data
 {
     public class ErgosAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>
     {

@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Repositories;
-using Xunit;
 using Repositories.Models;
+using Xunit;
 
-namespace HealthAPI.Acceptance.Tests
+namespace HealthAPI.Acceptance.Tests.Data
 {
 
     public class BloodPressureAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>

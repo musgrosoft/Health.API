@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
 using Fitbit.Services;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Xunit;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
 
-namespace HealthAPI.Acceptance.Tests
+namespace HealthAPI.Acceptance.Tests.Migration
 {
     public class FitbitAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>
     {

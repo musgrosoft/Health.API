@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Fitbit.Services;
 using Hangfire;
+using HealthAPI.Hangfire;
 using Microsoft.AspNetCore.Mvc;
-using Migrators.Hangfire;
 using Utils;
 
 namespace HealthAPI.Controllers.Migration

@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using Repositories.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Repositories;
+using Repositories.Models;
 using Xunit;
 
-namespace HealthAPI.Acceptance.Tests
+namespace HealthAPI.Acceptance.Tests.Data
 {
     public class HeartRateSummaryAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>
     {

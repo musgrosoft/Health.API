@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Fitbit.Migrator;
 using Utils;
 
-namespace Migrators.Hangfire
+namespace HealthAPI.Hangfire
 {
     public class HangfireWork : IHangfireWork
     {
