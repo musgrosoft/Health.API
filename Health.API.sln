@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI", "src\HealthAPI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Unit.Tests", "src\HealthAPI.Unit.Tests\HealthAPI.Unit.Tests.csproj", "{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrators", "src\Migrators\Migrators.csproj", "{83569E16-D4A1-4AF7-9F8B-3F1088673CF8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "src\Repositories\Repositories.csproj", "{B2CF4CB9-2A08-4D16-A784-E3765F53443E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "src\Services\Services.csproj", "{CDA2DCFB-B946-414C-9720-30B267FADCEC}"
@@ -27,9 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Acceptance.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.Unit.Tests", "src\Utils.Unit.Tests\Utils.Unit.Tests.csproj", "{2F73B2AE-075C-4554-8834-A6F0DF427BB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitbit", "Fitbit\Fitbit.csproj", "{28ED4CBB-CED7-4772-A617-DCED64CE3081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitbit", "Fitbit\Fitbit.csproj", "{28ED4CBB-CED7-4772-A617-DCED64CE3081}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nokia", "Nokia\Nokia.csproj", "{5CF10AF0-0F8F-405C-9D09-3D14F3ED22ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nokia", "Nokia\Nokia.csproj", "{5CF10AF0-0F8F-405C-9D09-3D14F3ED22ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google", "Google\Google.csproj", "{BF0A3A06-55C0-46CE-860E-4D6430E51356}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +45,6 @@ Global
 		{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACED73BE-1F13-4AB3-A4EE-31E02C14DAD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83569E16-D4A1-4AF7-9F8B-3F1088673CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83569E16-D4A1-4AF7-9F8B-3F1088673CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83569E16-D4A1-4AF7-9F8B-3F1088673CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83569E16-D4A1-4AF7-9F8B-3F1088673CF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2CF4CB9-2A08-4D16-A784-E3765F53443E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B2CF4CB9-2A08-4D16-A784-E3765F53443E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2CF4CB9-2A08-4D16-A784-E3765F53443E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -89,6 +85,10 @@ Global
 		{5CF10AF0-0F8F-405C-9D09-3D14F3ED22ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CF10AF0-0F8F-405C-9D09-3D14F3ED22ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CF10AF0-0F8F-405C-9D09-3D14F3ED22ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF0A3A06-55C0-46CE-860E-4D6430E51356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF0A3A06-55C0-46CE-860E-4D6430E51356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF0A3A06-55C0-46CE-860E-4D6430E51356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF0A3A06-55C0-46CE-860E-4D6430E51356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
