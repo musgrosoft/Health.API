@@ -1,5 +1,4 @@
-﻿using Services.Google;
-using Services.Health;
+﻿using Services.Health;
 
 namespace Google
 {

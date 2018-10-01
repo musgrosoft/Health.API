@@ -26,9 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Fitbit\Fitbit.csproj" />
     <ProjectReference Include="..\..\Google\Google.csproj" />
     <ProjectReference Include="..\..\Nokia\Nokia.csproj" />
+    <ProjectReference Include="..\Fitbit\Fitbit.csproj" />
     <ProjectReference Include="..\Utils\Utils.csproj" />
   </ItemGroup>
 

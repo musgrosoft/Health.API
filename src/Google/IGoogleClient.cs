@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Repositories.Models;
 
-namespace Services.Google
+namespace Google
 {
     public interface IGoogleClient
     {

@@ -7,7 +7,7 @@ using Google.Apis.Sheets.v4.Data;
 using Repositories.Models;
 using Utils;
 
-namespace Services.Google
+namespace Google
 {
     public class GoogleClient : IGoogleClient
     {
