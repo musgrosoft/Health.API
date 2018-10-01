@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Google;
 using HealthAPI.Controllers.Migration;
-using Migrators.Google;
 using Moq;
 using Utils;
 using Xunit;

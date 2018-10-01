@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Migrators.Google;
+using Google;
 using Moq;
 using Repositories.Models;
 using Services.Google;

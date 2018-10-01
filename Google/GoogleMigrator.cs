@@ -1,7 +1,7 @@
 ﻿using Services.Google;
 using Services.Health;
 
-namespace Migrators.Google
+namespace Google
 {
     public class GoogleMigrator : IGoogleMigrator
     {
