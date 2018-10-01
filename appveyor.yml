@@ -22,7 +22,11 @@ before_build:
 
     dotnet restore ./src/HealthAPI/HealthAPI.csproj
 
-    dotnet restore ./src/Migrators/Migrators.csproj
+    dotnet restore ./src/Fitbit/Fitbit.csproj
+    
+    dotnet restore ./src/Nokia/Nokia.csproj
+    
+    dotnet restore ./src/Google/Google.csproj
 
     dotnet restore ./src/Repositories/Repositories.csproj
 
@@ -45,7 +49,11 @@ before_build:
 
     dotnet clean ./src/HealthAPI/HealthAPI.csproj
 
-    dotnet clean ./src/Migrators/Migrators.csproj
+    dotnet clean ./src/Fitbit/Fitbit.csproj
+    
+    dotnet clean ./src/Nokia/Nokia.csproj
+    
+    dotnet clean ./src/Google/Google.csproj
 
     dotnet clean ./src/Repositories/Repositories.csproj
 
