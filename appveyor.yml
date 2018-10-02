@@ -8,6 +8,7 @@ branches:
     - master
 before_build:
 - cmd: >-
+
     dotnet restore ./src/HealthAPI.Acceptance.Tests/HealthAPI.Acceptance.Tests.csproj
 
     dotnet restore ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
@@ -33,6 +34,12 @@ before_build:
     dotnet restore ./src/Services/Services.csproj
 
     dotnet restore ./src/Utils/Utils.csproj
+    
+    dotnet restore ./src/Fitbit.Unit.Tests/Fitbit.Unit.Tests.csproj
+    
+    dotnet restore ./src/Nokia.Unit.Tests/Nokia.Unit.Tests.csproj
+    
+    dotnet restore ./src/GoogleSheets.Unit.Tests/GoogleSheets.Unit.Tests.csproj
 
 
     dotnet clean ./src/HealthAPI.Acceptance.Tests/HealthAPI.Acceptance.Tests.csproj
@@ -60,6 +67,12 @@ before_build:
     dotnet clean ./src/Services/Services.csproj
 
     dotnet clean ./src/Utils/Utils.csproj
+    
+    dotnet clean ./src/Fitbit.Unit.Tests/Fitbit.Unit.Tests.csproj
+    
+    dotnet clean ./src/Nokia.Unit.Tests/Nokia.Unit.Tests.csproj
+    
+    dotnet clean ./src/GoogleSheets.Unit.Tests/GoogleSheets.Unit.Tests.csproj
 
 build:
   project: Health.API.sln

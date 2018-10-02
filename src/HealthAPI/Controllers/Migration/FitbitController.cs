@@ -13,14 +13,14 @@ namespace HealthAPI.Controllers.Migration
     public class FitbitController : Controller
     {
         private readonly ILogger _logger;
-        private readonly IConfig _config;
+        private readonly IFitbitConfig _config;
         private readonly IFitbitService _fitbitService;
        // private readonly IHangfireUtility _hangfireUtility;
         private readonly IHangfireWork _hangfireWork;
 
         private readonly IBackgroundJobClient _backgroundJobClient;
 
-        public FitbitController(ILogger logger, IConfig config, IFitbitService fitbitService, IBackgroundJobClient backgroundJobClient, IHangfireWork hangfireWork)
+        public FitbitController(ILogger logger, IFitbitConfig config, IFitbitService fitbitService, IBackgroundJobClient backgroundJobClient, IHangfireWork hangfireWork)
         {
              
             _logger = logger;

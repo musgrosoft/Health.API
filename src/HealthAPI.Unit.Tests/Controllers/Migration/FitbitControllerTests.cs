@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+﻿using System.Threading.Tasks;
 using Fitbit.Migrator;
 using Fitbit.Services;
 using Hangfire;
@@ -11,9 +8,7 @@ using HealthAPI.Controllers.Migration;
 using HealthAPI.Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Migrators;
 using Moq;
-using Services.OAuth;
 using Utils;
 using Xunit;
 
@@ -24,9 +19,8 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
     {
         private readonly FitbitController _fitbitController;
         private readonly Mock<ILogger> _logger;
-        private readonly Mock<IConfig> _config;
+        private readonly Mock<IFitbitConfig> _config;
         private readonly Mock<IFitbitService> _fitbitService;
-    //      private readonly Mock<IHangfireUtility> _hangfireUtility;
         private readonly Mock<IBackgroundJobClient> _backgroundJobClient;
         private readonly IHangfireWork _hangfireWork;
         private Mock<IFitbitMigrator> _fitbitMigrator;
@@ -34,7 +28,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
         public FitbitControllerTests()
         {
             _logger = new Mock<ILogger>();
-            _config =new Mock<IConfig>();
+            _config =new Mock<IFitbitConfig>();
             _fitbitService = new Mock<IFitbitService>();
            // _hangfireUtility = new Mock<IHangfireUtility>();
             _backgroundJobClient = new Mock<IBackgroundJobClient>();

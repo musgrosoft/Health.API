@@ -11,7 +11,7 @@ namespace Google
 {
     public class GoogleClient : IGoogleClient
     {
-        private readonly IConfig _config;
+        private readonly IGoogleSheetsConfig _config;
         private readonly ILogger _logger;
         private String RunSpreadsheetId = "1-S-oI6M61po-TIvBu0JQwDMjzNkarl3SXqiNKUdusfg";
         private String AlcoholSpreadsheetId = "15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io";
@@ -20,7 +20,7 @@ namespace Google
         static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "sheetreader";
 
-        public GoogleClient(IConfig config, ILogger logger)
+        public GoogleClient(IGoogleSheetsConfig config, ILogger logger)
         {
             _config = config;
             _logger = logger;

@@ -12,7 +12,7 @@ using System.Net.Http;
 using Fitbit.Migrator;
 using Fitbit.Services;
 using Google;
-using Services.Google;
+//using Services.Google;
 using Nokia;
 using Hangfire.MemoryStorage;
 using Hangfire;
@@ -84,7 +84,13 @@ namespace HealthAPI
             services.AddSingleton<HttpClient, HttpClient>();
 
             services.AddTransient<IHealthService, HealthService>();
-            services.AddTransient<IConfig, Config>();
+
+            services.AddTransient<IHealthConfig, Config>();
+            services.AddTransient<IFitbitConfig, Config>();
+            services.AddTransient<INokiaConfig, Config>();
+            services.AddTransient<IGoogleSheetsConfig, Config>();
+
+
             services.AddTransient<ILogger, LogzIoLogger>();
             services.AddTransient<IAggregateStatisticsCalculator, AggregateStatisticsCalculator>();
             services.AddTransient<ITokenService, TokenService>();

@@ -14,7 +14,7 @@ namespace Nokia.Services
     {
         private readonly ITokenService _oAuthService;
 
-        private readonly IConfig _config;
+        private readonly INokiaConfig _config;
 
         private readonly HttpClient _httpClient;
 
@@ -24,7 +24,7 @@ namespace Nokia.Services
 
         private const string NOKIA_REDIRECT_URL = "http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
 
-        public NokiaAuthenticator(ITokenService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
+        public NokiaAuthenticator(ITokenService oAuthService, INokiaConfig config, HttpClient httpClient, ILogger logger)
         {
             _oAuthService = oAuthService;
             _config = config;

@@ -16,7 +16,7 @@ namespace Services.Tests.Fitbit
 
         
         private Mock<HttpMessageHandler> _httpMessageHandler;
-        private Mock<IConfig> _config;
+        private Mock<IFitbitConfig> _config;
         private Mock<ILogger> _logger;
         private HttpClient _httpClient;
         private FitbitClient _fitbitClient;
@@ -42,7 +42,7 @@ namespace Services.Tests.Fitbit
             _httpMessageHandler = new Mock<HttpMessageHandler>();
 
 
-            _config = new Mock<IConfig>();
+            _config = new Mock<IFitbitConfig>();
             _logger = new Mock<ILogger>();
             _fitbitAuthenticator = new Mock<IFitbitAuthenticator>();
 

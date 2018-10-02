@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Utils
 {
-    public class Config : IConfig
+    public class Config : IFitbitConfig, INokiaConfig, IGoogleSheetsConfig, IHealthConfig
     {
         private IConfigurationRoot _configurationRoot;
         private IConfigurationRoot ConfigurationRoot

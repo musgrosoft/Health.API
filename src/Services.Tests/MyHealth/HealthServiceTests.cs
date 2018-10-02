@@ -13,7 +13,7 @@ namespace Services.Tests.MyHealth
     {
         private Mock<IHealthRepository> _healthRepository;
         private HealthService _healthService;
-        private Mock<IConfig> _config;
+        private Mock<IFitbitConfig> _config;
         private Mock<ILogger> _logger;
 
         private Mock<IAggregateStatisticsCalculator> _aggregationCalculator;
@@ -25,7 +25,7 @@ namespace Services.Tests.MyHealth
         public HealthServiceTests()
         {
             _healthRepository = new Mock<IHealthRepository>();
-            _config = new Mock<IConfig>();
+            _config = new Mock<IFitbitConfig>();
             _logger = new Mock<ILogger>();
             _aggregationCalculator = new Mock<IAggregateStatisticsCalculator>();
             _targetService = new Mock<ITargetService>();
