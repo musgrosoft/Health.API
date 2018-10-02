@@ -4,15 +4,13 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
-using Repositories.Models;
-using Utils;
+using Google.Domain;
 
 namespace Google
 {
     public class GoogleClient : IGoogleClient
     {
         private readonly IGoogleSheetsConfig _config;
-        private readonly ILogger _logger;
         private String RunSpreadsheetId = "1-S-oI6M61po-TIvBu0JQwDMjzNkarl3SXqiNKUdusfg";
         private String AlcoholSpreadsheetId = "15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io";
         private String RowSpreadsheetId = "1QL-RYs8STqWCzg_ck4rD_py93l8CzhOpeu58qXFhoXA";
@@ -20,10 +18,9 @@ namespace Google
         static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "sheetreader";
 
-        public GoogleClient(IGoogleSheetsConfig config, ILogger logger)
+        public GoogleClient(IGoogleSheetsConfig config)
         {
             _config = config;
-            _logger = logger;
         }
 
         private IList<IList<Object>> GetRows(string sheetId, string range)
@@ -75,7 +72,7 @@ namespace Google
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogErrorAsync(ex);
+                //            _logger.LogErrorAsync(ex);
                         }
 
                     }
@@ -86,7 +83,7 @@ namespace Google
             }
             catch (Exception ex)
             {
-                _logger.LogErrorAsync(ex);
+           //     _logger.LogErrorAsync(ex);
             }
 
             return alcoholIntakes;
@@ -118,7 +115,7 @@ namespace Google
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogErrorAsync(ex);
+                         //   _logger.LogErrorAsync(ex);
                         }
 
                     }
@@ -129,7 +126,7 @@ namespace Google
             }
             catch (Exception ex)
             {
-                _logger.LogErrorAsync(ex);
+            //    _logger.LogErrorAsync(ex);
             }
 
             return ergos;
@@ -161,7 +158,7 @@ namespace Google
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogErrorAsync(ex);
+                       //     _logger.LogErrorAsync(ex);
                         }
 
                     }
@@ -172,7 +169,7 @@ namespace Google
             }
             catch (Exception ex)
             {
-                _logger.LogErrorAsync(ex);
+            //    _logger.LogErrorAsync(ex);
             }
 
             return runs;

@@ -1,4 +1,4 @@
-﻿namespace Utils
+﻿namespace Google
 {
     public interface IGoogleSheetsConfig
     {   

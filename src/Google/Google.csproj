@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Repositories\Repositories.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.35.2.1363" />
   </ItemGroup>
 
 </Project>

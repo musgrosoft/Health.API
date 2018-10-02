@@ -9,7 +9,7 @@ using Moq.Protected;
 using Utils;
 using Xunit;
 
-namespace Services.Tests.Fitbit
+namespace Fitbit.Unit.Tests.Fitbit
 {
     public class FitbitClientTests
     {

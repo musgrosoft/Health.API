@@ -9,7 +9,7 @@ using Services.Health;
 using Utils;
 using Xunit;
 
-namespace Migrators.Unit.Tests
+namespace Nokia.Unit.Tests
 {
     public class NokiaMigratorTests
     {

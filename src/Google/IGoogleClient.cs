@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Repositories.Models;
+using Google.Domain;
+using AlcoholIntake = Google.Domain.AlcoholIntake;
 
 namespace Google
 {

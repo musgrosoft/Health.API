@@ -22,6 +22,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using Nokia.Migrator;
 using Nokia.Services;
+using Services.Migrator;
 
 namespace HealthAPI
 {

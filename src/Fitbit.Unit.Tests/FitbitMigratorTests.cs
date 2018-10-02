@@ -9,7 +9,7 @@ using Services.Health;
 using Utils;
 using Xunit;
 
-namespace Migrators.Unit.Tests
+namespace Fitbit.Unit.Tests
 {
     public class FitbitMigratorTests
     {

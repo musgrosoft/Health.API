@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Fitbit.Domain;
 using Fitbit.Services;
 using Moq;
-using Xunit;
 using Utils;
+using Xunit;
 
-namespace Services.Tests.Fitbit
+namespace Fitbit.Unit.Tests.Fitbit
 {
     public class FitbitClientQueryAdapterTests
     {
