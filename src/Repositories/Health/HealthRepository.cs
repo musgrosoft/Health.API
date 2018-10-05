@@ -166,7 +166,7 @@ namespace Repositories.Health
             //weight.TargetKg = 88;
             //weight.MovingAverageKg = 0;
 
-            var elasticSearchUrl = Environment.GetEnvironmentVariable("ElasticSearchUrl") ?? "https://search-musgrosoft-ydh7nv75oxfke3gg4hmcc5qde4.eu-west-1.es.amazonaws.com";
+            var elasticSearchUrl = Environment.GetEnvironmentVariable("ElasticSearchUrl");
             var node = new Uri(elasticSearchUrl);
             var config = new ConnectionConfiguration(node);
             var elasticSearchClient = new ElasticLowLevelClient(config);
