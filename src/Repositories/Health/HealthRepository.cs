@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Elasticsearch.Net;
 using Repositories.Models;
 
 namespace Repositories.Health
@@ -161,6 +162,27 @@ namespace Repositories.Health
 
         public void Upsert(Weight weight)
         {
+            var elasticSearchUrl = Environment.GetEnvironmentVariable("ElasticSearchUrl");
+            var node = new Uri(elasticSearchUrl);
+            var config = new ConnectionConfiguration(node);
+            var elasticSearchClient = new ElasticLowLevelClient(config);
+
+            //var elasticsearchResponse = await _elasticSearchClient
+            //    .CreatePostAsync<BytesResponse>(elasticSearchIndex,
+            //        ElasticsearchIndexType,
+            //        Guid.NewGuid().ToString(), PostData.Serializable(data));
+
+            var elasticsearchResponse = elasticSearchClient
+                .CreatePostAsync<BytesResponse>("Weights",
+                    "data",
+                    Guid.NewGuid().ToString(), PostData.Serializable(weight)).Result;
+
+            //if (!elasticsearchResponse.Success)
+            //    _exceptionlessClientWrapper.SubmitException(new Exception(
+            //        $"Log to elastic search failed to {ConfigurationAdapter.ElasticSearchUrl}",
+            //        elasticsearchResponse.OriginalException));
+
+
             var existingWeight = _healthContext.Weights.Find(weight.CreatedDate);
 
             if (existingWeight == null)
