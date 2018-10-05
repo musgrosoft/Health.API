@@ -123,7 +123,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldInsertWeight()
         {
-            var weight = new Weight { Kg = 123 };
+            var weight = new Weight { Kg = 123, CreatedDate = new DateTime(2018,1,1)};
 
             _healthRepository.Upsert(weight);
 

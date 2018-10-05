@@ -162,7 +162,11 @@ namespace Repositories.Health
 
         public void Upsert(Weight weight)
         {
-            var elasticSearchUrl = Environment.GetEnvironmentVariable("ElasticSearchUrl");
+            //weight.FatRatioPercentage = 0;
+            //weight.TargetKg = 88;
+            //weight.MovingAverageKg = 0;
+
+            var elasticSearchUrl = Environment.GetEnvironmentVariable("ElasticSearchUrl") ?? "https://search-musgrosoft-ydh7nv75oxfke3gg4hmcc5qde4.eu-west-1.es.amazonaws.com";
             var node = new Uri(elasticSearchUrl);
             var config = new ConnectionConfiguration(node);
             var elasticSearchClient = new ElasticLowLevelClient(config);
@@ -173,9 +177,13 @@ namespace Repositories.Health
             //        Guid.NewGuid().ToString(), PostData.Serializable(data));
 
             var elasticsearchResponse = elasticSearchClient
-                .CreatePostAsync<BytesResponse>("Weights",
-                    "data",
-                    Guid.NewGuid().ToString(), PostData.Serializable(weight)).Result;
+                .Index<BytesResponse>(
+                    "weights",
+                    "weight",
+                    weight.CreatedDate.ToString(), 
+                    PostData.Serializable(weight),
+                    null
+                    );
 
             //if (!elasticsearchResponse.Success)
             //    _exceptionlessClientWrapper.SubmitException(new Exception(
