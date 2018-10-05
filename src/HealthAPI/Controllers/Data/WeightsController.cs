@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Elasticsearch.Net;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Models;
 using Services.Health;
@@ -21,6 +23,46 @@ namespace HealthAPI.Controllers.Data
         public IActionResult Get()
         {
             return Json(_healthService.GetAllWeights());
+        }
+
+        [HttpGet]
+        
+        public IActionResult Migrate()
+        {
+            var weights = _healthService.GetAllWeights();
+
+            var elasticSearchUrl = Environment.GetEnvironmentVariable("ElasticSearchUrl");
+            var node = new Uri(elasticSearchUrl);
+            var config = new ConnectionConfiguration(node);
+            var elasticSearchClient = new ElasticLowLevelClient(config);
+
+            //var elasticsearchResponse = await _elasticSearchClient
+            //    .CreatePostAsync<BytesResponse>(elasticSearchIndex,
+            //        ElasticsearchIndexType,
+            //        Guid.NewGuid().ToString(), PostData.Serializable(data));
+
+            foreach (var weight in weights)
+            {
+                var elasticsearchResponse = elasticSearchClient
+                    .Index<BytesResponse>(
+                        "weights",
+                        "weight",
+                        weight.CreatedDate.ToString(),
+                        PostData.Serializable(weight),
+                        null
+                    );
+            }
+
+
+
+            //if (!elasticsearchResponse.Success)
+            //    _exceptionlessClientWrapper.SubmitException(new Exception(
+            //        $"Log to elastic search failed to {ConfigurationAdapter.ElasticSearchUrl}",
+            //        elasticsearchResponse.OriginalException));
+
+
+
+            return Ok();
         }
 
         //[HttpGet]
