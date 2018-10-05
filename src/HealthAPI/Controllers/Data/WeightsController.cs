@@ -26,7 +26,7 @@ namespace HealthAPI.Controllers.Data
         }
 
         [HttpGet]
-        
+        [Route("Migrate")]
         public IActionResult Migrate()
         {
             var weights = _healthService.GetAllWeights();
