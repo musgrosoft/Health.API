@@ -2,7 +2,6 @@
 using Google;
 using HealthAPI.Controllers.Migration;
 using Moq;
-using Services.Migrator;
 using Utils;
 using Xunit;
 

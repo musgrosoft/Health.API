@@ -5,7 +5,7 @@ using Fitbit.Domain;
 using Fitbit.Services;
 using Xunit;
 
-namespace Fitbit.Unit.Tests.Fitbit
+namespace Services.Tests.Fitbit
 {
     public class FitbitMapperTests
     {

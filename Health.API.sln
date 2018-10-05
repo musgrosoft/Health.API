@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Acceptance.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.Unit.Tests", "src\Utils.Unit.Tests\Utils.Unit.Tests.csproj", "{2F73B2AE-075C-4554-8834-A6F0DF427BB9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{20D22A6F-A12F-4639-9465-CB4AEC9B509A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrators", "Migrators", "{20D22A6F-A12F-4639-9465-CB4AEC9B509A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitbit", "src\Fitbit\Fitbit.csproj", "{356C254F-083B-4645-B66A-543CA5A0130F}"
 EndProject

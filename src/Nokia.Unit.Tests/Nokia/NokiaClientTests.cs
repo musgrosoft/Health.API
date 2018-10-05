@@ -7,7 +7,7 @@ using Moq;
 using Moq.Protected;
 using Nokia.Services;
 
-namespace Nokia.Unit.Tests.Nokia
+namespace Services.Tests.Nokia
 {
     public class NokiaClientTests
     {

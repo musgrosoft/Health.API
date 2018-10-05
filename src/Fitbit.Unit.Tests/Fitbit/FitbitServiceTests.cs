@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.DynamicProxy.Contributors;
 using Fitbit.Domain;
 using Fitbit.Services;
 using Moq;
@@ -9,7 +10,7 @@ using Repositories.Models;
 using Utils;
 using Xunit;
 
-namespace Fitbit.Unit.Tests.Fitbit
+namespace Services.Tests.Fitbit
 {
     public class FitbitServiceTests
     {
