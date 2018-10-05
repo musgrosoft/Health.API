@@ -41,6 +41,8 @@ namespace HealthAPI.Controllers.Data
             //        ElasticsearchIndexType,
             //        Guid.NewGuid().ToString(), PostData.Serializable(data));
 
+            elasticSearchClient.IndicesDelete<BytesResponse>("weights");
+
             foreach (var weight in weights)
             {
                 var elasticsearchResponse = elasticSearchClient
