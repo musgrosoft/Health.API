@@ -185,6 +185,13 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
         
+        public DateTime GetLatestRunDate(DateTime defaultDateTime)
+        {
+            var latestDate = _healthRepository.GetLatestRunDate();
+            return latestDate ?? defaultDateTime;
+        }
+
+
         public void UpsertWeights(IEnumerable<Weight> weights)
         {
             var enumerable = weights.ToList();
@@ -214,6 +221,16 @@ namespace Services.Health
             foreach (var restingHeartRate in restingHeartRates)
             {
                 _healthRepository.Upsert(restingHeartRate);
+            }
+        }
+
+        public void UpsertRuns(IEnumerable<Run> runs)
+        {
+            _logger.LogMessageAsync($"RUNS : Saving {runs.Count()} runs");
+
+            foreach (var run in runs)
+            {
+                _healthRepository.Upsert(run);
             }
         }
 

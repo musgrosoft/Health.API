@@ -26,6 +26,7 @@ namespace HealthAPI.Hangfire
                 //daily gets
                 await _fitbitMigrator.MigrateStepCounts();
                 await _fitbitMigrator.MigrateActivitySummaries();
+                await _fitbitMigrator.MigrateRuns();
             }
             catch (Exception ex)
             {

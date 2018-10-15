@@ -14,7 +14,8 @@ namespace Repositories.Health
         DateTime? GetLatestActivitySummaryDate();
         DateTime? GetLatestRestingHeartRateDate();
         DateTime? GetLatestHeartSummaryDate();
-        
+        DateTime? GetLatestRunDate();
+
         void Upsert(Weight weight);
         void Upsert(BloodPressure bloodPressure);
         void Upsert(StepCount stepCount);
@@ -46,5 +47,6 @@ namespace Repositories.Health
         void Upsert(Ergo ergo);
         IList<Run> GetAllRuns();
         IList<Ergo> GetAllErgos();
+        
     }
 }
