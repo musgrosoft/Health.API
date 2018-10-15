@@ -86,9 +86,9 @@ namespace HealthAPI.Controllers.Migration
         [HttpGet]
         [ProducesResponseType(typeof(String), 200)]
         [Route("Runs")]
-        public IActionResult Runs()
+        public async Task<IActionResult> Runs()
         {
-            var runs = _fitbitService.GetRuns(new DateTime(2018, 8, 1), new DateTime(2018, 10, 11));
+            var runs = await _fitbitService.GetRuns(new DateTime(2018, 8, 1), new DateTime(2018, 10, 11));
             return Json(runs);
         }
     }
