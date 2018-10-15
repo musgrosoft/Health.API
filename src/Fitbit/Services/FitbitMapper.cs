@@ -58,13 +58,14 @@ namespace Fitbit.Services
 
             foreach (var fitbitDailyActivity in fitbitDailyActivities)
             {
-                TimeSpan startTime;
+                //TimeSpan startTime;
 
                 var someRuns = fitbitDailyActivity.activities.Select(y =>
                     new Run
                     {
                         //add start time
-                        CreatedDate = TimeSpan.TryParse("07:35", out startTime) ? fitbitDailyActivity.DateTime.Add(startTime) : fitbitDailyActivity.DateTime,
+                        //CreatedDate = TimeSpan.TryParse("07:35", out startTime) ? fitbitDailyActivity.DateTime.Add(startTime) : fitbitDailyActivity.DateTime,
+                        CreatedDate = fitbitDailyActivity.DateTime,
                         Time = TimeSpan.FromMilliseconds(y.duration),
                         Metres = y.distance * 1000
 
