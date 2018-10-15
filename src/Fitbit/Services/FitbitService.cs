@@ -26,6 +26,13 @@ namespace Fitbit.Services
             _fitbitMapper = fitbitMapper;
         }
 
+        public async Task<IEnumerable<Run>> GetRuns(DateTime fromDate, DateTime toDate)
+        {
+            var fitbitDailyActivities = await _fitbitClientQueryAdapter.GetFitbitDailyActivities(fromDate, toDate);
+
+            return _fitbitMapper.MapFitbitDailyActivitiesToRuns(fitbitDailyActivities);
+        }
+
         public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
         {
             var fitbitDailyActivities = await _fitbitClientQueryAdapter.GetFitbitDailyActivities(fromDate, toDate);

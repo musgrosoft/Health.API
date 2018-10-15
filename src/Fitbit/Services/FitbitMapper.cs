@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Fitbit.Domain;
 using Repositories.Models;
@@ -49,6 +50,27 @@ namespace Fitbit.Services
                 CreatedDate = x.DateTime,
                 Count = x.summary.steps
             });
+        }
+
+        public IEnumerable<Run> MapFitbitDailyActivitiesToRuns(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
+        {
+            var allTheRuns = new List<Run>();
+
+            foreach (var fitbitDailyActivity in fitbitDailyActivities)
+            {
+                var someRuns = fitbitDailyActivity.activities.Select(y =>
+                    new Run
+                    {
+                        CreatedDate = fitbitDailyActivity.DateTime,
+                        Time = new TimeSpan(0, 0, y.duration),
+                        Metres = y.distance
+
+                    });
+
+                allTheRuns.AddRange(someRuns);
+            }
+
+            return allTheRuns;
         }
     }
 }
