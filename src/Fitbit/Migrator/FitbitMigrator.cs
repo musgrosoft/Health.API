@@ -43,8 +43,8 @@ namespace Fitbit.Migrator
 
         public async Task MigrateRuns()
         {
-            //var latestRunDate = _healthService.GetLatestRunDate(MIN_FITBIT_DATE);
-            var latestRunDate = _healthService.GetLatestRunDate(new DateTime(2018,10,1));
+            var latestRunDate = _healthService.GetLatestRunDate(MIN_FITBIT_DATE);
+            //var latestRunDate = _healthService.GetLatestRunDate(new DateTime(2018,10,1));
             await _logger.LogMessageAsync($"RUNS : Latest Run record has a date of : {latestRunDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fromDate = latestRunDate.AddDays(-SEARCH_DAYS_PREVIOUS);
