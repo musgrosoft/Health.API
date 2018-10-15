@@ -16,7 +16,7 @@ namespace Fitbit.Domain
         //public bool isFavorite { get; set; }
         //public int logId { get; set; }
         public string name { get; set; }
-        public string startTime { get; set; }
+        public TimeSpan startTime { get; set; }
         public int steps { get; set; }
     }
 

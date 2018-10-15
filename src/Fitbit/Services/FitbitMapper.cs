@@ -62,7 +62,7 @@ namespace Fitbit.Services
                     new Run
                     {
                         //add start time
-                        CreatedDate = fitbitDailyActivity.DateTime,
+                        CreatedDate = fitbitDailyActivity.DateTime.Add(y.startTime) ,
                         Time = TimeSpan.FromMilliseconds(y.duration),
                         Metres = y.distance * 1000
 
