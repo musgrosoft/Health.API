@@ -20,12 +20,12 @@ namespace HealthAPI.Hangfire
         {
             try
             {
-                //monthly gets
-                await _fitbitMigrator.MigrateRestingHeartRates();
-                await _fitbitMigrator.MigrateHeartSummaries();
-                //daily gets
-                await _fitbitMigrator.MigrateStepCounts();
-                await _fitbitMigrator.MigrateActivitySummaries();
+                ////monthly gets
+                //await _fitbitMigrator.MigrateRestingHeartRates();
+                //await _fitbitMigrator.MigrateHeartSummaries();
+                ////daily gets
+                //await _fitbitMigrator.MigrateStepCounts();
+                //await _fitbitMigrator.MigrateActivitySummaries();
                 await _fitbitMigrator.MigrateRuns();
             }
             catch (Exception ex)
