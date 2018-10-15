@@ -63,7 +63,7 @@ namespace Fitbit.Services
                     {
                         //add start time
                         CreatedDate = fitbitDailyActivity.DateTime,
-                        Time = new TimeSpan(0, 0, 0, 0, y.duration),
+                        Time = TimeSpan.FromMilliseconds(y.duration),
                         Metres = y.distance * 1000
 
                     });
