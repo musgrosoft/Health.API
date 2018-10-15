@@ -61,9 +61,10 @@ namespace Fitbit.Services
                 var someRuns = fitbitDailyActivity.activities.Select(y =>
                     new Run
                     {
+                        //add start time
                         CreatedDate = fitbitDailyActivity.DateTime,
-                        Time = new TimeSpan(0, 0, y.duration),
-                        Metres = y.distance
+                        Time = new TimeSpan(0, 0, 0, 0, y.duration),
+                        Metres = y.distance * 1000
 
                     });
 
