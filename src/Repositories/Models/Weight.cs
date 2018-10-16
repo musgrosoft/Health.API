@@ -10,11 +10,12 @@ namespace Repositories.Models
         public DateTime CreatedDate { get; set; }
         public Double? Kg { get; set; }
         public Double? FatRatioPercentage { get; set; }
+        public Double? TargetKg { get; set; }
 
         [NotMapped]
         public Double? MovingAverageKg { get; set; }
-        [NotMapped]
-        public Double? TargetKg { get; set; }
+        
+        
 
     }
 

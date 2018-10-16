@@ -17,21 +17,21 @@ namespace Services.Health
             _calendar = calendar;
         }
 
-        public IList<Weight> SetTargets(IList<Weight> weights, int extraFutureDays)
+        public IEnumerable<Weight> SetTargets(IEnumerable<Weight> weights)
         {
             if (weights.Any())
             {
-                var targetEndDate = _calendar.Now().AddDays(extraFutureDays);
-                var currentMaxDate = weights.Max(x => x.CreatedDate);
-                var futuredays = (targetEndDate - currentMaxDate).TotalDays;
+                //var targetEndDate = _calendar.Now();//.AddDays(extraFutureDays);
+                //var currentMaxDate = weights.Max(x => x.CreatedDate);
+                //var futuredays = (targetEndDate - currentMaxDate).TotalDays;
 
-                for (int i = 1; i < futuredays + 1; i++)
-                {
-                    weights.Add(new Weight
-                    {
-                        CreatedDate = currentMaxDate.AddDays(i)
-                    });
-                }
+                //for (int i = 1; i < futuredays + 1; i++)
+                //{
+                //    weights.Add(new Weight
+                //    {
+                //        CreatedDate = currentMaxDate.AddDays(i)
+                //    });
+                //}
 
                 foreach (var weight in weights)
                 {

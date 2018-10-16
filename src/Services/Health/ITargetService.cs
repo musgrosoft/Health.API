@@ -5,7 +5,7 @@ namespace Services.Health
 {
     public interface ITargetService
     {
-        IList<Weight> SetTargets(IList<Weight> weights, int extraFutureDays);
+        IEnumerable<Weight> SetTargets(IEnumerable<Weight> weights);
         IList<StepCount> SetTargets(List<StepCount> stepCounts);
         IList<ActivitySummary> SetTargets(List<ActivitySummary> allActivitySummaries);
         IList<HeartRateSummary> SetTargets(List<HeartRateSummary> allHeartRateSummaries);

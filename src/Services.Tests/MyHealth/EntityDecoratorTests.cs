@@ -179,7 +179,7 @@ namespace Services.Tests.MyHealth
 
             _aggregationCalculator.Setup(x => x.GetMovingAverages(weights, 10)).Returns(listWithMovingAverages);
 
-            _targetService.Setup(x => x.SetTargets(listWithMovingAverages, 365)).Returns(listWithTargets);
+            _targetService.Setup(x => x.SetTargets(listWithMovingAverages)).Returns(listWithTargets);
 
             //when
             var result = _entityDecorator.GetAllWeights();

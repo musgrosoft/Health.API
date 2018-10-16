@@ -17,6 +17,7 @@ namespace Migrators.Unit.Tests
         private Mock<INokiaService> _nokiaService;
         private Mock<ILogger> _logger;
         private NokiaMigrator _nokiaMigrator;
+        private Mock<ITargetService> _targetService;
 
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
@@ -25,8 +26,9 @@ namespace Migrators.Unit.Tests
             _healthService = new Mock<IHealthService>();
             _nokiaService = new Mock<INokiaService>();
             _logger = new Mock<ILogger>();
+            _targetService = new Mock<ITargetService>();
 
-            _nokiaMigrator = new NokiaMigrator(_healthService.Object, _logger.Object, _nokiaService.Object);
+            _nokiaMigrator = new NokiaMigrator(_healthService.Object, _logger.Object, _nokiaService.Object, _targetService.Object);
         }
 
         [Fact]

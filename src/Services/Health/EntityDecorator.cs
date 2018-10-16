@@ -23,7 +23,7 @@ namespace Services.Health
         {
             var allWeights = _healthRepository.GetAllWeights();
             allWeights = _aggregateStatisticsCalculator.GetMovingAverages(allWeights, 10).ToList();
-            allWeights = _targetService.SetTargets(allWeights, 365).ToList();
+            allWeights = _targetService.SetTargets(allWeights).ToList();
 
             return allWeights;
         }

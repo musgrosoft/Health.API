@@ -59,6 +59,7 @@ namespace Fitbit.Services
             foreach (var fitbitDailyActivity in fitbitDailyActivities)
             {
                 //TimeSpan startTime;
+                //filter by some indicator that its a run
 
                 var someRuns = fitbitDailyActivity.activities.Select(y =>
                     new Run

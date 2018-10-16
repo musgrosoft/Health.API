@@ -12,17 +12,19 @@ namespace Nokia.Migrator
         private readonly IHealthService _healthService;
         private readonly ILogger _logger;
         private readonly INokiaService _nokiaService;
+        private readonly ITargetService _targetService;
 
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
         private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
         private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
 
-        public NokiaMigrator(IHealthService healthService, ILogger logger, INokiaService nokiaService)
+        public NokiaMigrator(IHealthService healthService, ILogger logger, INokiaService nokiaService, ITargetService targetService)
         {
             _healthService = healthService;
             _logger = logger;
             _nokiaService = nokiaService;
+            _targetService = targetService;
         }
         
         public async Task MigrateWeights()
@@ -34,6 +36,9 @@ namespace Nokia.Migrator
             
             var weights = await _nokiaService.GetWeights(fromDate);
             await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
+
+            //weights = _targetService.SetTargets(weights);
+            _targetService.SetTargets(weights);
 
             _healthService.UpsertWeights(weights);
         }
