@@ -38,7 +38,7 @@ namespace Services.Health
                     weight.TargetKg = _targetCalculator.GetTargetWeight(weight.CreatedDate);
                 }
 
-                weights = weights.OrderBy(x => x.CreatedDate).ToList();
+                //weights = weights.OrderBy(x => x.CreatedDate).ToList();
             }
 
             return weights;

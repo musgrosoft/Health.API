@@ -38,7 +38,7 @@ namespace Nokia.Migrator
             await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
 
             //weights = _targetService.SetTargets(weights);
-            _targetService.SetTargets(weights);
+            weights = _targetService.SetTargets(weights);
 
             _healthService.UpsertWeights(weights);
         }
