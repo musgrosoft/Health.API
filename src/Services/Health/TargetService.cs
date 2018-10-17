@@ -17,7 +17,7 @@ namespace Services.Health
             _calendar = calendar;
         }
 
-        public IEnumerable<Weight> SetTargets(IEnumerable<Weight> weights)
+        public List<Weight> SetTargets(IList<Weight> weights)
         {
             if (weights.Any())
             {
@@ -41,7 +41,7 @@ namespace Services.Health
                 //weights = weights.OrderBy(x => x.CreatedDate).ToList();
             }
 
-            return weights;
+            return weights.ToList();
         }
         
         public IList<StepCount> SetTargets(List<StepCount> stepCounts)

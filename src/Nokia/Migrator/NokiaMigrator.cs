@@ -34,17 +34,11 @@ namespace Nokia.Migrator
 
             var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             
-            var weights = await _nokiaService.GetWeights(fromDate);
+            var weights = (await _nokiaService.GetWeights(fromDate)).ToList();
             await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
 
-            //weights = _targetService.SetTargets(weights);
             weights = _targetService.SetTargets(weights);
-
-            foreach (var weight in weights)
-            {
-                weight.TargetKg = 123;
-            }
-
+            
             _healthService.UpsertWeights(weights);
         }
 
