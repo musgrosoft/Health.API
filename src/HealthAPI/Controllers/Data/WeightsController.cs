@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Models;
 using Services.Health;
@@ -25,47 +24,47 @@ namespace HealthAPI.Controllers.Data
             return Json(_healthService.GetAllWeights());
         }
 
-        [HttpGet]
-        [Route("Migrate")]
-        public IActionResult Migrate()
-        {
-            var weights = _healthService.GetAllWeights();
+        //[HttpGet]
+        //[Route("Migrate")]
+        //public IActionResult Migrate()
+        //{
+        //    var weights = _healthService.GetAllWeights();
 
-            var elasticSearchUrl = Environment.GetEnvironmentVariable("ElasticSearchUrl");
-            var node = new Uri(elasticSearchUrl);
-            var config = new ConnectionConfiguration(node);
-            var elasticSearchClient = new ElasticLowLevelClient(config);
+        //    var elasticSearchUrl = Environment.GetEnvironmentVariable("ElasticSearchUrl");
+        //    var node = new Uri(elasticSearchUrl);
+        //    var config = new ConnectionConfiguration(node);
+        //    var elasticSearchClient = new ElasticLowLevelClient(config);
 
-            //var elasticsearchResponse = await _elasticSearchClient
-            //    .CreatePostAsync<BytesResponse>(elasticSearchIndex,
-            //        ElasticsearchIndexType,
-            //        Guid.NewGuid().ToString(), PostData.Serializable(data));
+        //    //var elasticsearchResponse = await _elasticSearchClient
+        //    //    .CreatePostAsync<BytesResponse>(elasticSearchIndex,
+        //    //        ElasticsearchIndexType,
+        //    //        Guid.NewGuid().ToString(), PostData.Serializable(data));
 
-            elasticSearchClient.IndicesDelete<BytesResponse>("weights");
+        //    elasticSearchClient.IndicesDelete<BytesResponse>("weights");
 
-            foreach (var weight in weights)
-            {
-                var elasticsearchResponse = elasticSearchClient
-                    .Index<BytesResponse>(
-                        "weights",
-                        "weight",
-                        weight.CreatedDate.ToString(),
-                        PostData.Serializable(weight),
-                        null
-                    );
-            }
-
-
-
-            //if (!elasticsearchResponse.Success)
-            //    _exceptionlessClientWrapper.SubmitException(new Exception(
-            //        $"Log to elastic search failed to {ConfigurationAdapter.ElasticSearchUrl}",
-            //        elasticsearchResponse.OriginalException));
+        //    foreach (var weight in weights)
+        //    {
+        //        var elasticsearchResponse = elasticSearchClient
+        //            .Index<BytesResponse>(
+        //                "weights",
+        //                "weight",
+        //                weight.CreatedDate.ToString(),
+        //                PostData.Serializable(weight),
+        //                null
+        //            );
+        //    }
 
 
 
-            return Ok();
-        }
+        //    //if (!elasticsearchResponse.Success)
+        //    //    _exceptionlessClientWrapper.SubmitException(new Exception(
+        //    //        $"Log to elastic search failed to {ConfigurationAdapter.ElasticSearchUrl}",
+        //    //        elasticsearchResponse.OriginalException));
+
+
+
+        //    return Ok();
+        //}
 
         //[HttpGet]
         //public IList<Weight> Get()

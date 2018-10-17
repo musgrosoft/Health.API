@@ -14,7 +14,6 @@ using Fitbit.Services;
 using Google;
 //using Services.Google;
 using Nokia;
-using Hangfire.MemoryStorage;
 using Hangfire;
 using HealthAPI.Hangfire;
 using Services.Health;
@@ -27,23 +26,26 @@ namespace HealthAPI
 {
     public class Startup
     {
+        private Config _config;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _config = new Config();
         }
 
         public IConfiguration Configuration { get; }
 
         public virtual void SetUpDataBase(IServiceCollection services)
         {
-            var config = new Config();
+            
 
             services
                 .AddEntityFrameworkSqlServer()
                 .AddDbContext<HealthContext>(dboptions =>
             {
                 dboptions.UseSqlServer(
-                    config.HealthDbConnectionString,
+                    _config.HealthDbConnectionString,
                     sqlServerOptionsAction: sqlOptions =>
                     {
                         sqlOptions.EnableRetryOnFailure(
@@ -62,7 +64,7 @@ namespace HealthAPI
         {
             SetUpDataBase(services);
 
-            services.AddHangfire(x => x.UseMemoryStorage());
+            services.AddHangfire(x => x.UseSqlServerStorage(_config.HealthDbConnectionString));
 
             // Add service and create Policy with options
             services.AddCors(options =>
