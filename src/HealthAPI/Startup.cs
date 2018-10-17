@@ -15,6 +15,7 @@ using Google;
 //using Services.Google;
 using Nokia;
 using Hangfire;
+using Hangfire.MemoryStorage;
 using HealthAPI.Hangfire;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
@@ -64,7 +65,9 @@ namespace HealthAPI
         {
             SetUpDataBase(services);
 
-            services.AddHangfire(x => x.UseSqlServerStorage(_config.HealthDbConnectionString));
+            //   services.AddHangfire(x => x.UseSqlServerStorage(_config.HealthDbConnectionString));
+            //services.AddHangfire(x => x.UseSqlServerStorage("bum"));
+            services.AddHangfire(x => x.UseMemoryStorage());
 
             // Add service and create Policy with options
             services.AddCors(options =>
