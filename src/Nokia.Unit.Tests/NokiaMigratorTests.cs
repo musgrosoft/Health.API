@@ -47,7 +47,10 @@ namespace Migrators.Unit.Tests
             
             _nokiaService.Setup(x => x.GetWeights(latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<Weight>)weights));
 
+            _targetService.Setup(x => x.SetTargets(weights)).Returns(weights);
+
             await _nokiaMigrator.MigrateWeights();
+
 
             _healthService.Verify(x=>x.UpsertWeights(weights));
         }
