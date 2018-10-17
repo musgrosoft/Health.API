@@ -40,6 +40,11 @@ namespace Nokia.Migrator
             //weights = _targetService.SetTargets(weights);
             weights = _targetService.SetTargets(weights);
 
+            foreach (var weight in weights)
+            {
+                weight.TargetKg = 123;
+            }
+
             _healthService.UpsertWeights(weights);
         }
 

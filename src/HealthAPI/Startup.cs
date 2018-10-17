@@ -50,6 +50,8 @@ namespace HealthAPI
                             maxRetryCount: 5,
                             maxRetryDelay: TimeSpan.FromSeconds(30),
                             errorNumbersToAdd: null);
+
+                        sqlOptions.MigrationsAssembly("Repositories");
                     }
                 );
             });
