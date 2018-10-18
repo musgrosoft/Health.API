@@ -84,6 +84,14 @@ namespace Services.Health
             return alcoholIntakes;
         }
 
+        public List<StepCount> SetTargetsZZZ(IList<StepCount> stepCounts)
+        {
+            foreach (var stepCount in stepCounts)
+            {
+                stepCount.Target = 10000;
+            }
 
+            return stepCounts.ToList();
+        }
     }
 }

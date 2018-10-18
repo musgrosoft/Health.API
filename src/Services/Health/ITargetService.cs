@@ -10,5 +10,6 @@ namespace Services.Health
         IList<ActivitySummary> SetTargets(List<ActivitySummary> allActivitySummaries);
         IList<HeartRateSummary> SetTargets(List<HeartRateSummary> allHeartRateSummaries);
         IList<AlcoholIntake> SetTargets(List<AlcoholIntake> allAlcoholIntakes);
+        List<StepCount> SetTargetsZZZ(IList<StepCount> dailySteps);
     }
 }

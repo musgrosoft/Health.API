@@ -9,6 +9,7 @@ namespace Repositories.Models
         [Key]
         public DateTime CreatedDate { get; set; }
         public int? Count { get; set; }
+        public int? Target { get; set; }
 
         [NotMapped]
         public double? CumSumCount { get; set; }
