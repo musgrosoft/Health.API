@@ -236,6 +236,7 @@ namespace Repositories.Health
                 // _logger.Log($"STEP COUNT : Update Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
                 existingStepCount.Count = stepCount.Count;
                 existingStepCount.CumSumCount = stepCount.CumSumCount;
+                existingStepCount.Target = stepCount.Target;
             }
             else
             {
