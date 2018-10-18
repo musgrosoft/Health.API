@@ -56,24 +56,24 @@ namespace Migrators.Unit.Tests
         //}
 
 
-        [Fact]
-        public async Task ShouldMigrateActivityData()
-        {
-            _healthService.Setup(x => x.GetLatestActivitySummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertActivitySummaries(It.IsAny<IEnumerable<ActivitySummary>>()));
+        //[Fact]
+        //public async Task ShouldMigrateActivityData()
+        //{
+        //    _healthService.Setup(x => x.GetLatestActivitySummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
+        //    _healthService.Setup(x => x.UpsertActivitySummaries(It.IsAny<IEnumerable<ActivitySummary>>()));
 
-            var dailyActivities = new List<ActivitySummary>
-            {
-                new ActivitySummary{ CreatedDate = new DateTime(2010, 12, 1), VeryActiveMinutes = 111 },
-                new ActivitySummary{ CreatedDate = new DateTime(2010, 12, 1), VeryActiveMinutes = 222 }
-            };
+        //    var dailyActivities = new List<ActivitySummary>
+        //    {
+        //        new ActivitySummary{ CreatedDate = new DateTime(2010, 12, 1), VeryActiveMinutes = 111 },
+        //        new ActivitySummary{ CreatedDate = new DateTime(2010, 12, 1), VeryActiveMinutes = 222 }
+        //    };
 
-            _fitbitClient.Setup(x => x.GetActivitySummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<ActivitySummary>)dailyActivities));
+        //    _fitbitClient.Setup(x => x.GetActivitySummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<ActivitySummary>)dailyActivities));
 
-            await _fitbitMigrator.MigrateActivitySummaries();
+        //    await _fitbitMigrator.MigrateActivitySummaries();
 
-            _healthService.Verify(x => x.UpsertActivitySummaries(dailyActivities), Times.Once);
-        }
+        //    _healthService.Verify(x => x.UpsertActivitySummaries(dailyActivities), Times.Once);
+        //}
 
         [Fact]
         public async Task ShouldMigrateRestingHeartRateData()
