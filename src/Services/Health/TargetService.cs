@@ -76,5 +76,15 @@ namespace Services.Health
 
             return stepCounts.ToList();
         }
+
+        public List<ActivitySummary> SetTargetsZZZ(IList<ActivitySummary> activitySummaries)
+        {
+            foreach (var activitySummary in activitySummaries)
+            {
+                activitySummary.TargetActiveMinutes = 30;
+            }
+
+            return activitySummaries.ToList();
+        }
     }
 }

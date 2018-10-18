@@ -264,6 +264,7 @@ namespace Repositories.Health
                 existingActivitySummary.FairlyActiveMinutes = activitySummary.FairlyActiveMinutes;
                 existingActivitySummary.VeryActiveMinutes = activitySummary.VeryActiveMinutes;
 
+                existingActivitySummary.TargetActiveMinutes = activitySummary.TargetActiveMinutes;
                 existingActivitySummary.CumSumActiveMinutes = activitySummary.CumSumActiveMinutes;
                 //_logger.Log($"ACTIVITY SUMMARY : Insert Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
                
