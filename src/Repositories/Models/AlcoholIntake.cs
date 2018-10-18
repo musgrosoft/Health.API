@@ -9,10 +9,13 @@ namespace Repositories.Models
         [Key]
         public DateTime CreatedDate { get; set; }
         public Double Units { get; set; }
-        
+        public Double? Target { get; set; }
+
         [NotMapped]
         public Double? CumSumUnits { get; set; }
         [NotMapped]
         public double? TargetCumSumUnits { get; set; }
+
+        
     }
 }

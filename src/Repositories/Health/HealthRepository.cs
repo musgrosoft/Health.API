@@ -199,6 +199,7 @@ namespace Repositories.Health
             {
                 // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                 existingAlcoholIntake.Units = alcoholIntake.Units;
+                existingAlcoholIntake.Target = alcoholIntake.Target;
             }
 
             _healthContext.SaveChanges();
@@ -306,6 +307,8 @@ namespace Repositories.Health
                 existingHeartSummary.FatBurnMinutes = heartSummary.FatBurnMinutes;
                 existingHeartSummary.CardioMinutes = heartSummary.CardioMinutes;
                 existingHeartSummary.PeakMinutes = heartSummary.PeakMinutes;
+
+                existingHeartSummary.TargetCardioAndAbove = heartSummary.TargetCardioAndAbove;
 
                 existingHeartSummary.CumSumCardioAndAbove = heartSummary.CumSumCardioAndAbove;
 //                _logger.Log($"HEART SUMMARY : About to update Heart SUmmary Record : {heartSummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , ");

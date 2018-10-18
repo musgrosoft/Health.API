@@ -6,11 +6,13 @@ namespace Google
     {
         private readonly IGoogleClient _googleClient;
         private readonly IHealthService _healthService;
+        private readonly ITargetService _targetService;
 
-        public GoogleMigrator(IGoogleClient  googleClient, IHealthService healthService)
+        public GoogleMigrator(IGoogleClient  googleClient, IHealthService healthService, ITargetService targetService)
         {
             _googleClient = googleClient;
             _healthService = healthService;
+            _targetService = targetService;
         }
 
         public void MigrateRuns()
@@ -22,6 +24,7 @@ namespace Google
         public void MigrateAlcoholIntakes()
         {
             var alcoholIntakes = _googleClient.GetAlcoholIntakes();
+            alcoholIntakes = _targetService.SetTargetsZZZ(alcoholIntakes);
             _healthService.UpsertAlcoholIntakes(alcoholIntakes);
         }
 

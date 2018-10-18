@@ -94,7 +94,8 @@ namespace Fitbit.Migrator
             var getDataFromDate = latestHeartZonesDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             await _logger.LogMessageAsync($"HEART SUMMARY : Retrieving Heart Zone Data records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
                 
-            var heartSummaries = await _fitbitService.GetHeartSummaries(getDataFromDate, _calendar.Now());
+            var heartSummaries = (await _fitbitService.GetHeartSummaries(getDataFromDate, _calendar.Now())).ToList();
+            heartSummaries = _targetService.SetTargetsZZZ(heartSummaries);
 
             _healthService.UpsertHeartSummaries(heartSummaries);
         }

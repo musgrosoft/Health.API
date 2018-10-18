@@ -86,5 +86,25 @@ namespace Services.Health
 
             return activitySummaries.ToList();
         }
+
+        public List<HeartRateSummary> SetTargetsZZZ(IList<HeartRateSummary> heartRateSummaries)
+        {
+            foreach (var heartRateSummary in heartRateSummaries)
+            {
+                heartRateSummary.TargetCardioAndAbove = 11;
+            }
+
+            return heartRateSummaries.ToList();
+        }
+
+        public List<AlcoholIntake> SetTargetsZZZ(IList<AlcoholIntake> alcoholIntakes)
+        {
+            foreach (var alcoholIntake in alcoholIntakes)
+            {
+                alcoholIntake.Target = 6;
+            }
+
+            return alcoholIntakes.ToList();
+        }
     }
 }

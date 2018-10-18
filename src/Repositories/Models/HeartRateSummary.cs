@@ -12,12 +12,19 @@ namespace Repositories.Models
         public int? FatBurnMinutes { get; set; }
         public int? CardioMinutes { get; set; }
         public int? PeakMinutes { get; set; }
+        public int? TargetCardioAndAbove { get; set; }
 
         [NotMapped]
-        public double? CardioAndAbove => CardioMinutes + PeakMinutes;
+        public double? CardioAndAbove
+        {
+            get => CardioMinutes + PeakMinutes;
+        }
+
         [NotMapped]
         public double? CumSumCardioAndAbove { get; set; }
         [NotMapped]
         public double? TargetCumSumCardioAndAbove { get; set; }
+
+        
     }
 }

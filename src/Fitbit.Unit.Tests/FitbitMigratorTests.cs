@@ -94,23 +94,23 @@ namespace Migrators.Unit.Tests
             _healthService.Verify(x => x.UpsertRestingHeartRates(restingHeartRates), Times.Once);
         }
 
-        [Fact]
-        public async Task ShouldMigrateHeartZoneData()
-        {
-            _healthService.Setup(x => x.GetLatestHeartSummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-            _healthService.Setup(x => x.UpsertHeartSummaries(It.IsAny<IEnumerable<HeartRateSummary>>()));
+        //[Fact]
+        //public async Task ShouldMigrateHeartZoneData()
+        //{
+        //    _healthService.Setup(x => x.GetLatestHeartSummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
+        //    _healthService.Setup(x => x.UpsertHeartSummaries(It.IsAny<IEnumerable<HeartRateSummary>>()));
 
-            var heartZones = new List<HeartRateSummary>
-            {
-                new HeartRateSummary(){ CreatedDate = new DateTime(2010, 12, 1), CardioMinutes = 111 },
-                new HeartRateSummary{ CreatedDate = new DateTime(2022, 12, 22), CardioMinutes = 222}
-            };
+        //    var heartZones = new List<HeartRateSummary>
+        //    {
+        //        new HeartRateSummary(){ CreatedDate = new DateTime(2010, 12, 1), CardioMinutes = 111 },
+        //        new HeartRateSummary{ CreatedDate = new DateTime(2022, 12, 22), CardioMinutes = 222}
+        //    };
 
-            _fitbitClient.Setup(x => x.GetHeartSummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartRateSummary>)heartZones));
+        //    _fitbitClient.Setup(x => x.GetHeartSummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartRateSummary>)heartZones));
 
-            await _fitbitMigrator.MigrateHeartSummaries();
+        //    await _fitbitMigrator.MigrateHeartSummaries();
 
-            _healthService.Verify(x => x.UpsertHeartSummaries(heartZones), Times.Once);
-        }
+        //    _healthService.Verify(x => x.UpsertHeartSummaries(heartZones), Times.Once);
+        //}
     }
 }
