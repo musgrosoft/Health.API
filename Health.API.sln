@@ -37,6 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSheets.Unit.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql Scripts", "Sql Scripts", "{4C3EC78E-0F1F-45A9-BCB8-ED257D8338DB}"
 	ProjectSection(SolutionItems) = preProject
+		src\Sql Scripts\vw_AveragedDailyBloodPressures.sql = src\Sql Scripts\vw_AveragedDailyBloodPressures.sql
 		src\Sql Scripts\vw_AveragedDailyWeights.sql = src\Sql Scripts\vw_AveragedDailyWeights.sql
 	EndProjectSection
 EndProject
