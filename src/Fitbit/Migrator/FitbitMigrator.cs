@@ -45,19 +45,19 @@ namespace Fitbit.Migrator
             _healthService.UpsertStepCounts(dailySteps);
         }
 
-        public async Task MigrateRuns()
-        {
-            //var latestRunDate = _healthService.GetLatestRunDate(MIN_FITBIT_DATE);
-            var latestRunDate = _healthService.GetLatestRunDate(new DateTime(2018,9,1));
-            await _logger.LogMessageAsync($"RUNS : Latest Run record has a date of : {latestRunDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+        //public async Task MigrateRuns()
+        //{
+        //    //var latestRunDate = _healthService.GetLatestRunDate(MIN_FITBIT_DATE);
+        //    var latestRunDate = _healthService.GetLatestRunDate(new DateTime(2018,9,1));
+        //    await _logger.LogMessageAsync($"RUNS : Latest Run record has a date of : {latestRunDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            var fromDate = latestRunDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            await _logger.LogMessageAsync($"RUNS : Retrieving Run records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+        //    var fromDate = latestRunDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+        //    await _logger.LogMessageAsync($"RUNS : Retrieving Run records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
             
-            var runs = await _fitbitService.GetRuns(fromDate, _calendar.Now());
+        //    var runs = await _fitbitService.GetRuns(fromDate, _calendar.Now());
 
-            _healthService.UpsertRuns(runs);
-        }
+        //    _healthService.UpsertRuns(runs);
+        //}
 
         public async Task MigrateActivitySummaries()
         {

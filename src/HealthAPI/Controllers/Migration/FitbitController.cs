@@ -83,13 +83,13 @@ namespace HealthAPI.Controllers.Migration
             return Json("https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate");
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(String), 200)]
-        [Route("Runs")]
-        public async Task<IActionResult> Runs()
-        {
-            var runs = await _fitbitService.GetRuns(new DateTime(2018, 8, 1), new DateTime(2018, 10, 11));
-            return Json(runs);
-        }
+        //[HttpGet]
+        //[ProducesResponseType(typeof(String), 200)]
+        //[Route("Runs")]
+        //public async Task<IActionResult> Runs()
+        //{
+        //    var runs = await _fitbitService.GetRuns(new DateTime(2018, 8, 1), new DateTime(2018, 10, 11));
+        //    return Json(runs);
+        //}
     }
 }
