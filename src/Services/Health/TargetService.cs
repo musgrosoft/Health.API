@@ -69,9 +69,20 @@ namespace Services.Health
 
         public List<StepCount> SetTargetsZZZ(IList<StepCount> stepCounts)
         {
+            var targetStartDate = new DateTime(2017, 5, 2);
+
             foreach (var stepCount in stepCounts)
             {
-                stepCount.Target = 10000;
+                if ((stepCount.CreatedDate - targetStartDate).TotalDays < 0)
+                {
+                    stepCount.Target = 0;
+                }
+                else
+                {
+                    stepCount.Target = 10000;
+                }
+
+                
             }
 
             return stepCounts.ToList();
