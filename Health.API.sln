@@ -39,6 +39,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql Scripts", "Sql Scripts"
 	ProjectSection(SolutionItems) = preProject
 		src\Sql Scripts\vw_AveragedDailyBloodPressures.sql = src\Sql Scripts\vw_AveragedDailyBloodPressures.sql
 		src\Sql Scripts\vw_AveragedDailyWeights.sql = src\Sql Scripts\vw_AveragedDailyWeights.sql
+		src\Sql Scripts\vw_DailyStepCounts.sql = src\Sql Scripts\vw_DailyStepCounts.sql
+		src\Sql Scripts\vw_MonthlyHeartRateSummaries.sql = src\Sql Scripts\vw_MonthlyHeartRateSummaries.sql
+		src\Sql Scripts\vw_MonthlySteps.sql = src\Sql Scripts\vw_MonthlySteps.sql
+		src\Sql Scripts\vw_WeeklyHeartRateSummaries.sql = src\Sql Scripts\vw_WeeklyHeartRateSummaries.sql
+		src\Sql Scripts\vw_WeeklyStepCounts.sql = src\Sql Scripts\vw_WeeklyStepCounts.sql
 	EndProjectSection
 EndProject
 Global
