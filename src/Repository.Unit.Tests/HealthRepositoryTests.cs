@@ -430,9 +430,9 @@ namespace Repository.Unit.Tests
         {
             var activitySummaries = new List<ActivitySummary>
             {
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,1), TargetCumSumActiveMinutes = 3},
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,2), TargetCumSumActiveMinutes = 2},
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,3), TargetCumSumActiveMinutes = 1}
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,1)},
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,2)},
+                new ActivitySummary {CreatedDate = new DateTime(2018,1,3)}
 
             };
 
@@ -448,13 +448,10 @@ namespace Repository.Unit.Tests
             Assert.Equal(3, result.Count());
 
             Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
-            Assert.Equal(3, result[0].TargetCumSumActiveMinutes);
-
+            
             Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
-            Assert.Equal(2, result[1].TargetCumSumActiveMinutes);
-
+            
             Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-            Assert.Equal(1, result[2].TargetCumSumActiveMinutes);
         }
 
         [Fact]
@@ -529,9 +526,9 @@ namespace Repository.Unit.Tests
         {
             var heartRateSummaries = new List<HeartRateSummary>
             {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,3), TargetCumSumCardioAndAbove = 1},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,2), TargetCumSumCardioAndAbove = 2},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), TargetCumSumCardioAndAbove = 3}
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,3)},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,2)},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1)}
 
             };
 
@@ -547,13 +544,11 @@ namespace Repository.Unit.Tests
             Assert.Equal(3, result.Count());
 
             Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
-            Assert.Equal(3, result[0].TargetCumSumCardioAndAbove);
-
+            
             Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
-            Assert.Equal(2, result[1].TargetCumSumCardioAndAbove);
-
+            
             Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-            Assert.Equal(1, result[2].TargetCumSumCardioAndAbove);
+            
         }
 
 
@@ -594,9 +589,9 @@ namespace Repository.Unit.Tests
         {
             var stepCounts = new List<StepCount>
             {
-                new StepCount {CreatedDate = new DateTime(2018,1,3), TargetCumSumCount = 1},
-                new StepCount {CreatedDate = new DateTime(2018,1,1), TargetCumSumCount = 2},
-                new StepCount {CreatedDate = new DateTime(2018,1,2), TargetCumSumCount = 3}
+                new StepCount {CreatedDate = new DateTime(2018,1,3)},
+                new StepCount {CreatedDate = new DateTime(2018,1,1)},
+                new StepCount {CreatedDate = new DateTime(2018,1,2)}
 
             };
 
@@ -612,13 +607,10 @@ namespace Repository.Unit.Tests
             Assert.Equal(3, result.Count());
 
             Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
-            Assert.Equal(2, result[0].TargetCumSumCount);
-
+            
             Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
-            Assert.Equal(3, result[1].TargetCumSumCount);
-
+            
             Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-            Assert.Equal(1, result[2].TargetCumSumCount);
         }
 
         [Fact]

@@ -236,7 +236,7 @@ namespace Repositories.Health
             {
                 // _logger.Log($"STEP COUNT : Update Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
                 existingStepCount.Count = stepCount.Count;
-                existingStepCount.CumSumCount = stepCount.CumSumCount;
+                //existingStepCount.CumSumCount = stepCount.CumSumCount;
                 existingStepCount.Target = stepCount.Target;
             }
             else
@@ -266,7 +266,7 @@ namespace Repositories.Health
                 existingActivitySummary.VeryActiveMinutes = activitySummary.VeryActiveMinutes;
 
                 existingActivitySummary.TargetActiveMinutes = activitySummary.TargetActiveMinutes;
-                existingActivitySummary.CumSumActiveMinutes = activitySummary.CumSumActiveMinutes;
+            //    existingActivitySummary.CumSumActiveMinutes = activitySummary.CumSumActiveMinutes;
                 //_logger.Log($"ACTIVITY SUMMARY : Insert Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
                
             }
@@ -282,7 +282,7 @@ namespace Repositories.Health
             if (existingRestingHeartRate != null)
             {
                 existingRestingHeartRate.Beats = restingHeartRate.Beats;
-                existingRestingHeartRate.MovingAverageBeats = restingHeartRate.MovingAverageBeats;
+              //  existingRestingHeartRate.MovingAverageBeats = restingHeartRate.MovingAverageBeats;
              //   _logger.Log($"RESTING HEART RATE : About to update Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
                 //_healthRepository.Update(existingRestingHeartRate, restingHeartRate);
             }
@@ -310,7 +310,7 @@ namespace Repositories.Health
 
                 existingHeartSummary.TargetCardioAndAbove = heartSummary.TargetCardioAndAbove;
 
-                existingHeartSummary.CumSumCardioAndAbove = heartSummary.CumSumCardioAndAbove;
+            //    existingHeartSummary.CumSumCardioAndAbove = heartSummary.CumSumCardioAndAbove;
 //                _logger.Log($"HEART SUMMARY : About to update Heart SUmmary Record : {heartSummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , ");
   
             }

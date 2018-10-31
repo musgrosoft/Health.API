@@ -27,45 +27,7 @@ namespace Services.Health
             return weights.ToList();
         }
         
-        public IList<StepCount> SetTargets(List<StepCount> stepCounts)
-        {
-            foreach (var stepCount in stepCounts)
-            {
-                stepCount.TargetCumSumCount = _targetCalculator.GetTargetStepCountCumSum(stepCount.CreatedDate);
-            }
-
-            return stepCounts;
-        }
-
-        public IList<ActivitySummary> SetTargets(List<ActivitySummary> allActivitySummaries)
-        {
-            foreach (var activitySummary in allActivitySummaries)
-            {
-                activitySummary.TargetCumSumActiveMinutes = _targetCalculator.GetTargetActivitySummaryCumSum(activitySummary.CreatedDate);
-            }
-
-            return allActivitySummaries;
-        }
         
-        public IList<HeartRateSummary> SetTargets(List<HeartRateSummary> heartRateSummaries)
-        {
-            foreach (var heartRateSummary in heartRateSummaries)
-            {
-                heartRateSummary.TargetCumSumCardioAndAbove = _targetCalculator.GetTargetCumSumCardioAndAbove(heartRateSummary.CreatedDate);
-            }
-
-            return heartRateSummaries;
-        }
-        
-        public IList<AlcoholIntake> SetTargets(List<AlcoholIntake> alcoholIntakes)
-        {
-            foreach (var alcoholIntake in alcoholIntakes)
-            {
-                alcoholIntake.TargetCumSumUnits = _targetCalculator.GetAlcoholIntakeTarget(alcoholIntake.CreatedDate);
-            }
-
-            return alcoholIntakes;
-        }
 
         public List<StepCount> SetTargetsZZZ(IList<StepCount> stepCounts)
         {

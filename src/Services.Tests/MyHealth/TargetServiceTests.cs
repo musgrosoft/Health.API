@@ -22,101 +22,101 @@ namespace Services.Tests.MyHealth
             _targetService = new TargetService(_targetCalculator.Object, _calendar.Object);
         }
 
-        [Fact]
-        public void ShouldSetTargetsOnHeartRateSummaries()
-        {
-            _targetCalculator.Setup(x => x.GetTargetCumSumCardioAndAbove(new DateTime(2018, 1, 1))).Returns(1);
-            _targetCalculator.Setup(x => x.GetTargetCumSumCardioAndAbove(new DateTime(2018, 1, 2))).Returns(2);
-            _targetCalculator.Setup(x => x.GetTargetCumSumCardioAndAbove(new DateTime(2018, 1, 3))).Returns(3);
+        //[Fact]
+        //public void ShouldSetTargetsOnHeartRateSummaries()
+        //{
+        //    _targetCalculator.Setup(x => x.GetTargetCumSumCardioAndAbove(new DateTime(2018, 1, 1))).Returns(1);
+        //    _targetCalculator.Setup(x => x.GetTargetCumSumCardioAndAbove(new DateTime(2018, 1, 2))).Returns(2);
+        //    _targetCalculator.Setup(x => x.GetTargetCumSumCardioAndAbove(new DateTime(2018, 1, 3))).Returns(3);
 
             
 
-            var heartRateSummaries = new List<HeartRateSummary>
-            {
-                new HeartRateSummary {CreatedDate = new DateTime(2018, 1, 1)},
-                new HeartRateSummary {CreatedDate = new DateTime(2018, 1, 2)},
-                new HeartRateSummary {CreatedDate = new DateTime(2018, 1, 3)},
-            };
+        //    var heartRateSummaries = new List<HeartRateSummary>
+        //    {
+        //        new HeartRateSummary {CreatedDate = new DateTime(2018, 1, 1)},
+        //        new HeartRateSummary {CreatedDate = new DateTime(2018, 1, 2)},
+        //        new HeartRateSummary {CreatedDate = new DateTime(2018, 1, 3)},
+        //    };
             
-            //When
-            var updatedHeartRateSummaries = _targetService.SetTargets(heartRateSummaries);
+        //    //When
+        //    var updatedHeartRateSummaries = _targetService.SetTargets(heartRateSummaries);
 
-            //Then
-            Assert.Equal(1, updatedHeartRateSummaries[0].TargetCumSumCardioAndAbove);
-            Assert.Equal(2, updatedHeartRateSummaries[1].TargetCumSumCardioAndAbove);
-            Assert.Equal(3, updatedHeartRateSummaries[2].TargetCumSumCardioAndAbove);
+        //    //Then
+        //    Assert.Equal(1, updatedHeartRateSummaries[0].TargetCumSumCardioAndAbove);
+        //    Assert.Equal(2, updatedHeartRateSummaries[1].TargetCumSumCardioAndAbove);
+        //    Assert.Equal(3, updatedHeartRateSummaries[2].TargetCumSumCardioAndAbove);
 
-        }
+        //}
 
-        [Fact]
-        public void ShouldSetTargetsOnStepCounts()
-        {
-            _targetCalculator.Setup(x => x.GetTargetStepCountCumSum(new DateTime(2018, 1, 1))).Returns(1);
-            _targetCalculator.Setup(x => x.GetTargetStepCountCumSum(new DateTime(2018, 1, 2))).Returns(2);
-            _targetCalculator.Setup(x => x.GetTargetStepCountCumSum(new DateTime(2018, 1, 3))).Returns(3);
+        //[Fact]
+        //public void ShouldSetTargetsOnStepCounts()
+        //{
+        //    _targetCalculator.Setup(x => x.GetTargetStepCountCumSum(new DateTime(2018, 1, 1))).Returns(1);
+        //    _targetCalculator.Setup(x => x.GetTargetStepCountCumSum(new DateTime(2018, 1, 2))).Returns(2);
+        //    _targetCalculator.Setup(x => x.GetTargetStepCountCumSum(new DateTime(2018, 1, 3))).Returns(3);
 
-            var stepCounts = new List<StepCount>
-            {
-                new StepCount {CreatedDate = new DateTime(2018, 1, 1)},
-                new StepCount {CreatedDate = new DateTime(2018, 1, 2)},
-                new StepCount {CreatedDate = new DateTime(2018, 1, 3)},
-            };
+        //    var stepCounts = new List<StepCount>
+        //    {
+        //        new StepCount {CreatedDate = new DateTime(2018, 1, 1)},
+        //        new StepCount {CreatedDate = new DateTime(2018, 1, 2)},
+        //        new StepCount {CreatedDate = new DateTime(2018, 1, 3)},
+        //    };
             
-            //When
-            var updatedStepCounts = _targetService.SetTargets(stepCounts);
+        //    //When
+        //    var updatedStepCounts = _targetService.SetTargets(stepCounts);
 
-            //Then
-            Assert.Equal(1, updatedStepCounts[0].TargetCumSumCount);
-            Assert.Equal(2, updatedStepCounts[1].TargetCumSumCount);
-            Assert.Equal(3, updatedStepCounts[2].TargetCumSumCount);
-        }
+        //    //Then
+        //    Assert.Equal(1, updatedStepCounts[0].TargetCumSumCount);
+        //    Assert.Equal(2, updatedStepCounts[1].TargetCumSumCount);
+        //    Assert.Equal(3, updatedStepCounts[2].TargetCumSumCount);
+        //}
         
-        [Fact]
-        public void ShouldSetTargetsOnActivitySummaries()
-        {
-            _targetCalculator.Setup(x => x.GetTargetActivitySummaryCumSum(new DateTime(2018, 1, 1))).Returns(1);
-            _targetCalculator.Setup(x => x.GetTargetActivitySummaryCumSum(new DateTime(2018, 1, 2))).Returns(2);
-            _targetCalculator.Setup(x => x.GetTargetActivitySummaryCumSum(new DateTime(2018, 1, 3))).Returns(3);
+        //[Fact]
+        //public void ShouldSetTargetsOnActivitySummaries()
+        //{
+        //    _targetCalculator.Setup(x => x.GetTargetActivitySummaryCumSum(new DateTime(2018, 1, 1))).Returns(1);
+        //    _targetCalculator.Setup(x => x.GetTargetActivitySummaryCumSum(new DateTime(2018, 1, 2))).Returns(2);
+        //    _targetCalculator.Setup(x => x.GetTargetActivitySummaryCumSum(new DateTime(2018, 1, 3))).Returns(3);
 
-            var activitySummaries = new List<ActivitySummary>
-            {
-                new ActivitySummary {CreatedDate = new DateTime(2018, 1, 1)},
-                new ActivitySummary {CreatedDate = new DateTime(2018, 1, 2)},
-                new ActivitySummary {CreatedDate = new DateTime(2018, 1, 3)},
-            };
+        //    var activitySummaries = new List<ActivitySummary>
+        //    {
+        //        new ActivitySummary {CreatedDate = new DateTime(2018, 1, 1)},
+        //        new ActivitySummary {CreatedDate = new DateTime(2018, 1, 2)},
+        //        new ActivitySummary {CreatedDate = new DateTime(2018, 1, 3)},
+        //    };
 
-            //When
-            var updatedStepCounts = _targetService.SetTargets(activitySummaries);
+        //    //When
+        //    var updatedStepCounts = _targetService.SetTargets(activitySummaries);
 
-            //Then
-            Assert.Equal(1, updatedStepCounts[0].TargetCumSumActiveMinutes);
-            Assert.Equal(2, updatedStepCounts[1].TargetCumSumActiveMinutes);
-            Assert.Equal(3, updatedStepCounts[2].TargetCumSumActiveMinutes);
-        }
+        //    //Then
+        //    Assert.Equal(1, updatedStepCounts[0].TargetCumSumActiveMinutes);
+        //    Assert.Equal(2, updatedStepCounts[1].TargetCumSumActiveMinutes);
+        //    Assert.Equal(3, updatedStepCounts[2].TargetCumSumActiveMinutes);
+        //}
 
-        [Fact]
-        public void ShouldSetTargetsOnAlcoholIntakes()
-        {
-            _targetCalculator.Setup(x => x.GetAlcoholIntakeTarget(new DateTime(2018, 1, 1))).Returns(1);
-            _targetCalculator.Setup(x => x.GetAlcoholIntakeTarget(new DateTime(2018, 1, 2))).Returns(2);
-            _targetCalculator.Setup(x => x.GetAlcoholIntakeTarget(new DateTime(2018, 1, 3))).Returns(3);
+        //[Fact]
+        //public void ShouldSetTargetsOnAlcoholIntakes()
+        //{
+        //    _targetCalculator.Setup(x => x.GetAlcoholIntakeTarget(new DateTime(2018, 1, 1))).Returns(1);
+        //    _targetCalculator.Setup(x => x.GetAlcoholIntakeTarget(new DateTime(2018, 1, 2))).Returns(2);
+        //    _targetCalculator.Setup(x => x.GetAlcoholIntakeTarget(new DateTime(2018, 1, 3))).Returns(3);
 
-            var alcoholIntakes = new List<AlcoholIntake>
-            {
-                new AlcoholIntake {CreatedDate = new DateTime(2018, 1, 1)},
-                new AlcoholIntake {CreatedDate = new DateTime(2018, 1, 2)},
-                new AlcoholIntake {CreatedDate = new DateTime(2018, 1, 3)},
-            };
+        //    var alcoholIntakes = new List<AlcoholIntake>
+        //    {
+        //        new AlcoholIntake {CreatedDate = new DateTime(2018, 1, 1)},
+        //        new AlcoholIntake {CreatedDate = new DateTime(2018, 1, 2)},
+        //        new AlcoholIntake {CreatedDate = new DateTime(2018, 1, 3)},
+        //    };
             
-            //When
-            var updatedAlcoholIntakes = _targetService.SetTargets(alcoholIntakes);
+        //    //When
+        //    var updatedAlcoholIntakes = _targetService.SetTargets(alcoholIntakes);
 
-            //Then
-            Assert.Equal(1, updatedAlcoholIntakes[0].TargetCumSumUnits);
-            Assert.Equal(2, updatedAlcoholIntakes[1].TargetCumSumUnits);
-            Assert.Equal(3, updatedAlcoholIntakes[2].TargetCumSumUnits);
+        //    //Then
+        //    Assert.Equal(1, updatedAlcoholIntakes[0].TargetCumSumUnits);
+        //    Assert.Equal(2, updatedAlcoholIntakes[1].TargetCumSumUnits);
+        //    Assert.Equal(3, updatedAlcoholIntakes[2].TargetCumSumUnits);
 
-        }
+        //}
 
         [Fact]
         public void ShouldSetTargetsOnWeights()
