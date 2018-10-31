@@ -40,7 +40,7 @@ namespace Fitbit.Migrator
             await _logger.LogMessageAsync($"STEP COUNT : Retrieving Step records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var dailySteps = (await _fitbitService.GetStepCounts(fromDate, _calendar.Now())).ToList();
-            dailySteps = _targetService.SetTargetsZZZ(dailySteps);
+            dailySteps = _targetService.SetTargets(dailySteps);
 
             _healthService.UpsertStepCounts(dailySteps);
         }
@@ -68,7 +68,7 @@ namespace Fitbit.Migrator
             await _logger.LogMessageAsync($"ACTIVITY SUMMARY : Retrieving Activity records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var dailyActivites = (await _fitbitService.GetActivitySummaries(fromDate, _calendar.Now())).ToList();
-            dailyActivites = _targetService.SetTargetsZZZ(dailyActivites);
+            dailyActivites = _targetService.SetTargets(dailyActivites);
 
              _healthService.UpsertActivitySummaries(dailyActivites);
         }
@@ -95,7 +95,7 @@ namespace Fitbit.Migrator
             await _logger.LogMessageAsync($"HEART SUMMARY : Retrieving Heart Zone Data records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
                 
             var heartSummaries = (await _fitbitService.GetHeartSummaries(getDataFromDate, _calendar.Now())).ToList();
-            heartSummaries = _targetService.SetTargetsZZZ(heartSummaries);
+            heartSummaries = _targetService.SetTargets(heartSummaries);
 
             _healthService.UpsertHeartSummaries(heartSummaries);
         }

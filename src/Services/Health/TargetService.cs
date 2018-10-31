@@ -29,7 +29,7 @@ namespace Services.Health
         
         
 
-        public List<StepCount> SetTargetsZZZ(IList<StepCount> stepCounts)
+        public List<StepCount> SetTargets(IList<StepCount> stepCounts)
         {
             var targetStartDate = new DateTime(2017, 5, 2);
 
@@ -50,7 +50,7 @@ namespace Services.Health
             return stepCounts.ToList();
         }
 
-        public List<ActivitySummary> SetTargetsZZZ(IList<ActivitySummary> activitySummaries)
+        public List<ActivitySummary> SetTargets(IList<ActivitySummary> activitySummaries)
         {
             foreach (var activitySummary in activitySummaries)
             {
@@ -60,7 +60,7 @@ namespace Services.Health
             return activitySummaries.ToList();
         }
 
-        public List<HeartRateSummary> SetTargetsZZZ(IList<HeartRateSummary> heartRateSummaries)
+        public List<HeartRateSummary> SetTargets(IList<HeartRateSummary> heartRateSummaries)
         {
             foreach (var heartRateSummary in heartRateSummaries)
             {
@@ -70,7 +70,7 @@ namespace Services.Health
             return heartRateSummaries.ToList();
         }
 
-        public List<AlcoholIntake> SetTargetsZZZ(IList<AlcoholIntake> alcoholIntakes)
+        public List<AlcoholIntake> SetTargets(IList<AlcoholIntake> alcoholIntakes)
         {
             foreach (var alcoholIntake in alcoholIntakes)
             {

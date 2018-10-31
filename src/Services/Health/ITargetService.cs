@@ -6,9 +6,9 @@ namespace Services.Health
     public interface ITargetService
     {
         List<Weight> SetTargets(IList<Weight> weights);
-        List<StepCount> SetTargetsZZZ(IList<StepCount> dailySteps);
-        List<ActivitySummary> SetTargetsZZZ(IList<ActivitySummary> activitySummaries);
-        List<HeartRateSummary> SetTargetsZZZ(IList<HeartRateSummary> heartSummaries);
-        List<AlcoholIntake> SetTargetsZZZ(IList<AlcoholIntake> alcoholIntakes);
+        List<StepCount> SetTargets(IList<StepCount> dailySteps);
+        List<ActivitySummary> SetTargets(IList<ActivitySummary> activitySummaries);
+        List<HeartRateSummary> SetTargets(IList<HeartRateSummary> heartSummaries);
+        List<AlcoholIntake> SetTargets(IList<AlcoholIntake> alcoholIntakes);
     }
 }
