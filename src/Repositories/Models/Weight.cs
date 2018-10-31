@@ -12,11 +12,6 @@ namespace Repositories.Models
         public Double? FatRatioPercentage { get; set; }
         public Double? TargetKg { get; set; }
 
-        [NotMapped]
-        public Double? MovingAverageKg { get; set; }
-        
-        
-
     }
 
 }

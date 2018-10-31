@@ -10,7 +10,5 @@ namespace Repositories.Models
         public DateTime CreatedDate { get; set; }
         public int Beats { get; set; }
 
-        [NotMapped]
-        public Double? MovingAverageBeats { get; set; }
     }
 }

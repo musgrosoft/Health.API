@@ -12,21 +12,22 @@ namespace Services.Health
         private readonly IFitbitConfig _config;
         private readonly ILogger _logger;
         private readonly IHealthRepository _healthRepository;
-        private readonly IEntityAggregator _entityAggregator;
-        private readonly IEntityDecorator _entityDecorator;
+        //private readonly IEntityAggregator _entityAggregator;
+        //private readonly IEntityDecorator _entityDecorator;
         private const int MOVING_AVERAGE_PERIOD = 10;
 
         public HealthService(IFitbitConfig config,
             ILogger logger,
-            IHealthRepository healthRepository,
-            IEntityAggregator entityAggregator, 
-            IEntityDecorator entityDecorator)
+            IHealthRepository healthRepository
+            //IEntityAggregator entityAggregator, 
+          //  IEntityDecorator entityDecorator
+          )
         {
             _config = config;
             _logger = logger;
             _healthRepository = healthRepository;
-            _entityAggregator = entityAggregator;
-            _entityDecorator = entityDecorator;
+            //_entityAggregator = entityAggregator;
+          //  _entityDecorator = entityDecorator;
         }
 
 
@@ -42,111 +43,111 @@ namespace Services.Health
 
         public IList<Weight> GetAllWeights()
         {
-            return _entityDecorator.GetAllWeights();
+            return _healthRepository.GetAllWeights();
         }
 
         public IList<BloodPressure> GetAllBloodPressures()
         {
-            return _entityDecorator.GetAllBloodPressures();
+            return _healthRepository.GetAllBloodPressures();
         }
 
         public IList<RestingHeartRate> GetAllRestingHeartRates()
         {
-            return _entityDecorator.GetAllRestingHeartRates();
+            return _healthRepository.GetAllRestingHeartRates();
         }
 
         public IList<StepCount> GetAllStepCounts()
         {
-            return _entityDecorator.GetAllStepCounts();
+            return _healthRepository.GetAllStepCounts();
         }
 
-        public IList<StepCount> GetAllStepCountsByWeek()
-        {
-            var dailyStepCounts = _entityDecorator.GetAllStepCounts();
+        //public IList<StepCount> GetAllStepCountsByWeek()
+        //{
+        //    var dailyStepCounts = _healthRepository.GetAllStepCounts();
 
-            var weeklyStepCounts = _entityAggregator.GroupByWeek(dailyStepCounts);
+        //    var weeklyStepCounts = _entityAggregator.GroupByWeek(dailyStepCounts);
 
-            return weeklyStepCounts;
-        }
+        //    return weeklyStepCounts;
+        //}
 
-        public IList<StepCount> GetAllStepCountsByMonth()
-        {
-            var dailyStepCounts = _entityDecorator.GetAllStepCounts();
+        //public IList<StepCount> GetAllStepCountsByMonth()
+        //{
+        //    var dailyStepCounts = _entityDecorator.GetAllStepCounts();
 
-            var monthlyStepCounts = _entityAggregator.GroupByMonth(dailyStepCounts);
+        //    var monthlyStepCounts = _entityAggregator.GroupByMonth(dailyStepCounts);
 
-            return monthlyStepCounts;
-        }
+        //    return monthlyStepCounts;
+        //}
 
-        public IList<AlcoholIntake> GetAllAlcoholIntakes()
-        {
-            return _entityDecorator.GetAllAlcoholIntakes();
-        }
+        //public IList<AlcoholIntake> GetAllAlcoholIntakes()
+        //{
+        //    return _entityDecorator.GetAllAlcoholIntakes();
+        //}
 
-        public IList<AlcoholIntake> GetAllAlcoholIntakesByWeek()
-        {
-            var dailyAlcoholIntakes = _entityDecorator.GetAllAlcoholIntakes();
+        //public IList<AlcoholIntake> GetAllAlcoholIntakesByWeek()
+        //{
+        //    var dailyAlcoholIntakes = _entityDecorator.GetAllAlcoholIntakes();
 
-            var weeklyAlcoholIntakes = _entityAggregator.GroupByWeek(dailyAlcoholIntakes);
+        //    var weeklyAlcoholIntakes = _entityAggregator.GroupByWeek(dailyAlcoholIntakes);
 
-            return weeklyAlcoholIntakes;
-        }
+        //    return weeklyAlcoholIntakes;
+        //}
 
-        public IList<AlcoholIntake> GetAllAlcoholIntakesByMonth()
-        {
-            var dailyAlcoholIntakes = _entityDecorator.GetAllAlcoholIntakes();
+        //public IList<AlcoholIntake> GetAllAlcoholIntakesByMonth()
+        //{
+        //    var dailyAlcoholIntakes = _entityDecorator.GetAllAlcoholIntakes();
 
-            var monthlyAlcoholIntakes = _entityAggregator.GroupByMonth(dailyAlcoholIntakes);
+        //    var monthlyAlcoholIntakes = _entityAggregator.GroupByMonth(dailyAlcoholIntakes);
 
-            return monthlyAlcoholIntakes;
-        }
+        //    return monthlyAlcoholIntakes;
+        //}
 
-        public IList<HeartRateSummary> GetAllHeartRateSummaries()
-        {
-            return _entityDecorator.GetAllHeartRateSummaries();
-        }
+        //public IList<HeartRateSummary> GetAllHeartRateSummaries()
+        //{
+        //    return _entityDecorator.GetAllHeartRateSummaries();
+        //}
 
-        public IList<HeartRateSummary> GetAllHeartRateSummariesByWeek()
-        {
-            var dailyHeartRateSummaries = _entityDecorator.GetAllHeartRateSummaries();
+        //public IList<HeartRateSummary> GetAllHeartRateSummariesByWeek()
+        //{
+        //    var dailyHeartRateSummaries = _entityDecorator.GetAllHeartRateSummaries();
 
-            var weeklyHeartRateSummaries = _entityAggregator.GroupByWeek(dailyHeartRateSummaries);
+        //    var weeklyHeartRateSummaries = _entityAggregator.GroupByWeek(dailyHeartRateSummaries);
 
-            return weeklyHeartRateSummaries;
-        }
+        //    return weeklyHeartRateSummaries;
+        //}
 
-        public IList<HeartRateSummary> GetAllHeartRateSummariesByMonth()
-        {
-            var dailyHeartRateSummaries = _entityDecorator.GetAllHeartRateSummaries();
+        //public IList<HeartRateSummary> GetAllHeartRateSummariesByMonth()
+        //{
+        //    var dailyHeartRateSummaries = _entityDecorator.GetAllHeartRateSummaries();
 
-            var monthlyHeartRateSummaries = _entityAggregator.GroupByMonth(dailyHeartRateSummaries);
+        //    var monthlyHeartRateSummaries = _entityAggregator.GroupByMonth(dailyHeartRateSummaries);
 
-            return monthlyHeartRateSummaries;
-        }
+        //    return monthlyHeartRateSummaries;
+        //}
 
 
-        public IList<ActivitySummary> GetAllActivitySummaries()
-        {
-            return _entityDecorator.GetAllActivitySummaries();
-        }
+        //public IList<ActivitySummary> GetAllActivitySummaries()
+        //{
+        //    return _entityDecorator.GetAllActivitySummaries();
+        //}
 
-        public IList<ActivitySummary> GetAllActivitySummariesByWeek()
-        {
-            var dailyActivitySummaries = _entityDecorator.GetAllActivitySummaries();
+        //public IList<ActivitySummary> GetAllActivitySummariesByWeek()
+        //{
+        //    var dailyActivitySummaries = _entityDecorator.GetAllActivitySummaries();
 
-            var weeklyActivitySummaries = _entityAggregator.GroupByWeek(dailyActivitySummaries);
+        //    var weeklyActivitySummaries = _entityAggregator.GroupByWeek(dailyActivitySummaries);
 
-            return weeklyActivitySummaries;
-        }
+        //    return weeklyActivitySummaries;
+        //}
 
-        public IList<ActivitySummary> GetAllActivitySummariesByMonth()
-        {
-            var dailyActivitySummaries = _entityDecorator.GetAllActivitySummaries();
+        //public IList<ActivitySummary> GetAllActivitySummariesByMonth()
+        //{
+        //    var dailyActivitySummaries = _entityDecorator.GetAllActivitySummaries();
 
-            var monthlyActivitySummaries = _entityAggregator.GroupByMonth(dailyActivitySummaries);
+        //    var monthlyActivitySummaries = _entityAggregator.GroupByMonth(dailyActivitySummaries);
 
-            return monthlyActivitySummaries;
-        }
+        //    return monthlyActivitySummaries;
+        //}
 
 
         public DateTime GetLatestWeightDate(DateTime defaultDateTime)

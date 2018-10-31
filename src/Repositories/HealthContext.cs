@@ -15,13 +15,6 @@ namespace Repositories
         public virtual DbSet<Models.Ergo> Ergos { get; set; }
         public virtual DbSet<Models.Token> Tokens { get; set; }
 
-        //  public virtual DbSet<Models.HeartRate> HeartRates { get; set; }
-
-        //public HealthContext(IConfig config)
-        //{
-        //    _config = config;
-        //}
-
         public HealthContext(DbContextOptions<HealthContext> options) : base(options)
         {
 
@@ -51,6 +44,7 @@ namespace Repositories
         //{
         //    if (!optionsBuilder.IsConfigured)
         //    {
+
         //        optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
         //    }
         //}

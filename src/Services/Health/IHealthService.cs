@@ -14,9 +14,9 @@ namespace Services.Health
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
         DateTime GetLatestRunDate(DateTime minFitbitDate);
 
-        IList<ActivitySummary> GetAllActivitySummaries();
-        IList<ActivitySummary> GetAllActivitySummariesByWeek();
-        IList<ActivitySummary> GetAllActivitySummariesByMonth();
+        //IList<ActivitySummary> GetAllActivitySummaries();
+        //IList<ActivitySummary> GetAllActivitySummariesByWeek();
+        //IList<ActivitySummary> GetAllActivitySummariesByMonth();
 
         void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
         void UpsertActivitySummaries(IEnumerable<ActivitySummary> activitySummaries);
@@ -29,23 +29,23 @@ namespace Services.Health
         void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes);
 
 
-        IList<Weight> GetAllWeights();
-        IList<BloodPressure> GetAllBloodPressures();
-        IList<RestingHeartRate> GetAllRestingHeartRates();
-        IList<StepCount> GetAllStepCounts();
-        IList<StepCount> GetAllStepCountsByWeek();
-        IList<StepCount> GetAllStepCountsByMonth();
-        IList<AlcoholIntake> GetAllAlcoholIntakes();
-        IList<AlcoholIntake> GetAllAlcoholIntakesByWeek();
-        IList<AlcoholIntake> GetAllAlcoholIntakesByMonth();
-        IList<HeartRateSummary> GetAllHeartRateSummaries();
-        IList<HeartRateSummary> GetAllHeartRateSummariesByWeek();
-        IList<HeartRateSummary> GetAllHeartRateSummariesByMonth();
+        //IList<Weight> GetAllWeights();
+        //IList<BloodPressure> GetAllBloodPressures();
+        //IList<RestingHeartRate> GetAllRestingHeartRates();
+        //IList<StepCount> GetAllStepCounts();
+        //IList<StepCount> GetAllStepCountsByWeek();
+        //IList<StepCount> GetAllStepCountsByMonth();
+        //IList<AlcoholIntake> GetAllAlcoholIntakes();
+        //IList<AlcoholIntake> GetAllAlcoholIntakesByWeek();
+        //IList<AlcoholIntake> GetAllAlcoholIntakesByMonth();
+        //IList<HeartRateSummary> GetAllHeartRateSummaries();
+        //IList<HeartRateSummary> GetAllHeartRateSummariesByWeek();
+        //IList<HeartRateSummary> GetAllHeartRateSummariesByMonth();
 
 
         void UpsertErgos(List<Ergo> rows);
-        IList<Run> GetAllRuns();
-        IList<Ergo> GetAllErgos();
+        //IList<Run> GetAllRuns();
+        //IList<Ergo> GetAllErgos();
         
     }
 }

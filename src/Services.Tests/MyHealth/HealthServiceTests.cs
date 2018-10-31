@@ -16,10 +16,10 @@ namespace Services.Tests.MyHealth
         private Mock<IFitbitConfig> _config;
         private Mock<ILogger> _logger;
 
-        private Mock<IAggregateStatisticsCalculator> _aggregationCalculator;
+        //private Mock<IAggregateStatisticsCalculator> _aggregationCalculator;
         private Mock<ITargetService> _targetService;
-        private Mock<IEntityDecorator> _entityDecorator;
-        private Mock<IEntityAggregator> _entityAggregator;
+        //private Mock<IEntityDecorator> _entityDecorator;
+        //private Mock<IEntityAggregator> _entityAggregator;
 
 
         public HealthServiceTests()
@@ -27,18 +27,19 @@ namespace Services.Tests.MyHealth
             _healthRepository = new Mock<IHealthRepository>();
             _config = new Mock<IFitbitConfig>();
             _logger = new Mock<ILogger>();
-            _aggregationCalculator = new Mock<IAggregateStatisticsCalculator>();
+            //_aggregationCalculator = new Mock<IAggregateStatisticsCalculator>();
             _targetService = new Mock<ITargetService>();
 
-            _entityDecorator = new Mock<IEntityDecorator>();
-            _entityAggregator = new Mock<IEntityAggregator>();
+            //_entityDecorator = new Mock<IEntityDecorator>();
+            //_entityAggregator = new Mock<IEntityAggregator>();
 
             _healthService = new HealthService(
                 _config.Object, 
                 _logger.Object, 
-                _healthRepository.Object, 
-                _entityAggregator.Object, 
-                _entityDecorator.Object);
+                _healthRepository.Object//, 
+                //_entityAggregator.Object, 
+                //_entityDecorator.Object
+                );
         }
 
         [Fact]
@@ -317,43 +318,43 @@ namespace Services.Tests.MyHealth
             _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
         }
 
-        [Fact]
-        public void ShouldGetAllRestingHeartRates()
-        {
-            //Given
-            var restingHeartRates = new List<RestingHeartRate>
-            {
-                new RestingHeartRate {CreatedDate = new DateTime(2018,6,6), Beats = 123}
-            };
+        //[Fact]
+        //public void ShouldGetAllRestingHeartRates()
+        //{
+        //    //Given
+        //    var restingHeartRates = new List<RestingHeartRate>
+        //    {
+        //        new RestingHeartRate {CreatedDate = new DateTime(2018,6,6), Beats = 123}
+        //    };
             
-            _entityDecorator.Setup(x => x.GetAllRestingHeartRates()).Returns(restingHeartRates);
+        //    _entityDecorator.Setup(x => x.GetAllRestingHeartRates()).Returns(restingHeartRates);
             
-            //when
-            var result = _healthService.GetAllRestingHeartRates();
+        //    //when
+        //    var result = _healthService.GetAllRestingHeartRates();
 
-            //then
-            Assert.Equal(restingHeartRates, result);
-        }
+        //    //then
+        //    Assert.Equal(restingHeartRates, result);
+        //}
 
 
-        [Fact]
-        public void ShouldGetAllBloodPressures(){
+        //[Fact]
+        //public void ShouldGetAllBloodPressures(){
 
-            //Given
-            var bloodPressures = new List<BloodPressure>
-            {
-                new BloodPressure {CreatedDate = new DateTime(2018,6,6), Systolic = 123}
-            };
+        //    //Given
+        //    var bloodPressures = new List<BloodPressure>
+        //    {
+        //        new BloodPressure {CreatedDate = new DateTime(2018,6,6), Systolic = 123}
+        //    };
 
-            _entityDecorator.Setup(x => x.GetAllBloodPressures()).Returns(bloodPressures);
+        //    _entityDecorator.Setup(x => x.GetAllBloodPressures()).Returns(bloodPressures);
 
-            //when
-            var result = _healthService.GetAllBloodPressures();
+        //    //when
+        //    var result = _healthService.GetAllBloodPressures();
 
-            //then
-            Assert.Equal(bloodPressures, result);
+        //    //then
+        //    Assert.Equal(bloodPressures, result);
 
-        }
+        //}
 
         [Fact]
         public void ShouldGetAllRuns()
@@ -393,308 +394,6 @@ namespace Services.Tests.MyHealth
 
         }
 
-        [Fact]
-        public void ShouldGetAllWeights()
-        {
-            //Given
-            var weights = new List<Weight>
-            {
-                new Weight {CreatedDate = new DateTime(2018,6,6), Kg = 123}
-            };
 
-            _entityDecorator.Setup(x => x.GetAllWeights()).Returns(weights);
-
-            //when
-            var result = _healthService.GetAllWeights();
-
-            //then
-            Assert.Equal(weights, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllStepCounts()
-        {
-
-            //Given
-            var stepCounts = new List<StepCount>
-            {
-                new StepCount {CreatedDate = new DateTime(2018,6,6), Count = 123}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllStepCounts()).Returns(stepCounts);
-
-            //when
-            var result = _healthService.GetAllStepCounts();
-
-            //then
-            Assert.Equal(stepCounts, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllStepCountsByWeek()
-        {
-            //Given
-            var stepCounts = new List<StepCount>
-            {
-                new StepCount {CreatedDate = new DateTime(2018,6,6), Count = 123}
-            };
-
-            var weeklyStepCounts = new List<StepCount>
-            {
-                new StepCount {CreatedDate = new DateTime(2017,7,7), Count = 777}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllStepCounts()).Returns(stepCounts);
-            _entityAggregator.Setup(x => x.GroupByWeek(stepCounts)).Returns(weeklyStepCounts);
-
-            //when
-            var result = _healthService.GetAllStepCountsByWeek();
-
-            //then
-            Assert.Equal(weeklyStepCounts, result);
-        }
-
-        [Fact]
-        public void ShouldGetAllStepCountsByMonth()
-        {
-            //Given
-            var stepCounts = new List<StepCount>
-            {
-                new StepCount {CreatedDate = new DateTime(2018,6,6), Count = 123}
-            };
-
-            var monthlyStepCounts = new List<StepCount>
-            {
-                new StepCount {CreatedDate = new DateTime(2017,7,7), Count = 777}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllStepCounts()).Returns(stepCounts);
-            _entityAggregator.Setup(x => x.GroupByMonth(stepCounts)).Returns(monthlyStepCounts);
-
-            //when
-            var result = _healthService.GetAllStepCountsByMonth();
-
-            //then
-            Assert.Equal(monthlyStepCounts, result);
-        }
-
-        [Fact]
-        public void ShouldGetAllAlcoholIntakes()
-        {
-
-            //Given
-            var alcoholIntakes = new List<AlcoholIntake>
-            {
-                new AlcoholIntake {CreatedDate = new DateTime(2018,6,6), Units = 123}
-            };
-            
-            _entityDecorator.Setup(x => x.GetAllAlcoholIntakes()).Returns(alcoholIntakes);
-
-            //when
-            var result = _healthService.GetAllAlcoholIntakes();
-
-            //then
-            Assert.Equal(alcoholIntakes, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllAlcoholIntakesByWeek()
-        {
-
-            //Given
-            var alcoholIntakes = new List<AlcoholIntake>
-            {
-                new AlcoholIntake {CreatedDate = new DateTime(2018,6,6), Units = 123}
-            };
-
-            var weeklyAlcoholIntakes = new List<AlcoholIntake>
-            {
-                new AlcoholIntake {CreatedDate = new DateTime(2018,7,7), Units = 127}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllAlcoholIntakes()).Returns(alcoholIntakes);
-            _entityAggregator.Setup(x => x.GroupByWeek(alcoholIntakes)).Returns(weeklyAlcoholIntakes);
-
-            //when
-            var result = _healthService.GetAllAlcoholIntakesByWeek();
-
-            //then
-            Assert.Equal(weeklyAlcoholIntakes, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllAlcoholIntakesByMonth()
-        {
-
-            //Given
-            var alcoholIntakes = new List<AlcoholIntake>
-            {
-                new AlcoholIntake {CreatedDate = new DateTime(2018,6,6), Units = 123}
-            };
-
-            var monthlyAlcoholIntakes = new List<AlcoholIntake>
-            {
-                new AlcoholIntake {CreatedDate = new DateTime(2018,7,7), Units = 127}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllAlcoholIntakes()).Returns(alcoholIntakes);
-            _entityAggregator.Setup(x => x.GroupByMonth(alcoholIntakes)).Returns(monthlyAlcoholIntakes);
-
-            //when
-            var result = _healthService.GetAllAlcoholIntakesByMonth();
-
-            //then
-            Assert.Equal(monthlyAlcoholIntakes, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllHeartRateSummaries()
-        {
-
-            //Given
-            var heartRateSummaries = new List<HeartRateSummary>
-            {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,6,6), CardioMinutes = 123}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllHeartRateSummaries()).Returns(heartRateSummaries);
-
-            //when
-            var result = _healthService.GetAllHeartRateSummaries();
-
-            //then
-            Assert.Equal(heartRateSummaries, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllHeartRateSummariesByWeek()
-        {
-
-            //Given
-            var heartRateSummaries = new List<HeartRateSummary>
-            {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,6,6), CardioMinutes = 123}
-            };
-
-            var weeklyHeartRateSummaries = new List<HeartRateSummary>
-            {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,7,7), CardioMinutes = 127}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllHeartRateSummaries()).Returns(heartRateSummaries);
-            _entityAggregator.Setup(x => x.GroupByWeek(heartRateSummaries)).Returns(weeklyHeartRateSummaries);
-
-            //when
-            var result = _healthService.GetAllHeartRateSummariesByWeek();
-
-            //then
-            Assert.Equal(weeklyHeartRateSummaries, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllHeartRateSummariesByMonth()
-        {
-
-            //Given
-            var heartRateSummaries = new List<HeartRateSummary>
-            {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,6,6), CardioMinutes = 123}
-            };
-
-            var monthlyHeartRateSummaries = new List<HeartRateSummary>
-            {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,7,7), CardioMinutes = 127}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllHeartRateSummaries()).Returns(heartRateSummaries);
-            _entityAggregator.Setup(x => x.GroupByMonth(heartRateSummaries)).Returns(monthlyHeartRateSummaries);
-
-            //when
-            var result = _healthService.GetAllHeartRateSummariesByMonth();
-
-            //then
-            Assert.Equal(monthlyHeartRateSummaries, result);
-
-        }
-
-
-        [Fact]
-        public void ShouldGetAllActivitySummaries()
-        {
-
-            //Given
-            var activitySummaries = new List<ActivitySummary>
-            {
-                new ActivitySummary {CreatedDate = new DateTime(2018,6,6), VeryActiveMinutes = 123}
-            };
-            
-            _entityDecorator.Setup(x => x.GetAllActivitySummaries()).Returns(activitySummaries);
-
-            //when
-            var result = _healthService.GetAllActivitySummaries();
-
-            //then
-            Assert.Equal(activitySummaries, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllActivitySummariesByWeek()
-        {
-
-            //Given
-            var activitySummaries = new List<ActivitySummary>
-            {
-                new ActivitySummary {CreatedDate = new DateTime(2018,6,6), VeryActiveMinutes = 123}
-            };
-
-            var activitySummariesByWeek = new List<ActivitySummary>
-            {
-                new ActivitySummary {CreatedDate = new DateTime(2017,7,7), VeryActiveMinutes = 777}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllActivitySummaries()).Returns(activitySummaries);
-            _entityAggregator.Setup(x => x.GroupByWeek(activitySummaries)).Returns(activitySummariesByWeek);
-
-            //when
-            var result = _healthService.GetAllActivitySummariesByWeek();
-
-            //then
-            Assert.Equal(activitySummariesByWeek, result);
-
-        }
-
-        [Fact]
-        public void ShouldGetAllActivitySummariesByMonth()
-        {
-
-            //Given
-            var activitySummaries = new List<ActivitySummary>
-            {
-                new ActivitySummary {CreatedDate = new DateTime(2018,6,6), VeryActiveMinutes = 123}
-            };
-
-            var activitySummariesByMonth = new List<ActivitySummary>
-            {
-                new ActivitySummary {CreatedDate = new DateTime(2016,6,6), VeryActiveMinutes = 66}
-            };
-
-            _entityDecorator.Setup(x => x.GetAllActivitySummaries()).Returns(activitySummaries);
-            _entityAggregator.Setup(x => x.GroupByMonth(activitySummaries)).Returns(activitySummariesByMonth);
-
-            //when
-            var result = _healthService.GetAllActivitySummariesByMonth();
-
-            //then
-            Assert.Equal(activitySummariesByMonth, result);
-
-        }
     }
 }

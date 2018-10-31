@@ -10,12 +10,6 @@ namespace Repositories.Models
         public DateTime CreatedDate { get; set; }
         public Double? Diastolic { get; set; }
         public Double? Systolic { get; set; }
-
-        [NotMapped]
-        public Double? MovingAverageSystolic { get; set; }
-        [NotMapped]
-        public Double? MovingAverageDiastolic { get; set; }
-
-
+        
     }
 }

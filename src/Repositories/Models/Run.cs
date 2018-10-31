@@ -11,11 +11,5 @@ namespace Repositories.Models
         public TimeSpan Time { get; set; }
         public Double Metres { get; set; }
 
-        [NotMapped]
-        public Double TimeInMinutes => Time.TotalMinutes;
-        [NotMapped]
-        public Double PaceKmPerHour => (60 / Time.TotalMinutes) * (Metres / 1000);
-        [NotMapped]
-        public TimeSpan PaceTimeFor1Km =>  (Time * 1000) / Metres;
     }
 }
