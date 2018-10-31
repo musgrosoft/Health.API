@@ -13,32 +13,18 @@ namespace Services.Tests.MyHealth
     {
         private Mock<IHealthRepository> _healthRepository;
         private HealthService _healthService;
-        private Mock<IFitbitConfig> _config;
         private Mock<ILogger> _logger;
-
-        //private Mock<IAggregateStatisticsCalculator> _aggregationCalculator;
         private Mock<ITargetService> _targetService;
-        //private Mock<IEntityDecorator> _entityDecorator;
-        //private Mock<IEntityAggregator> _entityAggregator;
-
 
         public HealthServiceTests()
         {
             _healthRepository = new Mock<IHealthRepository>();
-            _config = new Mock<IFitbitConfig>();
             _logger = new Mock<ILogger>();
-            //_aggregationCalculator = new Mock<IAggregateStatisticsCalculator>();
             _targetService = new Mock<ITargetService>();
 
-            //_entityDecorator = new Mock<IEntityDecorator>();
-            //_entityAggregator = new Mock<IEntityAggregator>();
-
             _healthService = new HealthService(
-                _config.Object, 
                 _logger.Object, 
-                _healthRepository.Object//, 
-                //_entityAggregator.Object, 
-                //_entityDecorator.Object
+                _healthRepository.Object 
                 );
         }
 

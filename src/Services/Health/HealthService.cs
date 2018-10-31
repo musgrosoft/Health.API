@@ -9,21 +9,22 @@ namespace Services.Health
 {
     public class HealthService : IHealthService
     {   
-        private readonly IFitbitConfig _config;
+        //private readonly IFitbitConfig _config;
         private readonly ILogger _logger;
         private readonly IHealthRepository _healthRepository;
         //private readonly IEntityAggregator _entityAggregator;
         //private readonly IEntityDecorator _entityDecorator;
         private const int MOVING_AVERAGE_PERIOD = 10;
 
-        public HealthService(IFitbitConfig config,
+        public HealthService(
+            //IFitbitConfig config,
             ILogger logger,
             IHealthRepository healthRepository
             //IEntityAggregator entityAggregator, 
           //  IEntityDecorator entityDecorator
           )
         {
-            _config = config;
+           // _config = config;
             _logger = logger;
             _healthRepository = healthRepository;
             //_entityAggregator = entityAggregator;
