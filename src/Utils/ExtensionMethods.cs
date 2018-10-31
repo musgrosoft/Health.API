@@ -22,22 +22,22 @@ namespace Utils
         }
 
 
-        public static DateTime GetWeekStartingOnMonday(this DateTime val)
-        {
-            //set Monday as first day of week
-            int day = (val.DayOfWeek == 0) 
-                ? 7 
-                : (int)val.DayOfWeek;
+        //public static DateTime GetWeekStartingOnMonday(this DateTime val)
+        //{
+        //    //set Monday as first day of week
+        //    int day = (val.DayOfWeek == 0) 
+        //        ? 7 
+        //        : (int)val.DayOfWeek;
 
-            day = day - 1;
+        //    day = day - 1;
 
-            return val.AddDays(-day);
-        }
+        //    return val.AddDays(-day);
+        //}
 
-        public static DateTime GetFirstDayOfMonth(this DateTime val)
-        {
-            return new DateTime(val.Year, val.Month, 1);
-        }
+        //public static DateTime GetFirstDayOfMonth(this DateTime val)
+        //{
+        //    return new DateTime(val.Year, val.Month, 1);
+        //}
 
         public static bool Between(this DateTime val, DateTime startDate, DateTime endDate)
         {
