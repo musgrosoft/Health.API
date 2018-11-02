@@ -425,292 +425,292 @@ namespace Repository.Unit.Tests
             Assert.Equal(8, existingHeartSummary.PeakMinutes);
         }
 
-        [Fact]
-        public void ShouldGetAllActivitySummaries()
-        {
-            var activitySummaries = new List<ActivitySummary>
-            {
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,1)},
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,2)},
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,3)}
+        //[Fact]
+        //public void ShouldGetAllActivitySummaries()
+        //{
+        //    var activitySummaries = new List<ActivitySummary>
+        //    {
+        //        new ActivitySummary {CreatedDate = new DateTime(2018,1,1)},
+        //        new ActivitySummary {CreatedDate = new DateTime(2018,1,2)},
+        //        new ActivitySummary {CreatedDate = new DateTime(2018,1,3)}
 
-            };
+        //    };
 
-            foreach (var activitySummary in activitySummaries)
-            {
-                _fakeLocalContext.ActivitySummaries.Add(activitySummary);
-            }
+        //    foreach (var activitySummary in activitySummaries)
+        //    {
+        //        _fakeLocalContext.ActivitySummaries.Add(activitySummary);
+        //    }
             
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllActivitySummaries().ToList();
+        //    var result = _healthRepository.GetAllActivitySummaries().ToList();
 
-            Assert.Equal(3, result.Count());
+        //    Assert.Equal(3, result.Count());
 
-            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+        //    Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
             
-            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+        //    Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
             
-            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-        }
+        //    Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+        //}
 
-        [Fact]
-        public void ShouldGetAllAlcoholIntakes()
-        {
-            var alcoholIntakes = new List<AlcoholIntake>
-            {
-                new AlcoholIntake {CreatedDate = new DateTime(2018,1,3), Units = 1},
-                new AlcoholIntake {CreatedDate = new DateTime(2018,1,2), Units = 2},
-                new AlcoholIntake {CreatedDate = new DateTime(2018,1,1), Units = 3}
+        //[Fact]
+        //public void ShouldGetAllAlcoholIntakes()
+        //{
+        //    var alcoholIntakes = new List<AlcoholIntake>
+        //    {
+        //        new AlcoholIntake {CreatedDate = new DateTime(2018,1,3), Units = 1},
+        //        new AlcoholIntake {CreatedDate = new DateTime(2018,1,2), Units = 2},
+        //        new AlcoholIntake {CreatedDate = new DateTime(2018,1,1), Units = 3}
 
-            };
+        //    };
 
-            foreach (var alcoholIntake in alcoholIntakes)
-            {
-                _fakeLocalContext.AlcoholIntakes.Add(alcoholIntake);
-            }
+        //    foreach (var alcoholIntake in alcoholIntakes)
+        //    {
+        //        _fakeLocalContext.AlcoholIntakes.Add(alcoholIntake);
+        //    }
 
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllAlcoholIntakes().ToList();
+        //    var result = _healthRepository.GetAllAlcoholIntakes().ToList();
 
-            Assert.Equal(3, result.Count());
-            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
-            Assert.Equal(3, result[0].Units);
+        //    Assert.Equal(3, result.Count());
+        //    Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+        //    Assert.Equal(3, result[0].Units);
 
-            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
-            Assert.Equal(2, result[1].Units);
+        //    Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+        //    Assert.Equal(2, result[1].Units);
 
-            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-            Assert.Equal(1, result[2].Units);
-        }
+        //    Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+        //    Assert.Equal(1, result[2].Units);
+        //}
 
-        [Fact]
-        public void ShouldGetAllBloodPressures()
-        {
-            var bloodPressures = new List<BloodPressure>
-            {
+        //[Fact]
+        //public void ShouldGetAllBloodPressures()
+        //{
+        //    var bloodPressures = new List<BloodPressure>
+        //    {
                 
-                new BloodPressure {CreatedDate = new DateTime(2018,1,2), Systolic = 2},
-                new BloodPressure {CreatedDate = new DateTime(2018,1,1,1,0,0), Systolic = 10},
-                new BloodPressure {CreatedDate = new DateTime(2018,1,1,2,0,0), Systolic = 20},
-                new BloodPressure {CreatedDate = new DateTime(2018,1,1,3,0,0), Systolic = 30},
-                new BloodPressure {CreatedDate = new DateTime(2018,1,3), Systolic = 3}
+        //        new BloodPressure {CreatedDate = new DateTime(2018,1,2), Systolic = 2},
+        //        new BloodPressure {CreatedDate = new DateTime(2018,1,1,1,0,0), Systolic = 10},
+        //        new BloodPressure {CreatedDate = new DateTime(2018,1,1,2,0,0), Systolic = 20},
+        //        new BloodPressure {CreatedDate = new DateTime(2018,1,1,3,0,0), Systolic = 30},
+        //        new BloodPressure {CreatedDate = new DateTime(2018,1,3), Systolic = 3}
 
-            };
+        //    };
 
-            foreach (var bloodPressure in bloodPressures)
-            {
-                _fakeLocalContext.BloodPressures.Add(bloodPressure);
-            }
+        //    foreach (var bloodPressure in bloodPressures)
+        //    {
+        //        _fakeLocalContext.BloodPressures.Add(bloodPressure);
+        //    }
 
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllBloodPressures().ToList();
+        //    var result = _healthRepository.GetAllBloodPressures().ToList();
 
-            Assert.Equal(3, result.Count());
+        //    Assert.Equal(3, result.Count());
 
-            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
-            Assert.Equal(20, result[0].Systolic);
+        //    Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+        //    Assert.Equal(20, result[0].Systolic);
 
-            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
-            Assert.Equal(2, result[1].Systolic);
+        //    Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+        //    Assert.Equal(2, result[1].Systolic);
 
-            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-            Assert.Equal(3, result[2].Systolic);
+        //    Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+        //    Assert.Equal(3, result[2].Systolic);
 
-        }
+        //}
 
-        [Fact]
-        public void ShouldGetAllHeartRateSummaries()
-        {
-            var heartRateSummaries = new List<HeartRateSummary>
-            {
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,3)},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,2)},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1)}
+        //[Fact]
+        //public void ShouldGetAllHeartRateSummaries()
+        //{
+        //    var heartRateSummaries = new List<HeartRateSummary>
+        //    {
+        //        new HeartRateSummary {CreatedDate = new DateTime(2018,1,3)},
+        //        new HeartRateSummary {CreatedDate = new DateTime(2018,1,2)},
+        //        new HeartRateSummary {CreatedDate = new DateTime(2018,1,1)}
 
-            };
+        //    };
 
-            foreach (var heartRateSummary in heartRateSummaries)
-            {
-                _fakeLocalContext.HeartRateSummaries.Add(heartRateSummary);
-            }
+        //    foreach (var heartRateSummary in heartRateSummaries)
+        //    {
+        //        _fakeLocalContext.HeartRateSummaries.Add(heartRateSummary);
+        //    }
 
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllHeartRateSummaries().ToList();
+        //    var result = _healthRepository.GetAllHeartRateSummaries().ToList();
 
-            Assert.Equal(3, result.Count());
+        //    Assert.Equal(3, result.Count());
 
-            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+        //    Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
             
-            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+        //    Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
             
-            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+        //    Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
             
-        }
+        //}
 
 
-        [Fact]
-        public void ShouldGetAllRestingHeartRates()
-        {
-            var unorderedRestingHeartRates = new List<RestingHeartRate>
-            {
-                new RestingHeartRate {CreatedDate = new DateTime(2018,1,3), Beats = 1},
-                new RestingHeartRate {CreatedDate = new DateTime(2018,1,2), Beats = 2},
-                new RestingHeartRate {CreatedDate = new DateTime(2018,1,1), Beats = 3}
+        //[Fact]
+        //public void ShouldGetAllRestingHeartRates()
+        //{
+        //    var unorderedRestingHeartRates = new List<RestingHeartRate>
+        //    {
+        //        new RestingHeartRate {CreatedDate = new DateTime(2018,1,3), Beats = 1},
+        //        new RestingHeartRate {CreatedDate = new DateTime(2018,1,2), Beats = 2},
+        //        new RestingHeartRate {CreatedDate = new DateTime(2018,1,1), Beats = 3}
 
-            };
+        //    };
 
-            foreach (var restingHeartRate in unorderedRestingHeartRates)
-            {
-                _fakeLocalContext.RestingHeartRates.Add(restingHeartRate);
-            }
+        //    foreach (var restingHeartRate in unorderedRestingHeartRates)
+        //    {
+        //        _fakeLocalContext.RestingHeartRates.Add(restingHeartRate);
+        //    }
 
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var orderedRestingHeartRates = _healthRepository.GetAllRestingHeartRates().ToList();
+        //    var orderedRestingHeartRates = _healthRepository.GetAllRestingHeartRates().ToList();
 
-            Assert.Equal(3, orderedRestingHeartRates.Count());
+        //    Assert.Equal(3, orderedRestingHeartRates.Count());
 
-            Assert.Equal(new DateTime(2018, 1, 1), orderedRestingHeartRates[0].CreatedDate);
-            Assert.Equal(3, orderedRestingHeartRates[0].Beats);
+        //    Assert.Equal(new DateTime(2018, 1, 1), orderedRestingHeartRates[0].CreatedDate);
+        //    Assert.Equal(3, orderedRestingHeartRates[0].Beats);
 
-            Assert.Equal(new DateTime(2018, 1, 2), orderedRestingHeartRates[1].CreatedDate);
-            Assert.Equal(2, orderedRestingHeartRates[1].Beats);
+        //    Assert.Equal(new DateTime(2018, 1, 2), orderedRestingHeartRates[1].CreatedDate);
+        //    Assert.Equal(2, orderedRestingHeartRates[1].Beats);
             
-            Assert.Equal(new DateTime(2018, 1, 3), orderedRestingHeartRates[2].CreatedDate);
-            Assert.Equal(1, orderedRestingHeartRates[2].Beats);
-        }
+        //    Assert.Equal(new DateTime(2018, 1, 3), orderedRestingHeartRates[2].CreatedDate);
+        //    Assert.Equal(1, orderedRestingHeartRates[2].Beats);
+        //}
 
-        [Fact]
-        public void ShouldGetAllStepCounts()
-        {
-            var stepCounts = new List<StepCount>
-            {
-                new StepCount {CreatedDate = new DateTime(2018,1,3)},
-                new StepCount {CreatedDate = new DateTime(2018,1,1)},
-                new StepCount {CreatedDate = new DateTime(2018,1,2)}
+        //[Fact]
+        //public void ShouldGetAllStepCounts()
+        //{
+        //    var stepCounts = new List<StepCount>
+        //    {
+        //        new StepCount {CreatedDate = new DateTime(2018,1,3)},
+        //        new StepCount {CreatedDate = new DateTime(2018,1,1)},
+        //        new StepCount {CreatedDate = new DateTime(2018,1,2)}
 
-            };
+        //    };
 
-            foreach (var stepCount in stepCounts)
-            {
-                _fakeLocalContext.StepCounts.Add(stepCount);
-            }
+        //    foreach (var stepCount in stepCounts)
+        //    {
+        //        _fakeLocalContext.StepCounts.Add(stepCount);
+        //    }
 
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllStepCounts().ToList();
+        //    var result = _healthRepository.GetAllStepCounts().ToList();
 
-            Assert.Equal(3, result.Count());
+        //    Assert.Equal(3, result.Count());
 
-            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+        //    Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
             
-            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+        //    Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
             
-            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-        }
+        //    Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+        //}
 
-        [Fact]
-        public void ShouldGetAllRuns()
-        {
-            var runs = new List<Run>
-            {
-                new Run {CreatedDate = new DateTime(2018,1,3), Metres = 1},
-                new Run {CreatedDate = new DateTime(2018,1,1), Metres = 2},
-                new Run {CreatedDate = new DateTime(2018,1,2), Metres = 3}
+        //[Fact]
+        //public void ShouldGetAllRuns()
+        //{
+        //    var runs = new List<Run>
+        //    {
+        //        new Run {CreatedDate = new DateTime(2018,1,3), Metres = 1},
+        //        new Run {CreatedDate = new DateTime(2018,1,1), Metres = 2},
+        //        new Run {CreatedDate = new DateTime(2018,1,2), Metres = 3}
 
-            };
+        //    };
 
-            foreach (var run in runs)
-            {
-                _fakeLocalContext.Runs.Add(run);
-            }
+        //    foreach (var run in runs)
+        //    {
+        //        _fakeLocalContext.Runs.Add(run);
+        //    }
 
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllRuns().ToList();
+        //    var result = _healthRepository.GetAllRuns().ToList();
 
-            Assert.Equal(3, result.Count());
+        //    Assert.Equal(3, result.Count());
 
-            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
-            Assert.Equal(2, result[0].Metres);
+        //    Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+        //    Assert.Equal(2, result[0].Metres);
 
-            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
-            Assert.Equal(3, result[1].Metres);
+        //    Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+        //    Assert.Equal(3, result[1].Metres);
 
-            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-            Assert.Equal(1, result[2].Metres);
-        }
+        //    Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+        //    Assert.Equal(1, result[2].Metres);
+        //}
 
-        [Fact]
-        public void ShouldGetAllErgos()
-        {
-            var ergos = new List<Ergo>
-            {
-                new Ergo {CreatedDate = new DateTime(2018,1,3), Metres = 1},
-                new Ergo {CreatedDate = new DateTime(2018,1,1), Metres = 2},
-                new Ergo {CreatedDate = new DateTime(2018,1,2), Metres = 3}
+        //[Fact]
+        //public void ShouldGetAllErgos()
+        //{
+        //    var ergos = new List<Ergo>
+        //    {
+        //        new Ergo {CreatedDate = new DateTime(2018,1,3), Metres = 1},
+        //        new Ergo {CreatedDate = new DateTime(2018,1,1), Metres = 2},
+        //        new Ergo {CreatedDate = new DateTime(2018,1,2), Metres = 3}
 
-            };
+        //    };
 
-            foreach (var ergo in ergos)
-            {
-                _fakeLocalContext.Ergos.Add(ergo);
-            }
+        //    foreach (var ergo in ergos)
+        //    {
+        //        _fakeLocalContext.Ergos.Add(ergo);
+        //    }
 
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllErgos().ToList();
+        //    var result = _healthRepository.GetAllErgos().ToList();
 
-            Assert.Equal(3, result.Count());
+        //    Assert.Equal(3, result.Count());
 
-            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
-            Assert.Equal(2, result[0].Metres);
+        //    Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+        //    Assert.Equal(2, result[0].Metres);
 
-            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
-            Assert.Equal(3, result[1].Metres);
+        //    Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+        //    Assert.Equal(3, result[1].Metres);
 
-            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-            Assert.Equal(1, result[2].Metres);
-        }
+        //    Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+        //    Assert.Equal(1, result[2].Metres);
+        //}
 
-        [Fact]
-        public void ShouldGetAllWeights()
-        {
-            var weights = new List<Weight>
-            {
+        //[Fact]
+        //public void ShouldGetAllWeights()
+        //{
+        //    var weights = new List<Weight>
+        //    {
 
-                new Weight {CreatedDate = new DateTime(2018,1,2), Kg = 2},
-                new Weight {CreatedDate = new DateTime(2018,1,1,1,0,0), Kg = 10},
-                new Weight {CreatedDate = new DateTime(2018,1,1,2,0,0), Kg = 20},
-                new Weight {CreatedDate = new DateTime(2018,1,1,3,0,0), Kg = 30},
-                new Weight {CreatedDate = new DateTime(2018,1,3), Kg = 3}
+        //        new Weight {CreatedDate = new DateTime(2018,1,2), Kg = 2},
+        //        new Weight {CreatedDate = new DateTime(2018,1,1,1,0,0), Kg = 10},
+        //        new Weight {CreatedDate = new DateTime(2018,1,1,2,0,0), Kg = 20},
+        //        new Weight {CreatedDate = new DateTime(2018,1,1,3,0,0), Kg = 30},
+        //        new Weight {CreatedDate = new DateTime(2018,1,3), Kg = 3}
 
-            };
+        //    };
 
-            foreach (var weight in weights)
-            {
-                _fakeLocalContext.Weights.Add(weight);
-            }
+        //    foreach (var weight in weights)
+        //    {
+        //        _fakeLocalContext.Weights.Add(weight);
+        //    }
 
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.SaveChanges();
 
-            var result = _healthRepository.GetAllWeights().ToList();
+        //    var result = _healthRepository.GetAllWeights().ToList();
 
-            Assert.Equal(3, result.Count());
+        //    Assert.Equal(3, result.Count());
 
-            Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
-            Assert.Equal(20, result[0].Kg);
+        //    Assert.Equal(new DateTime(2018, 1, 1), result[0].CreatedDate);
+        //    Assert.Equal(20, result[0].Kg);
 
-            Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
-            Assert.Equal(2, result[1].Kg);
+        //    Assert.Equal(new DateTime(2018, 1, 2), result[1].CreatedDate);
+        //    Assert.Equal(2, result[1].Kg);
 
-            Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
-            Assert.Equal(3, result[2].Kg);
-        }
+        //    Assert.Equal(new DateTime(2018, 1, 3), result[2].CreatedDate);
+        //    Assert.Equal(3, result[2].Kg);
+        //}
 
 
 

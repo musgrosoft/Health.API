@@ -32,35 +32,35 @@ namespace Services.Health
         }
 
 
-        public IList<Run> GetAllRuns()
-        {
-            return _healthRepository.GetAllRuns();
-        }
+        //public IList<Run> GetAllRuns()
+        //{
+        //    return _healthRepository.GetAllRuns();
+        //}
 
-        public IList<Ergo> GetAllErgos()
-        {
-            return _healthRepository.GetAllErgos();
-        }
+        //public IList<Ergo> GetAllErgos()
+        //{
+        //    return _healthRepository.GetAllErgos();
+        //}
 
-        public IList<Weight> GetAllWeights()
-        {
-            return _healthRepository.GetAllWeights();
-        }
+        //public IList<Weight> GetAllWeights()
+        //{
+        //    return _healthRepository.GetAllWeights();
+        //}
 
-        public IList<BloodPressure> GetAllBloodPressures()
-        {
-            return _healthRepository.GetAllBloodPressures();
-        }
+        //public IList<BloodPressure> GetAllBloodPressures()
+        //{
+        //    return _healthRepository.GetAllBloodPressures();
+        //}
 
-        public IList<RestingHeartRate> GetAllRestingHeartRates()
-        {
-            return _healthRepository.GetAllRestingHeartRates();
-        }
+        //public IList<RestingHeartRate> GetAllRestingHeartRates()
+        //{
+        //    return _healthRepository.GetAllRestingHeartRates();
+        //}
 
-        public IList<StepCount> GetAllStepCounts()
-        {
-            return _healthRepository.GetAllStepCounts();
-        }
+        //public IList<StepCount> GetAllStepCounts()
+        //{
+        //    return _healthRepository.GetAllStepCounts();
+        //}
 
         //public IList<StepCount> GetAllStepCountsByWeek()
         //{

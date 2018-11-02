@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-//using Elasticsearch.Net;
 using Repositories.Models;
 
 namespace Repositories.Health
@@ -55,115 +53,8 @@ namespace Repositories.Health
             return _healthContext.Runs.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-
-
-        public IList<AlcoholIntake> GetAllAlcoholIntakes()
-        {
-            //to list to materialize entities
-            return _healthContext.AlcoholIntakes.OrderBy(x => x.CreatedDate).ToList();
-        }
-
-        public IList<ActivitySummary> GetAllActivitySummaries()
-        {
-            //to list to materialize entities
-            return _healthContext.ActivitySummaries.OrderBy(x => x.CreatedDate).ToList();
-        }
-
-        public IList<HeartRateSummary> GetAllHeartRateSummaries()
-        {
-            //to list to materialize entities
-            return _healthContext.HeartRateSummaries.OrderBy(x => x.CreatedDate).ToList();
-        }
-        
-        public IList<RestingHeartRate> GetAllRestingHeartRates()
-        {
-            //to list to materialize entities
-            return _healthContext.RestingHeartRates.OrderBy(x=>x.CreatedDate).ToList();
-        }
-
-        public IList<StepCount> GetAllStepCounts()
-        {
-            //to list to materialize entities
-            return _healthContext.StepCounts.OrderBy(x => x.CreatedDate).ToList();
-        }
-
-        public IList<Run> GetAllRuns()
-        {
-            //to list to materialize entities
-            return _healthContext.Runs.OrderBy(x => x.CreatedDate).ToList();
-        }
-
-        public IList<Ergo> GetAllErgos()
-        {
-            //to list to materialize entities
-            return _healthContext.Ergos.OrderBy(x => x.CreatedDate).ToList();
-        }
-
-        public IList<Weight> GetAllWeights()
-        {
-            ////to list to materialize entities
-            //return _healthContext.Weights
-            //    .GroupBy(x => x.CreatedDate.Date)
-            //    .Select(g => new Weight
-            //    {
-            //        CreatedDate = g.Key.Date,
-            //        Kg = g.Average(w => w.Kg)
-            //    })
-            //    .OrderBy(x => x.CreatedDate).ToList();
-
-            var allWeights = _healthContext.Weights.ToList();
-
-            return allWeights
-                .GroupBy(x => x.CreatedDate.Date)
-                .Select(g => new Weight
-                {
-                    CreatedDate = g.Key.Date,
-                    Kg = g.Average(w => w.Kg)
-                })
-                .OrderBy(x => x.CreatedDate).ToList();
-
-        }
-
-        public IList<BloodPressure> GetAllBloodPressures()
-        {
-            //to list to materialize entities
-            var allBloodPressures = _healthContext.BloodPressures.ToList();
-
-            //todo why does groupby generate invalid sql
-            return allBloodPressures
-                .GroupBy(x => x.CreatedDate.Date)
-                .Select(x => new BloodPressure
-                {
-                    CreatedDate = x.Key.Date,
-                    Systolic = x.Average(w => w.Systolic),
-                    Diastolic = x.Average(w => w.Diastolic)
-                })
-                .OrderBy(x => x.CreatedDate).ToList();
-        }
-
-        //public void Upsert(HeartRate heartRate)
-        //{
-        //    var existingHeartRate = _healthContext.HeartRates.Find(heartRate.CreatedDate);
-
-        //    if (existingHeartRate == null)
-        //    {
-        //        //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-        //        _healthContext.Add(heartRate);
-        //    }
-        //    else
-        //    {
-        //        // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-        //        existingHeartRate.Bpm = heartRate.Bpm;
-
-        //    }
-
-        //    _healthContext.SaveChanges();
-        //}
-
         public void Upsert(Weight weight)
         {
-
-
 
             var existingWeight = _healthContext.Weights.Find(weight.CreatedDate);
 

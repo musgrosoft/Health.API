@@ -342,43 +342,43 @@ namespace Services.Tests.MyHealth
 
         //}
 
-        [Fact]
-        public void ShouldGetAllRuns()
-        {
-            //Given
-            var runs = new List<Run>
-            {
-                new Run {CreatedDate = new DateTime(2018,6,6), Metres = 123}
-            };
+        //[Fact]
+        //public void ShouldGetAllRuns()
+        //{
+        //    //Given
+        //    var runs = new List<Run>
+        //    {
+        //        new Run {CreatedDate = new DateTime(2018,6,6), Metres = 123}
+        //    };
 
-            _healthRepository.Setup(x => x.GetAllRuns()).Returns(runs);
+        //    _healthRepository.Setup(x => x.GetAllRuns()).Returns(runs);
 
-            //when
-            var result = _healthService.GetAllRuns();
+        //    //when
+        //    var result = _healthService.GetAllRuns();
 
-            //then
-            Assert.Equal(runs, result);
+        //    //then
+        //    Assert.Equal(runs, result);
 
-        }
+        //}
 
-        [Fact]
-        public void ShouldGetAllErgos()
-        {
-            //Given
-            var ergos = new List<Ergo>
-            {
-                new Ergo {CreatedDate = new DateTime(2018,6,6), Metres = 123}
-            };
+        //[Fact]
+        //public void ShouldGetAllErgos()
+        //{
+        //    //Given
+        //    var ergos = new List<Ergo>
+        //    {
+        //        new Ergo {CreatedDate = new DateTime(2018,6,6), Metres = 123}
+        //    };
 
-            _healthRepository.Setup(x => x.GetAllErgos()).Returns(ergos);
+        //    _healthRepository.Setup(x => x.GetAllErgos()).Returns(ergos);
 
-            //when
-            var result = _healthService.GetAllErgos();
+        //    //when
+        //    var result = _healthService.GetAllErgos();
 
-            //then
-            Assert.Equal(ergos, result);
+        //    //then
+        //    Assert.Equal(ergos, result);
 
-        }
+        //}
 
 
     }
