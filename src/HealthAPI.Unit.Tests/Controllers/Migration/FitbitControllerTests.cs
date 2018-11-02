@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Fitbit.Migrator;
+using Fitbit.Importer;
 using Fitbit.Services;
 using Hangfire;
 using Hangfire.Common;

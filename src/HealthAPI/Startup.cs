@@ -9,18 +9,16 @@ using Utils;
 using Services.OAuth;
 using Repositories.OAuth;
 using System.Net.Http;
-using Fitbit.Migrator;
+using Fitbit.Importer;
+using Nokia.Importer;
 using Fitbit.Services;
 using Google;
-//using Services.Google;
-using Nokia;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using HealthAPI.Hangfire;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
-using Nokia.Migrator;
 using Nokia.Services;
 
 namespace HealthAPI

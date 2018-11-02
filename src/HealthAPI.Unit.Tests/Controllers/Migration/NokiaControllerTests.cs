@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using HealthAPI.Controllers.Migration;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Nokia.Migrator;
+using Nokia.Importer;
 using Nokia.Services;
 using Utils;
 using Xunit;

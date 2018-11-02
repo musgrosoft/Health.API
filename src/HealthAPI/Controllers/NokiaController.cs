@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Nokia.Migrator;
+using Nokia.Importer;
 using Nokia.Services;
 using Utils;
 
