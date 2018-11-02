@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Fitbit.Migrator;
+using Fitbit.Importer;
 using Fitbit.Services;
 using Moq;
 using Repositories.Models;
@@ -9,7 +9,7 @@ using Services.Health;
 using Utils;
 using Xunit;
 
-namespace Migrators.Unit.Tests
+namespace Fitbit.Unit.Tests
 {
     public class FitbitMigratorTests
     {

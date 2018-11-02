@@ -5,7 +5,7 @@ using Nokia.Services;
 using Services.Health;
 using Utils;
 
-namespace Nokia.Migrator
+namespace Nokia.Importer
 {   
     public class NokiaMigrator : INokiaMigrator
     {

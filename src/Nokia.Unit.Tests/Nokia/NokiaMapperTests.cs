@@ -6,7 +6,7 @@ using Nokia.Services;
 using Utils;
 using Xunit;
 
-namespace Services.Tests.Nokia
+namespace Nokia.Unit.Tests.Nokia
 {
     public class NokiaMapperTests
     {

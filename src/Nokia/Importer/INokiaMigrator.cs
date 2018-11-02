@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Nokia.Migrator
+namespace Nokia.Importer
 {
     public interface INokiaMigrator
     {

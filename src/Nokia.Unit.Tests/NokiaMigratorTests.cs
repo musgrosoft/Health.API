@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
-using Nokia.Migrator;
+using Nokia.Importer;
 using Nokia.Services;
 using Repositories.Models;
 using Services.Health;
 using Utils;
 using Xunit;
 
-namespace Migrators.Unit.Tests
+namespace Nokia.Unit.Tests
 {
     public class NokiaMigratorTests
     {

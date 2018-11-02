@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Google;
 using Moq;
 using Repositories.Models;
 using Services.Health;
 using Xunit;
 
-namespace Migrators.Unit.Tests
+namespace GoogleSheets.Unit.Tests
 {
     public class GoogleMigratorTests
     {
