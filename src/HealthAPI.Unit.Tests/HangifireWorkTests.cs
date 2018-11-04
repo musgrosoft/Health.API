@@ -19,9 +19,7 @@ namespace HealthAPI.Unit.Tests
             _fitbitMigrator = new Mock<IFitbitMigrator>();
             _logger = new Mock<ILogger>();
             _hangfireWork = new HangfireWork(_fitbitMigrator.Object, _logger.Object);
-
         }
-
 
         [Fact]
         public async Task ShouldMigrateAllFitbitData()
@@ -48,7 +46,6 @@ namespace HealthAPI.Unit.Tests
 
             //then
             _logger.Verify(x => x.LogErrorAsync(ex), Times.Once);
-
         }
 
 
