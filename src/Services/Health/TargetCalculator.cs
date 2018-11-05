@@ -102,5 +102,11 @@ namespace Services.Health
 
             return unitsOnTargetStartDate + (daysDiff * targetDailyUnits);
         }
+
+
+        public int GetActivitySummaryTarget(DateTime dateTime)
+        {
+            return 30;
+        }
     }
 }

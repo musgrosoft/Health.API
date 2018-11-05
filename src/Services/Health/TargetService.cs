@@ -50,15 +50,15 @@ namespace Services.Health
             return stepCounts.ToList();
         }
 
-        public List<ActivitySummary> SetTargets(IList<ActivitySummary> activitySummaries)
-        {
-            foreach (var activitySummary in activitySummaries)
-            {
-                activitySummary.TargetActiveMinutes = 30;
-            }
+        //public List<ActivitySummary> SetTargets(IList<ActivitySummary> activitySummaries)
+        //{
+        //    foreach (var activitySummary in activitySummaries)
+        //    {
+        //        activitySummary.TargetActiveMinutes = 30;
+        //    }
 
-            return activitySummaries.ToList();
-        }
+        //    return activitySummaries.ToList();
+        //}
 
         public List<HeartRateSummary> SetTargets(IList<HeartRateSummary> heartRateSummaries)
         {

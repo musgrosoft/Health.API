@@ -14,17 +14,18 @@ namespace Services.Tests.MyHealth
         private Mock<IHealthRepository> _healthRepository;
         private HealthService _healthService;
         private Mock<ILogger> _logger;
-        private Mock<ITargetService> _targetService;
+        private Mock<ITargetCalculator> _targetCalculator;
 
         public HealthServiceTests()
         {
             _healthRepository = new Mock<IHealthRepository>();
             _logger = new Mock<ILogger>();
-            _targetService = new Mock<ITargetService>();
+            _targetCalculator = new Mock<ITargetCalculator>();
 
             _healthService = new HealthService(
                 _logger.Object, 
-                _healthRepository.Object 
+                _healthRepository.Object ,
+                _targetCalculator.Object
                 );
         }
 
@@ -113,6 +114,21 @@ namespace Services.Tests.MyHealth
 
             //when
             var latestDate = _healthService.GetLatestHeartSummaryDate(DateTime.MinValue);
+
+            //then
+            Assert.Equal(date, latestDate);
+
+        }
+
+        [Fact]
+        public void ShouldGetLatestRunDate()
+        {
+            //Given 
+            var date = new DateTime(2015, 1, 7);
+            _healthRepository.Setup(x => x.GetLatestRunDate()).Returns(date);
+
+            //when
+            var latestDate = _healthService.GetLatestRunDate(DateTime.MinValue);
 
             //then
             Assert.Equal(date, latestDate);

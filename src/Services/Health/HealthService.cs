@@ -12,6 +12,9 @@ namespace Services.Health
         //private readonly IFitbitConfig _config;
         private readonly ILogger _logger;
         private readonly IHealthRepository _healthRepository;
+
+        private readonly ITargetCalculator _targetCalculator;
+
         //private readonly IEntityAggregator _entityAggregator;
         //private readonly IEntityDecorator _entityDecorator;
         private const int MOVING_AVERAGE_PERIOD = 10;
@@ -19,7 +22,8 @@ namespace Services.Health
         public HealthService(
             //IFitbitConfig config,
             ILogger logger,
-            IHealthRepository healthRepository
+            IHealthRepository healthRepository,
+            ITargetCalculator targetCalculator
             //IEntityAggregator entityAggregator, 
           //  IEntityDecorator entityDecorator
           )
@@ -27,6 +31,7 @@ namespace Services.Health
            // _config = config;
             _logger = logger;
             _healthRepository = healthRepository;
+            _targetCalculator = targetCalculator;
             //_entityAggregator = entityAggregator;
           //  _entityDecorator = entityDecorator;
         }
@@ -226,15 +231,7 @@ namespace Services.Health
             }
         }
 
-        public void UpsertRuns(IEnumerable<Run> runs)
-        {
-            _logger.LogMessageAsync($"RUNS : Saving {runs.Count()} runs");
 
-            foreach (var run in runs)
-            {
-                _healthRepository.Upsert(run);
-            }
-        }
 
         public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
         {
@@ -252,6 +249,8 @@ namespace Services.Health
 
             foreach (var activitySummary in activitySummaries)
             {
+                activitySummary.TargetActiveMinutes = _targetCalculator.GetActivitySummaryTarget(activitySummary.CreatedDate);
+
                 _healthRepository.Upsert(activitySummary);
             }
         }
@@ -266,9 +265,19 @@ namespace Services.Health
             }
         }
 
-        public void UpsertRuns(List<Run> runs)
+        //public void UpsertRuns(List<Run> runs)
+        //{
+        //    _logger.LogMessageAsync($"RUN : Saving {runs.Count()} runs");
+
+        //    foreach (var run in runs)
+        //    {
+        //        _healthRepository.Upsert(run);
+        //    }
+        //}
+
+        public void UpsertRuns(IEnumerable<Run> runs)
         {
-            _logger.LogMessageAsync($"RUN : Saving {runs.Count()} runs");
+            _logger.LogMessageAsync($"RUNS : Saving {runs.Count()} runs");
 
             foreach (var run in runs)
             {

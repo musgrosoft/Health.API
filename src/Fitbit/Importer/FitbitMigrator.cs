@@ -68,7 +68,7 @@ namespace Fitbit.Importer
             await _logger.LogMessageAsync($"ACTIVITY SUMMARY : Retrieving Activity records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var dailyActivites = (await _fitbitService.GetActivitySummaries(fromDate, _calendar.Now())).ToList();
-            dailyActivites = _targetService.SetTargets(dailyActivites);
+           // dailyActivites = _targetService.SetTargets(dailyActivites);
 
              _healthService.UpsertActivitySummaries(dailyActivites);
         }
