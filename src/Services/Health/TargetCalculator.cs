@@ -36,56 +36,56 @@ namespace Services.Health
             return null;
         }
         
-        public double? GetTargetStepCountCumSum(DateTime dateTime)
-        {
-            var targetStartDate = new DateTime(2017, 5, 2);
+        //public double? GetTargetStepCountCumSum(DateTime dateTime)
+        //{
+        //    var targetStartDate = new DateTime(2017, 5, 2);
 
-            var stepsOnTargetStartDate = 0;
-            var targetDailySteps = 10000;
+        //    var stepsOnTargetStartDate = 0;
+        //    var targetDailySteps = 10000;
 
-            var daysDiff = (dateTime - targetStartDate).TotalDays;
+        //    var daysDiff = (dateTime - targetStartDate).TotalDays;
 
-            if (daysDiff < 0)
-            {
-                return null;
-            }
+        //    if (daysDiff < 0)
+        //    {
+        //        return null;
+        //    }
 
-            var days = (dateTime - targetStartDate).TotalDays;
+        //    var days = (dateTime - targetStartDate).TotalDays;
 
-            return stepsOnTargetStartDate + (days * targetDailySteps);
-        }
+        //    return stepsOnTargetStartDate + (days * targetDailySteps);
+        //}
 
-        public double? GetTargetActivitySummaryCumSum(DateTime createdDate)
-        {
-            var targetStartDate = new DateTime(2017, 5, 2);
-            var activeMinutesOnTargetStartDate = 0;
-            var targetDailyActiveMinutes = 30;
+        //public double? GetTargetActivitySummaryCumSum(DateTime createdDate)
+        //{
+        //    var targetStartDate = new DateTime(2017, 5, 2);
+        //    var activeMinutesOnTargetStartDate = 0;
+        //    var targetDailyActiveMinutes = 30;
 
-            var daysDiff = (createdDate - targetStartDate).TotalDays;
+        //    var daysDiff = (createdDate - targetStartDate).TotalDays;
 
-            if (daysDiff < 0)
-            {
-                return null;
-            }
+        //    if (daysDiff < 0)
+        //    {
+        //        return null;
+        //    }
 
-            return (activeMinutesOnTargetStartDate + (daysDiff * targetDailyActiveMinutes));
-        }
+        //    return (activeMinutesOnTargetStartDate + (daysDiff * targetDailyActiveMinutes));
+        //}
 
-        public double? GetTargetCumSumCardioAndAbove(DateTime dateTime)
-        {
-            var targetStartDate = new DateTime(2018, 5, 20);
-            var minutesOnTargetStartDate = 1775;
-            var targetDailyMinutes = 11;
+        //public double? GetTargetCumSumCardioAndAbove(DateTime dateTime)
+        //{
+        //    var targetStartDate = new DateTime(2018, 5, 20);
+        //    var minutesOnTargetStartDate = 1775;
+        //    var targetDailyMinutes = 11;
 
-            var daysDiff = (dateTime - targetStartDate).TotalDays;
+        //    var daysDiff = (dateTime - targetStartDate).TotalDays;
 
-            if (daysDiff < 0)
-            {
-                return null;
-            }
+        //    if (daysDiff < 0)
+        //    {
+        //        return null;
+        //    }
 
-            return minutesOnTargetStartDate + (daysDiff * targetDailyMinutes);
-        }
+        //    return minutesOnTargetStartDate + (daysDiff * targetDailyMinutes);
+        //}
 
         public double? GetAlcoholIntakeTarget(DateTime dateTime)
         {
@@ -107,6 +107,11 @@ namespace Services.Health
         public int GetActivitySummaryTarget(DateTime dateTime)
         {
             return 30;
+        }
+
+        public int? GetTargetCardioAndAbove(DateTime heartSummaryCreatedDate)
+        {
+            return 11;
         }
     }
 }

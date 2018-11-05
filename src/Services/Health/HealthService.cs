@@ -261,6 +261,7 @@ namespace Services.Health
 
             foreach (var heartSummary in heartSummaries)
             {
+                heartSummary.TargetCardioAndAbove  = _targetCalculator.GetTargetCardioAndAbove(heartSummary.CreatedDate);
                 _healthRepository.Upsert(heartSummary);
             }
         }
@@ -301,6 +302,7 @@ namespace Services.Health
             
             foreach (var alcoholIntake in alcoholIntakes)
             {
+                alcoholIntake.Target = _targetCalculator.GetAlcoholIntakeTarget(alcoholIntake.CreatedDate);
                 _healthRepository.Upsert(alcoholIntake);
             }
         }

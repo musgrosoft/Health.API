@@ -13,19 +13,19 @@ namespace Services.Tests.MyHealth
             _targetCalculator = new TargetCalculator();
         }
 
-        [Theory]
-        [InlineData(2017, 1, 1, null)]
-        [InlineData(2018, 1, 1, 2440000)]
-        [InlineData(2018, 1, 2, 2450000)]
-        [InlineData(2018, 1, 3, 2460000)]
-        public void ShoulCalculateTargetStepCounts(int year, int month, int day, double? expectedTargetStepCounts)
-        {
-            var dateTime = new DateTime(year, month, day);
+        //[Theory]
+        //[InlineData(2017, 1, 1, null)]
+        //[InlineData(2018, 1, 1, 2440000)]
+        //[InlineData(2018, 1, 2, 2450000)]
+        //[InlineData(2018, 1, 3, 2460000)]
+        //public void ShoulCalculateTargetStepCounts(int year, int month, int day, double? expectedTargetStepCounts)
+        //{
+        //    var dateTime = new DateTime(year, month, day);
 
-            var targetStepCounts = _targetCalculator.GetTargetStepCountCumSum(dateTime);
+        //    var targetStepCounts = _targetCalculator.GetTargetStepCountCumSum(dateTime);
 
-            Assert.Equal(expectedTargetStepCounts,targetStepCounts);
-        }
+        //    Assert.Equal(expectedTargetStepCounts,targetStepCounts);
+        //}
 
         [Theory]
         [InlineData(2017, 1, 1, null)]

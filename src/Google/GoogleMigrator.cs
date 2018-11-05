@@ -24,7 +24,7 @@ namespace Google
         public void MigrateAlcoholIntakes()
         {
             var alcoholIntakes = _googleClient.GetAlcoholIntakes();
-            alcoholIntakes = _targetService.SetTargets(alcoholIntakes);
+           // alcoholIntakes = _targetService.SetTargets(alcoholIntakes);
             _healthService.UpsertAlcoholIntakes(alcoholIntakes);
         }
 

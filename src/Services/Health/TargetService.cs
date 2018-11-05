@@ -60,24 +60,24 @@ namespace Services.Health
         //    return activitySummaries.ToList();
         //}
 
-        public List<HeartRateSummary> SetTargets(IList<HeartRateSummary> heartRateSummaries)
-        {
-            foreach (var heartRateSummary in heartRateSummaries)
-            {
-                heartRateSummary.TargetCardioAndAbove = 11;
-            }
+        //public List<HeartRateSummary> SetTargets(IList<HeartRateSummary> heartRateSummaries)
+        //{
+        //    foreach (var heartRateSummary in heartRateSummaries)
+        //    {
+        //        heartRateSummary.TargetCardioAndAbove = 11;
+        //    }
 
-            return heartRateSummaries.ToList();
-        }
+        //    return heartRateSummaries.ToList();
+        //}
 
-        public List<AlcoholIntake> SetTargets(IList<AlcoholIntake> alcoholIntakes)
-        {
-            foreach (var alcoholIntake in alcoholIntakes)
-            {
-                alcoholIntake.Target = 6;
-            }
+        //public List<AlcoholIntake> SetTargets(IList<AlcoholIntake> alcoholIntakes)
+        //{
+        //    foreach (var alcoholIntake in alcoholIntakes)
+        //    {
+        //        alcoholIntake.Target = 6;
+        //    }
 
-            return alcoholIntakes.ToList();
-        }
+        //    return alcoholIntakes.ToList();
+        //}
     }
 }
