@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Utils
 {
-    public class Config : IFitbitConfig, INokiaConfig, IGoogleSheetsConfig, IHealthConfig
+    public class Config : IConfig
     {
         private IConfigurationRoot _configurationRoot;
         private IConfigurationRoot ConfigurationRoot
@@ -28,17 +28,26 @@ namespace Utils
             }
             return value;
         }
-
-        public string FitbitUserId => GetConfigValue("FitbitUserId");
+        
         public string HealthDbConnectionString => GetConfigValue("HealthDbConnectionString");
         public string LogzIoToken => GetConfigValue("LogzIoToken");
-        public string GoogleClientId => GetConfigValue("GoogleClientId");
-        public string GoogleClientSecret => GetConfigValue("GoogleClientSecret");
-        public string FitbitVerificationCode => GetConfigValue("FitbitVerificationCode");
-        public string NokiaClientId => GetConfigValue("NokiaClientId");
-        public string NokiaClientSecret => GetConfigValue("NokiaClientSecret");
+
+        //Fitbit
         public string FitbitClientId => GetConfigValue("FitbitClientId");
         public string FitbitClientSecret => GetConfigValue("FitbitClientSecret");
+        public string FitbitUserId => GetConfigValue("FitbitUserId");
+        public string FitbitVerificationCode => GetConfigValue("FitbitVerificationCode");
+        public string FitbitOAuthRedirectUrl
+        {
+            get { return "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/"; }
+        }
 
+        //Google Sheets
+        public string GoogleClientId => GetConfigValue("GoogleClientId");
+        public string GoogleClientSecret => GetConfigValue("GoogleClientSecret");
+        
+        //Nokia Health
+        public string NokiaClientId => GetConfigValue("NokiaClientId");
+        public string NokiaClientSecret => GetConfigValue("NokiaClientSecret");
     }
 }

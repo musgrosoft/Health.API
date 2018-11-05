@@ -13,14 +13,14 @@ namespace Fitbit.Services
         private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 
         private readonly HttpClient _httpClient;
-        private readonly IFitbitConfig _config;
+        private readonly IConfig _config;
 
         private readonly IFitbitAuthenticator _fitbitAuthenticator;
 
         //private readonly string _accessToken;
         private readonly ILogger _logger;
 
-        public FitbitClient(HttpClient httpClient, IFitbitConfig config, IFitbitAuthenticator fitbitAuthenticator,
+        public FitbitClient(HttpClient httpClient, IConfig config, IFitbitAuthenticator fitbitAuthenticator,
             ILogger logger)
         {
             _httpClient = httpClient;

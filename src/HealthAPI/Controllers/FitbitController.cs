@@ -13,14 +13,14 @@ namespace HealthAPI.Controllers.Migration
     public class FitbitController : Controller
     {
         private readonly ILogger _logger;
-        private readonly IFitbitConfig _config;
+        private readonly IConfig _config;
         private readonly IFitbitService _fitbitService;
        // private readonly IHangfireUtility _hangfireUtility;
         private readonly IHangfireWork _hangfireWork;
 
         private readonly IBackgroundJobClient _backgroundJobClient;
 
-        public FitbitController(ILogger logger, IFitbitConfig config, IFitbitService fitbitService, IBackgroundJobClient backgroundJobClient, IHangfireWork hangfireWork)
+        public FitbitController(ILogger logger, IConfig config, IFitbitService fitbitService, IBackgroundJobClient backgroundJobClient, IHangfireWork hangfireWork)
         {
              
             _logger = logger;
@@ -78,9 +78,13 @@ namespace HealthAPI.Controllers.Migration
         [Route("OAuthUrl")]
         public IActionResult OAuthUrl()
         {
-            var redirectUrl = "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
+            //var redirectUrl = "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
+            var redirectUrl = _config.FitbitOAuthRedirectUrl;
+            var urlEncodedRedirectUrl = Uri.EscapeDataString(redirectUrl);
 
-            return Json("https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate");
+
+            //return Json("https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate");
+            return Json($"https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri={urlEncodedRedirectUrl}&scope=activity%20heartrate");
         }
 
         //[HttpGet]

@@ -19,7 +19,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
     {
         private readonly FitbitController _fitbitController;
         private readonly Mock<ILogger> _logger;
-        private readonly Mock<IFitbitConfig> _config;
+        private readonly Mock<IConfig> _config;
         private readonly Mock<IFitbitService> _fitbitService;
         private readonly Mock<IBackgroundJobClient> _backgroundJobClient;
         private readonly IHangfireWork _hangfireWork;
@@ -28,7 +28,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
         public FitbitControllerTests()
         {
             _logger = new Mock<ILogger>();
-            _config =new Mock<IFitbitConfig>();
+            _config =new Mock<IConfig>();
             _fitbitService = new Mock<IFitbitService>();
            // _hangfireUtility = new Mock<IHangfireUtility>();
             _backgroundJobClient = new Mock<IBackgroundJobClient>();
@@ -61,6 +61,8 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
         [Fact]
         public void ShouldReturnOAuthUrl()
         {
+            _config.SetupGet(x => x.FitbitOAuthRedirectUrl).Returns("http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/");
+
             var response = (JsonResult)_fitbitController.OAuthUrl();
 
             Assert.Equal("https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate", response.Value);

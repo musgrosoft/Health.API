@@ -6,12 +6,12 @@ namespace Utils
 {
     public class LogzIoLogger : ILogger
     {
-        private readonly IHealthConfig _config;
+        private readonly IConfig _config;
         private readonly HttpClient _httpClient;
         private readonly ICalendar _calendar;
         private const string LOGZ_IO_BASE_URL = "http://listener.logz.io:8070";
 
-        public LogzIoLogger(IHealthConfig config, HttpClient httpClient, ICalendar calendar)
+        public LogzIoLogger(IConfig config, HttpClient httpClient, ICalendar calendar)
         {
             _config = config;
             _httpClient = httpClient;

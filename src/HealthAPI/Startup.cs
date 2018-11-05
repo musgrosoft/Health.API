@@ -90,11 +90,7 @@ namespace HealthAPI
 
             services.AddTransient<IHealthService, HealthService>();
 
-            services.AddTransient<IHealthConfig, Config>();
-            services.AddTransient<IFitbitConfig, Config>();
-            services.AddTransient<INokiaConfig, Config>();
-            services.AddTransient<IGoogleSheetsConfig, Config>();
-
+            services.AddTransient<IConfig, Config>();
 
             services.AddTransient<ILogger, LogzIoLogger>();
             //services.AddTransient<IAggregateStatisticsCalculator, AggregateStatisticsCalculator>();

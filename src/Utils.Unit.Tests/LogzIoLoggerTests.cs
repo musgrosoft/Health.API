@@ -12,14 +12,14 @@ namespace Utils.Unit.Tests
     public class LogzIoLoggerTests
     {
         private LogzIoLogger _logger;
-        private Mock<IHealthConfig> _config;
+        private Mock<IConfig> _config;
         private Uri _capturedUri;
         private StringContent _capturedContent;
         private Mock<ICalendar> _calendar;
 
         public LogzIoLoggerTests()
         {
-            _config = new Mock<IHealthConfig>();
+            _config = new Mock<IConfig>();
             var httpMessageHandler = new Mock<HttpMessageHandler>();
 
             httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
