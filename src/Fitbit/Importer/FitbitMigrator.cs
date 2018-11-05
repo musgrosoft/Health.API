@@ -13,20 +13,18 @@ namespace Fitbit.Importer
         private IHealthService _healthService;
         private IFitbitService _fitbitService;
         private readonly ICalendar _calendar;
-        private readonly ITargetService _targetService;
 
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
         private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
 
-        public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitService fitbitService, ICalendar calendar, ITargetService targetService)
+        public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitService fitbitService, ICalendar calendar)
         {
             _healthService = healthService;
             _logger = logger;
             _fitbitService = fitbitService;
             _calendar = calendar;
-            _targetService = targetService;
         }
 
 
@@ -40,7 +38,7 @@ namespace Fitbit.Importer
             await _logger.LogMessageAsync($"STEP COUNT : Retrieving Step records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var dailySteps = (await _fitbitService.GetStepCounts(fromDate, _calendar.Now())).ToList();
-            dailySteps = _targetService.SetTargets(dailySteps);
+           // dailySteps = _targetService.SetTargets(dailySteps);
 
             _healthService.UpsertStepCounts(dailySteps);
         }

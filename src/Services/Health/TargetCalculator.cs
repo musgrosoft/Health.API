@@ -35,7 +35,21 @@ namespace Services.Health
 
             return null;
         }
-        
+
+        public int? GetTargetStepCount(DateTime dateTime)
+        {
+            var targetStartDate = new DateTime(2017, 5, 2);
+            
+            if ((dateTime - targetStartDate).TotalDays < 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return 10000;
+            }
+        }
+
         //public double? GetTargetStepCountCumSum(DateTime dateTime)
         //{
         //    var targetStartDate = new DateTime(2017, 5, 2);

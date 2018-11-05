@@ -207,6 +207,7 @@ namespace Services.Health
 
             foreach (var weight in enumerable)
             {
+                weight.TargetKg = _targetCalculator.GetTargetWeight(weight.CreatedDate);
                 _healthRepository.Upsert(weight);
             }
         }
@@ -239,6 +240,7 @@ namespace Services.Health
             
             foreach (var stepCount in stepCounts)
             {
+                stepCount.Target = _targetCalculator.GetTargetStepCount(stepCount.CreatedDate);
                 _healthRepository.Upsert(stepCount);
             }            
         }

@@ -17,7 +17,6 @@ namespace Nokia.Unit.Tests
         private Mock<INokiaService> _nokiaService;
         private Mock<ILogger> _logger;
         private NokiaMigrator _nokiaMigrator;
-        private Mock<ITargetService> _targetService;
 
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
@@ -26,9 +25,8 @@ namespace Nokia.Unit.Tests
             _healthService = new Mock<IHealthService>();
             _nokiaService = new Mock<INokiaService>();
             _logger = new Mock<ILogger>();
-            _targetService = new Mock<ITargetService>();
 
-            _nokiaMigrator = new NokiaMigrator(_healthService.Object, _logger.Object, _nokiaService.Object, _targetService.Object);
+            _nokiaMigrator = new NokiaMigrator(_healthService.Object, _logger.Object, _nokiaService.Object);
         }
 
         [Fact]
@@ -47,7 +45,7 @@ namespace Nokia.Unit.Tests
             
             _nokiaService.Setup(x => x.GetWeights(latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<Weight>)weights));
 
-            _targetService.Setup(x => x.SetTargets(weights)).Returns(weights);
+           // _targetService.Setup(x => x.SetTargets(weights)).Returns(weights);
 
             await _nokiaMigrator.MigrateWeights();
 

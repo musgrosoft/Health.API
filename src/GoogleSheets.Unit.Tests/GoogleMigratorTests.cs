@@ -13,14 +13,12 @@ namespace GoogleSheets.Unit.Tests
         private Mock<IGoogleClient> _googleClient;
         private Mock<IHealthService> _healthService;
         private GoogleMigrator _googleMigrator;
-        private Mock<ITargetService> _targetService;
 
         public GoogleMigratorTests()
         {
             _googleClient = new Mock<IGoogleClient>();
             _healthService = new Mock<IHealthService>();
-            _targetService = new Mock<ITargetService>();
-            _googleMigrator = new GoogleMigrator(_googleClient.Object, _healthService.Object, _targetService.Object);
+            _googleMigrator = new GoogleMigrator(_googleClient.Object, _healthService.Object);
         }
 
         [Fact]

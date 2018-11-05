@@ -19,9 +19,7 @@ namespace Fitbit.Unit.Tests
         private readonly Mock<ICalendar> _calendar;
         private FitbitMigrator _fitbitMigrator;
         private readonly DateTime latestDate = new DateTime(2012, 3, 4);
-        private Mock<ITargetService> _targetService;
-
-
+        
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
         public FitbitMigratorTests()
@@ -30,10 +28,8 @@ namespace Fitbit.Unit.Tests
             _logger = new Mock<ILogger>();
             _healthService = new Mock<IHealthService>();
             _calendar = new Mock<ICalendar>();
-            _targetService = new Mock<ITargetService>();
         
-
-            _fitbitMigrator = new FitbitMigrator(_healthService.Object, _logger.Object, _fitbitClient.Object, _calendar.Object, _targetService.Object);
+            _fitbitMigrator = new FitbitMigrator(_healthService.Object, _logger.Object, _fitbitClient.Object, _calendar.Object);
         }
 
         //[Fact]

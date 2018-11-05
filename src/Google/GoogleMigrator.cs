@@ -6,13 +6,12 @@ namespace Google
     {
         private readonly IGoogleClient _googleClient;
         private readonly IHealthService _healthService;
-        private readonly ITargetService _targetService;
+        //private readonly ITargetService _targetService;
 
-        public GoogleMigrator(IGoogleClient  googleClient, IHealthService healthService, ITargetService targetService)
+        public GoogleMigrator(IGoogleClient  googleClient, IHealthService healthService)
         {
             _googleClient = googleClient;
             _healthService = healthService;
-            _targetService = targetService;
         }
 
         public void MigrateRuns()

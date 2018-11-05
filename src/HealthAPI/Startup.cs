@@ -93,7 +93,6 @@ namespace HealthAPI
             services.AddTransient<IConfig, Config>();
 
             services.AddTransient<ILogger, LogzIoLogger>();
-            //services.AddTransient<IAggregateStatisticsCalculator, AggregateStatisticsCalculator>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ITokenRepository, TokenRepository>();
             services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
@@ -105,12 +104,8 @@ namespace HealthAPI
             services.AddTransient<INokiaClient, NokiaClient>();
             services.AddTransient<INokiaAuthenticator, NokiaAuthenticator>();
             services.AddTransient<IFitbitClient, FitbitClient>();
-            services.AddTransient<ITargetService, TargetService>();
-           // services.AddTransient<IEntityAggregator, EntityAggregator>();
-            //services.AddTransient<IEntityDecorator, EntityDecorator>();
             services.AddTransient<IGoogleClient, GoogleClient>();
             services.AddTransient<IGoogleMigrator, GoogleMigrator>();
-           // services.AddTransient<IHangfireUtility, HangfireUtility>();
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<INokiaService, NokiaService>();
             services.AddTransient<ITargetCalculator, TargetCalculator>();
