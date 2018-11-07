@@ -50,57 +50,6 @@ namespace Services.Health
             }
         }
 
-        //public double? GetTargetStepCountCumSum(DateTime dateTime)
-        //{
-        //    var targetStartDate = new DateTime(2017, 5, 2);
-
-        //    var stepsOnTargetStartDate = 0;
-        //    var targetDailySteps = 10000;
-
-        //    var daysDiff = (dateTime - targetStartDate).TotalDays;
-
-        //    if (daysDiff < 0)
-        //    {
-        //        return null;
-        //    }
-
-        //    var days = (dateTime - targetStartDate).TotalDays;
-
-        //    return stepsOnTargetStartDate + (days * targetDailySteps);
-        //}
-
-        //public double? GetTargetActivitySummaryCumSum(DateTime createdDate)
-        //{
-        //    var targetStartDate = new DateTime(2017, 5, 2);
-        //    var activeMinutesOnTargetStartDate = 0;
-        //    var targetDailyActiveMinutes = 30;
-
-        //    var daysDiff = (createdDate - targetStartDate).TotalDays;
-
-        //    if (daysDiff < 0)
-        //    {
-        //        return null;
-        //    }
-
-        //    return (activeMinutesOnTargetStartDate + (daysDiff * targetDailyActiveMinutes));
-        //}
-
-        //public double? GetTargetCumSumCardioAndAbove(DateTime dateTime)
-        //{
-        //    var targetStartDate = new DateTime(2018, 5, 20);
-        //    var minutesOnTargetStartDate = 1775;
-        //    var targetDailyMinutes = 11;
-
-        //    var daysDiff = (dateTime - targetStartDate).TotalDays;
-
-        //    if (daysDiff < 0)
-        //    {
-        //        return null;
-        //    }
-
-        //    return minutesOnTargetStartDate + (daysDiff * targetDailyMinutes);
-        //}
-
         public double? GetAlcoholIntakeTarget(DateTime dateTime)
         {
             var targetStartDate = new DateTime(2018, 5, 29);
@@ -123,7 +72,7 @@ namespace Services.Health
             return 30;
         }
 
-        public int? GetTargetCardioAndAbove(DateTime heartSummaryCreatedDate)
+        public int? GetCardioAndAboveTarget(DateTime heartSummaryCreatedDate)
         {
             return 11;
         }

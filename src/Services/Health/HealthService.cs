@@ -263,7 +263,7 @@ namespace Services.Health
 
             foreach (var heartSummary in heartSummaries)
             {
-                heartSummary.TargetCardioAndAbove  = _targetCalculator.GetTargetCardioAndAbove(heartSummary.CreatedDate);
+                heartSummary.TargetCardioAndAbove  = _targetCalculator.GetCardioAndAboveTarget(heartSummary.CreatedDate);
                 _healthRepository.Upsert(heartSummary);
             }
         }

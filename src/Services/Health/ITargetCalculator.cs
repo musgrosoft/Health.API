@@ -11,6 +11,6 @@ namespace Services.Health
         //double? GetTargetCumSumCardioAndAbove(DateTime dateTime);
         double? GetAlcoholIntakeTarget(DateTime dateTime);
         int GetActivitySummaryTarget(DateTime dateTime);
-        int? GetTargetCardioAndAbove(DateTime heartSummaryCreatedDate);
+        int? GetCardioAndAboveTarget(DateTime heartSummaryCreatedDate);
     }
 }
