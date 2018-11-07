@@ -1,6 +1,6 @@
 ﻿namespace Google
 {
-    public interface IGoogleMigrator
+    public interface IGoogleImporter
     {
         void MigrateRuns();
         void MigrateAlcoholIntakes();

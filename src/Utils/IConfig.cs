@@ -20,5 +20,8 @@
         //Nokia Health
         string NokiaClientId { get; }
         string NokiaClientSecret { get; }
+        string RunSpreadsheetId { get; }
+        string AlcoholSpreadsheetId { get; }
+        string RowSpreadsheetId { get; }
     }
 }

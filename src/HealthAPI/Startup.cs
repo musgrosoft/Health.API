@@ -105,7 +105,7 @@ namespace HealthAPI
             services.AddTransient<INokiaAuthenticator, NokiaAuthenticator>();
             services.AddTransient<IFitbitClient, FitbitClient>();
             services.AddTransient<IGoogleClient, GoogleClient>();
-            services.AddTransient<IGoogleMigrator, GoogleMigrator>();
+            services.AddTransient<IGoogleImporter, GoogleImporter>();
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<INokiaService, NokiaService>();
             services.AddTransient<ITargetCalculator, TargetCalculator>();

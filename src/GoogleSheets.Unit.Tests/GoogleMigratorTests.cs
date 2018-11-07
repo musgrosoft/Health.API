@@ -12,13 +12,13 @@ namespace GoogleSheets.Unit.Tests
     {
         private Mock<IGoogleClient> _googleClient;
         private Mock<IHealthService> _healthService;
-        private GoogleMigrator _googleMigrator;
+        private GoogleImporter _googleImporter;
 
         public GoogleMigratorTests()
         {
             _googleClient = new Mock<IGoogleClient>();
             _healthService = new Mock<IHealthService>();
-            _googleMigrator = new GoogleMigrator(_googleClient.Object, _healthService.Object);
+            _googleImporter = new GoogleImporter(_googleClient.Object, _healthService.Object);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace GoogleSheets.Unit.Tests
             };
             _googleClient.Setup(x => x.GetRuns()).Returns(someRuns);
 
-            _googleMigrator.MigrateRuns();
+            _googleImporter.MigrateRuns();
 
             _healthService.Verify(x=>x.UpsertRuns(someRuns), Times.Once);
         }
@@ -48,7 +48,7 @@ namespace GoogleSheets.Unit.Tests
             };
             _googleClient.Setup(x => x.GetErgos()).Returns(someErgos);
 
-            _googleMigrator.MigrateErgos();
+            _googleImporter.MigrateErgos();
 
             _healthService.Verify(x => x.UpsertErgos(someErgos), Times.Once);
         }

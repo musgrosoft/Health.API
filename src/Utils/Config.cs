@@ -45,7 +45,11 @@ namespace Utils
         //Google Sheets
         public string GoogleClientId => GetConfigValue("GoogleClientId");
         public string GoogleClientSecret => GetConfigValue("GoogleClientSecret");
-        
+
+        public string RunSpreadsheetId => "1-S-oI6M61po-TIvBu0JQwDMjzNkarl3SXqiNKUdusfg";
+        public string AlcoholSpreadsheetId => "15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io";
+        public string RowSpreadsheetId => "1QL-RYs8STqWCzg_ck4rD_py93l8CzhOpeu58qXFhoXA";
+
         //Nokia Health
         public string NokiaClientId => GetConfigValue("NokiaClientId");
         public string NokiaClientSecret => GetConfigValue("NokiaClientSecret");

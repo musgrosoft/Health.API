@@ -11,12 +11,12 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
     {
         private readonly Mock<ILogger> _logger;
         private readonly GoogleSheetsController _googleSheetsController;
-        private readonly Mock<IGoogleMigrator> _googleMigrator;
+        private readonly Mock<IGoogleImporter> _googleMigrator;
 
         public GoogleSheetsControllerTests()
         {
             _logger = new Mock<ILogger>();
-            _googleMigrator = new Mock<IGoogleMigrator>();
+            _googleMigrator = new Mock<IGoogleImporter>();
      
             _googleSheetsController = new GoogleSheetsController(_logger.Object,_googleMigrator.Object);
         }

@@ -11,12 +11,12 @@ namespace HealthAPI.Controllers.Migration
     {
         private readonly ILogger _logger;
         
-        private readonly IGoogleMigrator _googleMigrator;
+        private readonly IGoogleImporter _googleImporter;
 
-        public GoogleSheetsController(ILogger logger, IGoogleMigrator googleMigrator)
+        public GoogleSheetsController(ILogger logger, IGoogleImporter googleImporter)
         {
             _logger = logger;
-            _googleMigrator = googleMigrator;
+            _googleImporter = googleImporter;
         }
         
         [HttpGet]
@@ -26,7 +26,7 @@ namespace HealthAPI.Controllers.Migration
         {
             _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Runs");
 
-            _googleMigrator.MigrateRuns();
+            _googleImporter.MigrateRuns();
 
             return Ok();
         }
@@ -38,7 +38,7 @@ namespace HealthAPI.Controllers.Migration
         {
             _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Ergos");
 
-            _googleMigrator.MigrateErgos();
+            _googleImporter.MigrateErgos();
 
             return Ok();
         }
@@ -50,7 +50,7 @@ namespace HealthAPI.Controllers.Migration
         {
             _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Units");
 
-            _googleMigrator.MigrateAlcoholIntakes();
+            _googleImporter.MigrateAlcoholIntakes();
 
             return Ok();
         }

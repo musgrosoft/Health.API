@@ -2,13 +2,13 @@
 
 namespace Google
 {
-    public class GoogleMigrator : IGoogleMigrator
+    public class GoogleImporter : IGoogleImporter
     {
         private readonly IGoogleClient _googleClient;
         private readonly IHealthService _healthService;
         //private readonly ITargetService _targetService;
 
-        public GoogleMigrator(IGoogleClient  googleClient, IHealthService healthService)
+        public GoogleImporter(IGoogleClient  googleClient, IHealthService healthService)
         {
             _googleClient = googleClient;
             _healthService = healthService;
