@@ -53,17 +53,16 @@ namespace Services.Health
         public double? GetAlcoholIntakeTarget(DateTime dateTime)
         {
             var targetStartDate = new DateTime(2018, 5, 29);
-            var unitsOnTargetStartDate = 5148;
+            //var unitsOnTargetStartDate = 5148;
             var targetDailyUnits = 4;
 
-            var daysDiff = (dateTime - targetStartDate).TotalDays;
 
-            if (daysDiff < 0)
+            if (dateTime < targetStartDate)
             {
                 return null;
             }
 
-            return unitsOnTargetStartDate + (daysDiff * targetDailyUnits);
+            return targetDailyUnits;
         }
 
 
