@@ -63,7 +63,7 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldInsertHeartSummary()
         {
-            var heartSummary = new HeartRateSummary { CardioMinutes = 123 };
+            var heartSummary = new HeartRateSummary { CardioMinutes = 123, Source = "wibble" };
 
             _healthRepository.Upsert(heartSummary);
 
@@ -203,9 +203,9 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldGetLatestHeartSummaryDate()
         {
-            var firstHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 1) };
-            var secondHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 2) };
-            var thirdHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 3) };
+            var firstHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 1), Source = "wibble"};
+            var secondHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 2), Source = "wibble" };
+            var thirdHeartSummary = new HeartRateSummary { CreatedDate = new DateTime(2018, 5, 3), Source = "wibble" };
 
             _fakeLocalContext.HeartRateSummaries.Add(firstHeartSummary);
             _fakeLocalContext.HeartRateSummaries.Add(secondHeartSummary);
@@ -411,11 +411,11 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateHeartSummary()
         {
-            var existingHeartSummary = new HeartRateSummary() { CreatedDate = new DateTime(2017, 1, 1), OutOfRangeMinutes = 1 , FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4};
+            var existingHeartSummary = new HeartRateSummary() { CreatedDate = new DateTime(2017, 1, 1), OutOfRangeMinutes = 1 , FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4, Source = "wibble" };
             _fakeLocalContext.HeartRateSummaries.Add(existingHeartSummary);
             _fakeLocalContext.SaveChanges();
 
-            var newHeartSummary = new HeartRateSummary() { CreatedDate = new DateTime(2017, 1, 1), OutOfRangeMinutes = 5, FatBurnMinutes = 6, CardioMinutes = 7, PeakMinutes = 8 };
+            var newHeartSummary = new HeartRateSummary() { CreatedDate = new DateTime(2017, 1, 1), OutOfRangeMinutes = 5, FatBurnMinutes = 6, CardioMinutes = 7, PeakMinutes = 8, Source = "wibble" };
 
             _healthRepository.Upsert(newHeartSummary);
 

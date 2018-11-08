@@ -189,7 +189,7 @@ namespace Repositories.Health
         public void Upsert(HeartRateSummary heartSummary)
         {
 
-            var existingHeartSummary = _healthContext.HeartRateSummaries.Find(heartSummary.CreatedDate);
+            var existingHeartSummary = _healthContext.HeartRateSummaries.Find(heartSummary.CreatedDate, heartSummary.Source);
 
             if (existingHeartSummary != null)
             {

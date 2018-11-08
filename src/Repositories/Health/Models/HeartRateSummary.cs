@@ -5,9 +5,7 @@ namespace Repositories.Health.Models
 {
     public class HeartRateSummary
     {
-        [Key]
         public DateTime CreatedDate { get; set; }
-        [Key]
         public string Source { get; set; }
 
         public int? OutOfRangeMinutes { get; set; }

@@ -27,7 +27,8 @@ namespace Fitbit.Services
                 OutOfRangeMinutes = x.value.heartRateZones.First(y => y.name == "Out of Range").minutes,
                 FatBurnMinutes = x.value.heartRateZones.First(y => y.name == "Fat Burn").minutes,
                 CardioMinutes = x.value.heartRateZones.First(y => y.name == "Cardio").minutes,
-                PeakMinutes = x.value.heartRateZones.First(y => y.name == "Peak").minutes
+                PeakMinutes = x.value.heartRateZones.First(y => y.name == "Peak").minutes,
+                Source = "Fitbit"
             });
         }
 
