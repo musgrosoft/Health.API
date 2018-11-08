@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Repositories.Health;
-using Repositories.Models;
+using Repositories.Health.Models;
 using Utils;
 
 namespace Services.Health

@@ -6,7 +6,7 @@ using HealthAPI.Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Utils;
 
-namespace HealthAPI.Controllers.Migration
+namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Fitbit")]

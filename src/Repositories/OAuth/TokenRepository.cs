@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Repositories.Models;
+using Repositories.OAuth.Models;
 
 namespace Repositories.OAuth
 {

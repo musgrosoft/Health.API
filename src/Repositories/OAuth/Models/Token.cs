@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Repositories.Models
+namespace Repositories.OAuth.Models
 {
     public class Token
     {

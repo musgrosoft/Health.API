@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Nokia.Domain;
-using Repositories.Models;
+using Repositories.Health.Models;
 using Utils;
 
 namespace Nokia.Services

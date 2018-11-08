@@ -1,4 +1,4 @@
-CREATE VIEW vw_AveragedDailyBloodPressures AS
+CREATE VIEW vw_DailyBloodPressures AS
 
 SELECT 
     CreatedDate, 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Nokia.Domain;
-using Repositories.Models;
+using Repositories.Health.Models;
 
 namespace Nokia.Services
 {

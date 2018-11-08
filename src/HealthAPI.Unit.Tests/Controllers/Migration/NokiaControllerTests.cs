@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using HealthAPI.Controllers.Migration;
+using HealthAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Nokia.Importer;

@@ -5,7 +5,7 @@ using Nokia.Importer;
 using Nokia.Services;
 using Utils;
 
-namespace HealthAPI.Controllers.Migration
+namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Nokia")]

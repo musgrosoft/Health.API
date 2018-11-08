@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Repositories.Models;
+using Repositories.Health.Models;
 using Utils;
 
 namespace Fitbit.Services

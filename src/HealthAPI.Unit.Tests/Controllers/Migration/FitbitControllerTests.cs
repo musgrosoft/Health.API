@@ -4,7 +4,7 @@ using Fitbit.Services;
 using Hangfire;
 using Hangfire.Common;
 using Hangfire.States;
-using HealthAPI.Controllers.Migration;
+using HealthAPI.Controllers;
 using HealthAPI.Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

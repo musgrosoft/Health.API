@@ -1,9 +1,8 @@
-﻿using System;
-using Google;
+﻿using Google;
 using Microsoft.AspNetCore.Mvc;
 using Utils;
 
-namespace HealthAPI.Controllers.Migration
+namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Google")]

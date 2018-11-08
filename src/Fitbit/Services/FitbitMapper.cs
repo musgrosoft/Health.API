@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Fitbit.Domain;
-using Repositories.Models;
+using Repositories.Health.Models;
 
 namespace Fitbit.Services
 {

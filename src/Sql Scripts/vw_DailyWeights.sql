@@ -1,4 +1,4 @@
-CREATE VIEW vw_AveragedDailyWeights AS
+CREATE VIEW vw_DailyWeights AS
 
 SELECT 
     CreatedDate, 

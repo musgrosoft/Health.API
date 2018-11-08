@@ -1,19 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Repositories.Health.Models;
+using Repositories.OAuth.Models;
 
 namespace Repositories
 {
     public class HealthContext : DbContext
     {
-        public virtual DbSet<Models.BloodPressure> BloodPressures { get; set; }
-        public virtual DbSet<Models.ActivitySummary> ActivitySummaries { get; set; }
-        public virtual DbSet<Models.StepCount> StepCounts { get; set; }
-        public virtual DbSet<Models.HeartRateSummary> HeartRateSummaries { get; set; }
-        public virtual DbSet<Models.RestingHeartRate> RestingHeartRates { get; set; }
-        public virtual DbSet<Models.AlcoholIntake> AlcoholIntakes { get; set; }
-        public virtual DbSet<Models.Weight> Weights { get; set; }
-        public virtual DbSet<Models.Run> Runs { get; set; }
-        public virtual DbSet<Models.Ergo> Ergos { get; set; }
-        public virtual DbSet<Models.Token> Tokens { get; set; }
+        public virtual DbSet<BloodPressure> BloodPressures { get; set; }
+        public virtual DbSet<ActivitySummary> ActivitySummaries { get; set; }
+        public virtual DbSet<StepCount> StepCounts { get; set; }
+        public virtual DbSet<HeartRateSummary> HeartRateSummaries { get; set; }
+        public virtual DbSet<RestingHeartRate> RestingHeartRates { get; set; }
+        public virtual DbSet<AlcoholIntake> AlcoholIntakes { get; set; }
+        public virtual DbSet<Weight> Weights { get; set; }
+        public virtual DbSet<Run> Runs { get; set; }
+        public virtual DbSet<Ergo> Ergos { get; set; }
+        public virtual DbSet<Token> Tokens { get; set; }
 
         public HealthContext(DbContextOptions<HealthContext> options) : base(options)
         {

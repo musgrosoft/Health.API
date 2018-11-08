@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Google;
 using Moq;
-using Repositories.Models;
+using Repositories.Health.Models;
 using Services.Health;
 using Xunit;
 

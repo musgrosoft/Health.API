@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Repositories.Models;
 using Repositories.OAuth;
+using Repositories.OAuth.Models;
 using Xunit;
 
 namespace Repository.Unit.Tests

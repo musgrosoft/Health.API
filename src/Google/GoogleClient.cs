@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Repositories.Models;
+using Repositories.Health.Models;
 using Utils;
 
 namespace Google

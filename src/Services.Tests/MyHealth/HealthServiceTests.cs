@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Moq;
 using Repositories.Health;
-using Repositories.Models;
+using Repositories.Health.Models;
 using Services.Health;
 using Utils;
 using Xunit;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Repositories.Models;
+using Repositories.Health.Models;
 
 namespace Repositories.Health
 {

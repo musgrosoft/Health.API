@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Fitbit.Domain;
 using Fitbit.Services;
 using Moq;
-using Repositories.Models;
+using Repositories.Health.Models;
 using Utils;
 using Xunit;
 

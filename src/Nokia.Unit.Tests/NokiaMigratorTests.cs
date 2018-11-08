@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Moq;
 using Nokia.Importer;
 using Nokia.Services;
-using Repositories.Models;
+using Repositories.Health.Models;
 using Services.Health;
 using Utils;
 using Xunit;

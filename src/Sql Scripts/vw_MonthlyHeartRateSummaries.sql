@@ -5,5 +5,5 @@ SELECT
   AVG(CardioMinutes) as CardioMinutes,
   AVG(PeakMinutes) as PeakMinutes
 FROM
-  HeartRateSummaries
+  vw_DailyHeartRateSummaries
 GROUP BY DATEADD(m, DATEDIFF(m, 0, CreatedDate), 0)

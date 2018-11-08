@@ -1,5 +1,5 @@
 ﻿using System;
-using Repositories.Models;
+using Repositories.Health.Models;
 
 namespace Repositories.Health
 {

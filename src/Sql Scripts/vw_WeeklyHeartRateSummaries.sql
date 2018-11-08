@@ -5,5 +5,5 @@ SELECT
   SUM(CardioMinutes) as CardioMinutes,
   SUM(PeakMinutes) as PeakMinutes
 FROM
-  HeartRateSummaries
+  vw_DailyHeartRateSummaries
 GROUP BY DATEADD(dd,-(DATEPART(dw, CreatedDate)-1), CreatedDate)
