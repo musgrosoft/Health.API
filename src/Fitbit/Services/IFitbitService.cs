@@ -14,5 +14,7 @@ namespace Fitbit.Services
         Task Subscribe();
         Task SetTokens(string code);
         //Task<IEnumerable<Run>> GetRuns(DateTime fromDate, DateTime toDate);
+        Task<IEnumerable<HeartRate>> GetDetailedHeartRates()//(DateTime fromDate, DateTime toDate)
+            ;
     }
 }

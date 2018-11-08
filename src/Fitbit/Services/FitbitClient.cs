@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -120,43 +121,43 @@ namespace Fitbit.Services
 
 
 
-        //public async Task<List<Dataset>> GetDetailedHeartRates(DateTime date)
-        //{
-        //    var accessToken = await _fitbitAuthenticator.GetAccessToken();
+        public async Task<List<Dataset>> GetDetailedHeartRates(DateTime date)
+        {
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
 
-        //    var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{date:yyyy-MM-dd}/1d/1sec.json";
+            var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{date:yyyy-MM-dd}/1d/1sec.json";
 
-        //    _httpClient.DefaultRequestHeaders.Clear();
-        //    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
-        //    var response = await _httpClient.GetAsync(uri);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var content = await response.Content.ReadAsStringAsync();
-        //        var data = JsonConvert.DeserializeObject<RootObject>(content);
-        //        foreach (var dataset in data.ActivitiesHeartIntraday.dataset)
-        //        {
-        //            dataset.time = new DateTime(date.Year, date.Month, date.Day, dataset.time.Hour, dataset.time.Minute, dataset.time.Second);
-        //        }
+            var response = await _httpClient.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<FitBitActivity>(content);
+                //foreach (var dataset in data.activitiesHeartIntraday.dataset)
+                //{
+                //    dataset.time = new DateTime(date.Year, date.Month, date.Day, (int)dataset.time.TotalHours, (int)dataset.time.TotalMinutes, (int)dataset.time.TotalSeconds);
+                //}
 
-        //        //data.DateTime = date;
-        //        return data.ActivitiesHeartIntraday.dataset;
-        //    }
-        //    else if (response.StatusCode == (HttpStatusCode)429)
-        //    {
-        //        throw new TooManyRequestsException(
-        //            $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-        //    }
-        //    else
-        //    {
+                //data.DateTime = date;
+                return data.activitiesHeartIntraday.dataset;
+            }
+            else if (response.StatusCode == (HttpStatusCode)429)
+            {
+                throw new TooManyRequestsException(
+                    $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+            }
+            else
+            {
 
-        //        throw new Exception(
-        //            $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-        //        //_logger.Log($"No FitbitDailyActivity found for date : {date}");
-        //        //return null;
-        //    }
+                throw new Exception(
+                    $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+                //_logger.Log($"No FitbitDailyActivity found for date : {date}");
+                //return null;
+            }
 
-        //}
+        }
 
     }
 }

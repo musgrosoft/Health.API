@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Fitbit.Domain;
 
@@ -10,5 +11,6 @@ namespace Fitbit.Services
         Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate);
         Task Subscribe();
 
+        Task<List<Dataset>> GetDetailedHeartRates(DateTime date);
     }
 }

@@ -11,5 +11,6 @@ namespace Fitbit.Services
         IEnumerable<ActivitySummary> MapFitbitDailyActivitiesToActivitySummaries(IEnumerable<FitbitDailyActivity> fitbitDailyActivities);
         IEnumerable<StepCount> MapFitbitDailyActivitiesToStepCounts(IEnumerable<FitbitDailyActivity> fitbitDailyActivities);
         IEnumerable<Run> MapFitbitDailyActivitiesToRuns(IEnumerable<FitbitDailyActivity> fitbitDailyActivities);
+        IEnumerable<HeartRate> MapDataSetToDetailedHeartRates(List<Dataset> detailedHeartRates);
     }
 }

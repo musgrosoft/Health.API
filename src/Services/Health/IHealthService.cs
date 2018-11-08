@@ -46,6 +46,7 @@ namespace Services.Health
         void UpsertErgos(List<Ergo> rows);
         //IList<Run> GetAllRuns();
         //IList<Ergo> GetAllErgos();
-        
+
+        void UpsertHeartRates(List<HeartRate> detailedHeartRates);
     }
 }

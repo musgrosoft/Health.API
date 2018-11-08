@@ -78,5 +78,25 @@ namespace Fitbit.Services
 
             return allTheRuns;
         }
+
+        public IEnumerable<HeartRate> MapDataSetToDetailedHeartRates(List<Dataset> detailedHeartRates)
+        {
+            var allTheDetailedHeartRates = new List<HeartRate>();
+
+            foreach (var detailedHeartRate in detailedHeartRates)
+            {
+                var detail = new HeartRate
+                {
+                    CreatedDate = new DateTime(detailedHeartRate.theDateTime.Year, detailedHeartRate.theDateTime.Month, detailedHeartRate.theDateTime.Day, detailedHeartRate.time.Hours, detailedHeartRate.time.Minutes, detailedHeartRate.time.Seconds),
+                    Bpm = detailedHeartRate.value,
+                    Source = "Fitbit"
+                };
+
+                allTheDetailedHeartRates.Add(detail);
+            }
+
+
+            return allTheDetailedHeartRates;
+        }
     }
 }

@@ -98,5 +98,12 @@ namespace Fitbit.Importer
             _healthService.UpsertHeartSummaries(heartSummaries);
         }
 
+        public async Task MigrateDetailedHeartRates()
+        {
+            var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates()).ToList();
+            
+            _healthService.UpsertHeartRates(detailedHeartRates);
+        }
+
     }
 }
