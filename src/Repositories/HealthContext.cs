@@ -16,6 +16,7 @@ namespace Repositories
         public virtual DbSet<Run> Runs { get; set; }
         public virtual DbSet<Ergo> Ergos { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
+        public virtual DbSet<HeartRate> HeartRates { get; set; }
 
         public HealthContext(DbContextOptions<HealthContext> options) : base(options)
         {
