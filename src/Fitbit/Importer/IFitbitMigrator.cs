@@ -9,5 +9,6 @@ namespace Fitbit.Importer
         Task MigrateRestingHeartRates();
         Task MigrateStepCounts();
         //Task MigrateRuns();
+        Task MigrateDetailedHeartRates();
     }
 }

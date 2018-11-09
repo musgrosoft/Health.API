@@ -22,6 +22,7 @@ namespace Repositories.Health
         void Upsert(Run run);
         void Upsert(AlcoholIntake alcoholIntake);
         void Upsert(Ergo ergo);
-        
+
+        void Upsert(HeartRate detailedHeartRate);
     }
 }

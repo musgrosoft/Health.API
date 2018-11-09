@@ -252,5 +252,20 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
+        public void Upsert(HeartRate detailedHeartRate)
+        {
+            var existingHeartRate = _healthContext.HeartRateSummaries.Find(detailedHeartRate.CreatedDate, detailedHeartRate.Source);
+
+            if (existingHeartRate != null)
+            {
+                detailedHeartRate.Bpm = detailedHeartRate.Bpm;
+            }
+            else
+            {
+                _healthContext.Add(detailedHeartRate);
+            }
+
+            _healthContext.SaveChanges();
+        }
     }
 }

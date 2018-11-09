@@ -298,6 +298,16 @@ namespace Services.Health
             }
         }
 
+        public void UpsertHeartRates(List<HeartRate> detailedHeartRates)
+        {
+            _logger.LogMessageAsync($"detailedHeartRates : Saving {detailedHeartRates.Count()} detailedHeartRates");
+
+            foreach (var heartRate in detailedHeartRates)
+            {
+                _healthRepository.Upsert(heartRate);
+            }
+        }
+
         public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
         {
             _logger.LogMessageAsync($"UNITS : Saving {alcoholIntakes.Count} alcohol intakes");

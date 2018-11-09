@@ -100,7 +100,7 @@ namespace Fitbit.Importer
 
         public async Task MigrateDetailedHeartRates()
         {
-            var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates()).ToList();
+            var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(DateTime.Now.AddDays(-1))).ToList();
             
             _healthService.UpsertHeartRates(detailedHeartRates);
         }
