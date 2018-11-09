@@ -140,7 +140,12 @@ namespace Fitbit.Services
                 //    dataset.time = new DateTime(date.Year, date.Month, date.Day, (int)dataset.time.TotalHours, (int)dataset.time.TotalMinutes, (int)dataset.time.TotalSeconds);
                 //}
 
-                //data.DateTime = date;
+                foreach (var dataset in data.activitiesHeartIntraday.dataset)
+                {
+                    dataset.theDateTime = date;
+                }
+
+
                 return data.activitiesHeartIntraday.dataset;
             }
             else if (response.StatusCode == (HttpStatusCode)429)
