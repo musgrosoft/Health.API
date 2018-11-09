@@ -12,7 +12,7 @@ namespace HealthAPI.Controllers
     public class NokiaController : Controller
     {
         private readonly ILogger _logger;
-        private readonly INokiaMigrator _nokiaMigrator;
+        private readonly INokiaImporter _nokiaImporter;
         private readonly INokiaService _nokiaService;
 
         private const int WeightKgMeasureTypeId = 1;
@@ -22,10 +22,10 @@ namespace HealthAPI.Controllers
         private const int SubscribeBloodPressureId = 4;
 
 
-        public NokiaController(ILogger logger, INokiaMigrator nokiaMigrator, INokiaService nokiaService)
+        public NokiaController(ILogger logger, INokiaImporter nokiaImporter, INokiaService nokiaService)
         {
             _logger = logger;
-            _nokiaMigrator = nokiaMigrator;
+            _nokiaImporter = nokiaImporter;
             _nokiaService = nokiaService;
         }
 
@@ -37,7 +37,7 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync("NOKIA NEW : Migrating just weights");
 
-            await _nokiaMigrator.MigrateWeights();
+            await _nokiaImporter.MigrateWeights();
 
             await _logger.LogMessageAsync("NOKIA : Finished Migrating just weights");
 
@@ -52,7 +52,7 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync("NOKIA NEW : Migrating just blood pressures");
 
-            await _nokiaMigrator.MigrateBloodPressures();
+            await _nokiaImporter.MigrateBloodPressures();
 
             await _logger.LogMessageAsync("NOKIA : Finished Migrating just blood pressures");
 

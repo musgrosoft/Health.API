@@ -98,9 +98,9 @@ namespace HealthAPI
             services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
             services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
             services.AddTransient<IFitbitService, FitbitService>();
-            services.AddTransient<IFitbitMigrator, FitbitMigrator>();
+            services.AddTransient<IFitbitImporter, FitbitImporter>();
             services.AddTransient<ICalendar, Calendar>();
-            services.AddTransient<INokiaMigrator, NokiaMigrator>();
+            services.AddTransient<INokiaImporter, NokiaImporter>();
             services.AddTransient<INokiaClient, NokiaClient>();
             services.AddTransient<INokiaAuthenticator, NokiaAuthenticator>();
             services.AddTransient<IFitbitClient, FitbitClient>();
@@ -110,6 +110,9 @@ namespace HealthAPI
             services.AddTransient<INokiaService, NokiaService>();
             services.AddTransient<ITargetCalculator, TargetCalculator>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();
+            services.AddTransient<ISheetMapper, SheetMapper>();
+            services.AddTransient<IMapper, Mapper>();
+
 
             services.AddTransient<INokiaMapper, NokiaMapper>();
             services.AddTransient<INokiaClientQueryAdapter, NokiaClientQueryAdapter>();

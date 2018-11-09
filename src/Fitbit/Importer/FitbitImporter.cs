@@ -7,7 +7,7 @@ using Utils;
 
 namespace Fitbit.Importer
 {
-    public class FitbitMigrator : IFitbitMigrator
+    public class FitbitImporter : IFitbitImporter
     {
         private readonly ILogger _logger;
         private IHealthService _healthService;
@@ -19,7 +19,7 @@ namespace Fitbit.Importer
 
         private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
 
-        public FitbitMigrator(IHealthService healthService, ILogger logger, IFitbitService fitbitService, ICalendar calendar)
+        public FitbitImporter(IHealthService healthService, ILogger logger, IFitbitService fitbitService, ICalendar calendar)
         {
             _healthService = healthService;
             _logger = logger;

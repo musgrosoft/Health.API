@@ -7,7 +7,7 @@ using Utils;
 
 namespace Nokia.Importer
 {   
-    public class NokiaMigrator : INokiaMigrator
+    public class NokiaImporter : INokiaImporter
     {
         private readonly IHealthService _healthService;
         private readonly ILogger _logger;
@@ -18,7 +18,7 @@ namespace Nokia.Importer
         private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
         private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
 
-        public NokiaMigrator(IHealthService healthService, ILogger logger, INokiaService nokiaService)
+        public NokiaImporter(IHealthService healthService, ILogger logger, INokiaService nokiaService)
         {
             _healthService = healthService;
             _logger = logger;

@@ -10,13 +10,13 @@ namespace HealthAPI.Unit.Tests
 {
     public class HangifireWorkTests
     {
-        private Mock<IFitbitMigrator> _fitbitMigrator;
+        private Mock<IFitbitImporter> _fitbitMigrator;
         private Mock<ILogger> _logger;
         private HangfireWork _hangfireWork;
 
         public HangifireWorkTests()
         {
-            _fitbitMigrator = new Mock<IFitbitMigrator>();
+            _fitbitMigrator = new Mock<IFitbitImporter>();
             _logger = new Mock<ILogger>();
             _hangfireWork = new HangfireWork(_fitbitMigrator.Object, _logger.Object);
         }

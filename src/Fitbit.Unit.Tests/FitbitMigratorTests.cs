@@ -17,7 +17,7 @@ namespace Fitbit.Unit.Tests
         private Mock<ILogger> _logger;
         private Mock<IHealthService> _healthService;
         private readonly Mock<ICalendar> _calendar;
-        private FitbitMigrator _fitbitMigrator;
+        private FitbitImporter _fitbitImporter;
         private readonly DateTime latestDate = new DateTime(2012, 3, 4);
         
         private const int SEARCH_DAYS_PREVIOUS = 10;
@@ -29,7 +29,7 @@ namespace Fitbit.Unit.Tests
             _healthService = new Mock<IHealthService>();
             _calendar = new Mock<ICalendar>();
         
-            _fitbitMigrator = new FitbitMigrator(_healthService.Object, _logger.Object, _fitbitClient.Object, _calendar.Object);
+            _fitbitImporter = new FitbitImporter(_healthService.Object, _logger.Object, _fitbitClient.Object, _calendar.Object);
         }
 
         //[Fact]
@@ -85,7 +85,7 @@ namespace Fitbit.Unit.Tests
 
             _fitbitClient.Setup(x => x.GetRestingHeartRates(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<RestingHeartRate>)restingHeartRates));
 
-            await _fitbitMigrator.MigrateRestingHeartRates();
+            await _fitbitImporter.MigrateRestingHeartRates();
 
             _healthService.Verify(x => x.UpsertRestingHeartRates(restingHeartRates), Times.Once);
         }

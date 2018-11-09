@@ -16,7 +16,7 @@ namespace Nokia.Unit.Tests
         private Mock<IHealthService> _healthService;
         private Mock<INokiaService> _nokiaService;
         private Mock<ILogger> _logger;
-        private NokiaMigrator _nokiaMigrator;
+        private NokiaImporter _nokiaImporter;
 
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
@@ -26,7 +26,7 @@ namespace Nokia.Unit.Tests
             _nokiaService = new Mock<INokiaService>();
             _logger = new Mock<ILogger>();
 
-            _nokiaMigrator = new NokiaMigrator(_healthService.Object, _logger.Object, _nokiaService.Object);
+            _nokiaImporter = new NokiaImporter(_healthService.Object, _logger.Object, _nokiaService.Object);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Nokia.Unit.Tests
 
            // _targetService.Setup(x => x.SetTargets(weights)).Returns(weights);
 
-            await _nokiaMigrator.MigrateWeights();
+            await _nokiaImporter.MigrateWeights();
 
 
             _healthService.Verify(x=>x.UpsertWeights(weights));
@@ -69,7 +69,7 @@ namespace Nokia.Unit.Tests
 
             _nokiaService.Setup(x => x.GetBloodPressures(latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS))).Returns(Task.FromResult((IEnumerable<BloodPressure>)bloodPressures));
 
-            await _nokiaMigrator.MigrateBloodPressures();
+            await _nokiaImporter.MigrateBloodPressures();
 
             _healthService.Verify(x => x.UpsertBloodPressures(bloodPressures));
 

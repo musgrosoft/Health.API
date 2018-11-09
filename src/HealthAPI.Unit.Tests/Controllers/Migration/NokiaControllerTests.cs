@@ -15,14 +15,14 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
     {
         private readonly NokiaController _nokiaController;
         private readonly Mock<INokiaService> _nokiaService;
-        private readonly Mock<INokiaMigrator> _nokiaMigrator;
+        private readonly Mock<INokiaImporter> _nokiaMigrator;
         private readonly Mock<ILogger> _logger;
 
         public NokiaControllerTests()
         {
             _logger = new Mock<ILogger>();
             _nokiaService = new Mock<INokiaService>();
-            _nokiaMigrator = new Mock<INokiaMigrator>();
+            _nokiaMigrator = new Mock<INokiaImporter>();
 
             _nokiaController = new NokiaController(_logger.Object, _nokiaMigrator.Object, _nokiaService.Object);
         }

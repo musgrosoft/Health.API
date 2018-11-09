@@ -7,12 +7,12 @@ namespace HealthAPI.Hangfire
 {
     public class HangfireWork : IHangfireWork
     {
-        private readonly IFitbitMigrator _fitbitMigrator;
+        private readonly IFitbitImporter _fitbitImporter;
         private readonly ILogger _logger;
 
-        public HangfireWork(IFitbitMigrator fitbitMigrator, ILogger logger)
+        public HangfireWork(IFitbitImporter fitbitImporter, ILogger logger)
         {
-            _fitbitMigrator = fitbitMigrator;
+            _fitbitImporter = fitbitImporter;
             _logger = logger;
         }
 
@@ -28,7 +28,7 @@ namespace HealthAPI.Hangfire
                 //await _fitbitMigrator.MigrateActivitySummaries();
                 ////await _fitbitMigrator.MigrateRuns();
 
-                await _fitbitMigrator.MigrateDetailedHeartRates();
+                await _fitbitImporter.MigrateDetailedHeartRates();
             }
             catch (Exception ex)
             {

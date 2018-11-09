@@ -2,7 +2,7 @@
 
 namespace Nokia.Importer
 {
-    public interface INokiaMigrator
+    public interface INokiaImporter
     {
         Task MigrateBloodPressures();
         Task MigrateWeights();

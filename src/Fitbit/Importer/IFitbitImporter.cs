@@ -2,7 +2,7 @@
 
 namespace Fitbit.Importer
 {
-    public interface IFitbitMigrator
+    public interface IFitbitImporter
     {
         Task MigrateActivitySummaries();
         Task MigrateHeartSummaries();

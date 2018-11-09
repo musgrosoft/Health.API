@@ -23,7 +23,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
         private readonly Mock<IFitbitService> _fitbitService;
         private readonly Mock<IBackgroundJobClient> _backgroundJobClient;
         private readonly IHangfireWork _hangfireWork;
-        private Mock<IFitbitMigrator> _fitbitMigrator;
+        private Mock<IFitbitImporter> _fitbitMigrator;
 
         public FitbitControllerTests()
         {
@@ -33,7 +33,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
            // _hangfireUtility = new Mock<IHangfireUtility>();
             _backgroundJobClient = new Mock<IBackgroundJobClient>();
 
-            _fitbitMigrator = new Mock<IFitbitMigrator>();
+            _fitbitMigrator = new Mock<IFitbitImporter>();
 
 
             _hangfireWork = new HangfireWork(_fitbitMigrator.Object, _logger.Object);
