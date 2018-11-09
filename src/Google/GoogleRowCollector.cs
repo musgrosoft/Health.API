@@ -13,9 +13,9 @@ namespace Google
         static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "sheetreader";
 
-        private readonly Config _config;
+        private readonly IConfig _config;
 
-        public GoogleRowCollector(Config config)
+        public GoogleRowCollector(IConfig config)
         {
             _config = config;
         }
