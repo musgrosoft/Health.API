@@ -112,6 +112,7 @@ namespace HealthAPI
             services.AddTransient<IFitbitMapper, FitbitMapper>();
             services.AddTransient<ISheetMapper, SheetMapper>();
             services.AddTransient<IMapper, Mapper>();
+            services.AddTransient<IGoogleRowCollector, GoogleRowCollector>();
 
 
             services.AddTransient<INokiaMapper, NokiaMapper>();
