@@ -52,5 +52,10 @@ namespace HealthAPI.Acceptance.Tests
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

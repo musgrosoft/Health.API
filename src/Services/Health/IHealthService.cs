@@ -12,7 +12,8 @@ namespace Services.Health
         DateTime GetLatestRestingHeartRateDate(DateTime defaultDateTime);
         DateTime GetLatestStepCountDate(DateTime defaultDateTime);
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
-        DateTime GetLatestRunDate(DateTime minFitbitDate);
+        DateTime GetLatestRunDate(DateTime defaultDateTime);
+        DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime);
 
         //IList<ActivitySummary> GetAllActivitySummaries();
         //IList<ActivitySummary> GetAllActivitySummariesByWeek();
@@ -48,5 +49,6 @@ namespace Services.Health
         //IList<Ergo> GetAllErgos();
 
         void UpsertHeartRates(List<HeartRate> detailedHeartRates);
+        
     }
 }

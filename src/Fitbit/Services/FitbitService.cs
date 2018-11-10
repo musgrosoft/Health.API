@@ -61,9 +61,11 @@ namespace Fitbit.Services
             return _fitbitMapper.MapActivitiesHeartsToHeartRateSummaries(heartActivies);
         }
 
-        public async Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime dateTime)//(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate)
         {
-            var detailedHeartRates = await _fitbitClient.GetDetailedHeartRates(dateTime);
+
+            var detailedHeartRates = await _fitbitClientQueryAdapter.GetDetailedHeartRates(fromDate, toDate);
+            //            var detailedHeartRates = await _fitbitClient.GetDetailedHeartRates(dateTime);
 
             return _fitbitMapper.MapDataSetToDetailedHeartRates(detailedHeartRates);
         }

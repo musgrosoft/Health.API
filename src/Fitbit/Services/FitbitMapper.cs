@@ -79,7 +79,7 @@ namespace Fitbit.Services
             return allTheRuns;
         }
 
-        public IEnumerable<HeartRate> MapDataSetToDetailedHeartRates(List<Dataset> detailedHeartRates)
+        public IEnumerable<HeartRate> MapDataSetToDetailedHeartRates(IEnumerable<Dataset> detailedHeartRates)
         {
             var allTheDetailedHeartRates = new List<HeartRate>();
 

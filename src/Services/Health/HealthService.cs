@@ -198,6 +198,12 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
+        public DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime)
+        {
+            var latestDate = _healthRepository.GetLatestDetailedHeartRatesDate();
+            return latestDate ?? defaultDateTime;
+        }
+
 
         public void UpsertWeights(IEnumerable<Weight> weights)
         {
@@ -318,6 +324,7 @@ namespace Services.Health
                 _healthRepository.Upsert(alcoholIntake);
             }
         }
+
 
     }
 }
