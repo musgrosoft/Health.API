@@ -20,6 +20,9 @@ namespace HealthAPI.Hangfire
         {
             try
             {
+                await _fitbitImporter.MigrateDetailedHeartRates();
+
+
                 //monthly gets
                 await _fitbitImporter.MigrateRestingHeartRates();
                 await _fitbitImporter.MigrateHeartSummaries();
@@ -28,7 +31,7 @@ namespace HealthAPI.Hangfire
                 await _fitbitImporter.MigrateActivitySummaries();
                 //await _fitbitMigrator.MigrateRuns();
 
-                await _fitbitImporter.MigrateDetailedHeartRates();
+                
             }
             catch (Exception ex)
             {
