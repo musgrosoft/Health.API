@@ -263,14 +263,15 @@ namespace Repositories.Health
 
             if (existingHeartRate != null)
             {
-                detailedHeartRate.Bpm = detailedHeartRate.Bpm;
+               // detailedHeartRate.Bpm = detailedHeartRate.Bpm;
             }
             else
             {
                 _healthContext.Add(detailedHeartRate);
+                _healthContext.SaveChanges();
             }
 
-            _healthContext.SaveChanges();
+            
         }
 
         
