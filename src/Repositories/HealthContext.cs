@@ -25,8 +25,8 @@ namespace Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<HeartRateSummary>().HasKey(c =>  new {c.CreatedDate, c.Source});
-            modelBuilder.Entity<HeartRate>().HasKey(c => new { c.CreatedDate, c.Source });
+            //modelBuilder.Entity<HeartRateSummary>().HasKey(c =>  new {c.CreatedDate, c.Source});
+            //modelBuilder.Entity<HeartRate>().HasKey(c => new { c.CreatedDate, c.Source });
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
