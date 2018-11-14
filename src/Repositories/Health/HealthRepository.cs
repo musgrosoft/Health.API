@@ -275,11 +275,19 @@ namespace Repositories.Health
 
         public void UpsertMany(IEnumerable<HeartRate> detailedHeartRates)
         {
-            foreach (var detailedHeartRate in detailedHeartRates)
+            for (int i = 0; i < (int)Math.Ceiling((double)detailedHeartRates.Count() / 10000); i++)
             {
-                _healthContext.Add(detailedHeartRate);
+                var someHeartRates = detailedHeartRates.Skip(i).Take(10000 * (i + 1));
+
+                foreach (var detailedHeartRate in someHeartRates)
+                {
+                    _healthContext.Add(detailedHeartRate);
+                }
+
+                _healthContext.SaveChanges();
             }
-            _healthContext.SaveChanges();
+
+
 
         }
     }
