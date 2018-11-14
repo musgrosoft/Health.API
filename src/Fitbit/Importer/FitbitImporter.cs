@@ -112,7 +112,7 @@ namespace Fitbit.Importer
             var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(latestDate, latestDate.AddDays(10))).ToList();
             detailedHeartRates = detailedHeartRates.Where(x => x.CreatedDate > latestDate).ToList();
             _healthService.UpsertHeartRates(detailedHeartRates);
-
+            await _logger.LogMessageAsync("DETAILED HEART RATES : Done it");
             //detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(latestDate.AddDays(1), latestDate.AddDays(1))).ToList();
             //_healthService.UpsertHeartRates(detailedHeartRates);
 
