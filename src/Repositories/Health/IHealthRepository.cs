@@ -13,7 +13,7 @@ namespace Repositories.Health
         DateTime? GetLatestRestingHeartRateDate();
         DateTime? GetLatestHeartSummaryDate();
         DateTime? GetLatestRunDate();
-        DateTime? GetLatestDetailedHeartRatesDate();
+        DateTime? GetLatestDetailedHeartRatesDate(string source);
 
 
         void Upsert(Weight weight);

@@ -200,7 +200,7 @@ namespace Services.Health
 
         public DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime)
         {
-            var latestDate = _healthRepository.GetLatestDetailedHeartRatesDate();
+            var latestDate = _healthRepository.GetLatestDetailedHeartRatesDate("Fitbit");
             return latestDate ?? defaultDateTime;
         }
 

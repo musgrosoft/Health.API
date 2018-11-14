@@ -54,9 +54,9 @@ namespace Repositories.Health
             return _healthContext.Runs.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        public DateTime? GetLatestDetailedHeartRatesDate()
+        public DateTime? GetLatestDetailedHeartRatesDate(string source)
         {
-            return _healthContext.HeartRates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
+            return _healthContext.HeartRates.Where(x=>x.Source == source).OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public void Upsert(Weight weight)
