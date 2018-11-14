@@ -100,7 +100,8 @@ namespace Fitbit.Importer
 
         public async Task MigrateDetailedHeartRates()
         {
-            var latestDate = _healthService.GetLatestDetailedHeartRatesDate(MIN_FITBIT_DATE);
+            //var latestDate = _healthService.GetLatestDetailedHeartRatesDate(MIN_FITBIT_DATE);
+            var latestDate = _healthService.GetLatestDetailedHeartRatesDate(new DateTime(2018,10,1));
             await _logger.LogMessageAsync($"DETAILED HEART RATES : Latest Data has a date of : {latestDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             //var getDataFromDate = latestDate.AddDays(-SEARCH_DAYS_PREVIOUS);
