@@ -308,10 +308,12 @@ namespace Services.Health
         {
             _logger.LogMessageAsync($"detailedHeartRates : Saving {detailedHeartRates.Count()} detailedHeartRates");
 
-            foreach (var heartRate in detailedHeartRates)
-            {
-                _healthRepository.Upsert(heartRate);
-            }
+            _healthRepository.UpsertMany(detailedHeartRates);
+
+            //foreach (var heartRate in detailedHeartRates)
+            //{
+            //    _healthRepository.Upsert(heartRate);
+            //}
         }
 
         public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Repositories.Health.Models;
 
@@ -270,10 +271,16 @@ namespace Repositories.Health
                 _healthContext.Add(detailedHeartRate);
                 _healthContext.SaveChanges();
             }
-
-            
         }
 
-        
+        public void UpsertMany(IEnumerable<HeartRate> detailedHeartRates)
+        {
+            foreach (var detailedHeartRate in detailedHeartRates)
+            {
+                _healthContext.Add(detailedHeartRate);
+            }
+            _healthContext.SaveChanges();
+
+        }
     }
 }

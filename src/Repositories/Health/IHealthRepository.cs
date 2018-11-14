@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Repositories.Health.Models;
 
 namespace Repositories.Health
@@ -26,5 +27,6 @@ namespace Repositories.Health
         void Upsert(Ergo ergo);
 
         void Upsert(HeartRate detailedHeartRate);
+        void UpsertMany(IEnumerable<HeartRate> detailedHeartRates);
     }
 }
