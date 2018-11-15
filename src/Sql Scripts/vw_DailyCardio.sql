@@ -1,19 +1,11 @@
 CREATE VIEW vw_DailyCardio AS
 	
-SELECT 
-	CreatedDate,
-	SUM(Minutes) AS Minutes
-FROM
-	(
 	SELECT
-		CreatedDate,
-		Bpm,
-		Minutes
+		DATEADD(dd, 0, DATEDIFF(dd, 0, CreatedDate)) AS CreatedDate,
+		COUNT(Bpm) AS CardioMinutes
 	FROM
-		vw_DailyHeartRates
+		vw_MinuteHeartRates
 	WHERE
 		Bpm >= 125
-	) AS CardioBpm
-GROUP BY 
-	CreatedDate
-	
+	GROUP BY 
+		DATEADD(dd, 0, DATEDIFF(dd, 0, CreatedDate))
