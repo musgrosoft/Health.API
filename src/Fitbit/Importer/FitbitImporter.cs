@@ -15,7 +15,8 @@ namespace Fitbit.Importer
         private readonly ICalendar _calendar;
 
         private const int FITBIT_HOURLY_RATE_LIMIT = 150;
-        private const int SEARCH_DAYS_PREVIOUS = 10;
+        //private const int SEARCH_DAYS_PREVIOUS = 10;
+        private const int SEARCH_DAYS_PREVIOUS = 1;
 
         private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
 
@@ -110,7 +111,7 @@ namespace Fitbit.Importer
 
             //var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(DateTime.Now.AddDays(-1))).ToList();
 
-            var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(latestDate, latestDate.AddDays(10))).ToList();
+            var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(latestDate, latestDate.AddDays(25))).ToList();
             detailedHeartRates = detailedHeartRates.Where(x => x.CreatedDate > latestDate).ToList();
             _healthService.UpsertHeartRates(detailedHeartRates);
             await _logger.LogMessageAsync("DETAILED HEART RATES : Done it");
