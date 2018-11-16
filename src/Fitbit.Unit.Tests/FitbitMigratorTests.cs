@@ -19,8 +19,9 @@ namespace Fitbit.Unit.Tests
         private readonly Mock<ICalendar> _calendar;
         private FitbitImporter _fitbitImporter;
         private readonly DateTime latestDate = new DateTime(2012, 3, 4);
-        
-        private const int SEARCH_DAYS_PREVIOUS = 10;
+
+        //private const int SEARCH_DAYS_PREVIOUS = 10;
+        private const int SEARCH_DAYS_PREVIOUS = 1;
 
         public FitbitMigratorTests()
         {
