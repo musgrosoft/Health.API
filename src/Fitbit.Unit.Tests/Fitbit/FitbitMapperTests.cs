@@ -82,9 +82,9 @@ namespace Fitbit.Unit.Tests.Fitbit
 
             //Then
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.OutOfRangeMinutes == 100 && x.FatBurnMinutes == 101 && x.CardioMinutes == 102 && x.PeakMinutes == 103);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.OutOfRangeMinutes == 200 && x.FatBurnMinutes == 201 && x.CardioMinutes == 202 && x.PeakMinutes == 203);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.OutOfRangeMinutes == 300 && x.FatBurnMinutes == 301 && x.CardioMinutes == 302 && x.PeakMinutes == 303);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.CardioMinutes == 102 && x.PeakMinutes == 103);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.CardioMinutes == 202 && x.PeakMinutes == 203);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.CardioMinutes == 302 && x.PeakMinutes == 303);
         }
 
         [Fact]

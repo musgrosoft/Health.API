@@ -13,7 +13,7 @@ namespace Services.Health
         DateTime GetLatestStepCountDate(DateTime defaultDateTime);
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
         DateTime GetLatestRunDate(DateTime defaultDateTime);
-        DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime);
+       // DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime);
 
         //IList<ActivitySummary> GetAllActivitySummaries();
         //IList<ActivitySummary> GetAllActivitySummariesByWeek();
@@ -48,7 +48,7 @@ namespace Services.Health
         //IList<Run> GetAllRuns();
         //IList<Ergo> GetAllErgos();
 
-        void UpsertHeartRates(List<HeartRate> detailedHeartRates);
+        //void UpsertHeartRates(List<HeartRate> detailedHeartRates);
         
     }
 }

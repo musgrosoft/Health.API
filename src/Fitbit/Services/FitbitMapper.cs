@@ -24,11 +24,8 @@ namespace Fitbit.Services
             return activitiesHearts.Select(x => new HeartRateSummary
             {
                 CreatedDate = x.dateTime,
-                OutOfRangeMinutes = x.value.heartRateZones.First(y => y.name == "Out of Range").minutes,
-                FatBurnMinutes = x.value.heartRateZones.First(y => y.name == "Fat Burn").minutes,
                 CardioMinutes = x.value.heartRateZones.First(y => y.name == "Cardio").minutes,
-                PeakMinutes = x.value.heartRateZones.First(y => y.name == "Peak").minutes,
-                Source = "Fitbit"
+                PeakMinutes = x.value.heartRateZones.First(y => y.name == "Peak").minutes
             });
         }
 
@@ -79,24 +76,5 @@ namespace Fitbit.Services
             return allTheRuns;
         }
 
-        public IEnumerable<HeartRate> MapDataSetToDetailedHeartRates(IEnumerable<Dataset> detailedHeartRates)
-        {
-            var allTheDetailedHeartRates = new List<HeartRate>();
-
-            foreach (var detailedHeartRate in detailedHeartRates)
-            {
-                var detail = new HeartRate
-                {
-                    CreatedDate = new DateTime(detailedHeartRate.theDateTime.Year, detailedHeartRate.theDateTime.Month, detailedHeartRate.theDateTime.Day, detailedHeartRate.time.Hours, detailedHeartRate.time.Minutes, detailedHeartRate.time.Seconds),
-                    Bpm = detailedHeartRate.value,
-                    Source = "Fitbit"
-                };
-
-                allTheDetailedHeartRates.Add(detail);
-            }
-
-
-            return allTheDetailedHeartRates;
-        }
     }
 }

@@ -16,7 +16,7 @@ namespace Repositories
         public virtual DbSet<Run> Runs { get; set; }
         public virtual DbSet<Ergo> Ergos { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
-        public virtual DbSet<HeartRate> HeartRates { get; set; }
+        //public virtual DbSet<HeartRate> HeartRates { get; set; }
 
         public HealthContext(DbContextOptions<HealthContext> options) : base(options)
         {
@@ -25,8 +25,7 @@ namespace Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<HeartRateSummary>().HasKey(c => new { c.CreatedDate, c.Source });
-            modelBuilder.Entity<HeartRate>().HasKey(c => new { c.CreatedDate, c.Source });
+            modelBuilder.Entity<Exercise>().HasKey(c => new { c.CreatedDate, c.Description});
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

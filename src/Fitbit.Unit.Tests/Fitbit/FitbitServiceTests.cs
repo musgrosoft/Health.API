@@ -163,9 +163,9 @@ namespace Fitbit.Unit.Tests.Fitbit
 
             var heartRateSummaries = new List<HeartRateSummary>
             {
-                new HeartRateSummary{CreatedDate = new DateTime(2017,1,1), OutOfRangeMinutes = 1, FatBurnMinutes = 2, CardioMinutes = 3, PeakMinutes = 4},
-                new HeartRateSummary{CreatedDate = new DateTime(2017,1,2), OutOfRangeMinutes = 5, FatBurnMinutes = 6, CardioMinutes = 7, PeakMinutes = 8},
-                new HeartRateSummary{CreatedDate = new DateTime(2017,1,3), OutOfRangeMinutes = 9, FatBurnMinutes = 10, CardioMinutes = 11, PeakMinutes = 12}
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,1), CardioMinutes = 3, PeakMinutes = 4},
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,2), CardioMinutes = 7, PeakMinutes = 8},
+                new HeartRateSummary{CreatedDate = new DateTime(2017,1,3), CardioMinutes = 11, PeakMinutes = 12}
             };
 
             _fitbitMapper.Setup(x => x.MapActivitiesHeartsToHeartRateSummaries(activitiesHearts))
@@ -176,9 +176,9 @@ namespace Fitbit.Unit.Tests.Fitbit
 
             //Then
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.OutOfRangeMinutes == 1 && x.FatBurnMinutes == 2 && x.CardioMinutes == 3 && x.PeakMinutes == 4);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.OutOfRangeMinutes == 5 && x.FatBurnMinutes == 6 && x.CardioMinutes == 7 && x.PeakMinutes == 8);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.OutOfRangeMinutes == 9 && x.FatBurnMinutes == 10 && x.CardioMinutes == 11 && x.PeakMinutes == 12);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.CardioMinutes == 3 && x.PeakMinutes == 4);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.CardioMinutes == 7 && x.PeakMinutes == 8);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.CardioMinutes == 11 && x.PeakMinutes == 12);
 
 
         }

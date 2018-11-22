@@ -11,12 +11,9 @@ namespace Fitbit.Services
         Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<HeartRateSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate);
-        Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate);
-
         Task Subscribe();
         Task SetTokens(string code);
-        //Task<IEnumerable<Run>> GetRuns(DateTime fromDate, DateTime toDate);
-//        Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime dateTime);
+        
         
     }
 }

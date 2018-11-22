@@ -25,14 +25,7 @@ namespace Fitbit.Services
             _fitbitAuthenticator = fitbitAuthenticator;
             _fitbitMapper = fitbitMapper;
         }
-
-        //public async Task<IEnumerable<Run>> GetRuns(DateTime fromDate, DateTime toDate)
-        //{
-        //    var fitbitDailyActivities = await _fitbitClientQueryAdapter.GetFitbitDailyActivities(fromDate, toDate);
-
-        //    return _fitbitMapper.MapFitbitDailyActivitiesToRuns(fitbitDailyActivities);
-        //}
-
+        
         public async Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
         {
             var fitbitDailyActivities = await _fitbitClientQueryAdapter.GetFitbitDailyActivities(fromDate, toDate);
@@ -59,15 +52,6 @@ namespace Fitbit.Services
             var heartActivies = await _fitbitClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate);
 
             return _fitbitMapper.MapActivitiesHeartsToHeartRateSummaries(heartActivies);
-        }
-
-        public async Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate)
-        {
-
-            var detailedHeartRates = await _fitbitClientQueryAdapter.GetDetailedHeartRates(fromDate, toDate);
-            //            var detailedHeartRates = await _fitbitClient.GetDetailedHeartRates(dateTime);
-
-            return _fitbitMapper.MapDataSetToDetailedHeartRates(detailedHeartRates);
         }
 
         public async Task Subscribe()

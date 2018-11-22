@@ -54,10 +54,10 @@ namespace Repositories.Health
             return _healthContext.Runs.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        public DateTime? GetLatestDetailedHeartRatesDate(string source)
-        {
-            return _healthContext.HeartRates.Where(x=>x.Source == source).OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
-        }
+        //public DateTime? GetLatestDetailedHeartRatesDate(string source)
+        //{
+        //    return _healthContext.HeartRates.Where(x => x.Source == source).OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
+        //}
 
         public void Upsert(Weight weight)
         {
@@ -195,13 +195,10 @@ namespace Repositories.Health
         public void Upsert(HeartRateSummary heartSummary)
         {
 
-            var existingHeartSummary = _healthContext.HeartRateSummaries.Find(heartSummary.CreatedDate, heartSummary.Source);
+            var existingHeartSummary = _healthContext.HeartRateSummaries.Find(heartSummary.CreatedDate);
 
             if (existingHeartSummary != null)
             {
-
-                existingHeartSummary.OutOfRangeMinutes = heartSummary.OutOfRangeMinutes;
-                existingHeartSummary.FatBurnMinutes = heartSummary.FatBurnMinutes;
                 existingHeartSummary.CardioMinutes = heartSummary.CardioMinutes;
                 existingHeartSummary.PeakMinutes = heartSummary.PeakMinutes;
 
@@ -258,37 +255,37 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Upsert(HeartRate detailedHeartRate)
-        {
-            var existingHeartRate = _healthContext.HeartRates.Find(detailedHeartRate.CreatedDate, detailedHeartRate.Source);
+        //public void Upsert(HeartRate detailedHeartRate)
+        //{
+        //    var existingHeartRate = _healthContext.HeartRates.Find(detailedHeartRate.CreatedDate, detailedHeartRate.Source);
 
-            if (existingHeartRate != null)
-            {
-               // detailedHeartRate.Bpm = detailedHeartRate.Bpm;
-            }
-            else
-            {
-                _healthContext.Add(detailedHeartRate);
-                _healthContext.SaveChanges();
-            }
-        }
+        //    if (existingHeartRate != null)
+        //    {
+        //       // detailedHeartRate.Bpm = detailedHeartRate.Bpm;
+        //    }
+        //    else
+        //    {
+        //        _healthContext.Add(detailedHeartRate);
+        //        _healthContext.SaveChanges();
+        //    }
+        //}
 
-        public void UpsertMany(IEnumerable<HeartRate> detailedHeartRates)
-        {
-            for (int i = 0; i < (int)Math.Ceiling((double)detailedHeartRates.Count() / 10000); i++)
-            {
-                var someHeartRates = detailedHeartRates.Skip(i).Take(10000 * (i + 1));
+        //public void UpsertMany(IEnumerable<HeartRate> detailedHeartRates)
+        //{
+        //    for (int i = 0; i < (int)Math.Ceiling((double)detailedHeartRates.Count() / 10000); i++)
+        //    {
+        //        var someHeartRates = detailedHeartRates.Skip(i).Take(10000 * (i + 1));
 
-                foreach (var detailedHeartRate in someHeartRates)
-                {
-                    _healthContext.Add(detailedHeartRate);
-                }
+        //        foreach (var detailedHeartRate in someHeartRates)
+        //        {
+        //            _healthContext.Add(detailedHeartRate);
+        //        }
 
-                _healthContext.SaveChanges();
-            }
+        //        _healthContext.SaveChanges();
+        //    }
 
 
 
-        }
+        //}
     }
 }

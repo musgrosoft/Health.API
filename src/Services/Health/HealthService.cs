@@ -198,11 +198,11 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
-        public DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime)
-        {
-            var latestDate = _healthRepository.GetLatestDetailedHeartRatesDate("Fitbit");
-            return latestDate ?? defaultDateTime;
-        }
+        //public DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime)
+        //{
+        //    var latestDate = _healthRepository.GetLatestDetailedHeartRatesDate("Fitbit");
+        //    return latestDate ?? defaultDateTime;
+        //}
 
 
         public void UpsertWeights(IEnumerable<Weight> weights)
@@ -304,17 +304,17 @@ namespace Services.Health
             }
         }
 
-        public void UpsertHeartRates(List<HeartRate> detailedHeartRates)
-        {
-            _logger.LogMessageAsync($"detailedHeartRates : Saving {detailedHeartRates.Count()} detailedHeartRates");
+        //public void UpsertHeartRates(List<HeartRate> detailedHeartRates)
+        //{
+        //    _logger.LogMessageAsync($"detailedHeartRates : Saving {detailedHeartRates.Count()} detailedHeartRates");
 
-            _healthRepository.UpsertMany(detailedHeartRates);
+        //    _healthRepository.UpsertMany(detailedHeartRates);
 
-            //foreach (var heartRate in detailedHeartRates)
-            //{
-            //    _healthRepository.Upsert(heartRate);
-            //}
-        }
+        //    //foreach (var heartRate in detailedHeartRates)
+        //    //{
+        //    //    _healthRepository.Upsert(heartRate);
+        //    //}
+        //}
 
         public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
         {

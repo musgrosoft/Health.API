@@ -43,19 +43,19 @@ namespace HealthAPI.Acceptance.Tests
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime dateTime)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime dateTime)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public Task<IEnumerable<Run>> GetRuns(DateTime fromDate, DateTime toDate)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

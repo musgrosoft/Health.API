@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.Health.Models
 {
-    public class HeartRate
+    public class Exercise
     {
         public DateTime CreatedDate { get; set; }
-        [MaxLength(20)]
-        public string Source { get; set; }
-        public int Bpm { get; set; }
+        public string Description { get; set; }
+        public TimeSpan Time { get; set; }
+        public Double Metres { get; set; }
+
     }
 }

@@ -32,8 +32,6 @@ namespace HealthAPI.Hangfire
                 //await _fitbitMigrator.MigrateRuns();
 
 
-                await _fitbitImporter.MigrateDetailedHeartRates();
-
 
             }
             catch (Exception ex)

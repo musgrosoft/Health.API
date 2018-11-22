@@ -306,9 +306,9 @@ namespace Services.Tests.MyHealth
             //Given
             var newHeartSummaries = new List<HeartRateSummary>
             {
-                new HeartRateSummary {CreatedDate = new DateTime(2016,1,1), FatBurnMinutes = 2016},
-                new HeartRateSummary {CreatedDate = new DateTime(2017,1,1), FatBurnMinutes = 2017},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), FatBurnMinutes = 2018}
+                new HeartRateSummary {CreatedDate = new DateTime(2016,1,1), CardioMinutes = 2016},
+                new HeartRateSummary {CreatedDate = new DateTime(2017,1,1), CardioMinutes = 2017},
+                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), CardioMinutes = 2018}
             };
 
             //When

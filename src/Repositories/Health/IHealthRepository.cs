@@ -13,7 +13,7 @@ namespace Repositories.Health
         DateTime? GetLatestRestingHeartRateDate();
         DateTime? GetLatestHeartSummaryDate();
         DateTime? GetLatestRunDate();
-        DateTime? GetLatestDetailedHeartRatesDate(string source);
+        //DateTime? GetLatestDetailedHeartRatesDate(string source);
 
 
         void Upsert(Weight weight);
@@ -26,7 +26,7 @@ namespace Repositories.Health
         void Upsert(AlcoholIntake alcoholIntake);
         void Upsert(Ergo ergo);
 
-        void Upsert(HeartRate detailedHeartRate);
-        void UpsertMany(IEnumerable<HeartRate> detailedHeartRates);
+        //void Upsert(HeartRate detailedHeartRate);
+        //void UpsertMany(IEnumerable<HeartRate> detailedHeartRates);
     }
 }
