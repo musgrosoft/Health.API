@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql Scripts", "Sql Scripts"
 		src\Sql Scripts\vw_DailyActiveMinutes.sql = src\Sql Scripts\vw_DailyActiveMinutes.sql
 		src\Sql Scripts\vw_DailyAlcoholIntakes.sql = src\Sql Scripts\vw_DailyAlcoholIntakes.sql
 		src\Sql Scripts\vw_DailyBloodPressures.sql = src\Sql Scripts\vw_DailyBloodPressures.sql
+		src\Sql Scripts\vw_DailyCardio.sql = src\Sql Scripts\vw_DailyCardio.sql
+		src\Sql Scripts\vw_DailyExercises.sql = src\Sql Scripts\vw_DailyExercises.sql
 		src\Sql Scripts\vw_DailyHeartRateSummaries.sql = src\Sql Scripts\vw_DailyHeartRateSummaries.sql
 		src\Sql Scripts\vw_DailyStepCounts.sql = src\Sql Scripts\vw_DailyStepCounts.sql
 		src\Sql Scripts\vw_DailyWeights.sql = src\Sql Scripts\vw_DailyWeights.sql
@@ -35,7 +37,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql Scripts", "Sql Scripts"
 		src\Sql Scripts\vw_MonthlySteps.sql = src\Sql Scripts\vw_MonthlySteps.sql
 		src\Sql Scripts\vw_WeeklyActiveMinutes.sql = src\Sql Scripts\vw_WeeklyActiveMinutes.sql
 		src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql = src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql
+		src\Sql Scripts\vw_WeeklyCardio.sql = src\Sql Scripts\vw_WeeklyCardio.sql
+		src\Sql Scripts\vw_WeeklyErgos.sql = src\Sql Scripts\vw_WeeklyErgos.sql
+		src\Sql Scripts\vw_WeeklyExercises.sql = src\Sql Scripts\vw_WeeklyExercises.sql
 		src\Sql Scripts\vw_WeeklyHeartRateSummaries.sql = src\Sql Scripts\vw_WeeklyHeartRateSummaries.sql
+		src\Sql Scripts\vw_WeeklyRuns.sql = src\Sql Scripts\vw_WeeklyRuns.sql
 		src\Sql Scripts\vw_WeeklyStepCounts.sql = src\Sql Scripts\vw_WeeklyStepCounts.sql
 	EndProjectSection
 EndProject
