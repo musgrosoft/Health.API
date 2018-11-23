@@ -13,11 +13,11 @@ namespace Google
             _healthService = healthService;
         }
 
-        public void MigrateRuns()
-        {
-            var runs = _googleClient.GetRuns();
-            _healthService.UpsertRuns(runs);
-        }
+        //public void MigrateRuns()
+        //{
+        //    var runs = _googleClient.GetRuns();
+        //    _healthService.UpsertRuns(runs);
+        //}
 
         public void MigrateAlcoholIntakes()
         {
@@ -25,10 +25,17 @@ namespace Google
             _healthService.UpsertAlcoholIntakes(alcoholIntakes);
         }
 
-        public void MigrateErgos()
+        //public void MigrateErgos()
+        //{
+        //    var rows = _googleClient.GetErgos();
+        //    _healthService.UpsertErgos(rows);
+        //}
+
+        public void ImportExercises()
         {
-            var rows = _googleClient.GetErgos();
-            _healthService.UpsertErgos(rows);
+            var rows = _googleClient.GetExercises();
+            _healthService.UpsertExercises(rows);
+
         }
 
 

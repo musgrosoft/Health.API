@@ -192,11 +192,11 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
         
-        public DateTime GetLatestRunDate(DateTime defaultDateTime)
-        {
-            var latestDate = _healthRepository.GetLatestRunDate();
-            return latestDate ?? defaultDateTime;
-        }
+        //public DateTime GetLatestRunDate(DateTime defaultDateTime)
+        //{
+        //    var latestDate = _healthRepository.GetLatestRunDate();
+        //    return latestDate ?? defaultDateTime;
+        //}
 
         //public DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime)
         //{
@@ -284,25 +284,25 @@ namespace Services.Health
         //    }
         //}
 
-        public void UpsertRuns(IEnumerable<Run> runs)
-        {
-            _logger.LogMessageAsync($"RUNS : Saving {runs.Count()} runs");
+        //public void UpsertRuns(IEnumerable<Run> runs)
+        //{
+        //    _logger.LogMessageAsync($"RUNS : Saving {runs.Count()} runs");
 
-            foreach (var run in runs)
-            {
-                _healthRepository.Upsert(run);
-            }
-        }
+        //    foreach (var run in runs)
+        //    {
+        //        _healthRepository.Upsert(run);
+        //    }
+        //}
 
-        public void UpsertErgos(List<Ergo> rows)
-        {
-            _logger.LogMessageAsync($"ROWS : Saving {rows.Count()} rows");
+        //public void UpsertErgos(List<Ergo> rows)
+        //{
+        //    _logger.LogMessageAsync($"ROWS : Saving {rows.Count()} rows");
 
-            foreach (var row in rows)
-            {
-                _healthRepository.Upsert(row);
-            }
-        }
+        //    foreach (var row in rows)
+        //    {
+        //        _healthRepository.Upsert(row);
+        //    }
+        //}
 
         //public void UpsertHeartRates(List<HeartRate> detailedHeartRates)
         //{
@@ -327,6 +327,14 @@ namespace Services.Health
             }
         }
 
+        public void UpsertExercises(List<Exercise> exercises)
+        {
+            _logger.LogMessageAsync($"EXERCISES : Saving {exercises.Count} exercises");
 
+            foreach (var exercise in exercises)
+            {
+                _healthRepository.Upsert(exercise);
+            }
+        }
     }
 }

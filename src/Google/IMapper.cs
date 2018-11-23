@@ -6,8 +6,9 @@ namespace Google
 {
     public interface IMapper
     {
-        Run MapRowToRun(IList<Object> row);
-        Ergo MapRowToErgo(IList<Object> row);
+        //Run MapRowToRun(IList<Object> row);
+        //Ergo MapRowToErgo(IList<Object> row);
         AlcoholIntake MapRowToAlcoholIntake(IList<Object> row);
+        Exercise MapRowToExerise(IList<Object> row);
     }
 }

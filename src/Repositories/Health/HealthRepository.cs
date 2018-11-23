@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Repositories.Health.Models;
 
@@ -49,16 +48,11 @@ namespace Repositories.Health
             return _healthContext.HeartRateSummaries.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        public DateTime? GetLatestRunDate()
+        public DateTime? GetLatestExerciseDate()
         {
-            return _healthContext.Runs.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
+            return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
-
-        //public DateTime? GetLatestDetailedHeartRatesDate(string source)
-        //{
-        //    return _healthContext.HeartRates.Where(x => x.Source == source).OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
-        //}
-
+        
         public void Upsert(Weight weight)
         {
 
@@ -97,6 +91,23 @@ namespace Repositories.Health
                 // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                 existingAlcoholIntake.Units = alcoholIntake.Units;
                 existingAlcoholIntake.Target = alcoholIntake.Target;
+            }
+
+            _healthContext.SaveChanges();
+        }
+
+        public void Upsert(Exercise exercise)
+        {
+            var existingExercise = _healthContext.Exercises.Find(exercise.CreatedDate, exercise.Description);
+
+            if (existingExercise == null)
+            {
+                _healthContext.Add(exercise);
+            }
+            else
+            {
+                existingExercise.Metres = exercise.Metres;
+                existingExercise.Time = exercise.Time;
             }
 
             _healthContext.SaveChanges();
@@ -217,75 +228,7 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Upsert(Run run)
-        {
-            var existingRun = _healthContext.Runs.Find(run.CreatedDate);
-
-            if (existingRun != null)
-            {
-
-                existingRun.Metres = run.Metres;
-                existingRun.Time = run.Time;
-            }
-            else
-            {
-                //  _logger.Log("HEART SUMMARY : insert thing");
-                _healthContext.Add(run);
-            }
-
-            _healthContext.SaveChanges();
-        }
-
-        public void Upsert(Ergo ergo)
-        {
-            var existingErgo = _healthContext.Ergos.Find(ergo.CreatedDate);
-
-            if (existingErgo == null)
-            {
-                //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                _healthContext.Add(ergo);
-            }
-            else
-            {
-                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                existingErgo.Metres = ergo.Metres;
-                existingErgo.Time = ergo.Time;
-            }
-
-            _healthContext.SaveChanges();
-        }
-
-        //public void Upsert(HeartRate detailedHeartRate)
-        //{
-        //    var existingHeartRate = _healthContext.HeartRates.Find(detailedHeartRate.CreatedDate, detailedHeartRate.Source);
-
-        //    if (existingHeartRate != null)
-        //    {
-        //       // detailedHeartRate.Bpm = detailedHeartRate.Bpm;
-        //    }
-        //    else
-        //    {
-        //        _healthContext.Add(detailedHeartRate);
-        //        _healthContext.SaveChanges();
-        //    }
-        //}
-
-        //public void UpsertMany(IEnumerable<HeartRate> detailedHeartRates)
-        //{
-        //    for (int i = 0; i < (int)Math.Ceiling((double)detailedHeartRates.Count() / 10000); i++)
-        //    {
-        //        var someHeartRates = detailedHeartRates.Skip(i).Take(10000 * (i + 1));
-
-        //        foreach (var detailedHeartRate in someHeartRates)
-        //        {
-        //            _healthContext.Add(detailedHeartRate);
-        //        }
-
-        //        _healthContext.SaveChanges();
-        //    }
 
 
-
-        //}
     }
 }

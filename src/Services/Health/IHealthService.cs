@@ -12,7 +12,7 @@ namespace Services.Health
         DateTime GetLatestRestingHeartRateDate(DateTime defaultDateTime);
         DateTime GetLatestStepCountDate(DateTime defaultDateTime);
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
-        DateTime GetLatestRunDate(DateTime defaultDateTime);
+        //DateTime GetLatestRunDate(DateTime defaultDateTime);
        // DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime);
 
         //IList<ActivitySummary> GetAllActivitySummaries();
@@ -26,9 +26,10 @@ namespace Services.Health
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
         // void UpsertAlcoholIntakes();
-        void UpsertRuns(IEnumerable<Run> runs);
+        //void UpsertRuns(IEnumerable<Run> runs);
         void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes);
 
+        void UpsertExercises(List<Exercise> exercises);
 
         //IList<Weight> GetAllWeights();
         //IList<BloodPressure> GetAllBloodPressures();
@@ -44,11 +45,12 @@ namespace Services.Health
         //IList<HeartRateSummary> GetAllHeartRateSummariesByMonth();
 
 
-        void UpsertErgos(List<Ergo> rows);
+        //void UpsertErgos(List<Ergo> rows);
         //IList<Run> GetAllRuns();
         //IList<Ergo> GetAllErgos();
 
         //void UpsertHeartRates(List<HeartRate> detailedHeartRates);
+
         
     }
 }

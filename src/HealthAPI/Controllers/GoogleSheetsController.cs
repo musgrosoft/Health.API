@@ -18,29 +18,29 @@ namespace HealthAPI.Controllers
             _googleImporter = googleImporter;
         }
         
-        [HttpGet]
-        [Route("Notify/Runs")]
-        //public async Task<IActionResult> Migrate()
-        public IActionResult MigrateRuns()
-        {
-            _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Runs");
+        //[HttpGet]
+        //[Route("Notify/Runs")]
+        ////public async Task<IActionResult> Migrate()
+        //public IActionResult MigrateRuns()
+        //{
+        //    _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Runs");
 
-            _googleImporter.MigrateRuns();
+        //    _googleImporter.MigrateRuns();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
-        [HttpGet]
-        [Route("Notify/Ergos")]
-        //public async Task<IActionResult> Migrate()
-        public IActionResult MigrateErgos()
-        {
-            _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Ergos");
+        //[HttpGet]
+        //[Route("Notify/Ergos")]
+        ////public async Task<IActionResult> Migrate()
+        //public IActionResult MigrateErgos()
+        //{
+        //    _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Ergos");
 
-            _googleImporter.MigrateErgos();
+        //    _googleImporter.MigrateErgos();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         [HttpGet]
         [Route("Notify/AlcoholIntakes")]
@@ -50,6 +50,18 @@ namespace HealthAPI.Controllers
             _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Units");
 
             _googleImporter.MigrateAlcoholIntakes();
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("Notify/Exercises")]
+        //public async Task<IActionResult> Migrate()
+        public IActionResult ImportExercises()
+        {
+            _logger.LogMessageAsync("GOOGLE SHEETS : Import Exercises");
+
+            _googleImporter.ImportExercises();
 
             return Ok();
         }

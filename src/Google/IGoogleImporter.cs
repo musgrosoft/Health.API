@@ -2,8 +2,9 @@
 {
     public interface IGoogleImporter
     {
-        void MigrateRuns();
+        //void MigrateRuns();
         void MigrateAlcoholIntakes();
-        void MigrateErgos();
+        //void MigrateErgos();
+        void ImportExercises();
     }
 }

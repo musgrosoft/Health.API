@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Repositories.Health.Models;
 
 namespace Repositories.Health
@@ -12,9 +11,7 @@ namespace Repositories.Health
         DateTime? GetLatestActivitySummaryDate();
         DateTime? GetLatestRestingHeartRateDate();
         DateTime? GetLatestHeartSummaryDate();
-        DateTime? GetLatestRunDate();
-        //DateTime? GetLatestDetailedHeartRatesDate(string source);
-
+        
 
         void Upsert(Weight weight);
         void Upsert(BloodPressure bloodPressure);
@@ -22,11 +19,8 @@ namespace Repositories.Health
         void Upsert(ActivitySummary activitySummary);
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(HeartRateSummary heartSummary);
-        void Upsert(Run run);
         void Upsert(AlcoholIntake alcoholIntake);
-        void Upsert(Ergo ergo);
+        void Upsert(Exercise exercise);
 
-        //void Upsert(HeartRate detailedHeartRate);
-        //void UpsertMany(IEnumerable<HeartRate> detailedHeartRates);
     }
 }

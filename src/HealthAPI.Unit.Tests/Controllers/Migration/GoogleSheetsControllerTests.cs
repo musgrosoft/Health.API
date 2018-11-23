@@ -21,25 +21,25 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             _googleSheetsController = new GoogleSheetsController(_logger.Object,_googleMigrator.Object);
         }
 
-        [Fact]
-        public void ShouldMigrateRuns()
-        {
-            _googleSheetsController.MigrateRuns();
+        //[Fact]
+        //public void ShouldMigrateRuns()
+        //{
+        //    _googleSheetsController.MigrateRuns();
 
-            _googleMigrator.Verify(x => x.MigrateRuns(), Times.Once);
-            _logger.Verify(x => x.LogMessageAsync("GOOGLE SHEETS : Migrate Runs"));
+        //    _googleMigrator.Verify(x => x.MigrateRuns(), Times.Once);
+        //    _logger.Verify(x => x.LogMessageAsync("GOOGLE SHEETS : Migrate Runs"));
 
-        }
+        //}
 
-        [Fact]
-        public void ShouldMigrateErgos()
-        {
-            _googleSheetsController.MigrateErgos();
+        //[Fact]
+        //public void ShouldMigrateErgos()
+        //{
+        //    _googleSheetsController.MigrateErgos();
 
-            _googleMigrator.Verify(x => x.MigrateErgos(), Times.Once);
-            _logger.Verify(x => x.LogMessageAsync("GOOGLE SHEETS : Migrate Ergos"));
+        //    _googleMigrator.Verify(x => x.MigrateErgos(), Times.Once);
+        //    _logger.Verify(x => x.LogMessageAsync("GOOGLE SHEETS : Migrate Ergos"));
 
-        }
+        //}
 
         [Fact]
         public void ShouldMigrateUnits()

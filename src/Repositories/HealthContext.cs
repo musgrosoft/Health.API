@@ -13,11 +13,9 @@ namespace Repositories
         public virtual DbSet<RestingHeartRate> RestingHeartRates { get; set; }
         public virtual DbSet<AlcoholIntake> AlcoholIntakes { get; set; }
         public virtual DbSet<Weight> Weights { get; set; }
-        public virtual DbSet<Run> Runs { get; set; }
-        public virtual DbSet<Ergo> Ergos { get; set; }
+        public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
-        //public virtual DbSet<HeartRate> HeartRates { get; set; }
-
+        
         public HealthContext(DbContextOptions<HealthContext> options) : base(options)
         {
 

@@ -24,15 +24,20 @@ namespace Google
             return _sheetMapper.Get<AlcoholIntake>(_config.AlcoholSpreadsheetId, "Sheet1!B2:F", _mapper.MapRowToAlcoholIntake);
         }
 
-        public List<Ergo> GetErgos()
+        //public List<Ergo> GetErgos()
+        //{
+        //    return _sheetMapper.Get<Ergo>(_config.RowSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToErgo);
+        //}
+
+        public List<Exercise> GetExercises()
         {
-            return _sheetMapper.Get<Ergo>(_config.RowSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToErgo);
+            return _sheetMapper.Get<Exercise>(_config.ExerciseSpreadsheetId, "Sheet1!A2:D", _mapper.MapRowToExerise);
         }
 
-        public List<Run> GetRuns()
-        {
-            return _sheetMapper.Get<Run>(_config.RunSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToRun);
-        }
+        //public List<Run> GetRuns()
+        //{
+        //    return _sheetMapper.Get<Run>(_config.RunSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToRun);
+        //}
 
     }
 }

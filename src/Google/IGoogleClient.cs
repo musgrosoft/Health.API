@@ -5,8 +5,9 @@ namespace Google
 {
     public interface IGoogleClient
     {
-        List<Run> GetRuns();
+        //List<Run> GetRuns();
         List<AlcoholIntake> GetAlcoholIntakes();
-        List<Ergo> GetErgos();
+        //List<Ergo> GetErgos();
+        List<Exercise> GetExercises();
     }
 }

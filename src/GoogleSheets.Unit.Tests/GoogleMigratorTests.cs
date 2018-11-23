@@ -21,37 +21,37 @@ namespace GoogleSheets.Unit.Tests
             _googleImporter = new GoogleImporter(_googleClient.Object, _healthService.Object);
         }
 
-        [Fact]
-        public void ShouldMigrateRuns()
-        {
-            //given
-            var someRuns = new List<Run>
-            {
-                new Run{CreatedDate = new DateTime(2018,1,1), Time = new TimeSpan(1,2,3), Metres = 123},
-                new Run{CreatedDate = new DateTime(2018,1,2), Time = new TimeSpan(1,2,4), Metres = 124}
-            };
-            _googleClient.Setup(x => x.GetRuns()).Returns(someRuns);
+        //[Fact]
+        //public void ShouldMigrateRuns()
+        //{
+        //    //given
+        //    var someRuns = new List<Run>
+        //    {
+        //        new Run{CreatedDate = new DateTime(2018,1,1), Time = new TimeSpan(1,2,3), Metres = 123},
+        //        new Run{CreatedDate = new DateTime(2018,1,2), Time = new TimeSpan(1,2,4), Metres = 124}
+        //    };
+        //    _googleClient.Setup(x => x.GetRuns()).Returns(someRuns);
 
-            _googleImporter.MigrateRuns();
+        //    _googleImporter.MigrateRuns();
 
-            _healthService.Verify(x=>x.UpsertRuns(someRuns), Times.Once);
-        }
+        //    _healthService.Verify(x=>x.UpsertRuns(someRuns), Times.Once);
+        //}
 
-        [Fact]
-        public void ShouldMigrateErgos()
-        {
-            //given
-            var someErgos = new List<Ergo>
-            {
-                new Ergo{CreatedDate = new DateTime(2018,1,1), Time = new TimeSpan(1,2,3), Metres = 123},
-                new Ergo{CreatedDate = new DateTime(2018,1,2), Time = new TimeSpan(1,2,4), Metres = 124}
-            };
-            _googleClient.Setup(x => x.GetErgos()).Returns(someErgos);
+        //[Fact]
+        //public void ShouldMigrateErgos()
+        //{
+        //    //given
+        //    var someErgos = new List<Ergo>
+        //    {
+        //        new Ergo{CreatedDate = new DateTime(2018,1,1), Time = new TimeSpan(1,2,3), Metres = 123},
+        //        new Ergo{CreatedDate = new DateTime(2018,1,2), Time = new TimeSpan(1,2,4), Metres = 124}
+        //    };
+        //    _googleClient.Setup(x => x.GetErgos()).Returns(someErgos);
 
-            _googleImporter.MigrateErgos();
+        //    _googleImporter.MigrateErgos();
 
-            _healthService.Verify(x => x.UpsertErgos(someErgos), Times.Once);
-        }
+        //    _healthService.Verify(x => x.UpsertErgos(someErgos), Times.Once);
+        //}
 
         //[Fact]
         //public void ShouldMigrateAlcoholIntakes()

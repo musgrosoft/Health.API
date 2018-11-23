@@ -84,29 +84,7 @@ namespace Repository.Unit.Tests
             Assert.Contains(restingHeartRate, restingHeartRates);
         }
 
-        [Fact]
-        public void ShouldInsertRun()
-        {
-            var run = new Run { Metres = 123 };
 
-            _healthRepository.Upsert(run);
-
-            var runs = _fakeLocalContext.Runs;
-
-            Assert.Contains(run, runs);
-        }
-
-        [Fact]
-        public void ShouldInsertErgo()
-        {
-            var ergo = new Ergo() { Metres = 123 };
-
-            _healthRepository.Upsert(ergo);
-
-            var ergos = _fakeLocalContext.Ergos;
-
-            Assert.Contains(ergo, ergos);
-        }
 
         [Fact]
         public void ShouldInsertStepCount()
@@ -234,22 +212,22 @@ namespace Repository.Unit.Tests
             Assert.Equal(thirdRestingHeartRate.CreatedDate, latestRestingHeartRateDate);
         }
 
-        [Fact]
-        public void ShouldGetLatestRunDate()
-        {
-            var firstRun = new Run { CreatedDate = new DateTime(2018, 5, 1) };
-            var secondRun = new Run { CreatedDate = new DateTime(2018, 5, 2) };
-            var thirdRun = new Run { CreatedDate = new DateTime(2018, 5, 3) };
+        //[Fact]
+        //public void ShouldGetLatestRunDate()
+        //{
+        //    var firstRun = new Run { CreatedDate = new DateTime(2018, 5, 1) };
+        //    var secondRun = new Run { CreatedDate = new DateTime(2018, 5, 2) };
+        //    var thirdRun = new Run { CreatedDate = new DateTime(2018, 5, 3) };
 
-            _fakeLocalContext.Runs.Add(firstRun);
-            _fakeLocalContext.Runs.Add(secondRun);
-            _fakeLocalContext.Runs.Add(thirdRun);
-            _fakeLocalContext.SaveChanges();
+        //    _fakeLocalContext.Runs.Add(firstRun);
+        //    _fakeLocalContext.Runs.Add(secondRun);
+        //    _fakeLocalContext.Runs.Add(thirdRun);
+        //    _fakeLocalContext.SaveChanges();
 
-            var latestRunDate = _healthRepository.GetLatestRunDate();
+        //    var latestRunDate = _healthRepository.GetLatestRunDate();
 
-            Assert.Equal(thirdRun.CreatedDate, latestRunDate);
-        }
+        //    Assert.Equal(thirdRun.CreatedDate, latestRunDate);
+        //}
 
         [Fact]
         public void ShouldGetLatestStepCountDate()
@@ -331,36 +309,36 @@ namespace Repository.Unit.Tests
             Assert.Equal(2, existingStepCount.Count);
         }
 
-        [Fact]
-        public void ShouldUpdateRun()
-        {
-            var existingRun = new Run{ CreatedDate = new DateTime(2017, 1, 1), Metres = 1234, Time = new TimeSpan(1,2,3)};
-            _fakeLocalContext.Runs.Add(existingRun);
-            _fakeLocalContext.SaveChanges();
+        //[Fact]
+        //public void ShouldUpdateRun()
+        //{
+        //    var existingRun = new Run{ CreatedDate = new DateTime(2017, 1, 1), Metres = 1234, Time = new TimeSpan(1,2,3)};
+        //    _fakeLocalContext.Runs.Add(existingRun);
+        //    _fakeLocalContext.SaveChanges();
 
-            var newRun = new Run { CreatedDate = new DateTime(2017, 1, 1), Metres = 2222, Time = new TimeSpan(2, 3, 4) };
+        //    var newRun = new Run { CreatedDate = new DateTime(2017, 1, 1), Metres = 2222, Time = new TimeSpan(2, 3, 4) };
 
-            _healthRepository.Upsert(newRun);
+        //    _healthRepository.Upsert(newRun);
 
-            Assert.Equal(2222, existingRun.Metres);
-            Assert.Equal(new TimeSpan(2, 3, 4), existingRun.Time);
+        //    Assert.Equal(2222, existingRun.Metres);
+        //    Assert.Equal(new TimeSpan(2, 3, 4), existingRun.Time);
 
-        }
+        //}
 
-        [Fact]
-        public void ShouldUpdateErgo()
-        {
-            var existingErgo = new Ergo{ CreatedDate = new DateTime(2017, 1, 1), Metres = 1234, Time = new TimeSpan(1, 2, 3) };
-            _fakeLocalContext.Ergos.Add(existingErgo);
-            _fakeLocalContext.SaveChanges();
+        //[Fact]
+        //public void ShouldUpdateErgo()
+        //{
+        //    var existingErgo = new Ergo{ CreatedDate = new DateTime(2017, 1, 1), Metres = 1234, Time = new TimeSpan(1, 2, 3) };
+        //    _fakeLocalContext.Ergos.Add(existingErgo);
+        //    _fakeLocalContext.SaveChanges();
 
-            var newErgo = new Ergo { CreatedDate = new DateTime(2017, 1, 1), Metres = 2222, Time = new TimeSpan(2, 3, 4) };
+        //    var newErgo = new Ergo { CreatedDate = new DateTime(2017, 1, 1), Metres = 2222, Time = new TimeSpan(2, 3, 4) };
 
-            _healthRepository.Upsert(newErgo);
+        //    _healthRepository.Upsert(newErgo);
 
-            Assert.Equal(2222, existingErgo.Metres);
-            Assert.Equal(new TimeSpan(2, 3, 4), existingErgo.Time);
-        }
+        //    Assert.Equal(2222, existingErgo.Metres);
+        //    Assert.Equal(new TimeSpan(2, 3, 4), existingErgo.Time);
+        //}
 
         [Fact]
         public void ShouldUpdateAlcoholIntake()
