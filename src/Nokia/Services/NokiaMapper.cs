@@ -24,8 +24,11 @@ namespace Nokia.Services
                 CreatedDate = x.date.ToDateFromUnixTime(),
                 Kg = x.measures.First(w => w.type == WeightKgMeasureTypeId).value * Math.Pow(10, x.measures.First(w => w.type == WeightKgMeasureTypeId).unit),
 
-                //todo set if available
-                // FatRatioPercentage = (Decimal)(weightMeasure.measures.FirstOrDefault(x => x.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, weightMeasure.measures.FirstOrDefault(x => x.type == FatRatioPercentageMeasureTypeId).unit)),
+                //set if available
+                FatRatioPercentage =
+                    x.measures.FirstOrDefault(w => w.type == FatRatioPercentageMeasureTypeId) == null ?
+                    (double?)(x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).unit)) :
+                    null
             });
         }
 
