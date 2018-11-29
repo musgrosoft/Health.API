@@ -26,9 +26,9 @@ namespace Nokia.Services
 
                 //set if available
                 FatRatioPercentage =
-                    x.measures.FirstOrDefault(w => w.type == FatRatioPercentageMeasureTypeId) == null ?
-                    (double?)(x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).unit)) :
-                    null
+                    x.measures.FirstOrDefault(w => w.type == FatRatioPercentageMeasureTypeId) == null ? 
+                    null : 
+                    (double?)(x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).unit))
             });
         }
 
