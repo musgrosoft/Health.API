@@ -38,24 +38,22 @@ namespace Services.Health
 
         public int? GetTargetStepCount(DateTime dateTime)
         {
-            var targetStartDate = new DateTime(2017, 5, 2);
+            //var targetStartDate = new DateTime(2017, 5, 2);
             
-            if ((dateTime - targetStartDate).TotalDays < 0)
-            {
-                return 0;
-            }
-            else
-            {
+            //if ((dateTime - targetStartDate).TotalDays < 0)
+            //{
+            //    return 0;
+            //}
+            //else
+            //{
                 return 10000;
-            }
+            //}
         }
 
         public double? GetAlcoholIntakeTarget(DateTime dateTime)
         {
             var targetStartDate = new DateTime(2018, 5, 29);
-            //var unitsOnTargetStartDate = 5148;
             var targetDailyUnits = 4;
-
 
             if (dateTime < targetStartDate)
             {
@@ -73,7 +71,19 @@ namespace Services.Health
 
         public int? GetCardioAndAboveTarget(DateTime heartSummaryCreatedDate)
         {
-            return 11;
+
+            var targetStartDate = new DateTime(2018, 5, 28);
+            var targetDailyCardio = 11;
+
+
+            if (heartSummaryCreatedDate < targetStartDate)
+            {
+                return 0;
+            }
+
+            return targetDailyCardio;
+
+
         }
     }
 }

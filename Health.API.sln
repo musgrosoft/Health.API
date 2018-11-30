@@ -23,25 +23,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSheets.Unit.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql Scripts", "Sql Scripts", "{4C3EC78E-0F1F-45A9-BCB8-ED257D8338DB}"
 	ProjectSection(SolutionItems) = preProject
+		src\Sql Scripts\tbl_Calendar.sql = src\Sql Scripts\tbl_Calendar.sql
 		src\Sql Scripts\vw_DailyActiveMinutes.sql = src\Sql Scripts\vw_DailyActiveMinutes.sql
 		src\Sql Scripts\vw_DailyAlcoholIntakes.sql = src\Sql Scripts\vw_DailyAlcoholIntakes.sql
 		src\Sql Scripts\vw_DailyBloodPressures.sql = src\Sql Scripts\vw_DailyBloodPressures.sql
 		src\Sql Scripts\vw_DailyCardio.sql = src\Sql Scripts\vw_DailyCardio.sql
 		src\Sql Scripts\vw_DailyExercises.sql = src\Sql Scripts\vw_DailyExercises.sql
 		src\Sql Scripts\vw_DailyHeartRateSummaries.sql = src\Sql Scripts\vw_DailyHeartRateSummaries.sql
+		src\Sql Scripts\vw_DailyNamedExercises.sql = src\Sql Scripts\vw_DailyNamedExercises.sql
 		src\Sql Scripts\vw_DailyStepCounts.sql = src\Sql Scripts\vw_DailyStepCounts.sql
 		src\Sql Scripts\vw_DailyWeights.sql = src\Sql Scripts\vw_DailyWeights.sql
 		src\Sql Scripts\vw_MonthlyActiveMinutes.sql = src\Sql Scripts\vw_MonthlyActiveMinutes.sql
 		src\Sql Scripts\vw_MonthlyAlcoholIntakes.sql = src\Sql Scripts\vw_MonthlyAlcoholIntakes.sql
+		src\Sql Scripts\vw_MonthlyCardio.sql = src\Sql Scripts\vw_MonthlyCardio.sql
 		src\Sql Scripts\vw_MonthlyHeartRateSummaries.sql = src\Sql Scripts\vw_MonthlyHeartRateSummaries.sql
+		src\Sql Scripts\vw_MonthlyNamedExercises.sql = src\Sql Scripts\vw_MonthlyNamedExercises.sql
 		src\Sql Scripts\vw_MonthlySteps.sql = src\Sql Scripts\vw_MonthlySteps.sql
 		src\Sql Scripts\vw_WeeklyActiveMinutes.sql = src\Sql Scripts\vw_WeeklyActiveMinutes.sql
 		src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql = src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql
 		src\Sql Scripts\vw_WeeklyCardio.sql = src\Sql Scripts\vw_WeeklyCardio.sql
-		src\Sql Scripts\vw_WeeklyErgos.sql = src\Sql Scripts\vw_WeeklyErgos.sql
 		src\Sql Scripts\vw_WeeklyExercises.sql = src\Sql Scripts\vw_WeeklyExercises.sql
 		src\Sql Scripts\vw_WeeklyHeartRateSummaries.sql = src\Sql Scripts\vw_WeeklyHeartRateSummaries.sql
-		src\Sql Scripts\vw_WeeklyRuns.sql = src\Sql Scripts\vw_WeeklyRuns.sql
+		src\Sql Scripts\vw_WeeklyNamedExercises.sql = src\Sql Scripts\vw_WeeklyNamedExercises.sql
 		src\Sql Scripts\vw_WeeklyStepCounts.sql = src\Sql Scripts\vw_WeeklyStepCounts.sql
 	EndProjectSection
 EndProject

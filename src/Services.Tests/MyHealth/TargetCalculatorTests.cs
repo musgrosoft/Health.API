@@ -14,7 +14,7 @@ namespace Services.Tests.MyHealth
         }
 
         [Theory]
-        [InlineData(2017, 1, 1, 0)]
+        [InlineData(2017, 1, 1, 10000)]
         [InlineData(2018, 1, 1, 10000)]
         [InlineData(2018, 1, 2, 10000)]
         [InlineData(2018, 1, 3, 10000)]
@@ -43,7 +43,9 @@ namespace Services.Tests.MyHealth
 
 
         [Theory]
-        [InlineData(2017, 1, 1, 11)]
+        [InlineData(2017, 1, 1, 0)]
+        [InlineData(2018, 5, 27, 0)]
+        [InlineData(2018, 5, 28, 11)]
         [InlineData(2019, 1, 1, 11)]
         [InlineData(2019, 1, 2, 11)]
         [InlineData(2019, 1, 3, 11)]
