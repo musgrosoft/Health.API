@@ -50,31 +50,31 @@ namespace Fitbit.Services
             });
         }
 
-        public IEnumerable<Run> MapFitbitDailyActivitiesToRuns(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
-        {
-            var allTheRuns = new List<Run>();
+        //public IEnumerable<Run> MapFitbitDailyActivitiesToRuns(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
+        //{
+        //    var allTheRuns = new List<Run>();
 
-            foreach (var fitbitDailyActivity in fitbitDailyActivities)
-            {
-                //TimeSpan startTime;
-                //filter by some indicator that its a run
+        //    foreach (var fitbitDailyActivity in fitbitDailyActivities)
+        //    {
+        //        //TimeSpan startTime;
+        //        //filter by some indicator that its a run
 
-                var someRuns = fitbitDailyActivity.activities.Select(y =>
-                    new Run
-                    {
-                        //add start time
-                        //CreatedDate = TimeSpan.TryParse("07:35", out startTime) ? fitbitDailyActivity.DateTime.Add(startTime) : fitbitDailyActivity.DateTime,
-                        CreatedDate = fitbitDailyActivity.DateTime,
-                        Time = TimeSpan.FromMilliseconds(y.duration),
-                        Metres = y.distance * 1000
+        //        var someRuns = fitbitDailyActivity.activities.Select(y =>
+        //            new Run
+        //            {
+        //                //add start time
+        //                //CreatedDate = TimeSpan.TryParse("07:35", out startTime) ? fitbitDailyActivity.DateTime.Add(startTime) : fitbitDailyActivity.DateTime,
+        //                CreatedDate = fitbitDailyActivity.DateTime,
+        //                Time = TimeSpan.FromMilliseconds(y.duration),
+        //                Metres = y.distance * 1000
 
-                    });
+        //            });
 
-                allTheRuns.AddRange(someRuns);
-            }
+        //        allTheRuns.AddRange(someRuns);
+        //    }
 
-            return allTheRuns;
-        }
+        //    return allTheRuns;
+        //}
 
     }
 }

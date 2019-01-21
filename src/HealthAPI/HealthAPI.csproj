@@ -5,6 +5,7 @@
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject>HealthAPI.Program</StartupObject>
+    <UserSecretsId>d9195df0-9daf-4fd7-b21c-906382fbf547</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

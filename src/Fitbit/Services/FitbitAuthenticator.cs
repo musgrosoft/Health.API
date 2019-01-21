@@ -11,7 +11,7 @@ namespace Fitbit.Services
 {
     public class FitbitAuthenticator : IFitbitAuthenticator
     {
-        private readonly ITokenService _oAuthService;
+        private readonly ITokenService _tokenService;
         private readonly IConfig _config;
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
@@ -19,9 +19,9 @@ namespace Fitbit.Services
 
         private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 
-        public FitbitAuthenticator(ITokenService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
+        public FitbitAuthenticator(ITokenService tokenService, IConfig config, HttpClient httpClient, ILogger logger)
         {
-            _oAuthService = oAuthService;
+            _tokenService = tokenService;
             _config = config;
             _httpClient = httpClient;
             _logger = logger;
@@ -34,8 +34,8 @@ namespace Fitbit.Services
             var tokenResponseAccessToken = tokens.access_token;
             var tokenResponseRefreshToken = tokens.refresh_token;
 
-            await _oAuthService.SaveFitbitAccessToken(tokenResponseAccessToken);
-            await _oAuthService.SaveFitbitRefreshToken(tokenResponseRefreshToken);
+            await _tokenService.SaveFitbitAccessToken(tokenResponseAccessToken);
+            await _tokenService.SaveFitbitRefreshToken(tokenResponseRefreshToken);
 
         }
 
@@ -43,15 +43,15 @@ namespace Fitbit.Services
 
         public async Task<string> GetAccessToken()
         {
-            var refreshToken = await _oAuthService.GetFitbitRefreshToken();
+            var refreshToken = await _tokenService.GetFitbitRefreshToken();
 
             var newTokens = await GetTokensWithRefreshToken(refreshToken);
 
             var newAccessToken = newTokens.access_token;
             var newRefreshToken = newTokens.refresh_token;
             
-            await _oAuthService.SaveFitbitAccessToken(newAccessToken);
-            await _oAuthService.SaveFitbitRefreshToken(newRefreshToken);
+            await _tokenService.SaveFitbitAccessToken(newAccessToken);
+            await _tokenService.SaveFitbitRefreshToken(newRefreshToken);
 
             return newAccessToken;
         }
