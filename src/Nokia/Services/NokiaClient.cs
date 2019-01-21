@@ -20,7 +20,7 @@ namespace Nokia.Services
         private const int SystolicBloodPressureMeasureTypeId = 10;
         private const int SubscribeBloodPressureId = 4;
 
-        private const string NOKIA_BASE_URL = "http://api.health.nokia.com";
+        private const string NOKIA_BASE_URL = "https://api.health.nokia.com";
 
         public NokiaClient(HttpClient httpClient, ILogger logger, INokiaAuthenticator nokiaAuthenticator)
         {
@@ -216,6 +216,9 @@ namespace Nokia.Services
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
+
+                await _logger.LogMessageAsync(content);
+
                 var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
                 return data.body.measuregrps;
 
