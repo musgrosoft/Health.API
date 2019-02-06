@@ -213,11 +213,14 @@ namespace Nokia.Services
 
             var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
 
+            
+
+            //TODO : success status code, does not indicate lack of error
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                await _logger.LogMessageAsync(content);
+                await _logger.LogMessageAsync("NOK AUTH " + content);
 
                 var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
                 return data.body.measuregrps;
@@ -225,6 +228,10 @@ namespace Nokia.Services
             }
             else
             {
+                var content = await response.Content.ReadAsStringAsync();
+
+                await _logger.LogMessageAsync("NOK AUTH e " + content);
+
                 throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
             }
         }

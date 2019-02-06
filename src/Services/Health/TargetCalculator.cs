@@ -6,6 +6,15 @@ namespace Services.Health
     {
         public Double? GetTargetWeight(DateTime dateTime)
         {
+
+            if (dateTime >= new DateTime(2019,1,1))
+            {
+                var days = (dateTime - new DateTime(2019, 1, 1)).TotalDays;
+
+                return 86 - (3 * days / 365);
+
+            }
+
             var targetStartDate = new DateTime(2018, 5, 1);
             var targetEndDate = DateTime.Now.AddDays(600);
             var totalDays = (targetEndDate - targetStartDate).TotalDays;
