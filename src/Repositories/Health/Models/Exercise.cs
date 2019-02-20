@@ -7,8 +7,8 @@ namespace Repositories.Health.Models
     {
         public DateTime CreatedDate { get; set; }
         public string Description { get; set; }
-        public TimeSpan Time { get; set; }
-        public Double Metres { get; set; }
+        public int TotalSeconds { get; set; }
+        public int Metres { get; set; }
 
     }
 }

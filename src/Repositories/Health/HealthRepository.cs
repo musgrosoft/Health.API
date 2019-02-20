@@ -13,10 +13,6 @@ namespace Repositories.Health
             _healthContext = healthContext;
         }
         
-        public DateTime? GetLatestStepCountDate()
-        {
-            return _healthContext.StepCounts.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
-        }
         
         public DateTime? GetLatestBloodPressureDate()
         {
@@ -33,20 +29,12 @@ namespace Repositories.Health
             return _healthContext.AlcoholIntakes.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        public DateTime? GetLatestActivitySummaryDate()
-        {
-            return _healthContext.ActivitySummaries.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
-        }
 
         public DateTime? GetLatestRestingHeartRateDate()
         {
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
         
-        public DateTime? GetLatestHeartSummaryDate()
-        {
-            return _healthContext.HeartRateSummaries.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
-        }
 
         public DateTime? GetLatestExerciseDate()
         {
@@ -107,7 +95,7 @@ namespace Repositories.Health
             else
             {
                 existingExercise.Metres = exercise.Metres;
-                existingExercise.Time = exercise.Time;
+                existingExercise.TotalSeconds = exercise.TotalSeconds;
             }
 
             _healthContext.SaveChanges();
@@ -136,52 +124,6 @@ namespace Repositories.Health
         }
 
 
-        public void Upsert(StepCount stepCount)
-        {
-
-            var existingStepCount = _healthContext.StepCounts.Find(stepCount.CreatedDate);
-            if (existingStepCount != null)
-            {
-                // _logger.Log($"STEP COUNT : Update Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
-                existingStepCount.Count = stepCount.Count;
-                //existingStepCount.CumSumCount = stepCount.CumSumCount;
-                existingStepCount.Target = stepCount.Target;
-            }
-            else
-            {
-                // _logger.Log($"STEP COUNT : Insert Step Data for {stepCount.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {stepCount.Count} steps");
-                _healthContext.Add(stepCount);
-            }
-
-            _healthContext.SaveChanges();
-        }
-
-        public void Upsert(ActivitySummary activitySummary)
-        {
-
-            var existingActivitySummary = _healthContext.ActivitySummaries.Find(activitySummary.CreatedDate);
-            if (existingActivitySummary == null)
-            {
-                // _logger.Log($"ACTIVITY SUMMARY : Update Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
-                _healthContext.Add(activitySummary);
-            }
-            else
-            {
-
-                existingActivitySummary.SedentaryMinutes = activitySummary.SedentaryMinutes;
-                existingActivitySummary.LightlyActiveMinutes = activitySummary.LightlyActiveMinutes;
-                existingActivitySummary.FairlyActiveMinutes = activitySummary.FairlyActiveMinutes;
-                existingActivitySummary.VeryActiveMinutes = activitySummary.VeryActiveMinutes;
-
-                existingActivitySummary.TargetActiveMinutes = activitySummary.TargetActiveMinutes;
-            //    existingActivitySummary.CumSumActiveMinutes = activitySummary.CumSumActiveMinutes;
-                //_logger.Log($"ACTIVITY SUMMARY : Insert Activity Data for {activitySummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} : {activitySummary.SedentaryMinutes} sedentary minutes, {activitySummary.LightlyActiveMinutes} lightly active minutes, {activitySummary.FairlyActiveMinutes} fairly active minutes, {activitySummary.VeryActiveMinutes} very active minutes.");
-               
-            }
-
-
-            _healthContext.SaveChanges();
-        }
 
         public void Upsert(RestingHeartRate restingHeartRate)
         {
@@ -203,30 +145,6 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Upsert(HeartRateSummary heartSummary)
-        {
-
-            var existingHeartSummary = _healthContext.HeartRateSummaries.Find(heartSummary.CreatedDate);
-
-            if (existingHeartSummary != null)
-            {
-                existingHeartSummary.CardioMinutes = heartSummary.CardioMinutes;
-                existingHeartSummary.PeakMinutes = heartSummary.PeakMinutes;
-
-                existingHeartSummary.TargetCardioAndAbove = heartSummary.TargetCardioAndAbove;
-
-            //    existingHeartSummary.CumSumCardioAndAbove = heartSummary.CumSumCardioAndAbove;
-//                _logger.Log($"HEART SUMMARY : About to update Heart SUmmary Record : {heartSummary.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , ");
-  
-            }
-            else
-            {
-                //  _logger.Log("HEART SUMMARY : insert thing");
-                _healthContext.Add(heartSummary);
-            }
-
-            _healthContext.SaveChanges();
-        }
 
 
 

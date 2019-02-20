@@ -25,10 +25,10 @@ namespace HealthAPI.Hangfire
 
                 //monthly gets
                 await _fitbitImporter.MigrateRestingHeartRates();
-                await _fitbitImporter.MigrateHeartSummaries();
+//                await _fitbitImporter.MigrateHeartSummaries();
                 //daily gets
-                await _fitbitImporter.MigrateStepCounts();
-                await _fitbitImporter.MigrateActivitySummaries();
+  //              await _fitbitImporter.MigrateStepCounts();
+    //            await _fitbitImporter.MigrateActivitySummaries();
                 //await _fitbitMigrator.MigrateRuns();
 
 

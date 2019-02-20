@@ -30,48 +30,6 @@ namespace Fitbit.Importer
 
 
 
-        public async Task MigrateStepCounts()
-        {
-            var latestStepDate = _healthService.GetLatestStepCountDate(MIN_FITBIT_DATE);
-            await _logger.LogMessageAsync($"STEP COUNT : Latest Step record has a date of : {latestStepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-            var fromDate = latestStepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            await _logger.LogMessageAsync($"STEP COUNT : Retrieving Step records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-            var dailySteps = (await _fitbitService.GetStepCounts(fromDate, _calendar.Now())).ToList();
-           // dailySteps = _targetService.SetTargets(dailySteps);
-
-            _healthService.UpsertStepCounts(dailySteps);
-        }
-
-        //public async Task MigrateRuns()
-        //{
-        //    //var latestRunDate = _healthService.GetLatestRunDate(MIN_FITBIT_DATE);
-        //    var latestRunDate = _healthService.GetLatestRunDate(new DateTime(2018,9,1));
-        //    await _logger.LogMessageAsync($"RUNS : Latest Run record has a date of : {latestRunDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-        //    var fromDate = latestRunDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-        //    await _logger.LogMessageAsync($"RUNS : Retrieving Run records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-            
-        //    var runs = await _fitbitService.GetRuns(fromDate, _calendar.Now());
-
-        //    _healthService.UpsertRuns(runs);
-        //}
-
-        public async Task MigrateActivitySummaries()
-        {
-            var latestActivityDate  = _healthService.GetLatestActivitySummaryDate(MIN_FITBIT_DATE);
-            await _logger.LogMessageAsync($"ACTIVITY SUMMARY : Latest Activity record has a date of : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-            var fromDate = latestActivityDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            await _logger.LogMessageAsync($"ACTIVITY SUMMARY : Retrieving Activity records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {latestActivityDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-            var dailyActivites = (await _fitbitService.GetActivitySummaries(fromDate, _calendar.Now())).ToList();
-           // dailyActivites = _targetService.SetTargets(dailyActivites);
-
-             _healthService.UpsertActivitySummaries(dailyActivites);
-        }
-
         public async Task MigrateRestingHeartRates()
         {
             var latestRestingHeartRateDate = _healthService.GetLatestRestingHeartRateDate(MIN_FITBIT_DATE);
@@ -85,46 +43,6 @@ namespace Fitbit.Importer
             _healthService.UpsertRestingHeartRates(restingHeartRates);
         }
 
-        public async Task MigrateHeartSummaries()
-        {
-            var latestHeartZonesDate = _healthService.GetLatestHeartSummaryDate(MIN_FITBIT_DATE);
-            await _logger.LogMessageAsync($"HEART SUMMARY : Latest Heart Zone Data has a date of : {latestHeartZonesDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-            var getDataFromDate = latestHeartZonesDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            await _logger.LogMessageAsync($"HEART SUMMARY : Retrieving Heart Zone Data records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-                
-            var heartSummaries = (await _fitbitService.GetHeartSummaries(getDataFromDate, _calendar.Now())).ToList();
-           //heartSummaries = _targetService.SetTargets(heartSummaries);
-
-            _healthService.UpsertHeartSummaries(heartSummaries);
-        }
-
-        //public async Task MigrateDetailedHeartRates()
-        //{
-        //    var latestDate = _healthService.GetLatestDetailedHeartRatesDate(MIN_FITBIT_DATE);
-        //    //var latestDate = _healthService.GetLatestDetailedHeartRatesDate(new DateTime(2018,10,1));
-        //    await _logger.LogMessageAsync($"DETAILED HEART RATES : Latest Data has a date of : {latestDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-        //    //var getDataFromDate = latestDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-        //    //await _logger.LogMessageAsync($"DETAILED HEART RATES : Retrieving Data records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-
-        //    //var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(DateTime.Now.AddDays(-1))).ToList();
-
-        //    var detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(latestDate, latestDate.AddDays(25))).ToList();
-        //    detailedHeartRates = detailedHeartRates.Where(x => x.CreatedDate > latestDate).ToList();
-        //    _healthService.UpsertHeartRates(detailedHeartRates);
-        //    await _logger.LogMessageAsync("DETAILED HEART RATES : Done it");
-        //    //detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(latestDate.AddDays(1), latestDate.AddDays(1))).ToList();
-        //    //_healthService.UpsertHeartRates(detailedHeartRates);
-
-        //    //detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(latestDate.AddDays(2), latestDate.AddDays(2))).ToList();
-        //    //_healthService.UpsertHeartRates(detailedHeartRates);
-
-        //    //detailedHeartRates = (await _fitbitService.GetDetailedHeartRates(latestDate.AddDays(3), latestDate.AddDays(3))).ToList();
-        //    //_healthService.UpsertHeartRates(detailedHeartRates);
-
-        //}
 
     }
 }

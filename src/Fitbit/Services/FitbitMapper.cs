@@ -19,37 +19,6 @@ namespace Fitbit.Services
                 });
         }
 
-        public IEnumerable<HeartRateSummary> MapActivitiesHeartsToHeartRateSummaries(IEnumerable<ActivitiesHeart> activitiesHearts)
-        {
-            return activitiesHearts.Select(x => new HeartRateSummary
-            {
-                CreatedDate = x.dateTime,
-                CardioMinutes = x.value.heartRateZones.First(y => y.name == "Cardio").minutes,
-                PeakMinutes = x.value.heartRateZones.First(y => y.name == "Peak").minutes
-            });
-        }
-
-        public IEnumerable<ActivitySummary> MapFitbitDailyActivitiesToActivitySummaries(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
-        {
-            return fitbitDailyActivities.Select(x => new ActivitySummary
-            {
-                CreatedDate = x.DateTime,
-                FairlyActiveMinutes = x.summary.fairlyActiveMinutes,
-                LightlyActiveMinutes = x.summary.lightlyActiveMinutes,
-                SedentaryMinutes = x.summary.sedentaryMinutes,
-                VeryActiveMinutes = x.summary.veryActiveMinutes
-            });
-        }
-
-        public IEnumerable<StepCount> MapFitbitDailyActivitiesToStepCounts(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
-        {
-            return fitbitDailyActivities.Select(x => new StepCount
-            {
-                CreatedDate = x.DateTime,
-                Count = x.summary.steps
-            });
-        }
-
         //public IEnumerable<Run> MapFitbitDailyActivitiesToRuns(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
         //{
         //    var allTheRuns = new List<Run>();

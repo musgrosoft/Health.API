@@ -168,17 +168,6 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
         
-        public DateTime GetLatestStepCountDate(DateTime defaultDateTime)
-        {
-            var latestDate = _healthRepository.GetLatestStepCountDate();
-            return latestDate ?? defaultDateTime;
-        }
-        
-        public DateTime GetLatestActivitySummaryDate(DateTime defaultDateTime)
-        {
-            var latestDate = _healthRepository.GetLatestActivitySummaryDate();
-            return latestDate ?? defaultDateTime;
-        }
 
         public DateTime GetLatestRestingHeartRateDate(DateTime defaultDateTime)
         {
@@ -186,23 +175,7 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
-        public DateTime GetLatestHeartSummaryDate(DateTime defaultDateTime)
-        {
-            var latestDate = _healthRepository.GetLatestHeartSummaryDate();
-            return latestDate ?? defaultDateTime;
-        }
         
-        //public DateTime GetLatestRunDate(DateTime defaultDateTime)
-        //{
-        //    var latestDate = _healthRepository.GetLatestRunDate();
-        //    return latestDate ?? defaultDateTime;
-        //}
-
-        //public DateTime GetLatestDetailedHeartRatesDate(DateTime defaultDateTime)
-        //{
-        //    var latestDate = _healthRepository.GetLatestDetailedHeartRatesDate("Fitbit");
-        //    return latestDate ?? defaultDateTime;
-        //}
 
 
         public void UpsertWeights(IEnumerable<Weight> weights)
@@ -238,84 +211,7 @@ namespace Services.Health
             }
         }
 
-
-
-        public void UpsertStepCounts(IEnumerable<StepCount> stepCounts)
-        {
-            _logger.LogMessageAsync($"STEP COUNT : Saving {stepCounts.Count()} Step Count");
-            
-            foreach (var stepCount in stepCounts)
-            {
-                stepCount.Target = _targetCalculator.GetTargetStepCount(stepCount.CreatedDate);
-                _healthRepository.Upsert(stepCount);
-            }            
-        }
         
-        public void UpsertActivitySummaries(IEnumerable<ActivitySummary>  activitySummaries)
-        {
-            _logger.LogMessageAsync($"ACTIVITY SUMMARY : Saving {activitySummaries.Count()} Activity Summary");
-
-            foreach (var activitySummary in activitySummaries)
-            {
-                activitySummary.TargetActiveMinutes = _targetCalculator.GetActivitySummaryTarget(activitySummary.CreatedDate);
-
-                _healthRepository.Upsert(activitySummary);
-            }
-        }
-        
-        public void UpsertHeartSummaries(IEnumerable<HeartRateSummary> heartSummaries)
-        {
-            _logger.LogMessageAsync($"HEART SUMMARY : Saving {heartSummaries.Count()} heart summaries");
-
-            foreach (var heartSummary in heartSummaries)
-            {
-                heartSummary.TargetCardioAndAbove  = _targetCalculator.GetCardioAndAboveTarget(heartSummary.CreatedDate);
-                _healthRepository.Upsert(heartSummary);
-            }
-        }
-
-        //public void UpsertRuns(List<Run> runs)
-        //{
-        //    _logger.LogMessageAsync($"RUN : Saving {runs.Count()} runs");
-
-        //    foreach (var run in runs)
-        //    {
-        //        _healthRepository.Upsert(run);
-        //    }
-        //}
-
-        //public void UpsertRuns(IEnumerable<Run> runs)
-        //{
-        //    _logger.LogMessageAsync($"RUNS : Saving {runs.Count()} runs");
-
-        //    foreach (var run in runs)
-        //    {
-        //        _healthRepository.Upsert(run);
-        //    }
-        //}
-
-        //public void UpsertErgos(List<Ergo> rows)
-        //{
-        //    _logger.LogMessageAsync($"ROWS : Saving {rows.Count()} rows");
-
-        //    foreach (var row in rows)
-        //    {
-        //        _healthRepository.Upsert(row);
-        //    }
-        //}
-
-        //public void UpsertHeartRates(List<HeartRate> detailedHeartRates)
-        //{
-        //    _logger.LogMessageAsync($"detailedHeartRates : Saving {detailedHeartRates.Count()} detailedHeartRates");
-
-        //    _healthRepository.UpsertMany(detailedHeartRates);
-
-        //    //foreach (var heartRate in detailedHeartRates)
-        //    //{
-        //    //    _healthRepository.Upsert(heartRate);
-        //    //}
-        //}
-
         public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
         {
             _logger.LogMessageAsync($"UNITS : Saving {alcoholIntakes.Count} alcohol intakes");

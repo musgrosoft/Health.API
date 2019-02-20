@@ -51,14 +51,15 @@ namespace Google
         {
             var date = DateTime.Parse((string)row[0]);
             var metres = int.Parse((string)row[1]);
-            var time = TimeSpan.Parse((string)row[2]);
+            
             var description = (string)row[3];
+            var totalSeconds = int.Parse((string)row[4]);
 
             return new Exercise
             {
                 CreatedDate = date,
                 Metres = metres,
-                Time = time,
+                TotalSeconds = totalSeconds,
                 Description = description
             };
         }
