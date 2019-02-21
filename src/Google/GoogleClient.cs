@@ -31,7 +31,7 @@ namespace Google
 
         public List<Exercise> GetExercises()
         {
-            return _sheetMapper.Get<Exercise>(_config.ExerciseSpreadsheetId, "Sheet1!A2:D", _mapper.MapRowToExerise);
+            return _sheetMapper.Get<Exercise>(_config.ExerciseSpreadsheetId, "Sheet1!A2:E", _mapper.MapRowToExerise);
         }
 
         //public List<Run> GetRuns()
