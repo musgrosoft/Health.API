@@ -11,20 +11,20 @@ namespace HealthAPI.Acceptance.Tests
 
         public bool HasSubscribed { get; private set; } = false;
 
-        public Task<IEnumerable<ActivitySummary>> GetActivitySummaries(DateTime fromDate, DateTime toDate)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<IEnumerable<ActivitySummary>> GetActivitySummaries(DateTime fromDate, DateTime toDate)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<IEnumerable<StepCount>> GetStepCounts(DateTime fromDate, DateTime toDate)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Task<IEnumerable<HeartRateSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<IEnumerable<HeartRateSummary>> GetHeartSummaries(DateTime fromDate, DateTime toDate)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
         {
@@ -48,10 +48,10 @@ namespace HealthAPI.Acceptance.Tests
         //    throw new NotImplementedException();
         //}
 
-        public Task<IEnumerable<Run>> GetRuns(DateTime fromDate, DateTime toDate)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<IEnumerable<Run>> GetRuns(DateTime fromDate, DateTime toDate)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public Task<IEnumerable<HeartRate>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate)
         //{

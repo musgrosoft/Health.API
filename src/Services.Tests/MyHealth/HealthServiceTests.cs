@@ -59,35 +59,35 @@ namespace Services.Tests.MyHealth
 
         }
 
-        [Fact]
-        public void ShouldGetLatestStepCountDate()
-        {
-            //Given 
-            var date = new DateTime(2018, 1, 4);
-            _healthRepository.Setup(x => x.GetLatestStepCountDate()).Returns(date);
+        //[Fact]
+        //public void ShouldGetLatestStepCountDate()
+        //{
+        //    //Given 
+        //    var date = new DateTime(2018, 1, 4);
+        //    _healthRepository.Setup(x => x.GetLatestStepCountDate()).Returns(date);
 
-            //when
-            var latestDate = _healthService.GetLatestStepCountDate(DateTime.MinValue);
+        //    //when
+        //    var latestDate = _healthService.GetLatestStepCountDate(DateTime.MinValue);
 
-            //then
-            Assert.Equal(date, latestDate);
+        //    //then
+        //    Assert.Equal(date, latestDate);
 
-        }
+        //}
 
-        [Fact]
-        public void ShouldGetLatestActivitySummaryDate()
-        {
-            //Given 
-            var date = new DateTime(2018, 1, 5);
-            _healthRepository.Setup(x => x.GetLatestActivitySummaryDate()).Returns(date);
+        //[Fact]
+        //public void ShouldGetLatestActivitySummaryDate()
+        //{
+        //    //Given 
+        //    var date = new DateTime(2018, 1, 5);
+        //    _healthRepository.Setup(x => x.GetLatestActivitySummaryDate()).Returns(date);
 
-            //when
-            var latestDate = _healthService.GetLatestActivitySummaryDate(DateTime.MinValue);
+        //    //when
+        //    var latestDate = _healthService.GetLatestActivitySummaryDate(DateTime.MinValue);
 
-            //then
-            Assert.Equal(date, latestDate);
+        //    //then
+        //    Assert.Equal(date, latestDate);
 
-        }
+        //}
 
 
         [Fact]
@@ -105,20 +105,20 @@ namespace Services.Tests.MyHealth
 
         }
 
-        [Fact]
-        public void ShouldGetLatestHeartSummaryDate()
-        {
-            //Given 
-            var date = new DateTime(2018, 1, 7);
-            _healthRepository.Setup(x => x.GetLatestHeartSummaryDate()).Returns(date);
+        //[Fact]
+        //public void ShouldGetLatestHeartSummaryDate()
+        //{
+        //    //Given 
+        //    var date = new DateTime(2018, 1, 7);
+        //    _healthRepository.Setup(x => x.GetLatestHeartSummaryDate()).Returns(date);
 
-            //when
-            var latestDate = _healthService.GetLatestHeartSummaryDate(DateTime.MinValue);
+        //    //when
+        //    var latestDate = _healthService.GetLatestHeartSummaryDate(DateTime.MinValue);
 
-            //then
-            Assert.Equal(date, latestDate);
+        //    //then
+        //    Assert.Equal(date, latestDate);
 
-        }
+        //}
 
         //[Fact]
         //public void ShouldGetLatestRunDate()
@@ -239,45 +239,45 @@ namespace Services.Tests.MyHealth
             _healthRepository.Verify(x => x.Upsert(newBloodPressures[2]), Times.Once);
         }
 
-        [Fact]
-        public void ShouldUpsertNewStepCounts()
-        {
-            //Given
-            var newStepCounts = new List<StepCount>
-            {
-                new StepCount {CreatedDate = new DateTime(2016,1,1), Count = 2016},
-                new StepCount {CreatedDate = new DateTime(2017,1,1), Count = 2017},
-                new StepCount {CreatedDate = new DateTime(2018,1,1), Count = 2018}
-            };
+        //[Fact]
+        //public void ShouldUpsertNewStepCounts()
+        //{
+        //    //Given
+        //    var newStepCounts = new List<StepCount>
+        //    {
+        //        new StepCount {CreatedDate = new DateTime(2016,1,1), Count = 2016},
+        //        new StepCount {CreatedDate = new DateTime(2017,1,1), Count = 2017},
+        //        new StepCount {CreatedDate = new DateTime(2018,1,1), Count = 2018}
+        //    };
 
-            //When
-            _healthService.UpsertStepCounts(newStepCounts);
+        //    //When
+        //    _healthService.UpsertStepCounts(newStepCounts);
 
-            //Then
-            _healthRepository.Verify(x => x.Upsert(newStepCounts[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newStepCounts[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newStepCounts[2]), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(newStepCounts[0]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newStepCounts[1]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newStepCounts[2]), Times.Once);
+        //}
 
-        [Fact]
-        public void ShouldUpsertNewActivitySummaries()
-        {
-            //Given
-            var newActivitySummaries = new List<ActivitySummary>
-            {
-                new ActivitySummary {CreatedDate = new DateTime(2016,1,1), FairlyActiveMinutes = 2016},
-                new ActivitySummary {CreatedDate = new DateTime(2017,1,1), FairlyActiveMinutes = 2017},
-                new ActivitySummary {CreatedDate = new DateTime(2018,1,1), FairlyActiveMinutes = 2018}
-            };
+        //[Fact]
+        //public void ShouldUpsertNewActivitySummaries()
+        //{
+        //    //Given
+        //    var newActivitySummaries = new List<ActivitySummary>
+        //    {
+        //        new ActivitySummary {CreatedDate = new DateTime(2016,1,1), FairlyActiveMinutes = 2016},
+        //        new ActivitySummary {CreatedDate = new DateTime(2017,1,1), FairlyActiveMinutes = 2017},
+        //        new ActivitySummary {CreatedDate = new DateTime(2018,1,1), FairlyActiveMinutes = 2018}
+        //    };
             
-            //When
-            _healthService.UpsertActivitySummaries(newActivitySummaries);
+        //    //When
+        //    _healthService.UpsertActivitySummaries(newActivitySummaries);
 
-            //Then
-            _healthRepository.Verify(x => x.Upsert(newActivitySummaries[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newActivitySummaries[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newActivitySummaries[2]), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(newActivitySummaries[0]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newActivitySummaries[1]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newActivitySummaries[2]), Times.Once);
+        //}
         
         [Fact]
         public void ShouldUpsertNewRestingHeartRates()
@@ -300,25 +300,25 @@ namespace Services.Tests.MyHealth
 
         }
         
-        [Fact]
-        public void ShouldUpsertHeartSummaries()
-        {
-            //Given
-            var newHeartSummaries = new List<HeartRateSummary>
-            {
-                new HeartRateSummary {CreatedDate = new DateTime(2016,1,1), CardioMinutes = 2016},
-                new HeartRateSummary {CreatedDate = new DateTime(2017,1,1), CardioMinutes = 2017},
-                new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), CardioMinutes = 2018}
-            };
+        //[Fact]
+        //public void ShouldUpsertHeartSummaries()
+        //{
+        //    //Given
+        //    var newHeartSummaries = new List<HeartRateSummary>
+        //    {
+        //        new HeartRateSummary {CreatedDate = new DateTime(2016,1,1), CardioMinutes = 2016},
+        //        new HeartRateSummary {CreatedDate = new DateTime(2017,1,1), CardioMinutes = 2017},
+        //        new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), CardioMinutes = 2018}
+        //    };
 
-            //When
-            _healthService.UpsertHeartSummaries(newHeartSummaries);
+        //    //When
+        //    _healthService.UpsertHeartSummaries(newHeartSummaries);
 
-            //Then
-            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[0]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[1]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
+        //}
 
         //[Fact]
         //public void ShouldGetAllRestingHeartRates()
