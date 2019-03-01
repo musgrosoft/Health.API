@@ -5,5 +5,5 @@ SELECT
   SUM(Metres) as Metres,
   SUM(TotalSeconds) as TotalSeconds
 FROM
-  Exercises
+  vw_DailyExercises
 GROUP BY DATEADD(dd,-(DATEPART(dw, CreatedDate)-1), CreatedDate)
