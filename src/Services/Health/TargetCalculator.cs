@@ -45,19 +45,6 @@ namespace Services.Health
             return null;
         }
 
-        public int? GetTargetStepCount(DateTime dateTime)
-        {
-            //var targetStartDate = new DateTime(2017, 5, 2);
-            
-            //if ((dateTime - targetStartDate).TotalDays < 0)
-            //{
-            //    return 0;
-            //}
-            //else
-            //{
-                return 10000;
-            //}
-        }
 
         public double? GetAlcoholIntakeTarget(DateTime dateTime)
         {
@@ -73,10 +60,6 @@ namespace Services.Health
         }
 
 
-        public int GetActivitySummaryTarget(DateTime dateTime)
-        {
-            return 30;
-        }
 
         public int? GetCardioAndAboveTarget(DateTime heartSummaryCreatedDate)
         {
