@@ -6,4 +6,5 @@ SELECT
   AVG(TotalSeconds) as TotalSeconds
 FROM
   vw_DailyExercises
+  WHERE CreatedDate <= GetDate()
 GROUP BY DATEADD(m, DATEDIFF(m, 0, CreatedDate), 0)
