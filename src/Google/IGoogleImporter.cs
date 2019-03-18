@@ -1,4 +1,6 @@
-﻿namespace Google
+﻿using Repositories.Health.Models;
+
+namespace Google
 {
     public interface IGoogleImporter
     {
@@ -6,5 +8,7 @@
         void MigrateAlcoholIntakes();
         //void MigrateErgos();
         void ImportExercises();
+
+        void InsertExercises(Exercise exercise);
     }
 }

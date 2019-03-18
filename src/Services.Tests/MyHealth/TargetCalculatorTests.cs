@@ -14,24 +14,6 @@ namespace Services.Tests.MyHealth
         }
 
 
-
-
-        [Theory]
-        [InlineData(2017, 1, 1, 0)]
-        [InlineData(2018, 5, 27, 0)]
-        [InlineData(2018, 5, 28, 11)]
-        [InlineData(2019, 1, 1, 11)]
-        [InlineData(2019, 1, 2, 11)]
-        [InlineData(2019, 1, 3, 11)]
-        public void ShouldGetCardioAndAboveTarget(int year, int month, int day, double? expectedTarget)
-        {
-            var dateTime = new DateTime(year, month, day);
-
-            var targetUnits = _targetCalculator.GetCardioAndAboveTarget(dateTime);
-
-            Assert.Equal(expectedTarget, targetUnits);
-        }
-
         [Theory]
         [InlineData(2017, 1, 1, null)]
         [InlineData(2019, 1, 1, 4)]

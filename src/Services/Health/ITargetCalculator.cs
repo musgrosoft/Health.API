@@ -8,6 +8,5 @@ namespace Services.Health
         
         double? GetAlcoholIntakeTarget(DateTime dateTime);
         
-        int? GetCardioAndAboveTarget(DateTime heartSummaryCreatedDate);
     }
 }

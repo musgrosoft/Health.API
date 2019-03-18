@@ -59,23 +59,5 @@ namespace Services.Health
             return targetDailyUnits;
         }
 
-
-
-        public int? GetCardioAndAboveTarget(DateTime heartSummaryCreatedDate)
-        {
-
-            var targetStartDate = new DateTime(2018, 5, 28);
-            var targetDailyCardio = 11;
-
-
-            if (heartSummaryCreatedDate < targetStartDate)
-            {
-                return 0;
-            }
-
-            return targetDailyCardio;
-
-
-        }
     }
 }

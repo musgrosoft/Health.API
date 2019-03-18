@@ -16,6 +16,7 @@ using Google;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using HealthAPI.Hangfire;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
@@ -70,11 +71,20 @@ namespace HealthAPI
             // Add service and create Policy with options
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44338")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+            });
+
+//                options.AddPolicy("CorsPolicy",
+//                    builder => builder.AllowAnyOrigin()
+//                        .AllowAnyMethod()
+//                        .AllowAnyHeader()
+//                        .AllowCredentials());
             });
 
             services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
@@ -150,7 +160,8 @@ namespace HealthAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("CorsPolicy");
+            //app.UseCors("CorsPolicy");
+            app.UseCors();
 
             app.UseMvc();
 
