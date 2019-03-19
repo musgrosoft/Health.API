@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,10 +18,13 @@ using Google;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using HealthAPI.Hangfire;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Localization;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using Nokia.Services;
+using Calendar = Utils.Calendar;
 
 namespace HealthAPI
 {
@@ -61,21 +66,29 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            SetUpDataBase(services);
-
-            //   services.AddHangfire(x => x.UseSqlServerStorage(_config.HealthDbConnectionString));
-            //services.AddHangfire(x => x.UseSqlServerStorage("bum"));
-            services.AddHangfire(x => x.UseMemoryStorage());
 
             // Add service and create Policy with options
             services.AddCors(options =>
             {
+                //options.AddDefaultPolicy(
+                    //builder =>
+                    //{
+                    //    builder.AllowAnyOrigin()
+                    //        .AllowAnyMethod()
+                    //        .AllowAnyHeader()
+                    //        .AllowCredentials();
+                    //});
+
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
+                        .AllowAnyHeader());
+//                        .AllowCredentials());
             });
+
+            SetUpDataBase(services);
+
+            services.AddHangfire(x => x.UseMemoryStorage());
 
             services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
 
@@ -140,7 +153,12 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
+
+            //app.UseCors();
+            app.UseCors("CorsPolicy");
+            //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
+
+            app.UseMvc();
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
@@ -149,10 +167,8 @@ namespace HealthAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors("CorsPolicy");
-
-            app.UseMvc();
+            
+            
 
             app.UseSwagger();
 
@@ -162,7 +178,7 @@ namespace HealthAPI
             });
 
 
-            //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
+            
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {

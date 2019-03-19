@@ -4,6 +4,7 @@ using Google;
 using Moq;
 using Repositories.Health.Models;
 using Services.Health;
+using Utils;
 using Xunit;
 
 namespace GoogleSheets.Unit.Tests
@@ -18,7 +19,7 @@ namespace GoogleSheets.Unit.Tests
         {
             _googleClient = new Mock<IGoogleClient>();
             _healthService = new Mock<IHealthService>();
-            _googleImporter = new GoogleImporter(_googleClient.Object, _healthService.Object);
+            _googleImporter = new GoogleImporter(_googleClient.Object, _healthService.Object, new Config());
         }
 
         //[Fact]
