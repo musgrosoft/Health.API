@@ -20,7 +20,7 @@ namespace Nokia.Services
         private const int SystolicBloodPressureMeasureTypeId = 10;
         private const int SubscribeBloodPressureId = 4;
 
-        private const string NOKIA_BASE_URL = "https://api.health.nokia.com";
+        private const string NOKIA_BASE_URL = "https://wbsapi.withings.net";
 
         public NokiaClient(HttpClient httpClient, ILogger logger, INokiaAuthenticator nokiaAuthenticator)
         {

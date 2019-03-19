@@ -7,7 +7,7 @@ using Repositories.Health.Models;
 
 namespace HealthAPI.Controllers
 {
-    [EnableCors]
+    [EnableCors("CorsPolicy")]
     [Produces("application/json")]
     [Route("api/Test")]
     public class TestController : Controller
@@ -21,7 +21,7 @@ namespace HealthAPI.Controllers
 
         [HttpPost]
         [Route("exercise")]
-        [EnableCors]
+        [EnableCors("CorsPolicy")]
         //public async Task<IActionResult> Migrate()
         public IActionResult Test([FromBody]Exercise exercise)
         {
