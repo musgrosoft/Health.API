@@ -21,12 +21,12 @@ namespace Nokia.Services
         private readonly ILogger _logger;
 
         //private const string NOKIA_BASE_URL = "https://api.health.nokia.com";
-        //private const string NOKIA_BASE_URL = "https://account.withings.com";
-        private const string NOKIA_BASE_URL = "https://wbsapi.withings.net";
+        private const string NOKIA_BASE_URL = "https://account.withings.com";
+        //private const string NOKIA_BASE_URL = "https://wbsapi.withings.net";
 
         
 
-        private const string NOKIA_REDIRECT_URL = "http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
+        private const string NOKIA_REDIRECT_URL = "https://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
 
         public NokiaAuthenticator(ITokenService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
         {

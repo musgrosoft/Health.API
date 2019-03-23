@@ -17,30 +17,7 @@ namespace HealthAPI.Controllers
             _logger = logger;
             _googleImporter = googleImporter;
         }
-        
-        //[HttpGet]
-        //[Route("Notify/Runs")]
-        ////public async Task<IActionResult> Migrate()
-        //public IActionResult MigrateRuns()
-        //{
-        //    _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Runs");
 
-        //    _googleImporter.MigrateRuns();
-
-        //    return Ok();
-        //}
-
-        //[HttpGet]
-        //[Route("Notify/Ergos")]
-        ////public async Task<IActionResult> Migrate()
-        //public IActionResult MigrateErgos()
-        //{
-        //    _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Ergos");
-
-        //    _googleImporter.MigrateErgos();
-
-        //    return Ok();
-        //}
 
         [HttpGet]
         [Route("Notify/AlcoholIntakes")]

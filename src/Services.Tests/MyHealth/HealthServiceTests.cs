@@ -104,37 +104,7 @@ namespace Services.Tests.MyHealth
             Assert.Equal(date, latestDate);
 
         }
-
-        //[Fact]
-        //public void ShouldGetLatestHeartSummaryDate()
-        //{
-        //    //Given 
-        //    var date = new DateTime(2018, 1, 7);
-        //    _healthRepository.Setup(x => x.GetLatestHeartSummaryDate()).Returns(date);
-
-        //    //when
-        //    var latestDate = _healthService.GetLatestHeartSummaryDate(DateTime.MinValue);
-
-        //    //then
-        //    Assert.Equal(date, latestDate);
-
-        //}
-
-        //[Fact]
-        //public void ShouldGetLatestRunDate()
-        //{
-        //    //Given 
-        //    var date = new DateTime(2015, 1, 7);
-        //    _healthRepository.Setup(x => x.GetLatestRunDate()).Returns(date);
-
-        //    //when
-        //    var latestDate = _healthService.GetLatestRunDate(DateTime.MinValue);
-
-        //    //then
-        //    Assert.Equal(date, latestDate);
-
-        //}
-
+        
         [Fact]
         public void ShouldUpsertNewWeights()
         {
@@ -156,47 +126,6 @@ namespace Services.Tests.MyHealth
             _healthRepository.Verify(x => x.Upsert(newWeights[2]), Times.Once);
         }
 
-        //[Fact]
-        //public void ShouldUpsertNewRuns()
-        //{
-        //    //Given
-        //    var newRuns = new List<Run>
-        //    {
-        //        new Run { CreatedDate = new DateTime(2010,10,10) },
-        //        new Run { CreatedDate = new DateTime(2010,10,11) },
-        //        new Run { CreatedDate = new DateTime(2010,10,12) }
-
-        //    };
-
-        //    //When
-        //    _healthService.UpsertRuns(newRuns);
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newRuns[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newRuns[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newRuns[2]), Times.Once);
-        //}
-
-        //[Fact]
-        //public void ShouldUpsertNewErgos()
-        //{
-        //    //Given
-        //    var newErgos = new List<Ergo>
-        //    {
-        //        new Ergo { CreatedDate = new DateTime(2010,10,10) },
-        //        new Ergo { CreatedDate = new DateTime(2010,10,11) },
-        //        new Ergo { CreatedDate = new DateTime(2010,10,12) }
-
-        //    };
-
-        //    //When
-        //    _healthService.UpsertErgos(newErgos);
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newErgos[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newErgos[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newErgos[2]), Times.Once);
-        //}
 
         [Fact]
         public void ShouldUpsertNewAlcoholIntakes()
