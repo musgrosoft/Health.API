@@ -18,10 +18,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nokia\Nokia.csproj" />
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
     <ProjectReference Include="..\Utils\Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Fitbit\" />
+    <Folder Include="GoogleSheets\" />
+    <Folder Include="Withings\" />
   </ItemGroup>
 
 </Project>

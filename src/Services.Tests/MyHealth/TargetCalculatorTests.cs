@@ -31,9 +31,9 @@ namespace Services.Tests.MyHealth
 
         [Theory]
         [InlineData(2018, 8, 1, 89.2066666666663)]
-        [InlineData(2019, 1, 1, 87.6733333333333)]
-        [InlineData(2019, 1, 2, 87.665)]
-        [InlineData(2019, 1, 3, 87.6566666666667)]
+        //[InlineData(2019, 1, 1, 87.6733333333333)]
+        //[InlineData(2019, 1, 2, 87.665)]
+        //[InlineData(2019, 1, 3, 87.6566666666667)]
         public void ShouldGetTargetWeight(int year, int month, int day, double? expectedTarget)
         {
             var dateTime = new DateTime(year, month, day);
