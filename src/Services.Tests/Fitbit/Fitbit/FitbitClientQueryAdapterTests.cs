@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Fitbit.Domain;
-using Fitbit.Services;
 using Moq;
+using Services.Fitbit.Domain;
+using Services.Fitbit.Services;
 using Utils;
 using Xunit;
 
-namespace Fitbit.Unit.Tests.Fitbit
+namespace Services.Tests.Fitbit.Fitbit
 {
     public class FitbitClientQueryAdapterTests
     {

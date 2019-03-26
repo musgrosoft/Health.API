@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Nokia.Domain;
-using Nokia.Domain.OAuthDomain;
 using Services.OAuth;
+using Services.Withings.Domain;
+using Services.Withings.Domain.OAuthDomain;
 using Utils;
 
-namespace Nokia.Services
+namespace Services.Withings.Services
 {
     public class NokiaAuthenticator : INokiaAuthenticator
     {

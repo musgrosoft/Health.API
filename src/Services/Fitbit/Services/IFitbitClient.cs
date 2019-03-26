@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Fitbit.Domain;
+using Services.Fitbit.Domain;
 
-namespace Fitbit.Services
+namespace Services.Fitbit.Services
 {
     public interface IFitbitClient
     {

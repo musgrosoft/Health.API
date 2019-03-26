@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using HealthAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Nokia.Importer;
-using Nokia.Services;
+using Services.Withings.Importer;
+using Services.Withings.Services;
 using Utils;
 using Xunit;
 

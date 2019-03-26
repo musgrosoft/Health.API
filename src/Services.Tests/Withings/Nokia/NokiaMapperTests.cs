@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nokia.Domain;
-using Nokia.Services;
+using Services.Withings.Domain;
+using Services.Withings.Services;
 using Utils;
 using Xunit;
 
-namespace Nokia.Unit.Tests.Nokia
+namespace Services.Tests.Withings.Nokia
 {
     public class NokiaMapperTests
     {

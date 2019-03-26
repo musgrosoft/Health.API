@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Fitbit.Domain;
 using Repositories.Health.Models;
+using Services.Fitbit.Domain;
 
-namespace Fitbit.Services
+namespace Services.Fitbit.Services
 {
     public class FitbitMapper : IFitbitMapper
     {

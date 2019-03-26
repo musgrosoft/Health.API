@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Utils;
 
-namespace Google
+namespace Services.GoogleSheets
 {
     public class GoogleRowCollector : IGoogleRowCollector
     {

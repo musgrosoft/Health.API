@@ -11,9 +11,6 @@ using Utils;
 using Services.OAuth;
 using Repositories.OAuth;
 using System.Net.Http;
-using Fitbit.Importer;
-using Nokia.Importer;
-using Fitbit.Services;
 using Google;
 using Hangfire;
 using Hangfire.MemoryStorage;
@@ -23,7 +20,11 @@ using Microsoft.AspNetCore.Localization;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
-using Nokia.Services;
+using Services.Fitbit.Importer;
+using Services.Fitbit.Services;
+using Services.GoogleSheets;
+using Services.Withings.Importer;
+using Services.Withings.Services;
 using Calendar = Utils.Calendar;
 
 namespace HealthAPI

@@ -1,11 +1,4 @@
-﻿using System.Threading.Tasks;
-using Fitbit.Services;
-using Moq;
-using Services.OAuth;
-using Utils;
-using Xunit;
-
-namespace Fitbit.Unit.Tests.Services
+﻿namespace Services.Tests.Fitbit.Services
 {
     public class FitbitAuthenticatorTests
     {

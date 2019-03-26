@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Fitbit.Services;
 using Repositories.Health.Models;
+using Services.Fitbit.Services;
 
 namespace HealthAPI.Acceptance.Tests
 {

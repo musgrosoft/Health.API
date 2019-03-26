@@ -8,7 +8,7 @@ using Repositories.Health.Models;
 using Services.Health;
 using Utils;
 
-namespace Google
+namespace Services.GoogleSheets
 {
 
     public class GoogleImporter : IGoogleImporter

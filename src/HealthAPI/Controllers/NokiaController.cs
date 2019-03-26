@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Nokia.Importer;
-using Nokia.Services;
+using Services.Withings.Importer;
+using Services.Withings.Services;
 using Utils;
 
 namespace HealthAPI.Controllers

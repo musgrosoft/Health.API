@@ -4,10 +4,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
-using Nokia.Domain;
+using Services.Withings.Domain;
 using Utils;
 
-namespace Nokia.Services
+namespace Services.Withings.Services
 {
     public class NokiaClient : INokiaClient
     {

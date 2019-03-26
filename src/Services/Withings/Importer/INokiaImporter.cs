@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Nokia.Importer
+namespace Services.Withings.Importer
 {
     public interface INokiaImporter
     {

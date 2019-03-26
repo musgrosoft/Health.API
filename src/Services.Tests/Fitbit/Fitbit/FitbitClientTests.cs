@@ -3,13 +3,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Fitbit.Services;
 using Moq;
 using Moq.Protected;
+using Services.Fitbit.Services;
 using Utils;
 using Xunit;
 
-namespace Fitbit.Unit.Tests.Fitbit
+namespace Services.Tests.Fitbit.Fitbit
 {
     public class FitbitClientTests
     {

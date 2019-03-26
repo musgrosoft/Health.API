@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Repositories.Health.Models;
 using Utils;
 
-namespace Fitbit.Services
+namespace Services.Fitbit.Services
 {
     public class FitbitService : IFitbitService
     {

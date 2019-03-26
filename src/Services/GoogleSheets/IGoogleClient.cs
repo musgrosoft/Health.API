@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Repositories.Health.Models;
 
-namespace Google
+namespace Services.GoogleSheets
 {
     public interface IGoogleClient
     {

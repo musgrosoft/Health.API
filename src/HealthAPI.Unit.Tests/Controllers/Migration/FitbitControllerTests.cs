@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Fitbit.Importer;
-using Fitbit.Services;
 using Hangfire;
 using Hangfire.Common;
 using Hangfire.States;
@@ -9,6 +7,8 @@ using HealthAPI.Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Services.Fitbit.Importer;
+using Services.Fitbit.Services;
 using Utils;
 using Xunit;
 

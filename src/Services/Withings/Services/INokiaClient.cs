@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nokia.Domain;
+using Services.Withings.Domain;
 
-namespace Nokia.Services
+namespace Services.Withings.Services
 {
     public interface INokiaClient
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Fitbit.Importer;
+using Services.Fitbit.Importer;
 using Utils;
 
 namespace HealthAPI.Hangfire

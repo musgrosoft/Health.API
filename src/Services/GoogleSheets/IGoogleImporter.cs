@@ -1,6 +1,6 @@
 ﻿using Repositories.Health.Models;
 
-namespace Google
+namespace Services.GoogleSheets
 {
     public interface IGoogleImporter
     {

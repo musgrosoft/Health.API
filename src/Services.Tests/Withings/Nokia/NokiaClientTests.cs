@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
-using Nokia.Services;
+using Services.Withings.Services;
 
-namespace Nokia.Unit.Tests.Nokia
+namespace Services.Tests.Withings.Nokia
 {
     public class NokiaClientTests
     {

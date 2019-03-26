@@ -1,4 +1,4 @@
-﻿namespace Fitbit.Domain
+﻿namespace Services.Fitbit.Domain
 {
     public class FitbitAuthTokensResponse
     {

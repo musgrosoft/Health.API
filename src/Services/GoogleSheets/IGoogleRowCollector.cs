@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Google
+namespace Services.GoogleSheets
 {
     public interface IGoogleRowCollector
     {

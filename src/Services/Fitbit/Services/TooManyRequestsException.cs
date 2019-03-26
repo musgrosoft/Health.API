@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fitbit.Services
+namespace Services.Fitbit.Services
 {
     [Serializable]
     public class TooManyRequestsException : Exception

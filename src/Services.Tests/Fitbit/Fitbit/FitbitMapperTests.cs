@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Fitbit.Domain;
-using Fitbit.Services;
+using Services.Fitbit.Domain;
+using Services.Fitbit.Services;
 using Xunit;
 
-namespace Fitbit.Unit.Tests.Fitbit
+namespace Services.Tests.Fitbit.Fitbit
 {
     public class FitbitMapperTests
     {

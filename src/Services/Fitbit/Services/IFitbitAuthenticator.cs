@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Fitbit.Services
+namespace Services.Fitbit.Services
 {
     public interface IFitbitAuthenticator
     {

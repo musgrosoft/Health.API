@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fitbit.Domain
+namespace Services.Fitbit.Domain
 {
     public class Value
     {

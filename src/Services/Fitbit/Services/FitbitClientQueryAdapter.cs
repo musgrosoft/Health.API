@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Fitbit.Domain;
+using Services.Fitbit.Domain;
 using Utils;
 
-namespace Fitbit.Services
+namespace Services.Fitbit.Services
 {
     public class FitbitClientQueryAdapter : IFitbitClientQueryAdapter
     {

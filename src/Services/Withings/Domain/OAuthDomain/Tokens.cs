@@ -1,4 +1,4 @@
-﻿namespace Nokia.Domain.OAuthDomain
+﻿namespace Services.Withings.Domain.OAuthDomain
 {
     public class Tokens
     {

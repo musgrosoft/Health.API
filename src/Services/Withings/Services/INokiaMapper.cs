@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Nokia.Domain;
 using Repositories.Health.Models;
+using Services.Withings.Domain;
 
-namespace Nokia.Services
+namespace Services.Withings.Services
 {
     public interface INokiaMapper
     {

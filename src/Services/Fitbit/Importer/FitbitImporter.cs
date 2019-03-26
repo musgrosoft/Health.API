@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Fitbit.Services;
+using Services.Fitbit.Services;
 using Services.Health;
 using Utils;
 
-namespace Fitbit.Importer
+namespace Services.Fitbit.Importer
 {
     public class FitbitImporter : IFitbitImporter
     {

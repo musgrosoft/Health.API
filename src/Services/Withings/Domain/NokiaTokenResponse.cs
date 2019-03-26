@@ -1,4 +1,4 @@
-﻿namespace Nokia.Domain
+﻿namespace Services.Withings.Domain
 {
     public class NokiaTokenResponse
     {

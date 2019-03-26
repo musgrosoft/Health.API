@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nokia.Domain
+namespace Services.Withings.Domain
 {
     public class Response
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Fitbit.Domain
+namespace Services.Fitbit.Domain
 {
     public class Dataset
     {

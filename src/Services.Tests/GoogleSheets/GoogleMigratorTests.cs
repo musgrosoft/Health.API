@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Google;
-using Moq;
-using Repositories.Health.Models;
+﻿using Moq;
+using Services.GoogleSheets;
 using Services.Health;
 using Utils;
-using Xunit;
 
-namespace GoogleSheets.Unit.Tests
+namespace Services.Tests.GoogleSheets
 {
     public class GoogleMigratorTests
     {

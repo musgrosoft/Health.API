@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Repositories.Health.Models;
 using Utils;
 
-namespace Google
+namespace Services.GoogleSheets
 {
     public class Mapper : IMapper
     {

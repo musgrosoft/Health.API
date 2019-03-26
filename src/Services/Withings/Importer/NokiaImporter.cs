@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Nokia.Services;
 using Services.Health;
+using Services.Withings.Services;
 using Utils;
 
-namespace Nokia.Importer
+namespace Services.Withings.Importer
 {   
     public class NokiaImporter : INokiaImporter
     {
