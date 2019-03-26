@@ -7,7 +7,7 @@ using Utils;
 
 namespace Services.Withings.Services
 {
-    public class NokiaMapper : INokiaMapper
+    public class WithingsMapper : IWithingsMapper
     {
 
         private const int WeightKgMeasureTypeId = 1;

@@ -2,7 +2,7 @@
 
 namespace Services.Withings.Services
 {
-    public interface INokiaAuthenticator
+    public interface IWithingsAuthenticator
     {
         Task SetTokens(string authorizationCode);
         Task<string> GetAccessToken();

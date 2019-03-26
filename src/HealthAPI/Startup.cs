@@ -114,14 +114,14 @@ namespace HealthAPI
             services.AddTransient<IFitbitService, FitbitService>();
             services.AddTransient<IFitbitImporter, FitbitImporter>();
             services.AddTransient<ICalendar, Calendar>();
-            services.AddTransient<INokiaImporter, NokiaImporter>();
-            services.AddTransient<INokiaClient, NokiaClient>();
-            services.AddTransient<INokiaAuthenticator, NokiaAuthenticator>();
+            services.AddTransient<IWithingsImporter, WithingsImporter>();
+            services.AddTransient<IWithingsClient, WithingsClient>();
+            services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
             services.AddTransient<IFitbitClient, FitbitClient>();
             services.AddTransient<IGoogleClient, GoogleClient>();
             services.AddTransient<IGoogleImporter, GoogleImporter>();
             services.AddTransient<IHangfireWork, HangfireWork>();
-            services.AddTransient<INokiaService, NokiaService>();
+            services.AddTransient<IWithingsService, WithingsService>();
             services.AddTransient<ITargetCalculator, TargetCalculator>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();
             services.AddTransient<ISheetMapper, SheetMapper>();
@@ -129,8 +129,8 @@ namespace HealthAPI
             services.AddTransient<IGoogleRowCollector, GoogleRowCollector>();
 
 
-            services.AddTransient<INokiaMapper, NokiaMapper>();
-            services.AddTransient<INokiaClientQueryAdapter, NokiaClientQueryAdapter>();
+            services.AddTransient<IWithingsMapper, WithingsMapper>();
+            services.AddTransient<IWithingsClientQueryAdapter, WithingsClientQueryAdapter>();
 
             services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
 

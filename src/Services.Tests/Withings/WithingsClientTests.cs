@@ -9,14 +9,14 @@ using Services.Withings.Services;
 
 namespace Services.Tests.Withings.Nokia
 {
-    public class NokiaClientTests
+    public class WithingsClientTests
     {
         Uri _capturedUri = new Uri("http://www.null.com");
         private Mock<HttpMessageHandler> _httpMessageHandler;
         private HttpClient _httpClient;
-        private NokiaClient _nokiaClient;
+        private WithingsClient _withingsClient;
 
-        public NokiaClientTests()
+        public WithingsClientTests()
         {
             _httpMessageHandler = new Mock<HttpMessageHandler>();
             _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
@@ -28,7 +28,7 @@ namespace Services.Tests.Withings.Nokia
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
 
-            _nokiaClient = new NokiaClient(_httpClient, null, null);
+            _withingsClient = new WithingsClient(_httpClient, null, null);
         }
 
         //[Fact]

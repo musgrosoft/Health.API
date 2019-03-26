@@ -5,7 +5,7 @@ using Services.Withings.Domain;
 
 namespace Services.Withings.Services
 {
-    public interface INokiaClientQueryAdapter
+    public interface IWithingsClientQueryAdapter
     {
         Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(DateTime sinceDateTime);
     }

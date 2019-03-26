@@ -10,7 +10,7 @@ using Utils;
 
 namespace Services.Withings.Services
 {
-    public class NokiaAuthenticator : INokiaAuthenticator
+    public class WithingsAuthenticator : IWithingsAuthenticator
     {
         private readonly ITokenService _oAuthService;
 
@@ -28,7 +28,7 @@ namespace Services.Withings.Services
 
         private const string NOKIA_REDIRECT_URL = "https://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
 
-        public NokiaAuthenticator(ITokenService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
+        public WithingsAuthenticator(ITokenService oAuthService, IConfig config, HttpClient httpClient, ILogger logger)
         {
             _oAuthService = oAuthService;
             _config = config;
@@ -59,7 +59,7 @@ namespace Services.Withings.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
+                    var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
 
                     var tokenResponseAccessToken = tokenResponse.access_token;
                     var tokenResponseRefreshToken = tokenResponse.refresh_token;
@@ -111,7 +111,7 @@ namespace Services.Withings.Services
 
             string responseBody = await response.Content.ReadAsStringAsync();
                         
-            var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
+            var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
 
             var tokenResponseAccessToken = tokenResponse.access_token;
             var tokenResponseRefreshToken = tokenResponse.refresh_token;

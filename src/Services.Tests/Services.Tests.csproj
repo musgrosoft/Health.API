@@ -26,7 +26,6 @@
   <ItemGroup>
     <Folder Include="Fitbit\" />
     <Folder Include="GoogleSheets\" />
-    <Folder Include="Withings\" />
   </ItemGroup>
 
 </Project>

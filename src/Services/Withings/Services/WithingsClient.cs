@@ -9,11 +9,11 @@ using Utils;
 
 namespace Services.Withings.Services
 {
-    public class NokiaClient : INokiaClient
+    public class WithingsClient : IWithingsClient
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
-        private readonly INokiaAuthenticator _nokiaAuthenticator;
+        private readonly IWithingsAuthenticator _withingsAuthenticator;
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
         private const int DiastolicBloodPressureMeasureTypeId = 9;
@@ -22,11 +22,11 @@ namespace Services.Withings.Services
 
         private const string NOKIA_BASE_URL = "https://wbsapi.withings.net";
 
-        public NokiaClient(HttpClient httpClient, ILogger logger, INokiaAuthenticator nokiaAuthenticator)
+        public WithingsClient(HttpClient httpClient, ILogger logger, IWithingsAuthenticator withingsAuthenticator)
         {
             _httpClient = httpClient;
             _logger = logger;
-            _nokiaAuthenticator = nokiaAuthenticator;
+            _withingsAuthenticator = withingsAuthenticator;
         }
 
         private async Task Revoke()
@@ -52,7 +52,7 @@ namespace Services.Withings.Services
         {
             await Revoke();
 
-            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
             //var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
 
             var weightsCallback = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify/Weights";
@@ -113,7 +113,7 @@ namespace Services.Withings.Services
         public async Task<string> GetWeightSubscription()
         {
             
-            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             //return null;
             _httpClient.DefaultRequestHeaders.Clear();
@@ -129,7 +129,7 @@ namespace Services.Withings.Services
         public async Task<string> GetBloodPressureSubscription()
         {
             
-            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             //return null;
             _httpClient.DefaultRequestHeaders.Clear();
@@ -206,7 +206,7 @@ namespace Services.Withings.Services
 
         public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups()
         {
-            var accessToken = await _nokiaAuthenticator.GetAccessToken();
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();

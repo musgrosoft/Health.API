@@ -4,7 +4,7 @@ using Services.Withings.Domain;
 
 namespace Services.Withings.Services
 {
-    public interface INokiaMapper
+    public interface IWithingsMapper
     {
         IEnumerable<Weight> MapMeasuresGroupsToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups);
         IEnumerable<BloodPressure> MapMeasuresGroupsToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups);

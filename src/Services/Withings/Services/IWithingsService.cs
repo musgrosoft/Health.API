@@ -5,7 +5,7 @@ using Repositories.Health.Models;
 
 namespace Services.Withings.Services
 {
-    public interface INokiaService
+    public interface IWithingsService
     {
         Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime);
         Task<IEnumerable<BloodPressure>> GetBloodPressures(DateTime sinceDateTime);

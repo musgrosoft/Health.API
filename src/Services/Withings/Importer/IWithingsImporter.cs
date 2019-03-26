@@ -2,7 +2,7 @@
 
 namespace Services.Withings.Importer
 {
-    public interface INokiaImporter
+    public interface IWithingsImporter
     {
         Task MigrateBloodPressures();
         Task MigrateWeights();

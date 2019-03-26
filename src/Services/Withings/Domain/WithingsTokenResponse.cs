@@ -1,6 +1,6 @@
 ﻿namespace Services.Withings.Domain
 {
-    public class NokiaTokenResponse
+    public class WithingsTokenResponse
     {
         public string access_token { get; set; }
         public string expires_in { get; set; }

@@ -7,18 +7,18 @@ using Utils;
 
 namespace Services.Withings.Services
 {
-    public class NokiaClientQueryAdapter : INokiaClientQueryAdapter
+    public class WithingsClientQueryAdapter : IWithingsClientQueryAdapter
     {
-        private readonly INokiaClient _nokiaClient;
+        private readonly IWithingsClient _withingsClient;
         
-        public NokiaClientQueryAdapter(INokiaClient nokiaClient)
+        public WithingsClientQueryAdapter(IWithingsClient withingsClient)
         {
-            _nokiaClient = nokiaClient;
+            _withingsClient = withingsClient;
         }
 
         public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(DateTime sinceDateTime)
         {
-            var measureGroups = await _nokiaClient.GetMeasureGroups();
+            var measureGroups = await _withingsClient.GetMeasureGroups();
 
             var dateFilteredMeasures = measureGroups.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
 

@@ -6,20 +6,20 @@ using Services.Withings.Services;
 using Utils;
 using Xunit;
 
-namespace Services.Tests.Withings.Nokia
+namespace Services.Tests.Withings
 {
-    public class NokiaMapperTests
+    public class WithingsMapperTests
     {
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
         private const int DiastolicBloodPressureMeasureTypeId = 9;
         private const int SystolicBloodPressureMeasureTypeId = 10;
 
-        private NokiaMapper _nokiaMapper;
+        private WithingsMapper _withingsMapper;
 
-        public NokiaMapperTests()
+        public WithingsMapperTests()
         {
-            _nokiaMapper = new NokiaMapper();
+            _withingsMapper = new WithingsMapper();
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Services.Tests.Withings.Nokia
                 }}
             };
 
-            var result = _nokiaMapper.MapMeasuresGroupsToWeights(measuresGroups);
+            var result = _withingsMapper.MapMeasuresGroupsToWeights(measuresGroups);
 
             //Then
             Assert.Equal(3, result.Count());
@@ -72,7 +72,7 @@ namespace Services.Tests.Withings.Nokia
                 }}
             };
 
-            var result = _nokiaMapper.MapMeasuresGroupsToBloodPressures(measuresGroups);
+            var result = _withingsMapper.MapMeasuresGroupsToBloodPressures(measuresGroups);
 
             //Then
             Assert.Equal(3, result.Count());

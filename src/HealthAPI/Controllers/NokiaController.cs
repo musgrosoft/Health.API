@@ -12,8 +12,8 @@ namespace HealthAPI.Controllers
     public class NokiaController : Controller
     {
         private readonly ILogger _logger;
-        private readonly INokiaImporter _nokiaImporter;
-        private readonly INokiaService _nokiaService;
+        private readonly IWithingsImporter _withingsImporter;
+        private readonly IWithingsService _withingsService;
 
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
@@ -22,11 +22,11 @@ namespace HealthAPI.Controllers
         private const int SubscribeBloodPressureId = 4;
 
 
-        public NokiaController(ILogger logger, INokiaImporter nokiaImporter, INokiaService nokiaService)
+        public NokiaController(ILogger logger, IWithingsImporter withingsImporter, IWithingsService withingsService)
         {
             _logger = logger;
-            _nokiaImporter = nokiaImporter;
-            _nokiaService = nokiaService;
+            _withingsImporter = withingsImporter;
+            _withingsService = withingsService;
         }
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync("NOKIA NEW : Migrating just weights");
 
-            await _nokiaImporter.MigrateWeights();
+            await _withingsImporter.MigrateWeights();
 
             await _logger.LogMessageAsync("NOKIA : Finished Migrating just weights");
 
@@ -52,7 +52,7 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync("NOKIA NEW : Migrating just blood pressures");
 
-            await _nokiaImporter.MigrateBloodPressures();
+            await _withingsImporter.MigrateBloodPressures();
 
             await _logger.LogMessageAsync("NOKIA : Finished Migrating just blood pressures");
 
@@ -63,7 +63,7 @@ namespace HealthAPI.Controllers
         [Route("OAuth")]
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {
-            await _nokiaService.SetTokens(code);
+            await _withingsService.SetTokens(code);
             return Ok("Helllo123 change to useful message");
         }
         
@@ -72,7 +72,7 @@ namespace HealthAPI.Controllers
         [Route("Subscribe")]
         public async Task<IActionResult> Subscribe()
         {
-            await _nokiaService.Subscribe();
+            await _withingsService.Subscribe();
             return Ok("Helllo123 change to useful message");
         }
 
@@ -80,7 +80,7 @@ namespace HealthAPI.Controllers
         [Route("ListSubscriptions")]
         public async Task<IActionResult> ListSubscriptions()
         {
-            var subscriptions = await _nokiaService.GetSubscriptions();
+            var subscriptions = await _withingsService.GetSubscriptions();
 
             return Ok(subscriptions);
         }
