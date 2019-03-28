@@ -22,7 +22,6 @@ namespace Repositories.OAuth
             }
             else
             {
-                //  _logger.Log("HEART SUMMARY : insert thing");
                 _healthContext.Add(new Token
                 {
                     Name = tokenName,
