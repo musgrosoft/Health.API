@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
-using Google;
+﻿using System;
+using System.Collections.Generic;
 using HealthAPI.Controllers;
 using Moq;
+using Repositories.Health.Models;
 using Services.GoogleSheets;
+using Services.Health;
 using Utils;
 using Xunit;
 
@@ -12,42 +14,34 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
     {
         private readonly Mock<ILogger> _logger;
         private readonly GoogleSheetsController _googleSheetsController;
-        private readonly Mock<IGoogleImporter> _googleMigrator;
+        
+        private Mock<IGoogleClient> _googleClient;
+        private Mock<IHealthService> _healthService;
 
         public GoogleSheetsControllerTests()
         {
             _logger = new Mock<ILogger>();
-            _googleMigrator = new Mock<IGoogleImporter>();
+            _googleClient = new Mock<IGoogleClient>();
+            _healthService = new Mock<IHealthService>();
      
-            _googleSheetsController = new GoogleSheetsController(_logger.Object,_googleMigrator.Object);
+            _googleSheetsController = new GoogleSheetsController(_logger.Object, _googleClient.Object, _healthService.Object);
         }
-
-        //[Fact]
-        //public void ShouldMigrateRuns()
-        //{
-        //    _googleSheetsController.MigrateRuns();
-
-        //    _googleMigrator.Verify(x => x.MigrateRuns(), Times.Once);
-        //    _logger.Verify(x => x.LogMessageAsync("GOOGLE SHEETS : Migrate Runs"));
-
-        //}
-
-        //[Fact]
-        //public void ShouldMigrateErgos()
-        //{
-        //    _googleSheetsController.MigrateErgos();
-
-        //    _googleMigrator.Verify(x => x.MigrateErgos(), Times.Once);
-        //    _logger.Verify(x => x.LogMessageAsync("GOOGLE SHEETS : Migrate Ergos"));
-
-        //}
 
         [Fact]
         public void ShouldMigrateUnits()
         {
+
+            var someAlcoholIntakes = new List<AlcoholIntake>
+            {
+                new AlcoholIntake {CreatedDate = new DateTime(2018,1,1),Units = 1},
+                new AlcoholIntake {CreatedDate = new DateTime(2018,1,2),Units = 2},
+                new AlcoholIntake {CreatedDate = new DateTime(2018,1,3),Units = 3}
+            };
+            _googleClient.Setup(x => x.GetAlcoholIntakes()).Returns(someAlcoholIntakes);
+            
             _googleSheetsController.MigrateUnits();
 
-            _googleMigrator.Verify(x=>x.MigrateAlcoholIntakes(), Times.Once);
+            _healthService.Verify(x=>x.UpsertAlcoholIntakes(someAlcoholIntakes), Times.Once);
             _logger.Verify(x=>x.LogMessageAsync("GOOGLE SHEETS : Migrate Units"));
 
         }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,12 +9,9 @@ using Utils;
 using Services.OAuth;
 using Repositories.OAuth;
 using System.Net.Http;
-using Google;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using HealthAPI.Hangfire;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Localization;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
@@ -119,7 +114,7 @@ namespace HealthAPI
             services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
             services.AddTransient<IFitbitClient, FitbitClient>();
             services.AddTransient<IGoogleClient, GoogleClient>();
-            services.AddTransient<IGoogleImporter, GoogleImporter>();
+
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<IWithingsService, WithingsService>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();

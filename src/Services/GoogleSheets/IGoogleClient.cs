@@ -9,5 +9,6 @@ namespace Services.GoogleSheets
         List<AlcoholIntake> GetAlcoholIntakes();
         //List<Ergo> GetErgos();
         List<Exercise> GetExercises();
+        void InsertExercises(Exercise exercise);
     }
 }

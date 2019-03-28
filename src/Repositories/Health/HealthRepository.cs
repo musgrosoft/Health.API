@@ -56,8 +56,6 @@ namespace Repositories.Health
                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                 existingWeight.Kg = weight.Kg;
                 existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
-                //todo test
-                existingWeight.TargetKg = weight.TargetKg;
             }
 
             _healthContext.SaveChanges();

@@ -1,6 +1,7 @@
 ﻿using Google;
 using Microsoft.AspNetCore.Mvc;
 using Services.GoogleSheets;
+using Services.Health;
 using Utils;
 
 namespace HealthAPI.Controllers
@@ -10,13 +11,15 @@ namespace HealthAPI.Controllers
     public class GoogleSheetsController : Controller
     {
         private readonly ILogger _logger;
+        private readonly IGoogleClient _googleClient;
+        private readonly IHealthService _healthService;
         
-        private readonly IGoogleImporter _googleImporter;
-
-        public GoogleSheetsController(ILogger logger, IGoogleImporter googleImporter)
+        public GoogleSheetsController(ILogger logger, IGoogleClient googleClient, IHealthService healthService)
         {
             _logger = logger;
-            _googleImporter = googleImporter;
+            _googleClient = googleClient;
+            _healthService = healthService;
+            //_googleImporter = googleImporter;
         }
 
 
@@ -27,7 +30,10 @@ namespace HealthAPI.Controllers
         {
             _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Units");
 
-            _googleImporter.MigrateAlcoholIntakes();
+            //_googleImporter.MigrateAlcoholIntakes();
+
+            var alcoholIntakes = _googleClient.GetAlcoholIntakes();
+            _healthService.UpsertAlcoholIntakes(alcoholIntakes);
 
             return Ok();
         }
@@ -39,7 +45,10 @@ namespace HealthAPI.Controllers
         {
             _logger.LogMessageAsync("GOOGLE SHEETS : Import Exercises");
 
-            _googleImporter.ImportExercises();
+            //_googleImporter.ImportExercises();
+
+            var rows = _googleClient.GetExercises();
+            _healthService.UpsertExercises(rows);
 
             return Ok();
         }

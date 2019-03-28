@@ -34,8 +34,6 @@ namespace Services.Withings.Importer
             
             var weights = (await _withingsService.GetWeights(fromDate)).ToList();
             await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
-
-            //weights = _targetService.SetTargets(weights);
             
             _healthService.UpsertWeights(weights);
         }

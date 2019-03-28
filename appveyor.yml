@@ -20,24 +20,12 @@ before_build:
     dotnet restore ./src/Utils.Unit.Tests/Utils.Unit.Tests.csproj
 
     dotnet restore ./src/HealthAPI/HealthAPI.csproj
-
-    dotnet restore ./src/Fitbit/Fitbit.csproj
     
-    dotnet restore ./src/Nokia/Nokia.csproj
-    
-    dotnet restore ./src/Google/Google.csproj
-
     dotnet restore ./src/Repositories/Repositories.csproj
 
     dotnet restore ./src/Services/Services.csproj
 
     dotnet restore ./src/Utils/Utils.csproj
-    
-    dotnet restore ./src/Fitbit.Unit.Tests/Fitbit.Unit.Tests.csproj
-    
-    dotnet restore ./src/Nokia.Unit.Tests/Nokia.Unit.Tests.csproj
-    
-    dotnet restore ./src/GoogleSheets.Unit.Tests/GoogleSheets.Unit.Tests.csproj
 
 
     dotnet clean ./src/HealthAPI.Acceptance.Tests/HealthAPI.Acceptance.Tests.csproj
@@ -52,23 +40,12 @@ before_build:
 
     dotnet clean ./src/HealthAPI/HealthAPI.csproj
 
-    dotnet clean ./src/Fitbit/Fitbit.csproj
-    
-    dotnet clean ./src/Nokia/Nokia.csproj
-    
-    dotnet clean ./src/Google/Google.csproj
-
     dotnet clean ./src/Repositories/Repositories.csproj
 
     dotnet clean ./src/Services/Services.csproj
 
     dotnet clean ./src/Utils/Utils.csproj
-    
-    dotnet clean ./src/Fitbit.Unit.Tests/Fitbit.Unit.Tests.csproj
-    
-    dotnet clean ./src/Nokia.Unit.Tests/Nokia.Unit.Tests.csproj
-    
-    dotnet clean ./src/GoogleSheets.Unit.Tests/GoogleSheets.Unit.Tests.csproj
+
 
 build:
   project: Health.API.sln

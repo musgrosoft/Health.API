@@ -1,7 +1,5 @@
-﻿using Google;
-using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebSockets.Internal;
 using Repositories.Health.Models;
 using Services.GoogleSheets;
 
@@ -13,11 +11,11 @@ namespace HealthAPI.Controllers
     [Route("api/Test")]
     public class TestController : Controller
     {
-        private readonly IGoogleImporter _googleImporter;
+        private readonly IGoogleClient _googleClient;
 
-        public TestController(IGoogleImporter googleImporter)
+        public TestController(IGoogleClient googleClient)
         {
-            _googleImporter = googleImporter;
+            _googleClient = googleClient;
         }
 
         [HttpPost]
@@ -26,7 +24,7 @@ namespace HealthAPI.Controllers
         //public async Task<IActionResult> Migrate()
         public IActionResult Test([FromBody]Exercise exercise)
         {
-            _googleImporter.InsertExercises(exercise);
+            _googleClient.InsertExercises(exercise);
 
             return Ok();
         }
