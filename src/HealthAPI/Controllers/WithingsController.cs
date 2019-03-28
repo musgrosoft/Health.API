@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Services.Withings.Importer;
+using Services.Health;
 using Services.Withings.Services;
 using Utils;
 
@@ -9,24 +10,29 @@ namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Nokia")]
-    public class NokiaController : Controller
+    public class WithingsController : Controller
     {
         private readonly ILogger _logger;
-        private readonly IWithingsImporter _withingsImporter;
         private readonly IWithingsService _withingsService;
+        private readonly IHealthService _healthService;
 
-        private const int WeightKgMeasureTypeId = 1;
-        private const int FatRatioPercentageMeasureTypeId = 6;
-        private const int DiastolicBloodPressureMeasureTypeId = 9;
-        private const int SystolicBloodPressureMeasureTypeId = 10;
-        private const int SubscribeBloodPressureId = 4;
+        //private const int WeightKgMeasureTypeId = 1;
+        //private const int FatRatioPercentageMeasureTypeId = 6;
+        //private const int DiastolicBloodPressureMeasureTypeId = 9;
+        //private const int SystolicBloodPressureMeasureTypeId = 10;
+        //private const int SubscribeBloodPressureId = 4;
 
 
-        public NokiaController(ILogger logger, IWithingsImporter withingsImporter, IWithingsService withingsService)
+        private const int SEARCH_DAYS_PREVIOUS = 10;
+
+        private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
+        private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
+
+        public WithingsController(ILogger logger, IWithingsService withingsService, IHealthService healthService)
         {
             _logger = logger;
-            _withingsImporter = withingsImporter;
             _withingsService = withingsService;
+            _healthService = healthService;
         }
 
         [HttpPost]
@@ -37,7 +43,17 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync("NOKIA NEW : Migrating just weights");
 
-            await _withingsImporter.MigrateWeights();
+            //await _withingsImporter.MigrateWeights();
+
+            var latestWeightDate = _healthService.GetLatestWeightDate(MIN_WEIGHT_DATE);
+            await _logger.LogMessageAsync($"WEIGHT : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+
+            var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+
+            var weights = (await _withingsService.GetWeights(fromDate)).ToList();
+            await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
+
+            _healthService.UpsertWeights(weights);
 
             await _logger.LogMessageAsync("NOKIA : Finished Migrating just weights");
 
@@ -52,7 +68,19 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync("NOKIA NEW : Migrating just blood pressures");
 
-            await _withingsImporter.MigrateBloodPressures();
+            //await _withingsImporter.MigrateBloodPressures();
+
+            var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(MIN_BLOOD_PRESSURE_DATE);
+            await _logger.LogMessageAsync($"BLOOD PRESSURE : Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+
+            var fromDate = latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+            await _logger.LogMessageAsync($"BLOOD PRESSURE : Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+
+            var bloodPressures = await _withingsService.GetBloodPressures(fromDate);
+            await _logger.LogMessageAsync($"BLOOD PRESSURE : Found {bloodPressures.Count()} Blood Pressure records.");
+
+            _healthService.UpsertBloodPressures(bloodPressures);
+
 
             await _logger.LogMessageAsync("NOKIA : Finished Migrating just blood pressures");
 

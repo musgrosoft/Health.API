@@ -64,7 +64,7 @@ deploy:
   website: Musgrosoft-Health-API
   username: $Musgrosoft-Health-API
   password:
-    secure: +Tef2W21z7HUxOIgJkYgHTkSozAEs7/Eb930gf7mSgGJAxwePhbwAm67F2waTMZPoxiBS/1Kt4VtsQKjlEX0kQ==
+    secure: Gz5GqhViaz2dZNJtBcfiXUptmuRRaS8YAZBWaqXhGRDKmqu70kTVdj65zvJnDzAM16M16iSL6vhji1Li7DakMA==
   artifact: mypackage
   aspnet_core: true
   remove_files: true

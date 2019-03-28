@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿//using System.Threading.Tasks;
 
-namespace Services.Withings.Importer
-{
-    public interface IWithingsImporter
-    {
-        Task MigrateBloodPressures();
-        Task MigrateWeights();
-    }
-}
+//namespace Services.Withings.Importer
+//{
+//    public interface IWithingsImporter
+//    {
+//        Task MigrateBloodPressures();
+//        Task MigrateWeights();
+//    }
+//}

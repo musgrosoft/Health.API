@@ -18,7 +18,6 @@ using Microsoft.EntityFrameworkCore;
 using Services.Fitbit.Importer;
 using Services.Fitbit.Services;
 using Services.GoogleSheets;
-using Services.Withings.Importer;
 using Services.Withings.Services;
 using Calendar = Utils.Calendar;
 
@@ -109,7 +108,6 @@ namespace HealthAPI
             services.AddTransient<IFitbitService, FitbitService>();
             services.AddTransient<IFitbitImporter, FitbitImporter>();
             services.AddTransient<ICalendar, Calendar>();
-            services.AddTransient<IWithingsImporter, WithingsImporter>();
             services.AddTransient<IWithingsClient, WithingsClient>();
             services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
             services.AddTransient<IFitbitClient, FitbitClient>();
