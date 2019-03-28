@@ -13,8 +13,6 @@ namespace Services.Health
         private readonly ILogger _logger;
         private readonly IHealthRepository _healthRepository;
 
-        private readonly ITargetCalculator _targetCalculator;
-
         //private readonly IEntityAggregator _entityAggregator;
         //private readonly IEntityDecorator _entityDecorator;
         private const int MOVING_AVERAGE_PERIOD = 10;
@@ -22,8 +20,7 @@ namespace Services.Health
         public HealthService(
             //IFitbitConfig config,
             ILogger logger,
-            IHealthRepository healthRepository,
-            ITargetCalculator targetCalculator
+            IHealthRepository healthRepository
             //IEntityAggregator entityAggregator, 
           //  IEntityDecorator entityDecorator
           )
@@ -31,7 +28,6 @@ namespace Services.Health
            // _config = config;
             _logger = logger;
             _healthRepository = healthRepository;
-            _targetCalculator = targetCalculator;
             //_entityAggregator = entityAggregator;
           //  _entityDecorator = entityDecorator;
         }
@@ -186,7 +182,6 @@ namespace Services.Health
 
             foreach (var weight in enumerable)
             {
-                weight.TargetKg = _targetCalculator.GetTargetWeight(weight.CreatedDate);
                 _healthRepository.Upsert(weight);
             }
         }

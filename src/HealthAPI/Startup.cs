@@ -122,7 +122,6 @@ namespace HealthAPI
             services.AddTransient<IGoogleImporter, GoogleImporter>();
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<IWithingsService, WithingsService>();
-            services.AddTransient<ITargetCalculator, TargetCalculator>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();
             services.AddTransient<ISheetMapper, SheetMapper>();
             services.AddTransient<IMapper, Mapper>();
