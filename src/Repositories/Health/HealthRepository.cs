@@ -78,7 +78,6 @@ namespace Repositories.Health
             {
                 // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
                 existingAlcoholIntake.Units = alcoholIntake.Units;
-                existingAlcoholIntake.Target = alcoholIntake.Target;
             }
 
             _healthContext.SaveChanges();

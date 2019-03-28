@@ -218,7 +218,6 @@ namespace Services.Health
             
             foreach (var alcoholIntake in alcoholIntakes)
             {
-                alcoholIntake.Target = _targetCalculator.GetAlcoholIntakeTarget(alcoholIntake.CreatedDate);
                 _healthRepository.Upsert(alcoholIntake);
             }
         }

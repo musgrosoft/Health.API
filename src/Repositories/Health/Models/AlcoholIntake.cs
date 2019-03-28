@@ -8,7 +8,5 @@ namespace Repositories.Health.Models
         [Key]
         public DateTime CreatedDate { get; set; }
         public Double Units { get; set; }
-        public Double? Target { get; set; }
-                
     }
 }

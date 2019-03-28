@@ -6,7 +6,6 @@ namespace Services.Health
     {
         double? GetTargetWeight(DateTime dateTime);
         
-        double? GetAlcoholIntakeTarget(DateTime dateTime);
         
     }
 }

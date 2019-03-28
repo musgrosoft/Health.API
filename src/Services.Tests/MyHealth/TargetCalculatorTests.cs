@@ -14,19 +14,7 @@ namespace Services.Tests.MyHealth
         }
 
 
-        [Theory]
-        [InlineData(2017, 1, 1, null)]
-        [InlineData(2019, 1, 1, 4)]
-        [InlineData(2019, 1, 2, 4)]
-        [InlineData(2019, 1, 3, 4)]
-        public void ShouldGetAlcoholIntakeTarget(int year, int month, int day, double? expectedTarget)
-        {
-            var dateTime = new DateTime(year, month, day);
 
-            var targetUnits = _targetCalculator.GetAlcoholIntakeTarget(dateTime);
-
-            Assert.Equal(expectedTarget, targetUnits);
-        }
 
 
         [Theory]

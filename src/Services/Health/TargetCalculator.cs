@@ -45,19 +45,5 @@ namespace Services.Health
             return null;
         }
 
-
-        public double? GetAlcoholIntakeTarget(DateTime dateTime)
-        {
-            var targetStartDate = new DateTime(2018, 5, 29);
-            var targetDailyUnits = 4;
-
-            if (dateTime < targetStartDate)
-            {
-                return null;
-            }
-
-            return targetDailyUnits;
-        }
-
     }
 }

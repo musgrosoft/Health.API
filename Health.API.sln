@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql Scripts", "Sql Scripts"
 		src\Sql Scripts\tbl_Calendar.sql = src\Sql Scripts\tbl_Calendar.sql
 		src\Sql Scripts\vw_DailyActiveMinutes.sql = src\Sql Scripts\vw_DailyActiveMinutes.sql
 		src\Sql Scripts\vw_DailyAlcoholIntakes.sql = src\Sql Scripts\vw_DailyAlcoholIntakes.sql
+		src\Sql Scripts\vw_DailyAlcoholIntakeTargets.sql = src\Sql Scripts\vw_DailyAlcoholIntakeTargets.sql
 		src\Sql Scripts\vw_DailyBloodPressures.sql = src\Sql Scripts\vw_DailyBloodPressures.sql
 		src\Sql Scripts\vw_DailyCardio.sql = src\Sql Scripts\vw_DailyCardio.sql
 		src\Sql Scripts\vw_DailyExercises.sql = src\Sql Scripts\vw_DailyExercises.sql
