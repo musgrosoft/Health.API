@@ -8,8 +8,8 @@ namespace Services.OAuth
         Task SaveFitbitAccessToken(string token);
         Task SaveFitbitRefreshToken(string token);
 
-        Task<string> GetNokiaRefreshToken();
-        Task SaveNokiaAccessToken(string token);
-        Task SaveNokiaRefreshToken(string token);
+        Task<string> GetWithingsRefreshToken();
+        Task SaveWithingsAccessToken(string token);
+        Task SaveWithingsRefreshToken(string token);
     }
 }

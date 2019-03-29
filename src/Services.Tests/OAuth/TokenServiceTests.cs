@@ -65,7 +65,7 @@ namespace Services.Tests.OAuth
             _repo.Setup(x => x.ReadToken("nokia_refresh_token")).Returns(Task.FromResult("Tremendous Token"));
 
             //When
-            var token = await _oAuthService.GetNokiaRefreshToken();
+            var token = await _oAuthService.GetWithingsRefreshToken();
 
             //Then
             Assert.Equal("Tremendous Token", token);
@@ -78,7 +78,7 @@ namespace Services.Tests.OAuth
             _repo.Setup(x => x.UpsertToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
 
             //When
-            await _oAuthService.SaveNokiaRefreshToken("Amazing Token");
+            await _oAuthService.SaveWithingsRefreshToken("Amazing Token");
 
             //Then
             _repo.Verify(x => x.UpsertToken("nokia_refresh_token", "Amazing Token"), Times.Once);
@@ -92,7 +92,7 @@ namespace Services.Tests.OAuth
             _repo.Setup(x => x.UpsertToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
 
             //When
-            await _oAuthService.SaveNokiaAccessToken("Good Token");
+            await _oAuthService.SaveWithingsAccessToken("Good Token");
 
             //Then
             _repo.Verify(x => x.UpsertToken("nokia_access_token", "Good Token"), Times.Once);

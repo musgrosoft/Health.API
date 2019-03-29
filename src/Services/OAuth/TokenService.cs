@@ -8,8 +8,8 @@ namespace Services.OAuth
         private const string FITBIT_ACCESS_TOKEN_KEY = "fitbit_access_token";
         private const string FITBIT_REFRESH_TOKEN_KEY = "fitbit_refresh_token";
 
-        private const string NOKIA_ACCESS_TOKEN_KEY = "nokia_access_token";
-        private const string NOKIA_REFRESH_TOKEN_KEY = "nokia_refresh_token";
+        private const string WITHINGS_ACCESS_TOKEN_KEY = "nokia_access_token";
+        private const string WITHINGS_REFRESH_TOKEN_KEY = "nokia_refresh_token";
         
         private readonly ITokenRepository _tokenRepository;
         
@@ -34,19 +34,19 @@ namespace Services.OAuth
         }
 
 
-        public async Task<string> GetNokiaRefreshToken()
+        public async Task<string> GetWithingsRefreshToken()
         {
-            return await _tokenRepository.ReadToken(NOKIA_REFRESH_TOKEN_KEY);
+            return await _tokenRepository.ReadToken(WITHINGS_REFRESH_TOKEN_KEY);
         }
 
-        public async Task SaveNokiaAccessToken(string token)
+        public async Task SaveWithingsAccessToken(string token)
         {
-            await _tokenRepository.UpsertToken(NOKIA_ACCESS_TOKEN_KEY, token);
+            await _tokenRepository.UpsertToken(WITHINGS_ACCESS_TOKEN_KEY, token);
         }
 
-        public async Task SaveNokiaRefreshToken(string token)
+        public async Task SaveWithingsRefreshToken(string token)
         {
-            await _tokenRepository.UpsertToken(NOKIA_REFRESH_TOKEN_KEY, token);
+            await _tokenRepository.UpsertToken(WITHINGS_REFRESH_TOKEN_KEY, token);
         }
 
     }

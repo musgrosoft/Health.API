@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Services.OAuth;
 using Services.Withings.Domain;
-using Services.Withings.Domain.OAuthDomain;
 using Utils;
 
 namespace Services.Withings.Services
@@ -64,8 +63,8 @@ namespace Services.Withings.Services
                     var tokenResponseAccessToken = tokenResponse.access_token;
                     var tokenResponseRefreshToken = tokenResponse.refresh_token;
 
-                    await _oAuthService.SaveNokiaAccessToken(tokenResponseAccessToken);
-                    await _oAuthService.SaveNokiaRefreshToken(tokenResponseRefreshToken);
+                    await _oAuthService.SaveWithingsAccessToken(tokenResponseAccessToken);
+                    await _oAuthService.SaveWithingsRefreshToken(tokenResponseRefreshToken);
                 }
                 else
                 {
@@ -81,20 +80,17 @@ namespace Services.Withings.Services
 
         public async Task<string> GetAccessToken()
         {
-            var refreshToken = await _oAuthService.GetNokiaRefreshToken();
+            var refreshToken = await _oAuthService.GetWithingsRefreshToken();
 
             var newTokens = await GetTokens(refreshToken);
-
-            var newAccessToken = newTokens.AccessToken;
-            var newRefreshToken = newTokens.RefreshToken;
-
-            await _oAuthService.SaveNokiaAccessToken(newAccessToken);
-            await _oAuthService.SaveNokiaRefreshToken(newRefreshToken);
             
-            return newAccessToken;
+            await _oAuthService.SaveWithingsAccessToken(newTokens.access_token);
+            await _oAuthService.SaveWithingsRefreshToken(newTokens.refresh_token);
+            
+            return newTokens.access_token;
         }
 
-        private async Task<Tokens> GetTokens(string refreshToken)
+        private async Task<WithingsTokenResponse> GetTokens(string refreshToken)
         {
             var url = $"{NOKIA_BASE_URL}/oauth2/token";
 
@@ -112,13 +108,8 @@ namespace Services.Withings.Services
             string responseBody = await response.Content.ReadAsStringAsync();
                         
             var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
-
-            var tokenResponseAccessToken = tokenResponse.access_token;
-            var tokenResponseRefreshToken = tokenResponse.refresh_token;
-
-            var tokens = new Tokens {AccessToken = tokenResponseAccessToken, RefreshToken = tokenResponseRefreshToken};
-
-            return tokens;
+            
+            return tokenResponse;
         }
 
 
