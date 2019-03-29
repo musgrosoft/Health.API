@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Repositories.Health.Models;
-using Utils;
 
 namespace Services.Fitbit.Services
 {

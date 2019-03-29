@@ -15,7 +15,6 @@ namespace HealthAPI.Controllers
         private readonly ILogger _logger;
         private readonly IConfig _config;
         private readonly IFitbitService _fitbitService;
-       // private readonly IHangfireUtility _hangfireUtility;
         private readonly IHangfireWork _hangfireWork;
 
         private readonly IBackgroundJobClient _backgroundJobClient;
@@ -27,7 +26,6 @@ namespace HealthAPI.Controllers
             _config = config;
             _fitbitService = fitbitService;
             _backgroundJobClient = backgroundJobClient;
-            //_hangfireUtility = hangfireUtility;
             _hangfireWork = hangfireWork;
         }
 
@@ -37,7 +35,6 @@ namespace HealthAPI.Controllers
         {
             _logger.LogMessageAsync("Fitbit Notification : MIGRATING ALL FITBIT DATA");
 
-            //_hangfireUtility.Enqueue(() => _hangfireWork.MigrateAllFitbitData());
             _backgroundJobClient.Enqueue(() => _hangfireWork.MigrateAllFitbitData());
 
             return (NoContent());
@@ -87,13 +84,5 @@ namespace HealthAPI.Controllers
             return Json($"https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri={urlEncodedRedirectUrl}&scope=activity%20heartrate");
         }
 
-        //[HttpGet]
-        //[ProducesResponseType(typeof(String), 200)]
-        //[Route("Runs")]
-        //public async Task<IActionResult> Runs()
-        //{
-        //    var runs = await _fitbitService.GetRuns(new DateTime(2018, 8, 1), new DateTime(2018, 10, 11));
-        //    return Json(runs);
-        //}
     }
 }

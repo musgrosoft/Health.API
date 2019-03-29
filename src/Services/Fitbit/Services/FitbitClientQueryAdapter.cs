@@ -18,64 +18,6 @@ namespace Services.Fitbit.Services
             _logger = logger;
         }
 
-        //public async Task<IEnumerable<Dataset>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate)
-        //{
-        //    var heartRates = new List<Dataset>();
-
-        //    for (DateTime date = fromDate;
-        //            date <= toDate;
-        //            date = date.AddDays(1))
-        //    {
-        //        List<Dataset> dataSets;
-        //        try
-        //        {
-        //            dataSets = await _fitbitClient.GetDetailedHeartRates(date);
-        //        }
-        //        catch (TooManyRequestsException ex)
-        //        {
-        //            await _logger.LogErrorAsync(ex);
-        //            break;
-        //        }
-
-        //        if (dataSets != null)
-        //        {
-        //            heartRates.AddRange(dataSets);
-        //        }
-        //    }
-
-        //    return heartRates;
-
-
-        //}
-
-        //public async Task<IEnumerable<FitbitDailyActivity>> GetFitbitDailyActivities(DateTime fromDate, DateTime toDate)
-        //{
-        //    var fitbitDailyActivities = new List<FitbitDailyActivity>();
-
-        //    for (DateTime date = fromDate;
-        //        date <= toDate;
-        //        date = date.AddDays(1))
-        //    {
-        //        FitbitDailyActivity fitbitDailyActivity;
-        //        try
-        //        {
-        //            fitbitDailyActivity = await _fitbitClient.GetFitbitDailyActivity(date);
-        //        }
-        //        catch (TooManyRequestsException ex)
-        //        {
-        //            await _logger.LogErrorAsync(ex);
-        //            break;
-        //        }
-                
-        //        if (fitbitDailyActivity != null)
-        //        {
-        //            fitbitDailyActivities.Add(fitbitDailyActivity);
-        //        }
-        //    }
-
-        //    return fitbitDailyActivities;
-        //}
-
         public async Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate)
         {
             var heartActivities = new List<ActivitiesHeart>();
