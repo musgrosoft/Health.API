@@ -55,38 +55,7 @@ namespace Services.Tests.MyHealth
             Assert.Equal(date, latestDate);
 
         }
-
-        //[Fact]
-        //public void ShouldGetLatestStepCountDate()
-        //{
-        //    //Given 
-        //    var date = new DateTime(2018, 1, 4);
-        //    _healthRepository.Setup(x => x.GetLatestStepCountDate()).Returns(date);
-
-        //    //when
-        //    var latestDate = _healthService.GetLatestStepCountDate(DateTime.MinValue);
-
-        //    //then
-        //    Assert.Equal(date, latestDate);
-
-        //}
-
-        //[Fact]
-        //public void ShouldGetLatestActivitySummaryDate()
-        //{
-        //    //Given 
-        //    var date = new DateTime(2018, 1, 5);
-        //    _healthRepository.Setup(x => x.GetLatestActivitySummaryDate()).Returns(date);
-
-        //    //when
-        //    var latestDate = _healthService.GetLatestActivitySummaryDate(DateTime.MinValue);
-
-        //    //then
-        //    Assert.Equal(date, latestDate);
-
-        //}
-
-
+        
         [Fact]
         public void ShouldGetLatestRestingHeartRateDate()
         {
@@ -123,6 +92,27 @@ namespace Services.Tests.MyHealth
             _healthRepository.Verify(x => x.Upsert(newWeights[2]), Times.Once);
         }
 
+
+        [Fact]
+        public void ShouldUpsertNewExercises()
+        {
+            //Given
+            var newExercises = new List<Exercise>
+            {
+                new Exercise { CreatedDate = new DateTime(2010,10,10) },
+                new Exercise { CreatedDate = new DateTime(2010,10,11) },
+                new Exercise { CreatedDate = new DateTime(2010,10,12) }
+
+            };
+
+            //When
+            _healthService.UpsertExercises(newExercises);
+
+            //Then
+            _healthRepository.Verify(x => x.Upsert(newExercises[0]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newExercises[1]), Times.Once);
+            _healthRepository.Verify(x => x.Upsert(newExercises[2]), Times.Once);
+        }
 
         [Fact]
         public void ShouldUpsertNewAlcoholIntakes()

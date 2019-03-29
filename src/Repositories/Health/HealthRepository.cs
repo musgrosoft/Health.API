@@ -23,22 +23,10 @@ namespace Repositories.Health
         {
            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
-
-        public DateTime? GetLatestAlcoholIntakeDate()
-        {
-            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
-        }
-
-
+        
         public DateTime? GetLatestRestingHeartRateDate()
         {
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
-        }
-        
-
-        public DateTime? GetLatestExerciseDate()
-        {
-            return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
         
         public void Upsert(Weight weight)
