@@ -14,7 +14,6 @@ namespace Services.Tests.Fitbit.Fitbit
     public class FitbitServiceTests
     {
         private FitbitService _fitbitService;
-        private Mock<ILogger> _logger;
         private Mock<IFitbitClientQueryAdapter> _fitbitClientQueryAdapter;
 
         private DateTime fromDate = new DateTime(2017,1,1);
@@ -25,14 +24,12 @@ namespace Services.Tests.Fitbit.Fitbit
 
         public FitbitServiceTests() 
         {
-            _logger = new Mock<ILogger>();
             _fitbitClientQueryAdapter = new Mock<IFitbitClientQueryAdapter>();
             _fitbitMapper = new Mock<IFitbitMapper>();
             _fitbitClient = new Mock<IFitbitClient>();
             _fitbitAuthenticator = new Mock<IFitbitAuthenticator>();
 
             _fitbitService = new FitbitService(
-                _logger.Object, 
                 _fitbitClientQueryAdapter.Object, 
                 _fitbitClient.Object, 
                 _fitbitAuthenticator.Object, 

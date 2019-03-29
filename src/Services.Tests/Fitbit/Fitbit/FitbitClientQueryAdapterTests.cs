@@ -23,71 +23,8 @@ namespace Services.Tests.Fitbit.Fitbit
             _fitbitClientClientQueryAdapter = new FitbitClientQueryAdapter(_fitbitClient.Object, _logger.Object);
         }
 
-        [Fact]
-        public async Task ShouldGetFitbitDailyActivities()
-        {
-            DateTime day1 = new DateTime(2017, 1, 1);
-            DateTime day2 = new DateTime(2017, 1, 2);
-            DateTime day3 = new DateTime(2017, 1, 3);
-            DateTime day4 = new DateTime(2017, 1, 4);
-            DateTime day5 = new DateTime(2017, 1, 5);
+ 
 
-            //Given
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day1)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day1, summary = new Summary {steps = 1}}));
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day2)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day2, summary = new Summary {steps = 2}}));
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day3)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day3, summary = new Summary {steps = 3}}));
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day4)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day4, summary = new Summary {steps = 4}}));
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day5)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day5, summary = new Summary {steps = 5}}));
-
-            //When
-            var fitbitDailyActivities = await _fitbitClientClientQueryAdapter.GetFitbitDailyActivities(day1, day5);
-
-            //Then
-            Assert.Equal(5, fitbitDailyActivities.Count());
-            Assert.Contains(fitbitDailyActivities, x => x.DateTime == day1 && x.summary.steps == 1);
-            Assert.Contains(fitbitDailyActivities, x => x.DateTime == day2 && x.summary.steps == 2);
-            Assert.Contains(fitbitDailyActivities, x => x.DateTime == day3 && x.summary.steps == 3);
-            Assert.Contains(fitbitDailyActivities, x => x.DateTime == day4 && x.summary.steps == 4);
-            Assert.Contains(fitbitDailyActivities, x => x.DateTime == day5 && x.summary.steps == 5);
-
-        }
-
-        [Fact]
-        public async Task ShouldReturnFitbitDailyActivitiesAfterReceivingTooManyRequestsException()
-        {
-            DateTime day1 = new DateTime(2017, 1, 1);
-            DateTime day2 = new DateTime(2017, 1, 2);
-            DateTime day3 = new DateTime(2017, 1, 3);
-            DateTime day4 = new DateTime(2017, 1, 4);
-            DateTime day5 = new DateTime(2017, 1, 5);
-
-            //Given
-            var tooManyRequests = new TooManyRequestsException("I'm a little teapot.");
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day1)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day1, summary = new Summary {steps = 1}}));
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day2)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day2, summary = new Summary {steps = 2}}));
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day3)).Throws(tooManyRequests);
-
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day4)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day4, summary = new Summary {steps = 4}}));
-            _fitbitClient.Setup(x => x.GetFitbitDailyActivity(day5)).Returns(
-                Task.FromResult(new FitbitDailyActivity {DateTime = day5, summary = new Summary {steps = 5}}));
-
-            //When
-            var fitbitDailyActivities = await _fitbitClientClientQueryAdapter.GetFitbitDailyActivities(day1, day5);
-
-            //Then
-            Assert.Equal(2, fitbitDailyActivities.Count());
-            Assert.Contains(fitbitDailyActivities, x => x.DateTime == day1 && x.summary.steps == 1);
-            Assert.Contains(fitbitDailyActivities, x => x.DateTime == day2 && x.summary.steps == 2);
-            _logger.Verify(x => x.LogErrorAsync(tooManyRequests), Times.Once);
-        }
 
         [Fact]
         public async Task ShouldGetFitbitHeartActivities()

@@ -83,38 +83,38 @@ namespace Services.Fitbit.Services
 
         }
 
-        public async Task<FitbitDailyActivity> GetFitbitDailyActivity(DateTime date)
-        {
-            var accessToken = await _fitbitAuthenticator.GetAccessToken();
+        //public async Task<FitbitDailyActivity> GetFitbitDailyActivity(DateTime date)
+        //{
+        //    var accessToken = await _fitbitAuthenticator.GetAccessToken();
 
 
-            var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/date/{date:yyyy-MM-dd}.json";
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+        //    var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/date/{date:yyyy-MM-dd}.json";
+        //    _httpClient.DefaultRequestHeaders.Clear();
+        //    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
-            var response = await _httpClient.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
+        //    var response = await _httpClient.GetAsync(uri);
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        var content = await response.Content.ReadAsStringAsync();
 
-                var data = JsonConvert.DeserializeObject<FitbitDailyActivity>(content);
-                data.DateTime = date;
-                return data;
-            }
-            else if (response.StatusCode == (HttpStatusCode) 429)
-            {
-                throw new TooManyRequestsException(
-                    $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-            }
-            else
-            {
+        //        var data = JsonConvert.DeserializeObject<FitbitDailyActivity>(content);
+        //        data.DateTime = date;
+        //        return data;
+        //    }
+        //    else if (response.StatusCode == (HttpStatusCode) 429)
+        //    {
+        //        throw new TooManyRequestsException(
+        //            $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+        //    }
+        //    else
+        //    {
 
-                throw new Exception(
-                    $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content.ReadAsStringAsync()}");
-                //_logger.Log($"No FitbitDailyActivity found for date : {date}");
-                //return null;
-            }
-        }
+        //        throw new Exception(
+        //            $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content.ReadAsStringAsync()}");
+        //        //_logger.Log($"No FitbitDailyActivity found for date : {date}");
+        //        //return null;
+        //    }
+        //}
 
 
 

@@ -34,11 +34,11 @@ namespace Services.Fitbit.Domain
         public double distance { get; set; }
     }
 
-    public class FitbitDailyActivity
-    {
-        public List<Activity> activities { get; set; }
-        //public Goals goals { get; set; }
-        public Summary summary { get; set; }
-        public DateTime DateTime { get; set; }
-    }
+    //public class FitbitDailyActivity
+    //{
+    //    public List<Activity> activities { get; set; }
+    //    //public Goals goals { get; set; }
+    //    public Summary summary { get; set; }
+    //    public DateTime DateTime { get; set; }
+    //}
 }

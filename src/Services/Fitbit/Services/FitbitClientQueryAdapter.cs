@@ -48,33 +48,33 @@ namespace Services.Fitbit.Services
 
         //}
 
-        public async Task<IEnumerable<FitbitDailyActivity>> GetFitbitDailyActivities(DateTime fromDate, DateTime toDate)
-        {
-            var fitbitDailyActivities = new List<FitbitDailyActivity>();
+        //public async Task<IEnumerable<FitbitDailyActivity>> GetFitbitDailyActivities(DateTime fromDate, DateTime toDate)
+        //{
+        //    var fitbitDailyActivities = new List<FitbitDailyActivity>();
 
-            for (DateTime date = fromDate;
-                date <= toDate;
-                date = date.AddDays(1))
-            {
-                FitbitDailyActivity fitbitDailyActivity;
-                try
-                {
-                    fitbitDailyActivity = await _fitbitClient.GetFitbitDailyActivity(date);
-                }
-                catch (TooManyRequestsException ex)
-                {
-                    await _logger.LogErrorAsync(ex);
-                    break;
-                }
+        //    for (DateTime date = fromDate;
+        //        date <= toDate;
+        //        date = date.AddDays(1))
+        //    {
+        //        FitbitDailyActivity fitbitDailyActivity;
+        //        try
+        //        {
+        //            fitbitDailyActivity = await _fitbitClient.GetFitbitDailyActivity(date);
+        //        }
+        //        catch (TooManyRequestsException ex)
+        //        {
+        //            await _logger.LogErrorAsync(ex);
+        //            break;
+        //        }
                 
-                if (fitbitDailyActivity != null)
-                {
-                    fitbitDailyActivities.Add(fitbitDailyActivity);
-                }
-            }
+        //        if (fitbitDailyActivity != null)
+        //        {
+        //            fitbitDailyActivities.Add(fitbitDailyActivity);
+        //        }
+        //    }
 
-            return fitbitDailyActivities;
-        }
+        //    return fitbitDailyActivities;
+        //}
 
         public async Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate)
         {
