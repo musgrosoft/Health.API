@@ -9,34 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Acceptance.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.Unit.Tests", "src\Utils.Unit.Tests\Utils.Unit.Tests.csproj", "{2F73B2AE-075C-4554-8834-A6F0DF427BB9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql Scripts", "Sql Scripts", "{4C3EC78E-0F1F-45A9-BCB8-ED257D8338DB}"
-	ProjectSection(SolutionItems) = preProject
-		src\Sql Scripts\tbl_Calendar.sql = src\Sql Scripts\tbl_Calendar.sql
-		src\Sql Scripts\vw_DailyActiveMinutes.sql = src\Sql Scripts\vw_DailyActiveMinutes.sql
-		src\Sql Scripts\vw_DailyAlcoholIntakes.sql = src\Sql Scripts\vw_DailyAlcoholIntakes.sql
-		src\Sql Scripts\vw_DailyAlcoholIntakeTargets.sql = src\Sql Scripts\vw_DailyAlcoholIntakeTargets.sql
-		src\Sql Scripts\vw_DailyBloodPressures.sql = src\Sql Scripts\vw_DailyBloodPressures.sql
-		src\Sql Scripts\vw_DailyCardio.sql = src\Sql Scripts\vw_DailyCardio.sql
-		src\Sql Scripts\vw_DailyExercises.sql = src\Sql Scripts\vw_DailyExercises.sql
-		src\Sql Scripts\vw_DailyHeartRateSummaries.sql = src\Sql Scripts\vw_DailyHeartRateSummaries.sql
-		src\Sql Scripts\vw_DailyNamedExercises.sql = src\Sql Scripts\vw_DailyNamedExercises.sql
-		src\Sql Scripts\vw_DailyWeights.sql = src\Sql Scripts\vw_DailyWeights.sql
-		src\Sql Scripts\vw_DailyWeightsTargets.sql = src\Sql Scripts\vw_DailyWeightsTargets.sql
-		src\Sql Scripts\vw_MonthlyActiveMinutes.sql = src\Sql Scripts\vw_MonthlyActiveMinutes.sql
-		src\Sql Scripts\vw_MonthlyAlcoholIntakes.sql = src\Sql Scripts\vw_MonthlyAlcoholIntakes.sql
-		src\Sql Scripts\vw_MonthlyCardio.sql = src\Sql Scripts\vw_MonthlyCardio.sql
-		src\Sql Scripts\vw_MonthlyHeartRateSummaries.sql = src\Sql Scripts\vw_MonthlyHeartRateSummaries.sql
-		src\Sql Scripts\vw_MonthlyNamedExercises.sql = src\Sql Scripts\vw_MonthlyNamedExercises.sql
-		src\Sql Scripts\vw_MonthlySteps.sql = src\Sql Scripts\vw_MonthlySteps.sql
-		src\Sql Scripts\vw_WeeklyActiveMinutes.sql = src\Sql Scripts\vw_WeeklyActiveMinutes.sql
-		src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql = src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql
-		src\Sql Scripts\vw_WeeklyCardio.sql = src\Sql Scripts\vw_WeeklyCardio.sql
-		src\Sql Scripts\vw_WeeklyExercises.sql = src\Sql Scripts\vw_WeeklyExercises.sql
-		src\Sql Scripts\vw_WeeklyHeartRateSummaries.sql = src\Sql Scripts\vw_WeeklyHeartRateSummaries.sql
-		src\Sql Scripts\vw_WeeklyNamedExercises.sql = src\Sql Scripts\vw_WeeklyNamedExercises.sql
-		src\Sql Scripts\vw_WeeklyStepCounts.sql = src\Sql Scripts\vw_WeeklyStepCounts.sql
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "src\Utils\Utils.csproj", "{09FA5C12-473A-43EB-AD02-C9854CEC6B10}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "src\Repositories\Repositories.csproj", "{819B510D-FD26-44AB-918F-FC0B854A7AF3}"
@@ -50,6 +22,24 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Tests", "src\Services.Tests\Services.Tests.csproj", "{C8B79DDA-1D79-4C9F-A619-76F3148087D8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Unit.Tests", "src\Repository.Unit.Tests\Repository.Unit.Tests.csproj", "{F09A6810-CAC0-4AD1-9380-63D92D94BEED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{F6D60EF3-03B4-4CB8-8E01-EC5BCDDDBE44}"
+	ProjectSection(SolutionItems) = preProject
+		src\Sql Scripts\tbl_Calendar.sql = src\Sql Scripts\tbl_Calendar.sql
+		src\Sql Scripts\vw_Alcohol_Daily.sql = src\Sql Scripts\vw_Alcohol_Daily.sql
+		src\Sql Scripts\vw_DailyBloodPressures.sql = src\Sql Scripts\vw_DailyBloodPressures.sql
+		src\Sql Scripts\vw_DailyExercises.sql = src\Sql Scripts\vw_DailyExercises.sql
+		src\Sql Scripts\vw_DailyExercisesAgg.sql = src\Sql Scripts\vw_DailyExercisesAgg.sql
+		src\Sql Scripts\vw_DailyNamedExercises.sql = src\Sql Scripts\vw_DailyNamedExercises.sql
+		src\Sql Scripts\vw_DailyWeights.sql = src\Sql Scripts\vw_DailyWeights.sql
+		src\Sql Scripts\vw_DailyWeightsTargets.sql = src\Sql Scripts\vw_DailyWeightsTargets.sql
+		src\Sql Scripts\vw_MonthlyAlcoholIntakes.sql = src\Sql Scripts\vw_MonthlyAlcoholIntakes.sql
+		src\Sql Scripts\vw_MonthlyExercises.sql = src\Sql Scripts\vw_MonthlyExercises.sql
+		src\Sql Scripts\vw_MonthlyNamedExercises.sql = src\Sql Scripts\vw_MonthlyNamedExercises.sql
+		src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql = src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql
+		src\Sql Scripts\vw_WeeklyExercises.sql = src\Sql Scripts\vw_WeeklyExercises.sql
+		src\Sql Scripts\vw_WeeklyNamedExercises.sql = src\Sql Scripts\vw_WeeklyNamedExercises.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
