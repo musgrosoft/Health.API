@@ -27,18 +27,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{F6D60EF3-03B
 	ProjectSection(SolutionItems) = preProject
 		src\Sql Scripts\tbl_Calendar.sql = src\Sql Scripts\tbl_Calendar.sql
 		src\Sql Scripts\vw_Alcohol_Daily.sql = src\Sql Scripts\vw_Alcohol_Daily.sql
-		src\Sql Scripts\vw_DailyBloodPressures.sql = src\Sql Scripts\vw_DailyBloodPressures.sql
-		src\Sql Scripts\vw_DailyExercises.sql = src\Sql Scripts\vw_DailyExercises.sql
-		src\Sql Scripts\vw_DailyExercisesAgg.sql = src\Sql Scripts\vw_DailyExercisesAgg.sql
-		src\Sql Scripts\vw_DailyNamedExercises.sql = src\Sql Scripts\vw_DailyNamedExercises.sql
-		src\Sql Scripts\vw_DailyWeights.sql = src\Sql Scripts\vw_DailyWeights.sql
-		src\Sql Scripts\vw_DailyWeightsTargets.sql = src\Sql Scripts\vw_DailyWeightsTargets.sql
-		src\Sql Scripts\vw_MonthlyAlcoholIntakes.sql = src\Sql Scripts\vw_MonthlyAlcoholIntakes.sql
-		src\Sql Scripts\vw_MonthlyExercises.sql = src\Sql Scripts\vw_MonthlyExercises.sql
-		src\Sql Scripts\vw_MonthlyNamedExercises.sql = src\Sql Scripts\vw_MonthlyNamedExercises.sql
-		src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql = src\Sql Scripts\vw_WeeklyAlcoholIntakes.sql
-		src\Sql Scripts\vw_WeeklyExercises.sql = src\Sql Scripts\vw_WeeklyExercises.sql
-		src\Sql Scripts\vw_WeeklyNamedExercises.sql = src\Sql Scripts\vw_WeeklyNamedExercises.sql
+		src\Sql Scripts\vw_Alcohol_Monthly.sql = src\Sql Scripts\vw_Alcohol_Monthly.sql
+		src\Sql Scripts\vw_Alcohol_Weekly.sql = src\Sql Scripts\vw_Alcohol_Weekly.sql
+		src\Sql Scripts\vw_BloodPressures_Daily.sql = src\Sql Scripts\vw_BloodPressures_Daily.sql
+		src\Sql Scripts\vw_Exercises_Daily.sql = src\Sql Scripts\vw_Exercises_Daily.sql
+		src\Sql Scripts\vw_Exercises_Daily_Agg.sql = src\Sql Scripts\vw_Exercises_Daily_Agg.sql
+		src\Sql Scripts\vw_Exercises_Monthly.sql = src\Sql Scripts\vw_Exercises_Monthly.sql
+		src\Sql Scripts\vw_Exercises_Weekly.sql = src\Sql Scripts\vw_Exercises_Weekly.sql
+		src\Sql Scripts\vw_Weights_Daily.sql = src\Sql Scripts\vw_Weights_Daily.sql
 	EndProjectSection
 EndProject
 Global

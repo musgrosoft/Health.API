@@ -1,4 +1,4 @@
-CREATE VIEW vw_DailyBloodPressures AS
+CREATE VIEW vw_BloodPressures_Daily AS
 
 SELECT 
     CreatedDate, 
@@ -14,4 +14,4 @@ FROM
 	AVG(Diastolic) AS Diastolic
 	FROM BloodPressures
 	GROUP BY CAST(CreatedDate AS DATE)
-) as DailyBloodpressures;
+) AS DailyBloodpressures;

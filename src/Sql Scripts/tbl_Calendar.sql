@@ -6,7 +6,7 @@ CREATE TABLE [Calendar]
 DECLARE @StartDate DATETIME
 DECLARE @EndDate DATETIME
 SET @StartDate = '2010-01-01'
-SET @EndDate = '2020-01-01'
+SET @EndDate = '2030-01-01'
 
 WHILE @StartDate <= @EndDate
       BEGIN
