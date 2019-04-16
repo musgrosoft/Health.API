@@ -7,7 +7,7 @@ using Google.Apis.Sheets.v4.Data;
 using Repositories.Health.Models;
 using Utils;
 
-namespace Services.GoogleSheets
+namespace Importer.GoogleSheets
 {
     public class GoogleClient : IGoogleClient
     {

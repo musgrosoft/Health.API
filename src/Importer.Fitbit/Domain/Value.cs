@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Services.Fitbit.Domain
+﻿namespace Importer.Fitbit.Domain
 {
     public class Value
     {

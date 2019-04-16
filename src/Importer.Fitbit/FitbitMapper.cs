@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Importer.Fitbit.Domain;
 using Repositories.Health.Models;
-using Services.Fitbit.Domain;
 
-namespace Services.Fitbit
+namespace Importer.Fitbit
 {
     public class FitbitMapper : IFitbitMapper
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Utils;
 
-namespace Services.GoogleSheets
+namespace Importer.GoogleSheets
 {
     public class SheetMapper : ISheetMapper
     {

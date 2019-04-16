@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Importer.Fitbit.Domain;
 using Newtonsoft.Json;
-using Services.Fitbit.Domain;
 using Services.OAuth;
 using Utils;
 
-namespace Services.Fitbit
+namespace Importer.Fitbit
 {
     public class FitbitAuthenticator : IFitbitAuthenticator
     {

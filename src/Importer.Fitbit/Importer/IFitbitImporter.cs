@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Services.Fitbit.Importer
+namespace Importer.Fitbit.Importer
 {
     public interface IFitbitImporter
     {

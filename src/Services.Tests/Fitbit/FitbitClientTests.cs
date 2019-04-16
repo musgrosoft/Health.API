@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Importer.Fitbit;
 using Moq;
 using Moq.Protected;
-using Services.Fitbit;
 using Utils;
 using Xunit;
 

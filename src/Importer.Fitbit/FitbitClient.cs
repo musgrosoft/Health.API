@@ -2,11 +2,11 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Importer.Fitbit.Domain;
 using Newtonsoft.Json;
-using Services.Fitbit.Domain;
 using Utils;
 
-namespace Services.Fitbit
+namespace Importer.Fitbit
 {
     public class FitbitClient : IFitbitClient
     {

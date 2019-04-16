@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Services.Withings.Domain;
+using Importer.Withings.Domain;
 using Utils;
 
-namespace Services.Withings
+namespace Importer.Withings
 {
     public class WithingsClientQueryAdapter : IWithingsClientQueryAdapter
     {

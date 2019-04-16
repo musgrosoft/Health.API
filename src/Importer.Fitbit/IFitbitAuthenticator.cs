@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Services.Fitbit
+namespace Importer.Fitbit
 {
     public interface IFitbitAuthenticator
     {

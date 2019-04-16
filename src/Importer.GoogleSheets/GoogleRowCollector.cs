@@ -5,7 +5,7 @@ using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Utils;
 
-namespace Services.GoogleSheets
+namespace Importer.GoogleSheets
 {
     public class GoogleRowCollector : IGoogleRowCollector
     {

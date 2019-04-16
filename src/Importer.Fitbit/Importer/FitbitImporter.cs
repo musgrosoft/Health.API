@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Services.Health;
 using Utils;
 
-namespace Services.Fitbit.Importer
+namespace Importer.Fitbit.Importer
 {
     public class FitbitImporter : IFitbitImporter
     {

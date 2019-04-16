@@ -2,10 +2,10 @@
 using System.Net;
 using System.Threading.Tasks;
 using HealthAPI.Controllers;
+using Importer.Withings;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Services.Health;
-using Services.Withings;
 using Utils;
 using Xunit;
 

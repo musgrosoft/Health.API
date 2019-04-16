@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Importer.Withings.Domain;
 using Repositories.Health.Models;
-using Services.Withings.Domain;
 using Utils;
 
-namespace Services.Withings
+namespace Importer.Withings
 {
     public class WithingsMapper : IWithingsMapper
     {

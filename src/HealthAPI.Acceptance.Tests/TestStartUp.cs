@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Importer.Fitbit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
 using Moq.Protected;
 using Repositories;
-using Services.Fitbit;
 
 namespace HealthAPI.Acceptance.Tests
 {

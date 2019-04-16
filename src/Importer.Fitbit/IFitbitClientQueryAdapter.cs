@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Services.Fitbit.Domain;
+using Importer.Fitbit.Domain;
 
-namespace Services.Fitbit
+namespace Importer.Fitbit
 {
     public interface IFitbitClientQueryAdapter
     {

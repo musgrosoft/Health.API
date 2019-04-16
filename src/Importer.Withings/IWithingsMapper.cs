@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using Importer.Withings.Domain;
 using Repositories.Health.Models;
-using Services.Withings.Domain;
 
-namespace Services.Withings
+namespace Importer.Withings
 {
     public interface IWithingsMapper
     {

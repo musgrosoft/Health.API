@@ -39,6 +39,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{F6D60EF3-03B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.Fitbit", "src\Importer.Fitbit\Importer.Fitbit.csproj", "{46EE83AC-3DB1-437F-A00D-2265075E7BC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.Withings", "src\Importer.Withings\Importer.Withings.csproj", "{DE9D6BA4-C723-499D-A544-CC58C5269CBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.GoogleSheets", "src\Importer.GoogleSheets\Importer.GoogleSheets.csproj", "{AB5C5C27-B896-4452-B09A-8C7FF7B81EEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +89,14 @@ Global
 		{46EE83AC-3DB1-437F-A00D-2265075E7BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46EE83AC-3DB1-437F-A00D-2265075E7BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46EE83AC-3DB1-437F-A00D-2265075E7BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE9D6BA4-C723-499D-A544-CC58C5269CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9D6BA4-C723-499D-A544-CC58C5269CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9D6BA4-C723-499D-A544-CC58C5269CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE9D6BA4-C723-499D-A544-CC58C5269CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB5C5C27-B896-4452-B09A-8C7FF7B81EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB5C5C27-B896-4452-B09A-8C7FF7B81EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB5C5C27-B896-4452-B09A-8C7FF7B81EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB5C5C27-B896-4452-B09A-8C7FF7B81EEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

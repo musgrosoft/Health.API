@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Importer.Fitbit;
+using Importer.Fitbit.Domain;
 using Moq;
 using Repositories.Health.Models;
-using Services.Fitbit;
-using Services.Fitbit.Domain;
 using Xunit;
 
 namespace Services.Tests.Fitbit

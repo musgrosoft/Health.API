@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Services.Withings.Domain
+namespace Importer.Withings.Domain
 {
     public class Response
     {

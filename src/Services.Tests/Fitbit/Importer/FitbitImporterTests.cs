@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Importer.Fitbit;
+using Importer.Fitbit.Importer;
 using Moq;
 using Repositories.Health.Models;
-using Services.Fitbit;
-using Services.Fitbit.Importer;
 using Services.Health;
 using Utils;
 using Xunit;
 
-namespace Services.Tests.Fitbit
+namespace Services.Tests.Fitbit.Importer
 {
     public class FitbitImporterTests
     {

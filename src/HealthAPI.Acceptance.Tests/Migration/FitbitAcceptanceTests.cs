@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
+using Importer.Fitbit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Services.Fitbit;
 using Xunit;
 
 namespace HealthAPI.Acceptance.Tests.Migration

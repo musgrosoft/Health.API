@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Services.Fitbit
+namespace Importer.Fitbit
 {
     [Serializable]
     public class TooManyRequestsException : Exception

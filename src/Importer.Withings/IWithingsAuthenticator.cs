@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Services.Withings
+namespace Importer.Withings
 {
     public interface IWithingsAuthenticator
     {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Importer.Withings.Domain;
 using Newtonsoft.Json;
 using Services.OAuth;
-using Services.Withings.Domain;
 using Utils;
 
-namespace Services.Withings
+namespace Importer.Withings
 {
     public class WithingsAuthenticator : IWithingsAuthenticator
     {

@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Importer.GoogleSheets;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Health.Models;
-using Services.GoogleSheets;
 
 
 namespace HealthAPI.Controllers

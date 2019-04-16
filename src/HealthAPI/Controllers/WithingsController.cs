@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Importer.Withings;
 using Microsoft.AspNetCore.Mvc;
 using Services.Health;
-using Services.Withings;
 using Utils;
 
 namespace HealthAPI.Controllers

@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Importer.Withings;
 using Moq;
 using Moq.Protected;
-using Services.Withings;
 
 namespace Services.Tests.Withings
 {

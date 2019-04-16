@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using Importer.Withings.Domain;
 using Newtonsoft.Json;
-using Services.Withings.Domain;
 using Utils;
 
-namespace Services.Withings
+namespace Importer.Withings
 {
     public class WithingsClient : IWithingsClient
     {

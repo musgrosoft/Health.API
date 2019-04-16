@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Repositories.Health.Models;
 
-namespace Services.GoogleSheets
+namespace Importer.GoogleSheets
 {
     public interface IMapper
     {

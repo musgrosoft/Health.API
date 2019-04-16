@@ -12,13 +12,13 @@ using System.Net.Http;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using HealthAPI.Hangfire;
+using Importer.Fitbit;
+using Importer.Fitbit.Importer;
+using Importer.GoogleSheets;
+using Importer.Withings;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
-using Services.Fitbit;
-using Services.Fitbit.Importer;
-using Services.GoogleSheets;
-using Services.Withings;
 using Calendar = Utils.Calendar;
 
 namespace HealthAPI

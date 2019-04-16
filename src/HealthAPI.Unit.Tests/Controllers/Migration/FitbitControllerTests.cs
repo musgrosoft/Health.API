@@ -4,11 +4,11 @@ using Hangfire.Common;
 using Hangfire.States;
 using HealthAPI.Controllers;
 using HealthAPI.Hangfire;
+using Importer.Fitbit;
+using Importer.Fitbit.Importer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Services.Fitbit;
-using Services.Fitbit.Importer;
 using Utils;
 using Xunit;
 

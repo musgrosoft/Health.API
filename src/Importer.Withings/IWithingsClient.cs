@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Services.Withings.Domain;
+using Importer.Withings.Domain;
 
-namespace Services.Withings
+namespace Importer.Withings
 {
     public interface IWithingsClient
     {

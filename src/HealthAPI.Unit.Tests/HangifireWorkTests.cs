@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using HealthAPI.Hangfire;
+using Importer.Fitbit.Importer;
 using Moq;
-using Services.Fitbit.Importer;
 using Utils;
 using Xunit;
 
