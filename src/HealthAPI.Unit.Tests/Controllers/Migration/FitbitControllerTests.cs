@@ -7,8 +7,8 @@ using HealthAPI.Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Services.Fitbit;
 using Services.Fitbit.Importer;
-using Services.Fitbit.Services;
 using Utils;
 using Xunit;
 

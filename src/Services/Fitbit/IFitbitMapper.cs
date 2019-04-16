@@ -2,7 +2,7 @@
 using Repositories.Health.Models;
 using Services.Fitbit.Domain;
 
-namespace Services.Fitbit.Services
+namespace Services.Fitbit
 {
     public interface IFitbitMapper
     {

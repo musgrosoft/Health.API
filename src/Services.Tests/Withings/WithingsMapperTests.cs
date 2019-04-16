@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Withings;
 using Services.Withings.Domain;
-using Services.Withings.Services;
 using Utils;
 using Xunit;
 

@@ -15,10 +15,10 @@ using HealthAPI.Hangfire;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
+using Services.Fitbit;
 using Services.Fitbit.Importer;
-using Services.Fitbit.Services;
 using Services.GoogleSheets;
-using Services.Withings.Services;
+using Services.Withings;
 using Calendar = Utils.Calendar;
 
 namespace HealthAPI

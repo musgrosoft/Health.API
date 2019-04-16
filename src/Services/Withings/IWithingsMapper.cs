@@ -2,7 +2,7 @@
 using Repositories.Health.Models;
 using Services.Withings.Domain;
 
-namespace Services.Withings.Services
+namespace Services.Withings
 {
     public interface IWithingsMapper
     {

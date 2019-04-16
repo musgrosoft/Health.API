@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Services.Fitbit.Domain;
 using Utils;
 
-namespace Services.Fitbit.Services
+namespace Services.Fitbit
 {
     public class FitbitClientQueryAdapter : IFitbitClientQueryAdapter
     {

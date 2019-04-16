@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Services.Health;
-using Services.Withings.Services;
+using Services.Withings;
 using Utils;
 
 namespace HealthAPI.Controllers

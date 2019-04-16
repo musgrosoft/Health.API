@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Repositories.Health.Models;
-using Services.Fitbit.Services;
+using Services.Fitbit;
 
 namespace HealthAPI.Acceptance.Tests
 {

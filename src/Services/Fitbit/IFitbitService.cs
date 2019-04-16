@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Repositories.Health.Models;
 
-namespace Services.Fitbit.Services
+namespace Services.Fitbit
 {
     public interface IFitbitService
     {

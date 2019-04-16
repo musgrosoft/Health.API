@@ -5,11 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
-using Services.Fitbit.Services;
+using Services.Fitbit;
 using Utils;
 using Xunit;
 
-namespace Services.Tests.Fitbit.Fitbit
+namespace Services.Tests.Fitbit
 {
     public class FitbitClientTests
     {

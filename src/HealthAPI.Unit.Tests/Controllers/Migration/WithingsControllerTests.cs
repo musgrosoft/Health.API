@@ -5,7 +5,7 @@ using HealthAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Services.Health;
-using Services.Withings.Services;
+using Services.Withings;
 using Utils;
 using Xunit;
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Services.Fitbit.Services;
 using Services.Health;
 using Utils;
 
@@ -13,8 +12,6 @@ namespace Services.Fitbit.Importer
         private IFitbitService _fitbitService;
         private readonly ICalendar _calendar;
 
-        private const int FITBIT_HOURLY_RATE_LIMIT = 150;
-        //private const int SEARCH_DAYS_PREVIOUS = 10;
         private const int SEARCH_DAYS_PREVIOUS = 1;
 
         private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);

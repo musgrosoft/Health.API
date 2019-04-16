@@ -7,7 +7,7 @@ using Services.Fitbit.Domain;
 using Services.OAuth;
 using Utils;
 
-namespace Services.Fitbit.Services
+namespace Services.Fitbit
 {
     public class FitbitAuthenticator : IFitbitAuthenticator
     {

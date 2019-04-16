@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Repositories.Health.Models;
 
-namespace Services.Withings.Services
+namespace Services.Withings
 {
     public interface IWithingsService
     {

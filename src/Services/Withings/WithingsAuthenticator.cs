@@ -7,7 +7,7 @@ using Services.OAuth;
 using Services.Withings.Domain;
 using Utils;
 
-namespace Services.Withings.Services
+namespace Services.Withings
 {
     public class WithingsAuthenticator : IWithingsAuthenticator
     {

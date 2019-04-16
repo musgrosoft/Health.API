@@ -4,12 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using Repositories.Health.Models;
+using Services.Fitbit;
 using Services.Fitbit.Domain;
-using Services.Fitbit.Services;
-using Utils;
 using Xunit;
 
-namespace Services.Tests.Fitbit.Fitbit
+namespace Services.Tests.Fitbit
 {
     public class FitbitServiceTests
     {

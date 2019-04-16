@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Services.Withings.Domain;
 
-namespace Services.Withings.Services
+namespace Services.Withings
 {
     public interface IWithingsClientQueryAdapter
     {

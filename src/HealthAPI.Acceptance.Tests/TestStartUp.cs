@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
 using Moq.Protected;
 using Repositories;
-using Services.Fitbit.Services;
+using Services.Fitbit;
 
 namespace HealthAPI.Acceptance.Tests
 {

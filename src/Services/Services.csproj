@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Fitbit\" />
     <Folder Include="GoogleSheets\" />
   </ItemGroup>
 

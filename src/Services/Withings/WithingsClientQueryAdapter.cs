@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Services.Withings.Domain;
 using Utils;
 
-namespace Services.Withings.Services
+namespace Services.Withings
 {
     public class WithingsClientQueryAdapter : IWithingsClientQueryAdapter
     {

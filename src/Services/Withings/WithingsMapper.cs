@@ -5,7 +5,7 @@ using Repositories.Health.Models;
 using Services.Withings.Domain;
 using Utils;
 
-namespace Services.Withings.Services
+namespace Services.Withings
 {
     public class WithingsMapper : IWithingsMapper
     {
