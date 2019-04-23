@@ -14,6 +14,7 @@
         string FitbitUserId { get; }
         string FitbitVerificationCode { get; }
         string FitbitOAuthRedirectUrl { get; }
+        string FitbitBaseUrl { get;}
 
         //Google Sheets
         string GoogleClientId { get; }

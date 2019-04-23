@@ -25,7 +25,7 @@ namespace HealthAPI
 {
     public class Startup
     {
-        private Config _config;
+        private IConfig _config;
 
         public Startup(IConfiguration configuration)
         {

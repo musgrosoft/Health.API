@@ -3,13 +3,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Importer.Fitbit;
 using Moq;
 using Moq.Protected;
 using Utils;
 using Xunit;
 
-namespace Services.Tests.Fitbit
+namespace Importer.Fitbit.Tests
 {
     public class FitbitClientTests
     {

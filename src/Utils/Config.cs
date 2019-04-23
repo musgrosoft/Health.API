@@ -42,6 +42,8 @@ namespace Utils
             get { return "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/"; }
         }
 
+        public string FitbitBaseUrl => "https://api.fitbit.com";
+
         //Google Sheets
         public string GoogleClientId => GetConfigValue("GoogleClientId");
         public string GoogleClientSecret => GetConfigValue("GoogleClientSecret");

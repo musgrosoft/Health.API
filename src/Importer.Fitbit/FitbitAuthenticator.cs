@@ -15,9 +15,7 @@ namespace Importer.Fitbit
         private readonly IConfig _config;
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
-        private readonly IFitbitClient _fitbitClient;
 
-        private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 
         public FitbitAuthenticator(ITokenService tokenService, IConfig config, HttpClient httpClient, ILogger logger)
         {
@@ -58,9 +56,7 @@ namespace Importer.Fitbit
 
         private async Task<FitbitRefreshTokenResponse> GetTokensWithRefreshToken(string refreshToken)
         {
-
-
-            var uri = FITBIT_BASE_URL + "/oauth2/token";
+            var uri = $"{_config.FitbitBaseUrl}/oauth2/token";
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + "MjI4UFI4OjAyZjIyODBkOTY2MWQwMWFiNDlkY2Q1NWJhMjE4OTFh");
@@ -84,7 +80,7 @@ namespace Importer.Fitbit
 
         private async Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode)
         {
-            var url = $"{FITBIT_BASE_URL}/oauth2/token";
+            var url = $"{_config.FitbitBaseUrl}/oauth2/token";
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + Base64Encode($"{_config.FitbitClientId}:{_config.FitbitClientSecret}"));
