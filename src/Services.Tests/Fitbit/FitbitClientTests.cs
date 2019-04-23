@@ -96,6 +96,41 @@ namespace Services.Tests.Fitbit
         }
 
         [Fact]
+        public async Task ShouldThrowTooManyRequestsExceptionWhenStatusCode429()
+        {
+            Uri _capturedUri = new Uri("http://www.null.com");
+
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = (HttpStatusCode) 429,
+                    Content = new StringContent(fitbitMonthlyActivityContent)
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
+
+            await Assert.ThrowsAsync<TooManyRequestsException>(() => _fitbitClient.GetMonthOfFitbitActivities(new DateTime()));
+
+//            var fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(new DateTime());
+        }
+
+        [Fact]
+        public async Task ShouldThrowExceptionWhenStatusCodeNotSuccess()
+        {
+            Uri _capturedUri = new Uri("http://www.null.com");
+
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = (HttpStatusCode)400,
+                    Content = new StringContent("I'm a little teapot")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
+
+            Exception ex = await Assert.ThrowsAsync<Exception>(() => _fitbitClient.GetMonthOfFitbitActivities(new DateTime()));
+            Assert.Contains("status code is 400", ex.Message);
+            Assert.Contains("content is I'm a little teapot", ex.Message);
+
+        }
+
+        [Fact]
         public async Task ShouldSubscribe()
         {
             //Given

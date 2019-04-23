@@ -75,7 +75,7 @@ namespace Importer.Fitbit
             else
             {
                 throw new Exception(
-                    $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content.ReadAsStringAsync()}");
+                    $"Failed call to fitbit api {uri} , status code is {(int)response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
 //                _logger.Log($"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
 //                return Maybe<FitBitActivity>.None;
             }
