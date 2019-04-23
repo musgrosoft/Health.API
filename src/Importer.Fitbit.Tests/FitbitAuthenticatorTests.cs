@@ -13,24 +13,34 @@ namespace Importer.Fitbit.Tests
 {
     public class FitbitAuthenticatorTests
     {
+        private Mock<HttpMessageHandler> _httpMessageHandler;
+        private Mock<ITokenService> _tokenService;
+        private Mock<IConfig> _config;
+        private Mock<ILogger> _logger;
+        private FitbitAuthenticator _fitbitAuthenticator;
+        private HttpClient _httpClient;
+
+
+        public FitbitAuthenticatorTests()
+        {
+            _httpMessageHandler = new Mock<HttpMessageHandler>();
+            _tokenService = new Mock<ITokenService>();
+            _config = new Mock<IConfig>();
+            _config.Setup(x => x.FitbitBaseUrl).Returns("https://api.fitbit.com");
+
+
+            _logger = new Mock<ILogger>();
+
+            _httpClient = new HttpClient(_httpMessageHandler.Object);
+
+            _fitbitAuthenticator = new FitbitAuthenticator(_tokenService.Object, _config.Object, _httpClient, _logger.Object);
+        }
+
         [Fact]
         public async Task ShouldSetTokens()
         {
             //Given
             var authorisationCode = "asdasd234234dfgdfgdf";
-
-            var _httpMessageHandler = new Mock<HttpMessageHandler>();
-
-            var tokenService = new Mock<ITokenService>();
-            var config = new Mock<IConfig>();
-
-            config.Setup(x => x.FitbitBaseUrl).Returns("https://api.fitbit.com");
-
-            var logger = new Mock<ILogger>();
-            var httpClient = new HttpClient(_httpMessageHandler.Object);
-
-            var fitbitAuthenticator = new FitbitAuthenticator(tokenService.Object,config.Object,httpClient,logger.Object);
-
 
             Uri _capturedUri = new Uri("http://www.null.com");
             _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
@@ -49,7 +59,7 @@ namespace Importer.Fitbit.Tests
 
 
             //When 
-            await fitbitAuthenticator.SetTokens(authorisationCode);
+            await _fitbitAuthenticator.SetTokens(authorisationCode);
 
             //Then
 
@@ -57,10 +67,18 @@ namespace Importer.Fitbit.Tests
             //Assert headers
             //Assert posted parameters
 
-            tokenService.Verify(x => x.SaveFitbitAccessToken("aaa"));
-            tokenService.Verify(x => x.SaveFitbitRefreshToken("bbb"));
+            _tokenService.Verify(x => x.SaveFitbitAccessToken("aaa"));
+            _tokenService.Verify(x => x.SaveFitbitRefreshToken("bbb"));
 
         }
-        
+
+
+        [Fact]
+        public async Task ShouldGetAccessToken()
+        {
+
+
+
+        }
     }
 }
