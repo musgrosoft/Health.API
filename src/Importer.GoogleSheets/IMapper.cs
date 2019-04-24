@@ -6,9 +6,7 @@ namespace Importer.GoogleSheets
 {
     public interface IMapper
     {
-        //Run MapRowToRun(IList<Object> row);
-        //Ergo MapRowToErgo(IList<Object> row);
-        Drink MapRowToAlcoholIntake(IList<Object> row);
+        Drink MapRowToDrink(IList<Object> row);
         Exercise MapRowToExerise(IList<Object> row);
     }
 }

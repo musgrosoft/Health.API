@@ -27,12 +27,12 @@ namespace Importer.GoogleSheets
 
         public List<Drink> GetHistoricAlcoholIntakes()
         {
-            return _sheetMapper.Get<Drink>(_config.HistoricAlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToAlcoholIntake);
+            return _sheetMapper.Get<Drink>(_config.HistoricAlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToDrink);
         }
 
         public List<Drink> GetDrinks()
         {
-            var drinks = _sheetMapper.Get<Drink>(_config.AlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToAlcoholIntake);
+            var drinks = _sheetMapper.Get<Drink>(_config.AlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToDrink);
 
             return drinks
                 .GroupBy(x => x.CreatedDate)

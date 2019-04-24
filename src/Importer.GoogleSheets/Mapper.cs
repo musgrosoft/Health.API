@@ -14,7 +14,7 @@ namespace Importer.GoogleSheets
             _logger = logger;
         }
         
-        public Drink MapRowToAlcoholIntake(IList<object> row)
+        public Drink MapRowToDrink(IList<object> row)
         {
             var date = DateTime.Parse((string)row[0]);
             var units = Double.Parse((string)row[2]);
