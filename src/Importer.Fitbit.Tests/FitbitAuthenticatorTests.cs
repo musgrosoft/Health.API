@@ -73,9 +73,14 @@ namespace Importer.Fitbit.Tests
             Assert.Equal("https://api.fitbit.com/oauth2/token", capturedRequest.RequestUri.AbsoluteUri);
             Assert.True(capturedRequest.Headers.Contains("Authorization"));
             Assert.Equal(new List<string>{ "Basic " + Base64Encode("123456:secret" )}, capturedRequest.Headers.GetValues("Authorization"));
-            //Assert headers
-            //Assert posted parameters
 
+            Assert.Equal(HttpMethod.Post, capturedRequest.Method);
+
+            Assert.Contains("grant_type=authorization_code", (await capturedRequest.Content.ReadAsStringAsync()));
+            Assert.Contains("client_id=123456", (await capturedRequest.Content.ReadAsStringAsync()));
+            Assert.Contains("code=asdasd234234dfgdfgdf", (await capturedRequest.Content.ReadAsStringAsync()));
+            Assert.Contains("redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F", (await capturedRequest.Content.ReadAsStringAsync()));
+            
             _tokenService.Verify(x => x.SaveFitbitAccessToken("aaa"));
             _tokenService.Verify(x => x.SaveFitbitRefreshToken("bbb"));
 
