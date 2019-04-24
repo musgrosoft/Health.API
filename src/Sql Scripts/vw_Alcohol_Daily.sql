@@ -16,8 +16,8 @@ FROM
 			ELSE NULL
 		END AS TargetUnits
 	FROM 
-		AlcoholIntakes AI
+		Drinks D
 		INNER JOIN Calendar C
-		ON AI.CreatedDate = C.CalendarDate
+		ON D.CreatedDate = C.CalendarDate
 		 
 ) AS DailyAlcohol
