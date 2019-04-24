@@ -1,4 +1,5 @@
-﻿using Google;
+﻿using System;
+using Google;
 using Importer.GoogleSheets;
 using Microsoft.AspNetCore.Mvc;
 using Services.Health;
@@ -31,6 +32,14 @@ namespace HealthAPI.Controllers
             _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Units");
 
             //_googleImporter.MigrateAlcoholIntakes();
+
+            var latestDrink = _healthService.GetLatestDrinkDate();
+
+            if (latestDrink == DateTime.MinValue)
+            {
+                var historicAlcoholIntakes = _googleClient.GetHistoricAlcoholIntakes();
+                _healthService.UpsertAlcoholIntakes(historicAlcoholIntakes);
+            }
 
             var alcoholIntakes = _googleClient.GetAlcoholIntakes();
             _healthService.UpsertAlcoholIntakes(alcoholIntakes);

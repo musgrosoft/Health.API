@@ -9,148 +9,16 @@ namespace Services.Health
 {
     public class HealthService : IHealthService
     {   
-        //private readonly IFitbitConfig _config;
         private readonly ILogger _logger;
         private readonly IHealthRepository _healthRepository;
-
-        //private readonly IEntityAggregator _entityAggregator;
-        //private readonly IEntityDecorator _entityDecorator;
-        private const int MOVING_AVERAGE_PERIOD = 10;
-
+        
         public HealthService(
-            //IFitbitConfig config,
             ILogger logger,
-            IHealthRepository healthRepository
-            //IEntityAggregator entityAggregator, 
-          //  IEntityDecorator entityDecorator
-          )
+            IHealthRepository healthRepository)
         {
-           // _config = config;
             _logger = logger;
             _healthRepository = healthRepository;
-            //_entityAggregator = entityAggregator;
-          //  _entityDecorator = entityDecorator;
         }
-
-
-        //public IList<Run> GetAllRuns()
-        //{
-        //    return _healthRepository.GetAllRuns();
-        //}
-
-        //public IList<Ergo> GetAllErgos()
-        //{
-        //    return _healthRepository.GetAllErgos();
-        //}
-
-        //public IList<Weight> GetAllWeights()
-        //{
-        //    return _healthRepository.GetAllWeights();
-        //}
-
-        //public IList<BloodPressure> GetAllBloodPressures()
-        //{
-        //    return _healthRepository.GetAllBloodPressures();
-        //}
-
-        //public IList<RestingHeartRate> GetAllRestingHeartRates()
-        //{
-        //    return _healthRepository.GetAllRestingHeartRates();
-        //}
-
-        //public IList<StepCount> GetAllStepCounts()
-        //{
-        //    return _healthRepository.GetAllStepCounts();
-        //}
-
-        //public IList<StepCount> GetAllStepCountsByWeek()
-        //{
-        //    var dailyStepCounts = _healthRepository.GetAllStepCounts();
-
-        //    var weeklyStepCounts = _entityAggregator.GroupByWeek(dailyStepCounts);
-
-        //    return weeklyStepCounts;
-        //}
-
-        //public IList<StepCount> GetAllStepCountsByMonth()
-        //{
-        //    var dailyStepCounts = _entityDecorator.GetAllStepCounts();
-
-        //    var monthlyStepCounts = _entityAggregator.GroupByMonth(dailyStepCounts);
-
-        //    return monthlyStepCounts;
-        //}
-
-        //public IList<AlcoholIntake> GetAllAlcoholIntakes()
-        //{
-        //    return _entityDecorator.GetAllAlcoholIntakes();
-        //}
-
-        //public IList<AlcoholIntake> GetAllAlcoholIntakesByWeek()
-        //{
-        //    var dailyAlcoholIntakes = _entityDecorator.GetAllAlcoholIntakes();
-
-        //    var weeklyAlcoholIntakes = _entityAggregator.GroupByWeek(dailyAlcoholIntakes);
-
-        //    return weeklyAlcoholIntakes;
-        //}
-
-        //public IList<AlcoholIntake> GetAllAlcoholIntakesByMonth()
-        //{
-        //    var dailyAlcoholIntakes = _entityDecorator.GetAllAlcoholIntakes();
-
-        //    var monthlyAlcoholIntakes = _entityAggregator.GroupByMonth(dailyAlcoholIntakes);
-
-        //    return monthlyAlcoholIntakes;
-        //}
-
-        //public IList<HeartRateSummary> GetAllHeartRateSummaries()
-        //{
-        //    return _entityDecorator.GetAllHeartRateSummaries();
-        //}
-
-        //public IList<HeartRateSummary> GetAllHeartRateSummariesByWeek()
-        //{
-        //    var dailyHeartRateSummaries = _entityDecorator.GetAllHeartRateSummaries();
-
-        //    var weeklyHeartRateSummaries = _entityAggregator.GroupByWeek(dailyHeartRateSummaries);
-
-        //    return weeklyHeartRateSummaries;
-        //}
-
-        //public IList<HeartRateSummary> GetAllHeartRateSummariesByMonth()
-        //{
-        //    var dailyHeartRateSummaries = _entityDecorator.GetAllHeartRateSummaries();
-
-        //    var monthlyHeartRateSummaries = _entityAggregator.GroupByMonth(dailyHeartRateSummaries);
-
-        //    return monthlyHeartRateSummaries;
-        //}
-
-
-        //public IList<ActivitySummary> GetAllActivitySummaries()
-        //{
-        //    return _entityDecorator.GetAllActivitySummaries();
-        //}
-
-        //public IList<ActivitySummary> GetAllActivitySummariesByWeek()
-        //{
-        //    var dailyActivitySummaries = _entityDecorator.GetAllActivitySummaries();
-
-        //    var weeklyActivitySummaries = _entityAggregator.GroupByWeek(dailyActivitySummaries);
-
-        //    return weeklyActivitySummaries;
-        //}
-
-        //public IList<ActivitySummary> GetAllActivitySummariesByMonth()
-        //{
-        //    var dailyActivitySummaries = _entityDecorator.GetAllActivitySummaries();
-
-        //    var monthlyActivitySummaries = _entityAggregator.GroupByMonth(dailyActivitySummaries);
-
-        //    return monthlyActivitySummaries;
-        //}
-
 
         public DateTime GetLatestWeightDate(DateTime defaultDateTime)
         {
@@ -171,7 +39,11 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
-        
+        public DateTime GetLatestDrinkDate()
+        {
+            var latestDate = _healthRepository.GetLatestDrinkDate();
+            return latestDate ?? DateTime.MinValue;
+        }
 
 
         public void UpsertWeights(IEnumerable<Weight> weights)
@@ -226,5 +98,7 @@ namespace Services.Health
                 _healthRepository.Upsert(exercise);
             }
         }
+
+
     }
 }

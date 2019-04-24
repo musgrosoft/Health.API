@@ -8,12 +8,14 @@ namespace Repositories.Health
         DateTime? GetLatestBloodPressureDate();
         DateTime? GetLatestWeightDate();
         DateTime? GetLatestRestingHeartRateDate();
-        
+        DateTime? GetLatestDrinkDate();
+
         void Upsert(Weight weight);
         void Upsert(BloodPressure bloodPressure);
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(AlcoholIntake alcoholIntake);
         void Upsert(Exercise exercise);
 
+        
     }
 }
