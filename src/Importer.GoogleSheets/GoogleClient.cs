@@ -25,18 +25,18 @@ namespace Importer.GoogleSheets
             _mapper = mapper;
         }
 
-        public List<AlcoholIntake> GetHistoricAlcoholIntakes()
+        public List<Drink> GetHistoricAlcoholIntakes()
         {
-            return _sheetMapper.Get<AlcoholIntake>(_config.HistoricAlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToAlcoholIntake);
+            return _sheetMapper.Get<Drink>(_config.HistoricAlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToAlcoholIntake);
         }
 
-        public List<AlcoholIntake> GetAlcoholIntakes()
+        public List<Drink> GetDrinks()
         {
-            var drinks = _sheetMapper.Get<AlcoholIntake>(_config.AlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToAlcoholIntake);
+            var drinks = _sheetMapper.Get<Drink>(_config.AlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToAlcoholIntake);
 
             return drinks
                 .GroupBy(x => x.CreatedDate)
-                .Select(x => new AlcoholIntake
+                .Select(x => new Drink
                 {
                     CreatedDate = x.Key,
                     Units = x.Sum(y => y.Units)

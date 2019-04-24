@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.Health.Models
 {
-    public class AlcoholIntake
+    public class Drink
     {
         [Key]
         public DateTime CreatedDate { get; set; }

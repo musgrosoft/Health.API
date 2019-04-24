@@ -31,13 +31,13 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
         public void ShouldMigrateUnits()
         {
 
-            var someAlcoholIntakes = new List<AlcoholIntake>
+            var someAlcoholIntakes = new List<Drink>
             {
-                new AlcoholIntake {CreatedDate = new DateTime(2018,1,1),Units = 1},
-                new AlcoholIntake {CreatedDate = new DateTime(2018,1,2),Units = 2},
-                new AlcoholIntake {CreatedDate = new DateTime(2018,1,3),Units = 3}
+                new Drink {CreatedDate = new DateTime(2018,1,1),Units = 1},
+                new Drink {CreatedDate = new DateTime(2018,1,2),Units = 2},
+                new Drink {CreatedDate = new DateTime(2018,1,3),Units = 3}
             };
-            _googleClient.Setup(x => x.GetAlcoholIntakes()).Returns(someAlcoholIntakes);
+            _googleClient.Setup(x => x.GetDrinks()).Returns(someAlcoholIntakes);
             
             _googleSheetsController.MigrateUnits();
 

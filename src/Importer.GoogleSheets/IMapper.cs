@@ -8,7 +8,7 @@ namespace Importer.GoogleSheets
     {
         //Run MapRowToRun(IList<Object> row);
         //Ergo MapRowToErgo(IList<Object> row);
-        AlcoholIntake MapRowToAlcoholIntake(IList<Object> row);
+        Drink MapRowToAlcoholIntake(IList<Object> row);
         Exercise MapRowToExerise(IList<Object> row);
     }
 }

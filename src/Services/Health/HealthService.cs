@@ -79,7 +79,7 @@ namespace Services.Health
         }
 
         
-        public void UpsertAlcoholIntakes(List<AlcoholIntake> alcoholIntakes)
+        public void UpsertAlcoholIntakes(List<Drink> alcoholIntakes)
         {
             _logger.LogMessageAsync($"UNITS : Saving {alcoholIntakes.Count} alcohol intakes");
             

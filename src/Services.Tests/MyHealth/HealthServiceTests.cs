@@ -118,11 +118,11 @@ namespace Services.Tests.MyHealth
         public void ShouldUpsertNewAlcoholIntakes()
         {
             //Given
-            var newAlcoholIntake = new List<AlcoholIntake>
+            var newAlcoholIntake = new List<Drink>
             {
-                new AlcoholIntake { CreatedDate = new DateTime(2010,10,10) },
-                new AlcoholIntake { CreatedDate = new DateTime(2010,10,11) },
-                new AlcoholIntake { CreatedDate = new DateTime(2010,10,12) }
+                new Drink { CreatedDate = new DateTime(2010,10,10) },
+                new Drink { CreatedDate = new DateTime(2010,10,11) },
+                new Drink { CreatedDate = new DateTime(2010,10,12) }
 
             };
 

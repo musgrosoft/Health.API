@@ -60,11 +60,11 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldInsertAlcoholIntake()
         {
-            var alcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2018,1,1) , Units = 123 };
+            var alcoholIntake = new Drink { CreatedDate = new DateTime(2018,1,1) , Units = 123 };
 
             _healthRepository.Upsert(alcoholIntake);
 
-            var alcoholIntakes = _fakeLocalContext.AlcoholIntakes;
+            var alcoholIntakes = _fakeLocalContext.Drinks;
 
             Assert.Contains(alcoholIntake, alcoholIntakes);
         }
@@ -170,11 +170,11 @@ namespace Repository.Unit.Tests
         [Fact]
         public void ShouldUpdateAlcoholIntake()
         {
-            var existingAlcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2017, 1, 1), Units = 1234};
-            _fakeLocalContext.AlcoholIntakes.Add(existingAlcoholIntake);
+            var existingAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 1234};
+            _fakeLocalContext.Drinks.Add(existingAlcoholIntake);
             _fakeLocalContext.SaveChanges();
 
-            var newAlcoholIntake = new AlcoholIntake { CreatedDate = new DateTime(2017, 1, 1), Units = 2345 };
+            var newAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 2345 };
 
             _healthRepository.Upsert(newAlcoholIntake);
 

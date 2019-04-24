@@ -6,10 +6,10 @@ namespace Importer.GoogleSheets
     public interface IGoogleClient
     {
         //List<Run> GetRuns();
-        List<AlcoholIntake> GetAlcoholIntakes();
+        List<Drink> GetDrinks();
         //List<Ergo> GetErgos();
         List<Exercise> GetExercises();
         void InsertExercises(Exercise exercise);
-        List<AlcoholIntake> GetHistoricAlcoholIntakes();
+        List<Drink> GetHistoricAlcoholIntakes();
     }
 }

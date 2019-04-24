@@ -13,7 +13,7 @@ namespace Repositories.Health
         void Upsert(Weight weight);
         void Upsert(BloodPressure bloodPressure);
         void Upsert(RestingHeartRate restingHeartRate);
-        void Upsert(AlcoholIntake alcoholIntake);
+        void Upsert(Drink drink);
         void Upsert(Exercise exercise);
 
         

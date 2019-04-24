@@ -31,7 +31,7 @@ namespace Repositories.Health
 
         public DateTime? GetLatestDrinkDate()
         {
-            return _healthContext.AlcoholIntakes.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
+            return _healthContext.Drinks.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public void Upsert(Weight weight)
@@ -56,19 +56,19 @@ namespace Repositories.Health
 
 
 
-        public void Upsert(AlcoholIntake alcoholIntake)
+        public void Upsert(Drink drink)
         {
-            var existingAlcoholIntake = _healthContext.AlcoholIntakes.Find(alcoholIntake.CreatedDate);
+            var existingAlcoholIntake = _healthContext.Drinks.Find(drink.CreatedDate);
 
             if (existingAlcoholIntake == null)
             {
                 //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                _healthContext.Add(alcoholIntake);
+                _healthContext.Add(drink);
             }
             else
             {
                 // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                existingAlcoholIntake.Units = alcoholIntake.Units;
+                existingAlcoholIntake.Units = drink.Units;
             }
 
             _healthContext.SaveChanges();

@@ -8,7 +8,7 @@ namespace Repositories
     {
         public virtual DbSet<BloodPressure> BloodPressures { get; set; }
         public virtual DbSet<RestingHeartRate> RestingHeartRates { get; set; }
-        public virtual DbSet<AlcoholIntake> AlcoholIntakes { get; set; }
+        public virtual DbSet<Drink> Drinks { get; set; }
         public virtual DbSet<Weight> Weights { get; set; }
         public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }

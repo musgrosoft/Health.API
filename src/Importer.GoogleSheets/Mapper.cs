@@ -14,12 +14,12 @@ namespace Importer.GoogleSheets
             _logger = logger;
         }
         
-        public AlcoholIntake MapRowToAlcoholIntake(IList<object> row)
+        public Drink MapRowToAlcoholIntake(IList<object> row)
         {
             var date = DateTime.Parse((string)row[0]);
             var units = Double.Parse((string)row[2]);
 
-            return new AlcoholIntake
+            return new Drink
             {
                 CreatedDate = date,
                 Units = units,
