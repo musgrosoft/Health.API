@@ -59,9 +59,8 @@ namespace Importer.Fitbit
             var uri = $"{_config.FitbitBaseUrl}/oauth2/token";
 
             _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + "MjI4UFI4OjAyZjIyODBkOTY2MWQwMWFiNDlkY2Q1NWJhMjE4OTFh");
-            //    client.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
-
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + Base64Encode($"{_config.FitbitClientId}:{_config.FitbitClientSecret}"));
+            
             var nvc = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("grant_type", "refresh_token"),
@@ -71,7 +70,7 @@ namespace Importer.Fitbit
             var response = await _httpClient.PostAsync(uri, new FormUrlEncodedContent(nvc));
 
 
-            //            response.EnsureSuccessStatusCode();
+                        response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
 
@@ -101,7 +100,6 @@ namespace Importer.Fitbit
             {
                 await _logger.LogMessageAsync($"Fitbit SetTokens SUCCESS status code : {response.StatusCode} , content: {responseBody}");
                 var tokenResponse = JsonConvert.DeserializeObject<FitbitAuthTokensResponse>(responseBody);
-                //var tokenResponse = JsonConvert.DeserializeObject<NokiaTokenResponse>(responseBody);
 
                 return tokenResponse;
             }
