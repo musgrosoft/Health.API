@@ -17,7 +17,7 @@ namespace Importer.GoogleSheets
         public AlcoholIntake MapRowToAlcoholIntake(IList<object> row)
         {
             var date = DateTime.Parse((string)row[0]);
-            var units = Double.Parse((string)row[1]);
+            var units = Double.Parse((string)row[2]);
 
             return new AlcoholIntake
             {

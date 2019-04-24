@@ -19,12 +19,12 @@
         //Google Sheets
         string GoogleClientId { get; }
         string GoogleClientSecret { get; }
+        string HistoricAlcoholSpreadsheetId { get; }
         string AlcoholSpreadsheetId { get; }
         string ExerciseSpreadsheetId { get; }
 
         //Nokia Health
         string NokiaClientId { get; }
         string NokiaClientSecret { get; }
-
     }
 }

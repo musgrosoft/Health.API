@@ -10,5 +10,6 @@ namespace Importer.GoogleSheets
         //List<Ergo> GetErgos();
         List<Exercise> GetExercises();
         void InsertExercises(Exercise exercise);
+        List<AlcoholIntake> GetHistoricAlcoholIntakes();
     }
 }

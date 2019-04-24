@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
@@ -24,9 +25,22 @@ namespace Importer.GoogleSheets
             _mapper = mapper;
         }
 
+        public List<AlcoholIntake> GetHistoricAlcoholIntakes()
+        {
+            return _sheetMapper.Get<AlcoholIntake>(_config.HistoricAlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToAlcoholIntake);
+        }
+
         public List<AlcoholIntake> GetAlcoholIntakes()
         {
-            return _sheetMapper.Get<AlcoholIntake>(_config.AlcoholSpreadsheetId, "Sheet1!B2:F", _mapper.MapRowToAlcoholIntake);
+            var drinks = _sheetMapper.Get<AlcoholIntake>(_config.AlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToAlcoholIntake);
+
+            return drinks
+                .GroupBy(x => x.CreatedDate)
+                .Select(x => new AlcoholIntake
+                {
+                    CreatedDate = x.Key,
+                    Units = x.Sum(y => y.Units)
+                }).ToList();
         }
 
         public List<Exercise> GetExercises()

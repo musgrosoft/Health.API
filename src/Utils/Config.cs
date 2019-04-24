@@ -48,7 +48,8 @@ namespace Utils
         public string GoogleClientId => GetConfigValue("GoogleClientId");
         public string GoogleClientSecret => GetConfigValue("GoogleClientSecret");
 
-        public string AlcoholSpreadsheetId => "15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io";
+        public string HistoricAlcoholSpreadsheetId => "15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io";
+        public string AlcoholSpreadsheetId => "1f3aTKUUMwE63nKeow917vhfsQyN1RTyoLCu6M2iml0I";
         public string ExerciseSpreadsheetId => "1iZcGq0qBonWjU3cpmfz42zR-Mp7vHfr2uvw50s6Rj8g";
 
 
