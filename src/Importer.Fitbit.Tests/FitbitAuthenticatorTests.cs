@@ -131,5 +131,54 @@ namespace Importer.Fitbit.Tests
             _tokenService.Verify(x => x.SaveFitbitRefreshToken("bbb2"));
 
         }
+
+        [Fact]
+        public async Task ShouldThrowExceptionOnNonSuccessStatusCodeWhenGetAccessToken()
+        {
+            //Given
+            _tokenService.Setup(x => x.GetFitbitRefreshToken()).Returns(Task.FromResult("abc123"));
+
+            HttpRequestMessage capturedRequest = new HttpRequestMessage();
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = (HttpStatusCode)500,
+                    Content = new StringContent(@"This is an error 123")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
+
+
+            //When
+            Exception ex = await Assert.ThrowsAsync<Exception>(() => _fitbitAuthenticator.GetAccessToken());
+
+            //Then
+
+            Assert.Contains("status code is : 500", ex.Message);
+            Assert.Contains("This is an error 123", ex.Message);
+        }
+
+        [Fact]
+        public async Task ShouldThrowExceptionOnNonSuccessStatusCodeWhenSetToken()
+        {
+            //Given
+            var authorisationCode = "asdasd234234dfgdfgdf";
+
+            HttpRequestMessage capturedRequest = new HttpRequestMessage();
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = (HttpStatusCode)404,
+                    Content = new StringContent("error abc")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
+
+
+
+            //When 
+            var ex = await Assert.ThrowsAsync<Exception>(()=> _fitbitAuthenticator.SetTokens(authorisationCode));
+
+            //Then
+            Assert.Contains("status code is : 404", ex.Message);
+            Assert.Contains("error abc", ex.Message);
+        }
+
     }
 }

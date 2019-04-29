@@ -69,12 +69,19 @@ namespace Importer.Fitbit
 
             var response = await _httpClient.PostAsync(uri, new FormUrlEncodedContent(nvc));
 
-
-                        response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<FitbitRefreshTokenResponse>(responseBody);
+            }
+            else
+            {
+                throw new Exception($"Fitbit GetTokensWithRefreshToken FAIL  non success status code is : {(int)response.StatusCode} , content: {responseBody}");
+            }
 
-            return JsonConvert.DeserializeObject<FitbitRefreshTokenResponse>(responseBody);
+
+            
         }
 
         private async Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode)
@@ -105,8 +112,7 @@ namespace Importer.Fitbit
             }
             else
             {
-                //await _logger.LogMessageAsync($"Fitbit SetTokens FAIL  non success status code : {response.StatusCode} , content: {responseBody}");
-                throw new Exception($"Fitbit SetTokens FAIL  non success status code : {response.StatusCode} , content: {responseBody}");
+                throw new Exception($"Fitbit GetTokensWithAuthorizationCode FAIL  non success status code is : {(int)response.StatusCode} , content: {responseBody}");
             }
 
         }

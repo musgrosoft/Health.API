@@ -28,7 +28,16 @@ namespace Importer.Withings
                 FatRatioPercentage =
                     x.measures.FirstOrDefault(w => w.type == FatRatioPercentageMeasureTypeId) == null ? 
                     null : 
-                    (double?)(x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).unit))
+                    (double?)(
+                        x.measures
+                            .First(
+                                w => w.type == FatRatioPercentageMeasureTypeId)
+                            .value * 
+                        Math.Pow(10, 
+                            x.measures.First
+                                (w => 
+                                w.type == FatRatioPercentageMeasureTypeId)
+                                .unit))
             });
         }
 

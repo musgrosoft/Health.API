@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Importer.Withings;
 using Importer.Withings.Domain;
 using Utils;
 using Xunit;
 
-namespace Services.Tests.Withings
+namespace Importer.Withings.Tests
 {
     public class WithingsMapperTests
     {
