@@ -7,9 +7,11 @@ namespace Importer.Fitbit
     public interface IFitbitClient
     {
         //Task<FitbitDailyActivity> GetFitbitDailyActivity(DateTime date);
-        Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate);
-        Task Subscribe();
+        Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate, string accessToken);
+        Task Subscribe(string accessToken);
 
         //Task<List<Dataset>> GetDetailedHeartRates(DateTime date);
+        Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode);
+        Task<FitbitRefreshTokenResponse> GetTokensWithRefreshToken(string refreshToken);
     }
 }

@@ -33,7 +33,7 @@ namespace Importer.Withings.Tests
             await _withingsService.Subscribe();
 
             //Then
-            _withingsClient.Verify(x => x.Subscribe(), Times.Once);
+            _withingsClient.Verify(x => x.Subscribe(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Importer.Withings.Tests
             //Given
             IEnumerable<Response.Measuregrp> someMeasureGroups = new List<Response.Measuregrp> { };
             var someWeights = new List<Weight>();
-            _withingsClientQueryAdaptor.Setup(x => x.GetMeasureGroups(It.IsAny<DateTime>())).Returns(Task.FromResult(someMeasureGroups));
+            _withingsClientQueryAdaptor.Setup(x => x.GetMeasureGroups(It.IsAny<DateTime>(), It.IsAny<string>())).Returns(Task.FromResult(someMeasureGroups));
             _withingsMapper.Setup(x => x.MapMeasuresGroupsToWeights(someMeasureGroups)).Returns(someWeights);
 
             //When
@@ -69,7 +69,7 @@ namespace Importer.Withings.Tests
             //Given
             IEnumerable<Response.Measuregrp> someMeasureGroups = new List<Response.Measuregrp> { };
             var someBloodpressures = new List<BloodPressure>();
-            _withingsClientQueryAdaptor.Setup(x => x.GetMeasureGroups(It.IsAny<DateTime>())).Returns(Task.FromResult(someMeasureGroups));
+            _withingsClientQueryAdaptor.Setup(x => x.GetMeasureGroups(It.IsAny<DateTime>(), It.IsAny<string>())).Returns(Task.FromResult(someMeasureGroups));
             _withingsMapper.Setup(x => x.MapMeasuresGroupsToBloodPressures(someMeasureGroups)).Returns(someBloodpressures);
 
             //When

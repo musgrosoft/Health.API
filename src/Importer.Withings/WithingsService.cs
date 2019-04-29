@@ -22,22 +22,28 @@ namespace Importer.Withings
 
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)
         {
-            var measureGroups = await _withingsClientQueryAdapter.GetMeasureGroups(sinceDateTime);
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
+
+            var measureGroups = await _withingsClientQueryAdapter.GetMeasureGroups(sinceDateTime, accessToken);
 
             return _withingsMapper.MapMeasuresGroupsToWeights(measureGroups);
         }
 
         public async Task<IEnumerable<BloodPressure>> GetBloodPressures(DateTime sinceDateTime)
         {
-            var measureGroups = await _withingsClientQueryAdapter.GetMeasureGroups(sinceDateTime);
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
+
+            var measureGroups = await _withingsClientQueryAdapter.GetMeasureGroups(sinceDateTime, accessToken);
 
             return _withingsMapper.MapMeasuresGroupsToBloodPressures(measureGroups);
         }
 
         public async Task<List<string>> GetSubscriptions()
         {
-            var weightSubscription = await _withingsClient.GetWeightSubscription();
-            var bloodPressureSubscription = await _withingsClient.GetBloodPressureSubscription();
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
+
+            var weightSubscription = await _withingsClient.GetWeightSubscription(accessToken);
+            var bloodPressureSubscription = await _withingsClient.GetBloodPressureSubscription(accessToken);
 
             var subscriptions = new List<string>
             {
@@ -50,7 +56,8 @@ namespace Importer.Withings
 
         public async Task Subscribe()
         {
-            await _withingsClient.Subscribe();
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            await _withingsClient.Subscribe(accessToken);
         }
 
         public async Task SetTokens(string authorizationCode)

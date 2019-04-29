@@ -6,9 +6,9 @@ namespace Importer.Withings
 {
     public interface IWithingsClient
     {
-        Task Subscribe();
-        Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups();
-        Task<string> GetWeightSubscription();
-        Task<string> GetBloodPressureSubscription();
+        Task Subscribe(string accessToken);
+        Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(string accessToken);
+        Task<string> GetWeightSubscription(string accessToken);
+        Task<string> GetBloodPressureSubscription(string accessToken);
     }
 }

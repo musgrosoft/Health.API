@@ -24,7 +24,9 @@ namespace Importer.Fitbit
         
         public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
         {
-            var heartActivies = await _fitbitClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate);
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
+
+            var heartActivies = await _fitbitClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate, accessToken);
 
             return _fitbitMapper.MapActivitiesHeartsToRestingHeartRates(heartActivies);
         }
@@ -32,7 +34,9 @@ namespace Importer.Fitbit
         
         public async Task Subscribe()
         {
-            await _fitbitClient.Subscribe();
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
+
+            await _fitbitClient.Subscribe(accessToken);
         }
 
         public async Task SetTokens(string code)

@@ -18,7 +18,6 @@ namespace Importer.Withings.Tests
         private HttpClient _httpClient;
         private WithingsClient _withingsClient;
         private Mock<ILogger> _logger;
-        private Mock<IWithingsAuthenticator> _withingsAuthenticator;
 
         public WithingsClientTests()
         {
@@ -32,11 +31,11 @@ namespace Importer.Withings.Tests
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
             _logger = new Mock<ILogger>();
-            _withingsAuthenticator = new Mock<IWithingsAuthenticator>();
-            _withingsAuthenticator.Setup(x => x.GetAccessToken()).Returns(Task.FromResult("abc123"));
+//            _withingsAuthenticator = new Mock<IWithingsAuthenticator>();
+//            _withingsAuthenticator.Setup(x => x.GetAccessToken()).Returns(Task.FromResult("abc123"));
 
 
-            _withingsClient = new WithingsClient(_httpClient, _logger.Object, _withingsAuthenticator.Object);
+            _withingsClient = new WithingsClient(_httpClient, _logger.Object);
         }
 
 
@@ -44,7 +43,7 @@ namespace Importer.Withings.Tests
         [Fact]
         public async Task ShouldGetMeasureGroups()
         {
-            var measuregrps = await _withingsClient.GetMeasureGroups();
+            var measuregrps = await _withingsClient.GetMeasureGroups("abc123");
 
             Assert.Equal("https://wbsapi.withings.net/measure?action=getmeas&access_token=abc123", _capturedUri.AbsoluteUri);
             Assert.Equal(8, measuregrps.Count());

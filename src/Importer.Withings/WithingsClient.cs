@@ -13,17 +13,15 @@ namespace Importer.Withings
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
-        private readonly IWithingsAuthenticator _withingsAuthenticator;
         private const int WeightKgMeasureTypeId = 1;
         private const int SubscribeBloodPressureId = 4;
 
         private const string NOKIA_BASE_URL = "https://wbsapi.withings.net";
 
-        public WithingsClient(HttpClient httpClient, ILogger logger, IWithingsAuthenticator withingsAuthenticator)
+        public WithingsClient(HttpClient httpClient, ILogger logger)
         {
             _httpClient = httpClient;
             _logger = logger;
-            _withingsAuthenticator = withingsAuthenticator;
         }
 
         private async Task Revoke()
@@ -45,11 +43,11 @@ namespace Importer.Withings
 
         }
 
-        public async Task Subscribe()
+        public async Task Subscribe(string accessToken)
         {
             await Revoke();
 
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            
             //var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
 
             var weightsCallback = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify/Weights";
@@ -107,10 +105,10 @@ namespace Importer.Withings
         //    return subscriptions;
         //}
 
-        public async Task<string> GetWeightSubscription()
+        public async Task<string> GetWeightSubscription(string accessToken)
         {
             
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            //var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             //return null;
             _httpClient.DefaultRequestHeaders.Clear();
@@ -123,10 +121,10 @@ namespace Importer.Withings
             
         }
 
-        public async Task<string> GetBloodPressureSubscription()
+        public async Task<string> GetBloodPressureSubscription(string accessToken)
         {
             
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            //var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             //return null;
             _httpClient.DefaultRequestHeaders.Clear();
@@ -140,9 +138,9 @@ namespace Importer.Withings
             
         }
         
-        public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups()
+        public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(string accessToken)
         {
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            //var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
