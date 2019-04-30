@@ -13,7 +13,7 @@ namespace Importer.Withings.Tests
 {
     public class WithingsClientTests
     {
-        Uri _capturedUri = new Uri("http://www.null.com");
+      //  Uri _capturedUri = new Uri("http://www.null.com");
         private string withingsClientId = "12312jhjskdh937ey19d";
         private string withingsClientSecret = "fdjs982rhdgdsfogiuhd";
         private Mock<HttpMessageHandler> _httpMessageHandler;
@@ -64,13 +64,13 @@ namespace Importer.Withings.Tests
             var tokenResponse = await _withingsClient.GetTokensByAuthorisationCode(authorizationCode);
 
             //Then
-            Assert.Equal("https://wbsapi.withings.net/oauth2/token", _capturedUri.AbsoluteUri);
+            Assert.Equal("https://wbsapi.withings.net/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
 
             Assert.Contains("grant_type=authorization_code", (await _capturedRequest.Content.ReadAsStringAsync()));
 
             Assert.Contains($"client_id={withingsClientId}", (await _capturedRequest.Content.ReadAsStringAsync()));
             Assert.Contains($"client_secret={withingsClientSecret}", (await _capturedRequest.Content.ReadAsStringAsync()));
-            //Assert.Contains($"redirect_urei={authorizationCode}", (await _capturedRequest.Content.ReadAsStringAsync()));
+            Assert.Contains($"redirect_uri=https%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Fnokia%2Foauth%2F", (await _capturedRequest.Content.ReadAsStringAsync()));
 
 
 
@@ -83,7 +83,7 @@ namespace Importer.Withings.Tests
         {
             var measuregrps = await _withingsClient.GetMeasureGroups("abc123");
 
-            Assert.Equal("https://wbsapi.withings.net/measure?action=getmeas&access_token=abc123", _capturedUri.AbsoluteUri);
+            Assert.Equal("https://wbsapi.withings.net/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
             Assert.Equal(8, measuregrps.Count());
             Assert.Contains(measuregrps, x => x.date == 1526015332 && x.measures.Exists(a => a.value == 83000 && a.type == 9 && a.unit == -3));
             //Assert.Contains(measuregrps, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018, 5, 10, 5, 4, 42));
