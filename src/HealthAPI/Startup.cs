@@ -111,14 +111,14 @@ namespace HealthAPI
             services.AddTransient<IWithingsClient, WithingsClient>();
             services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
             services.AddTransient<IFitbitClient, FitbitClient>();
-            services.AddTransient<IGoogleClient, GoogleClient>();
+            services.AddTransient<ISheetsService, SheetsService>();
 
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<IWithingsService, WithingsService>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();
             services.AddTransient<ISheetMapper, SheetMapper>();
-            services.AddTransient<IMapper, Mapper>();
-            services.AddTransient<IGoogleRowCollector, GoogleRowCollector>();
+            services.AddTransient<IMapFunctions, MapFunctions>();
+            services.AddTransient<ISheetsClient, SheetsClient>();
 
 
             services.AddTransient<IWithingsMapper, WithingsMapper>();

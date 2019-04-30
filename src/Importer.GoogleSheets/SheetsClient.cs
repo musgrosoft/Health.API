@@ -7,14 +7,14 @@ using Utils;
 
 namespace Importer.GoogleSheets
 {
-    public class GoogleRowCollector : IGoogleRowCollector
+    public class SheetsClient : ISheetsClient
     {
-        static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
+        static string[] Scopes = { Google.Apis.Sheets.v4.SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "sheetreader";
 
         private readonly IConfig _config;
 
-        public GoogleRowCollector(IConfig config)
+        public SheetsClient(IConfig config)
         {
             _config = config;
         }
@@ -29,7 +29,7 @@ namespace Importer.GoogleSheets
                 Scopes = Scopes
             }.FromPrivateKey(secret));
 
-            var service = new SheetsService(new BaseClientService.Initializer()
+            var service = new Google.Apis.Sheets.v4.SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,

@@ -10,5 +10,7 @@ namespace Importer.Withings
         Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups();
         Task<string> GetWeightSubscription();
         Task<string> GetBloodPressureSubscription();
+        Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode);
+        Task<WithingsTokenResponse> GetTokensByRefreshToken(string refreshToken);
     }
 }

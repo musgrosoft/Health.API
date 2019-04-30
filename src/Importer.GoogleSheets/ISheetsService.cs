@@ -3,13 +3,13 @@ using Repositories.Health.Models;
 
 namespace Importer.GoogleSheets
 {
-    public interface IGoogleClient
+    public interface ISheetsService
     {
-        //List<Run> GetRuns();
         List<Drink> GetDrinks();
-        //List<Ergo> GetErgos();
         List<Exercise> GetExercises();
+
         void InsertExercises(Exercise exercise);
-        List<Drink> GetHistoricAlcoholIntakes();
+
+        List<Drink> GetHistoricDrinks();
     }
 }

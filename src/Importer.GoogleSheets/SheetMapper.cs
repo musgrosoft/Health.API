@@ -6,13 +6,13 @@ namespace Importer.GoogleSheets
 {
     public class SheetMapper : ISheetMapper
     {
-        private readonly IGoogleRowCollector _googleRowCollector;
+        private readonly ISheetsClient _sheetsClient;
         private readonly IConfig _config;
         private readonly ILogger _logger;
 
-        public SheetMapper(IGoogleRowCollector googleRowCollector, IConfig config, ILogger logger)
+        public SheetMapper(ISheetsClient sheetsClient, IConfig config, ILogger logger)
         {
-            _googleRowCollector = googleRowCollector;
+            _sheetsClient = sheetsClient;
             _config = config;
             _logger = logger;
         }
@@ -23,7 +23,7 @@ namespace Importer.GoogleSheets
 
             try
             {
-                var rows = _googleRowCollector.GetRows(sheetId, range);
+                var rows = _sheetsClient.GetRows(sheetId, range);
                 if (rows != null && rows.Count > 0)
                 {
                     foreach (var row in rows)

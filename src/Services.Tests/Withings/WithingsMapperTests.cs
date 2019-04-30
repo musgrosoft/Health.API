@@ -41,7 +41,7 @@ namespace Services.Tests.Withings
                 }}
             };
 
-            var result = _withingsMapper.MapMeasuresGroupsToWeights(measuresGroups);
+            var result = _withingsMapper.MapToWeights(measuresGroups);
 
             //Then
             Assert.Equal(3, result.Count());
@@ -72,7 +72,7 @@ namespace Services.Tests.Withings
                 }}
             };
 
-            var result = _withingsMapper.MapMeasuresGroupsToBloodPressures(measuresGroups);
+            var result = _withingsMapper.MapToBloodPressures(measuresGroups);
 
             //Then
             Assert.Equal(3, result.Count());

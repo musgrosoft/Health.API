@@ -12,13 +12,13 @@ namespace HealthAPI.Controllers
     public class GoogleSheetsController : Controller
     {
         private readonly ILogger _logger;
-        private readonly IGoogleClient _googleClient;
+        private readonly ISheetsService _sheetsService;
         private readonly IHealthService _healthService;
         
-        public GoogleSheetsController(ILogger logger, IGoogleClient googleClient, IHealthService healthService)
+        public GoogleSheetsController(ILogger logger, ISheetsService sheetsService, IHealthService healthService)
         {
             _logger = logger;
-            _googleClient = googleClient;
+            _sheetsService = sheetsService;
             _healthService = healthService;
             //_googleImporter = googleImporter;
         }
@@ -37,11 +37,11 @@ namespace HealthAPI.Controllers
 
             if (latestDrink == DateTime.MinValue)
             {
-                var historicAlcoholIntakes = _googleClient.GetHistoricAlcoholIntakes();
+                var historicAlcoholIntakes = _sheetsService.GetHistoricDrinks();
                 _healthService.UpsertAlcoholIntakes(historicAlcoholIntakes);
             }
 
-            var alcoholIntakes = _googleClient.GetDrinks();
+            var alcoholIntakes = _sheetsService.GetDrinks();
             _healthService.UpsertAlcoholIntakes(alcoholIntakes);
 
             return Ok();
@@ -56,7 +56,7 @@ namespace HealthAPI.Controllers
 
             //_googleImporter.ImportExercises();
 
-            var rows = _googleClient.GetExercises();
+            var rows = _sheetsService.GetExercises();
             _healthService.UpsertExercises(rows);
 
             return Ok();

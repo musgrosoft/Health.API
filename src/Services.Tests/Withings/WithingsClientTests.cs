@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Importer.Withings;
 using Moq;
 using Moq.Protected;
+using Utils;
 
 namespace Services.Tests.Withings
 {
@@ -15,6 +16,7 @@ namespace Services.Tests.Withings
         private Mock<HttpMessageHandler> _httpMessageHandler;
         private HttpClient _httpClient;
         private WithingsClient _withingsClient;
+        private Mock<IConfig> _config;
 
         public WithingsClientTests()
         {
@@ -28,7 +30,9 @@ namespace Services.Tests.Withings
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
 
-            _withingsClient = new WithingsClient(_httpClient, null, null);
+            _config = new Mock<IConfig>();
+
+            _withingsClient = new WithingsClient(_httpClient, null, null, _config.Object);
         }
 
         //[Fact]

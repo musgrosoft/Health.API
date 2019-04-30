@@ -24,14 +24,14 @@ namespace Importer.Withings
         {
             var measureGroups = await _withingsClientQueryAdapter.GetMeasureGroups(sinceDateTime);
 
-            return _withingsMapper.MapMeasuresGroupsToWeights(measureGroups);
+            return _withingsMapper.MapToWeights(measureGroups);
         }
 
         public async Task<IEnumerable<BloodPressure>> GetBloodPressures(DateTime sinceDateTime)
         {
             var measureGroups = await _withingsClientQueryAdapter.GetMeasureGroups(sinceDateTime);
 
-            return _withingsMapper.MapMeasuresGroupsToBloodPressures(measureGroups);
+            return _withingsMapper.MapToBloodPressures(measureGroups);
         }
 
         public async Task<List<string>> GetSubscriptions()

@@ -14,20 +14,87 @@ namespace Importer.Withings
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
         private readonly IWithingsAuthenticator _withingsAuthenticator;
+        private readonly IConfig _config;
         private const int WeightKgMeasureTypeId = 1;
-        private const int FatRatioPercentageMeasureTypeId = 6;
-        private const int DiastolicBloodPressureMeasureTypeId = 9;
-        private const int SystolicBloodPressureMeasureTypeId = 10;
         private const int SubscribeBloodPressureId = 4;
 
         private const string NOKIA_BASE_URL = "https://wbsapi.withings.net";
 
-        public WithingsClient(HttpClient httpClient, ILogger logger, IWithingsAuthenticator withingsAuthenticator)
+        private const string NOKIA_REDIRECT_URL = "https://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
+
+        public WithingsClient(HttpClient httpClient, ILogger logger, IWithingsAuthenticator withingsAuthenticator, IConfig config)
         {
             _httpClient = httpClient;
             _logger = logger;
             _withingsAuthenticator = withingsAuthenticator;
+            _config = config;
         }
+
+        public async Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode)
+        {
+
+                var url = $"{NOKIA_BASE_URL}/oauth2/token";
+
+                var nvc = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                    new KeyValuePair<string, string>("client_id", _config.NokiaClientId),
+                    new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
+                    new KeyValuePair<string, string>("code", authorizationCode),
+                    new KeyValuePair<string, string>("redirect_uri", NOKIA_REDIRECT_URL)
+
+
+                };
+
+                var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
+
+                    return tokenResponse;
+
+//                    var tokenResponseAccessToken = tokenResponse.access_token;
+//                    var tokenResponseRefreshToken = tokenResponse.refresh_token;
+//
+//                    await _oAuthService.SaveWithingsAccessToken(tokenResponseAccessToken);
+//                    await _oAuthService.SaveWithingsRefreshToken(tokenResponseRefreshToken);
+                }
+                else
+                {
+                    throw  new Exception($"non success status code : {(int)response.StatusCode} , content: {responseBody}");
+                    //await _logger.LogMessageAsync($"non success status code : {response.StatusCode} , content: {responseBody}");
+                }
+            
+
+        }
+
+
+        public async Task<WithingsTokenResponse> GetTokensByRefreshToken(string refreshToken)
+        {
+            var url = $"{NOKIA_BASE_URL}/oauth2/token";
+
+            var nvc = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("grant_type", "refresh_token"),
+                new KeyValuePair<string, string>("client_id", _config.NokiaClientId),
+                new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
+                new KeyValuePair<string, string>("refresh_token", refreshToken),
+                new KeyValuePair<string, string>("redirect_uri", NOKIA_REDIRECT_URL)
+            };
+
+            var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
+
+            return tokenResponse;
+        }
+
+
 
         private async Task Revoke()
         {

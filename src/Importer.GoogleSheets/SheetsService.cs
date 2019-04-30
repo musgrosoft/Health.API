@@ -10,29 +10,29 @@ using Utils;
 
 namespace Importer.GoogleSheets
 {
-    public class GoogleClient : IGoogleClient
+    public class SheetsService : ISheetsService
     {
         private readonly IConfig _config;
         private readonly ISheetMapper _sheetMapper;
-        private readonly IMapper _mapper;
-        static string[] Scopes = { SheetsService.Scope.Spreadsheets };
+        private readonly IMapFunctions _mapFunctions;
+        static string[] Scopes = { Google.Apis.Sheets.v4.SheetsService.Scope.Spreadsheets };
         static string ApplicationName = "sheetreader";
 
-        public GoogleClient(IConfig config, ISheetMapper sheetMapper, IMapper mapper)
+        public SheetsService(IConfig config, ISheetMapper sheetMapper, IMapFunctions mapFunctions)
         {
             _config = config;
             _sheetMapper = sheetMapper;
-            _mapper = mapper;
+            _mapFunctions = mapFunctions;
         }
 
-        public List<Drink> GetHistoricAlcoholIntakes()
+        public List<Drink> GetHistoricDrinks()
         {
-            return _sheetMapper.Get<Drink>(_config.HistoricAlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToDrink);
+            return _sheetMapper.Get<Drink>(_config.HistoricAlcoholSpreadsheetId, "Sheet1!A2:C", _mapFunctions.MapRowToDrink);
         }
 
         public List<Drink> GetDrinks()
         {
-            var drinks = _sheetMapper.Get<Drink>(_config.AlcoholSpreadsheetId, "Sheet1!A2:C", _mapper.MapRowToDrink);
+            var drinks = _sheetMapper.Get<Drink>(_config.AlcoholSpreadsheetId, "Sheet1!A2:C", _mapFunctions.MapRowToDrink);
 
             return drinks
                 .GroupBy(x => x.CreatedDate)
@@ -45,7 +45,7 @@ namespace Importer.GoogleSheets
 
         public List<Exercise> GetExercises()
         {
-            return _sheetMapper.Get<Exercise>(_config.ExerciseSpreadsheetId, "Sheet1!A2:E", _mapper.MapRowToExerise);
+            return _sheetMapper.Get<Exercise>(_config.ExerciseSpreadsheetId, "Sheet1!A2:E", _mapFunctions.MapRowToExerise);
         }
 
         public void InsertExercises(Exercise exercise)
@@ -61,7 +61,7 @@ namespace Importer.GoogleSheets
                 Scopes = Scopes
             }.FromPrivateKey(secret));
 
-            var service = new SheetsService(new BaseClientService.Initializer()
+            var service = new Google.Apis.Sheets.v4.SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,

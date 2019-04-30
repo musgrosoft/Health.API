@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Importer.GoogleSheets
 {
-    public interface IGoogleRowCollector
+    public interface ISheetsClient
     {
         IList<IList<Object>> GetRows(string sheetId, string range);
     }
