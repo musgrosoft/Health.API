@@ -14,6 +14,8 @@ namespace Importer.Withings.Tests
     public class WithingsClientTests
     {
         Uri _capturedUri = new Uri("http://www.null.com");
+        private string withingsClientId = "12312jhjskdh937ey19d";
+        private string withingsClientSecret = "fdjs982rhdgdsfogiuhd";
         private Mock<HttpMessageHandler> _httpMessageHandler;
         private HttpClient _httpClient;
         private WithingsClient _withingsClient;
@@ -21,15 +23,20 @@ namespace Importer.Withings.Tests
 
         private Mock<ILogger> _logger;
 
+        private HttpRequestMessage _capturedRequest;
+
         public WithingsClientTests()
         {
             _httpMessageHandler = new Mock<HttpMessageHandler>();
+
+            _capturedRequest = new HttpRequestMessage();
+
             _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.FromResult(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(nokiaContent)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri);
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
             _logger = new Mock<ILogger>();
@@ -37,10 +44,38 @@ namespace Importer.Withings.Tests
 //            _withingsAuthenticator.Setup(x => x.GetAccessToken()).Returns(Task.FromResult("abc123"));
 
             _config = new Mock<IConfig>();
+            _config.Setup(x => x.WithingsClientId).Returns(withingsClientId);
+            _config.Setup(x => x.WithingsClientSecret).Returns(withingsClientSecret);
+
 
             _withingsClient = new WithingsClient(_httpClient, _logger.Object,  _config.Object);
         }
 
+
+        [Fact]
+        public async Task ShouldGetTokensByAuthorisationCode()
+        {
+            //Given
+            string authorizationCode = "qwe321";
+
+
+            //When
+
+            var tokenResponse = await _withingsClient.GetTokensByAuthorisationCode(authorizationCode);
+
+            //Then
+            Assert.Equal("https://wbsapi.withings.net/oauth2/token", _capturedUri.AbsoluteUri);
+
+            Assert.Contains("grant_type=authorization_code", (await _capturedRequest.Content.ReadAsStringAsync()));
+
+            Assert.Contains($"client_id={withingsClientId}", (await _capturedRequest.Content.ReadAsStringAsync()));
+            Assert.Contains($"client_secret={withingsClientSecret}", (await _capturedRequest.Content.ReadAsStringAsync()));
+            //Assert.Contains($"redirect_urei={authorizationCode}", (await _capturedRequest.Content.ReadAsStringAsync()));
+
+
+
+            Assert.Contains($"code={authorizationCode}", (await _capturedRequest.Content.ReadAsStringAsync()));
+        }
 
 
         [Fact]
@@ -237,5 +272,6 @@ namespace Importer.Withings.Tests
     }
 }";
 
+        
     }
 }

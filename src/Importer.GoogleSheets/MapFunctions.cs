@@ -12,7 +12,7 @@ namespace Importer.GoogleSheets
             return new Drink
             {
                 CreatedDate = DateTime.Parse((string)row[0]),
-                Units = Double.Parse((string)row[2])
+                Units = Double.Parse((string)row[4])
             };
         }
 

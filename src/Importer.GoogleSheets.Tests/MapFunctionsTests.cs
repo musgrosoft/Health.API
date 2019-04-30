@@ -20,6 +20,8 @@ namespace Importer.GoogleSheets.Tests
             {
                 "12 Jan 2001",
                 "",
+                "",
+                "",
                 "10"
             };
 

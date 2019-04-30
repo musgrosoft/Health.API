@@ -24,7 +24,7 @@
         string ExerciseSpreadsheetId { get; }
 
         //Nokia Health
-        string NokiaClientId { get; }
-        string NokiaClientSecret { get; }
+        string WithingsClientId { get; }
+        string WithingsClientSecret { get; }
     }
 }

@@ -54,7 +54,7 @@ namespace Utils
 
 
         //Nokia Health
-        public string NokiaClientId => GetConfigValue("NokiaClientId");
-        public string NokiaClientSecret => GetConfigValue("NokiaClientSecret");
+        public string WithingsClientId => GetConfigValue("NokiaClientId");
+        public string WithingsClientSecret => GetConfigValue("NokiaClientSecret");
     }
 }

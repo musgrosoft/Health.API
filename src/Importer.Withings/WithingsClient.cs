@@ -36,8 +36,8 @@ namespace Importer.Withings
                 var nvc = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("grant_type", "authorization_code"),
-                    new KeyValuePair<string, string>("client_id", _config.NokiaClientId),
-                    new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
+                    new KeyValuePair<string, string>("client_id", _config.WithingsClientId),
+                    new KeyValuePair<string, string>("client_secret", _config.WithingsClientSecret),
                     new KeyValuePair<string, string>("code", authorizationCode),
                     new KeyValuePair<string, string>("redirect_uri", NOKIA_REDIRECT_URL)
 
@@ -54,16 +54,11 @@ namespace Importer.Withings
 
                     return tokenResponse;
 
-//                    var tokenResponseAccessToken = tokenResponse.access_token;
-//                    var tokenResponseRefreshToken = tokenResponse.refresh_token;
-//
-//                    await _oAuthService.SaveWithingsAccessToken(tokenResponseAccessToken);
-//                    await _oAuthService.SaveWithingsRefreshToken(tokenResponseRefreshToken);
                 }
                 else
                 {
                     throw  new Exception($"non success status code : {(int)response.StatusCode} , content: {responseBody}");
-                    //await _logger.LogMessageAsync($"non success status code : {response.StatusCode} , content: {responseBody}");
+
                 }
             
 
@@ -77,8 +72,8 @@ namespace Importer.Withings
             var nvc = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("grant_type", "refresh_token"),
-                new KeyValuePair<string, string>("client_id", _config.NokiaClientId),
-                new KeyValuePair<string, string>("client_secret", _config.NokiaClientSecret),
+                new KeyValuePair<string, string>("client_id", _config.WithingsClientId),
+                new KeyValuePair<string, string>("client_secret", _config.WithingsClientSecret),
                 new KeyValuePair<string, string>("refresh_token", refreshToken),
                 new KeyValuePair<string, string>("redirect_uri", NOKIA_REDIRECT_URL)
             };
