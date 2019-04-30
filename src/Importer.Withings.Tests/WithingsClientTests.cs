@@ -19,6 +19,8 @@ namespace Importer.Withings.Tests
         private WithingsClient _withingsClient;
         private Mock<IConfig> _config;
 
+        private Mock<ILogger> _logger;
+
         public WithingsClientTests()
         {
             _httpMessageHandler = new Mock<HttpMessageHandler>();
@@ -36,7 +38,7 @@ namespace Importer.Withings.Tests
 
             _config = new Mock<IConfig>();
 
-            _withingsClient = new WithingsClient(_httpClient, null, null, _config.Object);
+            _withingsClient = new WithingsClient(_httpClient, _logger.Object,  _config.Object);
         }
 
 
@@ -234,7 +236,6 @@ namespace Importer.Withings.Tests
         ]
     }
 }";
-
 
     }
 }

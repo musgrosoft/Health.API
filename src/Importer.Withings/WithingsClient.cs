@@ -13,15 +13,19 @@ namespace Importer.Withings
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
+        private readonly IConfig _config;
         private const int WeightKgMeasureTypeId = 1;
         private const int SubscribeBloodPressureId = 4;
 
         private const string NOKIA_BASE_URL = "https://wbsapi.withings.net";
+        private const string NOKIA_REDIRECT_URL = "https://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
 
-        public WithingsClient(HttpClient httpClient, ILogger logger)
+
+        public WithingsClient(HttpClient httpClient, ILogger logger, IConfig config)
         {
             _httpClient = httpClient;
             _logger = logger;
+            _config = config;
         }
 
         public async Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode)

@@ -7,6 +7,6 @@ namespace Importer.GoogleSheets
     public interface IMapFunctions
     {
         Drink MapRowToDrink(IList<Object> row);
-        Exercise MapRowToExerise(IList<Object> row);
+        Exercise MapRowToExercise(IList<Object> row);
     }
 }

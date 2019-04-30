@@ -16,7 +16,7 @@ namespace Importer.GoogleSheets
             };
         }
 
-        public Exercise MapRowToExerise(IList<object> row)
+        public Exercise MapRowToExercise(IList<object> row)
         {
             return new Exercise
             {

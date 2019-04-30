@@ -45,7 +45,7 @@ namespace Importer.GoogleSheets
 
         public List<Exercise> GetExercises()
         {
-            return _sheetMapper.Get<Exercise>(_config.ExerciseSpreadsheetId, "Sheet1!A2:E", _mapFunctions.MapRowToExerise);
+            return _sheetMapper.Get<Exercise>(_config.ExerciseSpreadsheetId, "Sheet1!A2:E", _mapFunctions.MapRowToExercise);
         }
 
         public void InsertExercises(Exercise exercise)
