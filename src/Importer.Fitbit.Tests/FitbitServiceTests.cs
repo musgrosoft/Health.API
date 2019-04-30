@@ -41,7 +41,7 @@ namespace Importer.Fitbit.Tests
             await _fitbitService.Subscribe();
 
             //Then
-            _fitbitClient.Verify(x=>x.Subscribe(), Times.Once);
+            _fitbitClient.Verify(x=>x.Subscribe(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -123,7 +123,7 @@ namespace Importer.Fitbit.Tests
                 new ActivitiesHeart{dateTime = new DateTime(2017,1,1)}
             };
 
-            _fitbitClientQueryAdapter.Setup(x=>x.GetFitbitHeartActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)activitiesHearts));
+            _fitbitClientQueryAdapter.Setup(x=>x.GetFitbitHeartActivities(fromDate, toDate, It.IsAny<string>())).Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)activitiesHearts));
 
             var restingHeartRates = new List<RestingHeartRate>
             {

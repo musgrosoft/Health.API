@@ -116,6 +116,22 @@ namespace Repository.Unit.Tests
             Assert.Equal(thirdRestingHeartRate.CreatedDate, latestRestingHeartRateDate);
         }
 
+        [Fact]
+        public void ShouldGetLatestDrinkDate()
+        {
+            var firstDrink = new Drink { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondDrink = new Drink { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdDrink = new Drink { CreatedDate = new DateTime(2018, 5, 3) };
+
+            _fakeLocalContext.Drinks.Add(firstDrink);
+            _fakeLocalContext.Drinks.Add(secondDrink);
+            _fakeLocalContext.Drinks.Add(thirdDrink);
+            _fakeLocalContext.SaveChanges();
+
+            var latestDrinkDate = _healthRepository.GetLatestDrinkDate();
+
+            Assert.Equal(thirdDrink.CreatedDate, latestDrinkDate);
+        }
 
         [Fact]
         public void ShouldGetLatestWeightDate()

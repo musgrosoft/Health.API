@@ -18,7 +18,7 @@ namespace Importer.Fitbit
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate, string accessToken)
         {
             var heartActivities = new List<ActivitiesHeart>();
 
@@ -29,7 +29,7 @@ namespace Importer.Fitbit
                 FitBitActivity fitbitActivity;
                 try
                 { 
-                    fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(date);
+                    fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(date, accessToken);
                 }
                 catch (TooManyRequestsException ex)
                 {

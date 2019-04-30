@@ -32,7 +32,7 @@ namespace Importer.Fitbit.Tests
             DateTime toDate = new DateTime(2018, 3, 15);
 
             //Given 
-            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(1))).Returns(Task.FromResult(
+            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(1), It.IsAny<string>())).Returns(Task.FromResult(
                 new FitBitActivity
                 {
                     activitiesHeart = new List<ActivitiesHeart>
@@ -50,7 +50,7 @@ namespace Importer.Fitbit.Tests
                     }
                 }));
 
-            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(2))).Returns(Task.FromResult(
+            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(2), It.IsAny<string>())).Returns(Task.FromResult(
                 new FitBitActivity
                 {
                     activitiesHeart = new List<ActivitiesHeart>
@@ -68,7 +68,7 @@ namespace Importer.Fitbit.Tests
                     }
                 }));
 
-            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(3))).Returns(Task.FromResult(
+            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(3), It.IsAny<string>())).Returns(Task.FromResult(
                 new FitBitActivity
                 {
                     activitiesHeart = new List<ActivitiesHeart>
@@ -87,7 +87,7 @@ namespace Importer.Fitbit.Tests
                 }));
 
             //When
-            var heartActivities = await _fitbitClientClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate);
+            var heartActivities = await _fitbitClientClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate, It.IsAny<string>());
 
             Assert.Equal(5, heartActivities.Count());
             Assert.Contains(heartActivities, x => x.value.restingHeartRate == 11);
@@ -108,7 +108,7 @@ namespace Importer.Fitbit.Tests
             var tooManyRequests = new TooManyRequestsException("I'm a little teapot.");
 
             //Given 
-            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(1))).Returns(Task.FromResult(
+            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(1), It.IsAny<string>())).Returns(Task.FromResult(
                 new FitBitActivity
                 {
                     activitiesHeart = new List<ActivitiesHeart>
@@ -126,9 +126,9 @@ namespace Importer.Fitbit.Tests
                     }
                 }));
 
-            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(2))).Throws(tooManyRequests);
+            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(2), It.IsAny<string>())).Throws(tooManyRequests);
 
-            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(3))).Returns(Task.FromResult(
+            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(3), It.IsAny<string>())).Returns(Task.FromResult(
                 new FitBitActivity
                 {
                     activitiesHeart = new List<ActivitiesHeart>
@@ -147,7 +147,7 @@ namespace Importer.Fitbit.Tests
                 }));
 
             //When
-            var heartActivities = await _fitbitClientClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate);
+            var heartActivities = await _fitbitClientClientQueryAdapter.GetFitbitHeartActivities(fromDate, toDate, It.IsAny<string>());
 
             Assert.Equal(2, heartActivities.Count());
             Assert.Contains(heartActivities, x => x.value.restingHeartRate == 11);

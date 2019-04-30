@@ -13,21 +13,15 @@ namespace Importer.Withings
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
-        private readonly IWithingsAuthenticator _withingsAuthenticator;
-        private readonly IConfig _config;
         private const int WeightKgMeasureTypeId = 1;
         private const int SubscribeBloodPressureId = 4;
 
         private const string NOKIA_BASE_URL = "https://wbsapi.withings.net";
 
-        private const string NOKIA_REDIRECT_URL = "https://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
-
-        public WithingsClient(HttpClient httpClient, ILogger logger, IWithingsAuthenticator withingsAuthenticator, IConfig config)
+        public WithingsClient(HttpClient httpClient, ILogger logger)
         {
             _httpClient = httpClient;
             _logger = logger;
-            _withingsAuthenticator = withingsAuthenticator;
-            _config = config;
         }
 
         public async Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode)
@@ -115,11 +109,11 @@ namespace Importer.Withings
 
         }
 
-        public async Task Subscribe()
+        public async Task Subscribe(string accessToken)
         {
             await Revoke();
 
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            
             //var callback = "http://musgrosoft-health-api.azurewebsites.net/api/nokia";
 
             var weightsCallback = "http://musgrosoft-health-api.azurewebsites.net/api/Nokia/Notify/Weights";
@@ -177,10 +171,10 @@ namespace Importer.Withings
         //    return subscriptions;
         //}
 
-        public async Task<string> GetWeightSubscription()
+        public async Task<string> GetWeightSubscription(string accessToken)
         {
             
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            //var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             //return null;
             _httpClient.DefaultRequestHeaders.Clear();
@@ -193,10 +187,10 @@ namespace Importer.Withings
             
         }
 
-        public async Task<string> GetBloodPressureSubscription()
+        public async Task<string> GetBloodPressureSubscription(string accessToken)
         {
             
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            //var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             //return null;
             _httpClient.DefaultRequestHeaders.Clear();
@@ -209,71 +203,10 @@ namespace Importer.Withings
             return $"Subscription blood pressure ::: {response.StatusCode} , {content}";
             
         }
-
-        //        public async Task<IEnumerable<Response.Measuregrp>> GetWeightMeasureGroups(DateTime sinceDateTime)
-        //        {
-        //            var accessToken = await _nokiaAuthenticator.GetAccessToken();
-
-        ////            _logger.Log($"GetWeights accesstoken is ::: {accessToken}");
-
-        //            _httpClient.DefaultRequestHeaders.Clear();
-        //            _httpClient.DefaultRequestHeaders.Accept.Clear();
-
-        //            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
-        //            var content = await response.Content.ReadAsStringAsync();
-
-        //            await _logger.LogMessageAsync($"GetWeights ::: {response.StatusCode} , {content}");
-
-        //            if (response.IsSuccessStatusCode)
-        //            {   
-        //                var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
-
-        //                var dateFilteredMeasures = data.body.measuregrps.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
-        //                var weightMeasures = dateFilteredMeasures.Where(x => x.measures.Any(y => y.type == WeightKgMeasureTypeId)).ToList();
-
-        //                return weightMeasures;
-        //            }
-        //            else
-        //            {
-        //                throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {content}");
-        //            }
-        //        }
-
-        //        public  async Task<IEnumerable<Response.Measuregrp>> GetBloodPressuresMeasureGroups(DateTime sinceDateTime)
-        //        {
-        //            var accessToken = await _nokiaAuthenticator.GetAccessToken();
-
-        //            _httpClient.DefaultRequestHeaders.Clear();
-        //            _httpClient.DefaultRequestHeaders.Accept.Clear();
-
-        //            //var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&oauth_consumer_key=ebb1cbd42bb69687cb85ccb20919b0ff006208b79c387059123344b921837d8d&oauth_nonce=742bef6a3da52fbf004573d18b8f04cf&oauth_signature=cgO95H%2Fg2qx0VQ9ma2k8qeHronM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1503326610&oauth_token=7f027003b78369d415bd0ee8e91fdd43408896616108b72b97fd7c153685f&oauth_version=1.0&userid=8792669");
-
-        //            var response = await _httpClient.GetAsync($"{NOKIA_BASE_URL}/measure?action=getmeas&access_token={accessToken}");
-
-
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                var content = await response.Content.ReadAsStringAsync();
-        //                var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
-
-
-        //                var dateFilteredMeasures = data.body.measuregrps.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
-
-        //                var bloodPressureMeasures = dateFilteredMeasures.Where(x =>
-        //                    x.measures.Any(y => y.type == DiastolicBloodPressureMeasureTypeId) &&
-        //                    x.measures.Any(y => y.type == SystolicBloodPressureMeasureTypeId)).ToList();
-
-        //                return bloodPressureMeasures;
-        //            }
-        //            else
-        //            {
-        //                throw new Exception($"Error calling nokia api , status code is {response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
-        //            }
-        //        }
-
-        public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups()
+        
+        public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(string accessToken)
         {
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
+            //var accessToken = await _withingsAuthenticator.GetAccessToken();
 
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();

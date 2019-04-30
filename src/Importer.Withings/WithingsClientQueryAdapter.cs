@@ -16,9 +16,9 @@ namespace Importer.Withings
             _withingsClient = withingsClient;
         }
 
-        public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(DateTime sinceDateTime)
+        public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(DateTime sinceDateTime, string accessToken)
         {
-            var measureGroups = await _withingsClient.GetMeasureGroups();
+            var measureGroups = await _withingsClient.GetMeasureGroups(accessToken);
 
             var dateFilteredMeasures = measureGroups.Where(x => x.date.ToDateFromUnixTime() >= sinceDateTime);
 
