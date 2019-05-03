@@ -38,7 +38,7 @@ namespace Utils
         public string FitbitClientSecret => GetConfigValue("FitbitClientSecret");
         public string FitbitUserId => GetConfigValue("FitbitUserId");
         public string FitbitVerificationCode => GetConfigValue("FitbitVerificationCode");
-        public string FitbitOAuthRedirectUrl => "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
+        public string FitbitOAuthRedirectUrl => "https://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
         public string FitbitBaseUrl => "https://api.fitbit.com";
 
         //Google Sheets

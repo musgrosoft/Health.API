@@ -215,7 +215,7 @@ namespace Importer.Fitbit.Tests
             Assert.Contains("grant_type=authorization_code", (await capturedRequest.Content.ReadAsStringAsync()));
             Assert.Contains("client_id=123456", (await capturedRequest.Content.ReadAsStringAsync()));
             Assert.Contains("code=asdasd234234dfgdfgdf", (await capturedRequest.Content.ReadAsStringAsync()));
-            Assert.Contains("redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F", (await capturedRequest.Content.ReadAsStringAsync()));
+            Assert.Contains("redirect_uri=https%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F", (await capturedRequest.Content.ReadAsStringAsync()));
 
 
         }
