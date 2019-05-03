@@ -8,11 +8,11 @@
 
 //namespace HealthAPI.Acceptance.Tests
 //{
-//    public class NokiaAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>
+//    public class WithingsAcceptanceTests : IClassFixture<WebApplicationFactory<HealthAPI.Startup>>
 //    {
 //        private readonly WebApplicationFactory<Startup> _factory;
 
-//        public NokiaAcceptanceTests(WebApplicationFactory<HealthAPI.Startup> factory)
+//        public WithingsAcceptanceTests(WebApplicationFactory<HealthAPI.Startup> factory)
 //        {
 //            _factory = factory.WithWebHostBuilder(builder => builder.UseStartup<TestStartup>());
 //        }
@@ -21,8 +21,8 @@
 //        public async Task ShouldListSubscriptions()
 //        {
 //            //var client = _factory.CreateClient();
-            
-//            //var response = await client.GetAsync("/api/Nokia/ListSubscriptions");
+
+//            //var response = await client.GetAsync("/api/Withings/ListSubscriptions");
 
 //            //Assert.Equal("200",response.StatusCode.ToString());
 

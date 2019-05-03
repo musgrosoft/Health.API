@@ -122,7 +122,7 @@ namespace Importer.Withings.Tests
                 .Returns(Task.FromResult(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(nokiaContent)
+                    Content = new StringContent(withingsContent)
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
 
             //When
@@ -153,7 +153,7 @@ namespace Importer.Withings.Tests
         }
 
 
-        private string nokiaContent = @"{
+        private string withingsContent = @"{
     ""status"": 0,
     ""body"": {
         ""updatetime"": 1526036073,

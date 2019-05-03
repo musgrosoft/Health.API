@@ -25,7 +25,7 @@
         string DrinksRange { get; }
         string ExercisesRange { get; }
 
-        //Nokia Health
+        //Withings
         string WithingsClientId { get; }
         string WithingsClientSecret { get; }
         string WithingsBaseUrl { get; }

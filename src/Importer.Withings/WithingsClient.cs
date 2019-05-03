@@ -106,7 +106,7 @@ namespace Importer.Withings
             {
                 var content = await response.Content.ReadAsStringAsync();
                 
-                throw new Exception($"Error calling nokia api , status code is {(int)response.StatusCode} , and content is {content}");
+                throw new Exception($"Error calling withings api , status code is {(int)response.StatusCode} , and content is {content}");
             }
         }
 

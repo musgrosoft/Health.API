@@ -9,20 +9,13 @@ using Utils;
 namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Nokia")]
+    [Route("api/Withings")]
     public class WithingsController : Controller
     {
         private readonly ILogger _logger;
         private readonly IWithingsService _withingsService;
         private readonly IHealthService _healthService;
-
-        //private const int WeightKgMeasureTypeId = 1;
-        //private const int FatRatioPercentageMeasureTypeId = 6;
-        //private const int DiastolicBloodPressureMeasureTypeId = 9;
-        //private const int SystolicBloodPressureMeasureTypeId = 10;
-        //private const int SubscribeBloodPressureId = 4;
-
-
+        
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
         private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
@@ -45,10 +38,10 @@ namespace HealthAPI.Controllers
 
             _healthService.UpsertWeights(weights);
 
-            await _logger.LogMessageAsync("NOKIA NEW : Migrating just weights");
+            await _logger.LogMessageAsync("Migrating just weights");
             await _logger.LogMessageAsync($"WEIGHT : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
             await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
-            await _logger.LogMessageAsync("NOKIA : Finished Migrating just weights");
+            await _logger.LogMessageAsync("Finished Migrating just weights");
 
             return Ok();
         }

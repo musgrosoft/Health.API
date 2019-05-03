@@ -50,11 +50,10 @@ namespace Utils
         public string DrinksRange => "Sheet1!A2:C";
         public string ExercisesRange => "Sheet1!A2:E";
 
-
-        //Nokia Health
-        public string WithingsClientId => GetConfigValue("NokiaClientId");
-        public string WithingsClientSecret => GetConfigValue("NokiaClientSecret");
+        //Withings
+        public string WithingsClientId => GetConfigValue("WithingsClientId");
+        public string WithingsClientSecret => GetConfigValue("WithingsClientSecret");
         public string WithingsBaseUrl => "https://wbsapi.withings.net";
-        public string WithingsRedirectUrl => "https://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/";
+        public string WithingsRedirectUrl => "https://musgrosoft-health-api.azurewebsites.net/api/withings/oauth/";
     }
 }
