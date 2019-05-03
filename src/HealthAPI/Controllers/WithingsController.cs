@@ -76,24 +76,6 @@ namespace HealthAPI.Controllers
             await _withingsService.SetTokens(code);
             return Ok("Saved tokens successfully");
         }
-        
-
-        [HttpGet]
-        [Route("Subscribe")]
-        public async Task<IActionResult> Subscribe()
-        {
-            await _withingsService.Subscribe();
-            return Ok("Helllo123 change to useful message");
-        }
-
-        [HttpGet]
-        [Route("ListSubscriptions")]
-        public async Task<IActionResult> ListSubscriptions()
-        {
-            var subscriptions = await _withingsService.GetSubscriptions();
-
-            return Ok(subscriptions);
-        }
        
 
     }

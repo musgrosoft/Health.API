@@ -1,5 +1,4 @@
 ﻿using System;
-using Google;
 using Importer.GoogleSheets;
 using Microsoft.AspNetCore.Mvc;
 using Services.Health;
@@ -20,18 +19,13 @@ namespace HealthAPI.Controllers
             _logger = logger;
             _sheetsService = sheetsService;
             _healthService = healthService;
-            //_googleImporter = googleImporter;
         }
-
-
+        
         [HttpGet]
         [Route("Notify/AlcoholIntakes")]
-        //public async Task<IActionResult> Migrate()
         public IActionResult MigrateUnits()
         {
             _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Units");
-
-            //_googleImporter.MigrateAlcoholIntakes();
 
             var latestDrink = _healthService.GetLatestDrinkDate();
 
@@ -49,13 +43,10 @@ namespace HealthAPI.Controllers
 
         [HttpGet]
         [Route("Notify/Exercises")]
-        //public async Task<IActionResult> Migrate()
         public IActionResult ImportExercises()
         {
             _logger.LogMessageAsync("GOOGLE SHEETS : Import Exercises");
-
-            //_googleImporter.ImportExercises();
-
+            
             var rows = _sheetsService.GetExercises();
             _healthService.UpsertExercises(rows);
 

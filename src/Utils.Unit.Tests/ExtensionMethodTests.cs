@@ -28,35 +28,7 @@ namespace Utils.Unit.Tests
 
             Assert.Equal(expectedDate, date);
         }
-
-        //[Theory]
-        //[InlineData(2020, 1, 25)]
-        //[InlineData(2019, 2, 2)]
-        //[InlineData(2018, 12, 1)]
-        //public void ShouldGetFirstDayOfMonth(int year, int month, int day)
-        //{
-        //    var date = new DateTime(year,month,day);
-        //    var output = date.GetFirstDayOfMonth();
-
-        //    Assert.Equal(year, output.Year);
-        //    Assert.Equal(month, output.Month);
-        //    Assert.Equal(1 , output.Day);
-        //}
-
-        //[Theory]
-        //[InlineData(2020, 1, 25, 2020, 1, 20)]
-        //[InlineData(2019, 2, 2, 2019, 1, 28)]
-        //[InlineData(2018, 12, 1, 2018, 11, 26)]
-        //public void ShouldGetMondayForTheWeek(int year, int month, int day, int expectedYear, int expectedMonth, int expectedDay)
-        //{
-        //    var date = new DateTime(year, month, day);
-        //    var expectedDate = new DateTime(expectedYear, expectedMonth, expectedDay);
-
-        //    var result = date.GetWeekStartingOnMonday();
-
-        //    Assert.Equal(expectedDate, result);
-        //}
-
+        
 
         [Theory]
         [InlineData(2020, 1, 20, 2020, 1, 25, 2020, 1, 22, true)]

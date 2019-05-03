@@ -17,31 +17,36 @@ namespace Importer.GoogleSheets
         {
             var list = new List<T>();
 
-            try
+            if (rows == null || rows.Count == 0)
             {
-                if (rows != null && rows.Count > 0)
-                {
-                    foreach (var row in rows)
-                    {
-                        try
-                        {
-                            list.Add(mapperFunc(row));
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.LogErrorAsync(ex);
-                        }
+                return list;
+            }
 
-                    }
+
+            //    try
+            //{
+                
+            foreach (var row in rows)
+            {
+                try
+                {
+                    list.Add(mapperFunc(row));
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogErrorAsync(ex);
                 }
 
+            }
+                
 
 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogErrorAsync(ex);
-            }
+
+            //}
+//            catch (Exception ex)
+//            {
+//                _logger.LogErrorAsync(ex);
+//            }
 
             return list;
         }

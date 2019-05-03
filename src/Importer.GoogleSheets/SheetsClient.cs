@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
-using Google.Apis.Sheets.v4;
-using Google.Apis.Sheets.v4.Data;
 using Utils;
 
 namespace Importer.GoogleSheets
@@ -29,18 +27,19 @@ namespace Importer.GoogleSheets
                 Scopes = Scopes
             }.FromPrivateKey(secret));
 
-            var service = new Google.Apis.Sheets.v4.SheetsService(new BaseClientService.Initializer()
+            var service = new Google.Apis.Sheets.v4.SheetsService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,
             });
 
-            SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(sheetId, range);
+            var request = service.Spreadsheets.Values.Get(sheetId, range);
 
-            ValueRange response = request.Execute();
-            IList<IList<object>> values = response.Values;
+            var response = request.Execute();
 
-            return values;
+            var rows = response.Values;
+
+            return rows;
         }
     }
 }

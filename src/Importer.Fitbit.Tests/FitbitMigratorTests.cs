@@ -32,44 +32,6 @@ namespace Importer.Fitbit.Tests
             _fitbitImporter = new FitbitImporter(_healthService.Object, _logger.Object, _fitbitClient.Object, _calendar.Object);
         }
 
-        //[Fact]
-        //public async Task ShouldMigrateStepCounts()
-        //{
-        //    _healthService.Setup(x => x.GetLatestStepCountDate(It.IsAny<DateTime>())).Returns(latestDate);
-        //    _healthService.Setup(x => x.UpsertStepCounts(It.IsAny<IEnumerable<StepCount>>()));
-            
-        //    var stepCounts = new List<StepCount>
-        //    {
-        //        new StepCount{ CreatedDate = new DateTime(2010, 12, 1), Count = 111 },
-        //        new StepCount{ CreatedDate = new DateTime(2022, 12, 22), Count = 222}
-        //    };
-
-        //    _fitbitClient.Setup(x => x.GetStepCounts(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS),It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<StepCount>)stepCounts));
-
-        //    await _fitbitMigrator.MigrateStepCounts();
-
-        //    _healthService.Verify(x => x.UpsertStepCounts(stepCounts), Times.Once);
-        //}
-
-
-        //[Fact]
-        //public async Task ShouldMigrateActivityData()
-        //{
-        //    _healthService.Setup(x => x.GetLatestActivitySummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-        //    _healthService.Setup(x => x.UpsertActivitySummaries(It.IsAny<IEnumerable<ActivitySummary>>()));
-
-        //    var dailyActivities = new List<ActivitySummary>
-        //    {
-        //        new ActivitySummary{ CreatedDate = new DateTime(2010, 12, 1), VeryActiveMinutes = 111 },
-        //        new ActivitySummary{ CreatedDate = new DateTime(2010, 12, 1), VeryActiveMinutes = 222 }
-        //    };
-
-        //    _fitbitClient.Setup(x => x.GetActivitySummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<ActivitySummary>)dailyActivities));
-
-        //    await _fitbitMigrator.MigrateActivitySummaries();
-
-        //    _healthService.Verify(x => x.UpsertActivitySummaries(dailyActivities), Times.Once);
-        //}
 
         [Fact]
         public async Task ShouldMigrateRestingHeartRateData()
@@ -90,23 +52,5 @@ namespace Importer.Fitbit.Tests
             _healthService.Verify(x => x.UpsertRestingHeartRates(restingHeartRates), Times.Once);
         }
 
-        //[Fact]
-        //public async Task ShouldMigrateHeartZoneData()
-        //{
-        //    _healthService.Setup(x => x.GetLatestHeartSummaryDate(It.IsAny<DateTime>())).Returns(latestDate);
-        //    _healthService.Setup(x => x.UpsertHeartSummaries(It.IsAny<IEnumerable<HeartRateSummary>>()));
-
-        //    var heartZones = new List<HeartRateSummary>
-        //    {
-        //        new HeartRateSummary(){ CreatedDate = new DateTime(2010, 12, 1), CardioMinutes = 111 },
-        //        new HeartRateSummary{ CreatedDate = new DateTime(2022, 12, 22), CardioMinutes = 222}
-        //    };
-
-        //    _fitbitClient.Setup(x => x.GetHeartSummaries(latestDate.AddDays(-SEARCH_DAYS_PREVIOUS), It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<HeartRateSummary>)heartZones));
-
-        //    await _fitbitMigrator.MigrateHeartSummaries();
-
-        //    _healthService.Verify(x => x.UpsertHeartSummaries(heartZones), Times.Once);
-        //}
     }
 }

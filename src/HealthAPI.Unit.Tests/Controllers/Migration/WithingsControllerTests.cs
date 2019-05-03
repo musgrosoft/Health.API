@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using HealthAPI.Controllers;
 using Importer.Withings;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Repositories.Health.Models;
 using Services.Health;
@@ -31,50 +29,6 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             _withingsController = new WithingsController(_logger.Object, _withingsService.Object, _healthService.Object);
         }
 
-        //[Fact]
-        //public async Task ShouldMigrateWeights()
-        //{
-        //   var response = (OkResult)(await _withingsController.MigrateWeights());
-
-        //    _nokiaMigrator.Verify(x=>x.MigrateWeights(), Times.Once);
-
-        //    Assert.Equal( 200, response.StatusCode);
-        //}
-
-        //[Fact]
-        //public async Task ShouldMigrateBloodPressures()
-        //{
-        //    var response = (OkResult)(await _withingsController.MigrateBloodPressures());
-
-        //    _nokiaMigrator.Verify(x => x.MigrateBloodPressures(), Times.Once);
-
-        //    Assert.Equal(200, response.StatusCode);
-        //}
-        
-        [Fact]
-        public async Task ShouldListSubscriptions()
-        {
-            var subscriptions = new List<string>
-            {
-                "subscript one",
-                "subscription two"
-            };
-
-            _withingsService.Setup(x => x.GetSubscriptions()).Returns(Task.FromResult(subscriptions));
-
-            var response = (OkObjectResult) (await _withingsController.ListSubscriptions());
-
-            Assert.Equal(subscriptions, response.Value);
-        }
-
-        [Fact]
-        public async Task ShouldSubscribe()
-        {
-            await _withingsController.Subscribe();
-
-            _withingsService.Verify(x=>x.Subscribe(), Times.Once);
-
-        }
         
         [Fact]
         public async Task ShouldSetTokens()

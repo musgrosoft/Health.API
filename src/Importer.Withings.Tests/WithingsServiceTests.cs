@@ -10,7 +10,6 @@ namespace Importer.Withings.Tests
 {
     public class WithingsServiceTests
     {
-        private Mock<IWithingsClient> _withingsClient;
         private Mock<IWithingsAuthenticator> _withingsAuthenticator;
         private Mock<IWithingsMapper> _withingsMapper;
         private Mock<IWithingsClientQueryAdapter> _withingsClientQueryAdaptor;
@@ -18,22 +17,10 @@ namespace Importer.Withings.Tests
 
         public WithingsServiceTests()
         {
-            _withingsClient = new Mock<IWithingsClient>();
             _withingsAuthenticator = new Mock<IWithingsAuthenticator>();
             _withingsMapper = new Mock<IWithingsMapper>();
             _withingsClientQueryAdaptor = new Mock<IWithingsClientQueryAdapter>();
-
-            _withingsService = new WithingsService(_withingsClient.Object, _withingsAuthenticator.Object, _withingsMapper.Object, _withingsClientQueryAdaptor.Object);
-        }
-
-        [Fact]
-        public async Task ShouldSubscribe()
-        {
-            //When
-            await _withingsService.Subscribe();
-
-            //Then
-            _withingsClient.Verify(x => x.Subscribe(It.IsAny<string>()), Times.Once);
+            _withingsService = new WithingsService(_withingsAuthenticator.Object, _withingsMapper.Object, _withingsClientQueryAdaptor.Object);
         }
 
         [Fact]
