@@ -28,6 +28,10 @@ before_build:
     dotnet restore ./src/Utils/Utils.csproj
     
     dotnet restore ./src/Importer.Fitbit.Tests/Importer.Fitbit.Tests.csproj
+    
+    dotnet restore ./src/Importer.Withings.Tests/Importer.Withings.Tests.csproj
+    
+    dotnet restore ./src/Importer.GoogleSheets.Tests/Importer.GoogleSheets.Tests.csproj
 
 
     dotnet clean ./src/HealthAPI.Acceptance.Tests/HealthAPI.Acceptance.Tests.csproj
@@ -49,6 +53,10 @@ before_build:
     dotnet clean ./src/Utils/Utils.csproj
     
     dotnet clean ./src/Importer.Fitbit.Tests/Importer.Fitbit.Tests.csproj
+    
+    dotnet clean ./src/Importer.Withings.Tests/Importer.Withings.Tests.csproj
+    
+    dotnet clean ./src/Importer.GoogleSheets.Tests/Importer.GoogleSheets.Tests.csproj
 
 
 build:

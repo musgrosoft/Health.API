@@ -28,7 +28,8 @@ namespace Importer.Withings.Tests
             {
                 new Response.Measuregrp {date = (int)(new DateTime(2018,1,1).ToUnixTimeFromDate()), measures = new List<Response.Measure>
                 {
-                    new Response.Measure {type = WeightKgMeasureTypeId, unit = 0, value = 90}
+                    new Response.Measure {type = WeightKgMeasureTypeId, unit = 0, value = 90},
+                    new Response.Measure {type = FatRatioPercentageMeasureTypeId, unit = 0, value = 80},
                 }},
                 new Response.Measuregrp {date = (int)(new DateTime(2018,1,2).ToUnixTimeFromDate()), measures = new List<Response.Measure>
                 {
@@ -44,7 +45,7 @@ namespace Importer.Withings.Tests
 
             //Then
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Kg == 90);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Kg == 90 && x.FatRatioPercentage == 80);
             Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Kg == 91);
             Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Kg == 92);
         }

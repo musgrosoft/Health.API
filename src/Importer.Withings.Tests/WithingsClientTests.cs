@@ -47,6 +47,24 @@ namespace Importer.Withings.Tests
             _withingsClient = new WithingsClient(_httpClient, _logger.Object,  _config.Object);
         }
 
+        [Fact]
+        public async Task GetTokensByAuthorisationCodeShouldThrowExceptionOnNonSuccessStatusCode()
+        {
+            //Given
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Has error")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+
+            //When
+            var ex = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByAuthorisationCode(""));
+
+            //Then
+            Assert.Contains("404", ex.Message);
+            Assert.Contains("Has error", ex.Message);
+        }
 
         [Fact]
         public async Task ShouldGetTokensByAuthorisationCode()

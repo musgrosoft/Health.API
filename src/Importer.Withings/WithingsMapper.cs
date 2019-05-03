@@ -9,7 +9,6 @@ namespace Importer.Withings
 {
     public class WithingsMapper : IWithingsMapper
     {
-
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
         private const int DiastolicBloodPressureMeasureTypeId = 9;
@@ -26,18 +25,9 @@ namespace Importer.Withings
 
                 //set if available
                 FatRatioPercentage =
-                    x.measures.FirstOrDefault(w => w.type == FatRatioPercentageMeasureTypeId) == null ? 
-                    null : 
-                    (double?)(
-                        x.measures
-                            .First(
-                                w => w.type == FatRatioPercentageMeasureTypeId)
-                            .value * 
-                        Math.Pow(10, 
-                            x.measures.First
-                                (w => 
-                                w.type == FatRatioPercentageMeasureTypeId)
-                                .unit))
+                    x.measures.FirstOrDefault(w => w.type == FatRatioPercentageMeasureTypeId) == null 
+                    ? null 
+                    : (double?)(x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).unit))
             });
         }
 

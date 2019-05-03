@@ -20,6 +20,8 @@ namespace Importer.Withings.Tests
             _withingsAuthenticator = new WithingsAuthenticator(_tokenService.Object, _withingsClient.Object);
         }
 
+
+
         [Fact]
         public async Task ShouldSetTokens()
         {

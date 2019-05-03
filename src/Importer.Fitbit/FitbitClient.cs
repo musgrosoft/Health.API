@@ -41,13 +41,9 @@ namespace Importer.Fitbit
             await _logger.LogMessageAsync("content ::: " + response.Content);
 
         }
-
-
-
+        
         public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate, string accessToken)
         {
-            //var accessToken = await _fitbitAuthenticator.GetAccessToken();
-
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/1m.json";
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
@@ -61,15 +57,11 @@ namespace Importer.Fitbit
             }
             else if (response.StatusCode == (HttpStatusCode) 429)
             {
-                throw new TooManyRequestsException(
-                    $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+                throw new TooManyRequestsException($"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
             }
             else
             {
-                throw new Exception(
-                    $"Failed call to fitbit api {uri} , status code is {(int)response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
-//                _logger.Log($"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-//                return Maybe<FitBitActivity>.None;
+                throw new Exception($"Failed call to fitbit api {uri} , status code is {(int)response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
             }
 
         }
@@ -99,9 +91,6 @@ namespace Importer.Fitbit
             {
                 throw new Exception($"Fitbit GetTokensWithRefreshToken FAIL  non success status code is : {(int)response.StatusCode} , content: {responseBody}");
             }
-
-
-
         }
 
         public async Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode)
