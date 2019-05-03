@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Hangfire;
 using HealthAPI.Hangfire;
 using Importer.Fitbit;
@@ -53,15 +52,7 @@ namespace HealthAPI.Controllers
                 return NotFound();
             }
         }
-
-        [HttpGet]
-        [Route("Subscribe")]
-        public async Task<IActionResult> Subscribe()
-        {
-            await _fitbitService.Subscribe();
-            return Ok();
-        }
-
+        
         [HttpGet]
         [Route("OAuth")]
         public async Task<IActionResult> OAuth([FromQuery]string code)
@@ -70,19 +61,6 @@ namespace HealthAPI.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(String), 200)]
-        [Route("OAuthUrl")]
-        public IActionResult OAuthUrl()
-        {
-            //var redirectUrl = "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
-            var redirectUrl = _config.FitbitOAuthRedirectUrl;
-            var urlEncodedRedirectUrl = Uri.EscapeDataString(redirectUrl);
-
-
-            //return Json("https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate");
-            return Json($"https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri={urlEncodedRedirectUrl}&scope=activity%20heartrate");
-        }
 
     }
 }

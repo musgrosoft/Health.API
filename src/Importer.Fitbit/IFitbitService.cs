@@ -8,9 +8,6 @@ namespace Importer.Fitbit
     public interface IFitbitService
     {
         Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate);
-        Task Subscribe();
         Task SetTokens(string code);
-        
-        
     }
 }

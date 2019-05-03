@@ -16,24 +16,24 @@ namespace HealthAPI.Acceptance.Tests.Migration
             _factory = factory.WithWebHostBuilder(builder => builder.UseStartup<TestStartup>());
         }
 
-        [Fact]
-        public async Task ShouldSubscribe()
-        {
-            var client = _factory.CreateClient();
+        //[Fact]
+        //public async Task ShouldSubscribe()
+        //{
+        //    var client = _factory.CreateClient();
             
-            var response = await client.GetAsync("/api/Fitbit/Subscribe");
+        //    var response = await client.GetAsync("/api/Fitbit/Subscribe");
 
-            using (var scope = _factory.Server.Host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
+        //    using (var scope = _factory.Server.Host.Services.CreateScope())
+        //    {
+        //        var services = scope.ServiceProvider;
 
-                var fitbitService = (FitbitServiceStub)services.GetRequiredService(typeof(IFitbitService));
+        //        var fitbitService = (FitbitServiceStub)services.GetRequiredService(typeof(IFitbitService));
 
-                Assert.True(fitbitService.HasSubscribed);
-            }
+        //        Assert.True(fitbitService.HasSubscribed);
+        //    }
 
 
-        }
+        //}
 
 
 

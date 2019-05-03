@@ -135,49 +135,7 @@ namespace Importer.Fitbit.Tests
             Assert.Contains("content is I'm a little teapot", ex.Message);
 
         }
-
-        [Fact]
-        public async Task ShouldSubscribe()
-        {
-            //Given
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent("wibble")
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
-
-
-            _config.Setup(x => x.FitbitUserId).Returns("USER_ID_123");
-
-            _config.Setup(x => x.FitbitBaseUrl).Returns("https://api.fitbit.com");
-
-            _config.Setup(x => x.FitbitClientId).Returns("123456");
-
-            _config.Setup(x => x.FitbitClientSecret).Returns("secret");
-
-            //When
-            await _fitbitClient.Subscribe("I am a token");
-
-            //Then
-
-            Assert.Equal("https://api.fitbit.com/1/user/USER_ID_123/apiSubscriptions/123.json", _capturedUri.AbsoluteUri);
-            Assert.Equal("I am a token", _httpClient.DefaultRequestHeaders.Authorization.Parameter);
-            //also verify bearer token
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
+        
         [Fact]
         public async Task ShouldSetTokens()
         {
@@ -197,8 +155,6 @@ namespace Importer.Fitbit.Tests
                     ""user_id"": ""26FWFL""
                 }")
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
-
-
 
             //When 
             var response = await _fitbitClient.GetTokensWithAuthorizationCode(authorisationCode);

@@ -26,21 +26,6 @@ namespace Importer.Fitbit
             _logger = logger;
 
         }
-
-        //POST https://api.fitbit.com/1/user/-/apiSubscriptions/123.json
-
-        public async Task Subscribe(string accessToken)
-        {
-            var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/apiSubscriptions/123.json";
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-
-            var response = await _httpClient.PostAsync(uri,null);
-
-            await _logger.LogMessageAsync("Status code ::: " + response.StatusCode);
-            await _logger.LogMessageAsync("content ::: " + response.Content);
-
-        }
         
         public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate, string accessToken)
         {

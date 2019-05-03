@@ -14,7 +14,6 @@ using Xunit;
 
 namespace HealthAPI.Unit.Tests.Controllers.Migration
 {
-    
     public class FitbitControllerTests
     {
         private readonly FitbitController _fitbitController;
@@ -30,26 +29,13 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
             _logger = new Mock<ILogger>();
             _config =new Mock<IConfig>();
             _fitbitService = new Mock<IFitbitService>();
-           // _hangfireUtility = new Mock<IHangfireUtility>();
             _backgroundJobClient = new Mock<IBackgroundJobClient>();
 
             _fitbitMigrator = new Mock<IFitbitImporter>();
-
-
             _hangfireWork = new HangfireWork(_fitbitMigrator.Object, _logger.Object);
-
-
             _fitbitController = new FitbitController(_logger.Object, _config.Object, _fitbitService.Object, _backgroundJobClient.Object, _hangfireWork);
         }
-
-        [Fact]
-        public async Task ShouldSubscribe()
-        {
-            await _fitbitController.Subscribe();
-
-            _fitbitService.Verify(x=>x.Subscribe());
-        }
-
+        
         [Fact]
         public async Task ShouldSetTokens()
         {
@@ -57,18 +43,7 @@ namespace HealthAPI.Unit.Tests.Controllers.Migration
 
             _fitbitService.Verify(x=>x.SetTokens("qwerty111"), Times.Once);
         }
-
-        [Fact]
-        public void ShouldReturnOAuthUrl()
-        {
-            _config.SetupGet(x => x.FitbitOAuthRedirectUrl).Returns("http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/");
-
-            var response = (JsonResult)_fitbitController.OAuthUrl();
-
-            Assert.Equal("https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=228PR8&redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F&scope=activity%20heartrate", response.Value);
-
-        }
-
+        
         [Fact]
         public void ShouldVerifyFitbitCode()
         {
