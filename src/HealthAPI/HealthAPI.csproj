@@ -9,11 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\MigrationArea\Controllers\" />
-    <Folder Include="Areas\MigrationArea\Data\" />
-    <Folder Include="Areas\MigrationArea\Models\" />
-    <Folder Include="Areas\MigrationArea\Views\" />
-    <Folder Include="wwwroot\" />
+    <Compile Remove="Areas\**" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="Areas\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="Areas\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="Areas\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
