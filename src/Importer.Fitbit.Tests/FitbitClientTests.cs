@@ -14,7 +14,7 @@ namespace Importer.Fitbit.Tests
     public class FitbitClientTests
     {
 
-        
+        private string fitbitRedirect = "www.redirect.com";
         private Mock<HttpMessageHandler> _httpMessageHandler;
         private Mock<IConfig> _config;
         private Mock<ILogger> _logger;
@@ -48,6 +48,7 @@ namespace Importer.Fitbit.Tests
             _config.Setup(x => x.FitbitClientId).Returns("123456");
 
             _config.Setup(x => x.FitbitClientSecret).Returns("secret");
+            _config.Setup(x => x.FitbitOAuthRedirectUrl).Returns(fitbitRedirect);
 
             _logger = new Mock<ILogger>();
 
@@ -215,7 +216,7 @@ namespace Importer.Fitbit.Tests
             Assert.Contains("grant_type=authorization_code", (await capturedRequest.Content.ReadAsStringAsync()));
             Assert.Contains("client_id=123456", (await capturedRequest.Content.ReadAsStringAsync()));
             Assert.Contains("code=asdasd234234dfgdfgdf", (await capturedRequest.Content.ReadAsStringAsync()));
-            Assert.Contains("redirect_uri=https%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F", (await capturedRequest.Content.ReadAsStringAsync()));
+            Assert.Contains($"redirect_uri={fitbitRedirect}", (await capturedRequest.Content.ReadAsStringAsync()));
 
 
         }
