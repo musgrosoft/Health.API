@@ -39,22 +39,15 @@ namespace HealthAPI.Controllers
         [Route("Notify/Weights")]
         public async Task<IActionResult> MigrateWeights()
         {
-            //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
-
-            await _logger.LogMessageAsync("NOKIA NEW : Migrating just weights");
-
-            //await _withingsImporter.MigrateWeights();
-
             var latestWeightDate = _healthService.GetLatestWeightDate(MIN_WEIGHT_DATE);
-            await _logger.LogMessageAsync($"WEIGHT : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
             var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-
             var weights = (await _withingsService.GetWeights(fromDate)).ToList();
-            await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
 
             _healthService.UpsertWeights(weights);
 
+            await _logger.LogMessageAsync("NOKIA NEW : Migrating just weights");
+            await _logger.LogMessageAsync($"WEIGHT : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
             await _logger.LogMessageAsync("NOKIA : Finished Migrating just weights");
 
             return Ok();
@@ -64,25 +57,14 @@ namespace HealthAPI.Controllers
         [Route("Notify/BloodPressures")]
         public async Task<IActionResult> MigrateBloodPressures()
         {
-            //http://www.yourdomain.net/yourCustomApplication.php ?userid=123456&startdate=1260350649 &enddate=1260350650&appli=44
-
-            await _logger.LogMessageAsync("NOKIA NEW : Migrating just blood pressures");
-
-            //await _withingsImporter.MigrateBloodPressures();
-
             var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(MIN_BLOOD_PRESSURE_DATE);
-            await _logger.LogMessageAsync($"BLOOD PRESSURE : Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
             var fromDate = latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            await _logger.LogMessageAsync($"BLOOD PRESSURE : Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
             var bloodPressures = await _withingsService.GetBloodPressures(fromDate);
-            await _logger.LogMessageAsync($"BLOOD PRESSURE : Found {bloodPressures.Count()} Blood Pressure records.");
+            _healthService.UpsertBloodpressures(bloodPressures);
 
-            _healthService.UpsertBloodPressures(bloodPressures);
-
-
-            await _logger.LogMessageAsync("NOKIA : Finished Migrating just blood pressures");
+            await _logger.LogMessageAsync($"BLOOD PRESSURE : Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
+                                          $"BLOOD PRESSURE : Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
+                                          $"BLOOD PRESSURE : Upserting {bloodPressures.Count()} Blood Pressure records.");
 
             return Ok();
         }
@@ -92,7 +74,7 @@ namespace HealthAPI.Controllers
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {
             await _withingsService.SetTokens(code);
-            return Ok("Helllo123 change to useful message");
+            return Ok("Saved tokens successfully");
         }
         
 
@@ -112,18 +94,7 @@ namespace HealthAPI.Controllers
 
             return Ok(subscriptions);
         }
-
-        
-        [HttpGet]
-        [ProducesResponseType(typeof(String), 200)]
-        [Route("OAuthUrl")]
-        public IActionResult OAuthUrl()
-        {
-            var redirectUrl = "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/";
-
-            return Json("https://account.health.nokia.com/oauth2_user/authorize2?response_type=code&redirect_uri=http://musgrosoft-health-api.azurewebsites.net/api/nokia/oauth/&client_id=09d4e17f36ee237455246942602624feaad12ac51598859bc79ddbd821147942&scope=user.info,user.metrics,user.activity&state=768uyFys");
-        }
-        
+       
 
     }
 }

@@ -50,18 +50,14 @@ namespace Services.Health
         {
             var enumerable = weights.ToList();
 
-            _logger.LogMessageAsync($"WEIGHT : Saving {enumerable.Count()} weight");
-
             foreach (var weight in enumerable)
             {
                 _healthRepository.Upsert(weight);
             }
         }
 
-        public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
+        public void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures)
         {
-            _logger.LogMessageAsync($"BLOOD PRESSURE : Saving {bloodPressures.Count()} blood pressure");
-
             foreach (var bloodPressure in bloodPressures)
             {
                 _healthRepository.Upsert(bloodPressure);

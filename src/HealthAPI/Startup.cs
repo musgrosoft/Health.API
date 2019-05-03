@@ -116,7 +116,7 @@ namespace HealthAPI
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<IWithingsService, WithingsService>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();
-            services.AddTransient<ISheetMapper, SheetMapper>();
+            services.AddTransient<IRowMapper, RowMapper>();
             services.AddTransient<IMapFunctions, MapFunctions>();
             services.AddTransient<ISheetsClient, SheetsClient>();
 

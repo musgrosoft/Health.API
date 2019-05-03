@@ -4,26 +4,21 @@ using Utils;
 
 namespace Importer.GoogleSheets
 {
-    public class SheetMapper : ISheetMapper
+    public class RowMapper : IRowMapper
     {
-        private readonly ISheetsClient _sheetsClient;
-        private readonly IConfig _config;
         private readonly ILogger _logger;
 
-        public SheetMapper(ISheetsClient sheetsClient, IConfig config, ILogger logger)
+        public RowMapper(ILogger logger)
         {
-            _sheetsClient = sheetsClient;
-            _config = config;
             _logger = logger;
         }
 
-        public List<T> Get<T>(string sheetId, string range, Func<IList<object>, T> mapperFunc)
+        public List<T> Get<T>(IList<IList<object>> rows, Func<IList<object>, T> mapperFunc)
         {
             var list = new List<T>();
 
             try
             {
-                var rows = _sheetsClient.GetRows(sheetId, range);
                 if (rows != null && rows.Count > 0)
                 {
                     foreach (var row in rows)

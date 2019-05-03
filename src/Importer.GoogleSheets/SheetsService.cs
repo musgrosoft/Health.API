@@ -13,26 +13,41 @@ namespace Importer.GoogleSheets
     public class SheetsService : ISheetsService
     {
         private readonly IConfig _config;
-        private readonly ISheetMapper _sheetMapper;
+        private readonly IRowMapper _rowMapper;
         private readonly IMapFunctions _mapFunctions;
+        private readonly ISheetsClient _sheetsClient;
         static string[] Scopes = { Google.Apis.Sheets.v4.SheetsService.Scope.Spreadsheets };
         static string ApplicationName = "sheetreader";
 
-        public SheetsService(IConfig config, ISheetMapper sheetMapper, IMapFunctions mapFunctions)
+        public SheetsService(IConfig config, IRowMapper rowMapper, IMapFunctions mapFunctions, ISheetsClient sheetsClient)
         {
             _config = config;
-            _sheetMapper = sheetMapper;
+            _rowMapper = rowMapper;
             _mapFunctions = mapFunctions;
+            _sheetsClient = sheetsClient;
         }
 
         public List<Drink> GetHistoricDrinks()
         {
-            return _sheetMapper.Get<Drink>(_config.HistoricAlcoholSpreadsheetId, "Sheet1!A2:C", _mapFunctions.MapRowToDrink);
+            var rows = _sheetsClient.GetRows(_config.HistoricAlcoholSpreadsheetId, _config.DrinksRange);
+
+            var drinks = _rowMapper.Get<Drink>(rows, _mapFunctions.MapRowToDrink);
+
+            return drinks
+                .GroupBy(x => x.CreatedDate)
+                .Select(x => new Drink
+                {
+                    CreatedDate = x.Key,
+                    Units = x.Sum(y => y.Units)
+                }).ToList();
+
         }
 
         public List<Drink> GetDrinks()
         {
-            var drinks = _sheetMapper.Get<Drink>(_config.AlcoholSpreadsheetId, "Sheet1!A2:C", _mapFunctions.MapRowToDrink);
+            var rows = _sheetsClient.GetRows(_config.AlcoholSpreadsheetId, _config.DrinksRange);
+
+            var drinks = _rowMapper.Get<Drink>(rows, _mapFunctions.MapRowToDrink);
 
             return drinks
                 .GroupBy(x => x.CreatedDate)
@@ -45,7 +60,9 @@ namespace Importer.GoogleSheets
 
         public List<Exercise> GetExercises()
         {
-            return _sheetMapper.Get<Exercise>(_config.ExerciseSpreadsheetId, "Sheet1!A2:E", _mapFunctions.MapRowToExercise);
+            var rows = _sheetsClient.GetRows(_config.ExerciseSpreadsheetId, _config.ExercisesRange);
+
+            return _rowMapper.Get<Exercise>(rows, _mapFunctions.MapRowToExercise);
         }
 
         public void InsertExercises(Exercise exercise)

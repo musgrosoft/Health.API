@@ -22,6 +22,8 @@
         string HistoricAlcoholSpreadsheetId { get; }
         string AlcoholSpreadsheetId { get; }
         string ExerciseSpreadsheetId { get; }
+        string DrinksRange { get; }
+        string ExercisesRange { get; }
 
         //Nokia Health
         string WithingsClientId { get; }

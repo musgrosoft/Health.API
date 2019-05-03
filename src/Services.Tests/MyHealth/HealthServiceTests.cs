@@ -160,7 +160,7 @@ namespace Services.Tests.MyHealth
             };
             
             //When
-            _healthService.UpsertBloodPressures(newBloodPressures);
+            _healthService.UpsertBloodpressures(newBloodPressures);
 
             //Then
             _healthRepository.Verify(x => x.Upsert(newBloodPressures[0]), Times.Once);
