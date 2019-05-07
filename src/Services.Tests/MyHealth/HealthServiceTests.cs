@@ -7,7 +7,7 @@ using Services.Health;
 using Utils;
 using Xunit;
 
-namespace Services.Tests.MyHealth
+namespace Services.Tests.Unit.MyHealth
 {
     public class HealthServiceTests
     {

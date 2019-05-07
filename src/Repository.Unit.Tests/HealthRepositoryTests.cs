@@ -1,9 +1,9 @@
-﻿using Repositories.Health;
-using System;
+﻿using System;
+using Repositories.Health;
 using Repositories.Health.Models;
 using Xunit;
 
-namespace Repository.Unit.Tests
+namespace Repository.Tests.Unit
 {
     public class HealthRepositoryTests : IDisposable
     {

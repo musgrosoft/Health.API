@@ -8,7 +8,7 @@ using Services.Health;
 using Utils;
 using Xunit;
 
-namespace HealthAPI.Unit.Tests.Controllers.Migration
+namespace HealthAPI.Tests.Unit.Controllers.Migration
 {
     public class GoogleSheetsControllerTests
     {

@@ -4,7 +4,7 @@ using Repositories.OAuth;
 using Repositories.OAuth.Models;
 using Xunit;
 
-namespace Repository.Unit.Tests
+namespace Repository.Tests.Unit
 {
     public class TokenRepositoryTests : IDisposable
     {

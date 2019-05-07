@@ -9,7 +9,7 @@ using Moq.Protected;
 using Utils;
 using Xunit;
 
-namespace Importer.Withings.Tests
+namespace Importer.Withings.Tests.Unit
 {
     public class WithingsClientTests
     {

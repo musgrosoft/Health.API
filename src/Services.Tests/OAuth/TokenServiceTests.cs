@@ -4,7 +4,7 @@ using Repositories.OAuth;
 using Services.OAuth;
 using Xunit;
 
-namespace Services.Tests.OAuth
+namespace Services.Tests.Unit.OAuth
 {
     public class TokenServiceTests
     {

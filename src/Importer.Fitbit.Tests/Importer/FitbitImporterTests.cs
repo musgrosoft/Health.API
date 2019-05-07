@@ -8,7 +8,7 @@ using Services.Health;
 using Utils;
 using Xunit;
 
-namespace Importer.Fitbit.Tests.Importer
+namespace Importer.Fitbit.Tests.Unit.Importer
 {
     public class FitbitImporterTests
     {

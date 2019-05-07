@@ -7,7 +7,7 @@ using Moq;
 using Moq.Protected;
 using Xunit;
 
-namespace Utils.Unit.Tests
+namespace Utils.Tests.Unit
 {
     public class LogzIoLoggerTests
     {

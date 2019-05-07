@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using HealthAPI.Controllers;
 using Importer.Withings;
@@ -9,7 +8,7 @@ using Services.Health;
 using Utils;
 using Xunit;
 
-namespace HealthAPI.Unit.Tests.Controllers.Migration
+namespace HealthAPI.Tests.Unit.Controllers.Migration
 {
     public class WithingsControllerTests
     {
