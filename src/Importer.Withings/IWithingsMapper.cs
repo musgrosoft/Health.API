@@ -6,7 +6,7 @@ namespace Importer.Withings
 {
     public interface IWithingsMapper
     {
-        IEnumerable<Weight> MapMeasuresGroupsToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups);
-        IEnumerable<BloodPressure> MapMeasuresGroupsToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups);
+        IEnumerable<Weight> MapToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups);
+        IEnumerable<BloodPressure> MapToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups);
     }
 }

@@ -14,7 +14,7 @@ namespace Importer.Fitbit.Tests.Unit
     public class FitbitClientTests
     {
 
-        
+        private string fitbitRedirect = "www.redirect.com";
         private Mock<HttpMessageHandler> _httpMessageHandler;
         private Mock<IConfig> _config;
         private Mock<ILogger> _logger;
@@ -48,6 +48,7 @@ namespace Importer.Fitbit.Tests.Unit
             _config.Setup(x => x.FitbitClientId).Returns("123456");
 
             _config.Setup(x => x.FitbitClientSecret).Returns("secret");
+            _config.Setup(x => x.FitbitOAuthRedirectUrl).Returns(fitbitRedirect);
 
             _logger = new Mock<ILogger>();
 
@@ -134,49 +135,7 @@ namespace Importer.Fitbit.Tests.Unit
             Assert.Contains("content is I'm a little teapot", ex.Message);
 
         }
-
-        [Fact]
-        public async Task ShouldSubscribe()
-        {
-            //Given
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent("wibble")
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
-
-
-            _config.Setup(x => x.FitbitUserId).Returns("USER_ID_123");
-
-            _config.Setup(x => x.FitbitBaseUrl).Returns("https://api.fitbit.com");
-
-            _config.Setup(x => x.FitbitClientId).Returns("123456");
-
-            _config.Setup(x => x.FitbitClientSecret).Returns("secret");
-
-            //When
-            await _fitbitClient.Subscribe("I am a token");
-
-            //Then
-
-            Assert.Equal("https://api.fitbit.com/1/user/USER_ID_123/apiSubscriptions/123.json", _capturedUri.AbsoluteUri);
-            Assert.Equal("I am a token", _httpClient.DefaultRequestHeaders.Authorization.Parameter);
-            //also verify bearer token
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
+        
         [Fact]
         public async Task ShouldSetTokens()
         {
@@ -197,8 +156,6 @@ namespace Importer.Fitbit.Tests.Unit
                 }")
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
 
-
-
             //When 
             var response = await _fitbitClient.GetTokensWithAuthorizationCode(authorisationCode);
 
@@ -215,7 +172,7 @@ namespace Importer.Fitbit.Tests.Unit
             Assert.Contains("grant_type=authorization_code", (await capturedRequest.Content.ReadAsStringAsync()));
             Assert.Contains("client_id=123456", (await capturedRequest.Content.ReadAsStringAsync()));
             Assert.Contains("code=asdasd234234dfgdfgdf", (await capturedRequest.Content.ReadAsStringAsync()));
-            Assert.Contains("redirect_uri=http%3A%2F%2Fmusgrosoft-health-api.azurewebsites.net%2Fapi%2Ffitbit%2Foauth%2F", (await capturedRequest.Content.ReadAsStringAsync()));
+            Assert.Contains($"redirect_uri={fitbitRedirect}", (await capturedRequest.Content.ReadAsStringAsync()));
 
 
         }

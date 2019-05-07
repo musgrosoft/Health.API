@@ -8,8 +8,8 @@ namespace Services.OAuth
         private const string FITBIT_ACCESS_TOKEN_KEY = "fitbit_access_token";
         private const string FITBIT_REFRESH_TOKEN_KEY = "fitbit_refresh_token";
 
-        private const string WITHINGS_ACCESS_TOKEN_KEY = "nokia_access_token";
-        private const string WITHINGS_REFRESH_TOKEN_KEY = "nokia_refresh_token";
+        private const string WITHINGS_ACCESS_TOKEN_KEY = "withings_access_token";
+        private const string WITHINGS_REFRESH_TOKEN_KEY = "withings_refresh_token";
         
         private readonly ITokenRepository _tokenRepository;
         

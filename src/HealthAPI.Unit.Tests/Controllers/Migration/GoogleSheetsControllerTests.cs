@@ -15,13 +15,13 @@ namespace HealthAPI.Tests.Unit.Controllers.Migration
         private readonly Mock<ILogger> _logger;
         private readonly GoogleSheetsController _googleSheetsController;
         
-        private Mock<IGoogleClient> _googleClient;
+        private Mock<ISheetsService> _googleClient;
         private Mock<IHealthService> _healthService;
 
         public GoogleSheetsControllerTests()
         {
             _logger = new Mock<ILogger>();
-            _googleClient = new Mock<IGoogleClient>();
+            _googleClient = new Mock<ISheetsService>();
             _healthService = new Mock<IHealthService>();
      
             _googleSheetsController = new GoogleSheetsController(_logger.Object, _googleClient.Object, _healthService.Object);

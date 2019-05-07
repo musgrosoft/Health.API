@@ -13,7 +13,7 @@ namespace Services.Health
         
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
         
-        void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
+        void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures);
 
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);

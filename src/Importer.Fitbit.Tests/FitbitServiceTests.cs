@@ -33,17 +33,7 @@ namespace Importer.Fitbit.Tests.Unit
                 _fitbitAuthenticator.Object, 
                 _fitbitMapper.Object);
         }
-
-        [Fact]
-        public async Task ShouldSubscribe()
-        {
-            //When
-            await _fitbitService.Subscribe();
-
-            //Then
-            _fitbitClient.Verify(x=>x.Subscribe(It.IsAny<string>()), Times.Once);
-        }
-
+        
         [Fact]
         public async Task ShouldSetTokens()
         {
@@ -53,66 +43,6 @@ namespace Importer.Fitbit.Tests.Unit
             //Then
             _fitbitAuthenticator.Verify(x => x.SetTokens("I am an authorization code"), Times.Once);
         }
-
-        //[Fact]
-        //public async Task ShouldGetStepCounts()
-        //{
-        //    //Given
-        //    var fitbitDailyActivities = new List<FitbitDailyActivity>
-        //    {
-        //        new FitbitDailyActivity {DateTime = new DateTime(2017, 1, 1)}
-        //    };
-
-        //    var stepCounts = new List<StepCount>
-        //    {
-        //        new StepCount{CreatedDate = new DateTime(2017, 1, 1), Count = 111},
-        //        new StepCount{CreatedDate = new DateTime(2017, 1, 2), Count = 222},
-        //        new StepCount{CreatedDate = new DateTime(2017, 1, 3), Count = 333}
-        //    };
-
-        //    _fitbitClientQueryAdapter.Setup(x => x.GetFitbitDailyActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<FitbitDailyActivity>)fitbitDailyActivities));
-        //    _fitbitMapper.Setup(x => x.MapFitbitDailyActivitiesToStepCounts(fitbitDailyActivities)).Returns(stepCounts);
-
-        //    //When
-        //    var result = await _fitbitService.GetStepCounts(fromDate, toDate);
-
-        //    //Then
-        //    Assert.Equal(3,result.Count());
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Count == 111);
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.Count == 222);
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.Count == 333);
-
-        //}
-
-        //[Fact]
-        //public async Task ShouldGetDailyActivities()
-        //{
-        //    //Given
-        //    var fitbitDailyActivities = new List<FitbitDailyActivity>
-        //    {
-        //        new FitbitDailyActivity{DateTime = new DateTime(2017,1,1)}
-        //    };
-
-        //    var activitySummaries = new List<ActivitySummary>
-        //    {
-        //        new ActivitySummary {CreatedDate = new DateTime(2017,1,1), FairlyActiveMinutes = 101, LightlyActiveMinutes = 201, SedentaryMinutes = 301, VeryActiveMinutes = 401},
-        //        new ActivitySummary {CreatedDate = new DateTime(2017,1,2), FairlyActiveMinutes = 102, LightlyActiveMinutes = 202, SedentaryMinutes = 302, VeryActiveMinutes = 402},
-        //        new ActivitySummary {CreatedDate = new DateTime(2017,1,3), FairlyActiveMinutes = 103, LightlyActiveMinutes = 203, SedentaryMinutes = 303, VeryActiveMinutes = 403},
-        //    };
-
-        //    _fitbitClientQueryAdapter.Setup(x => x.GetFitbitDailyActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<FitbitDailyActivity>)fitbitDailyActivities));
-        //    _fitbitMapper.Setup(x => x.MapFitbitDailyActivitiesToActivitySummaries(fitbitDailyActivities)).Returns(activitySummaries);
-
-        //    //When
-        //    var result = await _fitbitService.GetActivitySummaries(fromDate, toDate);
-
-        //    //Then
-        //    Assert.Equal(3, result.Count());
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.FairlyActiveMinutes == 101 && x.LightlyActiveMinutes == 201 && x.SedentaryMinutes == 301 && x.VeryActiveMinutes == 401);
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.FairlyActiveMinutes == 102 && x.LightlyActiveMinutes == 202 && x.SedentaryMinutes == 302 && x.VeryActiveMinutes == 402);
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.FairlyActiveMinutes == 103 && x.LightlyActiveMinutes == 203 && x.SedentaryMinutes == 303 && x.VeryActiveMinutes == 403);
-
-        //}
 
         [Fact]
         public async Task ShouldGetRestingHeartRates()
@@ -145,37 +75,5 @@ namespace Importer.Fitbit.Tests.Unit
 
         }
 
-        //[Fact]
-        //public async Task ShouldGetHeartSummaries()
-        //{
-        //    //Given
-        //    var activitiesHearts = new List<ActivitiesHeart>
-        //    {
-        //        new ActivitiesHeart{dateTime = new DateTime(2017,1,1)}
-        //    };
-
-        //    _fitbitClientQueryAdapter.Setup(x => x.GetFitbitHeartActivities(fromDate, toDate)).Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)activitiesHearts));
-
-        //    var heartRateSummaries = new List<HeartRateSummary>
-        //    {
-        //        new HeartRateSummary{CreatedDate = new DateTime(2017,1,1), CardioMinutes = 3, PeakMinutes = 4},
-        //        new HeartRateSummary{CreatedDate = new DateTime(2017,1,2), CardioMinutes = 7, PeakMinutes = 8},
-        //        new HeartRateSummary{CreatedDate = new DateTime(2017,1,3), CardioMinutes = 11, PeakMinutes = 12}
-        //    };
-
-        //    _fitbitMapper.Setup(x => x.MapActivitiesHeartsToHeartRateSummaries(activitiesHearts))
-        //        .Returns(heartRateSummaries);
-
-        //    //When
-        //    var result = await _fitbitService.GetHeartSummaries(fromDate, toDate);
-
-        //    //Then
-        //    Assert.Equal(3, result.Count());
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.CardioMinutes == 3 && x.PeakMinutes == 4);
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.CardioMinutes == 7 && x.PeakMinutes == 8);
-        //    Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.CardioMinutes == 11 && x.PeakMinutes == 12);
-
-
-        //}
     }
 }

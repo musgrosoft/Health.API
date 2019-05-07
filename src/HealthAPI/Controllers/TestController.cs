@@ -11,11 +11,11 @@ namespace HealthAPI.Controllers
     [Route("api/Test")]
     public class TestController : Controller
     {
-        private readonly IGoogleClient _googleClient;
+        private readonly ISheetsService _sheetsService;
 
-        public TestController(IGoogleClient googleClient)
+        public TestController(ISheetsService sheetsService)
         {
-            _googleClient = googleClient;
+            _sheetsService = sheetsService;
         }
 
         [HttpPost]
@@ -24,7 +24,7 @@ namespace HealthAPI.Controllers
         //public async Task<IActionResult> Migrate()
         public IActionResult Test([FromBody]Exercise exercise)
         {
-            _googleClient.InsertExercises(exercise);
+            _sheetsService.InsertExercises(exercise);
 
             return Ok();
         }

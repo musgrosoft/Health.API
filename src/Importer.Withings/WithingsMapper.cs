@@ -9,13 +9,12 @@ namespace Importer.Withings
 {
     public class WithingsMapper : IWithingsMapper
     {
-
         private const int WeightKgMeasureTypeId = 1;
         private const int FatRatioPercentageMeasureTypeId = 6;
         private const int DiastolicBloodPressureMeasureTypeId = 9;
         private const int SystolicBloodPressureMeasureTypeId = 10;
 
-        public IEnumerable<Weight> MapMeasuresGroupsToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups)
+        public IEnumerable<Weight> MapToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups)
         {
             return weightMeasuresGroups
                 .Where(x=>x.measures.Any(y=>y.type == WeightKgMeasureTypeId))
@@ -26,22 +25,13 @@ namespace Importer.Withings
 
                 //set if available
                 FatRatioPercentage =
-                    x.measures.FirstOrDefault(w => w.type == FatRatioPercentageMeasureTypeId) == null ? 
-                    null : 
-                    (double?)(
-                        x.measures
-                            .First(
-                                w => w.type == FatRatioPercentageMeasureTypeId)
-                            .value * 
-                        Math.Pow(10, 
-                            x.measures.First
-                                (w => 
-                                w.type == FatRatioPercentageMeasureTypeId)
-                                .unit))
+                    x.measures.FirstOrDefault(w => w.type == FatRatioPercentageMeasureTypeId) == null 
+                    ? null 
+                    : (double?)(x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).value * Math.Pow(10, x.measures.First(w => w.type == FatRatioPercentageMeasureTypeId).unit))
             });
         }
 
-        public IEnumerable<BloodPressure> MapMeasuresGroupsToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups)
+        public IEnumerable<BloodPressure> MapToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups)
         {
             return bloodPressureMeasuresGroups
                 .Where(x => x.measures.Any(y => y.type == DiastolicBloodPressureMeasureTypeId))

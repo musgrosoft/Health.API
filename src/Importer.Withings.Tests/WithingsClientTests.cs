@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Moq;
 using Moq.Protected;
 using Utils;
@@ -13,46 +14,164 @@ namespace Importer.Withings.Tests.Unit
 {
     public class WithingsClientTests
     {
-        Uri _capturedUri = new Uri("http://www.null.com");
+      //  Uri _capturedUri = new Uri("http://www.null.com");
+        private string withingsClientId = "12312jhjskdh937ey19d";
+        private string withingsClientSecret = "fdjs982rhdgdsfogiuhd";
+        private string baseUrl = "https://www.null.com";
+        private string redirectUrl = "https://www.redirect.com/thing/stuff/";
         private Mock<HttpMessageHandler> _httpMessageHandler;
         private HttpClient _httpClient;
         private WithingsClient _withingsClient;
+        private Mock<IConfig> _config;
+
         private Mock<ILogger> _logger;
+
+        private HttpRequestMessage _capturedRequest;
 
         public WithingsClientTests()
         {
             _httpMessageHandler = new Mock<HttpMessageHandler>();
+
+            _capturedRequest = new HttpRequestMessage();
+
+            _httpClient = new HttpClient(_httpMessageHandler.Object);
+            _logger = new Mock<ILogger>();
+
+            _config = new Mock<IConfig>();
+            _config.Setup(x => x.WithingsClientId).Returns(withingsClientId);
+            _config.Setup(x => x.WithingsClientSecret).Returns(withingsClientSecret);
+            
+            _config.Setup(x => x.WithingsBaseUrl).Returns(baseUrl);
+            _config.Setup(x => x.WithingsRedirectUrl).Returns(redirectUrl);
+            
+            _withingsClient = new WithingsClient(_httpClient, _logger.Object,  _config.Object);
+        }
+
+        [Fact]
+        public async Task GetTokensByAuthorisationCodeShouldThrowExceptionOnNonSuccessStatusCode()
+        {
+            //Given
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Has error")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+
+            //When
+            var ex = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByAuthorisationCode(""));
+
+            //Then
+            Assert.Contains("404", ex.Message);
+            Assert.Contains("Has error", ex.Message);
+        }
+
+        [Fact]
+        public async Task ShouldGetTokensByAuthorisationCode()
+        {
+            //Given
+            string authorizationCode = "qwe321";
+
             _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.FromResult(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(nokiaContent)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri);
-
-            _httpClient = new HttpClient(_httpMessageHandler.Object);
-            _logger = new Mock<ILogger>();
-//            _withingsAuthenticator = new Mock<IWithingsAuthenticator>();
-//            _withingsAuthenticator.Setup(x => x.GetAccessToken()).Returns(Task.FromResult("abc123"));
+                    Content = new StringContent("{'access_token':'aaa111' , 'refresh_token':'bbb111' }")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
 
 
-            _withingsClient = new WithingsClient(_httpClient, _logger.Object);
+            //When
+
+            var tokenResponse = await _withingsClient.GetTokensByAuthorisationCode(authorizationCode);
+
+            //Then
+            Assert.Equal("aaa111", tokenResponse.access_token);
+            Assert.Equal("bbb111", tokenResponse.refresh_token);
+
+            Assert.Equal($"{baseUrl}/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
+
+            var content = await _capturedRequest.Content.ReadAsStringAsync();
+
+            Assert.Contains("grant_type=authorization_code", content);
+            Assert.Contains($"client_id={withingsClientId}", content);
+            Assert.Contains($"client_secret={withingsClientSecret}", content);
+            Assert.Contains(($"redirect_uri={HttpUtility.UrlEncode(redirectUrl)}").ToUpper(), content.ToUpper());
+            Assert.Contains($"code={authorizationCode}", content);
         }
 
+        [Fact]
+        public async Task ShouldGetTokensByRefreshToken()
+        {
+            //Given
+            string refreshToken = "slkdjflsdjkfjsldkf";
 
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent("{'access_token':'ccc' , 'refresh_token':'ddd' }")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+
+            //When
+
+            var tokenResponse = await _withingsClient.GetTokensByRefreshToken(refreshToken);
+
+            //Then
+            Assert.Equal("ccc", tokenResponse.access_token);
+            Assert.Equal("ddd", tokenResponse.refresh_token);
+
+            Assert.Equal($"{baseUrl}/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
+
+            var content = await _capturedRequest.Content.ReadAsStringAsync();
+
+            Assert.Contains("grant_type=refresh_token", content);
+            Assert.Contains($"client_id={withingsClientId}", content);
+            Assert.Contains($"client_secret={withingsClientSecret}", content);
+            Assert.Contains(($"redirect_uri={HttpUtility.UrlEncode(redirectUrl)}").ToUpper(), content.ToUpper());
+            Assert.Contains($"refresh_token={refreshToken}", content);
+
+        }
 
         [Fact]
         public async Task ShouldGetMeasureGroups()
         {
+            //Given
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(withingsContent)
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+
+            //When
+
             var measuregrps = await _withingsClient.GetMeasureGroups("abc123");
 
-            Assert.Equal("https://wbsapi.withings.net/measure?action=getmeas&access_token=abc123", _capturedUri.AbsoluteUri);
+            Assert.Equal($"{baseUrl}/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
             Assert.Equal(8, measuregrps.Count());
             Assert.Contains(measuregrps, x => x.date == 1526015332 && x.measures.Exists(a => a.value == 83000 && a.type == 9 && a.unit == -3));
             //Assert.Contains(measuregrps, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018, 5, 10, 5, 4, 42));
         }
 
+        [Fact]
+        public async void ShouldThrowErrorOnNoSuccessStausCodeWhenGetMeasureGroups()
+        {
+            //Given
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("this is an error")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
 
-        private string nokiaContent = @"{
+            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetMeasureGroups("abc123"));
+
+            Assert.Contains("status code is 404", exception.Message);
+            Assert.Contains("content is this is an error", exception.Message);
+        }
+
+
+        private string withingsContent = @"{
     ""status"": 0,
     ""body"": {
         ""updatetime"": 1526036073,
@@ -234,6 +353,6 @@ namespace Importer.Withings.Tests.Unit
     }
 }";
 
-
+        
     }
 }

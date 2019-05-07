@@ -59,10 +59,10 @@ namespace Services.Tests.Unit.OAuth
         }
 
         [Fact]
-        public async Task ShouldReadNokiaRefreshToken()
+        public async Task ShouldReadWithingsRefreshToken()
         {
             //Given
-            _repo.Setup(x => x.ReadToken("nokia_refresh_token")).Returns(Task.FromResult("Tremendous Token"));
+            _repo.Setup(x => x.ReadToken("withings_refresh_token")).Returns(Task.FromResult("Tremendous Token"));
 
             //When
             var token = await _oAuthService.GetWithingsRefreshToken();
@@ -72,7 +72,7 @@ namespace Services.Tests.Unit.OAuth
         }
 
         [Fact]
-        public async Task ShouldSaveNokiaRefreshToken()
+        public async Task ShouldSaveWithingsRefreshToken()
         {
             //Given
             _repo.Setup(x => x.UpsertToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
@@ -81,12 +81,12 @@ namespace Services.Tests.Unit.OAuth
             await _oAuthService.SaveWithingsRefreshToken("Amazing Token");
 
             //Then
-            _repo.Verify(x => x.UpsertToken("nokia_refresh_token", "Amazing Token"), Times.Once);
+            _repo.Verify(x => x.UpsertToken("withings_refresh_token", "Amazing Token"), Times.Once);
 
         }
 
         [Fact]
-        public async Task ShouldSaveNokiaAccessToken()
+        public async Task ShouldSaveWithingsAccessToken()
         {
             //Given
             _repo.Setup(x => x.UpsertToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.CompletedTask);
@@ -95,7 +95,7 @@ namespace Services.Tests.Unit.OAuth
             await _oAuthService.SaveWithingsAccessToken("Good Token");
 
             //Then
-            _repo.Verify(x => x.UpsertToken("nokia_access_token", "Good Token"), Times.Once);
+            _repo.Verify(x => x.UpsertToken("withings_access_token", "Good Token"), Times.Once);
 
         }
 

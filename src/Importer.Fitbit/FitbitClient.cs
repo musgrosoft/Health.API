@@ -26,28 +26,9 @@ namespace Importer.Fitbit
             _logger = logger;
 
         }
-
-        //POST https://api.fitbit.com/1/user/-/apiSubscriptions/123.json
-
-        public async Task Subscribe(string accessToken)
-        {
-            var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/apiSubscriptions/123.json";
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-
-            var response = await _httpClient.PostAsync(uri,null);
-
-            await _logger.LogMessageAsync("Status code ::: " + response.StatusCode);
-            await _logger.LogMessageAsync("content ::: " + response.Content);
-
-        }
-
-
-
+        
         public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate, string accessToken)
         {
-            //var accessToken = await _fitbitAuthenticator.GetAccessToken();
-
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/1m.json";
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
@@ -61,99 +42,14 @@ namespace Importer.Fitbit
             }
             else if (response.StatusCode == (HttpStatusCode) 429)
             {
-                throw new TooManyRequestsException(
-                    $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+                throw new TooManyRequestsException($"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
             }
             else
             {
-                throw new Exception(
-                    $"Failed call to fitbit api {uri} , status code is {(int)response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
-//                _logger.Log($"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-//                return Maybe<FitBitActivity>.None;
+                throw new Exception($"Failed call to fitbit api {uri} , status code is {(int)response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
             }
 
         }
-
-        //public async Task<FitbitDailyActivity> GetFitbitDailyActivity(DateTime date)
-        //{
-        //    var accessToken = await _fitbitAuthenticator.GetAccessToken();
-
-
-        //    var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/date/{date:yyyy-MM-dd}.json";
-        //    _httpClient.DefaultRequestHeaders.Clear();
-        //    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-
-        //    var response = await _httpClient.GetAsync(uri);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var content = await response.Content.ReadAsStringAsync();
-
-        //        var data = JsonConvert.DeserializeObject<FitbitDailyActivity>(content);
-        //        data.DateTime = date;
-        //        return data;
-        //    }
-        //    else if (response.StatusCode == (HttpStatusCode) 429)
-        //    {
-        //        throw new TooManyRequestsException(
-        //            $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-        //    }
-        //    else
-        //    {
-
-        //        throw new Exception(
-        //            $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content.ReadAsStringAsync()}");
-        //        //_logger.Log($"No FitbitDailyActivity found for date : {date}");
-        //        //return null;
-        //    }
-        //}
-
-
-
-
-
-
-        //public async Task<List<Dataset>> GetDetailedHeartRates(DateTime date)
-        //{
-        //    var accessToken = await _fitbitAuthenticator.GetAccessToken();
-
-        //    var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{date:yyyy-MM-dd}/1d/1min.json";
-
-        //    _httpClient.DefaultRequestHeaders.Clear();
-        //    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-
-        //    var response = await _httpClient.GetAsync(uri);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var content = await response.Content.ReadAsStringAsync();
-        //        var data = JsonConvert.DeserializeObject<FitBitActivity>(content);
-        //        //foreach (var dataset in data.activitiesHeartIntraday.dataset)
-        //        //{
-        //        //    dataset.time = new DateTime(date.Year, date.Month, date.Day, (int)dataset.time.TotalHours, (int)dataset.time.TotalMinutes, (int)dataset.time.TotalSeconds);
-        //        //}
-
-        //        foreach (var dataset in data.activitiesHeartIntraday.dataset)
-        //        {
-        //            dataset.theDateTime = date;
-        //        }
-
-
-        //        return data.activitiesHeartIntraday.dataset;
-        //    }
-        //    else if (response.StatusCode == (HttpStatusCode)429)
-        //    {
-        //        throw new TooManyRequestsException(
-        //            $"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-        //    }
-        //    else
-        //    {
-
-        //        throw new Exception(
-        //            $"Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
-        //        //_logger.Log($"No FitbitDailyActivity found for date : {date}");
-        //        //return null;
-        //    }
-
-        //}
 
         public async Task<FitbitRefreshTokenResponse> GetTokensWithRefreshToken(string refreshToken)
         {
@@ -180,9 +76,6 @@ namespace Importer.Fitbit
             {
                 throw new Exception($"Fitbit GetTokensWithRefreshToken FAIL  non success status code is : {(int)response.StatusCode} , content: {responseBody}");
             }
-
-
-
         }
 
         public async Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode)
@@ -197,7 +90,7 @@ namespace Importer.Fitbit
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
                 new KeyValuePair<string, string>("client_id", _config.FitbitClientId),
                 new KeyValuePair<string, string>("code", authorizationCode),
-                new KeyValuePair<string, string>("redirect_uri", "http://musgrosoft-health-api.azurewebsites.net/api/fitbit/oauth/"),
+                new KeyValuePair<string, string>("redirect_uri", _config.FitbitOAuthRedirectUrl),
             };
 
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));

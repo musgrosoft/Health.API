@@ -22,9 +22,13 @@
         string HistoricAlcoholSpreadsheetId { get; }
         string AlcoholSpreadsheetId { get; }
         string ExerciseSpreadsheetId { get; }
+        string DrinksRange { get; }
+        string ExercisesRange { get; }
 
-        //Nokia Health
-        string NokiaClientId { get; }
-        string NokiaClientSecret { get; }
+        //Withings
+        string WithingsClientId { get; }
+        string WithingsClientSecret { get; }
+        string WithingsBaseUrl { get; }
+        string WithingsRedirectUrl { get; }
     }
 }

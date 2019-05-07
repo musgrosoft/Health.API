@@ -30,15 +30,7 @@ namespace Importer.Fitbit
 
             return _fitbitMapper.MapActivitiesHeartsToRestingHeartRates(heartActivies);
         }
-
         
-        public async Task Subscribe()
-        {
-            var accessToken = await _fitbitAuthenticator.GetAccessToken();
-
-            await _fitbitClient.Subscribe(accessToken);
-        }
-
         public async Task SetTokens(string code)
         {
             await _fitbitAuthenticator.SetTokens(code);
