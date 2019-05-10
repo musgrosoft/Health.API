@@ -44,6 +44,8 @@ namespace Importer.Withings
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
+                await _logger.LogMessageAsync("trying to get tokens by auth code and the respone is " + responseBody);
+
                 if (response.IsSuccessStatusCode)
                 {
                     var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
