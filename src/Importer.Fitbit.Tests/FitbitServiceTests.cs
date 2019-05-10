@@ -7,7 +7,7 @@ using Moq;
 using Repositories.Health.Models;
 using Xunit;
 
-namespace Importer.Fitbit.Tests
+namespace Importer.Fitbit.Tests.Unit
 {
     public class FitbitServiceTests
     {

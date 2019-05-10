@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A2D87D95-3579-40F0-8734-DBB7D20BDC52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Acceptance.Tests", "src\HealthAPI.Acceptance.Tests\HealthAPI.Acceptance.Tests.csproj", "{65E8C5F2-889C-44FA-816D-6B2380BFA10A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.Unit.Tests", "src\Utils.Unit.Tests\Utils.Unit.Tests.csproj", "{2F73B2AE-075C-4554-8834-A6F0DF427BB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.Tests.Unit", "src\Utils.Unit.Tests\Utils.Tests.Unit.csproj", "{2F73B2AE-075C-4554-8834-A6F0DF427BB9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "src\Utils\Utils.csproj", "{09FA5C12-473A-43EB-AD02-C9854CEC6B10}"
 EndProject
@@ -17,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "src\Services\Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI", "src\HealthAPI\HealthAPI.csproj", "{1E8E2BFC-C531-4807-AD1F-DC3A90655C1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Unit.Tests", "src\HealthAPI.Unit.Tests\HealthAPI.Unit.Tests.csproj", "{D2FD969E-ACA4-47C4-864D-962E7655BD5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthAPI.Tests.Unit", "src\HealthAPI.Unit.Tests\HealthAPI.Tests.Unit.csproj", "{D2FD969E-ACA4-47C4-864D-962E7655BD5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Tests", "src\Services.Tests\Services.Tests.csproj", "{C8B79DDA-1D79-4C9F-A619-76F3148087D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Tests.Unit", "src\Services.Tests\Services.Tests.Unit.csproj", "{C8B79DDA-1D79-4C9F-A619-76F3148087D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Unit.Tests", "src\Repository.Unit.Tests\Repository.Unit.Tests.csproj", "{F09A6810-CAC0-4AD1-9380-63D92D94BEED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Tests.Unit", "src\Repository.Unit.Tests\Repository.Tests.Unit.csproj", "{F09A6810-CAC0-4AD1-9380-63D92D94BEED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{F6D60EF3-03B4-4CB8-8E01-EC5BCDDDBE44}"
 	ProjectSection(SolutionItems) = preProject
@@ -43,9 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.Withings", "src\Im
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.GoogleSheets", "src\Importer.GoogleSheets\Importer.GoogleSheets.csproj", "{AB5C5C27-B896-4452-B09A-8C7FF7B81EEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.Fitbit.Tests", "src\Importer.Fitbit.Tests\Importer.Fitbit.Tests.csproj", "{68B73DC6-C9C0-4380-B1D9-ABC5DAFEC445}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.Fitbit.Tests.Unit", "src\Importer.Fitbit.Tests\Importer.Fitbit.Tests.Unit.csproj", "{68B73DC6-C9C0-4380-B1D9-ABC5DAFEC445}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.Withings.Tests", "src\Importer.Withings.Tests\Importer.Withings.Tests.csproj", "{EB19123B-30B6-4184-A9EB-85F3444D943F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.Withings.Tests.Unit", "src\Importer.Withings.Tests\Importer.Withings.Tests.Unit.csproj", "{EB19123B-30B6-4184-A9EB-85F3444D943F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.GoogleSheets.Tests", "src\Importer.GoogleSheets.Tests\Importer.GoogleSheets.Tests.csproj", "{73A75163-51D5-4D53-8619-3780BD7D132D}"
 EndProject
@@ -55,10 +53,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{65E8C5F2-889C-44FA-816D-6B2380BFA10A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65E8C5F2-889C-44FA-816D-6B2380BFA10A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65E8C5F2-889C-44FA-816D-6B2380BFA10A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65E8C5F2-889C-44FA-816D-6B2380BFA10A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F73B2AE-075C-4554-8834-A6F0DF427BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F73B2AE-075C-4554-8834-A6F0DF427BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F73B2AE-075C-4554-8834-A6F0DF427BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -120,7 +114,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{65E8C5F2-889C-44FA-816D-6B2380BFA10A} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}
 		{2F73B2AE-075C-4554-8834-A6F0DF427BB9} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}
 		{D2FD969E-ACA4-47C4-864D-962E7655BD5B} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}
 		{C8B79DDA-1D79-4C9F-A619-76F3148087D8} = {A2D87D95-3579-40F0-8734-DBB7D20BDC52}

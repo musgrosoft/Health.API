@@ -5,7 +5,7 @@ using Importer.Withings.Domain;
 using Utils;
 using Xunit;
 
-namespace Importer.Withings.Tests
+namespace Importer.Withings.Tests.Unit
 {
     public class WithingsMapperTests
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace Utils.Unit.Tests
+namespace Utils.Tests.Unit
 {
     public class ExtensionMethodTests
     {

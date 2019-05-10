@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
-using Utils;
 
-namespace Repository.Unit.Tests
+namespace Repository.Tests.Unit
 {
     public class FakeLocalContext : HealthContext
     {

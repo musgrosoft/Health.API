@@ -4,7 +4,7 @@ using Moq;
 using Services.OAuth;
 using Xunit;
 
-namespace Importer.Fitbit.Tests
+namespace Importer.Fitbit.Tests.Unit
 {
     public class FitbitAuthenticatorTests
     {

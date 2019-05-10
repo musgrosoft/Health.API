@@ -1,12 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using HealthAPI.Hangfire;
+﻿using HealthAPI.Hangfire;
 using Importer.Fitbit.Importer;
 using Moq;
 using Utils;
-using Xunit;
 
-namespace HealthAPI.Unit.Tests
+namespace HealthAPI.Tests.Unit
 {
     public class HangifireWorkTests
     {

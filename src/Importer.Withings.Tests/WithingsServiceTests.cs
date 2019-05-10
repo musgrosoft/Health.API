@@ -6,7 +6,7 @@ using Moq;
 using Repositories.Health.Models;
 using Xunit;
 
-namespace Importer.Withings.Tests
+namespace Importer.Withings.Tests.Unit
 {
     public class WithingsServiceTests
     {
