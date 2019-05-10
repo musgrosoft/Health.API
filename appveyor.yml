@@ -32,7 +32,7 @@ before_build:
     dotnet restore ./src/Importer.GoogleSheets.Tests/Importer.GoogleSheets.Tests.csproj
 
     
-    dotnet clean ./src/HealthAPI.Unit.Tests/HealthAPI.Unit.Tests.csproj
+    dotnet clean ./src/HealthAPI.Tests.Unit/HealthAPI.Tests.Unit.csproj
 
     dotnet clean ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
 
