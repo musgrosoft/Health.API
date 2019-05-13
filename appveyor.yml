@@ -9,7 +9,7 @@ branches:
 before_build:
 - cmd: >-
 
-    dotnet restore ./src/HealthAPI.Tests.Unit/Health.API.Tests.Unit.csproj
+    dotnet restore ./src/Health.API.Tests.Unit/Health.API.Tests.Unit.csproj
 
     dotnet restore ./src/Repository.Tests.Unit/Repository.Tests.Unit.csproj
 
@@ -40,7 +40,7 @@ before_build:
     
     dotnet clean ./src/Utils.Tests.Unit/Utils.Tests.Unit.csproj
 
-    dotnet clean ./src/Health.API/HealthAPI.csproj
+    dotnet clean ./src/Health.API/Health.API.csproj
     
     dotnet clean ./src/Repositories/Repositories.csproj
 
