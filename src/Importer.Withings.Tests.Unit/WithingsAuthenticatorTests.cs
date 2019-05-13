@@ -2,6 +2,7 @@
 using Importer.Withings.Domain;
 using Moq;
 using Services.OAuth;
+using Utils;
 using Xunit;
 
 namespace Importer.Withings.Tests.Unit
@@ -11,13 +12,15 @@ namespace Importer.Withings.Tests.Unit
         private Mock<ITokenService> _tokenService;
         private WithingsAuthenticator _withingsAuthenticator;
         private Mock<IWithingsClient> _withingsClient;
+        private Mock<ILogger> _logger;
 
         public WithingsAuthenticatorTests()
         {
             _tokenService = new Mock<ITokenService>();
             _withingsClient = new Mock<IWithingsClient>();
+            _logger = new Mock<ILogger>();
 
-            _withingsAuthenticator = new WithingsAuthenticator(_tokenService.Object, _withingsClient.Object);
+            _withingsAuthenticator = new WithingsAuthenticator(_tokenService.Object, _withingsClient.Object, _logger.Object);
         }
 
 

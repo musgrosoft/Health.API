@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HealthAPI\Health.API.csproj" />
+    <ProjectReference Include="..\Health.API\Health.API.csproj" />
   </ItemGroup>
 
 </Project>
