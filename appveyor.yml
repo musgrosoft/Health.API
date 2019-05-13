@@ -61,7 +61,7 @@ build:
   verbosity: minimal
 test: auto
 after_test:
-- cmd: dotnet publish ./src/HealthAPI /p:OutDir="%appveyor_build_folder%\publish" /p:PackageLocation="%appveyor_build_folder%\publish" /p:PublishProfile=Release /p:WebPublishMethod=Package
+- cmd: dotnet publish ./src/Health.API /p:OutDir="%appveyor_build_folder%\publish" /p:PackageLocation="%appveyor_build_folder%\publish" /p:PublishProfile=Release /p:WebPublishMethod=Package
 artifacts:
 - path: publish\*.zip
   name: mypackage
