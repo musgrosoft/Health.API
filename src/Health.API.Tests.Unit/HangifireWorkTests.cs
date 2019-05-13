@@ -1,7 +1,10 @@
-﻿using HealthAPI.Hangfire;
+﻿using System;
+using System.Threading.Tasks;
+using HealthAPI.Hangfire;
 using Importer.Fitbit.Importer;
 using Moq;
 using Utils;
+using Xunit;
 
 namespace HealthAPI.Tests.Unit
 {

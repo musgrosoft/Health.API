@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +6,7 @@ using Importer.Withings.Domain;
 using Moq;
 using Xunit;
 
-namespace Importer.Withings.Tests
+namespace Importer.Withings.Tests.Unit
 {
     public class WithingsClientQueryAdapterTests
     {

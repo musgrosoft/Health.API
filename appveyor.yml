@@ -9,15 +9,15 @@ branches:
 before_build:
 - cmd: >-
 
-    dotnet restore ./src/HealthAPI.Tests.Unit/HealthAPI.Tests.Unit.csproj
+    dotnet restore ./src/HealthAPI.Tests.Unit/Health.API.Tests.Unit.csproj
 
-    dotnet restore ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
+    dotnet restore ./src/Repository.Tests.Unit/Repository.Tests.Unit.csproj
 
-    dotnet restore ./src/Services.Tests/Services.Tests.csproj
+    dotnet restore ./src/Services.Tests.Unit/Services.Tests.Unit.csproj
     
-    dotnet restore ./src/Utils.Unit.Tests/Utils.Unit.Tests.csproj
+    dotnet restore ./src/Utils.Tests.Unit/Utils.Tests.Unit.csproj
 
-    dotnet restore ./src/HealthAPI/HealthAPI.csproj
+    dotnet restore ./src/Health.API/HealthAPI.csproj
     
     dotnet restore ./src/Repositories/Repositories.csproj
 
@@ -25,34 +25,34 @@ before_build:
 
     dotnet restore ./src/Utils/Utils.csproj
     
-    dotnet restore ./src/Importer.Fitbit.Tests/Importer.Fitbit.Tests.csproj
+    dotnet restore ./src/Importer.Fitbit.Tests.Unit/Importer.Fitbit.Tests.Unit.csproj
     
-    dotnet restore ./src/Importer.Withings.Tests/Importer.Withings.Tests.csproj
+    dotnet restore ./src/Importer.Withings.Tests.Unit/Importer.Withings.Tests.Unit.csproj
     
-    dotnet restore ./src/Importer.GoogleSheets.Tests/Importer.GoogleSheets.Tests.csproj
+    dotnet restore ./src/Importer.GoogleSheets.Tests.Unit/Importer.GoogleSheets.Tests.Unit.csproj
 
     
-    dotnet clean ./src/HealthAPI.Tests.Unit/HealthAPI.Tests.Unit.csproj
+    dotnet clean ./src/HealthAPI.Tests.Unit/Health.API.Tests.Unit.csproj
 
-    dotnet clean ./src/Repository.Unit.Tests/Repository.Unit.Tests.csproj
+    dotnet clean ./src/Repository.Tests.Unit/Repository.Tests.Unit.csproj
 
-    dotnet clean ./src/Services.Tests/Services.Tests.csproj
+    dotnet clean ./src/Services.Tests.Unit/Services.Tests.Unit.csproj
     
-    dotnet clean ./src/Utils.Unit.Tests/Utils.Unit.Tests.csproj
+    dotnet clean ./src/Utils.Tests.Unit/Utils.Tests.Unit.csproj
 
-    dotnet clean ./src/HealthAPI/HealthAPI.csproj
-
+    dotnet clean ./src/Health.API/HealthAPI.csproj
+    
     dotnet clean ./src/Repositories/Repositories.csproj
 
     dotnet clean ./src/Services/Services.csproj
 
     dotnet clean ./src/Utils/Utils.csproj
     
-    dotnet clean ./src/Importer.Fitbit.Tests/Importer.Fitbit.Tests.csproj
+    dotnet clean ./src/Importer.Fitbit.Tests.Unit/Importer.Fitbit.Tests.Unit.csproj
     
-    dotnet clean ./src/Importer.Withings.Tests/Importer.Withings.Tests.csproj
+    dotnet clean ./src/Importer.Withings.Tests.Unit/Importer.Withings.Tests.Unit.csproj
     
-    dotnet clean ./src/Importer.GoogleSheets.Tests/Importer.GoogleSheets.Tests.csproj
+    dotnet clean ./src/Importer.GoogleSheets.Tests.Unit/Importer.GoogleSheets.Tests.Unit.csproj
 
 
 build:

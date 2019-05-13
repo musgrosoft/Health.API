@@ -4,7 +4,7 @@ using Moq;
 using Services.OAuth;
 using Xunit;
 
-namespace Importer.Withings.Tests
+namespace Importer.Withings.Tests.Unit
 {
     public class WithingsAuthenticatorTests
     {
