@@ -17,7 +17,7 @@ before_build:
     
     dotnet restore ./src/Utils.Tests.Unit/Utils.Tests.Unit.csproj
 
-    dotnet restore ./src/Health.API/HealthAPI.csproj
+    dotnet restore ./src/Health.API/Health.API.csproj
     
     dotnet restore ./src/Repositories/Repositories.csproj
 
@@ -32,7 +32,7 @@ before_build:
     dotnet restore ./src/Importer.GoogleSheets.Tests.Unit/Importer.GoogleSheets.Tests.Unit.csproj
 
     
-    dotnet clean ./src/HealthAPI.Tests.Unit/Health.API.Tests.Unit.csproj
+    dotnet clean ./src/Health.API.Tests.Unit/Health.API.Tests.Unit.csproj
 
     dotnet clean ./src/Repository.Tests.Unit/Repository.Tests.Unit.csproj
 
