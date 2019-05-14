@@ -27,7 +27,7 @@ namespace Importer.Withings
         public async Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode)
         {
 
-                var url = $"{_config.WithingsBaseUrl}/oauth2/token";
+                var url = $"{_config.WithingsAccountBaseUrl}/oauth2/token";
 
                 var nvc = new List<KeyValuePair<string, string>>
                 {
@@ -36,8 +36,6 @@ namespace Importer.Withings
                     new KeyValuePair<string, string>("client_secret", _config.WithingsClientSecret),
                     new KeyValuePair<string, string>("code", authorizationCode),
                     new KeyValuePair<string, string>("redirect_uri", _config.WithingsRedirectUrl)
-
-
                 };
 
                 var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
@@ -49,6 +47,12 @@ namespace Importer.Withings
                 if (response.IsSuccessStatusCode)
                 {
                     var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
+
+                    if (String.IsNullOrEmpty(tokenResponse.access_token) ||
+                        String.IsNullOrEmpty(tokenResponse.refresh_token))
+                    {
+                        throw new Exception($"Access token or Refresh token is empty : {(int)response.StatusCode} , content: {responseBody}");
+                    }
 
                     return tokenResponse;
 
@@ -65,7 +69,7 @@ namespace Importer.Withings
 
         public async Task<WithingsTokenResponse> GetTokensByRefreshToken(string refreshToken)
         {
-            var url = $"{_config.WithingsBaseUrl}/oauth2/token";
+            var url = $"{_config.WithingsAccountBaseUrl}/oauth2/token";
 
             var nvc = new List<KeyValuePair<string, string>>
             {
@@ -94,7 +98,7 @@ namespace Importer.Withings
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
 
-            var response = await _httpClient.GetAsync($"{_config.WithingsBaseUrl}/measure?action=getmeas&access_token={accessToken}");
+            var response = await _httpClient.GetAsync($"{_config.WithingsApiBaseUrl}/measure?action=getmeas&access_token={accessToken}");
 
             //TODO : success status code, does not indicate lack of error
             if (response.IsSuccessStatusCode)

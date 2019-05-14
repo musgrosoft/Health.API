@@ -53,7 +53,8 @@ namespace Utils
         //Withings
         public string WithingsClientId => GetConfigValue("WithingsClientId");
         public string WithingsClientSecret => GetConfigValue("WithingsClientSecret");
-        public string WithingsBaseUrl => "https://wbsapi.withings.net";
+        public string WithingsAccountBaseUrl => "https://account.withings.com";
+        public string WithingsApiBaseUrl => "https://wbsapi.withings.net";
         public string WithingsRedirectUrl => "https://musgrosoft-health-api.azurewebsites.net/api/withings/oauth/";
     }
 }

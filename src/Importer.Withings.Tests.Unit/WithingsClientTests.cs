@@ -17,7 +17,8 @@ namespace Importer.Withings.Tests.Unit
       //  Uri _capturedUri = new Uri("http://www.null.com");
         private string withingsClientId = "12312jhjskdh937ey19d";
         private string withingsClientSecret = "fdjs982rhdgdsfogiuhd";
-        private string baseUrl = "https://www.null.com";
+        private string baseAccountUrl = "https://www.nullaccount.com";
+        private string baseApiUrl = "https://www.nullapi.com";
         private string redirectUrl = "https://www.redirect.com/thing/stuff/";
         private Mock<HttpMessageHandler> _httpMessageHandler;
         private HttpClient _httpClient;
@@ -41,7 +42,8 @@ namespace Importer.Withings.Tests.Unit
             _config.Setup(x => x.WithingsClientId).Returns(withingsClientId);
             _config.Setup(x => x.WithingsClientSecret).Returns(withingsClientSecret);
             
-            _config.Setup(x => x.WithingsBaseUrl).Returns(baseUrl);
+            _config.Setup(x => x.WithingsAccountBaseUrl).Returns(baseAccountUrl);
+            _config.Setup(x => x.WithingsApiBaseUrl).Returns(baseApiUrl);
             _config.Setup(x => x.WithingsRedirectUrl).Returns(redirectUrl);
             
             _withingsClient = new WithingsClient(_httpClient, _logger.Object,  _config.Object);
@@ -88,7 +90,7 @@ namespace Importer.Withings.Tests.Unit
             Assert.Equal("aaa111", tokenResponse.access_token);
             Assert.Equal("bbb111", tokenResponse.refresh_token);
 
-            Assert.Equal($"{baseUrl}/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal($"{baseAccountUrl}/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
 
             var content = await _capturedRequest.Content.ReadAsStringAsync();
 
@@ -120,7 +122,7 @@ namespace Importer.Withings.Tests.Unit
             Assert.Equal("ccc", tokenResponse.access_token);
             Assert.Equal("ddd", tokenResponse.refresh_token);
 
-            Assert.Equal($"{baseUrl}/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal($"{baseAccountUrl}/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
 
             var content = await _capturedRequest.Content.ReadAsStringAsync();
 
@@ -147,7 +149,7 @@ namespace Importer.Withings.Tests.Unit
 
             var measuregrps = await _withingsClient.GetMeasureGroups("abc123");
 
-            Assert.Equal($"{baseUrl}/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal($"{baseApiUrl}/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
             Assert.Equal(8, measuregrps.Count());
             Assert.Contains(measuregrps, x => x.date == 1526015332 && x.measures.Exists(a => a.value == 83000 && a.type == 9 && a.unit == -3));
             //Assert.Contains(measuregrps, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018, 5, 10, 5, 4, 42));

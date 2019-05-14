@@ -28,7 +28,9 @@
         //Withings
         string WithingsClientId { get; }
         string WithingsClientSecret { get; }
-        string WithingsBaseUrl { get; }
         string WithingsRedirectUrl { get; }
+
+        string WithingsAccountBaseUrl { get; }
+        string WithingsApiBaseUrl { get; }
     }
 }
