@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthAPI.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/Fitbit")]
     public class AlexaController : Controller
     {
         // GET
+        [HttpGet]
+        [Route("FlashBriefing")]
         public IActionResult FlashBriefing()
         {
             var flashBriefings = new List<FlashBriiefing>
