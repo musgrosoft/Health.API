@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Fitbit")]
+    [Route("api/Alexa")]
     public class AlexaController : Controller
     {
         // GET
