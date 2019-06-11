@@ -25,7 +25,8 @@ namespace Services.Health
         
 
         DateTime GetLatestDrinkDate();
-        Weight GetLatestWeight();
-        BloodPressure GetLatestBloodPressure();
+
+        List<Weight> GetLatestWeights(int num = 10);
+        List<BloodPressure> GetLatestBloodPressures(int num = 10);
     }
 }

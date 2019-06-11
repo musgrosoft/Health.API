@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Repositories.Health.Models;
 
 namespace Repositories.Health
@@ -16,7 +17,7 @@ namespace Repositories.Health
         void Upsert(Drink drink);
         void Upsert(Exercise exercise);
         
-        Weight GetLatestWeight();
-        BloodPressure GetLatestBloodPressure();
+        List<Weight> GetLatestWeights(int num);
+        List<BloodPressure> GetLatestBloodPressures(int num);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Repositories.Health.Models;
 
@@ -29,9 +30,19 @@ namespace Repositories.Health
             return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
         }
 
-        public BloodPressure GetLatestBloodPressure()
+        public List<BloodPressure> GetLatestBloodPressures(int num)
         {
-            return  _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+            return  _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        public List<BloodPressure> GetLatestBloodPressure(int num)
+        {
+            return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        public List<Weight> GetLatestWeights(int num)
+        {
+            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
 
         public DateTime? GetLatestRestingHeartRateDate()
