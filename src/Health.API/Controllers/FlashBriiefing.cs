@@ -2,7 +2,7 @@
 
 namespace HealthAPI.Controllers
 {
-    public class FlashBriiefing
+    public class FlashBriefing
     {
         public string uid { get; set; }
         public string updateDate { get; set; }

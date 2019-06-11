@@ -61,28 +61,24 @@ namespace HealthAPI.Controllers
             }
 
 
-            var flashBriefings = new List<FlashBriiefing>
+            var flashBriefings = new List<FlashBriefing>
                 {
-                new FlashBriiefing
+                new FlashBriefing
                 {
                     uid = "1_WEIGHT",
-                    //updateDate = latestWeightDate.ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
-                    updateDate = new DateTime(2019,6,11,9,0,0).ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    //updateDate = latestWeightDate.ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    updateDate = new DateTime(2019,6,10,22,34,51).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
                     titleText = "Latest Weight",
                     mainText = $"Your weight from {daysOldWeightExpression} is {latestWeights.Average(x=>x.Kg).Value:0.#} kg. " +
-                               $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic).Value:0.#} over {latestBloodpressures.Average(x=>x.Systolic).Value:0.#}. ",
-                    redirectionUrl = "https://www.amazon.com"
-
+                               $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic).Value:0.#} over {latestBloodpressures.Average(x=>x.Systolic).Value:0.#}. "
                 },
-                new FlashBriiefing
+                new FlashBriefing
                 {
                     uid = "2_BLOOD_PRESSURE",
-                    //updateDate = latestBloodPressureDate.ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
-                    updateDate = new DateTime(2019,6,11,9,0,0).ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    //updateDate = latestBloodPressureDate.ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    updateDate = new DateTime(2019,6,10,22,34,43).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
                     titleText = "Latest Blood Pressure",
-                    mainText = $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic)} over {latestBloodpressures.Average(x=>x.Systolic)}. ",
-                    redirectionUrl = "https://www.amazon.com"
-
+                    mainText = $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic)} over {latestBloodpressures.Average(x=>x.Systolic)}. "
                 }
 
                 };
