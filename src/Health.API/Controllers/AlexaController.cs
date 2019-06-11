@@ -18,7 +18,7 @@ namespace HealthAPI.Controllers
                 new FlashBriiefing
                 {
                     uid = "EXAMPLE_CHANNEL_MULTI_ITEM_JSON_TTS_1",
-                    updateDate = "2019-06-10T22:34:51.0Z" ,
+                    updateDate = new DateTime(2019,6,10,22,34,51).ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
                     titleText = "Multi Item JSON (TTS)",
                     mainText = "This channel has multiple TTS JSON items. This is the first item.",
                     redirectionUrl = "https://www.amazon.com"
@@ -27,7 +27,7 @@ namespace HealthAPI.Controllers
                 new FlashBriiefing
                 {
                     uid = "EXAMPLE_CHANNEL_MULTI_ITEM_JSON_TTS_2",
-                    updateDate = "2019-06-10T23:34:51.0Z",
+                    updateDate = new DateTime(2019,6,10,21,34,51).ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
                     titleText = "Multi Item JSON (TTS)",
                     mainText = "This channel has multiple TTS JSON items. This is the second item.",
                     redirectionUrl = "https://www.amazon.com"
