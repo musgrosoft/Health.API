@@ -56,7 +56,7 @@ namespace HealthAPI.Controllers
                     daysOldBloodpressureExpression = "yesterday";
                     break;
                 default:
-                    daysOldBloodpressureExpression = $"from {daysOldWeight} days ago";
+                    daysOldBloodpressureExpression = $"{daysOldWeight} days ago";
                     break;
             }
 
@@ -70,7 +70,7 @@ namespace HealthAPI.Controllers
                     updateDate = new DateTime(2019,6,10,09,30,00).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
                     titleText = "Latest Weight",
                     mainText = $"Your weight from {daysOldWeightExpression} is {latestWeights.Average(x=>x.Kg).Value:0.#} kg. " +
-                               $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic).Value:0.#} over {latestBloodpressures.Average(x=>x.Systolic).Value:0.#}. ",
+                               $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic).Value:0.#} over {latestBloodpressures.Average(x=>x.Diastolic).Value:0.#}. ",
                     redirectionUrl = "https://www.amazon.com"
                 },
                 new FlashBriefing
