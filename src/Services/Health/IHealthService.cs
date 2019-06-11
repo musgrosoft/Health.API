@@ -25,5 +25,7 @@ namespace Services.Health
         
 
         DateTime GetLatestDrinkDate();
+        Weight GetLatestWeight();
+        BloodPressure GetLatestBloodPressure();
     }
 }

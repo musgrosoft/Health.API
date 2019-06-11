@@ -9,9 +9,9 @@ namespace HealthAPI.Controllers
     [Route("api/Alexa")]
     public class AlexaController : Controller
     {
-        private readonly HealthService _healthService;
+        private readonly IHealthService _healthService;
 
-        public AlexaController(HealthService healthService)
+        public AlexaController(IHealthService healthService)
         {
             _healthService = healthService;
         }
