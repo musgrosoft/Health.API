@@ -15,7 +15,8 @@ namespace Repositories.Health
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(Drink drink);
         void Upsert(Exercise exercise);
-
         
+        Weight GetLatestWeight();
+        BloodPressure GetLatestBloodPressure();
     }
 }

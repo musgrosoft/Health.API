@@ -26,6 +26,11 @@ namespace Services.Health
             return latestWeightDate ?? defaultDateTime;
         }
 
+        public Weight GetLatestWeight()
+        {
+            return _healthRepository.GetLatestWeight();
+        }
+
         public DateTime GetLatestBloodPressureDate(DateTime defaultDateTime)
         {
             var latestDate = _healthRepository.GetLatestBloodPressureDate();
@@ -96,5 +101,9 @@ namespace Services.Health
         }
 
 
+        public BloodPressure GetLatestBloodPressure()
+        {
+            return _healthRepository.GetLatestBloodPressure();
+        }
     }
 }

@@ -23,7 +23,17 @@ namespace Repositories.Health
         {
            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
-        
+
+        public Weight GetLatestWeight()
+        {
+            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+        }
+
+        public BloodPressure GetLatestBloodPressure()
+        {
+            return  _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+        }
+
         public DateTime? GetLatestRestingHeartRateDate()
         {
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
@@ -90,6 +100,8 @@ namespace Repositories.Health
 
             _healthContext.SaveChanges();
         }
+
+
 
         public void Upsert(BloodPressure bloodPressure)
         {
