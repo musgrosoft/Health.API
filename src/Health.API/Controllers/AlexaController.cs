@@ -66,7 +66,8 @@ namespace HealthAPI.Controllers
                 new FlashBriiefing
                 {
                     uid = "1_WEIGHT",
-                    updateDate = latestWeightDate.ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    //updateDate = latestWeightDate.ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    updateDate = new DateTime(2019,6,11,9,0,0).ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
                     titleText = "Latest Weight",
                     mainText = $"Your weight from {daysOldWeightExpression} is {latestWeights.Average(x=>x.Kg).Value:0.#} kg. " +
                                $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic).Value:0.#} over {latestBloodpressures.Average(x=>x.Systolic).Value:0.#}. ",
@@ -76,7 +77,8 @@ namespace HealthAPI.Controllers
                 new FlashBriiefing
                 {
                     uid = "2_BLOOD_PRESSURE",
-                    updateDate = latestBloodPressureDate.ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    //updateDate = latestBloodPressureDate.ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    updateDate = new DateTime(2019,6,11,9,0,0).ToString("yyyy-MM-ddTHH:mm:ss0Z"), //"2019-06-10T22:34:51.0Z" ,
                     titleText = "Latest Blood Pressure",
                     mainText = $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic)} over {latestBloodpressures.Average(x=>x.Systolic)}. ",
                     redirectionUrl = "https://www.amazon.com"
