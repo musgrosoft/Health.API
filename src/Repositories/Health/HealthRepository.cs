@@ -35,6 +35,16 @@ namespace Repositories.Health
             return  _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
 
+        public DateTime? GetLatestExerciseDate()
+        {
+            return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
+        }
+
+        public List<RestingHeartRate> GetLatestExercises(int num)
+        {
+            return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
         public List<BloodPressure> GetLatestBloodPressure(int num)
         {
             return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();

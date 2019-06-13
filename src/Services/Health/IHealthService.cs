@@ -7,26 +7,20 @@ namespace Services.Health
     public interface IHealthService
     {
         DateTime GetLatestBloodPressureDate(DateTime defaultDateTime);
-        
-        
         DateTime GetLatestRestingHeartRateDate(DateTime defaultDateTime);
-        
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
-        
-        void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures);
+        DateTime GetLatestDrinkDate();
 
+        void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures);
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
-
         void UpsertAlcoholIntakes(List<Drink> alcoholIntakes);
-
         void UpsertExercises(List<Exercise> exercises);
 
-        
-
-        DateTime GetLatestDrinkDate();
 
         List<Weight> GetLatestWeights(int num = 10);
         List<BloodPressure> GetLatestBloodPressures(int num = 10);
+        DateTime GetLatestExerciseDate(DateTime defaultDateTime);
+        List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10);
     }
 }

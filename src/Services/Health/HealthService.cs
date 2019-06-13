@@ -36,6 +36,18 @@ namespace Services.Health
             return _healthRepository.GetLatestBloodPressures(num);
         }
 
+               
+        public DateTime GetLatestExerciseDate(DateTime defaultDateTime)
+        {
+            var latestDate = _healthRepository.GetLatestExerciseDate();
+            return latestDate ?? defaultDateTime;
+        }
+
+        public List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10)
+        {
+            return _healthRepository.GetLatestExercises(num);
+        }
+
         public DateTime GetLatestBloodPressureDate(DateTime defaultDateTime)
         {
             var latestDate = _healthRepository.GetLatestBloodPressureDate();

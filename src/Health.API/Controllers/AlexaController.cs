@@ -17,72 +17,89 @@ namespace HealthAPI.Controllers
             _healthService = healthService;
         }
 
+        private string PrettifyDaysOld(double daysOld)
+        {
+            switch (daysOld)
+            {
+                case 0:
+                    return "today";
+                case 1:
+                    return "yesterday";
+                default:
+                    return $"from {daysOld} days ago";
+            }
+        }
+
+        private double DaysOld(DateTime dateTime)
+        {
+            return (DateTime.Now.Date - dateTime.Date).TotalDays;
+        }
+
         // GET
         [HttpGet]
         [Route("FlashBriefing")]
         public IActionResult FlashBriefing()
         {
             var latestWeightDate = _healthService.GetLatestWeightDate(DateTime.MinValue);
+            var daysOldWeight = DaysOld(latestWeightDate);
+            var daysOldWeightExpression = PrettifyDaysOld(daysOldWeight);
+            
             var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(DateTime.MinValue);
+            var daysOldBloodpressure = DaysOld(latestBloodPressureDate);
+            var daysOldBloodpressureExpression = PrettifyDaysOld(daysOldBloodpressure);
 
-            var daysOldWeight = (DateTime.Now.Date - latestWeightDate.Date).TotalDays;
-            var daysOldWeightExpression = "daysOldWeightExpression";
+            var latestRestingHeartRate = _healthService.GetLatestRestingHeartRateDate(DateTime.MinValue);
+            var daysOldRestingHeartRate = DaysOld(latestRestingHeartRate);
+            var daysOldRestingHeartRateExpression = PrettifyDaysOld(daysOldRestingHeartRate);
 
-            var daysOldBloodpressure = (DateTime.Now.Date - latestBloodPressureDate.Date).TotalDays;
-            var daysOldBloodpressureExpression = "daysOldBloodpressureExpression";
+            var latestDrinkDate = _healthService.GetLatestDrinkDate();
+            var daysOldDrinkDate = DaysOld(latestDrinkDate);
+            var daysOldDrinkDateExpression = PrettifyDaysOld(daysOldDrinkDate);
 
+            var latestExerciseDate = _healthService.GetLatestExerciseDate(DateTime.MinValue);
+            var daysOldExerciseDate = DaysOld(latestExerciseDate);
+            var daysOldExerciseDateExpression = PrettifyDaysOld(daysOldExerciseDate);
+            
             var latestWeights = _healthService.GetLatestWeights();
             var latestBloodpressures = _healthService.GetLatestBloodPressures();
+            var latestRestingHeartRates = _healthService.GetLatestRestingHeartRates();
 
-            switch (daysOldWeight)
-            {
-                case 0:
-                    daysOldWeightExpression = "today";
-                    break;
-                case 1:
-                    daysOldWeightExpression = "yesterday";
-                    break;
-                default:
-                    daysOldWeightExpression = $"from {daysOldWeight} days ago";
-                    break;
-            }
-
-            switch (daysOldBloodpressure)
-            {
-                case 0:
-                    daysOldBloodpressureExpression = "today";
-                    break;
-                case 1:
-                    daysOldBloodpressureExpression = "yesterday";
-                    break;
-                default:
-                    daysOldBloodpressureExpression = $"{daysOldWeight} days ago";
-                    break;
-            }
 
 
             var flashBriefings = new List<FlashBriefing>
                 {
+
+                    new FlashBriefing
+                    {
+                        uid = "1_AGE_OF_DATA",
+                        updateDate = DateTime.Now.AddMinutes(1).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
+                        titleText = "Latest recordings",
+                        mainText = $"Latest Weight recorded {daysOldWeightExpression}. " +
+                                   $"Latest Blood pressure recorded {daysOldBloodpressureExpression}. " +
+                                   $"Latest Resting Heart Rate recorded {daysOldRestingHeartRateExpression}. " +
+                                   $"Latest Drink recorded {daysOldDrinkDateExpression}. " +
+                                   $"Latest Exercise recorded {daysOldExerciseDate}. ",
+                        redirectionUrl = "https://www.amazon.com"
+                    },
+
                 new FlashBriefing
                 {
-                    uid = "1_WEIGHT_a",
-                    //updateDate = latestWeightDate.ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
-                    updateDate = new DateTime(2019,6,10,09,30,00).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
-                    titleText = "Latest Weight",
-                    mainText = $"Your weight from {daysOldWeightExpression} is {latestWeights.Average(x=>x.Kg).Value:0.#} kg. " +
-                               $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic).Value:0.#} over {latestBloodpressures.Average(x=>x.Diastolic).Value:0.#}. ",
+                    uid = "2_DATA",
+                    updateDate = DateTime.Now.AddMinutes(2).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
+                    titleText = "Data",
+                    mainText = $"Your Weight is {latestWeights.Average(x=>x.Kg).Value:0.#} kg. " +
+                               $"Your blood pressure is {latestBloodpressures.Average(x=>x.Systolic).Value:N0} over {latestBloodpressures.Average(x=>x.Diastolic).Value:N0}. " +
+                               $"Your resting heart rate is {latestRestingHeartRates.Average(x=>x.Beats):N0}. ",
                     redirectionUrl = "https://www.amazon.com"
                 },
-                new FlashBriefing
-                {
-                    uid = "2_BLOOD_PRESSURE_b",
-                    //updateDate = latestBloodPressureDate.ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
-                    updateDate = new DateTime(2019,6,9,10,34,43).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
-                    titleText = "Latest Blood Pressure",
-                   // mainText = $"Your blood pressure from {daysOldBloodpressureExpression} is {latestBloodpressures.Average(x=>x.Systolic)} over {latestBloodpressures.Average(x=>x.Systolic)}. ",
-                    mainText = $"This is some unique content. ",
-                    redirectionUrl = "https://www.amazon.com"
-                }
+//                new FlashBriefing
+//                {
+//                    uid = "3_TARGETS",
+//                    updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), //"2019-06-10T22:34:51.0Z" ,
+//                    titleText = "Targets",
+//                    mainText = $"This is some unique content. ",
+//                    redirectionUrl = "https://www.amazon.com"
+//                }
 
                 };
 
