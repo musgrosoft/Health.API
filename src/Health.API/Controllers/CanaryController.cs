@@ -9,7 +9,8 @@ using Services.OAuth;
 
 namespace Health.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    [Route("api/Canary")]
     [ApiController]
     public class CanaryController : ControllerBase
     {
@@ -22,6 +23,8 @@ namespace Health.API.Controllers
             _tokenService = tokenService;
         }
 
+        [HttpGet]
+        [Route("Index")]
         public async Task<IActionResult> Index()
         {
             var fitbitRefreshToken = await _tokenService.GetFitbitRefreshToken();
