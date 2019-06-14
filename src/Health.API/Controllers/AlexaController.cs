@@ -78,7 +78,7 @@ namespace HealthAPI.Controllers
                                    $"Latest Blood pressure recorded {daysOldBloodpressureExpression}. " +
                                    $"Latest Resting Heart Rate recorded {daysOldRestingHeartRateExpression}. " +
                                    $"Latest Drink recorded {daysOldDrinkDateExpression}. " +
-                                   $"Latest Exercise recorded {daysOldExerciseDate}. ",
+                                   $"Latest Exercise recorded {daysOldExerciseDateExpression}. ",
                         redirectionUrl = "https://www.amazon.com"
                     },
 
