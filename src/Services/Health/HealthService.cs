@@ -58,6 +58,11 @@ namespace Services.Health
             return _healthRepository.GetLatestExercises(num);
         }
 
+        public double GetCumSumUnits()
+        {
+            return _healthRepository.GetCumSUmUnits();
+        }
+
         public DateTime GetLatestBloodPressureDate(DateTime defaultDateTime)
         {
             var latestDate = _healthRepository.GetLatestBloodPressureDate();

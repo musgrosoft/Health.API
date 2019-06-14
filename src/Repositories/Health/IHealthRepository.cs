@@ -23,5 +23,6 @@ namespace Repositories.Health
         List<Exercise> GetLatestExercises(int num);
         List<Drink> GetLatestDrinks(int num);
         List<RestingHeartRate> GetLatestRestingHeartRate(int num);
+        double GetCumSUmUnits();
     }
 }

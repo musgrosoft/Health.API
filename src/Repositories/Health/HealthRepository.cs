@@ -55,6 +55,11 @@ namespace Repositories.Health
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
 
+        public double GetCumSUmUnits()
+        {
+            return _healthContext.Drinks.Sum(x=>x.Units);
+        }
+
         public List<BloodPressure> GetLatestBloodPressure(int num)
         {
             return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();

@@ -79,6 +79,20 @@ namespace HealthAPI.Controllers
             var averageSystolic = latestBloodpressures.Average(x => x.Systolic);
             var averageDiastolic = latestBloodpressures.Average(x => x.Diastolic);
 
+            var cumSumUnits = _healthService.GetCumSumUnits();
+            var targetUnits = 5147.7 - ((DateTime.Now - new DateTime(2018, 5, 29)).Days * 4);
+
+            //                SUM(TargetUnits) OVER(ORDER BY CalendarDate) + 5147.7 as CumSumTargetUnits,	
+            //            SUM(Units) OVER(ORDER BY CalendarDate) as CumSumUnits
+            //            FROM
+            //            (
+            //                SELECT
+            //
+            //                    CalendarDate,
+            //                Units,
+            //                CASE
+            //
+            //                    WHEN CalendarDate > '2018/05/29' THEN 4
 
 
             //WHEN CalendarDate >= '2019/01/01' THEN 86    - ((3.000/365) * (DATEDIFF(day , '2019/01/01' , CalendarDate)))
@@ -89,6 +103,16 @@ namespace HealthAPI.Controllers
 
             var hitMessages = "";
             var missedMessages = "";
+
+
+            if (cumSumUnits < targetUnits)
+            {
+                hitMessages += $"Hitting weight target {targetUnits} and {cumSumUnits}, you are {(targetUnits - cumSumUnits):N1} units below target. ";
+            }
+            else
+            {
+                missedMessages += $"Missed weight target {targetUnits} and {cumSumUnits}, you are {(cumSumUnits - targetUnits):N1} units above target. ";
+            }
 
             if (averageWeight < targetWeight)
             {
