@@ -92,29 +92,29 @@ namespace HealthAPI.Controllers
 
             if (averageWeight < targetWeight)
             {
-                hitMessages += $"Hitting weight target, you are {targetWeight-averageWeight} kilograms below target. ";
+                hitMessages += $"Hitting weight target {targetWeight} and {averageWeight}, you are {(targetWeight-averageWeight):N1} kilograms below target. ";
             }
             else
             {
-                missedMessages += $"Missed weight target, you are {averageWeight - targetWeight} kilograms above target. ";
+                missedMessages += $"Missed weight target, you are {(averageWeight - targetWeight):N1} kilograms above target. ";
             }
 
             if (averageSystolic < targetSystolic)
             {
-                hitMessages += $"Hitting systolic blood pressure target, you are {targetSystolic - averageSystolic} mmHg below target. ";
+                hitMessages += $"Hitting systolic blood pressure target, you are {(targetSystolic - averageSystolic):N0} mmHg below target. ";
             }
             else
             {
-                missedMessages += $"Missed systolic blood pressure target, you are {averageSystolic - targetSystolic} mmHg above target. ";
+                missedMessages += $"Missed systolic blood pressure target, you are {(averageSystolic - targetSystolic):N0} mmHg above target. ";
             }
 
             if (averageDiastolic < targetDiastolic)
             {
-                hitMessages += $"Hitting diastolic blood pressure target, you are {targetDiastolic - averageDiastolic} mmHg below target. ";
+                hitMessages += $"Hitting diastolic blood pressure target, you are {(targetDiastolic - averageDiastolic):N0} mmHg below target. ";
             }
             else
             {
-                missedMessages += $"Missing diastolic blood pressure target, you are {averageDiastolic - targetDiastolic} mmHg below target. ";
+                missedMessages += $"Missing diastolic blood pressure target, you are {(averageDiastolic - targetDiastolic):N0} mmHg below target. ";
             }
 
             var briefings = new List<FlashBriefing>();

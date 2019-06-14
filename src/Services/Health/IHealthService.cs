@@ -22,5 +22,7 @@ namespace Services.Health
         List<BloodPressure> GetLatestBloodPressures(int num = 10);
         DateTime GetLatestExerciseDate(DateTime defaultDateTime);
         List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10);
+        List<Drink> GetLatestDrinks(int num = 10);
+        List<Exercise> GetLatestExercises(int num = 10);
     }
 }

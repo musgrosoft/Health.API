@@ -40,7 +40,17 @@ namespace Repositories.Health
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        public List<RestingHeartRate> GetLatestExercises(int num)
+        List<Exercise> IHealthRepository.GetLatestExercises(int num)
+        {
+            return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        public List<Drink> GetLatestDrinks(int num)
+        {
+            return _healthContext.Drinks.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        public List<RestingHeartRate> GetLatestRestingHeartRate(int num)
         {
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }

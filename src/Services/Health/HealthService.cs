@@ -45,6 +45,16 @@ namespace Services.Health
 
         public List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10)
         {
+            return _healthRepository.GetLatestRestingHeartRate(num);
+        }
+
+        public List<Drink> GetLatestDrinks(int num = 10)
+        {
+            return _healthRepository.GetLatestDrinks(num);
+        }
+
+        public List<Exercise> GetLatestExercises(int num)
+        {
             return _healthRepository.GetLatestExercises(num);
         }
 

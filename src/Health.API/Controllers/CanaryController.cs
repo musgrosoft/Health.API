@@ -31,7 +31,7 @@ namespace Health.API.Controllers
         {
             var fitbitRefreshToken = await _tokenService.GetFitbitRefreshToken();
             var withingsRefreshToken = await _tokenService.GetWithingsRefreshToken();
-            var latestRestingHeartRates = _healthService.GetLatestRestingHeartRates(20);
+            
 
             var messages = new List<string>();
 
@@ -41,7 +41,11 @@ namespace Health.API.Controllers
             return Ok(new CanaryData
             {
                 Messages = messages,
-                RestingHeartRates = latestRestingHeartRates
+                LatestRestingHeartRates = _healthService.GetLatestRestingHeartRates(20),
+                LatestWeights = _healthService.GetLatestWeights(20),
+                LatestBloodPressures = _healthService.GetLatestBloodPressures(20),
+                LatestDrinks = _healthService.GetLatestDrinks(20),
+                LatestExercises = _healthService.GetLatestExercises(20)
             });
 
         }
@@ -50,7 +54,11 @@ namespace Health.API.Controllers
         private class CanaryData
         {
             public List<string> Messages { get; set; }
-            public List<RestingHeartRate> RestingHeartRates { get; set; }
+            public List<RestingHeartRate> LatestRestingHeartRates { get; set; }
+            public List<Weight> LatestWeights { get; set; }
+            public List<BloodPressure> LatestBloodPressures { get; set; }
+            public List<Drink> LatestDrinks { get; set; }
+            public List<Exercise> LatestExercises { get; set; }
         }
     }
 }

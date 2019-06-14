@@ -20,6 +20,8 @@ namespace Repositories.Health
         List<Weight> GetLatestWeights(int num);
         List<BloodPressure> GetLatestBloodPressures(int num);
         DateTime? GetLatestExerciseDate();
-        List<RestingHeartRate> GetLatestExercises(int num);
+        List<Exercise> GetLatestExercises(int num);
+        List<Drink> GetLatestDrinks(int num);
+        List<RestingHeartRate> GetLatestRestingHeartRate(int num);
     }
 }
