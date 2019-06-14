@@ -21,18 +21,18 @@ namespace HealthAPI.Controllers
             _tokenService = tokenService;
         }
 
-        private string PrettifyDaysOld(double daysOld)
-        {
-            switch (daysOld)
-            {
-                case 0:
-                    return "today";
-                case 1:
-                    return "yesterday";
-                default:
-                    return $"from {daysOld} days ago";
-            }
-        }
+//        private string PrettifyDaysOld(double daysOld)
+//        {
+//            switch (daysOld)
+//            {
+//                case 0:
+//                    return "today";
+//                case 1:
+//                    return "yesterday";
+//                default:
+//                    return $"from {daysOld} days ago";
+//            }
+//        }
 
         private double DaysOld(DateTime dateTime)
         {
@@ -44,30 +44,6 @@ namespace HealthAPI.Controllers
         [Route("FlashBriefing")]
         public async Task<IActionResult> FlashBriefing()
         {
-            var latestWeightDate = _healthService.GetLatestWeightDate(DateTime.MinValue);
-            var daysOldWeight = DaysOld(latestWeightDate);
-            var daysOldWeightExpression = PrettifyDaysOld(daysOldWeight);
-            
-            var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(DateTime.MinValue);
-            var daysOldBloodpressure = DaysOld(latestBloodPressureDate);
-            var daysOldBloodpressureExpression = PrettifyDaysOld(daysOldBloodpressure);
-
-            var latestRestingHeartRate = _healthService.GetLatestRestingHeartRateDate(DateTime.MinValue);
-            var daysOldRestingHeartRate = DaysOld(latestRestingHeartRate);
-            var daysOldRestingHeartRateExpression = PrettifyDaysOld(daysOldRestingHeartRate);
-
-            var latestDrinkDate = _healthService.GetLatestDrinkDate();
-            var daysOldDrinkDate = DaysOld(latestDrinkDate);
-            var daysOldDrinkDateExpression = PrettifyDaysOld(daysOldDrinkDate);
-
-            var latestExerciseDate = _healthService.GetLatestExerciseDate(DateTime.MinValue);
-            var daysOldExerciseDate = DaysOld(latestExerciseDate);
-            var daysOldExerciseDateExpression = PrettifyDaysOld(daysOldExerciseDate);
-            
-            var latestWeights = _healthService.GetLatestWeights();
-            var latestBloodpressures = _healthService.GetLatestBloodPressures();
-            var latestRestingHeartRates = _healthService.GetLatestRestingHeartRates();
-
             var flashBriefings = new List<FlashBriefing>();
 
             var technicalErrorFlashBriefing = await GetTechnicalErrorFlashBriefing();
@@ -84,70 +60,143 @@ namespace HealthAPI.Controllers
                 flashBriefings.Add(oldDataFlashBriefing);
             }
 
-//            var hitTargetsFlashBriefing = GetHitTargetsFlashBriefing();
+            var targetsFlashBriefing = GetTargetsFlashBriefing();
 
-
+            flashBriefings.AddRange(targetsFlashBriefing);
+            
             //Content-Type: application/json
             return Ok(flashBriefings);
         }
 
-//        private FlashBriefing GetHitTargetsFlashBriefing()
-//        {
-//            var latestWeights = _healthService.GetLatestWeights();
-//            var latestBloodpressures = _healthService.GetLatestBloodPressures();
-//            var latestRestingHeartRates = _healthService.GetLatestRestingHeartRates();
-//
-//            var averageWeight = latestWeights.Average(x => x.Kg);
-//            var targetWeight 
-//        }
+        private List<FlashBriefing> GetTargetsFlashBriefing()
+        {
+            var latestWeights = _healthService.GetLatestWeights();
+            var latestBloodpressures = _healthService.GetLatestBloodPressures();
+            var latestRestingHeartRates = _healthService.GetLatestRestingHeartRates();
+
+            var averageWeight = latestWeights.Average(x => x.Kg);
+
+            var averageSystolic = latestBloodpressures.Average(x => x.Systolic);
+            var averageDiastolic = latestBloodpressures.Average(x => x.Diastolic);
+
+
+
+            //WHEN CalendarDate >= '2019/01/01' THEN 86    - ((3.000/365) * (DATEDIFF(day , '2019/01/01' , CalendarDate)))
+            var targetWeight = 86 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3 / 365));
+
+            var targetSystolic = 120;
+            var targetDiastolic = 80;
+
+            var hitMessages = "";
+            var missedMessages = "";
+
+            if (averageWeight < targetWeight)
+            {
+                hitMessages += $"Hitting weight target, you are {targetWeight-averageWeight} kilograms below target. ";
+            }
+            else
+            {
+                missedMessages += $"Missed weight target, you are {averageWeight - targetWeight} kilograms above target. ";
+            }
+
+            if (averageSystolic < targetSystolic)
+            {
+                hitMessages += $"Hitting systolic blood pressure target, you are {targetSystolic - averageSystolic} mmHg below target. ";
+            }
+            else
+            {
+                missedMessages += $"Missed systolic blood pressure target, you are {averageSystolic - targetSystolic} mmHg above target. ";
+            }
+
+            if (averageDiastolic < targetDiastolic)
+            {
+                hitMessages += $"Hitting diastolic blood pressure target, you are {targetDiastolic - averageDiastolic} mmHg below target. ";
+            }
+            else
+            {
+                missedMessages += $"Missing diastolic blood pressure target, you are {averageDiastolic - targetDiastolic} mmHg below target. ";
+            }
+
+            var briefings = new List<FlashBriefing>();
+
+            if (!string.IsNullOrWhiteSpace(hitMessages))
+            {
+                briefings.Add(
+
+                    new FlashBriefing
+                    {
+                        uid = "HIT TARGETS",
+                        updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
+                        titleText = "Hit Targets",
+                        mainText = $"You have hit these targets. {hitMessages}",
+                        redirectionUrl = "https://www.amazon.com"
+                    }
+
+                  );
+            }
+
+            if (!string.IsNullOrWhiteSpace(hitMessages))
+            {
+                briefings.Add(
+
+                    new FlashBriefing
+                    {
+                        uid = "MISSED TARGETS",
+                        updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
+                        titleText = "Missed Targets",
+                        mainText = $"You have missed these targets. {missedMessages}",
+                        redirectionUrl = "https://www.amazon.com"
+                    }
+
+                );
+            }
+
+            return briefings;
+
+        }
 
         private FlashBriefing GetOldDataFlashBriefing()
         {
             var latestWeightDate = _healthService.GetLatestWeightDate(DateTime.MinValue);
             var daysOldWeight = DaysOld(latestWeightDate);
-            var daysOldWeightExpression = PrettifyDaysOld(daysOldWeight);
 
             var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(DateTime.MinValue);
             var daysOldBloodpressure = DaysOld(latestBloodPressureDate);
-            var daysOldBloodpressureExpression = PrettifyDaysOld(daysOldBloodpressure);
 
             var latestRestingHeartRate = _healthService.GetLatestRestingHeartRateDate(DateTime.MinValue);
             var daysOldRestingHeartRate = DaysOld(latestRestingHeartRate);
-            var daysOldRestingHeartRateExpression = PrettifyDaysOld(daysOldRestingHeartRate);
 
             var latestDrinkDate = _healthService.GetLatestDrinkDate();
             var daysOldDrinkDate = DaysOld(latestDrinkDate);
-            var daysOldDrinkDateExpression = PrettifyDaysOld(daysOldDrinkDate);
 
             var latestExerciseDate = _healthService.GetLatestExerciseDate(DateTime.MinValue);
             var daysOldExerciseDate = DaysOld(latestExerciseDate);
-            var daysOldExerciseDateExpression = PrettifyDaysOld(daysOldExerciseDate);
             
             var messages = "";
 
             if (daysOldWeight > 4)
             {
-                messages += $"Weight was last updated {daysOldWeightExpression}. ";
+                messages += $"Weight was last updated {daysOldWeight} days ago. ";
             }
 
             if (daysOldBloodpressure > 4)
             {
-                messages += $"Blood pressure was last updated {daysOldBloodpressureExpression}. ";
+                messages += $"Blood pressure was last updated {daysOldBloodpressure} days ago. ";
             }
 
             if (daysOldRestingHeartRate > 2)
             {
-                messages += $"Resting heart rate was last updated {daysOldRestingHeartRateExpression}. ";
+                messages += $"Resting heart rate was last updated {daysOldRestingHeartRate} days ago. ";
             }
 
             if (daysOldDrinkDate > 3)
             {
-                messages += $"Drinks were last updated {daysOldDrinkDateExpression}. ";
+                messages += $"Drinks were last updated {daysOldDrinkDate} days ago. ";
             }
 
             if (daysOldExerciseDate > 3)
             {
-                messages += $"Exercise was last updated {daysOldExerciseDateExpression}. ";
+                messages += $"Exercise was last updated {daysOldExerciseDate} days ago. ";
             }
 
             if (string.IsNullOrWhiteSpace(messages))
