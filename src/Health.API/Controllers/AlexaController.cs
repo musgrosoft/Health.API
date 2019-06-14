@@ -125,7 +125,7 @@ namespace HealthAPI.Controllers
 
                     new FlashBriefing
                     {
-                        uid = "HIT TARGETS",
+                        uid = "3 HIT TARGETS",
                         updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
                         titleText = "Hit Targets",
                         mainText = $"You have hit these targets. {hitMessages}",
@@ -141,8 +141,8 @@ namespace HealthAPI.Controllers
 
                     new FlashBriefing
                     {
-                        uid = "MISSED TARGETS",
-                        updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
+                        uid = "4 MISSED TARGETS",
+                        updateDate = DateTime.Now.AddMinutes(4).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
                         titleText = "Missed Targets",
                         mainText = $"You have missed these targets. {missedMessages}",
                         redirectionUrl = "https://www.amazon.com"
@@ -207,7 +207,7 @@ namespace HealthAPI.Controllers
             {
                 return new FlashBriefing
                 {
-                    uid = "OLD DATA",
+                    uid = "2 OLD DATA",
                     updateDate = DateTime.Now.AddMinutes(2).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
                     titleText = "Old Date",
                     mainText = $"There is some old data. {messages}",
@@ -242,7 +242,7 @@ namespace HealthAPI.Controllers
             {
                 return new FlashBriefing
                 {
-                    uid = "TECHNICAL ERRORS",
+                    uid = "1 TECHNICAL ERRORS",
                     updateDate = DateTime.Now.AddMinutes(1).ToString("yyyy-MM-ddTHH:mm:ss.0Z"), 
                     titleText = "Technical Errors",
                     mainText = $"There are technical errors. {messages}",
