@@ -96,7 +96,7 @@ namespace HealthAPI.Controllers
 
 
             //WHEN CalendarDate >= '2019/01/01' THEN 86    - ((3.000/365) * (DATEDIFF(day , '2019/01/01' , CalendarDate)))
-            var targetWeight = 86 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3 / 365));
+            var targetWeight = (86 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3 / 365)));
 
             var targetSystolic = 120;
             var targetDiastolic = 80;
@@ -107,11 +107,11 @@ namespace HealthAPI.Controllers
 
             if (cumSumUnits < targetUnits)
             {
-                hitMessages += $"Hitting weight target {targetUnits} and {cumSumUnits}, you are {(targetUnits - cumSumUnits):N1} units below target. ";
+                hitMessages += $"Hitting drinks target {targetUnits} and {cumSumUnits}, you are {(targetUnits - cumSumUnits):N1} units below target. ";
             }
             else
             {
-                missedMessages += $"Missed weight target {targetUnits} and {cumSumUnits}, you are {(cumSumUnits - targetUnits):N1} units above target. ";
+                missedMessages += $"Missed drinks target {targetUnits} and {cumSumUnits}, you are {(cumSumUnits - targetUnits):N1} units above target. ";
             }
 
             if (averageWeight < targetWeight)
