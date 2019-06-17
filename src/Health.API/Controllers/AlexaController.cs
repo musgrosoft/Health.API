@@ -80,7 +80,7 @@ namespace HealthAPI.Controllers
             var averageDiastolic = latestBloodpressures.Average(x => x.Diastolic);
 
             var cumSumUnits = _healthService.GetCumSumUnits();
-            var targetUnits = 5147.7 - ((DateTime.Now - new DateTime(2018, 5, 29)).Days * 4);
+            var targetUnits = 5147.7 + ((DateTime.Now - new DateTime(2018, 5, 29)).Days * 4);
 
             //                SUM(TargetUnits) OVER(ORDER BY CalendarDate) + 5147.7 as CumSumTargetUnits,	
             //            SUM(Units) OVER(ORDER BY CalendarDate) as CumSumUnits
@@ -116,30 +116,34 @@ namespace HealthAPI.Controllers
 
             if (averageWeight < targetWeight)
             {
-                hitMessages += $"Hitting weight target {targetWeight} and {averageWeight}, you are {(targetWeight-averageWeight):N1} kilograms below target. ";
+                hitMessages += $"Hitting weight target , target weight is {targetWeight} and actual weight is {averageWeight}, you are {(targetWeight-averageWeight):N1} kilograms below target, with a weight of {averageWeight}. ";
             }
             else
             {
-                missedMessages += $"Missed weight target, you are {(averageWeight - targetWeight):N1} kilograms above target. ";
+                missedMessages += $"Missed weight target , target weight is {targetWeight} and actual weight is {averageWeight}, you are {(averageWeight - targetWeight):N1} kilograms above target with a weight of {averageWeight}. ";
             }
 
             if (averageSystolic < targetSystolic)
             {
-                hitMessages += $"Hitting systolic blood pressure target, you are {(targetSystolic - averageSystolic):N0} mmHg below target. ";
+                hitMessages += $"Hitting systolic blood pressure target, you are {(targetSystolic - averageSystolic):N0} mmHg below target, at {averageSystolic}. ";
             }
             else
             {
-                missedMessages += $"Missed systolic blood pressure target, you are {(averageSystolic - targetSystolic):N0} mmHg above target. ";
+                missedMessages += $"Missed systolic blood pressure target, you are {(averageSystolic - targetSystolic):N0} mmHg above target, at {averageSystolic}. ";
             }
 
             if (averageDiastolic < targetDiastolic)
             {
-                hitMessages += $"Hitting diastolic blood pressure target, you are {(targetDiastolic - averageDiastolic):N0} mmHg below target. ";
+                hitMessages += $"Hitting diastolic blood pressure target, you are {(targetDiastolic - averageDiastolic):N0} mmHg below target, at {averageDiastolic}. ";
             }
             else
             {
-                missedMessages += $"Missing diastolic blood pressure target, you are {(averageDiastolic - targetDiastolic):N0} mmHg below target. ";
+                missedMessages += $"Missing diastolic blood pressure target, you are {(averageDiastolic - targetDiastolic):N0} mmHg below target, at {averageDiastolic}. ";
             }
+
+            missedMessages += "Placeholder for cumsum cardio minutes.";
+            missedMessages += "Placeholder for rowing target.";
+            missedMessages += "Placeholder for running target.";
 
             var briefings = new List<FlashBriefing>();
 
