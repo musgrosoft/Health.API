@@ -96,7 +96,7 @@ namespace HealthAPI.Controllers
 
 
             //WHEN CalendarDate >= '2019/01/01' THEN 86    - ((3.000/365) * (DATEDIFF(day , '2019/01/01' , CalendarDate)))
-            var targetWeight = (86.000 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3 / 365)));
+            var targetWeight = (86.000 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3.000 / 365)));
 
             var targetSystolic = 120;
             var targetDiastolic = 80;
