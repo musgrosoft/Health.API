@@ -6,7 +6,7 @@ using Repositories.Health.Models;
 
 namespace HealthAPI.Controllers
 {
-    [EnableCors("CorsPolicy")]
+    //[EnableCors("CorsPolicy")]
     [Produces("application/json")]
     [Route("api/Test")]
     public class TestController : Controller
