@@ -63,24 +63,24 @@ namespace HealthAPI
         public virtual void ConfigureServices(IServiceCollection services)
         {
 
-            // Add service and create Policy with options
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();
-                    });
+            //// Add service and create Policy with options
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(
+            //        builder =>
+            //        {
+            //            builder.AllowAnyOrigin()
+            //                .AllowAnyMethod()
+            //                .AllowAnyHeader()
+            //                .AllowCredentials();
+            //        });
 
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
-            });
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder.AllowAnyOrigin()
+            //            .AllowAnyMethod()
+            //            .AllowAnyHeader()
+            //            .AllowCredentials());
+            //});
 
             SetUpDataBase(services);
 
@@ -156,7 +156,7 @@ namespace HealthAPI
 //                        .AllowAnyHeader()
 //                        .AllowCredentials();
 //                });
-            app.UseCors("CorsPolicy");
+            //app.UseCors("CorsPolicy");
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
             app.UseMvc();
