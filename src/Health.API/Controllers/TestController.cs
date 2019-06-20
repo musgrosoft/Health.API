@@ -20,7 +20,8 @@ namespace HealthAPI.Controllers
 
         [HttpPost]
         [Route("exercise")]
-        [EnableCors("CorsPolicy")]
+        //[EnableCors("CorsPolicy")]
+        [EnableCors]
         //public async Task<IActionResult> Migrate()
         public IActionResult Test([FromBody]Exercise exercise)
         {
