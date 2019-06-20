@@ -148,8 +148,15 @@ namespace HealthAPI
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 
-            app.UseCors();
-            app.UseCors("CorsPolicy");
+            app.UseCors(
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+            //app.UseCors("CorsPolicy");
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
             app.UseMvc();
