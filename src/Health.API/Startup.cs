@@ -65,20 +65,20 @@ namespace HealthAPI
             // Add service and create Policy with options
             services.AddCors(options =>
             {
-                //options.AddDefaultPolicy(
-                    //builder =>
-                    //{
-                    //    builder.AllowAnyOrigin()
-                    //        .AllowAnyMethod()
-                    //        .AllowAnyHeader()
-                    //        .AllowCredentials();
-                    //});
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
 
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader());
-//                        .AllowCredentials());
+                        .AllowAnyHeader()
+                        .AllowCredentials());
             });
 
             SetUpDataBase(services);
