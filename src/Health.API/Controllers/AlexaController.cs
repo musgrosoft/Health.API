@@ -21,19 +21,6 @@ namespace HealthAPI.Controllers
             _tokenService = tokenService;
         }
 
-//        private string PrettifyDaysOld(double daysOld)
-//        {
-//            switch (daysOld)
-//            {
-//                case 0:
-//                    return "today";
-//                case 1:
-//                    return "yesterday";
-//                default:
-//                    return $"from {daysOld} days ago";
-//            }
-//        }
-
         private double DaysOld(DateTime dateTime)
         {
             return (DateTime.Now.Date - dateTime.Date).TotalDays;
@@ -80,7 +67,7 @@ namespace HealthAPI.Controllers
             var averageDiastolic = latestBloodpressures.Average(x => x.Diastolic);
 
             var cumSumUnits = _healthService.GetCumSumUnits();
-            var targetUnits = 5147.7 + ((DateTime.Now - new DateTime(2018, 5, 29)).Days * 4);
+            var targetUnits = 5147.7 + ((DateTime.Now.Date - new DateTime(2018, 5, 29)).Days * 4);
 
             //                SUM(TargetUnits) OVER(ORDER BY CalendarDate) + 5147.7 as CumSumTargetUnits,	
             //            SUM(Units) OVER(ORDER BY CalendarDate) as CumSumUnits
@@ -96,7 +83,7 @@ namespace HealthAPI.Controllers
 
 
             //WHEN CalendarDate >= '2019/01/01' THEN 86    - ((3.000/365) * (DATEDIFF(day , '2019/01/01' , CalendarDate)))
-            var targetWeight = (86.000 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3 / 365)));
+            var targetWeight = (86.000 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3.000 / 365)));
 
             var targetSystolic = 120;
             var targetDiastolic = 80;
@@ -107,38 +94,38 @@ namespace HealthAPI.Controllers
 
             if (cumSumUnits < targetUnits)
             {
-                hitMessages += $"Hitting drinks target {targetUnits} and {cumSumUnits}, you are {(targetUnits - cumSumUnits):N1} units below target. ";
+                hitMessages += $"Hitting drinks target, you are {(targetUnits - cumSumUnits):N0} units below target. ";
             }
             else
             {
-                missedMessages += $"Missed drinks target {targetUnits} and {cumSumUnits}, you are {(cumSumUnits - targetUnits):N1} units above target. ";
+                missedMessages += $"Missed drinks target, you are {(cumSumUnits - targetUnits):N0} units above target. ";
             }
 
             if (averageWeight < targetWeight)
             {
-                hitMessages += $"Hitting weight target , target weight is {targetWeight} and actual weight is {averageWeight}, you are {(targetWeight-averageWeight):N1} kilograms below target, with a weight of {averageWeight}. ";
+                hitMessages += $"Hitting weight target , target weight is {targetWeight:N1} and actual weight is {averageWeight:N1}, you are {(targetWeight-averageWeight):N1} kilograms below target, with a weight of {averageWeight:N1}. ";
             }
             else
             {
-                missedMessages += $"Missed weight target , target weight is {targetWeight} and actual weight is {averageWeight}, you are {(averageWeight - targetWeight):N1} kilograms above target with a weight of {averageWeight}. ";
+                missedMessages += $"Missed weight target , target weight is {targetWeight:N1} and actual weight is {averageWeight:N1}, you are {(averageWeight - targetWeight):N1} kilograms above target with a weight of {averageWeight:N1}. ";
             }
 
             if (averageSystolic < targetSystolic)
             {
-                hitMessages += $"Hitting systolic blood pressure target, you are {(targetSystolic - averageSystolic):N0} mmHg below target, at {averageSystolic}. ";
+                hitMessages += $"Hitting systolic blood pressure target, you are {(targetSystolic - averageSystolic):N0} mmHg below target, at {averageSystolic:N0}. ";
             }
             else
             {
-                missedMessages += $"Missed systolic blood pressure target, you are {(averageSystolic - targetSystolic):N0} mmHg above target, at {averageSystolic}. ";
+                missedMessages += $"Missed systolic blood pressure target, you are {(averageSystolic - targetSystolic):N0} mmHg above target, at {averageSystolic:N0}. ";
             }
 
             if (averageDiastolic < targetDiastolic)
             {
-                hitMessages += $"Hitting diastolic blood pressure target, you are {(targetDiastolic - averageDiastolic):N0} mmHg below target, at {averageDiastolic}. ";
+                hitMessages += $"Hitting diastolic blood pressure target, you are {(targetDiastolic - averageDiastolic):N0} mmHg below target, at {averageDiastolic:N0}. ";
             }
             else
             {
-                missedMessages += $"Missing diastolic blood pressure target, you are {(averageDiastolic - targetDiastolic):N0} mmHg below target, at {averageDiastolic}. ";
+                missedMessages += $"Missing diastolic blood pressure target, you are {(averageDiastolic - targetDiastolic):N0} mmHg below target, at {averageDiastolic:N0}. ";
             }
 
             missedMessages += "Placeholder for cumsum cardio minutes.";
@@ -202,12 +189,12 @@ namespace HealthAPI.Controllers
             
             var messages = "";
 
-            if (daysOldWeight > 4)
+            if (daysOldWeight > 2)
             {
                 messages += $"Weight was last updated {daysOldWeight} days ago. ";
             }
 
-            if (daysOldBloodpressure > 4)
+            if (daysOldBloodpressure > 2)
             {
                 messages += $"Blood pressure was last updated {daysOldBloodpressure} days ago. ";
             }
@@ -217,12 +204,12 @@ namespace HealthAPI.Controllers
                 messages += $"Resting heart rate was last updated {daysOldRestingHeartRate} days ago. ";
             }
 
-            if (daysOldDrinkDate > 3)
+            if (daysOldDrinkDate > 2)
             {
                 messages += $"Drinks were last updated {daysOldDrinkDate} days ago. ";
             }
 
-            if (daysOldExerciseDate > 3)
+            if (daysOldExerciseDate > 2)
             {
                 messages += $"Exercise was last updated {daysOldExerciseDate} days ago. ";
             }
