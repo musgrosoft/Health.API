@@ -29,5 +29,15 @@ namespace HealthAPI.Controllers
 
             return Ok();
         }
+
+
+        [HttpGet]
+        [Route("exercises")]
+        public IActionResult GetAllTHeExercises()
+        {
+            var exercisese = _sheetsService.GetExercises();
+
+            return Ok(exercisese);
+        }
     }
 }
