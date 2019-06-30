@@ -110,23 +110,16 @@ namespace HealthAPI.Controllers
                 missedMessages += $"Missed weight target , target weight is {targetWeight:N1} and actual weight is {averageWeight:N1}, you are {(averageWeight - targetWeight):N1} kilograms above target with a weight of {averageWeight:N1}. ";
             }
 
-            if (averageSystolic < targetSystolic)
+            if (averageSystolic > targetSystolic || averageDiastolic < targetDiastolic)
             {
-                hitMessages += $"Hitting systolic blood pressure target, you are {(targetSystolic - averageSystolic):N0} mmHg below target, at {averageSystolic:N0}. ";
+                //todo systolic aand or diastolic in message
+                missedMessages += $"Blood pressure is too high. At {(targetDiastolic - averageDiastolic):N0} over {(targetSystolic - averageSystolic):N0}"
             }
             else
             {
-                missedMessages += $"Missed systolic blood pressure target, you are {(averageSystolic - targetSystolic):N0} mmHg above target, at {averageSystolic:N0}. ";
+                hitMessages += $"Blood pressure is healthy, at {(targetDiastolic - averageDiastolic):N0} over {(targetSystolic - averageSystolic):N0}.";
             }
 
-            if (averageDiastolic < targetDiastolic)
-            {
-                hitMessages += $"Hitting diastolic blood pressure target, you are {(targetDiastolic - averageDiastolic):N0} mmHg below target, at {averageDiastolic:N0}. ";
-            }
-            else
-            {
-                missedMessages += $"Missing diastolic blood pressure target, you are {(averageDiastolic - targetDiastolic):N0} mmHg below target, at {averageDiastolic:N0}. ";
-            }
 
             missedMessages += "Placeholder for cumsum cardio minutes.";
             missedMessages += "Placeholder for rowing target.";
@@ -143,7 +136,7 @@ namespace HealthAPI.Controllers
                         uid = "3 HIT TARGETS",
                         updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
                         titleText = "Hit Targets",
-                        mainText = $"You have hit these targets. {hitMessages}",
+                        mainText = $"You have hit {hitMessages.Count()} targets. {hitMessages}",
                         redirectionUrl = "https://www.amazon.com"
                     }
 
@@ -159,7 +152,7 @@ namespace HealthAPI.Controllers
                         uid = "4 MISSED TARGETS",
                         updateDate = DateTime.Now.AddMinutes(4).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
                         titleText = "Missed Targets",
-                        mainText = $"You have missed these targets. {missedMessages}",
+                        mainText = $"You have missed {missedMessages.Count()} targets. {missedMessages}",
                         redirectionUrl = "https://www.amazon.com"
                     }
 
