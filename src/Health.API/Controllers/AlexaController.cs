@@ -121,9 +121,9 @@ namespace HealthAPI.Controllers
             }
 
 
-            missedMessages += "Placeholder for cumsum cardio minutes.";
-            missedMessages += "Placeholder for rowing target.";
-            missedMessages += "Placeholder for running target.";
+            missedMessages += "Placeholder for cumsum cardio minutes. \r\n";
+            missedMessages += "Placeholder for rowing target. \r\n";
+            missedMessages += "Placeholder for running target. \r\n";
 
             var briefings = new List<FlashBriefing>();
 
