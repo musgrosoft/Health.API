@@ -104,7 +104,7 @@ namespace HealthAPI.Controllers
             if (averageSystolic > targetSystolic || averageDiastolic < targetDiastolic)
             {
                 //todo systolic aand or diastolic in message
-                missedMessages += $"Blood pressure is too high. At {(targetDiastolic - averageDiastolic):N0} over {(targetSystolic - averageSystolic):N0}"
+                missedMessages += $"Blood pressure is too high. At {(targetDiastolic - averageDiastolic):N0} over {(targetSystolic - averageSystolic):N0}";
             }
             else
             {
