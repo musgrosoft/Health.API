@@ -120,9 +120,9 @@ namespace HealthAPI.Controllers
                 hitMessages += $"Ahead of Ergo target by {latest15MinuteErgoDistance - target15MinuteErgoMetres} metres. ";
             }
 
-            missedMessages += "Placeholder for cumsum cardio minutes. \r\n";
-            missedMessages += "Placeholder for rowing target. \r\n";
-            missedMessages += "Placeholder for running target. \r\n";
+            missedMessages += "Placeholder for cumsum cardio minutes. ";
+            missedMessages += "Placeholder for rowing target. ";
+            missedMessages += "Placeholder for running target. ";
 
             var briefings = new List<FlashBriefing>();
 
