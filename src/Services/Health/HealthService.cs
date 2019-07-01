@@ -58,6 +58,11 @@ namespace Services.Health
             return _healthRepository.GetLatestExercises(num);
         }
 
+        public List<Exercise> GetLatest15MinuteErgos(int num)
+        {
+            return _healthRepository.GetLatest15MinuteErgos(num);
+        }
+
         public double GetCumSumUnits()
         {
             return _healthRepository.GetCumSUmUnits();

@@ -40,9 +40,19 @@ namespace Repositories.Health
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        List<Exercise> IHealthRepository.GetLatestExercises(int num)
+        List<Exercise> GetLatestExercises(int num)
         {
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        List<Exercise> GetLatest15MinuteErgos(int num)
+        {
+            return _healthContext.Exercises
+                .Where(x => x.Description.ToLower() == "ergo")
+                .Where(x => x.TotalSeconds == 900)
+                .OrderByDescending(x => x.CreatedDate)
+                .Take(num)
+                .ToList();
         }
 
         public List<Drink> GetLatestDrinks(int num)
@@ -55,7 +65,7 @@ namespace Repositories.Health
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
 
-        public double GetCumSUmUnits()
+        public double GetCumSumUnits()
         {
             return _healthContext.Drinks.Sum(x=>x.Units);
         }

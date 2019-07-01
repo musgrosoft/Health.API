@@ -50,7 +50,7 @@ namespace HealthAPI.Controllers
             var targetsFlashBriefing = GetTargetsFlashBriefing();
 
             flashBriefings.AddRange(targetsFlashBriefing);
-            
+
             //Content-Type: application/json
             return Ok(flashBriefings);
         }
@@ -60,6 +60,8 @@ namespace HealthAPI.Controllers
             var latestWeights = _healthService.GetLatestWeights();
             var latestBloodpressures = _healthService.GetLatestBloodPressures();
             var latestRestingHeartRates = _healthService.GetLatestRestingHeartRates();
+            var latest15MinuteErgoDistance = _healthService.GetLatest15MinuteErgos(1).First().Metres;
+
 
             var averageWeight = latestWeights.Average(x => x.Kg);
 
@@ -67,22 +69,11 @@ namespace HealthAPI.Controllers
             var averageDiastolic = latestBloodpressures.Average(x => x.Diastolic);
 
             var cumSumUnits = _healthService.GetCumSumUnits();
+
+
+
             var targetUnits = 5147.7 + ((DateTime.Now.Date - new DateTime(2018, 5, 29)).Days * 4);
-
-            //                SUM(TargetUnits) OVER(ORDER BY CalendarDate) + 5147.7 as CumSumTargetUnits,	
-            //            SUM(Units) OVER(ORDER BY CalendarDate) as CumSumUnits
-            //            FROM
-            //            (
-            //                SELECT
-            //
-            //                    CalendarDate,
-            //                Units,
-            //                CASE
-            //
-            //                    WHEN CalendarDate > '2018/05/29' THEN 4
-
-
-            //WHEN CalendarDate >= '2019/01/01' THEN 86    - ((3.000/365) * (DATEDIFF(day , '2019/01/01' , CalendarDate)))
+            var target15MinuteErgoMetres = 3386 + (DateTime.Now.Date - new DateTime(2019, 1, 1)).TotalDays;
             var targetWeight = (86.000 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3.000 / 365)));
 
             var targetSystolic = 120;
@@ -103,7 +94,7 @@ namespace HealthAPI.Controllers
 
             if (averageWeight < targetWeight)
             {
-                hitMessages += $"Hitting weight target , target weight is {targetWeight:N1} and actual weight is {averageWeight:N1}, you are {(targetWeight-averageWeight):N1} kilograms below target, with a weight of {averageWeight:N1}. ";
+                hitMessages += $"Hitting weight target , target weight is {targetWeight:N1} and actual weight is {averageWeight:N1}, you are {(targetWeight - averageWeight):N1} kilograms below target, with a weight of {averageWeight:N1}. ";
             }
             else
             {
@@ -120,6 +111,14 @@ namespace HealthAPI.Controllers
                 hitMessages += $"Blood pressure is healthy, at {(targetDiastolic - averageDiastolic):N0} over {(targetSystolic - averageSystolic):N0}.";
             }
 
+            if (target15MinuteErgoMetres > latest15MinuteErgoDistance)
+            {
+                missedMessages += $"Behind Ergo target by {target15MinuteErgoMetres - latest15MinuteErgoDistance} metres. ";
+            }
+            else
+            {
+                hitMessages += $"Ahead of Ergo target by {latest15MinuteErgoDistance - target15MinuteErgoMetres} metres. ";
+            }
 
             missedMessages += "Placeholder for cumsum cardio minutes. \r\n";
             missedMessages += "Placeholder for rowing target. \r\n";

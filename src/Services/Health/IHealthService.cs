@@ -24,6 +24,7 @@ namespace Services.Health
         List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10);
         List<Drink> GetLatestDrinks(int num = 10);
         List<Exercise> GetLatestExercises(int num = 10);
+        List<Exercise> GetLatest15MinuteErgos(int num = 10);
         double GetCumSumUnits();
     }
 }
