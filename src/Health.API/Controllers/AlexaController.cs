@@ -82,6 +82,8 @@ namespace HealthAPI.Controllers
             var hitMessages = "";
             var missedMessages = "";
 
+            var hitTargets = 0;
+            var missedTargets = 0;
 
             if (cumSumUnits < targetUnits)
             {

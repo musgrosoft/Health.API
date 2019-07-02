@@ -40,12 +40,12 @@ namespace Repositories.Health
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        List<Exercise> GetLatestExercises(int num)
+        public List<Exercise> GetLatestExercises(int num)
         {
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
 
-        List<Exercise> GetLatest15MinuteErgos(int num)
+        public List<Exercise> GetLatest15MinuteErgos(int num)
         {
             return _healthContext.Exercises
                 .Where(x => x.Description.ToLower() == "ergo")
