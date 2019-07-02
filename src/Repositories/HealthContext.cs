@@ -25,10 +25,12 @@ namespace Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Exercise>().HasKey(c => new { c.CreatedDate, c.Description });
+
             if (this.Database.IsSqlServer())
             {
 
-                modelBuilder.Entity<Exercise>().HasKey(c => new { c.CreatedDate, c.Description });
 
                 modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 1), Beats = 123 });
                 modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 2), Beats = 123 });
