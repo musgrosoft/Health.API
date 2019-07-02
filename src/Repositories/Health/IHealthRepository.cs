@@ -23,7 +23,8 @@ namespace Repositories.Health
         List<Exercise> GetLatestExercises(int num);
         List<Drink> GetLatestDrinks(int num);
         List<RestingHeartRate> GetLatestRestingHeartRate(int num);
-        List<Exercise> GetLatest15MinuteErgos(int num);
+        Exercise GetFurthest(DateTime fromDate, string exerciseType, int totalSeconds);
         double GetCumSumUnits();
+        Target GetTarget(DateTime date);
     }
 }

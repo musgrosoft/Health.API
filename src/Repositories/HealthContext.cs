@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Health.Models;
 using Repositories.OAuth.Models;
 
@@ -11,6 +13,7 @@ namespace Repositories
         public virtual DbSet<Drink> Drinks { get; set; }
         public virtual DbSet<Weight> Weights { get; set; }
         public virtual DbSet<Exercise> Exercises { get; set; }
+        public virtual DbSet<Target> Targets { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
         
         public HealthContext(DbContextOptions<HealthContext> options) : base(options)
@@ -18,10 +21,62 @@ namespace Repositories
 
         }
 
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Exercise>().HasKey(c => new { c.CreatedDate, c.Description});
+
+            modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 1), Beats = 123 });
+            modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 2), Beats = 123 });
+
+            for(var date = new DateTime(2018,5,1); date < new DateTime(2020,1,1); date = date.AddDays(1))
+            {
+                modelBuilder.Entity<Target>().HasData(new Target
+                {
+                    Date = date,
+                    Kg = GetTargetKg(date),
+                    MetresErgo15Minutes = GetTargetErgoMetresFor15Minutes(date),
+                    MetresTreadmill30Minutes = GetTargetMetresFor30MinuteTreadmill(date),
+                    Diastolic = 80,
+                    Systolic = 120,
+                    Units = 4,
+                    CardioMinutes = 11
+                });
+            }
+
+
+            this.Database.ExecuteSqlCommand(File.ReadAllText("/Sql Scripts/vw_Weights_Daily.sql"));
         }
+
+        private double GetTargetKg(DateTime date)
+        {
+            if (date >= new DateTime(2019, 1, 1))
+            {
+                return 86 - ((3.000 / 365) * (date - new DateTime(2019, 1, 1)).TotalDays);
+            }
+            else if (date >= new DateTime(2018, 9, 1))
+            {
+                return 88.7 - ((0.250 / 30) * (date - new DateTime(2018, 9, 1)).TotalDays);
+            }
+            else if (date >= new DateTime(2018, 5, 1))
+            {
+                return 90.74 - ((0.500 / 30) * (date - new DateTime(2018, 5, 1)).TotalDays);
+            }
+
+            return 100;
+        }
+
+        private int GetTargetErgoMetresFor15Minutes(DateTime date)
+        {
+            return (int)(3386 + (DateTime.Now.Date - new DateTime(2019, 1, 1)).TotalDays);
+        }
+
+        private int GetTargetMetresFor30MinuteTreadmill(DateTime date)
+        {
+            return (int)(5000 + 2.74725275 * (DateTime.Now.Date - new DateTime(2019, 1, 1)).TotalDays);
+        }
+
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

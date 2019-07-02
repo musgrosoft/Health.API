@@ -26,6 +26,11 @@ namespace Services.Health
             return latestWeightDate ?? defaultDateTime;
         }
 
+        public Target GetTarget(DateTime date)
+        {
+            return _healthRepository.GetTarget(date);
+        }
+
         public List<Weight> GetLatestWeights(int num = 10)
         {
             return _healthRepository.GetLatestWeights(num);
@@ -58,9 +63,14 @@ namespace Services.Health
             return _healthRepository.GetLatestExercises(num);
         }
 
-        public List<Exercise> GetLatest15MinuteErgos(int num)
+        public Exercise GetFurthest15MinuteErgo(DateTime fromDate)
         {
-            return _healthRepository.GetLatest15MinuteErgos(num);
+            return _healthRepository.GetFurthest(fromDate, "ergo", 900);
+        }
+
+        public Exercise GetFurthest30MinuteTreadmill(DateTime fromDate)
+        {
+            return _healthRepository.GetFurthest(fromDate, "treadmill", 1800);
         }
 
         public double GetCumSumUnits()

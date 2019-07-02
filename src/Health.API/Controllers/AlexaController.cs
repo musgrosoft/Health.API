@@ -60,7 +60,8 @@ namespace HealthAPI.Controllers
             var latestWeights = _healthService.GetLatestWeights();
             var latestBloodpressures = _healthService.GetLatestBloodPressures();
             var latestRestingHeartRates = _healthService.GetLatestRestingHeartRates();
-            var latest15MinuteErgoDistance = _healthService.GetLatest15MinuteErgos(1).First().Metres;
+            var furthest15MinuteErgo = _healthService.GetFurthest15MinuteErgo(DateTime.Now.AddDays(-15));
+            var furthest30MinuteTreadmill = _healthService.GetFurthest30MinuteTreadmill(DateTime.Now.AddDays(-15));
 
 
             var averageWeight = latestWeights.Average(x => x.Kg);
@@ -70,65 +71,81 @@ namespace HealthAPI.Controllers
 
             var cumSumUnits = _healthService.GetCumSumUnits();
 
+            var target = _healthService.GetTarget(DateTime.Now);
 
 
             var targetUnits = 5147.7 + ((DateTime.Now.Date - new DateTime(2018, 5, 29)).Days * 4);
-            var target15MinuteErgoMetres = 3386 + (DateTime.Now.Date - new DateTime(2019, 1, 1)).TotalDays;
-            var targetWeight = (86.000 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3.000 / 365)));
+            //var target15MinuteErgoMetres = 3386 + (DateTime.Now.Date - new DateTime(2019, 1, 1)).TotalDays;
+            //var targetWeight = (86.000 - ((DateTime.Now - new DateTime(2019, 1, 1)).Days * (3.000 / 365)));
 
-            var targetSystolic = 120;
-            var targetDiastolic = 80;
+//            var targetSystolic = 120;
+//            var targetDiastolic = 80;
 
-            var hitMessages = "";
-            var missedMessages = "";
+            var hitMessages = new List<string>();
+            var missedMessages = new List<string>();
 
-            var hitTargets = 0;
-            var missedTargets = 0;
 
             if (cumSumUnits < targetUnits)
             {
-                hitMessages += $"Hitting drinks target, you are {(targetUnits - cumSumUnits):N0} units below target. ";
+                hitMessages.Add( $"Ding. Hitting drinks target, you are {(targetUnits - cumSumUnits):N0} units below target.");
             }
             else
             {
-                missedMessages += $"Missed drinks target, you are {(cumSumUnits - targetUnits):N0} units above target. ";
+                missedMessages.Add($"Urrr. Missed drinks target, you are {(cumSumUnits - targetUnits):N0} units above target.");
             }
 
-            if (averageWeight < targetWeight)
+            if (averageWeight < target.Kg)
             {
-                hitMessages += $"Hitting weight target , target weight is {targetWeight:N1} and actual weight is {averageWeight:N1}, you are {(targetWeight - averageWeight):N1} kilograms below target, with a weight of {averageWeight:N1}. ";
+                hitMessages.Add( $"Hitting weight target , target weight is {target.Kg:N1} and actual weight is {averageWeight:N1}, you are {(target.Kg - averageWeight):N1} kilograms below target, with a weight of {averageWeight:N1}.");
             }
             else
             {
-                missedMessages += $"Missed weight target , target weight is {targetWeight:N1} and actual weight is {averageWeight:N1}, you are {(averageWeight - targetWeight):N1} kilograms above target with a weight of {averageWeight:N1}. ";
+                missedMessages.Add( $"Missed weight target , target weight is {target.Kg:N1} and actual weight is {averageWeight:N1}, you are {(averageWeight - target.Kg):N1} kilograms above target with a weight of {averageWeight:N1}.");
             }
 
-            if (averageSystolic > targetSystolic || averageDiastolic < targetDiastolic)
+            if (averageSystolic > target.Systolic || averageDiastolic < target.Diastolic)
             {
                 //todo systolic aand or diastolic in message
-                missedMessages += $"Blood pressure is too high. At {(targetDiastolic - averageDiastolic):N0} over {(targetSystolic - averageSystolic):N0}";
+                missedMessages.Add( $"Blood pressure is too high. At {(target.Diastolic - averageDiastolic):N0} over {(target.Systolic - averageSystolic):N0}.");
             }
             else
             {
-                hitMessages += $"Blood pressure is healthy, at {(targetDiastolic - averageDiastolic):N0} over {(targetSystolic - averageSystolic):N0}.";
+                hitMessages.Add( $"Blood pressure is healthy, at {(target.Diastolic - averageDiastolic):N0} over {(target.Systolic - averageSystolic):N0}.");
             }
 
-            if (target15MinuteErgoMetres > latest15MinuteErgoDistance)
+            if (target.MetresErgo15Minutes > furthest15MinuteErgo.Metres)
             {
-                missedMessages += $"Behind Ergo target by {target15MinuteErgoMetres - latest15MinuteErgoDistance} metres. ";
+                missedMessages.Add( $"Behind Ergo target by {target.MetresErgo15Minutes - furthest15MinuteErgo.Metres} metres.");
             }
             else
             {
-                hitMessages += $"Ahead of Ergo target by {latest15MinuteErgoDistance - target15MinuteErgoMetres} metres. ";
+                hitMessages.Add($"Ahead of Ergo target by {furthest15MinuteErgo.Metres - target.MetresErgo15Minutes} metres.");
             }
 
-            missedMessages += "Placeholder for cumsum cardio minutes. ";
-            missedMessages += "Placeholder for rowing target. ";
-            missedMessages += "Placeholder for running target. ";
+            if (target.MetresErgo15Minutes > furthest15MinuteErgo.Metres)
+            {
+                missedMessages.Add($"Behind Ergo target by {target.MetresErgo15Minutes - furthest15MinuteErgo.Metres} metres.");
+            }
+            else
+            {
+                hitMessages.Add($"Ahead of Ergo target by {furthest15MinuteErgo.Metres - target.MetresErgo15Minutes} metres.");
+            }
+
+            if (target.MetresTreadmill30Minutes > furthest30MinuteTreadmill.Metres)
+            {
+                missedMessages.Add($"Behind treadmill target by {target.MetresTreadmill30Minutes - furthest30MinuteTreadmill.Metres} metres.");
+            }
+            else
+            {
+                hitMessages.Add($"Ahead of treadmill target by {furthest30MinuteTreadmill.Metres - target.MetresTreadmill30Minutes} metres.");
+            }
+
+            missedMessages.Add( "Placeholder for cumsum cardio minutes.");
+            missedMessages.Add("Placeholder for running target. ");
 
             var briefings = new List<FlashBriefing>();
 
-            if (!string.IsNullOrWhiteSpace(hitMessages))
+            if (hitMessages.Any())
             {
                 briefings.Add(
 
@@ -137,14 +154,14 @@ namespace HealthAPI.Controllers
                         uid = "3 HIT TARGETS",
                         updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
                         titleText = "Hit Targets",
-                        mainText = $"You have hit {hitMessages.Count()} targets. {hitMessages}",
+                        mainText = $"You have hit {hitMessages.Count()} targets. {string.Join(" ", hitMessages)}",
                         redirectionUrl = "https://www.amazon.com"
                     }
 
                   );
             }
 
-            if (!string.IsNullOrWhiteSpace(hitMessages))
+            if (missedMessages.Any())
             {
                 briefings.Add(
 
@@ -153,7 +170,7 @@ namespace HealthAPI.Controllers
                         uid = "4 MISSED TARGETS",
                         updateDate = DateTime.Now.AddMinutes(4).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
                         titleText = "Missed Targets",
-                        mainText = $"You have missed {missedMessages.Count()} targets. {missedMessages}",
+                        mainText = $"You have missed {missedMessages.Count()} targets. {string.Join(" ", missedMessages)}",
                         redirectionUrl = "https://www.amazon.com"
                     }
 

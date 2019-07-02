@@ -45,14 +45,24 @@ namespace Repositories.Health
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
 
-        public List<Exercise> GetLatest15MinuteErgos(int num)
+//        public Exercise GetFastest15MinuteErgo(DateTime fromDate)
+//        {
+//            return _healthContext.Exercises
+//                .Where(x => x.Description.ToLower() == "ergo")
+//                .Where(x => x.TotalSeconds == 900)
+//                .Where(x => x.CreatedDate >= fromDate)
+//                .OrderByDescending(x => x.Metres)
+//                .FirstOrDefault();
+//        }
+
+        public Exercise GetFurthest(DateTime fromDate, string exerciseType, int totalSeconds)
         {
             return _healthContext.Exercises
-                .Where(x => x.Description.ToLower() == "ergo")
-                .Where(x => x.TotalSeconds == 900)
-                .OrderByDescending(x => x.CreatedDate)
-                .Take(num)
-                .ToList();
+                .Where(x => x.Description.ToLower() == exerciseType.ToLower())
+                .Where(x => x.TotalSeconds == totalSeconds)
+                .Where(x => x.CreatedDate >= fromDate)
+                .OrderByDescending(x => x.Metres)
+                .FirstOrDefault();
         }
 
         public List<Drink> GetLatestDrinks(int num)
@@ -68,6 +78,11 @@ namespace Repositories.Health
         public double GetCumSumUnits()
         {
             return _healthContext.Drinks.Sum(x=>x.Units);
+        }
+
+        public Target GetTarget(DateTime date)
+        {
+            return _healthContext.Targets.First(x => x.Date.Date == date.Date);
         }
 
         public List<BloodPressure> GetLatestBloodPressure(int num)

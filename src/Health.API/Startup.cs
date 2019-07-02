@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -54,9 +56,11 @@ namespace HealthAPI
                             errorNumbersToAdd: null);
 
                         sqlOptions.MigrationsAssembly("Repositories");
+
                     }
                 );
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -187,7 +191,7 @@ namespace HealthAPI
                 //context.Database.Migrate();
                 // context.EnsureSeedData();
                 context.Database.EnsureCreated();
-                
+
             }
 
         }

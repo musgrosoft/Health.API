@@ -11,20 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "src\Reposit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "src\Services\Services.csproj", "{8251DCD0-C14D-41F4-BAAF-EA8A3D506A8E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{F6D60EF3-03B4-4CB8-8E01-EC5BCDDDBE44}"
-	ProjectSection(SolutionItems) = preProject
-		src\Sql Scripts\tbl_Calendar.sql = src\Sql Scripts\tbl_Calendar.sql
-		src\Sql Scripts\vw_Alcohol_Daily.sql = src\Sql Scripts\vw_Alcohol_Daily.sql
-		src\Sql Scripts\vw_Alcohol_Monthly.sql = src\Sql Scripts\vw_Alcohol_Monthly.sql
-		src\Sql Scripts\vw_Alcohol_Weekly.sql = src\Sql Scripts\vw_Alcohol_Weekly.sql
-		src\Sql Scripts\vw_BloodPressures_Daily.sql = src\Sql Scripts\vw_BloodPressures_Daily.sql
-		src\Sql Scripts\vw_Exercises_Daily.sql = src\Sql Scripts\vw_Exercises_Daily.sql
-		src\Sql Scripts\vw_Exercises_Daily_Agg.sql = src\Sql Scripts\vw_Exercises_Daily_Agg.sql
-		src\Sql Scripts\vw_Exercises_Monthly.sql = src\Sql Scripts\vw_Exercises_Monthly.sql
-		src\Sql Scripts\vw_Exercises_Weekly.sql = src\Sql Scripts\vw_Exercises_Weekly.sql
-		src\Sql Scripts\vw_Weights_Daily.sql = src\Sql Scripts\vw_Weights_Daily.sql
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.Fitbit", "src\Importer.Fitbit\Importer.Fitbit.csproj", "{46EE83AC-3DB1-437F-A00D-2265075E7BC4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.Withings", "src\Importer.Withings\Importer.Withings.csproj", "{DE9D6BA4-C723-499D-A544-CC58C5269CBE}"
