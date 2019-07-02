@@ -46,7 +46,7 @@ namespace Repositories
             }
 
 
-            this.Database.ExecuteSqlCommand(File.ReadAllText("/Sql Scripts/vw_Weights_Daily.sql"));
+            this.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
         }
 
         private double GetTargetKg(DateTime date)
