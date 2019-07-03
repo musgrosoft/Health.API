@@ -28,31 +28,31 @@ namespace Repositories
 
             modelBuilder.Entity<Exercise>().HasKey(c => new { c.CreatedDate, c.Description });
 
-            if (this.Database.IsSqlServer())
-            {
+            //if (this.Database.IsSqlServer())
+            //{
 
 
-                modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 1), Beats = 123 });
-                modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 2), Beats = 123 });
+            //    modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 1), Beats = 123 });
+            //    modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 2), Beats = 123 });
 
-                for (var date = new DateTime(2018, 5, 1); date < new DateTime(2020, 1, 1); date = date.AddDays(1))
-                {
-                    modelBuilder.Entity<Target>().HasData(new Target
-                    {
-                        Date = date,
-                        Kg = GetTargetKg(date),
-                        MetresErgo15Minutes = GetTargetErgoMetresFor15Minutes(date),
-                        MetresTreadmill30Minutes = GetTargetMetresFor30MinuteTreadmill(date),
-                        Diastolic = 80,
-                        Systolic = 120,
-                        Units = 4,
-                        CardioMinutes = 11
-                    });
-                }
+            //    for (var date = new DateTime(2018, 5, 1); date < new DateTime(2020, 1, 1); date = date.AddDays(1))
+            //    {
+            //        modelBuilder.Entity<Target>().HasData(new Target
+            //        {
+            //            Date = date,
+            //            Kg = GetTargetKg(date),
+            //            MetresErgo15Minutes = GetTargetErgoMetresFor15Minutes(date),
+            //            MetresTreadmill30Minutes = GetTargetMetresFor30MinuteTreadmill(date),
+            //            Diastolic = 80,
+            //            Systolic = 120,
+            //            Units = 4,
+            //            CardioMinutes = 11
+            //        });
+            //    }
 
 
-                this.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
-            }
+            //    this.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
+            //}
         }
 
         private double GetTargetKg(DateTime date)
