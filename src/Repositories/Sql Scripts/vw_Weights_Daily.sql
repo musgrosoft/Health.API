@@ -19,8 +19,8 @@ FROM
 		AVG(Kg) AS Kg,
 		AVG(FatRatioPercentage) AS FatRatioPercentage
 		FROM
-		Weights
+		dbo.Weights
 		GROUP BY CAST(CreatedDate AS DATE)
 	) AS AverageDailyWeights 
-		RIGHT JOIN Calendar Cal
+		RIGHT JOIN dbo.Calendar Cal
 		ON Cal.CalendarDate = AverageDailyWeights.CreatedDate
