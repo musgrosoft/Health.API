@@ -1,0 +1,9 @@
+drop table bloodpressures
+drop table drinks
+drop table exercises
+drop table restingheartrates
+drop table targets
+drop table tokens
+drop table weights
+
+drop view vw_Weights_Daily
