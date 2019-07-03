@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
+using Moq;
+using Utils;
 
 namespace Repository.Tests.Unit
 {
@@ -20,7 +22,7 @@ namespace Repository.Tests.Unit
         //{
         //}
 
-        public FakeLocalContext() : base(new DbContextOptions<HealthContext>())
+        public FakeLocalContext() : base(new DbContextOptions<HealthContext>(), new Mock<ILogger>().Object)
         {
         }
     }
