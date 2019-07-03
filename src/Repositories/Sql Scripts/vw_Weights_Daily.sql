@@ -1,3 +1,4 @@
+USE Health;
 CREATE VIEW vw_Weights_Daily AS
 
 SELECT 
