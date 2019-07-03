@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Health.Models;
 using Repositories.OAuth.Models;
+using Utils;
 
 namespace Repositories
 {
@@ -15,10 +17,12 @@ namespace Repositories
         public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<Target> Targets { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
-        
-        public HealthContext(DbContextOptions<HealthContext> options) : base(options)
-        {
 
+        private readonly ILogger _logger;
+        
+        public HealthContext(DbContextOptions<HealthContext> options, ILogger logger) : base(options)
+        {
+            _logger = logger;
         }
 
         
@@ -50,8 +54,17 @@ namespace Repositories
                     });
                 }
 
+                try
+                {
+                    this.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
+                }
+                catch(Exception ex)
+                {
+                    Task task = Task.Run(async () => await _logger.LogErrorAsync(ex));
+                    //return task.Result;
 
-                //this.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
+                }
+
             }
         }
 
