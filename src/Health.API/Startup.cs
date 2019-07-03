@@ -200,8 +200,6 @@ namespace HealthAPI
                 catch (Exception ex)
                 {
                     Task task = Task.Run(async () => await logger.LogErrorAsync(ex));
-                    
-
                 }
 
             }
