@@ -23,6 +23,7 @@ using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using Calendar = Utils.Calendar;
+using System.Threading.Tasks;
 
 namespace HealthAPI
 {
@@ -182,7 +183,7 @@ namespace HealthAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-
+            var logger = new Utils.LogzIoLogger(new Config(),new HttpClient(),new Calendar());
             
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -198,8 +199,8 @@ namespace HealthAPI
                 }
                 catch (Exception ex)
                 {
-                  //  Task task = Task.Run(async () => await _logger.LogErrorAsync(ex));
-                    //return task.Result;
+                    Task task = Task.Run(async () => await logger.LogErrorAsync(ex));
+                    
 
                 }
 
