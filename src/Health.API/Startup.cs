@@ -191,12 +191,15 @@ namespace HealthAPI
                 var context = serviceScope.ServiceProvider.GetService<HealthContext>();
                 //context.Database.Migrate();
                 // context.EnsureSeedData();
-                context.Database.EnsureCreated();
+                var created = context.Database.EnsureCreated();
                 try
                 {
-                    context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/tbl_Calendar.sql"));
-                    context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
-                    context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
+                    if (created)
+                    {
+                        context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/tbl_Calendar.sql"));
+                        context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
+                        context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -207,5 +210,6 @@ namespace HealthAPI
 
         }
     }
+
 }
 
