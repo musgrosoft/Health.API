@@ -41,11 +41,18 @@ namespace Health.API.Controllers
             return Ok(new CanaryData
             {
                 Messages = messages,
-                LatestRestingHeartRates = _healthService.GetLatestRestingHeartRates(20),
-                LatestWeights = _healthService.GetLatestWeights(20),
-                LatestBloodPressures = _healthService.GetLatestBloodPressures(20),
-                LatestDrinks = _healthService.GetLatestDrinks(20),
-                LatestExercises = _healthService.GetLatestExercises(20)
+//                LatestRestingHeartRates = _healthService.GetLatestRestingHeartRates(20),
+//                LatestWeights = _healthService.GetLatestWeights(20),
+//                LatestBloodPressures = _healthService.GetLatestBloodPressures(20),
+//                LatestDrinks = _healthService.GetLatestDrinks(20),
+//                LatestExercises = _healthService.GetLatestExercises(20)
+
+                LatestRestingHeartRates = _healthService.GetLatestRestingHeartRates(20000),
+                LatestWeights = _healthService.GetLatestWeights(20000),
+                LatestBloodPressures = _healthService.GetLatestBloodPressures(20000),
+                LatestDrinks = _healthService.GetLatestDrinks(20000),
+                LatestExercises = _healthService.GetLatestExercises(20000)
+
             });
 
         }

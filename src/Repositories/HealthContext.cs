@@ -54,18 +54,6 @@ namespace Repositories
                     });
                 }
 
-                //try
-                //{
-                //    this.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/tbl_Calendar.sql"));
-                //    this.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
-                //}
-                //catch(Exception ex)
-                //{
-                //    Task task = Task.Run(async () => await _logger.LogErrorAsync(ex));
-                //    //return task.Result;
-
-                //}
-
             }
         }
 

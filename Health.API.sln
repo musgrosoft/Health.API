@@ -33,6 +33,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Tests.Unit", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.Tests.Unit", "src\Utils.Tests.Unit\Utils.Tests.Unit.csproj", "{3498246D-E8C6-4CEB-9FB8-6CBA1E349828}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql Scripts", "Sql Scripts", "{28FA2269-6D8C-45EB-BA77-F9B7497956F6}"
+	ProjectSection(SolutionItems) = preProject
+		src\Sql Scripts\Drop_All_Tables_And_Views.txt = src\Sql Scripts\Drop_All_Tables_And_Views.txt
+		src\Sql Scripts\tbl_Calendar.sql = src\Sql Scripts\tbl_Calendar.sql
+		src\Sql Scripts\vw_Alcohol_Daily.sql = src\Sql Scripts\vw_Alcohol_Daily.sql
+		src\Sql Scripts\vw_Alcohol_Monthly.sql = src\Sql Scripts\vw_Alcohol_Monthly.sql
+		src\Sql Scripts\vw_Alcohol_Weekly.sql = src\Sql Scripts\vw_Alcohol_Weekly.sql
+		src\Sql Scripts\vw_BloodPressures_Daily.sql = src\Sql Scripts\vw_BloodPressures_Daily.sql
+		src\Sql Scripts\vw_Exercises_Daily.sql = src\Sql Scripts\vw_Exercises_Daily.sql
+		src\Sql Scripts\vw_Exercises_Daily_Agg.sql = src\Sql Scripts\vw_Exercises_Daily_Agg.sql
+		src\Sql Scripts\vw_Exercises_Monthly.sql = src\Sql Scripts\vw_Exercises_Monthly.sql
+		src\Sql Scripts\vw_Exercises_Weekly.sql = src\Sql Scripts\vw_Exercises_Weekly.sql
+		src\Sql Scripts\vw_Weights_Daily.sql = src\Sql Scripts\vw_Weights_Daily.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
