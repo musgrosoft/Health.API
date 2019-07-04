@@ -80,6 +80,11 @@ namespace Repositories.Health
             return _healthContext.Drinks.Sum(x=>x.Units);
         }
 
+        public double GetCumSumCardioMinutes()
+        {
+            return (_healthContext.Exercises.Sum(x => x.TotalSeconds))/60;
+        }
+
         public Target GetTarget(DateTime date)
         {
             return _healthContext.Targets.First(x => x.Date.Date == date.Date);

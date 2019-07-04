@@ -141,8 +141,7 @@ namespace HealthAPI.Controllers
             }
 
             missedMessages.Add( "Placeholder for cumsum cardio minutes.");
-            missedMessages.Add("Placeholder for running target. ");
-
+            
             var briefings = new List<FlashBriefing>();
 
             if (hitMessages.Any())
