@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Repositories.Health.Models;
 using Repositories.OAuth.Models;
 using Utils;
@@ -35,9 +37,43 @@ namespace Repositories
             if (this.Database.IsSqlServer())
             {
 
+                //Seed CalendarDates
+                for (var date = new DateTime(2010, 1, 1); date < new DateTime(2030, 1, 1); date = date.AddDays(1))
+                {
+                    modelBuilder.Entity<CalendarDate>().HasData(new CalendarDate {Date = date});
+                }
 
-                modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 1), Beats = 123 });
-                modelBuilder.Entity<RestingHeartRate>().HasData(new RestingHeartRate { CreatedDate = new DateTime(2015, 1, 2), Beats = 123 });
+                //Seed Weights
+                var weightsJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/Weights.json");
+                var weights = JsonConvert.DeserializeObject<List<Weight>>(weightsJson);
+                foreach (var weight in weights)
+                {
+                    modelBuilder.Entity<Weight>().HasData(weight);
+                }
+
+                //Seed Blood Pressures
+                var bloodPressuresJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/BloodPressures.json");
+                var bloodPressures = JsonConvert.DeserializeObject<List<BloodPressure>>(bloodPressuresJson);
+                foreach (var bloodPressure in bloodPressures)
+                {
+                    modelBuilder.Entity<BloodPressure>().HasData(bloodPressure);
+                }
+
+                //Seed Exercises
+                var exercisesJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/Exercises.json");
+                var exercises = JsonConvert.DeserializeObject<List<Exercise>>(exercisesJson);
+                foreach (var exercise in exercises)
+                {
+                    modelBuilder.Entity<Exercise>().HasData(exercise);
+                }
+
+                //Seed Resting Heart Rates
+                var restingHeartRateJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/RestingHeartRates.json");
+                var restingHeartRates = JsonConvert.DeserializeObject<List<RestingHeartRate>>(restingHeartRateJson);
+                foreach (var restingHeartRate in restingHeartRates)
+                {
+                    modelBuilder.Entity<RestingHeartRate>().HasData(restingHeartRate);
+                }
 
                 for (var date = new DateTime(2018, 5, 1); date < new DateTime(2020, 1, 1); date = date.AddDays(1))
                 {
