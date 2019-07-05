@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Repositories.Health.Models;
@@ -19,6 +17,7 @@ namespace Repositories
         public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<Target> Targets { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
+        public virtual DbSet<CalendarDate> CalendarDates { get; set; }
 
         private readonly ILogger _logger;
         
@@ -121,34 +120,6 @@ namespace Repositories
             return (int)(5000 + 2.74725275 * (DateTime.Now.Date - new DateTime(2019, 1, 1)).TotalDays);
         }
 
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        _config = new Config();
-        //        var connectionString = _config.HealthDbConnectionString;
-        //        optionsBuilder.UseSqlServer(
-        //            connectionString,
-        //            sqlServerOptionsAction: sqlOptions =>
-        //            {
-        //                sqlOptions.EnableRetryOnFailure(
-        //                    maxRetryCount: 5,
-        //                    maxRetryDelay: TimeSpan.FromSeconds(30),
-        //                    errorNumbersToAdd: null);
-        //            }
-        //        );
-        //    }
-        //}
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-
-        //        optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
-        //    }
-        //}
 
     }
 }
