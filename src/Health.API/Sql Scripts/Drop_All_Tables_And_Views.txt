@@ -1,9 +1,19 @@
-drop table bloodpressures
-drop table drinks
-drop table exercises
-drop table restingheartrates
-drop table targets
-drop table tokens
-drop table weights
+drop table BloodPressures
+drop table Drinks
+drop table Exercises
+drop table RestingHeartRates
+drop table Targets
+drop table Tokens
+drop table Weights
+drop table CalendarDates
+drop table Calendar
 
 drop view vw_Weights_Daily
+drop view vw_Alcohol_Daily.sql
+drop view vw_Alcohol_Monthly.sql
+drop view vw_Alcohol_Weekly.sql
+drop view vw_BloodPressures_Daily.sql
+drop view vw_Exercises_Daily.sql
+drop view vw_Exercises_Daily_Agg.sql
+drop view vw_Exercises_Monthly.sql
+drop view vw_Exercises_Weekly.sql
