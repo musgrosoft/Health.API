@@ -26,5 +26,6 @@ namespace Repositories.Health
         Exercise GetFurthest(DateTime fromDate, string exerciseType, int totalSeconds);
         double GetCumSumUnits();
         Target GetTarget(DateTime date);
+        double GetCumSumCardioMinutes();
     }
 }

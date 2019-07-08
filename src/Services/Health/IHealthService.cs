@@ -28,5 +28,6 @@ namespace Services.Health
         double GetCumSumUnits();
         Target GetTarget(DateTime date);
         Exercise GetFurthest30MinuteTreadmill(DateTime fromDate);
+        double GetCumSumCardioMinutes();
     }
 }
