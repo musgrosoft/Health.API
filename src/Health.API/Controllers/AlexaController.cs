@@ -71,6 +71,7 @@ namespace HealthAPI.Controllers
             var cumSumCardioMinutes = _healthService.GetCumSumCardioMinutes();
 
             var target = _healthService.GetTarget(DateTime.Now);
+            //var targetCumSumUnits
 
             var targetUnits = 5147.7 + ((DateTime.Now.Date - new DateTime(2018, 5, 29)).TotalDays * 4);
             var targetCardio = 11 * (DateTime.Now.Date - new DateTime(2018, 5, 29)).TotalDays;
@@ -110,11 +111,11 @@ namespace HealthAPI.Controllers
             if (averageSystolic > target.Systolic || averageDiastolic < target.Diastolic)
             {
                 //todo systolic aand or diastolic in message
-                missedMessages.Add( $"MISSED TARGET. Blood pressure is too high. At {(target.Diastolic - averageDiastolic):N0} over {(target.Systolic - averageSystolic):N0}.");
+                missedMessages.Add( $"MISSED TARGET. Blood pressure is too high. At {averageDiastolic:N0} over {averageSystolic:N0}.");
             }
             else
             {
-                hitMessages.Add( $"HIT TARGET. Blood pressure is healthy, at {(target.Diastolic - averageDiastolic):N0} over {(target.Systolic - averageSystolic):N0}.");
+                hitMessages.Add( $"HIT TARGET. Blood pressure is healthy, at {averageDiastolic:N0} over {averageSystolic:N0}.");
             }
 
             if (target.MetresErgo15Minutes > furthest15MinuteErgo.Metres)
