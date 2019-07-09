@@ -8,12 +8,15 @@ drop table Weights
 drop table CalendarDates
 drop table Calendar
 
-drop view vw_Weights_Daily
-drop view vw_Alcohol_Daily.sql
-drop view vw_Alcohol_Monthly.sql
-drop view vw_Alcohol_Weekly.sql
-drop view vw_BloodPressures_Daily.sql
-drop view vw_Exercises_Daily.sql
-drop view vw_Exercises_Daily_Agg.sql
-drop view vw_Exercises_Monthly.sql
-drop view vw_Exercises_Weekly.sql
+drop view vw_DailyAlcoholIntakes
+drop view vw_DailyCardio
+drop view vw_DailyExercises
+drop view vw_DailyExercisesAgg
+drop view vw_DailyHeartRateSummaries
+drop view vw_DailyWeightsTargets
+drop view vw_MonthlyAlcoholIntakes
+drop view vw_MonthlyCardio
+drop view vw_MonthlyExercises
+drop view vw_WeeklyAlcoholIntakes
+drop view vw_WeeklyCardio
+drop view vw_WeeklyExercises
