@@ -22,5 +22,5 @@ FROM
 		dbo.Weights
 		GROUP BY CAST(CreatedDate AS DATE)
 	) AS AverageDailyWeights 
-		RIGHT JOIN dbo.Calendar Cal
+		RIGHT JOIN dbo.CalendarDates Cal
 		ON Cal.CalendarDate = AverageDailyWeights.CreatedDate
