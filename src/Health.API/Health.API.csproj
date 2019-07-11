@@ -40,9 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Sql Scripts\tbl_Calendar.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Sql Scripts\vw_Alcohol_Daily.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
