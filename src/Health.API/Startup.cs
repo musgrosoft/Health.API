@@ -24,6 +24,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using Calendar = Utils.Calendar;
 using System.Threading.Tasks;
+using Health.API.Controllers;
 
 namespace HealthAPI
 {
@@ -125,6 +126,8 @@ namespace HealthAPI
             services.AddTransient<IRowMapper, RowMapper>();
             services.AddTransient<IMapFunctions, MapFunctions>();
             services.AddTransient<ISheetsClient, SheetsClient>();
+
+            services.AddTransient<IMessageMaker, MessageMaker>();
 
 
             services.AddTransient<IWithingsMapper, WithingsMapper>();

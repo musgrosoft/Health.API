@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Repositories.Health.Models;
 using Services.Health;
 using Services.OAuth;
@@ -18,11 +19,13 @@ namespace Health.API.Controllers
     {
         private readonly IHealthService _healthService;
         private readonly ITokenService _tokenService;
+        private readonly IMessageMaker _messageMaker;
 
-        public CanaryController(IHealthService healthService, ITokenService tokenService)
+        public CanaryController(IHealthService healthService, ITokenService tokenService, IMessageMaker messageMaker)
         {
             _healthService = healthService;
             _tokenService = tokenService;
+            _messageMaker = messageMaker;
         }
 
         [HttpGet]
@@ -57,6 +60,30 @@ namespace Health.API.Controllers
 
         }
 
+        [HttpGet]
+        [Route("Messages")]
+        public async Task<IActionResult> Messages()
+        {
+
+            
+            
+            var errors = await _messageMaker.GetTechnicalErrorMessages();
+            var oldData = _messageMaker.GetOldDataMessages();
+            var targetMessages = _messageMaker.GetTargetMessages();
+            var missedTargets = targetMessages.MissedTargets;
+            var hitTargets = targetMessages.HitTargets;
+
+            var messages = new List<string>();
+
+            messages.AddRange(errors);
+            messages.AddRange(oldData);
+            messages.AddRange(missedTargets);
+            messages.AddRange(hitTargets);
+
+
+            return Ok(messages);
+
+        }
 
         private class CanaryData
         {
