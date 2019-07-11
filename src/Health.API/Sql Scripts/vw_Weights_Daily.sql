@@ -2,17 +2,13 @@ CREATE VIEW vw_Weights_Daily AS
 
 SELECT 
     Date, 
-    Kg, 
+    Weights.Kg AS Kg,
+	Targets.Kg AS TargetKg,
 	FatRatioPercentage, 
     AVG(Kg) OVER (ORDER BY Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageKg,
-	AVG(FatRatioPercentage) OVER (ORDER BY Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageFatRatioPercentage,
-	CASE 
-        WHEN Date >= '2019/01/01' THEN 86    - ((3.000/365) * (DATEDIFF(day , '2019/01/01' , Date)))
-		WHEN Date >= '2018/09/01' THEN 88.7  - ((0.250/30)  * (DATEDIFF(day , '2018/09/01' , Date)))
-		WHEN Date >= '2018/05/01' THEN 90.74 - ((0.500/30)  * (DATEDIFF(day , '2018/05/01' , Date)))
-        ELSE NULL
-    END AS TargetKg
+	AVG(FatRatioPercentage) OVER (ORDER BY Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageFatRatioPercentage
 FROM
+
 	(
 		SELECT 
 		CAST(CreatedDate AS DATE) AS CreatedDate,
@@ -22,5 +18,8 @@ FROM
 		dbo.Weights
 		GROUP BY CAST(CreatedDate AS DATE)
 	) AS AverageDailyWeights 
-		RIGHT JOIN dbo.CalendarDates Cal
-		ON Cal.Date = AverageDailyWeights.CreatedDate
+
+RIGHT JOIN dbo.CalendarDates Cal
+ON Cal.Date = AverageDailyWeights.CreatedDate
+LEFT JOIN Targets T
+ON T.Date = AverageDailyWeights.CreatedDate

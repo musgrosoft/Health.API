@@ -144,7 +144,7 @@ namespace Health.API.Controllers
             }
             else
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET. Cardio target, you are {(cumSumCardioMinutes - targetCardio):N0} minutes above target.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET. Cardio target, you are {(cumSumCardioMinutes - targetCardio):N0} minutes above target. Target is {targetCardio} and actual is {cumSumCardioMinutes}. ");
             }
 
 
