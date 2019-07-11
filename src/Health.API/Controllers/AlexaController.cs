@@ -57,10 +57,10 @@ namespace HealthAPI.Controllers
             {
                 briefings.Add(new FlashBriefing
                 {
-                    uid = "3 HIT TARGETS",
+                    uid = "3 MISSED TARGETS",
                     updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
-                    titleText = "Hit Targets",
-                    mainText = $"You have hit {targetMessages.MissedTargets.Count()} targets. {string.Join(" ", targetMessages.MissedTargets)}",
+                    titleText = "Missed Targets",
+                    mainText = $"You have missed {targetMessages.MissedTargets.Count()} targets. {string.Join(" ", targetMessages.MissedTargets)}",
                     redirectionUrl = "https://www.amazon.com"
                 });
             }
@@ -72,8 +72,8 @@ namespace HealthAPI.Controllers
 
                     new FlashBriefing
                     {
-                        uid = "3 HIT TARGETS",
-                        updateDate = DateTime.Now.AddMinutes(3).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
+                        uid = "4 HIT TARGETS",
+                        updateDate = DateTime.Now.AddMinutes(4).ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
                         titleText = "Hit Targets",
                         mainText = $"You have hit {targetMessages.HitTargets.Count()} targets. {string.Join(" ", targetMessages.HitTargets)}",
                         redirectionUrl = "https://www.amazon.com"
