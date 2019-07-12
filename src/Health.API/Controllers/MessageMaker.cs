@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using HealthAPI.Controllers;
 using Services.Health;
 using Services.OAuth;
@@ -129,53 +130,57 @@ namespace Health.API.Controllers
             var targetUnits = 5147.7 + ((DateTime.Now.Date - new DateTime(2018, 5, 29)).TotalDays * 4);
             var targetCardio = 11 * (DateTime.Now.Date - new DateTime(2018, 5, 29)).TotalDays;
 
+            var target500mSplitInSec = 500 * 15 * 60 / target.MetresErgo15Minutes;
+            var targetTimespan = new TimeSpan(0, 0, target500mSplitInSec);
 
+            var current500mSplitInSec = 500 * 15 * 60 / furthest15MinuteErgo.Metres;
+            var currentTimespan = new TimeSpan(0, 0, current500mSplitInSec);
 
             if (cumSumUnits < targetUnits)
             {
-                targetMessages.HitTargets.Add($"HIT TARGET - DRINKS. Drinks target, you are {(targetUnits - cumSumUnits):N0} units below target.");
+                targetMessages.HitTargets.Add($"HIT TARGET - DRINKS : Drinks target, you are {(targetUnits - cumSumUnits):N0} units below target.");
             }
             else
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET. Drinks target, you are {(cumSumUnits - targetUnits):N0} units above target.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - DRINKS : Drinks target, you are {(cumSumUnits - targetUnits):N0} units above target.");
             }
 
             if (cumSumCardioMinutes < targetCardio)
             {
-                targetMessages.HitTargets.Add($"HIT TARGET - CARDIO MINUTES. Cardio target, you are {(targetCardio - cumSumCardioMinutes):N0} minutes below target.");
+                targetMessages.HitTargets.Add($"HIT TARGET - CARDIO MINUTES : Cardio target, you are {(targetCardio - cumSumCardioMinutes):N0} minutes below target.");
             }
             else
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET - CARDIO MINUTES. Cardio target, you are {(cumSumCardioMinutes - targetCardio):N0} minutes above target. Target is {targetCardio} and actual is {cumSumCardioMinutes}. ");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - CARDIO MINUTES : Cardio target, you are {(cumSumCardioMinutes - targetCardio):N0} minutes above target. Target is {targetCardio} and actual is {cumSumCardioMinutes}. ");
             }
 
 
             if (averageWeight < target.Kg)
             {
-                targetMessages.HitTargets.Add($"HIT TARGET - WEIGHT. Your weight is  {(target.Kg - averageWeight):N1} kilograms below target at {averageWeight:N1}.");
+                targetMessages.HitTargets.Add($"HIT TARGET - WEIGHT : Todays target weight is {(target.Kg):N1}. Your weight is {(target.Kg - averageWeight):N1} kilograms below target at {averageWeight:N1}.");
             }
             else
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET - WEIGHT. Your weight is {(averageWeight - target.Kg):N1} kilograms above target at {averageWeight:N1}.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - WEIGHT : Todays target weight is {(target.Kg):N1}. Your weight is {(averageWeight - target.Kg):N1} kilograms above target at {averageWeight:N1}.");
             }
 
             if (averageSystolic > target.Systolic || averageDiastolic < target.Diastolic)
             {
                 //todo systolic aand or diastolic in message
-                targetMessages.MissedTargets.Add($"MISSED TARGET - BLOOD PRESSURE. Blood pressure is too high. At {averageDiastolic:N0} over {averageSystolic:N0}.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - BLOOD PRESSURE. Blood pressure is too high at {averageDiastolic:N0}/{averageSystolic:N0} mmHg.");
             }
             else
             {
-                targetMessages.HitTargets.Add($"HIT TARGET - BLOOD PRESSURE. Blood pressure is healthy, at {averageDiastolic:N0} over {averageSystolic:N0}.");
+                targetMessages.HitTargets.Add($"HIT TARGET - BLOOD PRESSURE. Blood pressure is healthy, at {averageDiastolic:N0}/{averageSystolic:N0} mmHg.");
             }
 
             if (target.MetresErgo15Minutes > furthest15MinuteErgo.Metres)
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET - ERGO. Behind Ergo target by {target.MetresErgo15Minutes - furthest15MinuteErgo.Metres} metres.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - ERGO : Today's 15 min ergo target is {target.MetresErgo15Minutes} (Equivalent to a 500m split time of {targetTimespan.Minutes}m{targetTimespan.Seconds}sec). You are behind Ergo target by {target.MetresErgo15Minutes - furthest15MinuteErgo.Metres} metres at {furthest15MinuteErgo.Metres} metres (Equivalent to a 500m split time of {currentTimespan.Minutes}m{currentTimespan.Seconds}sec) (furthest in last {daysForErgoAndRunningTargets} days).");
             }
             else
             {
-                targetMessages.HitTargets.Add($"HIT TARGET - ERGO. Ahead of Ergo target by {furthest15MinuteErgo.Metres - target.MetresErgo15Minutes} metres.");
+                targetMessages.HitTargets.Add($"HIT TARGET - ERGO : Today's 15 min ergo target is {target.MetresErgo15Minutes}. You are ahead of Ergo target by {furthest15MinuteErgo.Metres - target.MetresErgo15Minutes} metres at {furthest15MinuteErgo.Metres} metres (Equivalent to a 500m split time of {currentTimespan.Minutes}m{currentTimespan.Seconds}sec) (furthest in last {daysForErgoAndRunningTargets} days).");
             }
 
             if (target.MetresTreadmill30Minutes > furthest30MinuteTreadmill.Metres)
