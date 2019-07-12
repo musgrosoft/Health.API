@@ -180,7 +180,7 @@ namespace Health.API.Controllers
             }
             else
             {
-                targetMessages.HitTargets.Add($"HIT TARGET - ERGO : Today's 15 min ergo target is {target.MetresErgo15Minutes}. You are ahead of Ergo target by {furthest15MinuteErgo.Metres - target.MetresErgo15Minutes} metres at {furthest15MinuteErgo.Metres} metres (Equivalent to a 500m split time of {currentTimespan.Minutes}m{currentTimespan.Seconds}sec) (furthest in last {daysForErgoAndRunningTargets} days).");
+                targetMessages.HitTargets.Add($"HIT TARGET - ERGO : Today's 15 min ergo target is {target.MetresErgo15Minutes} (Equivalent to a 500m split time of {targetTimespan.Minutes}m{targetTimespan.Seconds}sec). You are ahead of Ergo target by {furthest15MinuteErgo.Metres - target.MetresErgo15Minutes} metres at {furthest15MinuteErgo.Metres} metres (Equivalent to a 500m split time of {currentTimespan.Minutes}m{currentTimespan.Seconds}sec) (furthest in last {daysForErgoAndRunningTargets} days).");
             }
 
             if (target.MetresTreadmill30Minutes > furthest30MinuteTreadmill.Metres)
