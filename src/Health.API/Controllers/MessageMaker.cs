@@ -133,7 +133,7 @@ namespace Health.API.Controllers
 
             if (cumSumUnits < targetUnits)
             {
-                targetMessages.HitTargets.Add($"HIT TARGET. Drinks target, you are {(targetUnits - cumSumUnits):N0} units below target.");
+                targetMessages.HitTargets.Add($"HIT TARGET - DRINKS. Drinks target, you are {(targetUnits - cumSumUnits):N0} units below target.");
             }
             else
             {
@@ -142,49 +142,49 @@ namespace Health.API.Controllers
 
             if (cumSumCardioMinutes < targetCardio)
             {
-                targetMessages.HitTargets.Add($"HIT TARGET. Cardio target, you are {(targetCardio - cumSumCardioMinutes):N0} minutes below target.");
+                targetMessages.HitTargets.Add($"HIT TARGET - CARDIO MINUTES. Cardio target, you are {(targetCardio - cumSumCardioMinutes):N0} minutes below target.");
             }
             else
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET. Cardio target, you are {(cumSumCardioMinutes - targetCardio):N0} minutes above target. Target is {targetCardio} and actual is {cumSumCardioMinutes}. ");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - CARDIO MINUTES. Cardio target, you are {(cumSumCardioMinutes - targetCardio):N0} minutes above target. Target is {targetCardio} and actual is {cumSumCardioMinutes}. ");
             }
 
 
             if (averageWeight < target.Kg)
             {
-                targetMessages.HitTargets.Add($"HIT TARGET. Your weight is  {(target.Kg - averageWeight):N1} kilograms below target at {averageWeight:N1}.");
+                targetMessages.HitTargets.Add($"HIT TARGET - WEIGHT. Your weight is  {(target.Kg - averageWeight):N1} kilograms below target at {averageWeight:N1}.");
             }
             else
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET. Your weight is {(averageWeight - target.Kg):N1} kilograms above target at {averageWeight:N1}.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - WEIGHT. Your weight is {(averageWeight - target.Kg):N1} kilograms above target at {averageWeight:N1}.");
             }
 
             if (averageSystolic > target.Systolic || averageDiastolic < target.Diastolic)
             {
                 //todo systolic aand or diastolic in message
-                targetMessages.MissedTargets.Add($"MISSED TARGET. Blood pressure is too high. At {averageDiastolic:N0} over {averageSystolic:N0}.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - BLOOD PRESSURE. Blood pressure is too high. At {averageDiastolic:N0} over {averageSystolic:N0}.");
             }
             else
             {
-                targetMessages.HitTargets.Add($"HIT TARGET. Blood pressure is healthy, at {averageDiastolic:N0} over {averageSystolic:N0}.");
+                targetMessages.HitTargets.Add($"HIT TARGET - BLOOD PRESSURE. Blood pressure is healthy, at {averageDiastolic:N0} over {averageSystolic:N0}.");
             }
 
             if (target.MetresErgo15Minutes > furthest15MinuteErgo.Metres)
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET. Behind Ergo target by {target.MetresErgo15Minutes - furthest15MinuteErgo.Metres} metres.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - ERGO. Behind Ergo target by {target.MetresErgo15Minutes - furthest15MinuteErgo.Metres} metres.");
             }
             else
             {
-                targetMessages.HitTargets.Add($"HIT TARGET. Ahead of Ergo target by {furthest15MinuteErgo.Metres - target.MetresErgo15Minutes} metres.");
+                targetMessages.HitTargets.Add($"HIT TARGET - ERGO. Ahead of Ergo target by {furthest15MinuteErgo.Metres - target.MetresErgo15Minutes} metres.");
             }
 
             if (target.MetresTreadmill30Minutes > furthest30MinuteTreadmill.Metres)
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET. Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m, your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m. You are behind treadmill target by {target.MetresTreadmill30Minutes - furthest30MinuteTreadmill.Metres} metres.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - TREADMILL. Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m, your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m. You are behind treadmill target by {target.MetresTreadmill30Minutes - furthest30MinuteTreadmill.Metres} metres.");
             }
             else
             {
-                targetMessages.HitTargets.Add($"HIT TARGET.  Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m, your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m. You are ahead of treadmill target by {furthest30MinuteTreadmill.Metres - target.MetresTreadmill30Minutes} metres.");
+                targetMessages.HitTargets.Add($"HIT TARGET - TREADMILL.  Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m, your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m. You are ahead of treadmill target by {furthest30MinuteTreadmill.Metres - target.MetresTreadmill30Minutes} metres.");
             }
 
             return targetMessages;

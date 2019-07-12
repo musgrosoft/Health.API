@@ -5,8 +5,8 @@ SELECT
     AverageDailyWeights.Kg AS Kg,
 	T.Kg AS TargetKg,
 	AverageDailyWeights.FatRatioPercentage, 
-    AVG(AverageDailyWeights.Kg) OVER (ORDER BY Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageKg,
-	AVG(AverageDailyWeights.FatRatioPercentage) OVER (ORDER BY Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageFatRatioPercentage
+    AVG(AverageDailyWeights.Kg) OVER (ORDER BY Cal.Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageKg,
+	AVG(AverageDailyWeights.FatRatioPercentage) OVER (ORDER BY Cal.Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageFatRatioPercentage
 FROM
 
 	(
