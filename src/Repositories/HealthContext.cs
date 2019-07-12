@@ -112,12 +112,12 @@ namespace Repositories
 
         private int GetTargetErgoMetresFor15Minutes(DateTime date)
         {
-            return (int)(3386 + (DateTime.Now.Date - new DateTime(2019, 1, 1)).TotalDays);
+            return (int)(3386 + (date - new DateTime(2019, 1, 1)).TotalDays);
         }
 
         private int GetTargetMetresFor30MinuteTreadmill(DateTime date)
         {
-            return (int)(5000 + 2.74725275 * (DateTime.Now.Date - new DateTime(2019, 1, 1)).TotalDays);
+            return (int)(5000 + 2.74725275 * (date - new DateTime(2019, 1, 1)).TotalDays);
         }
 
 
