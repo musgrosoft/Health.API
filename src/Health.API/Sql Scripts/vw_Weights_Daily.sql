@@ -1,9 +1,9 @@
 CREATE VIEW vw_Weights_Daily AS
 
 SELECT 
-    Date, 
-    Weights.Kg AS Kg,
-	Targets.Kg AS TargetKg,
+    dbo.CalendarDates.Date, 
+    dbo.Weights.Kg AS Kg,
+	dbo.Targets.Kg AS TargetKg,
 	FatRatioPercentage, 
     AVG(Kg) OVER (ORDER BY Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageKg,
 	AVG(FatRatioPercentage) OVER (ORDER BY Date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS MovingAverageFatRatioPercentage

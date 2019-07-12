@@ -196,10 +196,13 @@ namespace HealthAPI
                 var created = context.Database.EnsureCreated();
                 try
                 {
-                    if (created)
-                    {
+                    //Always run scripts on startup
+                    //if (created)
+                    //{
                         //Run these when db first created
                         context.Database.SetCommandTimeout(180);
+
+                        context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
 
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
@@ -213,7 +216,7 @@ namespace HealthAPI
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Weekly.sql"));
 
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
-                    }
+                    //}
                 }
                 catch (Exception ex)
                 {
