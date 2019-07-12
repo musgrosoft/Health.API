@@ -196,11 +196,12 @@ namespace HealthAPI
                 var created = context.Database.EnsureCreated();
                 try
                 {
+                    Task task = Task.Run(async () => await logger.LogMessageAsync("STARTING UP SQL SCRIPTS"));
                     //Always run scripts on startup
                     //if (created)
                     //{
-                        //Run these when db first created
-                        context.Database.SetCommandTimeout(180);
+                    //Run these when db first created
+                    context.Database.SetCommandTimeout(180);
 
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
 
