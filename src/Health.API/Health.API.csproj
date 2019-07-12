@@ -40,6 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Sql Scripts\Drop_All_Views.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Sql Scripts\vw_Alcohol_Daily.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
