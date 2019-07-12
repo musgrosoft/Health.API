@@ -35,4 +35,3 @@ SELECT @name =
  )
  ORDER BY [name])
 END
-GO
