@@ -106,13 +106,15 @@ namespace Health.API.Controllers
 
         public TargetMessages GetTargetMessages()
         {
+            var daysForErgoAndRunningTargets = 15;
+
             var targetMessages = new TargetMessages();
             
             var latestWeights = _healthService.GetLatestWeights();
             var latestBloodpressures = _healthService.GetLatestBloodPressures();
 
-            var furthest15MinuteErgo = _healthService.GetFurthest15MinuteErgo(DateTime.Now.AddDays(-15));
-            var furthest30MinuteTreadmill = _healthService.GetFurthest30MinuteTreadmill(DateTime.Now.AddDays(-15));
+            var furthest15MinuteErgo = _healthService.GetFurthest15MinuteErgo(DateTime.Now.AddDays(-daysForErgoAndRunningTargets));
+            var furthest30MinuteTreadmill = _healthService.GetFurthest30MinuteTreadmill(DateTime.Now.AddDays(-daysForErgoAndRunningTargets));
 
             var averageWeight = latestWeights.Average(x => x.Kg);
             var averageSystolic = latestBloodpressures.Average(x => x.Systolic);
@@ -178,11 +180,11 @@ namespace Health.API.Controllers
 
             if (target.MetresTreadmill30Minutes > furthest30MinuteTreadmill.Metres)
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET. Behind treadmill target by {target.MetresTreadmill30Minutes - furthest30MinuteTreadmill.Metres} metres.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET. Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m, your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m. You are behind treadmill target by {target.MetresTreadmill30Minutes - furthest30MinuteTreadmill.Metres} metres.");
             }
             else
             {
-                targetMessages.HitTargets.Add($"HIT TARGET. Ahead of treadmill target by {furthest30MinuteTreadmill.Metres - target.MetresTreadmill30Minutes} metres.");
+                targetMessages.HitTargets.Add($"HIT TARGET.  Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m, your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m. You are ahead of treadmill target by {furthest30MinuteTreadmill.Metres - target.MetresTreadmill30Minutes} metres.");
             }
 
             return targetMessages;
