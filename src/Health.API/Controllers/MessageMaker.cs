@@ -183,11 +183,11 @@ namespace Health.API.Controllers
 
             if (target.MetresTreadmill30Minutes > furthest30MinuteTreadmill.Metres)
             {
-                targetMessages.MissedTargets.Add($"MISSED TARGET - TREADMILL. Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m ({(target.MetresTreadmill30Minutes* 0.000621371):N3}miles), your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m. You are behind treadmill target by {target.MetresTreadmill30Minutes - furthest30MinuteTreadmill.Metres} metres.");
+                targetMessages.MissedTargets.Add($"MISSED TARGET - TREADMILL. Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m ({(target.MetresTreadmill30Minutes* 0.000621371):N3}miles), your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m ({(furthest30MinuteTreadmill.Metres * 0.000621371):N3}miles). You are behind treadmill target by {target.MetresTreadmill30Minutes - furthest30MinuteTreadmill.Metres} metres ({((target.MetresTreadmill30Minutes - furthest30MinuteTreadmill.Metres) * 0.000621371):N3}miles).");
             }
             else
             {
-                targetMessages.HitTargets.Add($"HIT TARGET - TREADMILL.  Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m ({(target.MetresTreadmill30Minutes * 0.000621371):N3}miles), your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m. You are ahead of treadmill target by {furthest30MinuteTreadmill.Metres - target.MetresTreadmill30Minutes} metres.");
+                targetMessages.HitTargets.Add($"HIT TARGET - TREADMILL.  Today's 30 min treadmill target is {target.MetresTreadmill30Minutes}m ({(target.MetresTreadmill30Minutes * 0.000621371):N3}miles), your best distance for 30min in the last {daysForErgoAndRunningTargets} days is {furthest30MinuteTreadmill.Metres}m ({(furthest30MinuteTreadmill.Metres * 0.000621371):N3}miles). You are ahead of treadmill target by {furthest30MinuteTreadmill.Metres - target.MetresTreadmill30Minutes} metres ({((furthest30MinuteTreadmill.Metres - target.MetresTreadmill30Minutes) * 0.000621371):N3}miles).");
             }
 
             return targetMessages;
