@@ -1,4 +1,6 @@
-﻿DECLARE @schemeName NVARCHAR(10);
+﻿DECLARE @schemeName NVARCHAR(250);
+DECLARE @name NVARCHAR(250);
+
 SET @schemeName = 'dbo';
 
 SELECT @name = 
