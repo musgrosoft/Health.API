@@ -200,7 +200,6 @@ namespace HealthAPI
                     {
                         //Run these when db first created
                         context.Database.SetCommandTimeout(180);
-                        context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/tbl_Calendar.sql"));
 
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
