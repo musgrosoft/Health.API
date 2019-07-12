@@ -1,4 +1,5 @@
-﻿SET @schemeName = 'dbo'
+﻿DECLARE @schemeName NVARCHAR(10);
+SET @schemeName = 'dbo';
 
 SELECT @name = 
 (SELECT TOP 1 o.[name] 
@@ -17,7 +18,7 @@ SELECT @name =
 BEGIN
     SELECT @SQL = 'DROP VIEW [' + @schemeName + '].[' + RTRIM(@name) +']'
     EXEC (@SQL)
-    PRINT 'Dropped View: ' + @name
+--    PRINT 'Dropped View: ' + @name
 SELECT @name = 
 (SELECT TOP 1 o.[name] 
  FROM sysobjects o
