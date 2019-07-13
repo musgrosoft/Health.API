@@ -22,4 +22,4 @@ FROM
 RIGHT JOIN dbo.CalendarDates Cal
 ON Cal.Date = AverageDailyWeights.CreatedDate
 LEFT JOIN Targets T
-ON T.Date = AverageDailyWeights.CreatedDate
+ON T.Date = Cal.CreatedDate
