@@ -105,7 +105,7 @@ namespace Health.API.Controllers
 
         public TargetMessages GetTargetMessages()
         {
-            var daysForErgoAndRunningTargets = 15;
+            var daysForErgoAndRunningTargets = 28;
 
             var targetMessages = new TargetMessages();
             
