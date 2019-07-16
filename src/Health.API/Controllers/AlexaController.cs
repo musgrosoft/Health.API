@@ -11,9 +11,9 @@ namespace HealthAPI.Controllers
     [Route("api/Alexa")]
     public class AlexaController : Controller
     {
-        private readonly IMessageMaker _messageMaker;
+        private readonly IAlexaMessageMaker _messageMaker;
 
-        public AlexaController(IMessageMaker messageMaker)
+        public AlexaController(IAlexaMessageMaker messageMaker)
         {
             _messageMaker = messageMaker;
         }

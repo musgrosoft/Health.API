@@ -128,7 +128,7 @@ namespace HealthAPI
             services.AddTransient<ISheetsClient, SheetsClient>();
 
             services.AddTransient<IMessageMaker, MessageMaker>();
-
+            services.AddTransient<IAlexaMessageMaker, AlexaMessageMaker>();
 
             services.AddTransient<IWithingsMapper, WithingsMapper>();
             services.AddTransient<IWithingsClientQueryAdapter, WithingsClientQueryAdapter>();
