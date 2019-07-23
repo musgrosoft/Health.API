@@ -20,6 +20,7 @@ namespace HealthAPI.Controllers
 
         private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
         private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
+        private DateTime MIN_SLEEP_DATE = new DateTime(2019, 7, 15);
 
         public WithingsController(ILogger logger, IWithingsService withingsService, IHealthService healthService)
         {
@@ -58,6 +59,24 @@ namespace HealthAPI.Controllers
             await _logger.LogMessageAsync($"BLOOD PRESSURE : Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
                                           $"BLOOD PRESSURE : Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
                                           $"BLOOD PRESSURE : Upserting {bloodPressures.Count()} Blood Pressure records.");
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("Notify/Sleeps")]
+        public async Task<IActionResult> MigrateSleeps()
+        {
+            var latestSleepDate = _healthService.GetLatestWithingsSleepDate(MIN_SLEEP_DATE);
+            var fromDate = latestSleepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+
+            var sleeps = await _withingsService.GetSleeps(fromDate);
+
+            _healthService.UpsertWithingsSleeps(sleeps);
+
+            await _logger.LogMessageAsync($"WITHINGS SLEEP : Latest Sleep record has a date of : {latestSleepDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
+                                          $"WITHINGS SLEEP : Retrieving Sleep records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
+                                          $"WITHINGS SLEEP : Upserting {sleeps.Count()} sleep records.");
 
             return Ok();
         }

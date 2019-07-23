@@ -18,9 +18,9 @@ namespace Importer.Fitbit
                 });
         }
 
-        public IEnumerable<FitbitSleep> MapSleepsToFitbitSleeps(IEnumerable<Sleep> sleeps)
+        public IEnumerable<MyFitbitSleep> MapSleepsToFitbitSleeps(IEnumerable<Sleep> sleeps)
         {
-            return sleeps.Select(x => new FitbitSleep
+            return sleeps.Select(x => new MyFitbitSleep
             {
                 AwakeCount = x.awakeCount,
                 AwakeDuration = x.awakeDuration,
@@ -37,7 +37,10 @@ namespace Importer.Fitbit
                 RestlessCount = x.restlessCount,
                 RestlessDuration = x.restlessDuration,
                 StartTime = x.startTime,
-                TimeInBed = x.timeInBed
+                TimeInBed = x.timeInBed,
+                Level1 = x.minuteData.Count(y => y.value == 1),
+                Level2 = x.minuteData.Count(y => y.value == 2),
+                Level3 = x.minuteData.Count(y => y.value == 3)
             });
         }
 

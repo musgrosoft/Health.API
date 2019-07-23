@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.Health.Models
 {
-    public class WithingsSleep
+    public class MyWithingsSleep
     {
         [Key]
         public int Id { get; set; }

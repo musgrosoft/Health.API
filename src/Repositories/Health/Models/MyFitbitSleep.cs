@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.Health.Models
 {
-    public class FitbitSleep
+    public class MyFitbitSleep
     {
         [Key]
         public int LogId { get; set; }
@@ -25,5 +25,8 @@ namespace Repositories.Health.Models
         public int RestlessDuration { get; set; }
         public int TimeInBed { get; set; }
 
+        public int Level1 { get; set; }
+        public int Level2 { get; set; }
+        public int Level3 { get; set; }
     }
 }

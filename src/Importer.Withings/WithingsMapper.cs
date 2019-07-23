@@ -42,5 +42,31 @@ namespace Importer.Withings
                 Systolic = (int)(x.measures.First(bp => bp.type == SystolicBloodPressureMeasureTypeId).value * Math.Pow(10, x.measures.First(bp => bp.type == SystolicBloodPressureMeasureTypeId).unit)),
             });
         }
+
+        public IEnumerable<MyWithingsSleep> MapToMyWithingsSleep(IEnumerable<Series> series)
+        {
+            return series.Select(x => new MyWithingsSleep
+            {
+                DeepSleepDuration = x.data.deepsleepduration,
+                DurationToSleep = x.data.durationtosleep,
+                DurationToWakeUp = x.data.durationtowakeup,
+                EndDate = x.enddate.ToDateFromUnixTime(),
+                HeartRateAvg = x.data.hr_average,
+                HeartRateMax = x.data.hr_max,
+                HeartRateMin = x.data.hr_min,
+                Id = x.id,
+                LightSleepDuration = x.data.lightsleepduration,
+                ModifiedDate = x.modified.ToDateFromUnixTime(),
+                RemSleepDuration = x.data.remsleepduration,
+                RespirationRateAvg = x.data.rr_average,
+                RespirationRateMax = x.data.rr_max,
+                RespirationRateMin = x.data.rr_min,
+                StartDate = x.startdate.ToDateFromUnixTime(),
+                TimeZone = x.timezone,
+                WakeUpCount = x.data.wakeupcount,
+                WakeUpDuration = x.data.wakeupduration
+
+            });
+        }
     }
 }

@@ -8,11 +8,11 @@ namespace Importer.Fitbit.Domain
         public List<Sleep> sleep { get; set; }
     }
 
-//    public class MinuteData
-//    {
-//        public string dateTime { get; set; }
-//        public string value { get; set; }
-//    }
+    public class MinuteData
+    {
+        public string dateTime { get; set; }
+        public int value { get; set; }
+    }
 
     public class Sleep
     {
@@ -24,7 +24,7 @@ namespace Importer.Fitbit.Domain
         public int efficiency { get; set; }
         public DateTime endTime { get; set; }
         public int logId { get; set; }
-        //public List<MinuteData> minuteData { get; set; }
+        public List<MinuteData> minuteData { get; set; }
         public int minutesAfterWakeup { get; set; }
         public int minutesAsleep { get; set; }
         public int minutesAwake { get; set; }

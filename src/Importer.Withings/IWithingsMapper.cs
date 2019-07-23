@@ -8,5 +8,6 @@ namespace Importer.Withings
     {
         IEnumerable<Weight> MapToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups);
         IEnumerable<BloodPressure> MapToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups);
+        IEnumerable<MyWithingsSleep> MapToMyWithingsSleep(IEnumerable<Series> series);
     }
 }

@@ -25,6 +25,11 @@ namespace Repositories.Health
            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
+        public DateTime? GetLatestWithingsSleepDate()
+        {
+            return _healthContext.MyWithingsSleeps.OrderByDescending(x => x.StartDate).FirstOrDefault()?.StartDate;
+        }
+
         public Weight GetLatestWeight()
         {
             return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
@@ -85,6 +90,8 @@ namespace Repositories.Health
             return (_healthContext.Exercises.Sum(x => x.TotalSeconds))/60;
         }
 
+
+
         public Target GetTarget(DateTime date)
         {
             return _healthContext.Targets.First(x => x.Date.Date == date.Date);
@@ -94,6 +101,8 @@ namespace Repositories.Health
         {
             return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
+
+
 
         public List<Weight> GetLatestWeights(int num)
         {
@@ -112,7 +121,7 @@ namespace Repositories.Health
 
         public DateTime? GetLatestFitbitSleepDate()
         {
-            return _healthContext.FitbitSleeps.OrderByDescending(x => x.DateOfSleep).FirstOrDefault()?.DateOfSleep;
+            return _healthContext.MyFitbitSleeps.OrderByDescending(x => x.DateOfSleep).FirstOrDefault()?.DateOfSleep;
         }
 
         public void Upsert(Weight weight)
@@ -135,31 +144,64 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Upsert(FitbitSleep fitbitSleep)
+        public void Upsert(MyFitbitSleep myFitbitSleep)
         {
-            var existingSleep = _healthContext.FitbitSleeps.Find(fitbitSleep.LogId);
+            var existingSleep = _healthContext.MyFitbitSleeps.Find(myFitbitSleep.LogId);
 
             if (existingSleep == null)
             {
-                _healthContext.Add(fitbitSleep);
+                _healthContext.Add(myFitbitSleep);
             }
             else
             {
-                existingSleep.AwakeCount = fitbitSleep.AwakeCount;
-                existingSleep.AwakeDuration = fitbitSleep.AwakeDuration;
-                existingSleep.AwakeningsCount = fitbitSleep.AwakeningsCount;
-                existingSleep.DateOfSleep = fitbitSleep.DateOfSleep;
-                existingSleep.Duration = fitbitSleep.Duration;
-                existingSleep.Efficiency = fitbitSleep.Efficiency;
-                existingSleep.EndTime = fitbitSleep.EndTime;
-                existingSleep.MinutesAfterWakeup = fitbitSleep.MinutesAfterWakeup;
-                existingSleep.MinutesAsleep = fitbitSleep.MinutesAsleep;
-                existingSleep.MinutesAwake = fitbitSleep.MinutesAwake;
-                existingSleep.MinutesToFallAsleep = fitbitSleep.MinutesToFallAsleep;
-                existingSleep.RestlessCount = fitbitSleep.RestlessCount;
-                existingSleep.RestlessDuration = fitbitSleep.RestlessDuration;
-                existingSleep.StartTime = fitbitSleep.StartTime;
-                existingSleep.TimeInBed = fitbitSleep.TimeInBed;
+                existingSleep.AwakeCount = myFitbitSleep.AwakeCount;
+                existingSleep.AwakeDuration = myFitbitSleep.AwakeDuration;
+                existingSleep.AwakeningsCount = myFitbitSleep.AwakeningsCount;
+                existingSleep.DateOfSleep = myFitbitSleep.DateOfSleep;
+                existingSleep.Duration = myFitbitSleep.Duration;
+                existingSleep.Efficiency = myFitbitSleep.Efficiency;
+                existingSleep.EndTime = myFitbitSleep.EndTime;
+                existingSleep.MinutesAfterWakeup = myFitbitSleep.MinutesAfterWakeup;
+                existingSleep.MinutesAsleep = myFitbitSleep.MinutesAsleep;
+                existingSleep.MinutesAwake = myFitbitSleep.MinutesAwake;
+                existingSleep.MinutesToFallAsleep = myFitbitSleep.MinutesToFallAsleep;
+                existingSleep.RestlessCount = myFitbitSleep.RestlessCount;
+                existingSleep.RestlessDuration = myFitbitSleep.RestlessDuration;
+                existingSleep.StartTime = myFitbitSleep.StartTime;
+                existingSleep.TimeInBed = myFitbitSleep.TimeInBed;
+            }
+
+            _healthContext.SaveChanges();
+        }
+
+        public void Upsert(MyWithingsSleep myWithingsSleep)
+        {
+            var existingSleep = _healthContext.MyWithingsSleeps.Find(myWithingsSleep.Id);
+
+            if (existingSleep == null)
+            {
+                _healthContext.Add(myWithingsSleep);
+            }
+            else
+            {
+                existingSleep.StartDate = myWithingsSleep.StartDate;
+                existingSleep.DeepSleepDuration = myWithingsSleep.DeepSleepDuration;
+                existingSleep.DurationToSleep = myWithingsSleep.DurationToSleep;
+                existingSleep.DurationToWakeUp = myWithingsSleep.DurationToWakeUp;
+                existingSleep.EndDate = myWithingsSleep.EndDate;
+                existingSleep.HeartRateAvg = myWithingsSleep.HeartRateAvg;
+                existingSleep.HeartRateMax = myWithingsSleep.HeartRateMax;
+                existingSleep.HeartRateMin = myWithingsSleep.HeartRateMin;
+                existingSleep.LightSleepDuration = myWithingsSleep.LightSleepDuration;
+                existingSleep.ModifiedDate = myWithingsSleep.ModifiedDate;
+                existingSleep.RemSleepDuration = myWithingsSleep.RemSleepDuration;
+                existingSleep.RespirationRateAvg = myWithingsSleep.RespirationRateAvg;
+                existingSleep.RespirationRateMax = myWithingsSleep.RespirationRateMax;
+                existingSleep.RespirationRateMin = myWithingsSleep.RespirationRateMin;
+                existingSleep.TimeZone = myWithingsSleep.TimeZone;
+                existingSleep.WakeUpCount = myWithingsSleep.WakeUpCount;
+                existingSleep.WakeUpDuration = myWithingsSleep.WakeUpDuration;
+
             }
 
             _healthContext.SaveChanges();
