@@ -10,5 +10,6 @@ namespace Importer.Fitbit
         //Task<IEnumerable<FitbitDailyActivity>> GetFitbitDailyActivities(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate, string accessToken);
         //Task<IEnumerable<Dataset>> GetDetailedHeartRates(DateTime fromDate, DateTime toDate);
+        Task<IEnumerable<Sleep>> GetFitbitSleeps(DateTime fromDate, DateTime toDate, string accessToken);
     }
 }

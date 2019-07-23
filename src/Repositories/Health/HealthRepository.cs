@@ -110,6 +110,11 @@ namespace Repositories.Health
             return _healthContext.Drinks.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
+        public DateTime? GetLatestFitbitSleepDate()
+        {
+            return _healthContext.FitbitSleeps.OrderByDescending(x => x.DateOfSleep).FirstOrDefault()?.DateOfSleep;
+        }
+
         public void Upsert(Weight weight)
         {
 
@@ -130,6 +135,35 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
+        public void Upsert(FitbitSleep fitbitSleep)
+        {
+            var existingSleep = _healthContext.FitbitSleeps.Find(fitbitSleep.LogId);
+
+            if (existingSleep == null)
+            {
+                _healthContext.Add(fitbitSleep);
+            }
+            else
+            {
+                existingSleep.AwakeCount = fitbitSleep.AwakeCount;
+                existingSleep.AwakeDuration = fitbitSleep.AwakeDuration;
+                existingSleep.AwakeningsCount = fitbitSleep.AwakeningsCount;
+                existingSleep.DateOfSleep = fitbitSleep.DateOfSleep;
+                existingSleep.Duration = fitbitSleep.Duration;
+                existingSleep.Efficiency = fitbitSleep.Efficiency;
+                existingSleep.EndTime = fitbitSleep.EndTime;
+                existingSleep.MinutesAfterWakeup = fitbitSleep.MinutesAfterWakeup;
+                existingSleep.MinutesAsleep = fitbitSleep.MinutesAsleep;
+                existingSleep.MinutesAwake = fitbitSleep.MinutesAwake;
+                existingSleep.MinutesToFallAsleep = fitbitSleep.MinutesToFallAsleep;
+                existingSleep.RestlessCount = fitbitSleep.RestlessCount;
+                existingSleep.RestlessDuration = fitbitSleep.RestlessDuration;
+                existingSleep.StartTime = fitbitSleep.StartTime;
+                existingSleep.TimeInBed = fitbitSleep.TimeInBed;
+            }
+
+            _healthContext.SaveChanges();
+        }
 
 
         public void Upsert(Drink drink)

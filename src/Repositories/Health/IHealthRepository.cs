@@ -10,13 +10,15 @@ namespace Repositories.Health
         DateTime? GetLatestWeightDate();
         DateTime? GetLatestRestingHeartRateDate();
         DateTime? GetLatestDrinkDate();
+        DateTime? GetLatestFitbitSleepDate();
 
         void Upsert(Weight weight);
         void Upsert(BloodPressure bloodPressure);
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(Drink drink);
         void Upsert(Exercise exercise);
-        
+        void Upsert(FitbitSleep fitbitSleep);
+
         List<Weight> GetLatestWeights(int num);
         List<BloodPressure> GetLatestBloodPressures(int num);
         DateTime? GetLatestExerciseDate();
@@ -27,5 +29,6 @@ namespace Repositories.Health
         double GetCumSumUnits();
         Target GetTarget(DateTime date);
         double GetCumSumCardioMinutes();
+        
     }
 }

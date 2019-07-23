@@ -9,5 +9,6 @@ namespace Importer.Fitbit
         Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate, string accessToken);
         Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode);
         Task<FitbitRefreshTokenResponse> GetTokensWithRefreshToken(string refreshToken);
+        Task<FitbitSleeps> Get100DaysOfSleeps(DateTime startDate, string accessToken);
     }
 }

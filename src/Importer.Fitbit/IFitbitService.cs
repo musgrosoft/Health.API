@@ -9,5 +9,6 @@ namespace Importer.Fitbit
     {
         Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate);
         Task SetTokens(string code);
+        Task<IEnumerable<FitbitSleep>> GetSleeps(DateTime fromDate, DateTime toDate);
     }
 }

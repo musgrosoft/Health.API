@@ -18,6 +18,29 @@ namespace Importer.Fitbit
                 });
         }
 
+        public IEnumerable<FitbitSleep> MapSleepsToFitbitSleeps(IEnumerable<Sleep> sleeps)
+        {
+            return sleeps.Select(x => new FitbitSleep
+            {
+                AwakeCount = x.awakeCount,
+                AwakeDuration = x.awakeDuration,
+                AwakeningsCount = x.awakeningsCount,
+                DateOfSleep = x.dateOfSleep,
+                Duration = x.duration,
+                Efficiency = x.efficiency,
+                EndTime = x.endTime,
+                LogId = x.logId,
+                MinutesAfterWakeup = x.minutesAfterWakeup,
+                MinutesAsleep = x.minutesAsleep,
+                MinutesAwake = x.minutesAwake,
+                MinutesToFallAsleep = x.minutesToFallAsleep,
+                RestlessCount = x.restlessCount,
+                RestlessDuration = x.restlessDuration,
+                StartTime = x.startTime,
+                TimeInBed = x.timeInBed
+            });
+        }
+
         //public IEnumerable<Run> MapFitbitDailyActivitiesToRuns(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
         //{
         //    var allTheRuns = new List<Run>();

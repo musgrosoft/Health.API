@@ -51,6 +51,30 @@ namespace Importer.Fitbit
 
         }
 
+        public async Task<FitbitSleeps> Get100DaysOfSleeps(DateTime startDate, string accessToken)
+        {
+            var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/{startDate.AddDays(100):yyyy-MM-dd}.json";
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+
+            var response = await _httpClient.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<FitbitSleeps>(content);
+                return data;
+            }
+            else if (response.StatusCode == (HttpStatusCode)429)
+            {
+                throw new TooManyRequestsException($"Too many requests made to Fitbit API. Failed call to fitbit api {uri} , status code is {response.StatusCode} , and content is {response.Content}");
+            }
+            else
+            {
+                throw new Exception($"Failed call to fitbit api {uri} , status code is {(int)response.StatusCode} , and content is {await response.Content.ReadAsStringAsync()}");
+            }
+
+        }
+
         public async Task<FitbitRefreshTokenResponse> GetTokensWithRefreshToken(string refreshToken)
         {
             var uri = $"{_config.FitbitBaseUrl}/oauth2/token";

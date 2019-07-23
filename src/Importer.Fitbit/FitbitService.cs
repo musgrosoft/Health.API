@@ -30,7 +30,16 @@ namespace Importer.Fitbit
 
             return _fitbitMapper.MapActivitiesHeartsToRestingHeartRates(heartActivies);
         }
-        
+
+        public async Task<IEnumerable<FitbitSleep>> GetSleeps(DateTime fromDate, DateTime toDate)
+        {
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
+
+            var sleeps = await _fitbitClientQueryAdapter.GetFitbitSleeps(fromDate, toDate, accessToken);
+
+            return _fitbitMapper.MapSleepsToFitbitSleeps(sleeps);
+        }
+
         public async Task SetTokens(string code)
         {
             await _fitbitAuthenticator.SetTokens(code);

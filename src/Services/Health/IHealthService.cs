@@ -16,7 +16,7 @@ namespace Services.Health
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
         void UpsertAlcoholIntakes(List<Drink> alcoholIntakes);
         void UpsertExercises(List<Exercise> exercises);
-
+        void UpsertFitbitSleeps(IEnumerable<FitbitSleep> fitbitSleeps);
 
         List<Weight> GetLatestWeights(int num = 10);
         List<BloodPressure> GetLatestBloodPressures(int num = 10);
@@ -29,5 +29,7 @@ namespace Services.Health
         Target GetTarget(DateTime date);
         Exercise GetFurthest30MinuteTreadmill(DateTime fromDate);
         double GetCumSumCardioMinutes();
+
+        DateTime GetLatestFitbitSleepDate(DateTime defaultDateTime);
     }
 }

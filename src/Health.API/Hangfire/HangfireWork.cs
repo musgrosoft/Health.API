@@ -21,6 +21,7 @@ namespace HealthAPI.Hangfire
             try
             {
                 await _fitbitImporter.MigrateRestingHeartRates();
+                await _fitbitImporter.MigrateSleeps();
             }
             catch (Exception ex)
             {

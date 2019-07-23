@@ -8,5 +8,6 @@ namespace Importer.Fitbit
     {
         IEnumerable<RestingHeartRate> MapActivitiesHeartsToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts);
 
+        IEnumerable<FitbitSleep> MapSleepsToFitbitSleeps(IEnumerable<Sleep> sleeps);
     }
 }
