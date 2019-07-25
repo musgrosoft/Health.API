@@ -1,16 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Repositories.Health.Models
 {
     public class MyFitbitSleep
     {
-        [Key]
-        public int LogId { get; set; }
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None), Key]
+        public long LogId { get; set; }
         public DateTime StartTime{get;set;}
 
-        public int AwakeCount{get;set;}
-        public int AwakeDuration { get; set; }
+        public int? AwakeCount{get;set;}
         public int AwakeningsCount{get;set;}
         public DateTime DateOfSleep { get; set; }
         public int Duration { get; set; }
@@ -21,16 +21,16 @@ namespace Repositories.Health.Models
         public int MinutesAsleep {get;set;}
         public int MinutesAwake { get; set; }
         public int  MinutesToFallAsleep { get; set; }
-        public int RestlessCount { get; set; }
-        public int RestlessDuration { get; set; }
+        public int? RestlessCount { get; set; }
+        
         public int TimeInBed { get; set; }
 
         public string Type { get; set; }
         public int InfoCode { get; set; }
-        public int AwakeMinutes { get; set; }
-        public int AsleepCount { get; set; }
-        public int AsleepMinutes { get; set; }
-        public int RestlessMinutes { get; set; }
+        public int? AwakeMinutes { get; set; }
+        public int? AsleepCount { get; set; }
+        public int? AsleepMinutes { get; set; }
+        public int? RestlessMinutes { get; set; }
         public int DeepCount { get; set; }
         public int DeepMinutes { get; set; }
         public int DeepMinutesThirtyDayAvg { get; set; }

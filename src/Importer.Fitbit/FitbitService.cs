@@ -37,7 +37,9 @@ namespace Importer.Fitbit
 
             var sleeps = await _fitbitClientQueryAdapter.GetFitbitSleeps(fromDate, toDate, accessToken);
 
-            return _fitbitMapper.MapSleepsToFitbitSleeps(sleeps);
+            var sl = _fitbitMapper.MapSleepsToFitbitSleeps(sleeps);
+
+            return sl;
         }
 
         public async Task SetTokens(string code)

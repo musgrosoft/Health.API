@@ -6,3 +6,5 @@ drop table Targets
 drop table Tokens
 drop table Weights
 drop table CalendarDates
+drop table MyWithingsSleeps
+drop table MyFitbitSleeps

@@ -94,7 +94,7 @@ namespace Importer.Fitbit.Domain
         public DateTime endTime { get; set; }
         public int infoCode { get; set; }
         public Levels levels { get; set; }
-        public int logId { get; set; }
+        public long logId { get; set; }
         public int minutesAfterWakeup { get; set; }
         public int minutesAsleep { get; set; }
         public int minutesAwake { get; set; }

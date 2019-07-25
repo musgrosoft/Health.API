@@ -155,7 +155,7 @@ namespace Repositories.Health
             else
             {
                 existingSleep.AwakeCount = myFitbitSleep.AwakeCount;
-                existingSleep.AwakeDuration = myFitbitSleep.AwakeDuration;
+                existingSleep.AwakeMinutes = myFitbitSleep.AwakeMinutes;
                 existingSleep.AwakeningsCount = myFitbitSleep.AwakeningsCount;
                 existingSleep.DateOfSleep = myFitbitSleep.DateOfSleep;
                 existingSleep.Duration = myFitbitSleep.Duration;
@@ -166,7 +166,7 @@ namespace Repositories.Health
                 existingSleep.MinutesAwake = myFitbitSleep.MinutesAwake;
                 existingSleep.MinutesToFallAsleep = myFitbitSleep.MinutesToFallAsleep;
                 existingSleep.RestlessCount = myFitbitSleep.RestlessCount;
-                existingSleep.RestlessDuration = myFitbitSleep.RestlessDuration;
+                existingSleep.RestlessMinutes = myFitbitSleep.RestlessMinutes;
                 existingSleep.StartTime = myFitbitSleep.StartTime;
                 existingSleep.TimeInBed = myFitbitSleep.TimeInBed;
             }
