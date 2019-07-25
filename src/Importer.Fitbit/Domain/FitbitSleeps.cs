@@ -8,31 +8,102 @@ namespace Importer.Fitbit.Domain
         public List<Sleep> sleep { get; set; }
     }
 
-    public class MinuteData
+//    public class Datum
+//    {
+//        public DateTime dateTime { get; set; }
+//        public string level { get; set; }
+//        public int seconds { get; set; }
+//    }
+//
+//    public class ShortData
+//    {
+//        public DateTime dateTime { get; set; }
+//        public string level { get; set; }
+//        public int seconds { get; set; }
+//    }
+
+    public class Deep
     {
-        public string dateTime { get; set; }
-        public int value { get; set; }
+        public int count { get; set; }
+        public int minutes { get; set; }
+        public int thirtyDayAvgMinutes { get; set; }
+    }
+
+    public class Light
+    {
+        public int count { get; set; }
+        public int minutes { get; set; }
+        public int thirtyDayAvgMinutes { get; set; }
+    }
+
+    public class Rem
+    {
+        public int count { get; set; }
+        public int minutes { get; set; }
+        public int thirtyDayAvgMinutes { get; set; }
+    }
+
+    public class Wake
+    {
+        public int count { get; set; }
+        public int minutes { get; set; }
+        public int thirtyDayAvgMinutes { get; set; }
+    }
+
+    public class Asleep
+    {
+        public int count { get; set; }
+        public int minutes { get; set; }
+    }
+
+    public class Awake
+    {
+        public int count { get; set; }
+        public int minutes { get; set; }
+    }
+
+    public class Restless
+    {
+        public int count { get; set; }
+        public int minutes { get; set; }
+    }
+
+    public class Summary
+    {
+        public Deep deep { get; set; }
+        public Light light { get; set; }
+        public Rem rem { get; set; }
+        public Wake wake { get; set; }
+        public Asleep asleep { get; set; }
+        public Awake awake { get; set; }
+        public Restless restless { get; set; }
+    }
+
+    public class Levels
+    {
+//        public List<Datum> data { get; set; }
+//        public List<ShortData> shortData { get; set; }
+        public Summary summary { get; set; }
     }
 
     public class Sleep
     {
-        public int awakeCount { get; set; }
-        public int awakeDuration { get; set; }
-        public int awakeningsCount { get; set; }
         public DateTime dateOfSleep { get; set; }
         public int duration { get; set; }
         public int efficiency { get; set; }
         public DateTime endTime { get; set; }
+        public int infoCode { get; set; }
+        public Levels levels { get; set; }
         public int logId { get; set; }
-        public List<MinuteData> minuteData { get; set; }
         public int minutesAfterWakeup { get; set; }
         public int minutesAsleep { get; set; }
         public int minutesAwake { get; set; }
         public int minutesToFallAsleep { get; set; }
-        public int restlessCount { get; set; }
-        public int restlessDuration { get; set; }
         public DateTime startTime { get; set; }
         public int timeInBed { get; set; }
+        public string type { get; set; }
     }
+
+
 
 }

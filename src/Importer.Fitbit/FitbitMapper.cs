@@ -22,9 +22,33 @@ namespace Importer.Fitbit
         {
             return sleeps.Select(x => new MyFitbitSleep
             {
-                AwakeCount = x.awakeCount,
-                AwakeDuration = x.awakeDuration,
-                AwakeningsCount = x.awakeningsCount,
+                AwakeCount = x.levels.summary.awake.count ,
+                AwakeMinutes = x.levels.summary.awake.minutes,
+
+                AsleepCount = x.levels.summary.asleep.count,
+                AsleepMinutes = x.levels.summary.asleep.minutes,
+
+                RestlessCount = x.levels.summary.restless.count,
+                RestlessMinutes = x.levels.summary.restless.minutes,
+
+
+                DeepCount = x.levels.summary.deep.count,
+                DeepMinutes = x.levels.summary.deep.minutes,
+                DeepMinutesThirtyDayAvg = x.levels.summary.deep.thirtyDayAvgMinutes,
+
+                LightCount = x.levels.summary.light.count,
+                LightMinutes = x.levels.summary.light.minutes,
+                LightMinutesThirtyDayAvg = x.levels.summary.light.thirtyDayAvgMinutes,
+
+                RemCount = x.levels.summary.rem.count,
+                RemMinutes = x.levels.summary.rem.minutes,
+                RemMinutesThirtyDayAvg = x.levels.summary.rem.thirtyDayAvgMinutes,
+
+                WakeCount = x.levels.summary.wake.count,
+                WakeMinutes = x.levels.summary.wake.minutes,
+                WakeMinutesThirtyDayAvg = x.levels.summary.wake.thirtyDayAvgMinutes,
+
+
                 DateOfSleep = x.dateOfSleep,
                 Duration = x.duration,
                 Efficiency = x.efficiency,
@@ -34,13 +58,11 @@ namespace Importer.Fitbit
                 MinutesAsleep = x.minutesAsleep,
                 MinutesAwake = x.minutesAwake,
                 MinutesToFallAsleep = x.minutesToFallAsleep,
-                RestlessCount = x.restlessCount,
-                RestlessDuration = x.restlessDuration,
+                
                 StartTime = x.startTime,
                 TimeInBed = x.timeInBed,
-                Level1 = x.minuteData.Count(y => y.value == 1),
-                Level2 = x.minuteData.Count(y => y.value == 2),
-                Level3 = x.minuteData.Count(y => y.value == 3)
+                Type = x.type,
+                InfoCode = x.infoCode
             });
         }
 
