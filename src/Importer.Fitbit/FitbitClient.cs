@@ -53,7 +53,7 @@ namespace Importer.Fitbit
 
         public async Task<FitbitSleeps> Get100DaysOfSleeps(DateTime startDate, string accessToken)
         {
-            var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/{startDate.AddDays(100):yyyy-MM-dd}.json";
+            var uri = FITBIT_BASE_URL + $"/1.2/user/{_config.FitbitUserId}/sleep/date/{startDate:yyyy-MM-dd}/{startDate.AddDays(100):yyyy-MM-dd}.json";
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 

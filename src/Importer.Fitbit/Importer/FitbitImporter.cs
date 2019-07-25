@@ -15,6 +15,7 @@ namespace Importer.Fitbit.Importer
         private const int SEARCH_DAYS_PREVIOUS = 1;
 
         private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
+        private DateTime MIN_FITBIT_SLEEP_DATE = new DateTime(2019, 7, 1);
 
         public FitbitImporter(IHealthService healthService, ILogger logger, IFitbitService fitbitService, ICalendar calendar)
         {
@@ -41,7 +42,7 @@ namespace Importer.Fitbit.Importer
 
         public async Task MigrateSleeps()
         {
-            var latestFitbitSleepDate = _healthService.GetLatestFitbitSleepDate(MIN_FITBIT_DATE);
+            var latestFitbitSleepDate = _healthService.GetLatestFitbitSleepDate(MIN_FITBIT_SLEEP_DATE);
             await _logger.LogMessageAsync($"SLEEP : Latest Sleep record has a date of : {latestFitbitSleepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var getDataFromDate = latestFitbitSleepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
