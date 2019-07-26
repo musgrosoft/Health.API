@@ -120,13 +120,13 @@ namespace Importer.Withings
 
         public async Task<IEnumerable<Series>> Get7DaysOfSleeps(string accessToken, DateTime startDate)
         {
-            var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=getsummary&lastupdate={startDate.ToUnixTimeFromDate()}&data_fields=wakeupduration,lightsleepduration,deepsleepduration,wakeupcount,durationtosleep,remsleepduration,durationtowakeup,hr_average,hr_min,hr_max,rr_average,rr_min,rr_max";
-            var response = await _httpClient.GetAsync(url);
-            //https://wbsapi.withings.net                                                     /v2/sleep?action=getsummary&lastupdate=1563492600                      &data_fields=wakeupduration,lightsleepduration,deepsleepduration,wakeupcount,durationtosleep,remsleepduration,durationtowakeup,hr_average,hr_min,hr_max,rr_average,rr_min,rr_max
-
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+
+            var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=getsummary&lastupdate={startDate.ToUnixTimeFromDate()}&data_fields=wakeupduration,lightsleepduration,deepsleepduration,wakeupcount,durationtosleep,remsleepduration,durationtowakeup,hr_average,hr_min,hr_max,rr_average,rr_min,rr_max";
+            var response = await _httpClient.GetAsync(url);
+            //https://wbsapi.withings.net                                                     /v2/sleep?action=getsummary&lastupdate=1563492600                      &data_fields=wakeupduration,lightsleepduration,deepsleepduration,wakeupcount,durationtosleep,remsleepduration,durationtowakeup,hr_average,hr_min,hr_max,rr_average,rr_min,rr_max
 
             //TODO : success status code, does not indicate lack of error
             if (response.IsSuccessStatusCode)
