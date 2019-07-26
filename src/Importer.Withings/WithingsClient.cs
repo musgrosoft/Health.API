@@ -126,10 +126,11 @@ namespace Importer.Withings
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
-            
+            //TODO : success status code, does not indicate lack of error
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
+                await _logger.LogMessageAsync("blip bloop : " + content);
 
                 var data = JsonConvert.DeserializeObject<SleepsRootObject>(content);
                 return data.body.series;
