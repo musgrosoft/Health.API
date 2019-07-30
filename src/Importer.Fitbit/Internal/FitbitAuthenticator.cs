@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Services.OAuth;
 using Utils;
 
-namespace Importer.Fitbit
+namespace Importer.Fitbit.Internal
 {
     internal class FitbitAuthenticator //: IFitbitAuthenticator
     {

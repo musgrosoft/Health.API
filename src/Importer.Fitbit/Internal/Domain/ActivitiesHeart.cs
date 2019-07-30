@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Importer.Fitbit.Domain
+namespace Importer.Fitbit.Internal.Domain
 {
     internal class ActivitiesHeart
     {

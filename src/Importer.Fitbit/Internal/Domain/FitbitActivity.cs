@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Importer.Fitbit.Domain
+namespace Importer.Fitbit.Internal.Domain
 {
 
     internal class FitBitActivity

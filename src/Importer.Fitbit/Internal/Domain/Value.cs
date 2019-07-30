@@ -1,4 +1,4 @@
-﻿namespace Importer.Fitbit.Domain
+﻿namespace Importer.Fitbit.Internal.Domain
 {
     internal class Value
     {

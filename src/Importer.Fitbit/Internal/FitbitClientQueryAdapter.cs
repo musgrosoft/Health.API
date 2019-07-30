@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Importer.Fitbit.Domain;
+using Importer.Fitbit.Internal.Domain;
 using Utils;
 
-namespace Importer.Fitbit
+namespace Importer.Fitbit.Internal
 {
     internal class FitbitClientQueryAdapter //: IFitbitClientQueryAdapter
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Importer.Fitbit.Domain
+namespace Importer.Fitbit.Internal.Domain
 {
     internal class FitbitSleeps
     {
