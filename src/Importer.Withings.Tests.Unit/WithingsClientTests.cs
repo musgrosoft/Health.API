@@ -149,7 +149,9 @@ namespace Importer.Withings.Tests.Unit
 
             var measuregrps = await _withingsClient.GetMeasureGroups("abc123");
 
-            Assert.Equal($"{baseApiUrl}/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
+            //Assert.Equal($"{baseApiUrl}/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal($"{baseApiUrl}/measure?action=getmeas", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal("abc123", _capturedRequest.Headers.Authorization.Parameter);
             Assert.Equal(8, measuregrps.Count());
             Assert.Contains(measuregrps, x => x.date == 1526015332 && x.measures.Exists(a => a.value == 83000 && a.type == 9 && a.unit == -3));
             //Assert.Contains(measuregrps, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018, 5, 10, 5, 4, 42));
