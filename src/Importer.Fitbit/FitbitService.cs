@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Repositories.Health.Models;
+using Services.OAuth;
+using Utils;
 
 namespace Importer.Fitbit
 {
     public class FitbitService : IFitbitService
     {
         private readonly IFitbitClientQueryAdapter _fitbitClientQueryAdapter;
-        private readonly IFitbitAuthenticator _fitbitAuthenticator;
+        private readonly FitbitAuthenticator _fitbitAuthenticator;
         private readonly FitbitMapper _fitbitMapper;
 
-        public FitbitService(IFitbitClientQueryAdapter fitbitClientQueryAdapter, IFitbitAuthenticator fitbitAuthenticator)
+        public FitbitService(IFitbitClientQueryAdapter fitbitClientQueryAdapter, ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
         {
             _fitbitClientQueryAdapter = fitbitClientQueryAdapter;
-            _fitbitAuthenticator = fitbitAuthenticator;
+            _fitbitAuthenticator =new FitbitAuthenticator(tokenService, httpClient, config, logger);
             _fitbitMapper = new FitbitMapper();
         }
         

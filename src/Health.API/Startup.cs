@@ -110,7 +110,7 @@ namespace HealthAPI
             services.AddTransient<ILogger, LogzIoLogger>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ITokenRepository, TokenRepository>();
-            services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
+            //services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
             services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
             services.AddTransient<IFitbitService, FitbitService>();
             services.AddTransient<IFitbitImporter, FitbitImporter>();

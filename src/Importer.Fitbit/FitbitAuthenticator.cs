@@ -5,19 +5,19 @@ using Utils;
 
 namespace Importer.Fitbit
 {
-    public class FitbitAuthenticator : IFitbitAuthenticator
+    public class FitbitAuthenticator //: IFitbitAuthenticator
     {
         private readonly ITokenService _tokenService;
         private readonly FitbitClient _fitbitClient;
 
 
-        public FitbitAuthenticator(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
+        internal FitbitAuthenticator(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
         {
             _tokenService = tokenService;
             _fitbitClient = new FitbitClient(httpClient, config, logger); 
         }
 
-        public async Task SetTokens(string authorizationCode)
+        internal async Task SetTokens(string authorizationCode)
         {
             var tokens = await _fitbitClient.GetTokensWithAuthorizationCode(authorizationCode);
 
@@ -31,7 +31,7 @@ namespace Importer.Fitbit
 
 
 
-        public async Task<string> GetAccessToken()
+        internal async Task<string> GetAccessToken()
         {
             var refreshToken = await _tokenService.GetFitbitRefreshToken();
 
