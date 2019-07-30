@@ -29,7 +29,6 @@ namespace Importer.Fitbit.Tests.Unit
 
             _fitbitService = new FitbitService(
                 _fitbitClientQueryAdapter.Object, 
-                _fitbitClient.Object, 
                 _fitbitAuthenticator.Object, 
                 _fitbitMapper.Object);
         }
