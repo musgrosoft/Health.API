@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Importer.Fitbit.Domain;
 using Utils;
@@ -9,12 +10,12 @@ namespace Importer.Fitbit
 {
     public class FitbitClientQueryAdapter : IFitbitClientQueryAdapter
     {
-        private readonly IFitbitClient _fitbitClient;
+        private readonly FitbitClient _fitbitClient;
         private readonly ILogger _logger;
 
-        public FitbitClientQueryAdapter(IFitbitClient fitbitClient, ILogger logger)
+        public FitbitClientQueryAdapter(HttpClient httpClient, IConfig config, ILogger logger)
         {
-            _fitbitClient = fitbitClient;
+            _fitbitClient = new FitbitClient(httpClient, config, logger);
             _logger = logger;
         }
 

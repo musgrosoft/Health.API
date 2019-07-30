@@ -117,7 +117,7 @@ namespace HealthAPI
             services.AddTransient<ICalendar, Calendar>();
             services.AddTransient<IWithingsClient, WithingsClient>();
             services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
-            services.AddTransient<IFitbitClient, FitbitClient>();
+            //services.AddTransient<IFitbitClient, FitbitClient>();
             services.AddTransient<ISheetsService, SheetsService>();
 
             services.AddTransient<IHangfireWork, HangfireWork>();
