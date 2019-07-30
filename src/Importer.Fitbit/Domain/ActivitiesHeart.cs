@@ -2,9 +2,9 @@
 
 namespace Importer.Fitbit.Domain
 {
-    public class ActivitiesHeart
+    internal class ActivitiesHeart
     {
-        public DateTime dateTime { get; set; }
-        public Value value { get; set; }
+        internal DateTime dateTime { get; set; }
+        internal Value value { get; set; }
     }
 }

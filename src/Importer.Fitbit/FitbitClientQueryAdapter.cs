@@ -8,18 +8,18 @@ using Utils;
 
 namespace Importer.Fitbit
 {
-    public class FitbitClientQueryAdapter : IFitbitClientQueryAdapter
+    internal class FitbitClientQueryAdapter //: IFitbitClientQueryAdapter
     {
         private readonly FitbitClient _fitbitClient;
         private readonly ILogger _logger;
 
-        public FitbitClientQueryAdapter(HttpClient httpClient, IConfig config, ILogger logger)
+        internal FitbitClientQueryAdapter(HttpClient httpClient, IConfig config, ILogger logger)
         {
             _fitbitClient = new FitbitClient(httpClient, config, logger);
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate, string accessToken)
+        internal async Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate, string accessToken)
         {
             var heartActivities = new List<ActivitiesHeart>();
 
@@ -43,7 +43,7 @@ namespace Importer.Fitbit
             return heartActivities.Where(x => x.dateTime.Between(fromDate, toDate));
         }
 
-        public async Task<IEnumerable<Sleep>> GetFitbitSleeps(DateTime fromDate, DateTime toDate, string accessToken)
+        internal async Task<IEnumerable<Sleep>> GetFitbitSleeps(DateTime fromDate, DateTime toDate, string accessToken)
         {
             var allTheSleeps = new List<Sleep>();
 

@@ -3,9 +3,9 @@
 namespace Importer.Fitbit
 {
     [Serializable]
-    public class TooManyRequestsException : Exception
+    internal class TooManyRequestsException : Exception
     {
-        public TooManyRequestsException(string message) : base(message)
+        internal TooManyRequestsException(string message) : base(message)
         {
         }
     }

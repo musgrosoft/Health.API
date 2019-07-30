@@ -5,7 +5,7 @@ using Utils;
 
 namespace Importer.Fitbit
 {
-    public class FitbitAuthenticator //: IFitbitAuthenticator
+    internal class FitbitAuthenticator //: IFitbitAuthenticator
     {
         private readonly ITokenService _tokenService;
         private readonly FitbitClient _fitbitClient;

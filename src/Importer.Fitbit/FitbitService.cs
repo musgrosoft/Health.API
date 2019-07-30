@@ -10,13 +10,13 @@ namespace Importer.Fitbit
 {
     public class FitbitService : IFitbitService
     {
-        private readonly IFitbitClientQueryAdapter _fitbitClientQueryAdapter;
+        private readonly FitbitClientQueryAdapter _fitbitClientQueryAdapter;
         private readonly FitbitAuthenticator _fitbitAuthenticator;
         private readonly FitbitMapper _fitbitMapper;
 
-        public FitbitService(IFitbitClientQueryAdapter fitbitClientQueryAdapter, ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
+        public FitbitService(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
         {
-            _fitbitClientQueryAdapter = fitbitClientQueryAdapter;
+            _fitbitClientQueryAdapter = new FitbitClientQueryAdapter(httpClient,config,logger);
             _fitbitAuthenticator =new FitbitAuthenticator(tokenService, httpClient, config, logger);
             _fitbitMapper = new FitbitMapper();
         }

@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 namespace Importer.Fitbit.Domain
 {
 
-    public class FitBitActivity
+    internal class FitBitActivity
     {
         [JsonProperty("activities-heart") ]
-        public List<ActivitiesHeart> activitiesHeart { get; set; }
+        internal List<ActivitiesHeart> activitiesHeart { get; set; }
     }
     
 }
