@@ -16,21 +16,18 @@ namespace Importer.Fitbit.Tests.Unit
 
         private DateTime fromDate = new DateTime(2017,1,1);
         private DateTime toDate = new DateTime(2018, 2, 2);
-        private Mock<IFitbitMapper> _fitbitMapper;
-        private Mock<IFitbitClient> _fitbitClient;
+        
+        
         private Mock<IFitbitAuthenticator> _fitbitAuthenticator;
 
         public FitbitServiceTests() 
         {
             _fitbitClientQueryAdapter = new Mock<IFitbitClientQueryAdapter>();
-            _fitbitMapper = new Mock<IFitbitMapper>();
-            _fitbitClient = new Mock<IFitbitClient>();
             _fitbitAuthenticator = new Mock<IFitbitAuthenticator>();
 
             _fitbitService = new FitbitService(
                 _fitbitClientQueryAdapter.Object, 
-                _fitbitAuthenticator.Object, 
-                _fitbitMapper.Object);
+                _fitbitAuthenticator.Object);
         }
         
         [Fact]
@@ -47,30 +44,34 @@ namespace Importer.Fitbit.Tests.Unit
         public async Task ShouldGetRestingHeartRates()
         {
             //Given
+
             var activitiesHearts = new List<ActivitiesHeart>
             {
-                new ActivitiesHeart{dateTime = new DateTime(2017,1,1)}
+                new ActivitiesHeart {dateTime = new DateTime(2018,1,1),value = new Value {restingHeartRate = 51}},
+                new ActivitiesHeart {dateTime = new DateTime(2018,1,2),value = new Value {restingHeartRate = 52}},
+                new ActivitiesHeart {dateTime = new DateTime(2018,1,3),value = new Value {restingHeartRate = 53}},
+                new ActivitiesHeart { dateTime = new DateTime(2018, 1, 4), value = new Value { restingHeartRate = 0 } } /// don't map if 0 restingheartrate
             };
 
             _fitbitClientQueryAdapter.Setup(x=>x.GetFitbitHeartActivities(fromDate, toDate, It.IsAny<string>())).Returns(Task.FromResult((IEnumerable<ActivitiesHeart>)activitiesHearts));
 
-            var restingHeartRates = new List<RestingHeartRate>
-            {
-                new RestingHeartRate{CreatedDate = new DateTime(2017,1,1), Beats = 111},
-                new RestingHeartRate{CreatedDate = new DateTime(2017,1,2), Beats = 222},
-                new RestingHeartRate{CreatedDate = new DateTime(2017,1,3), Beats = 333},
-            };
+//            var restingHeartRates = new List<RestingHeartRate>
+//            {
+//                new RestingHeartRate{CreatedDate = new DateTime(2017,1,1), Beats = 111},
+//                new RestingHeartRate{CreatedDate = new DateTime(2017,1,2), Beats = 222},
+//                new RestingHeartRate{CreatedDate = new DateTime(2017,1,3), Beats = 333},
+//            };
 
-            _fitbitMapper.Setup(x => x.MapActivitiesHeartsToRestingHeartRates(activitiesHearts)).Returns(restingHeartRates);
+//            _fitbitMapper.Setup(x => x.MapActivitiesHeartsToRestingHeartRates(activitiesHearts)).Returns(restingHeartRates);
 
             //When
             var result = await _fitbitService.GetRestingHeartRates(fromDate, toDate);
 
             //Then
             Assert.Equal(3, result.Count());
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 1) && x.Beats == 111);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 2) && x.Beats == 222);
-            Assert.Contains(result, x => x.CreatedDate == new DateTime(2017, 1, 3) && x.Beats == 333);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 1) && x.Beats == 51);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 2) && x.Beats == 52);
+            Assert.Contains(result, x => x.CreatedDate == new DateTime(2018, 1, 3) && x.Beats == 53);
 
         }
 

@@ -9,13 +9,13 @@ namespace Importer.Fitbit
     {
         private readonly IFitbitClientQueryAdapter _fitbitClientQueryAdapter;
         private readonly IFitbitAuthenticator _fitbitAuthenticator;
-        private readonly IFitbitMapper _fitbitMapper;
+        private readonly FitbitMapper _fitbitMapper;
 
-        public FitbitService(IFitbitClientQueryAdapter fitbitClientQueryAdapter, IFitbitAuthenticator fitbitAuthenticator, IFitbitMapper fitbitMapper)
+        public FitbitService(IFitbitClientQueryAdapter fitbitClientQueryAdapter, IFitbitAuthenticator fitbitAuthenticator)
         {
             _fitbitClientQueryAdapter = fitbitClientQueryAdapter;
             _fitbitAuthenticator = fitbitAuthenticator;
-            _fitbitMapper = fitbitMapper;
+            _fitbitMapper = new FitbitMapper();
         }
         
         public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
