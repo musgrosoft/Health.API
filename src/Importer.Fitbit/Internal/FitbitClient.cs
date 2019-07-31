@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Importer.Fitbit.Domain;
+using Importer.Fitbit.Internal.Domain;
 using Newtonsoft.Json;
 using Utils;
 
-namespace Importer.Fitbit
+namespace Importer.Fitbit.Internal
 {
-    public class FitbitClient : IFitbitClient
+    internal class FitbitClient 
     {
         private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 
@@ -19,7 +19,7 @@ namespace Importer.Fitbit
         //private readonly string _accessToken;
         private readonly ILogger _logger;
 
-        public FitbitClient(HttpClient httpClient, IConfig config, ILogger logger)
+        internal FitbitClient(HttpClient httpClient, IConfig config, ILogger logger)
         {
             _httpClient = httpClient;
             _config = config;
@@ -27,7 +27,7 @@ namespace Importer.Fitbit
 
         }
         
-        public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate, string accessToken)
+        internal async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate, string accessToken)
         {
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/1m.json";
             _httpClient.DefaultRequestHeaders.Clear();
@@ -51,7 +51,7 @@ namespace Importer.Fitbit
 
         }
 
-        public async Task<FitbitSleeps> Get100DaysOfSleeps(DateTime startDate, string accessToken)
+        internal async Task<FitbitSleeps> Get100DaysOfSleeps(DateTime startDate, string accessToken)
         {
             var uri = FITBIT_BASE_URL + $"/1.2/user/{_config.FitbitUserId}/sleep/date/{startDate:yyyy-MM-dd}/{startDate.AddDays(100):yyyy-MM-dd}.json";
             _httpClient.DefaultRequestHeaders.Clear();
@@ -75,7 +75,7 @@ namespace Importer.Fitbit
 
         }
 
-        public async Task<FitbitRefreshTokenResponse> GetTokensWithRefreshToken(string refreshToken)
+        internal async Task<FitbitRefreshTokenResponse> GetTokensWithRefreshToken(string refreshToken)
         {
             var uri = $"{_config.FitbitBaseUrl}/oauth2/token";
 
@@ -102,7 +102,7 @@ namespace Importer.Fitbit
             }
         }
 
-        public async Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode)
+        internal async Task<FitbitAuthTokensResponse> GetTokensWithAuthorizationCode(string authorizationCode)
         {
             var url = $"{_config.FitbitBaseUrl}/oauth2/token";
 

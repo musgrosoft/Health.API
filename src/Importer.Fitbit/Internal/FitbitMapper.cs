@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Importer.Fitbit.Domain;
+using Importer.Fitbit.Internal.Domain;
 using Repositories.Health.Models;
 
-namespace Importer.Fitbit
+namespace Importer.Fitbit.Internal
 {
-    public class FitbitMapper : IFitbitMapper
+    internal class FitbitMapper //: IFitbitMapper
     {
-        public IEnumerable<RestingHeartRate> MapActivitiesHeartsToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts)
+        internal IEnumerable<RestingHeartRate> MapActivitiesHeartsToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts)
         {
             return activitiesHearts
                 .Where(a => a.value.restingHeartRate != 0)
@@ -18,7 +18,7 @@ namespace Importer.Fitbit
                 });
         }
 
-        public IEnumerable<MyFitbitSleep> MapSleepsToFitbitSleeps(IEnumerable<Sleep> sleeps)
+        internal IEnumerable<MyFitbitSleep> MapSleepsToFitbitSleeps(IEnumerable<Sleep> sleeps)
         {
             return sleeps.Select(x => new MyFitbitSleep
             {

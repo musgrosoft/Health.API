@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Importer.GoogleSheets.Tests
+namespace Importer.GoogleSheets.Tests.Unit
 {
     public class MapFunctionsTests
     {

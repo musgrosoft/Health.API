@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Importer.Fitbit.Internal;
 using Repositories.Health.Models;
+using Services.OAuth;
+using Utils;
 
 namespace Importer.Fitbit
 {
     public class FitbitService : IFitbitService
     {
-        private readonly IFitbitClientQueryAdapter _fitbitClientQueryAdapter;
-        private readonly IFitbitClient _fitbitClient;
-        private readonly IFitbitAuthenticator _fitbitAuthenticator;
-        private readonly IFitbitMapper _fitbitMapper;
+        private readonly FitbitClientQueryAdapter _fitbitClientQueryAdapter;
+        private readonly FitbitAuthenticator _fitbitAuthenticator;
+        private readonly FitbitMapper _fitbitMapper;
 
-        public FitbitService(IFitbitClientQueryAdapter fitbitClientQueryAdapter, IFitbitClient fitbitClient, IFitbitAuthenticator fitbitAuthenticator, IFitbitMapper fitbitMapper)
+        public FitbitService(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
         {
-            _fitbitClientQueryAdapter = fitbitClientQueryAdapter;
-            _fitbitClient = fitbitClient;
-            _fitbitAuthenticator = fitbitAuthenticator;
-            _fitbitMapper = fitbitMapper;
+            _fitbitClientQueryAdapter = new FitbitClientQueryAdapter(httpClient,config,logger);
+            _fitbitAuthenticator =new FitbitAuthenticator(tokenService, httpClient, config, logger);
+            _fitbitMapper = new FitbitMapper();
         }
-        
-
         
         public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
         {

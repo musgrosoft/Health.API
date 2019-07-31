@@ -1,21 +1,23 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Services.OAuth;
+using Utils;
 
-namespace Importer.Fitbit
+namespace Importer.Fitbit.Internal
 {
-    public class FitbitAuthenticator : IFitbitAuthenticator
+    internal class FitbitAuthenticator //: IFitbitAuthenticator
     {
         private readonly ITokenService _tokenService;
-        private readonly IFitbitClient _fitbitClient;
+        private readonly FitbitClient _fitbitClient;
 
 
-        public FitbitAuthenticator(ITokenService tokenService, IFitbitClient fitbitClient)
+        internal FitbitAuthenticator(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
         {
             _tokenService = tokenService;
-            _fitbitClient = fitbitClient;
+            _fitbitClient = new FitbitClient(httpClient, config, logger); 
         }
 
-        public async Task SetTokens(string authorizationCode)
+        internal async Task SetTokens(string authorizationCode)
         {
             var tokens = await _fitbitClient.GetTokensWithAuthorizationCode(authorizationCode);
 
@@ -29,7 +31,7 @@ namespace Importer.Fitbit
 
 
 
-        public async Task<string> GetAccessToken()
+        internal async Task<string> GetAccessToken()
         {
             var refreshToken = await _tokenService.GetFitbitRefreshToken();
 
