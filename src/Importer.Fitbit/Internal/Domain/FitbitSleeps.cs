@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Importer.Fitbit.Internal.Domain
 {
-    internal class FitbitSleeps
+    public class FitbitSleeps
     {
-        internal List<Sleep> sleep { get; set; }
+        public List<Sleep> sleep { get; set; }
     }
 
     //    public class Datum
@@ -22,86 +22,86 @@ namespace Importer.Fitbit.Internal.Domain
     //        public int seconds { get; set; }
     //    }
 
-    internal class Deep
+    public class Deep
     {
-        internal int count { get; set; }
-        internal int minutes { get; set; }
-        internal int thirtyDayAvgMinutes { get; set; }
+        public int count { get; set; }
+        public int minutes { get; set; }
+        public int thirtyDayAvgMinutes { get; set; }
     }
 
-    internal class Light
+    public class Light
     {
-        internal int count { get; set; }
-        internal int minutes { get; set; }
-        internal int thirtyDayAvgMinutes { get; set; }
+        public int count { get; set; }
+        public int minutes { get; set; }
+        public int thirtyDayAvgMinutes { get; set; }
     }
 
-    internal class Rem
+    public class Rem
     {
-        internal int count { get; set; }
-        internal int minutes { get; set; }
-        internal int thirtyDayAvgMinutes { get; set; }
+        public int count { get; set; }
+        public int minutes { get; set; }
+        public int thirtyDayAvgMinutes { get; set; }
     }
 
-    internal class Wake
+    public class Wake
     {
-        internal int count { get; set; }
-        internal int minutes { get; set; }
-        internal int thirtyDayAvgMinutes { get; set; }
+        public int count { get; set; }
+        public int minutes { get; set; }
+        public int thirtyDayAvgMinutes { get; set; }
     }
 
-    internal class Asleep
+    public class Asleep
     {
-        internal int count { get; set; }
-        internal int minutes { get; set; }
+        public int count { get; set; }
+        public int minutes { get; set; }
     }
 
-    internal class Awake
+    public class Awake
     {
-        internal int count { get; set; }
-        internal int minutes { get; set; }
+        public int count { get; set; }
+        public int minutes { get; set; }
     }
 
-    internal class Restless
+    public class Restless
     {
-        internal int count { get; set; }
-        internal int minutes { get; set; }
+        public int count { get; set; }
+        public int minutes { get; set; }
     }
 
-    internal class Summary
+    public class Summary
     {
-        internal Deep deep { get; set; }
-        internal Light light { get; set; }
-        internal Rem rem { get; set; }
-        internal Wake wake { get; set; }
-        internal Asleep asleep { get; set; }
-        internal Awake awake { get; set; }
-        internal Restless restless { get; set; }
+        public Deep deep { get; set; }
+        public Light light { get; set; }
+        public Rem rem { get; set; }
+        public Wake wake { get; set; }
+        public Asleep asleep { get; set; }
+        public Awake awake { get; set; }
+        public Restless restless { get; set; }
     }
 
-    internal class Levels
+    public class Levels
     {
         //        public List<Datum> data { get; set; }
         //        public List<ShortData> shortData { get; set; }
-        internal Summary summary { get; set; }
+        public Summary summary { get; set; }
     }
 
-    internal class Sleep
+    public class Sleep
     {
-        internal DateTime dateOfSleep { get; set; }
-        internal int duration { get; set; }
-        internal int efficiency { get; set; }
-        internal DateTime endTime { get; set; }
-        internal int infoCode { get; set; }
-        internal Levels levels { get; set; }
-        internal long logId { get; set; }
-        internal int minutesAfterWakeup { get; set; }
-        internal int minutesAsleep { get; set; }
-        internal int minutesAwake { get; set; }
-        internal int minutesToFallAsleep { get; set; }
-        internal DateTime startTime { get; set; }
-        internal int timeInBed { get; set; }
-        internal string type { get; set; }
+        public DateTime dateOfSleep { get; set; }
+        public int duration { get; set; }
+        public int efficiency { get; set; }
+        public DateTime endTime { get; set; }
+        public int infoCode { get; set; }
+        public Levels levels { get; set; }
+        public long logId { get; set; }
+        public int minutesAfterWakeup { get; set; }
+        public int minutesAsleep { get; set; }
+        public int minutesAwake { get; set; }
+        public int minutesToFallAsleep { get; set; }
+        public DateTime startTime { get; set; }
+        public int timeInBed { get; set; }
+        public string type { get; set; }
     }
 
 

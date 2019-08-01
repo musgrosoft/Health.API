@@ -1,9 +1,9 @@
 ﻿namespace Importer.Fitbit.Internal.Domain
 {
-    internal class Value
+    public class Value
     {
         //public List<object> customHeartRateZones { get; set; }
         //public List<HeartRateZone> heartRateZones { get; set; }
-        internal int restingHeartRate { get; set; }
+        public int restingHeartRate { get; set; }
     }
 }
