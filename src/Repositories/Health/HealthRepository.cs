@@ -139,13 +139,13 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Upsert(MyFitbitSleep myFitbitSleep)
+        public void Upsert(Sleep sleep)
         {
-            var existingSleep = _healthContext.MyFitbitSleeps.Find(myFitbitSleep.LogId);
+            var existingSleep = _healthContext.MyFitbitSleeps.Find(sleep.LogId);
 
             if (existingSleep == null)
             {
-                _healthContext.Add(myFitbitSleep);
+                _healthContext.Add(sleep);
             }
             else
             {

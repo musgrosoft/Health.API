@@ -125,7 +125,7 @@ namespace Services.Health
         }
 
 
-        public void UpsertFitbitSleeps(IEnumerable<MyFitbitSleep> fitbitSleeps)
+        public void UpsertFitbitSleeps(IEnumerable<Sleep> fitbitSleeps)
         {
             foreach (var fitbitSleep in fitbitSleeps)
             {

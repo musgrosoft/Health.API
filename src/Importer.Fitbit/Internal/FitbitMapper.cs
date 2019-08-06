@@ -2,6 +2,7 @@
 using System.Linq;
 using Importer.Fitbit.Internal.Domain;
 using Repositories.Health.Models;
+using Sleep = Repositories.Health.Models.Sleep;
 
 namespace Importer.Fitbit.Internal
 {
@@ -18,9 +19,9 @@ namespace Importer.Fitbit.Internal
                 });
         }
 
-        internal IEnumerable<MyFitbitSleep> MapSleepsToFitbitSleeps(IEnumerable<Sleep> sleeps)
+        internal IEnumerable<Sleep> MapSleepsToFitbitSleeps(IEnumerable<Domain.Sleep> sleeps)
         {
-            return sleeps.Select(x => new MyFitbitSleep
+            return sleeps.Select(x => new Sleep
             {
                 AwakeCount = x.levels.summary.awake?.count,
                 AwakeMinutes = x.levels.summary.awake?.minutes,

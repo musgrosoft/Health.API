@@ -17,7 +17,7 @@ namespace Repositories.Health
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(Drink drink);
         void Upsert(Exercise exercise);
-        void Upsert(MyFitbitSleep myFitbitSleep);
+        void Upsert(Sleep sleep);
 
         List<Weight> GetLatestWeights(int num);
         List<BloodPressure> GetLatestBloodPressures(int num);
