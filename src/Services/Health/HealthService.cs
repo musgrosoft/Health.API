@@ -66,13 +66,7 @@ namespace Services.Health
             var latestDate = _healthRepository.GetLatestFitbitSleepDate();
             return latestDate ?? defaultDateTime;
         }
-
-        public DateTime GetLatestWithingsSleepDate(DateTime defaultDateTime)
-        {
-            var latestDate = _healthRepository.GetLatestWithingsSleepDate();
-            return latestDate ?? defaultDateTime;
-        }
-
+        
         public List<Exercise> GetLatestExercises(int num)
         {
             return _healthRepository.GetLatestExercises(num);
@@ -138,15 +132,7 @@ namespace Services.Health
                 _healthRepository.Upsert(fitbitSleep);
             }
         }
-
-        public void UpsertWithingsSleeps(IEnumerable<MyWithingsSleep> sleeps)
-        {
-            foreach (var myWithingsSleep in sleeps)
-            {
-                _healthRepository.Upsert(myWithingsSleep);
-            }
-        }
-
+        
         public void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures)
         {
             foreach (var bloodPressure in bloodPressures)

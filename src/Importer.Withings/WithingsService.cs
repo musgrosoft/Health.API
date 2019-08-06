@@ -36,15 +36,6 @@ namespace Importer.Withings
             return _withingsMapper.MapToBloodPressures(measureGroups);
         }
 
-        public async Task<IEnumerable<MyWithingsSleep>> GetSleeps(DateTime sinceDateTime)
-        {
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
-
-            var series = await _withingsClientQueryAdapter.GetSleepSeries(sinceDateTime, accessToken);
-
-            return _withingsMapper.MapToMyWithingsSleep(series);
-        }
-
 
         public async Task SetTokens(string authorizationCode)
         {

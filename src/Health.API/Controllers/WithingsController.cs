@@ -63,23 +63,6 @@ namespace HealthAPI.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        [Route("Notify/Sleeps")]
-        public async Task<IActionResult> MigrateSleeps()
-        {
-            var latestSleepDate = _healthService.GetLatestWithingsSleepDate(MIN_SLEEP_DATE);
-            var fromDate = latestSleepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-
-            var sleeps = await _withingsService.GetSleeps(fromDate);
-
-            _healthService.UpsertWithingsSleeps(sleeps);
-
-            await _logger.LogMessageAsync($"WITHINGS SLEEP : Latest Sleep record has a date of : {latestSleepDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
-                                          $"WITHINGS SLEEP : Retrieving Sleep records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
-                                          $"WITHINGS SLEEP : Upserting {sleeps.Count()} sleep records.");
-
-            return Ok();
-        }
 
         [HttpGet]
         [Route("OAuth")]

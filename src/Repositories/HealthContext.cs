@@ -19,7 +19,6 @@ namespace Repositories
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<CalendarDate> CalendarDates { get; set; }
         public virtual DbSet<MyFitbitSleep> MyFitbitSleeps { get; set; }
-        public virtual DbSet<MyWithingsSleep> MyWithingsSleeps { get; set; }
 
         private readonly ILogger _logger;
         

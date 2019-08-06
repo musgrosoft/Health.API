@@ -18,7 +18,6 @@ namespace Repositories.Health
         void Upsert(Drink drink);
         void Upsert(Exercise exercise);
         void Upsert(MyFitbitSleep myFitbitSleep);
-        void Upsert(MyWithingsSleep myWithingsSleep);
 
         List<Weight> GetLatestWeights(int num);
         List<BloodPressure> GetLatestBloodPressures(int num);
@@ -31,6 +30,5 @@ namespace Repositories.Health
         Target GetTarget(DateTime date);
         double GetCumSumCardioMinutes();
 
-        DateTime? GetLatestWithingsSleepDate();
     }
 }

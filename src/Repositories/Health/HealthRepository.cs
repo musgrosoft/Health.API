@@ -24,12 +24,7 @@ namespace Repositories.Health
         {
            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
-
-        public DateTime? GetLatestWithingsSleepDate()
-        {
-            return _healthContext.MyWithingsSleeps.OrderByDescending(x => x.StartDate).FirstOrDefault()?.StartDate;
-        }
-
+        
         public Weight GetLatestWeight()
         {
             return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
@@ -173,40 +168,6 @@ namespace Repositories.Health
 
             _healthContext.SaveChanges();
         }
-
-        public void Upsert(MyWithingsSleep myWithingsSleep)
-        {
-            var existingSleep = _healthContext.MyWithingsSleeps.Find(myWithingsSleep.Id);
-
-            if (existingSleep == null)
-            {
-                _healthContext.Add(myWithingsSleep);
-            }
-            else
-            {
-                existingSleep.StartDate = myWithingsSleep.StartDate;
-                existingSleep.DeepSleepDuration = myWithingsSleep.DeepSleepDuration;
-                existingSleep.DurationToSleep = myWithingsSleep.DurationToSleep;
-                existingSleep.DurationToWakeUp = myWithingsSleep.DurationToWakeUp;
-                existingSleep.EndDate = myWithingsSleep.EndDate;
-                existingSleep.HeartRateAvg = myWithingsSleep.HeartRateAvg;
-                existingSleep.HeartRateMax = myWithingsSleep.HeartRateMax;
-                existingSleep.HeartRateMin = myWithingsSleep.HeartRateMin;
-                existingSleep.LightSleepDuration = myWithingsSleep.LightSleepDuration;
-                existingSleep.ModifiedDate = myWithingsSleep.ModifiedDate;
-                existingSleep.RemSleepDuration = myWithingsSleep.RemSleepDuration;
-                existingSleep.RespirationRateAvg = myWithingsSleep.RespirationRateAvg;
-                existingSleep.RespirationRateMax = myWithingsSleep.RespirationRateMax;
-                existingSleep.RespirationRateMin = myWithingsSleep.RespirationRateMin;
-                existingSleep.TimeZone = myWithingsSleep.TimeZone;
-                existingSleep.WakeUpCount = myWithingsSleep.WakeUpCount;
-                existingSleep.WakeUpDuration = myWithingsSleep.WakeUpDuration;
-
-            }
-
-            _healthContext.SaveChanges();
-        }
-
 
         public void Upsert(Drink drink)
         {
