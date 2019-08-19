@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Importer.Fitbit.Internal.Domain;
 using Repositories.Health.Models;
 using Sleep = Repositories.Health.Models.Sleep;
@@ -64,6 +65,18 @@ namespace Importer.Fitbit.Internal
                 TimeInBed = x.timeInBed,
                 Type = x.type,
                 InfoCode = x.infoCode
+            });
+        }
+
+        public IEnumerable<Drink> MapFitbitFoodsToDrinks(IEnumerable<Food> foods)
+        {
+            return foods.Select(x => new Drink()
+            {
+                Millilitres = x.loggedFood.amount,
+                PercentageAlcohol = double.Parse(new Regex(@"\s([\d\.]*)%").Match(x.loggedFood.name).Groups[0].Value),
+                Name = x.loggedFood.name,
+                Units = 2,
+                CreatedDate = x.logDate
             });
         }
 
