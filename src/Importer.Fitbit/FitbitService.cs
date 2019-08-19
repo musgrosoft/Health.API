@@ -35,11 +35,22 @@ namespace Importer.Fitbit
         {
             var accessToken = await _fitbitAuthenticator.GetAccessToken();
 
-            var sleeps = await _fitbitClientQueryAdapter.GetFitbitSleeps(fromDate, toDate, accessToken);
+            var fitbitSleeps = await _fitbitClientQueryAdapter.GetFitbitSleeps(fromDate, toDate, accessToken);
 
-            var sl = _fitbitMapper.MapSleepsToFitbitSleeps(sleeps);
+            var sleeps = _fitbitMapper.MapSleepsToFitbitSleeps(fitbitSleeps);
 
-            return sl;
+            return sleeps;
+        }
+
+        public async Task<IEnumerable<Drink>> GetDrinks(DateTime fromDate, DateTime toDate)
+        {
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
+
+            var foods = await _fitbitClientQueryAdapter.GetFitbitFoods(fromDate, toDate, accessToken);
+
+            var drinks = _fitbitMapper.MapFitbitFoodsToDrinks(foods);
+
+            return drinks;
         }
 
         public async Task SetTokens(string code)

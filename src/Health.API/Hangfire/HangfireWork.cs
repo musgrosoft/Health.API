@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Importer.Fitbit;
 using Services.Health;
@@ -65,6 +66,17 @@ namespace HealthAPI.Hangfire
             var fitbitSleeps = await _fitbitService.GetSleeps(getDataFromDate, _calendar.Now());
 
             _healthService.UpsertFitbitSleeps(fitbitSleeps);
+        }
+
+        private async Task MigrateDrinks()
+        {
+            //var latestDrinkDate = _healthService.GetLatestDrinkDate()
+            var latestDrinkDate = new DateTime(2019, 8, 19);
+
+            var data = await _fitbitService.GetDrinks(latestDrinkDate, _calendar.Now());
+
+            _healthService.UpsertAlcoholIntakes(data.ToList());
+
         }
     }
 }

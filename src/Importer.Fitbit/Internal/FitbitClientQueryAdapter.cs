@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Importer.Fitbit.Internal.Domain;
+using Repositories.Health.Models;
 using Utils;
+using Sleep = Importer.Fitbit.Internal.Domain.Sleep;
 
 namespace Importer.Fitbit.Internal
 {
@@ -66,6 +68,31 @@ namespace Importer.Fitbit.Internal
             }
 
             return allTheSleeps.Where(x => x.dateOfSleep.Between(fromDate, toDate));
+        }
+
+        internal async Task<IEnumerable<Food>> GetFitbitFoods(DateTime fromDate, DateTime toDate, string accessToken)
+        {
+            var allTheFoods= new List<Food>();
+
+
+            for (DateTime date = fromDate;
+                date < toDate;
+                date = date.AddDays(1))
+            {
+                FitbitFoodData fitbitFoodData;
+                try
+                {
+                    fitbitFoodData = await _fitbitClient.GetDayOfFoods(date, accessToken);
+                }
+                catch (TooManyRequestsException ex)
+                {
+                    await _logger.LogErrorAsync(ex);
+                    break;
+                }
+                allTheFoods.AddRange(fitbitFoodData.foods);
+            }
+
+            return allTheFoods.Where(x => x.logDate.Between(fromDate, toDate));
         }
     }
 }
