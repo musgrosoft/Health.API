@@ -35,8 +35,8 @@ namespace HealthAPI.Controllers
                 _healthService.UpsertAlcoholIntakes(historicAlcoholIntakes);
             }
 
-            var alcoholIntakes = _sheetsService.GetDrinks();
-            _healthService.UpsertAlcoholIntakes(alcoholIntakes);
+            //var alcoholIntakes = _sheetsService.GetDrinks();
+            //_healthService.UpsertAlcoholIntakes(alcoholIntakes);
 
             return Ok();
         }

@@ -27,23 +27,23 @@ namespace HealthAPI.Tests.Unit.Controllers.Migration
             _googleSheetsController = new GoogleSheetsController(_logger.Object, _googleClient.Object, _healthService.Object);
         }
 
-        [Fact]
-        public void ShouldMigrateUnits()
-        {
+        //[Fact]
+        //public void ShouldMigrateUnits()
+        //{
 
-            var someAlcoholIntakes = new List<Drink>
-            {
-                new Drink {CreatedDate = new DateTime(2018,1,1),Units = 1},
-                new Drink {CreatedDate = new DateTime(2018,1,2),Units = 2},
-                new Drink {CreatedDate = new DateTime(2018,1,3),Units = 3}
-            };
-            _googleClient.Setup(x => x.GetDrinks()).Returns(someAlcoholIntakes);
+        //    var someAlcoholIntakes = new List<Drink>
+        //    {
+        //        new Drink {CreatedDate = new DateTime(2018,1,1),Units = 1},
+        //        new Drink {CreatedDate = new DateTime(2018,1,2),Units = 2},
+        //        new Drink {CreatedDate = new DateTime(2018,1,3),Units = 3}
+        //    };
+        //    _googleClient.Setup(x => x.GetDrinks()).Returns(someAlcoholIntakes);
             
-            _googleSheetsController.MigrateUnits();
+        //    _googleSheetsController.MigrateUnits();
 
-            _healthService.Verify(x=>x.UpsertAlcoholIntakes(someAlcoholIntakes), Times.Once);
-            _logger.Verify(x=>x.LogMessageAsync("GOOGLE SHEETS : Migrate Units"));
+        //    _healthService.Verify(x=>x.UpsertAlcoholIntakes(someAlcoholIntakes), Times.Once);
+        //    _logger.Verify(x=>x.LogMessageAsync("GOOGLE SHEETS : Migrate Units"));
 
-        }
+        //}
     }
 }
