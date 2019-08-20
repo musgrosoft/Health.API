@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Importer.Fitbit.Internal.Domain;
 using Repositories.Health.Models;
@@ -95,6 +96,7 @@ namespace Importer.Fitbit.Internal
             foreach (var food in allTheFoods)
             {
                 await _logger.LogMessageAsync("foodname is " + food.loggedFood.name);
+                await _logger.LogMessageAsync("my regex gives " + new Regex(@"\(([\d\.]*)\sunits\)").Match(x.loggedFood.name).Groups[0].Value);
             }
 
             return allTheFoods.Where(x => x.logDate.Between(fromDate, toDate));
