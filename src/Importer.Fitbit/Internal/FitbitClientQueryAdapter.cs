@@ -92,6 +92,11 @@ namespace Importer.Fitbit.Internal
                 allTheFoods.AddRange(fitbitFoodData.foods);
             }
 
+            foreach (var food in allTheFoods)
+            {
+                await _logger.LogMessageAsync("foodname is " + food.loggedFood.name);
+            }
+
             return allTheFoods.Where(x => x.logDate.Between(fromDate, toDate));
         }
     }
