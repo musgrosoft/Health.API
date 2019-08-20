@@ -96,7 +96,7 @@ namespace Importer.Fitbit.Internal
             foreach (var food in allTheFoods)
             {
                 await _logger.LogMessageAsync("foodname is " + food.loggedFood.name);
-                await _logger.LogMessageAsync("my regex gives " + new Regex(@"\(([\d\.]*)\sunits\)").Match(x.loggedFood.name).Groups[0].Value);
+                await _logger.LogMessageAsync("my regex gives " + new Regex(@"\(([\d\.]*)\sunits\)").Match(food.loggedFood.name).Groups[0].Value);
             }
 
             return allTheFoods.Where(x => x.logDate.Between(fromDate, toDate));
