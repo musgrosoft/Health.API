@@ -70,14 +70,21 @@ namespace Importer.Fitbit.Internal
 
         public IEnumerable<Drink> MapFitbitFoodsToDrinks(IEnumerable<Food> foods)
         {
-            return foods.Select(x => new Drink()
+            var drinks = foods.Select(x => new Drink()
             {
-                Millilitres = x.loggedFood.amount,
-                PercentageAlcohol = double.Parse(new Regex(@"\s([\d\.]*)%").Match(x.loggedFood.name).Groups[0].Value),
-                Name = x.loggedFood.name,
-                Units = 2,
+                Units = double.Parse(new Regex(@"\(([\d\.]*)\sunits\)").Match(x.loggedFood.name).Groups[0].Value),
                 CreatedDate = x.logDate
             });
+
+            var drinksAggregatedByDay = drinks
+                .GroupBy(x => x.CreatedDate)
+                .Select(x => new Drink
+                {
+                    CreatedDate = x.Key,
+                    Units = x.Sum(y => y.Units)
+                }).ToList();
+
+            return drinksAggregatedByDay;
         }
 
         //public IEnumerable<Run> MapFitbitDailyActivitiesToRuns(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
