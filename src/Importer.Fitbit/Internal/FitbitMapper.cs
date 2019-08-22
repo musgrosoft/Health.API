@@ -72,7 +72,7 @@ namespace Importer.Fitbit.Internal
         {
             var drinks = foods.Select(x => new Drink()
             {
-                Units = double.Parse(new Regex(@"\(([\d\.]*)\sunits\)").Match(x.loggedFood.name).Groups[0].Value),
+                Units = double.Parse(new Regex(@"\(([\d\.]*)\sunits\)").Match(x.loggedFood.name).Groups[1].Value),
                 CreatedDate = x.logDate
             });
 
