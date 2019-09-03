@@ -9,7 +9,7 @@ CREATE VIEW vw_FitbitSleeps_Daily AS
 		(SUM(LightMinutes) + SUM(DeepMinutes) + SUM(RemMinutes))  AS TotalSleepMinutes,
 		SUM (MinutesAsleep) AS MinutesAsleep,
 		--MAX(StartTime) AS StartTime,
-		MAX(EndTime AS DATE) AS EndDate
+		MAX(CAST(EndTime AS DATE)) AS EndDate
 		FROM
 		dbo.MyFitbitSleeps
 		GROUP BY CAST(StartTime AS DATE)
