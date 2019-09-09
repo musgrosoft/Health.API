@@ -12,13 +12,15 @@ namespace Repositories.Health.Models
         public DateTime DateOfSleep { get; set; }
         public DateTime StartTime{get;set;}
         public DateTime EndTime { get; set; }
+        //public bool IsMainSleep { get; set; }
 
 
 
 
-        
-        
-        
+
+
+
+
         public int Duration { get; set; }
         public int Efficiency { get; set; }
         
