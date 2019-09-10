@@ -32,7 +32,7 @@ namespace Importer.Fitbit.Internal
 
                 RestlessCount = x.levels.summary.restless?.count,
                 RestlessMinutes = x.levels.summary.restless?.minutes,
-
+                
 
                 DeepCount = x.levels.summary.deep?.count,
                 DeepMinutes = x.levels.summary.deep?.minutes,
@@ -64,7 +64,9 @@ namespace Importer.Fitbit.Internal
                 StartTime = x.startTime,
                 TimeInBed = x.timeInBed,
                 Type = x.type,
-                InfoCode = x.infoCode
+                InfoCode = x.infoCode,
+
+                IsMainSleep = x.isMainSleep
             });
         }
 
