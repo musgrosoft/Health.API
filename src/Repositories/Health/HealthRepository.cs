@@ -149,21 +149,23 @@ namespace Repositories.Health
             }
             else
             {
-                //existingSleep.AwakeCount = myFitbitSleep.AwakeCount;
-                //existingSleep.AwakeMinutes = myFitbitSleep.AwakeMinutes;
-                //existingSleep.AwakeningsCount = myFitbitSleep.AwakeningsCount;
-                //existingSleep.DateOfSleep = myFitbitSleep.DateOfSleep;
-                //existingSleep.Duration = myFitbitSleep.Duration;
-                //existingSleep.Efficiency = myFitbitSleep.Efficiency;
-                //existingSleep.EndTime = myFitbitSleep.EndTime;
-                //existingSleep.MinutesAfterWakeup = myFitbitSleep.MinutesAfterWakeup;
-                //existingSleep.MinutesAsleep = myFitbitSleep.MinutesAsleep;
-                //existingSleep.MinutesAwake = myFitbitSleep.MinutesAwake;
-                //existingSleep.MinutesToFallAsleep = myFitbitSleep.MinutesToFallAsleep;
-                //existingSleep.RestlessCount = myFitbitSleep.RestlessCount;
-                //existingSleep.RestlessMinutes = myFitbitSleep.RestlessMinutes;
-                //existingSleep.StartTime = myFitbitSleep.StartTime;
-                //existingSleep.TimeInBed = myFitbitSleep.TimeInBed;
+                existingSleep.AwakeCount = sleep.AwakeCount;
+                existingSleep.AwakeMinutes = sleep.AwakeMinutes;
+                
+                existingSleep.DateOfSleep = sleep.DateOfSleep;
+                existingSleep.Duration = sleep.Duration;
+                existingSleep.Efficiency = sleep.Efficiency;
+                existingSleep.EndTime = sleep.EndTime;
+                existingSleep.MinutesAfterWakeup = sleep.MinutesAfterWakeup;
+                existingSleep.MinutesAsleep = sleep.MinutesAsleep;
+                existingSleep.MinutesAwake = sleep.MinutesAwake;
+                existingSleep.MinutesToFallAsleep = sleep.MinutesToFallAsleep;
+                existingSleep.RestlessCount = sleep.RestlessCount;
+                existingSleep.RestlessMinutes = sleep.RestlessMinutes;
+                existingSleep.StartTime = sleep.StartTime;
+                existingSleep.TimeInBed = sleep.TimeInBed;
+
+                existingSleep.IsMainSleep= sleep.IsMainSleep;
             }
 
             _healthContext.SaveChanges();
