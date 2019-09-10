@@ -43,20 +43,20 @@ namespace Importer.GoogleSheets
 
         }
 
-//        public List<Drink> GetDrinks()
-//        {
-//            var rows = _sheetsClient.GetRows(_config.AlcoholSpreadsheetId, _config.DrinksRange);
-//
-//            var drinks = _rowMapper.Get<Drink>(rows, _mapFunctions.MapRowToDrink);
-//
-//            return drinks
-//                .GroupBy(x => x.CreatedDate)
-//                .Select(x => new Drink
-//                {
-//                    CreatedDate = x.Key,
-//                    Units = x.Sum(y => y.Units)
-//                }).ToList();
-//        }
+        public List<Drink> GetDrinks()
+        {
+            var rows = _sheetsClient.GetRows(_config.AlcoholSpreadsheetId, _config.DrinksRange);
+
+            var drinks = _rowMapper.Get<Drink>(rows, _mapFunctions.MapRowToDrink);
+
+            return drinks
+                .GroupBy(x => x.CreatedDate)
+                .Select(x => new Drink
+                {
+                    CreatedDate = x.Key,
+                    Units = x.Sum(y => y.Units)
+                }).ToList();
+        }
 
         public List<Exercise> GetExercises()
         {

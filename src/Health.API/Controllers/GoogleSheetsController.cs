@@ -29,14 +29,14 @@ namespace HealthAPI.Controllers
 
             var latestDrink = _healthService.GetLatestDrinkDate();
 
-            if (latestDrink == DateTime.MinValue)
-            {
+            //if (latestDrink == DateTime.MinValue)
+            //{
                 var historicAlcoholIntakes = _sheetsService.GetHistoricDrinks();
                 _healthService.UpsertAlcoholIntakes(historicAlcoholIntakes);
-            }
+            //}
 
-            //var alcoholIntakes = _sheetsService.GetDrinks();
-            //_healthService.UpsertAlcoholIntakes(alcoholIntakes);
+            var alcoholIntakes = _sheetsService.GetDrinks();
+            _healthService.UpsertAlcoholIntakes(alcoholIntakes);
 
             return Ok();
         }
