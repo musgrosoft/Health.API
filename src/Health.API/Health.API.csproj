@@ -70,9 +70,6 @@
     <None Update="Sql Scripts\vw_Fitbit_Sleeps_Daily.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Sql Scripts\vw_Withings_Sleeps_Daily.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Sql Scripts\vw_Weights_Daily.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

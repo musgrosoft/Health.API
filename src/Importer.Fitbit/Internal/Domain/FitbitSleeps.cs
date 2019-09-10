@@ -102,7 +102,7 @@ namespace Importer.Fitbit.Internal.Domain
         public DateTime startTime { get; set; }
         public int timeInBed { get; set; }
         public string type { get; set; }
-        public bool isMainSleep { get; set; }
+        public int isMainSleep { get; set; }
     }
 
 

@@ -66,7 +66,7 @@ namespace Importer.Fitbit.Internal
                 Type = x.type,
                 InfoCode = x.infoCode,
 
-                IsMainSleep = x.isMainSleep
+                IsMainSleep = (x.isMainSleep == 1)
             });
         }
 
