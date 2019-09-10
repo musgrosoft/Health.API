@@ -75,6 +75,15 @@ namespace Repositories
                     modelBuilder.Entity<RestingHeartRate>().HasData(restingHeartRate);
                 }
 
+                //Seed Units
+                var drinksJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/Drinks.json");
+                var drinks = JsonConvert.DeserializeObject<List<Drink>>(drinksJson);
+                foreach (var drink in drinks)
+                {
+                    modelBuilder.Entity<Drink>().HasData(drink);
+                }
+
+
                 for (var date = new DateTime(2018, 5, 1); date < new DateTime(2020, 1, 1); date = date.AddDays(1))
                 {
                     modelBuilder.Entity<Target>().HasData(new Target

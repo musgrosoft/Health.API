@@ -21,25 +21,25 @@ namespace HealthAPI.Controllers
             _healthService = healthService;
         }
         
-        [HttpGet]
-        [Route("Notify/AlcoholIntakes")]
-        public IActionResult MigrateUnits()
-        {
-            _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Units");
+        //[HttpGet]
+        //[Route("Notify/AlcoholIntakes")]
+        //public IActionResult MigrateUnits()
+        //{
+        //    _logger.LogMessageAsync("GOOGLE SHEETS : Migrate Units");
 
-            var latestDrink = _healthService.GetLatestDrinkDate();
+        //    var latestDrink = _healthService.GetLatestDrinkDate();
 
-            //if (latestDrink == DateTime.MinValue)
-            //{
-                var historicAlcoholIntakes = _sheetsService.GetHistoricDrinks();
-                _healthService.UpsertAlcoholIntakes(historicAlcoholIntakes);
-            //}
+        //    //if (latestDrink == DateTime.MinValue)
+        //    //{
+        //        var historicAlcoholIntakes = _sheetsService.GetHistoricDrinks();
+        //        _healthService.UpsertAlcoholIntakes(historicAlcoholIntakes);
+        //    //}
 
-            var alcoholIntakes = _sheetsService.GetDrinks();
-            _healthService.UpsertAlcoholIntakes(alcoholIntakes);
+        //    var alcoholIntakes = _sheetsService.GetDrinks();
+        //    _healthService.UpsertAlcoholIntakes(alcoholIntakes);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         [HttpGet]
         [Route("Notify/Exercises")]
