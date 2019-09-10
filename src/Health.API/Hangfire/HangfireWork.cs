@@ -62,6 +62,7 @@ namespace HealthAPI.Hangfire
             await _logger.LogMessageAsync($"SLEEP : Latest Sleep record has a date of : {latestFitbitSleepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var getDataFromDate = latestFitbitSleepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+            getDataFromDate = latestFitbitSleepDate.AddDays(-100);
             await _logger.LogMessageAsync($"SLEEP : Retrieving Sleep records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fitbitSleeps = await _fitbitService.GetSleeps(getDataFromDate, _calendar.Now());
