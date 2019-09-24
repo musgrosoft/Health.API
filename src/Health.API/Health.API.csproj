@@ -55,6 +55,9 @@
     <None Update="Sql Scripts\vw_BloodPressures_Daily.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Sql Scripts\vw_Exercises_Daily_2.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Sql Scripts\vw_Exercises_Daily.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
