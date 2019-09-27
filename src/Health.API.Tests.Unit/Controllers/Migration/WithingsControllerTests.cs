@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthAPI.Controllers;
-using Importer.Withings;
 using Moq;
 using Repositories.Health.Models;
 using Services.Health;
 using Utils;
+using Withings;
 using Xunit;
 
 namespace HealthAPI.Tests.Unit.Controllers.Migration

@@ -14,15 +14,15 @@ using System.Net.Http;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using HealthAPI.Hangfire;
-using Importer.Fitbit;
 using Importer.GoogleSheets;
-using Importer.Withings;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using Calendar = Utils.Calendar;
 using System.Threading.Tasks;
+using Fitbit;
 using Health.API.Controllers;
+using Withings;
 
 namespace HealthAPI
 {

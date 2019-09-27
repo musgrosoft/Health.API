@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Hangfire;
 using HealthAPI.Hangfire;
-using Importer.Fitbit;
+using Fitbit;
 using Microsoft.AspNetCore.Mvc;
 using Utils;
 

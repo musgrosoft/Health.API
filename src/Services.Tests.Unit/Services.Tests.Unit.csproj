@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Importer.Fitbit\Fitbit.csproj" />
-    <ProjectReference Include="..\Importer.Withings\Importer.Withings.csproj" />
+    <ProjectReference Include="..\Fitbit\Fitbit.csproj" />
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
     <ProjectReference Include="..\Utils\Utils.csproj" />
+    <ProjectReference Include="..\Withings\Withings.csproj" />
   </ItemGroup>
 
   <ItemGroup>

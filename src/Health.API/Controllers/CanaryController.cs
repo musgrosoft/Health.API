@@ -35,6 +35,7 @@ namespace Health.API.Controllers
             var fitbitRefreshToken = await _tokenService.GetFitbitRefreshToken();
             var withingsRefreshToken = await _tokenService.GetWithingsRefreshToken();
             
+            // Add check that subscribed to notifications/subscriptons on withings an fitbit
 
             var messages = new List<string>();
 
