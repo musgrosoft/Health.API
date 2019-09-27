@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GoogleSheets\GoogleSheets.csproj" />
     <ProjectReference Include="..\Health.API\Health.API.csproj" />
   </ItemGroup>
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Importer.GoogleSheets
+namespace GoogleSheets
 {
     public interface ISheetsClient
     {

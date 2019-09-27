@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-
-namespace Importer.Fitbit.Tests.Unit
+﻿namespace Fitbit.Tests.Unit
 {
     public class FitbitMapperTests
     {

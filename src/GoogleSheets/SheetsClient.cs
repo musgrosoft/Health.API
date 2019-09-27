@@ -3,7 +3,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Utils;
 
-namespace Importer.GoogleSheets
+namespace GoogleSheets
 {
     public class SheetsClient : ISheetsClient
     {

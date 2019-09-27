@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Repositories.Health.Models;
 
-namespace Importer.GoogleSheets
+namespace GoogleSheets
 {
     public interface ISheetsService
     {

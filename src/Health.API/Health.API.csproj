@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fitbit\Fitbit.csproj" />
-    <ProjectReference Include="..\GoogleSheets\Importer.GoogleSheets.csproj" />
+    <ProjectReference Include="..\GoogleSheets\GoogleSheets.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
     <ProjectReference Include="..\Utils\Utils.csproj" />
     <ProjectReference Include="..\Withings\Withings.csproj" />

@@ -8,7 +8,7 @@ using Google.Apis.Sheets.v4.Data;
 using Repositories.Health.Models;
 using Utils;
 
-namespace Importer.GoogleSheets
+namespace GoogleSheets
 {
     public class SheetsService : ISheetsService
     {

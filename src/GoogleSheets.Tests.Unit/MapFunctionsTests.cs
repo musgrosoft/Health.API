@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using GoogleSheets;
 using Xunit;
 
-namespace Importer.GoogleSheets.Tests.Unit
+namespace GoogleSheets.Tests.Unit
 {
     public class MapFunctionsTests
     {

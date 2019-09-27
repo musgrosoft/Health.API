@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using GoogleSheets;
 using Moq;
 using Repositories.Health.Models;
 using Utils;
 using Xunit;
 
-namespace Importer.GoogleSheets.Tests.Unit
+namespace GoogleSheets.Tests.Unit
 {
     public class RowMapperTests
     {

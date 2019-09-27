@@ -29,11 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MyUtils", "MyUtils", "{20D1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitbit", "src\Fitbit\Fitbit.csproj", "{FB2C3E63-4C0A-46B1-9D2D-C8BEC90C58E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.Fitbit.Tests.Unit", "src\Fitbit.Tests.Unit\Importer.Fitbit.Tests.Unit.csproj", "{77D82DD9-F197-4D48-AB2F-43F64C973D03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitbit.Tests.Unit", "src\Fitbit.Tests.Unit\Fitbit.Tests.Unit.csproj", "{77D82DD9-F197-4D48-AB2F-43F64C973D03}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.GoogleSheets", "src\GoogleSheets\Importer.GoogleSheets.csproj", "{68DDE4F4-DAD2-4871-8A40-9DD8D8E664CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSheets", "src\GoogleSheets\GoogleSheets.csproj", "{68DDE4F4-DAD2-4871-8A40-9DD8D8E664CC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Importer.GoogleSheets.Tests.Unit", "src\GoogleSheets.Tests.Unit\Importer.GoogleSheets.Tests.Unit.csproj", "{88039205-A86D-45C6-8F0B-0C847DCD27DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSheets.Tests.Unit", "src\GoogleSheets.Tests.Unit\GoogleSheets.Tests.Unit.csproj", "{88039205-A86D-45C6-8F0B-0C847DCD27DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Withings", "src\Withings\Withings.csproj", "{56E6720A-57E8-4193-B94D-BA0019881C7B}"
 EndProject

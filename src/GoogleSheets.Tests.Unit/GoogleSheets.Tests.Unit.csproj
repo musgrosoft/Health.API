@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GoogleSheets\Importer.GoogleSheets.csproj" />
+    <ProjectReference Include="..\GoogleSheets\GoogleSheets.csproj" />
   </ItemGroup>
 
 </Project>

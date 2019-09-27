@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Utils;
 
-namespace Importer.GoogleSheets
+namespace GoogleSheets
 {
     public class RowMapper : IRowMapper
     {
