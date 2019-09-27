@@ -38,14 +38,18 @@ namespace Importer.Withings
                     new KeyValuePair<string, string>("redirect_uri", _config.WithingsRedirectUrl)
                 };
 
+                await _logger.LogMessageAsync("~~~ trying to get tokens by authorisation code");
+
                 var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
+
+                await _logger.LogMessageAsync("~~~ received response from Withings");
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                await _logger.LogMessageAsync("trying to get tokens by auth code and the respone is " + responseBody);
-
                 if (response.IsSuccessStatusCode)
                 {
+                    await _logger.LogMessageAsync("~~~ Success Status Code");
+
                     var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
 
                     if (String.IsNullOrEmpty(tokenResponse.access_token) ||
@@ -59,6 +63,8 @@ namespace Importer.Withings
                 }
                 else
                 {
+                    await _logger.LogMessageAsync("~~~ Non Success Status Code");
+
                     throw  new Exception($"non success status code : {(int)response.StatusCode} , content: {responseBody}");
 
                 }
@@ -80,13 +86,34 @@ namespace Importer.Withings
                 new KeyValuePair<string, string>("redirect_uri", _config.WithingsRedirectUrl)
             };
 
+            await _logger.LogMessageAsync("~~~ trying to get tokens by refresh token");
+
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
 
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
+            if (response.IsSuccessStatusCode)
+            {
+                await _logger.LogMessageAsync("~~~ Success Status Code");
 
-            return tokenResponse;
+                var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
+
+                if (String.IsNullOrEmpty(tokenResponse.access_token) ||
+                    String.IsNullOrEmpty(tokenResponse.refresh_token))
+                {
+                    throw new Exception($"Access token or Refresh token is empty : {(int)response.StatusCode} , content: {responseBody}");
+                }
+
+                return tokenResponse;
+            }
+            else
+            {
+                await _logger.LogMessageAsync("~~~ Non Success Status Code");
+
+                throw new Exception($"non success status code : {(int)response.StatusCode} , content: {responseBody}");
+            }
+
+
         }
 
 
