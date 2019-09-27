@@ -32,6 +32,7 @@ namespace Services.Health
         double GetCumSumCardioMinutes();
 
         DateTime GetLatestFitbitSleepDate(DateTime defaultDateTime);
-        
+
+        List<Sleep> GetLatestSleeps(int num = 10);
     }
 }

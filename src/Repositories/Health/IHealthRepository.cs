@@ -30,5 +30,6 @@ namespace Repositories.Health
         Target GetTarget(DateTime date);
         double GetCumSumCardioMinutes();
 
+        List<Sleep> GetLatestSleeps(int num);
     }
 }

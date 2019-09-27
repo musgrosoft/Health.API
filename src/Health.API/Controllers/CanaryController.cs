@@ -35,28 +35,28 @@ namespace Health.API.Controllers
             var fitbitRefreshToken = await _tokenService.GetFitbitRefreshToken();
             var withingsRefreshToken = await _tokenService.GetWithingsRefreshToken();
             
-            // Add check that subscribed to notifications/subscriptons on withings an fitbit
+            // TODO Add check that subscribed to notifications/subscriptons on withings an fitbit
 
             var messages = new List<string>();
 
             messages.Add(string.IsNullOrWhiteSpace(fitbitRefreshToken) ? "XXX Fitbit Refresh Token is empty" : "Fitbit Refresh Token is populated");
             messages.Add(string.IsNullOrWhiteSpace(withingsRefreshToken) ? "XXX Withings Refresh Token is empty" : "Withings Refresh Token is populated");
 
+            return Ok(messages);
+        }
+
+        [HttpGet]
+        [Route("Data")]
+        public IActionResult Data()
+        {
             return Ok(new CanaryData
             {
-                Messages = messages,
-//                LatestRestingHeartRates = _healthService.GetLatestRestingHeartRates(20),
-//                LatestWeights = _healthService.GetLatestWeights(20),
-//                LatestBloodPressures = _healthService.GetLatestBloodPressures(20),
-//                LatestDrinks = _healthService.GetLatestDrinks(20),
-//                LatestExercises = _healthService.GetLatestExercises(20)
-
                 LatestRestingHeartRates = _healthService.GetLatestRestingHeartRates(20000),
                 LatestWeights = _healthService.GetLatestWeights(20000),
                 LatestBloodPressures = _healthService.GetLatestBloodPressures(20000),
                 LatestDrinks = _healthService.GetLatestDrinks(20000),
-                LatestExercises = _healthService.GetLatestExercises(20000)
-
+                LatestExercises = _healthService.GetLatestExercises(20000),
+                LatestSleeps = _healthService.GetLatestSleeps(20000)
             });
 
         }
@@ -88,12 +88,13 @@ namespace Health.API.Controllers
 
         private class CanaryData
         {
-            public List<string> Messages { get; set; }
+            
             public List<RestingHeartRate> LatestRestingHeartRates { get; set; }
             public List<Weight> LatestWeights { get; set; }
             public List<BloodPressure> LatestBloodPressures { get; set; }
             public List<Drink> LatestDrinks { get; set; }
             public List<Exercise> LatestExercises { get; set; }
+            public List<Sleep> LatestSleeps { get; set; }
         }
     }
 }

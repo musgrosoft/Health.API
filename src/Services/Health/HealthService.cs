@@ -66,7 +66,12 @@ namespace Services.Health
             var latestDate = _healthRepository.GetLatestFitbitSleepDate();
             return latestDate ?? defaultDateTime;
         }
-        
+
+        public List<Sleep> GetLatestSleeps(int num = 10)
+        {
+            return _healthRepository.GetLatestSleeps(num);
+        }
+
         public List<Exercise> GetLatestExercises(int num)
         {
             return _healthRepository.GetLatestExercises(num);

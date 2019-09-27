@@ -85,6 +85,11 @@ namespace Repositories.Health
             return (_healthContext.Exercises.Sum(x => x.TotalSeconds))/60;
         }
 
+        public List<Sleep> GetLatestSleeps(int num)
+        {
+            //todo when you start sleep past midnight???
+            return _healthContext.MyFitbitSleeps.OrderByDescending(x => x.DateOfSleep).Take(num).ToList();
+        }
 
 
         public Target GetTarget(DateTime date)
