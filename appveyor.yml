@@ -30,8 +30,6 @@ before_build:
     dotnet restore ./src/Fitbit.Tests.Unit/Fitbit.Tests.Unit.csproj
     
     dotnet restore ./src/Withings.Tests.Unit/Withings.Tests.Unit.csproj
-    
-    dotnet restore ./src/GoogleSheets.Tests.Unit/GoogleSheets.Tests.Unit.csproj
 
     
     dotnet clean ./src/Health.API.Tests.Unit/Health.API.Tests.Unit.csproj
@@ -55,8 +53,6 @@ before_build:
     dotnet clean ./src/Fitbit.Tests.Unit/Fitbit.Tests.Unit.csproj
     
     dotnet clean ./src/Withings.Tests.Unit/Withings.Tests.Unit.csproj
-    
-    dotnet clean ./src/GoogleSheets.Tests.Unit/GoogleSheets.Tests.Unit.csproj
 
 
 build:
