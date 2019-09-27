@@ -165,7 +165,7 @@ namespace Repositories.Health
                 existingSleep.StartTime = sleep.StartTime;
                 existingSleep.TimeInBed = sleep.TimeInBed;
 
-                existingSleep.IsMainSleep= sleep.IsMainSleep;
+                //existingSleep.IsMainSleep= sleep.IsMainSleep;
             }
 
             _healthContext.SaveChanges();
