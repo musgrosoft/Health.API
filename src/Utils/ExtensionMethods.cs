@@ -23,7 +23,7 @@ namespace Utils
 
         public static double ToUnixTimeMillisecondsFromDate(this DateTime dateTime)
         {
-            return (dateTime - epoch).Milliseconds;
+            return (dateTime - epoch).TotalMilliseconds;
         }
 
         public static bool Between(this DateTime val, DateTime startDate, DateTime endDate)
