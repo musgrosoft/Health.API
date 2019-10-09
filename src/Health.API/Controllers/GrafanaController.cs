@@ -27,7 +27,7 @@ namespace Health.API.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet, HttpPost]
         [Route("search")]
         public IActionResult Search()
         {
@@ -40,7 +40,7 @@ namespace Health.API.Controllers
                 );
         }
 
-        [HttpGet]
+        [HttpGet, HttpPost]
         [Route("query")]
         public IActionResult Query()
         {
