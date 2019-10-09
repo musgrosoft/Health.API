@@ -61,7 +61,7 @@ namespace Health.API.Controllers
                         Target = "weights",
                         Datapoints = _healthService.GetLatestWeights(20000)
                             .OrderBy( x => x.CreatedDate )
-                            .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeFromDate() } )
+                            .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeFromDate() * 1000 } )
                             .ToList()
                         }
                     
