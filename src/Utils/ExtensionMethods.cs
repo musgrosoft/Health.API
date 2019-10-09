@@ -21,6 +21,11 @@ namespace Utils
             return (dateTime - epoch).TotalSeconds;
         }
 
+        public static double ToUnixTimeMillisecondsFromDate(this DateTime dateTime)
+        {
+            return (dateTime - epoch).Milliseconds;
+        }
+
         public static bool Between(this DateTime val, DateTime startDate, DateTime endDate)
         {
             return (val >= startDate && val <= endDate);
