@@ -42,31 +42,51 @@ namespace Health.API.Controllers
 
         [HttpGet, HttpPost]
         [Route("query")]
-        public IActionResult Query()
+        public IActionResult Query([FromBody] GrafanaRequest grafanaRequest)
         {
-            return Ok(
-                new List<QueryResponse>
-                {
-                    new QueryResponse
+
+            if (grafanaRequest.targets[0].target == "sleeps")
+            {
+                return Ok(
+                    new List<QueryResponse>
                     {
-                        Target = "sleeps",
-                        Datapoints = _healthService.GetLatestSleeps(20000)
-                            .OrderBy( x => x.DateOfSleep )
-                            .Select( x => new double?[] { x.AsleepMinutes, x.DateOfSleep.ToUnixTimeMillisecondsFromDate() } )
-                            .ToList()
-                            
-                    },
-                    new QueryResponse
+                        new QueryResponse
+                        {
+                            Target = "sleeps",
+                            Datapoints = _healthService.GetLatestSleeps(20000)
+                                .OrderBy( x => x.DateOfSleep )
+                                .Select( x => new double?[] { x.AsleepMinutes, x.DateOfSleep.ToUnixTimeMillisecondsFromDate() } )
+                                .ToList()
+
+                        },
+
+
+                    }
+                );
+
+            }
+
+            if (grafanaRequest.targets[0].target == "weights")
+            {
+                return Ok(
+                    new List<QueryResponse>
                     {
-                        Target = "weights",
-                        Datapoints = _healthService.GetLatestWeights(20000)
-                            .OrderBy( x => x.CreatedDate )
-                            .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
-                            .ToList()
+                        new QueryResponse
+                        {
+                            Target = "weights",
+                            Datapoints = _healthService.GetLatestWeights(20000)
+                                .OrderBy( x => x.CreatedDate )
+                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
+                                .ToList()
                         }
-                    
-                }
-            );
+
+                    }
+                );
+
+            }
+
+            return Ok("no matching target " + grafanaRequest.ToString());
+
         }
 
     }
