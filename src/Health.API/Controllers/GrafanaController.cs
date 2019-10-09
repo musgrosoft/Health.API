@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Health;
 using Utils;
+using MoreLinq;
+using Repositories;
 
 namespace Health.API.Controllers
 {
@@ -35,7 +37,8 @@ namespace Health.API.Controllers
                 new List<string>
                 {
                     "sleeps",
-                    "weights"
+                    "weights",
+                    "weightsMovingAverage"
                 }
                 );
         }
@@ -77,6 +80,29 @@ namespace Health.API.Controllers
                             Datapoints = _healthService.GetLatestWeights(20000)
                                 .OrderBy( x => x.CreatedDate )
                                 .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
+                                .ToList()
+                        }
+
+                    }
+                );
+
+            }
+
+            if (grafanaRequest.targets[0].target == "weightsMovingAverage")
+            {
+                return Ok(
+                    new List<QueryResponse>
+                    {
+                        new QueryResponse
+                        {
+                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
+
+                Target = "weightsMovingAverage",
+                            Datapoints = _healthService.GetLatestWeights(20000)
+                                .OrderBy( x => x.CreatedDate )
+                                .WindowRight(10)
+                                .Select(window => new double?[]{window.Average(x => x.Kg), window.Max(x=>x.CreatedDate).ToUnixTimeMillisecondsFromDate()  })
+//                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
                         }
 
