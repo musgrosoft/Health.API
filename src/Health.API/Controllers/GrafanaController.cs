@@ -8,6 +8,7 @@ using Services.Health;
 using Utils;
 using MoreLinq;
 using Repositories;
+using Repositories.Health.Models;
 
 namespace Health.API.Controllers
 {
@@ -15,7 +16,9 @@ namespace Health.API.Controllers
     {
         Sleeps,
         Weights,
-        WeightsMovingAverage
+        WeightsMovingAverage,
+        PercentageFat,
+        PercentageFatMovingAverage
     }
 
     [Route("api/[controller]")]
@@ -41,12 +44,7 @@ namespace Health.API.Controllers
         public IActionResult Search()
         {
             return Ok(
-                new List<string>
-                {
-                    "sleeps",
-                    "weights",
-                    "weightsMovingAverage"
-                }
+                    Enum.GetNames(typeof(TTarget)).ToList()
                 );
         }
 
@@ -79,6 +77,18 @@ namespace Health.API.Controllers
             
         }
 
+        private List<Weight> _orderedWeights;
+        private List<Weight> GetAllWeights()
+        {
+            if (_orderedWeights == null)
+            {
+                _orderedWeights = _healthService.GetLatestWeights(20000).OrderBy(x => x.CreatedDate).ToList();
+            }
+
+            return _orderedWeights;
+
+        }
+
         private QueryResponse GetQueryResponse(TTarget tt)
         {
             switch (tt)
@@ -100,8 +110,7 @@ namespace Health.API.Controllers
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = _healthService.GetLatestWeights(20000)
-                                .OrderBy(x => x.CreatedDate)
+                        Datapoints = _orderedWeights
                                 .Select(x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                                 .ToList()
                     };
@@ -113,13 +122,36 @@ namespace Health.API.Controllers
                         //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                         Target = tt.ToString(),
-                        Datapoints = _healthService.GetLatestWeights(20000)
-                                .OrderBy(x => x.CreatedDate)
+                        Datapoints = _orderedWeights
                                 .WindowRight(10)
                                 .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
                     };
+
+                case TTarget.PercentageFat:
+
+                    return new QueryResponse
+                    {
+                        Target = tt.ToString(),
+                        Datapoints = _orderedWeights
+                            .Select(x => new double?[] { x.FatRatioPercentage, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
+                            .ToList()
+                    };
+
+                case TTarget.PercentageFatMovingAverage:
+                    return
+                        new QueryResponse
+                        {
+                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
+
+                            Target = tt.ToString(),
+                            Datapoints = _orderedWeights
+                                .WindowRight(10)
+                                .Select(window => new double?[] { window.Average(x => x.FatRatioPercentage), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
+                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
+                                .ToList()
+                        };
 
                 default:
                     return null;
