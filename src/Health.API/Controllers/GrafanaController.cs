@@ -11,6 +11,13 @@ using Repositories;
 
 namespace Health.API.Controllers
 {
+    public enum TTarget
+    {
+        Sleeps,
+        Weights,
+        WeightsMovingAverage
+    }
+
     [Route("api/[controller]")]
     [ApiController]
     public class GrafanaController : ControllerBase
@@ -47,71 +54,78 @@ namespace Health.API.Controllers
         [Route("query")]
         public IActionResult Query([FromBody] GrafanaRequest grafanaRequest)
         {
-
-            if (grafanaRequest.targets[0].target == "sleeps")
+            var responses = new List<QueryResponse>();
+            
+            foreach(var target in grafanaRequest.targets)
             {
-                return Ok(
-                    new List<QueryResponse>
-                    {
+                var t = Enum.Parse(typeof(TTarget), target.target);
+
+                var qr = GetQueryResponse((TTarget)t);
+
+                responses.Add(qr);
+
+
+            }
+
+            if(responses.Any())
+            {
+                return Ok(responses);
+            }
+            else {
+                return Ok("no matching target " + grafanaRequest.ToString());
+            }
+
+
+            
+        }
+
+        private QueryResponse GetQueryResponse(TTarget tt)
+        {
+            switch (tt)
+            {
+                case TTarget.Sleeps:
+                        return
                         new QueryResponse
                         {
-                            Target = "sleeps",
+                            Target = tt.ToString(),
                             Datapoints = _healthService.GetLatestSleeps(20000)
-                                .OrderBy( x => x.DateOfSleep )
-                                .Select( x => new double?[] { x.AsleepMinutes, x.DateOfSleep.ToUnixTimeMillisecondsFromDate() } )
+                                .OrderBy(x => x.DateOfSleep)
+                                .Select(x => new double?[] { x.AsleepMinutes, x.DateOfSleep.ToUnixTimeMillisecondsFromDate() })
                                 .ToList()
 
-                        },
+                        };
 
+                case TTarget.Weights:
 
-                    }
-                );
-
-            }
-
-            if (grafanaRequest.targets[0].target == "weights")
-            {
-                return Ok(
-                    new List<QueryResponse>
+                    return new QueryResponse
                     {
-                        new QueryResponse
-                        {
-                            Target = "weights",
-                            Datapoints = _healthService.GetLatestWeights(20000)
-                                .OrderBy( x => x.CreatedDate )
-                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
+                        Target = tt.ToString(),
+                        Datapoints = _healthService.GetLatestWeights(20000)
+                                .OrderBy(x => x.CreatedDate)
+                                .Select(x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                                 .ToList()
-                        }
+                    };
 
-                    }
-                );
-
-            }
-
-            if (grafanaRequest.targets[0].target == "weightsMovingAverage")
-            {
-                return Ok(
-                    new List<QueryResponse>
+                case TTarget.WeightsMovingAverage:
+                    return
+                    new QueryResponse
                     {
-                        new QueryResponse
-                        {
-                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
+                        //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
-                Target = "weightsMovingAverage",
-                            Datapoints = _healthService.GetLatestWeights(20000)
-                                .OrderBy( x => x.CreatedDate )
+                        Target = tt.ToString(),
+                        Datapoints = _healthService.GetLatestWeights(20000)
+                                .OrderBy(x => x.CreatedDate)
                                 .WindowRight(10)
-                                .Select(window => new double?[]{window.Average(x => x.Kg), window.Max(x=>x.CreatedDate).ToUnixTimeMillisecondsFromDate()  })
-//                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
+                                .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
+                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
-                        }
+                    };
 
-                    }
-                );
+                default:
+                    return null;
+
 
             }
-
-            return Ok("no matching target " + grafanaRequest.ToString());
 
         }
 
