@@ -110,7 +110,7 @@ namespace Health.API.Controllers
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = _orderedWeights
+                        Datapoints = GetAllWeights()
                                 .Select(x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                                 .ToList()
                     };
@@ -122,7 +122,7 @@ namespace Health.API.Controllers
                         //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                         Target = tt.ToString(),
-                        Datapoints = _orderedWeights
+                        Datapoints = GetAllWeights()
                                 .WindowRight(10)
                                 .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
@@ -134,7 +134,7 @@ namespace Health.API.Controllers
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = _orderedWeights
+                        Datapoints = GetAllWeights()
                             .Select(x => new double?[] { x.FatRatioPercentage, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                             .ToList()
                     };
@@ -146,7 +146,7 @@ namespace Health.API.Controllers
                             //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                             Target = tt.ToString(),
-                            Datapoints = _orderedWeights
+                            Datapoints = GetAllWeights()
                                 .WindowRight(10)
                                 .Select(window => new double?[] { window.Average(x => x.FatRatioPercentage), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
