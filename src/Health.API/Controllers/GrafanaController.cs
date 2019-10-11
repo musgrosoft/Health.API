@@ -15,10 +15,14 @@ namespace Health.API.Controllers
     public enum TTarget
     {
         Sleeps,
-        Weights,
-        WeightsMovingAverage,
-        PercentageFat,
-        PercentageFatMovingAverage
+        WeightKg,
+        WeightKgMovingAverage,
+        WeightPercentageFat,
+        WeightPercentageFatMovingAverage,
+        WeightFatKg,
+        WeightFatKgMovingAverage,
+        WeightLeanKg,
+        WeightLeanKgMovingAverage
     }
 
     [Route("api/[controller]")]
@@ -105,7 +109,7 @@ namespace Health.API.Controllers
 
                         };
 
-                case TTarget.Weights:
+                case TTarget.WeightKg:
 
                     return new QueryResponse
                     {
@@ -115,7 +119,7 @@ namespace Health.API.Controllers
                                 .ToList()
                     };
 
-                case TTarget.WeightsMovingAverage:
+                case TTarget.WeightKgMovingAverage:
                     return
                     new QueryResponse
                     {
@@ -129,7 +133,7 @@ namespace Health.API.Controllers
                                 .ToList()
                     };
 
-                case TTarget.PercentageFat:
+                case TTarget.WeightPercentageFat:
 
                     return new QueryResponse
                     {
@@ -139,7 +143,7 @@ namespace Health.API.Controllers
                             .ToList()
                     };
 
-                case TTarget.PercentageFatMovingAverage:
+                case TTarget.WeightPercentageFatMovingAverage:
                     return
                         new QueryResponse
                         {
@@ -152,6 +156,55 @@ namespace Health.API.Controllers
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
                         };
+
+                case TTarget.WeightFatKg:
+
+                    return new QueryResponse
+                    {
+                        Target = tt.ToString(),
+                        Datapoints = GetAllWeights()
+                            .Select(x => new double?[] { x.FatKg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
+                            .ToList()
+                    };
+
+                case TTarget.WeightFatKgMovingAverage:
+                    return
+                        new QueryResponse
+                        {
+                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
+
+                            Target = tt.ToString(),
+                            Datapoints = GetAllWeights()
+                                .WindowRight(10)
+                                .Select(window => new double?[] { window.Average(x => x.FatKg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
+                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
+                                .ToList()
+                        };
+
+                case TTarget.WeightLeanKg:
+
+                    return new QueryResponse
+                    {
+                        Target = tt.ToString(),
+                        Datapoints = GetAllWeights()
+                            .Select(x => new double?[] { x.LeanKg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
+                            .ToList()
+                    };
+
+                case TTarget.WeightLeanKgMovingAverage:
+                    return
+                        new QueryResponse
+                        {
+                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
+
+                            Target = tt.ToString(),
+                            Datapoints = GetAllWeights()
+                                .WindowRight(10)
+                                .Select(window => new double?[] { window.Average(x => x.LeanKg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
+                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
+                                .ToList()
+                        };
+
 
                 default:
                     return null;
