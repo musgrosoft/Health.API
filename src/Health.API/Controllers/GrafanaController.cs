@@ -82,11 +82,19 @@ namespace Health.API.Controllers
         }
 
         private List<Weight> _orderedWeights;
-        private List<Weight> GetAllWeights()
+        private List<Weight> GetAllWeightsAggregatedByDay()
         {
             if (_orderedWeights == null)
             {
-                _orderedWeights = _healthService.GetLatestWeights(20000).OrderBy(x => x.CreatedDate).ToList();
+                _orderedWeights = _healthService.GetLatestWeights(20000)
+                    .GroupBy(x=>x.CreatedDate.Date)
+                    .Select(x=> new Weight
+                    {
+                        CreatedDate = x.Key,
+                        Kg = x.Average(y => y.Kg),
+                        FatRatioPercentage = x.Average(y=>y.FatRatioPercentage) ,
+                    })
+                    .OrderBy(x => x.CreatedDate).ToList();
             }
 
             return _orderedWeights;
@@ -114,7 +122,7 @@ namespace Health.API.Controllers
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = GetAllWeights()
+                        Datapoints = GetAllWeightsAggregatedByDay()
                                 .Select(x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                                 .ToList()
                     };
@@ -126,7 +134,7 @@ namespace Health.API.Controllers
                         //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                         Target = tt.ToString(),
-                        Datapoints = GetAllWeights()
+                        Datapoints = GetAllWeightsAggregatedByDay()
                                 .WindowRight(10)
                                 .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
@@ -138,7 +146,7 @@ namespace Health.API.Controllers
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = GetAllWeights()
+                        Datapoints = GetAllWeightsAggregatedByDay()
                             .Select(x => new double?[] { x.FatRatioPercentage, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                             .ToList()
                     };
@@ -150,7 +158,7 @@ namespace Health.API.Controllers
                             //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                             Target = tt.ToString(),
-                            Datapoints = GetAllWeights()
+                            Datapoints = GetAllWeightsAggregatedByDay()
                                 .WindowRight(10)
                                 .Select(window => new double?[] { window.Average(x => x.FatRatioPercentage), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
@@ -162,7 +170,7 @@ namespace Health.API.Controllers
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = GetAllWeights()
+                        Datapoints = GetAllWeightsAggregatedByDay()
                             .Select(x => new double?[] { x.FatKg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                             .ToList()
                     };
@@ -174,7 +182,7 @@ namespace Health.API.Controllers
                             //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                             Target = tt.ToString(),
-                            Datapoints = GetAllWeights()
+                            Datapoints = GetAllWeightsAggregatedByDay()
                                 .WindowRight(10)
                                 .Select(window => new double?[] { window.Average(x => x.FatKg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
@@ -186,7 +194,7 @@ namespace Health.API.Controllers
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = GetAllWeights()
+                        Datapoints = GetAllWeightsAggregatedByDay()
                             .Select(x => new double?[] { x.LeanKg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                             .ToList()
                     };
@@ -198,7 +206,7 @@ namespace Health.API.Controllers
                             //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                             Target = tt.ToString(),
-                            Datapoints = GetAllWeights()
+                            Datapoints = GetAllWeightsAggregatedByDay()
                                 .WindowRight(10)
                                 .Select(window => new double?[] { window.Average(x => x.LeanKg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
