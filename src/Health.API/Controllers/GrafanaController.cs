@@ -9,12 +9,14 @@ using Utils;
 using MoreLinq;
 using Repositories;
 using Repositories.Health.Models;
+using GoogleSheets;
 
 namespace Health.API.Controllers
 {
     public enum TTarget
     {
         Sleeps,
+
         WeightKg,
         WeightKgMovingAverage,
         WeightPercentageFat,
@@ -22,7 +24,9 @@ namespace Health.API.Controllers
         WeightFatKg,
         WeightFatKgMovingAverage,
         WeightLeanKg,
-        WeightLeanKgMovingAverage
+        WeightLeanKgMovingAverage,
+
+        Exercise_Daily_TotalSeconds
     }
 
     [Route("api/[controller]")]
@@ -30,10 +34,12 @@ namespace Health.API.Controllers
     public class GrafanaController : ControllerBase
     {
         private readonly IHealthService _healthService;
+        private readonly ISheetsService _sheetsService;
 
-        public GrafanaController(IHealthService healthService)
+        public GrafanaController(IHealthService healthService, ISheetsService sheetsService)
         {
             _healthService = healthService;
+            _sheetsService = sheetsService;
         }
 
         [HttpGet]
@@ -81,12 +87,12 @@ namespace Health.API.Controllers
             
         }
 
-        private List<Weight> _orderedWeights;
+       // private List<Weight> _orderedWeights;
         private List<Weight> GetAllWeightsAggregatedByDay()
         {
-            if (_orderedWeights == null)
-            {
-                _orderedWeights = _healthService.GetLatestWeights(20000)
+            //if (_orderedWeights == null)
+            //{
+                return _healthService.GetLatestWeights(20000)
                     .GroupBy(x=>x.CreatedDate.Date)
                     .Select(x=> new Weight
                     {
@@ -95,9 +101,9 @@ namespace Health.API.Controllers
                         FatRatioPercentage = x.Average(y=>y.FatRatioPercentage) ,
                     })
                     .OrderBy(x => x.CreatedDate).ToList();
-            }
+            //}
 
-            return _orderedWeights;
+            //return _orderedWeights;
 
         }
 
@@ -116,6 +122,26 @@ namespace Health.API.Controllers
                                 .ToList()
 
                         };
+
+                case TTarget.Exercise:
+
+                    //var gService = new GoogleSheets.SheetsService()
+                    return
+                    new QueryResponse
+                    {
+
+
+                        Target = tt.ToString(),
+                        Datapoints = _sheetsService.GetExercises()
+
+
+
+                        //_healthService.GetLatestExercises(20000)
+                            .OrderBy(x => x.CreatedDate)
+                            .Select(x => new double?[] { x.TotalSeconds, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
+                            .ToList()
+
+                    };
 
                 case TTarget.WeightKg:
 
