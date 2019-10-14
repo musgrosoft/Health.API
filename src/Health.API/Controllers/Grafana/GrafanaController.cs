@@ -13,26 +13,28 @@ using GoogleSheets;
 
 namespace Health.API.Controllers
 {
-    public enum TTarget
-    {
-        Sleeps,
 
-        WeightKg,
-        WeightKgMovingAverage,
-        WeightPercentageFat,
-        WeightPercentageFatMovingAverage,
-        WeightFatKg,
-        WeightFatKgMovingAverage,
-        WeightLeanKg,
-        WeightLeanKgMovingAverage,
-
-        Exercise_Daily_TotalSeconds
-    }
 
     [Route("api/[controller]")]
     [ApiController]
     public class GrafanaController : ControllerBase
     {
+        private enum TTarget
+        {
+            Sleeps,
+
+            WeightKg,
+            WeightKgMovingAverage,
+            WeightPercentageFat,
+            WeightPercentageFatMovingAverage,
+            WeightFatKg,
+            WeightFatKgMovingAverage,
+            WeightLeanKg,
+            WeightLeanKgMovingAverage,
+
+            Exercise_Daily_TotalSeconds
+        }
+
         private readonly IHealthService _healthService;
         private readonly ISheetsService _sheetsService;
 
@@ -258,16 +260,5 @@ namespace Health.API.Controllers
 
     }
 
-    public class QueryResponse
-    {
-        public string Target { get; set; }
-        public List<double?[]> Datapoints { get; set; }
-    }
-
-//    public class Datapoint
-//    {
-//        public double Value { get; set; }
-//        public double UnixTimestamp { get; set; }
-//    }
 
 }
