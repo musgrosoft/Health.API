@@ -124,33 +124,6 @@ namespace Health.API.Controllers
 
                         };
 
-                case TTarget.Exercise_Daily_TotalSeconds:
-
-                    //var gService = new GoogleSheets.SheetsService()
-                    return
-                    new QueryResponse
-                    {
-
-
-                        Target = tt.ToString(),
-                        Datapoints = _sheetsService.GetExercises()
-                        .GroupBy(x=>x.CreatedDate)
-                        .Select(x=> new Exercise
-                        {
-                            CreatedDate = x.Key,
-                            TotalSeconds = x.Sum(y=>y.TotalSeconds),
-                            Metres = x.Sum(y=>y.Metres),
-                            Description = "Daily Sum"
-                        })
-
-
-
-                        //_healthService.GetLatestExercises(20000)
-                            .OrderBy(x => x.CreatedDate)
-                            .Select(x => new double?[] { x.TotalSeconds, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
-                            .ToList()
-
-                    };
 
                 case TTarget.WeightKg:
 
