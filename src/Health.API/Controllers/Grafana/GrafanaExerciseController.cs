@@ -15,9 +15,9 @@ namespace Health.API.Controllers
 {
 
 
-    [Route("api/Grafana/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class ExerciseController : ControllerBase
+    public class GrafanaExerciseController : ControllerBase
     {
         private enum GrafanaExerciseTargets
         {
@@ -29,7 +29,7 @@ namespace Health.API.Controllers
         private readonly IHealthService _healthService;
         private readonly ISheetsService _sheetsService;
 
-        public ExerciseController(IHealthService healthService, ISheetsService sheetsService)
+        public GrafanaExerciseController(IHealthService healthService, ISheetsService sheetsService)
         {
             _healthService = healthService;
             _sheetsService = sheetsService;
