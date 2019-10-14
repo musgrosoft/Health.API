@@ -15,7 +15,7 @@ namespace Health.API.Controllers
 {
 
 
-    [Route("api/[controller]")]
+    [Route("api/Grafana/[controller]")]
     [ApiController]
     public class ExerciseController : ControllerBase
     {

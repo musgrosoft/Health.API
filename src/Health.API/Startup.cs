@@ -125,7 +125,7 @@ namespace HealthAPI
             services.AddTransient<IMapFunctions, MapFunctions>();
             services.AddTransient<ISheetsClient, SheetsClient>();
 
-            services.AddTransient<IMessageMaker, MessageMaker>();
+            //services.AddTransient<IMessageMaker, MessageMaker>();
 
             services.AddTransient<IWithingsMapper, WithingsMapper>();
             services.AddTransient<IWithingsClientQueryAdapter, WithingsClientQueryAdapter>();

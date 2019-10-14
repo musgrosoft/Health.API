@@ -15,9 +15,9 @@ namespace Health.API.Controllers
 {
 
 
-    [Route("api/[controller]")]
+    [Route("api/Grafana[controller]")]
     [ApiController]
-    public class GrafanaController : ControllerBase
+    public class WeightController : ControllerBase
     {
         private enum TTarget
         {
@@ -32,13 +32,12 @@ namespace Health.API.Controllers
             WeightLeanKg,
             WeightLeanKgMovingAverage,
 
-            Exercise_Daily_TotalSeconds
         }
 
         private readonly IHealthService _healthService;
         private readonly ISheetsService _sheetsService;
 
-        public GrafanaController(IHealthService healthService, ISheetsService sheetsService)
+        public WeightController(IHealthService healthService, ISheetsService sheetsService)
         {
             _healthService = healthService;
             _sheetsService = sheetsService;
