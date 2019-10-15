@@ -16,8 +16,9 @@ namespace Services.Health
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
         void UpsertAlcoholIntakes(List<Drink> alcoholIntakes);
         void UpsertExercises(List<Exercise> exercises);
-        void UpsertFitbitSleeps(IEnumerable<SleepSummary> fitbitSleeps);
-        
+        void UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries);
+        void UpsertSleepStates(IEnumerable<SleepState> sleepStates);
+
 
         List<Weight> GetLatestWeights(int num = 10);
         List<BloodPressure> GetLatestBloodPressures(int num = 10);

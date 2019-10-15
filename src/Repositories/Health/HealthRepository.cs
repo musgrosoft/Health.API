@@ -88,7 +88,7 @@ namespace Repositories.Health
         public List<SleepSummary> GetLatestSleeps(int num)
         {
             //todo when you start sleep past midnight???
-            return _healthContext.MyFitbitSleeps.OrderByDescending(x => x.DateOfSleep).Take(num).ToList();
+            return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).Take(num).ToList();
         }
 
 
@@ -101,6 +101,7 @@ namespace Repositories.Health
         {
             return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
+
 
 
 
@@ -121,7 +122,7 @@ namespace Repositories.Health
 
         public DateTime? GetLatestFitbitSleepDate()
         {
-            return _healthContext.MyFitbitSleeps.OrderByDescending(x => x.DateOfSleep).FirstOrDefault()?.DateOfSleep;
+            return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).FirstOrDefault()?.DateOfSleep;
         }
 
         public void Upsert(Weight weight)
@@ -146,7 +147,7 @@ namespace Repositories.Health
 
         public void Upsert(SleepSummary sleepSummary)
         {
-            var existingSleep = _healthContext.MyFitbitSleeps.Find(sleepSummary.LogId);
+            var existingSleep = _healthContext.SleepSummaries.Find(sleepSummary.LogId);
 
             if (existingSleep == null)
             {
@@ -171,6 +172,22 @@ namespace Repositories.Health
                 existingSleep.TimeInBed = sleepSummary.TimeInBed;
 
                 //existingSleep.IsMainSleep= sleep.IsMainSleep;
+            }
+
+            _healthContext.SaveChanges();
+        }
+
+        public void Upsert(SleepState sleepState)
+        {
+            var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
+
+            if (existingSleepState == null)
+            {
+                _healthContext.Add(sleepState);
+            }
+            else
+            {
+                existingSleepState.State = sleepState.State;
             }
 
             _healthContext.SaveChanges();

@@ -19,6 +19,8 @@ namespace Repositories.Health
         void Upsert(Exercise exercise);
         void Upsert(SleepSummary sleepSummary);
 
+        void Upsert(SleepState sleepState);
+
         List<Weight> GetLatestWeights(int num);
         List<BloodPressure> GetLatestBloodPressures(int num);
         DateTime? GetLatestExerciseDate();

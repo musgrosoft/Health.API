@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Fitbit.Internal.Domain;
 using Utils;
-using Sleep = Fitbit.Internal.Domain.Sleep;
+using Sleep = Fitbit.Internal.Domain.FSleep;
 
 namespace Fitbit.Internal
 {

@@ -31,15 +31,26 @@ namespace Fitbit
             return _fitbitMapper.MapActivitiesHeartsToRestingHeartRates(heartActivies);
         }
 
-        public async Task<IEnumerable<SleepSummary>> GetSleeps(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<SleepSummary>> GetSleepSummaries(DateTime fromDate, DateTime toDate)
         {
             var accessToken = await _fitbitAuthenticator.GetAccessToken();
 
             var fitbitSleeps = await _fitbitClientQueryAdapter.GetFitbitSleeps(fromDate, toDate, accessToken);
 
-            var sleeps = _fitbitMapper.MapSleepsToFitbitSleeps(fitbitSleeps);
+            var sleepSummaries = _fitbitMapper.MapFitbitSleepsToSleepSummaries(fitbitSleeps);
 
-            return sleeps;
+            return sleepSummaries;
+        }
+
+        public async Task<IEnumerable<SleepState>> GetSleepStates(DateTime fromDate, DateTime toDate)
+        {
+            var accessToken = await _fitbitAuthenticator.GetAccessToken();
+
+            var fitbitSleeps = await _fitbitClientQueryAdapter.GetFitbitSleeps(fromDate, toDate, accessToken);
+
+            var sleepStates = _fitbitMapper.MapFitbitSleepsToSleepStates(fitbitSleeps);
+
+            return sleepStates;
         }
 
         public async Task<IEnumerable<Drink>> GetDrinks(DateTime fromDate, DateTime toDate)

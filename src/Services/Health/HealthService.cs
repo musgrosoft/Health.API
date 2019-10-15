@@ -130,14 +130,22 @@ namespace Services.Health
         }
 
 
-        public void UpsertFitbitSleeps(IEnumerable<SleepSummary> fitbitSleeps)
+        public void UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries)
         {
-            foreach (var fitbitSleep in fitbitSleeps)
+            foreach (var fitbitSleep in sleepSummaries)
             {
                 _healthRepository.Upsert(fitbitSleep);
             }
         }
-        
+
+        public void UpsertSleepStates(IEnumerable<SleepState> sleepStates)
+        {
+            foreach (var sleepState in sleepStates)
+            {
+                _healthRepository.Upsert(sleepState);
+            }
+        }
+
         public void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures)
         {
             foreach (var bloodPressure in bloodPressures)
