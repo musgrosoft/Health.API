@@ -26,7 +26,7 @@ namespace Health.API.Controllers
             BloodPressureSystolic,
             BloodPressureSystolicMovingAverage,
 
-            BloodDiastolicSystolic,
+            BloodPressureDiastolic,
             BloodPressureDiastolicMovingAverage,
 
 
@@ -84,29 +84,30 @@ namespace Health.API.Controllers
             
         }
 
-        private List<Weight> _rawWeights;
-        private async Task<List<Weight>> GetRawWeights()
+        private List<BloodPressure> _rawBPs;
+        private async Task<List<BloodPressure>> GetRawBPs()
         {
-            if (_rawWeights == null)
+            if (_rawBPs == null)
             {
-                _rawWeights = (await _withingsService.GetWeights(new DateTime(2010,1,1))).ToList().OrderBy(x => x.CreatedDate).ToList();
+                _rawBPs = (await _withingsService.GetBloodPressures(new DateTime(2010,1,1))).ToList().OrderBy(x => x.CreatedDate).ToList();
             }
 
-            return _rawWeights;
+            return _rawBPs;
         }
 
         // private List<Weight> _orderedWeights;
-        private async Task<List<Weight>> GetAllWeightsAggregatedByDay()
+        private async Task<List<BloodPressure>> GetAllBPsAggregatedByDay()
         {
             //if (_orderedWeights == null)
             //{
-                return (await GetRawWeights())
+                return (await GetRawBPs())
                     .GroupBy(x=>x.CreatedDate.Date)
-                    .Select(x=> new Weight
+                    .Select(x=> new BloodPressure
                     {
                         CreatedDate = x.Key,
-                        Kg = x.Average(y => y.Kg),
-                        FatRatioPercentage = x.Average(y=>y.FatRatioPercentage) ,
+                        Diastolic = x.Average(y => y.Diastolic),
+                        Systolic = x.Average(y=>y.Systolic) ,
+                        
                     })
                     .OrderBy(x => x.CreatedDate).ToList();
             //}
@@ -132,101 +133,55 @@ namespace Health.API.Controllers
                         //};
 
 
-                case TTarget.WeightKg:
+                case TTarget.BloodPressureSystolic:
 
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .Select(x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
+                        Datapoints = (await GetAllBPsAggregatedByDay())
+                                .Select(x => new double?[] { x.Systolic, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                                 .ToList()
                     };
 
-                case TTarget.WeightKgMovingAverage:
+                case TTarget.BloodPressureSystolicMovingAverage:
                     return
                     new QueryResponse
                     {
                         //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                         Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
+                        Datapoints = (await GetAllBPsAggregatedByDay())
                                 .WindowRight(10)
-                                .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
+                                .Select(window => new double?[] { window.Average(x => x.Systolic), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
                     };
 
-                case TTarget.WeightPercentageFat:
+                case TTarget.BloodPressureDiastolic:
 
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                            .Select(x => new double?[] { x.FatRatioPercentage, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
+                        Datapoints = (await GetAllBPsAggregatedByDay())
+                            .Select(x => new double?[] { x.Diastolic, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
                             .ToList()
                     };
 
-                case TTarget.WeightPercentageFatMovingAverage:
+                case TTarget.BloodPressureDiastolicMovingAverage:
                     return
                         new QueryResponse
                         {
                             //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
 
                             Target = tt.ToString(),
-                            Datapoints = (await GetAllWeightsAggregatedByDay())
+                            Datapoints = (await GetAllBPsAggregatedByDay())
                                 .WindowRight(10)
-                                .Select(window => new double?[] { window.Average(x => x.FatRatioPercentage), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
+                                .Select(window => new double?[] { window.Average(x => x.Diastolic), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
                         };
 
-                case TTarget.WeightFatKg:
-
-                    return new QueryResponse
-                    {
-                        Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                            .Select(x => new double?[] { x.FatKg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
-                            .ToList()
-                    };
-
-                case TTarget.WeightFatKgMovingAverage:
-                    return
-                        new QueryResponse
-                        {
-                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
-
-                            Target = tt.ToString(),
-                            Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .WindowRight(10)
-                                .Select(window => new double?[] { window.Average(x => x.FatKg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
-                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
-                                .ToList()
-                        };
-
-                case TTarget.WeightLeanKg:
-
-                    return new QueryResponse
-                    {
-                        Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                            .Select(x => new double?[] { x.LeanKg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
-                            .ToList()
-                    };
-
-                case TTarget.WeightLeanKgMovingAverage:
-                    return
-                        new QueryResponse
-                        {
-                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
-
-                            Target = tt.ToString(),
-                            Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .WindowRight(10)
-                                .Select(window => new double?[] { window.Average(x => x.LeanKg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
-                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
-                                .ToList()
-                        };
+               
 
 
                 default:
