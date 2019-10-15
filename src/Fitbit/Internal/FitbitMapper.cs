@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Fitbit.Internal.Domain;
 using Repositories.Health.Models;
-using Sleep = Repositories.Health.Models.Sleep;
 
 namespace Fitbit.Internal
 {
@@ -20,9 +19,9 @@ namespace Fitbit.Internal
                 });
         }
 
-        internal IEnumerable<Sleep> MapSleepsToFitbitSleeps(IEnumerable<Domain.Sleep> sleeps)
+        internal IEnumerable<SleepSummary> MapSleepsToFitbitSleeps(IEnumerable<Domain.Sleep> sleeps)
         {
-            return sleeps.Select(x => new Sleep
+            return sleeps.Select(x => new SleepSummary
             {
                 AwakeCount = x.levels.summary.awake?.count,
                 AwakeMinutes = x.levels.summary.awake?.minutes,

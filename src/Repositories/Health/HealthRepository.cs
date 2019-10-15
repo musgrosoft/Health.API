@@ -85,7 +85,7 @@ namespace Repositories.Health
             return (_healthContext.Exercises.Sum(x => x.TotalSeconds))/60;
         }
 
-        public List<Sleep> GetLatestSleeps(int num)
+        public List<SleepSummary> GetLatestSleeps(int num)
         {
             //todo when you start sleep past midnight???
             return _healthContext.MyFitbitSleeps.OrderByDescending(x => x.DateOfSleep).Take(num).ToList();
@@ -144,31 +144,31 @@ namespace Repositories.Health
             _healthContext.SaveChanges();
         }
 
-        public void Upsert(Sleep sleep)
+        public void Upsert(SleepSummary sleepSummary)
         {
-            var existingSleep = _healthContext.MyFitbitSleeps.Find(sleep.LogId);
+            var existingSleep = _healthContext.MyFitbitSleeps.Find(sleepSummary.LogId);
 
             if (existingSleep == null)
             {
-                _healthContext.Add(sleep);
+                _healthContext.Add(sleepSummary);
             }
             else
             {
-                existingSleep.AwakeCount = sleep.AwakeCount;
-                existingSleep.AwakeMinutes = sleep.AwakeMinutes;
+                existingSleep.AwakeCount = sleepSummary.AwakeCount;
+                existingSleep.AwakeMinutes = sleepSummary.AwakeMinutes;
                 
-                existingSleep.DateOfSleep = sleep.DateOfSleep;
-                existingSleep.Duration = sleep.Duration;
-                existingSleep.Efficiency = sleep.Efficiency;
-                existingSleep.EndTime = sleep.EndTime;
-                existingSleep.MinutesAfterWakeup = sleep.MinutesAfterWakeup;
-                existingSleep.MinutesAsleep = sleep.MinutesAsleep;
-                existingSleep.MinutesAwake = sleep.MinutesAwake;
-                existingSleep.MinutesToFallAsleep = sleep.MinutesToFallAsleep;
-                existingSleep.RestlessCount = sleep.RestlessCount;
-                existingSleep.RestlessMinutes = sleep.RestlessMinutes;
-                existingSleep.StartTime = sleep.StartTime;
-                existingSleep.TimeInBed = sleep.TimeInBed;
+                existingSleep.DateOfSleep = sleepSummary.DateOfSleep;
+                existingSleep.Duration = sleepSummary.Duration;
+                existingSleep.Efficiency = sleepSummary.Efficiency;
+                existingSleep.EndTime = sleepSummary.EndTime;
+                existingSleep.MinutesAfterWakeup = sleepSummary.MinutesAfterWakeup;
+                existingSleep.MinutesAsleep = sleepSummary.MinutesAsleep;
+                existingSleep.MinutesAwake = sleepSummary.MinutesAwake;
+                existingSleep.MinutesToFallAsleep = sleepSummary.MinutesToFallAsleep;
+                existingSleep.RestlessCount = sleepSummary.RestlessCount;
+                existingSleep.RestlessMinutes = sleepSummary.RestlessMinutes;
+                existingSleep.StartTime = sleepSummary.StartTime;
+                existingSleep.TimeInBed = sleepSummary.TimeInBed;
 
                 //existingSleep.IsMainSleep= sleep.IsMainSleep;
             }

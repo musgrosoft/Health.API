@@ -31,7 +31,7 @@ namespace Fitbit
             return _fitbitMapper.MapActivitiesHeartsToRestingHeartRates(heartActivies);
         }
 
-        public async Task<IEnumerable<Sleep>> GetSleeps(DateTime fromDate, DateTime toDate)
+        public async Task<IEnumerable<SleepSummary>> GetSleeps(DateTime fromDate, DateTime toDate)
         {
             var accessToken = await _fitbitAuthenticator.GetAccessToken();
 

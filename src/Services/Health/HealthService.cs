@@ -67,7 +67,7 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
-        public List<Sleep> GetLatestSleeps(int num = 10)
+        public List<SleepSummary> GetLatestSleeps(int num = 10)
         {
             return _healthRepository.GetLatestSleeps(num);
         }
@@ -130,7 +130,7 @@ namespace Services.Health
         }
 
 
-        public void UpsertFitbitSleeps(IEnumerable<Sleep> fitbitSleeps)
+        public void UpsertFitbitSleeps(IEnumerable<SleepSummary> fitbitSleeps)
         {
             foreach (var fitbitSleep in fitbitSleeps)
             {

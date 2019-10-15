@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Repositories.Health.Models
 {
-    public class Sleep
+    public class SleepSummary
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None), Key]
         public long LogId { get; set; }

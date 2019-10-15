@@ -69,7 +69,7 @@ namespace Health.API.Controllers
             public List<BloodPressure> LatestBloodPressures { get; set; }
             public List<Drink> LatestDrinks { get; set; }
             public List<Exercise> LatestExercises { get; set; }
-            public List<Sleep> LatestSleeps { get; set; }
+            public List<SleepSummary> LatestSleeps { get; set; }
         }
     }
 }
