@@ -14,13 +14,15 @@ namespace Withings.Tests.Unit
         private Mock<IWithingsMapper> _withingsMapper;
         private Mock<IWithingsClientQueryAdapter> _withingsClientQueryAdaptor;
         private WithingsService _withingsService;
+        private Mock<IWithingsClient> _withingsClient;
 
         public WithingsServiceTests()
         {
             _withingsAuthenticator = new Mock<IWithingsAuthenticator>();
             _withingsMapper = new Mock<IWithingsMapper>();
             _withingsClientQueryAdaptor = new Mock<IWithingsClientQueryAdapter>();
-            _withingsService = new WithingsService(_withingsAuthenticator.Object, _withingsMapper.Object, _withingsClientQueryAdaptor.Object);
+            _withingsClient = new Mock<IWithingsClient>();
+            _withingsService = new WithingsService(_withingsAuthenticator.Object, _withingsMapper.Object, _withingsClientQueryAdaptor.Object, _withingsClient.Object);
         }
 
         [Fact]

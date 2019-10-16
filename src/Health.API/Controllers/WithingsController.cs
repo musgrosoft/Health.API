@@ -44,6 +44,19 @@ namespace HealthAPI.Controllers
             await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records, in previous {SEARCH_DAYS_PREVIOUS} days ");
             await _logger.LogMessageAsync("Finished Migrating just weights");
 
+
+
+            var sleepStates = await _withingsService.GetSleepStates();
+            sleepStates = sleepStates.Select(x => new Repositories.Health.Models.SleepState
+            {
+                CreatedDate = x.CreatedDate.AddYears(-1),
+                State = x.State
+            }).ToList();
+
+
+            _healthService.UpsertSleepStates(sleepStates);
+
+
             return Ok();
         }
 

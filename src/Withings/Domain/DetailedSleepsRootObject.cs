@@ -55,7 +55,7 @@ namespace Withings.Domain
 
     public class BBody
     {
-        public SSeries series { get; set; }
+        public List<SSeries> series { get; set; }
         public int model { get; set; }
         //public bool more { get; set; }
         //public int offset { get; set; }

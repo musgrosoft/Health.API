@@ -75,22 +75,14 @@ namespace HealthAPI.Hangfire
 
         private async Task MigrateSleepStates()
         {
-            var date = MIN_FITBIT_SLEEP_DATE;
+            //var date = MIN_FITBIT_SLEEP_DATE;
 
-
-            var sleepStates = await _fitbitService.GetSleepStates(date, _calendar.Now());
-            sleepStates = sleepStates.OrderBy(x => x.CreatedDate);
-            
-            await _logger.LogMessageAsync($"SLEEP STATES: Found : {sleepStates.Count()} sleep states");
-            await _logger.LogMessageAsync($"SLEEP STATES: running from  : {sleepStates.Min(x=>x.CreatedDate)} ");
-            await _logger.LogMessageAsync($"SLEEP STATES: running to : {sleepStates.Max(x=>x.CreatedDate)} sleep states");
-
-            foreach (var sleepState in sleepStates)
+            for (DateTime date = MIN_FITBIT_SLEEP_DATE; date < _calendar.Now().AddDays(1); date = date.AddDays(1))
             {
-                await _logger.LogMessageAsync($"SLEEP STATES ----- : Found : {sleepState.CreatedDate } , {sleepState.State }");
+                var sleepStates = await _fitbitService.GetSleepStates(date, date.AddDays(1));
+                _healthService.UpsertSleepStates(sleepStates);
             }
 
-            _healthService.UpsertSleepStates(sleepStates);
         }
 
 

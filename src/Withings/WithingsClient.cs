@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Repositories.Health.Models;
 using Utils;
 using Withings.Domain;
 
@@ -23,6 +24,8 @@ namespace Withings
             _logger = logger;
             _config = config;
         }
+
+
 
         public async Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode)
         {
@@ -144,7 +147,8 @@ namespace Withings
             }
         }
 
-        public async Task<SSeries> Get1DayOfDetailedSleepData(DateTime startDate, string accessToken)
+
+        public async Task<List<SSeries>> Get1DayOfDetailedSleepData(DateTime startDate, string accessToken)
         {
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
