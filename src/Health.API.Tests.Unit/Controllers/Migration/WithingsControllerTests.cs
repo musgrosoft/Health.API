@@ -60,26 +60,26 @@ namespace HealthAPI.Tests.Unit.Controllers.Migration
 
         }
 
-        [Fact]
-        public async Task ShouldMigrateWeights()
-        {
-            //Given
-            var minWeightDate = new DateTime(2012, 1, 1);
-            var searchDaysPrevious = 10;
-            var latestWeightDate = new DateTime(2019, 1, 1);
-            IEnumerable<Weight> someWeights = new List<Weight>();
+        //[Fact]
+        //public async Task ShouldMigrateWeights()
+        //{
+        //    //Given
+        //    var minWeightDate = new DateTime(2012, 1, 1);
+        //    var searchDaysPrevious = 10;
+        //    var latestWeightDate = new DateTime(2019, 1, 1);
+        //    IEnumerable<Weight> someWeights = new List<Weight>();
 
-            _healthService.Setup(x => x.GetLatestWeightDate(minWeightDate)).Returns(latestWeightDate);
-            _withingsService.Setup(x => x.GetWeights(latestWeightDate.AddDays(-searchDaysPrevious))).Returns(Task.FromResult(someWeights));
+        //    _healthService.Setup(x => x.GetLatestWeightDate(minWeightDate)).Returns(latestWeightDate);
+        //    _withingsService.Setup(x => x.GetWeights(latestWeightDate.AddDays(-searchDaysPrevious))).Returns(Task.FromResult(someWeights));
 
-            //When
-            await _withingsController.MigrateWeights();
+        //    //When
+        //    await _withingsController.MigrateWeights();
 
-            //Then
-            _healthService.Verify(x => x.UpsertWeights(someWeights), Times.Once);
+        //    //Then
+        //    _healthService.Verify(x => x.UpsertWeights(someWeights), Times.Once);
 
 
-        }
+        //}
 
     }
 }
