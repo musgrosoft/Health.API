@@ -79,6 +79,7 @@ namespace HealthAPI.Hangfire
 
 
             var sleepStates = await _fitbitService.GetSleepStates(date, _calendar.Now());
+            sleepStates = sleepStates.OrderBy(x => x.CreatedDate);
             
             await _logger.LogMessageAsync($"SLEEP STATES: Found : {sleepStates.Count()} sleep states");
             await _logger.LogMessageAsync($"SLEEP STATES: running from  : {sleepStates.Min(x=>x.CreatedDate)} ");
