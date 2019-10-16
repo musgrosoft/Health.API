@@ -84,6 +84,10 @@ namespace HealthAPI.Hangfire
             await _logger.LogMessageAsync($"SLEEP STATES: running from  : {sleepStates.Min(x=>x.CreatedDate)} ");
             await _logger.LogMessageAsync($"SLEEP STATES: running to : {sleepStates.Max(x=>x.CreatedDate)} sleep states");
 
+            foreach (var sleepState in sleepStates)
+            {
+                await _logger.LogMessageAsync($"SLEEP STATES ----- : Found : {sleepState.CreatedDate } , {sleepState.State }");
+            }
 
             _healthService.UpsertSleepStates(sleepStates);
         }
