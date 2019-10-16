@@ -34,7 +34,8 @@ namespace HealthAPI.Hangfire
             try
             {
                 await MigrateRestingHeartRates();
-                await MigrateSleeps();
+                await MigrateSleepSummaries();
+                await MigrateSleepStates();
                 await MigrateDrinks();
             }
             catch (Exception ex)
@@ -56,7 +57,7 @@ namespace HealthAPI.Hangfire
             _healthService.UpsertRestingHeartRates(restingHeartRates);
         }
 
-        private async Task MigrateSleeps()
+        private async Task MigrateSleepSummaries()
         {
             var latestFitbitSleepDate = _healthService.GetLatestFitbitSleepDate(MIN_FITBIT_SLEEP_DATE);
             await _logger.LogMessageAsync($"SLEEP : Latest Sleep record has a date of : {latestFitbitSleepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
@@ -69,12 +70,18 @@ namespace HealthAPI.Hangfire
             var fitbitSleeps = await _fitbitService.GetSleepSummaries(getDataFromDate, _calendar.Now());
             _healthService.UpsertSleepSummaries(fitbitSleeps);
 
-            var sleepStates = await _fitbitService.GetSleepStates(getDataFromDate, _calendar.Now());
-            _healthService.UpsertSleepStates(sleepStates);
-
-
-
         }
+
+
+        private async Task MigrateSleepStates()
+        {
+            var date = MIN_FITBIT_SLEEP_DATE;
+
+
+            var sleepStates = await _fitbitService.GetSleepStates(date, _calendar.Now());
+            _healthService.UpsertSleepStates(sleepStates);
+        }
+
 
         private async Task MigrateDrinks()
         {
