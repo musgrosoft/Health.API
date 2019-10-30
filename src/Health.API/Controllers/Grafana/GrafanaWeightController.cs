@@ -99,15 +99,28 @@ namespace Health.API.Controllers
         {
             //if (_orderedWeights == null)
             //{
-                return (await GetRawWeights())
-                    .GroupBy(x=>x.CreatedDate.Date)
-                    .Select(x=> new Weight
+
+            var startDate = new DateTime(2010, 1, 1);
+            var endDate = DateTime.Now.Date;
+
+            var dateRange = Enumerable.Range(0, 1 + endDate.Subtract(startDate).Days)
+                                            .Select(offset => startDate.AddDays(offset));
+
+            var weightsAggregatedByDay = (await GetRawWeights())
+                    .GroupBy(x => x.CreatedDate.Date)
+                    .Select(x => new Weight
                     {
                         CreatedDate = x.Key,
                         Kg = x.Average(y => y.Kg),
-                        FatRatioPercentage = x.Average(y=>y.FatRatioPercentage) ,
+                        FatRatioPercentage = x.Average(y => y.FatRatioPercentage),
                     })
                     .OrderBy(x => x.CreatedDate).ToList();
+
+
+            return dateRange
+                .Join(weightsAggregatedByDay, d => d.Date, w => w.CreatedDate, (d,w) => w ?? new Weight { })
+                .ToList();
+
             //}
 
             //return _orderedWeights;
@@ -150,7 +163,7 @@ namespace Health.API.Controllers
                         Target = tt.ToString(),
                         Datapoints = (await GetAllWeightsAggregatedByDay())
                                 .WindowLeft(10)
-                                .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
+                                .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate.ToUnixTimeMillisecondsFromDate()) })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
                     };
