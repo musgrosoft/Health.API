@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Services.Health;
 using Utils;
 using MoreLinq;
-using Repositories;
 using Repositories.Health.Models;
-using GoogleSheets;
 using Withings;
 
 namespace Health.API.Controllers
@@ -153,7 +149,7 @@ namespace Health.API.Controllers
 
                         Target = tt.ToString(),
                         Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .WindowRight(10)
+                                .WindowLeft(10)
                                 .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
