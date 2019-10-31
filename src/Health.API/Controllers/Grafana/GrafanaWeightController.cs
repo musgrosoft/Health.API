@@ -134,7 +134,7 @@ namespace Health.API.Controllers
 
         private async Task<QueryResponse> GetQueryResponse(GrafanaTarget tt, DateTime startTime, DateTime endTime)
         {
-            var timeFilteredWeights = (await GetAllWeightsAggregatedByDay()).Where(x => x.Day.Between(startTime, endTime));
+            var timeFilteredWeights = (await GetAllWeightsAggregatedByDay());//.Where(x => x.Day.Between(startTime, endTime));
 
             switch (tt)
             {
