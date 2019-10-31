@@ -118,7 +118,7 @@ namespace Health.API.Controllers
 
 
             return dateRange
-                .GroupJoin(weightsAggregatedByDay, d => d.Date, w => w.CreatedDate, (d,w) => w != null ? w.Single() : new Weight { })
+                .GroupJoin(weightsAggregatedByDay, d => d.Date, w => w.CreatedDate, (d,w) => (w != null && w.Any()) ? w.Single() : new Weight { })
                 .ToList();
 
             //}
