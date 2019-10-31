@@ -162,7 +162,7 @@ namespace Health.API.Controllers
 
                         Target = tt.ToString(),
                         Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .WindowRight(10)
+                                .WindowLeft(10)
                                 .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate.ToUnixTimeMillisecondsFromDate()) })
                                 //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
                                 .ToList()
