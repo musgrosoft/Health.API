@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Health.API.Controllers.Grafana;
 using Microsoft.AspNetCore.Mvc;
 using Utils;
 using MoreLinq;
@@ -16,19 +17,12 @@ namespace Health.API.Controllers
     [ApiController]
     public class GrafanaWeightController : ControllerBase
     {
-        private enum TTarget
+        private enum GrafanaTarget
         {
-            Sleeps,
-
             WeightKg,
             WeightKgMovingAverage,
             WeightPercentageFat,
             WeightPercentageFatMovingAverage,
-            WeightFatKg,
-            WeightFatKgMovingAverage,
-            WeightLeanKg,
-            WeightLeanKgMovingAverage,
-
         }
 
         private readonly IWithingsService _withingsService;
@@ -50,7 +44,7 @@ namespace Health.API.Controllers
         public IActionResult Search()
         {
             return Ok(
-                    Enum.GetNames(typeof(TTarget)).ToList()
+                    Enum.GetNames(typeof(GrafanaTarget)).ToList()
                 );
         }
 
@@ -59,12 +53,15 @@ namespace Health.API.Controllers
         public async Task<IActionResult> Query([FromBody] GrafanaRequest grafanaRequest)
         {
             var responses = new List<QueryResponse>();
-            
-            foreach(var target in grafanaRequest.targets)
-            {
-                var t = Enum.Parse(typeof(TTarget), target.target);
 
-                var qr = await GetQueryResponse((TTarget)t);
+            var startTime = grafanaRequest.startTime.ToDateFromUnixTime();
+            var endTime = grafanaRequest.endTime.ToDateFromUnixTime();
+
+            foreach (var target in grafanaRequest.targets)
+            {
+                var t = Enum.Parse(typeof(GrafanaTarget), target.target);
+
+                var qr = await GetQueryResponse((GrafanaTarget)t, startTime, endTime);
 
                 responses.Add(qr);
 
@@ -83,30 +80,23 @@ namespace Health.API.Controllers
             
         }
 
-        private List<Weight> _rawWeights;
-        private async Task<List<Weight>> GetRawWeights()
+
+        private List<GrafanaWeight> _grafanaWeights;
+        private async Task<List<GrafanaWeight>> GetAllWeightsAggregatedByDay()
         {
-            if (_rawWeights == null)
+            if (_grafanaWeights == null)
             {
-                _rawWeights = (await _withingsService.GetWeights(new DateTime(2010,1,1))).ToList().OrderBy(x => x.CreatedDate).ToList();
-            }
 
-            return _rawWeights;
-        }
+                var startDate = new DateTime(2010, 1, 1);
+                var endDate = DateTime.Now.Date;
 
-        // private List<Weight> _orderedWeights;
-        private async Task<List<Weight>> GetAllWeightsAggregatedByDay()
-        {
-            //if (_orderedWeights == null)
-            //{
+                var rawWeights = (await _withingsService.GetWeights(new DateTime(2010, 1, 1))).ToList()
+                    .OrderBy(x => x.CreatedDate).ToList();
 
-            var startDate = new DateTime(2010, 1, 1);
-            var endDate = DateTime.Now.Date;
+                var dateRange = Enumerable.Range(0, 1 + endDate.Subtract(startDate).Days)
+                    .Select(offset => startDate.AddDays(offset));
 
-            var dateRange = Enumerable.Range(0, 1 + endDate.Subtract(startDate).Days)
-                                            .Select(offset => startDate.AddDays(offset));
-
-            var weightsAggregatedByDay = (await GetRawWeights())
+                var weightsAggregatedByDay = rawWeights
                     .GroupBy(x => x.CreatedDate.Date)
                     .Select(x => new Weight
                     {
@@ -114,130 +104,70 @@ namespace Health.API.Controllers
                         Kg = x.Average(y => y.Kg),
                         FatRatioPercentage = x.Average(y => y.FatRatioPercentage),
                     })
-                    .OrderBy(x => x.CreatedDate).ToList();
+                    .OrderBy(x => x.CreatedDate);
 
 
-            return dateRange
-                .GroupJoin(weightsAggregatedByDay, d => d.Date, w => w.CreatedDate, (d,w) => (w != null && w.Any()) ? w.Single() : new Weight { CreatedDate = d})
-                .ToList();
+                var weightsOverDateRange = dateRange
+                    .GroupJoin(weightsAggregatedByDay, d => d.Date, w => w.CreatedDate,
+                        (d, w) => (w != null && w.Any()) ? w.Single() : new Weight {CreatedDate = d});
 
-            //}
+                _grafanaWeights = weightsOverDateRange
+                    .WindowRight(10)
+                    .Select(window =>
+                        new GrafanaWeight
+                        {
+                            //Day = window.Max(x => x.CreatedDate),
+                            Day = window.Last().CreatedDate,
+                            MovingAverageKg = window.Average(x => x.Kg),
+                            Kg = window.Last().Kg,
+                            FatRatioPercentage = window.Last().FatRatioPercentage,
+                            MovingAverageFatRatioPercentage = window.Average(x => x.FatRatioPercentage),
 
-            //return _orderedWeights;
+                        })
+                    .ToList();
+
+            }
+
+            return _grafanaWeights;
 
         }
 
-        private async Task<QueryResponse> GetQueryResponse(TTarget tt)
+        private async Task<QueryResponse> GetQueryResponse(GrafanaTarget tt, DateTime startTime, DateTime endTime)
         {
+            var timeFilteredWeights = (await GetAllWeightsAggregatedByDay()).Where(x => x.Day.Between(startTime, endTime));
+
             switch (tt)
             {
-//                case TTarget.Sleeps:
-//                        return
-//                        new QueryResponse
-//                        {
-//                            Target = tt.ToString(),
-//                            Datapoints = _withingsService.GetLatestSleeps(20000)
-//                                .OrderBy(x => x.DateOfSleep)
-//                                .Select(x => new double?[] { x.AsleepMinutes, x.DateOfSleep.ToUnixTimeMillisecondsFromDate() })
-//                                .ToList()
-
-                        //};
-
-
-                case TTarget.WeightKg:
+                case GrafanaTarget.WeightKg:
 
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .Select(x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
-                                .ToList()
+                        Datapoints = timeFilteredWeights.Select(x => new double?[] { x.Kg, x.Day.ToUnixTimeMillisecondsFromDate() }).ToList()
                     };
 
-                case TTarget.WeightKgMovingAverage:
+                case GrafanaTarget.WeightKgMovingAverage:
                     return
                     new QueryResponse
                     {
-                        //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
-
                         Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .WindowRight(10)
-                                .Select(window => new double?[] { window.Average(x => x.Kg), window.Max(x => x.CreatedDate.ToUnixTimeMillisecondsFromDate()) })
-                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
-                                .ToList()
+                        Datapoints = timeFilteredWeights.Select(x => new double?[] { x.MovingAverageKg, x.Day.ToUnixTimeMillisecondsFromDate() }).ToList()
                     };
 
-                case TTarget.WeightPercentageFat:
+                case GrafanaTarget.WeightPercentageFat:
 
                     return new QueryResponse
                     {
                         Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                            .Select(x => new double?[] { x.FatRatioPercentage, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
-                            .ToList()
+                        Datapoints = timeFilteredWeights.Select(x => new double?[] { x.FatRatioPercentage, x.Day.ToUnixTimeMillisecondsFromDate() }).ToList()
                     };
 
-                case TTarget.WeightPercentageFatMovingAverage:
+                case GrafanaTarget.WeightPercentageFatMovingAverage:
                     return
                         new QueryResponse
                         {
-                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
-
                             Target = tt.ToString(),
-                            Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .WindowRight(10)
-                                .Select(window => new double?[] { window.Average(x => x.FatRatioPercentage), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
-                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
-                                .ToList()
-                        };
-
-                case TTarget.WeightFatKg:
-
-                    return new QueryResponse
-                    {
-                        Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                            .Select(x => new double?[] { x.FatKg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
-                            .ToList()
-                    };
-
-                case TTarget.WeightFatKgMovingAverage:
-                    return
-                        new QueryResponse
-                        {
-                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
-
-                            Target = tt.ToString(),
-                            Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .WindowRight(10)
-                                .Select(window => new double?[] { window.Average(x => x.FatKg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
-                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
-                                .ToList()
-                        };
-
-                case TTarget.WeightLeanKg:
-
-                    return new QueryResponse
-                    {
-                        Target = tt.ToString(),
-                        Datapoints = (await GetAllWeightsAggregatedByDay())
-                            .Select(x => new double?[] { x.LeanKg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() })
-                            .ToList()
-                    };
-
-                case TTarget.WeightLeanKgMovingAverage:
-                    return
-                        new QueryResponse
-                        {
-                            //var averaged = mySeries.Windowed(period).Select(window => window.Average(keyValuePair => keyValuePair.Value));
-
-                            Target = tt.ToString(),
-                            Datapoints = (await GetAllWeightsAggregatedByDay())
-                                .WindowRight(10)
-                                .Select(window => new double?[] { window.Average(x => x.LeanKg), window.Max(x => x.CreatedDate).ToUnixTimeMillisecondsFromDate() })
-                                //                                .Select( x => new double?[] { x.Kg, x.CreatedDate.ToUnixTimeMillisecondsFromDate() } )
-                                .ToList()
+                            Datapoints = timeFilteredWeights.Select(x => new double?[] { x.MovingAverageFatRatioPercentage, x.Day.ToUnixTimeMillisecondsFromDate() }).ToList()
                         };
 
 
