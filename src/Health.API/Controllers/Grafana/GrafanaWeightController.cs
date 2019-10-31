@@ -54,8 +54,8 @@ namespace Health.API.Controllers
         {
             var responses = new List<QueryResponse>();
 
-            var startTime = grafanaRequest.startTime.ToDateFromUnixTime();
-            var endTime = grafanaRequest.endTime.ToDateFromUnixTime();
+            var startTime = grafanaRequest.startTime.ToDateFromUnixTimeMilliseconds();
+            var endTime = grafanaRequest.endTime.ToDateFromUnixTimeMilliseconds();
 
             foreach (var target in grafanaRequest.targets)
             {
