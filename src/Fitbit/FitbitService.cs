@@ -52,18 +52,7 @@ namespace Fitbit
 
             return sleepStates;
         }
-
-        public async Task<IEnumerable<Drink>> GetDrinks(DateTime fromDate, DateTime toDate)
-        {
-            var accessToken = await _fitbitAuthenticator.GetAccessToken();
-
-            var foods = await _fitbitClientQueryAdapter.GetFitbitFoods(fromDate, toDate, accessToken);
-
-            var drinks = _fitbitMapper.MapFitbitFoodsToDrinks(foods);
-
-            return drinks;
-        }
-
+        
         public async Task SetTokens(string code)
         {
             await _fitbitAuthenticator.SetTokens(code);

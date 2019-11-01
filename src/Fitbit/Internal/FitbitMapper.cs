@@ -100,50 +100,6 @@ namespace Fitbit.Internal
             });
         }
 
-        public IEnumerable<Drink> MapFitbitFoodsToDrinks(IEnumerable<Food> foods)
-        {
-            var drinks = foods.Select(x => new Drink()
-            {
-                Units = double.Parse(new Regex(@"\(([\d\.]*)\sunits\)").Match(x.loggedFood.name).Groups[1].Value),
-                CreatedDate = x.logDate
-            });
-
-            var drinksAggregatedByDay = drinks
-                .GroupBy(x => x.CreatedDate)
-                .Select(x => new Drink
-                {
-                    CreatedDate = x.Key,
-                    Units = x.Sum(y => y.Units)
-                }).ToList();
-
-            return drinksAggregatedByDay;
-        }
-
-        //public IEnumerable<Run> MapFitbitDailyActivitiesToRuns(IEnumerable<FitbitDailyActivity> fitbitDailyActivities)
-        //{
-        //    var allTheRuns = new List<Run>();
-
-        //    foreach (var fitbitDailyActivity in fitbitDailyActivities)
-        //    {
-        //        //TimeSpan startTime;
-        //        //filter by some indicator that its a run
-
-        //        var someRuns = fitbitDailyActivity.activities.Select(y =>
-        //            new Run
-        //            {
-        //                //add start time
-        //                //CreatedDate = TimeSpan.TryParse("07:35", out startTime) ? fitbitDailyActivity.DateTime.Add(startTime) : fitbitDailyActivity.DateTime,
-        //                CreatedDate = fitbitDailyActivity.DateTime,
-        //                Time = TimeSpan.FromMilliseconds(y.duration),
-        //                Metres = y.distance * 1000
-
-        //            });
-
-        //        allTheRuns.AddRange(someRuns);
-        //    }
-
-        //    return allTheRuns;
-        //}
 
     }
 }

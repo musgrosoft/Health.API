@@ -70,35 +70,5 @@ namespace Fitbit.Internal
             return allTheSleeps.Where(x => x.dateOfSleep.Between(fromDate, toDate));
         }
 
-        internal async Task<IEnumerable<Food>> GetFitbitFoods(DateTime fromDate, DateTime toDate, string accessToken)
-        {
-            var allTheFoods= new List<Food>();
-
-
-            for (DateTime date = fromDate;
-                date < toDate;
-                date = date.AddDays(1))
-            {
-                FitbitFoodData fitbitFoodData;
-                try
-                {
-                    fitbitFoodData = await _fitbitClient.GetDayOfFoods(date, accessToken);
-                }
-                catch (TooManyRequestsException ex)
-                {
-                    await _logger.LogErrorAsync(ex);
-                    break;
-                }
-                allTheFoods.AddRange(fitbitFoodData.foods);
-            }
-
-            foreach (var food in allTheFoods)
-            {
-                await _logger.LogMessageAsync("foodname is " + food.loggedFood.name);
-                await _logger.LogMessageAsync("my regex gives " + new Regex(@"\(([\d\.]*)\sunits\)").Match(food.loggedFood.name).Groups[1].Value);
-            }
-
-            return allTheFoods.Where(x => x.logDate.Between(fromDate, toDate));
-        }
     }
 }
