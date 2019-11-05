@@ -120,9 +120,14 @@ namespace Repositories.Health
             return _healthContext.Drinks.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        public DateTime? GetLatestFitbitSleepDate()
+        public DateTime? GetLatestSleepSummaryDate()
         {
             return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).FirstOrDefault()?.DateOfSleep;
+        }
+
+        public DateTime? GetLatestSleepStateDate(DateTime defaultDateTime)
+        {
+            return _healthContext.SleepStates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
         public void Upsert(Weight weight)
@@ -179,18 +184,72 @@ namespace Repositories.Health
 
         public void Upsert(SleepState sleepState)
         {
-            var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
+            //var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
 
-            if (existingSleepState == null)
+            //if (existingSleepState == null)
+            //{
+            //    _healthContext.Add(sleepState);
+            //}
+            //else
+            //{
+            //    existingSleepState.State = sleepState.State;
+            //}
+
+            //_healthContext.SaveChanges();
+
+
+            try
             {
-                _healthContext.Add(sleepState);
+                //disable detection of changes to improve performance
+                _healthContext.ChangeTracker.AutoDetectChangesEnabled = false;
+
+                //for all the entities to update...
+                _healthContext.Attach(sleepState);
+
+                //then perform the update
+                _healthContext.SaveChanges();
             }
-            else
+            finally
             {
-                existingSleepState.State = sleepState.State;
+                //re-enable detection of changes
+                _healthContext.ChangeTracker.AutoDetectChangesEnabled = true;
             }
 
-            _healthContext.SaveChanges();
+        }
+
+        public void Upsert(List<SleepState> sleepStates)
+        {
+            //var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
+
+            //if (existingSleepState == null)
+            //{
+            //    _healthContext.Add(sleepState);
+            //}
+            //else
+            //{
+            //    existingSleepState.State = sleepState.State;
+            //}
+
+            //_healthContext.SaveChanges();
+
+
+            try
+            {
+                //disable detection of changes to improve performance
+                _healthContext.ChangeTracker.AutoDetectChangesEnabled = false;
+
+                //for all the entities to update...
+                _healthContext.AttachRange(sleepStates);
+
+                //then perform the update
+                _healthContext.SaveChanges();
+            }
+            finally
+            {
+                //re-enable detection of changes
+                _healthContext.ChangeTracker.AutoDetectChangesEnabled = true;
+            }
+
         }
 
         public void Upsert(Drink drink)

@@ -10,6 +10,10 @@ namespace Services.Health
         DateTime GetLatestRestingHeartRateDate(DateTime defaultDateTime);
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
         DateTime GetLatestDrinkDate();
+        DateTime GetLatestSleepSummaryDate(DateTime defaultDateTime);
+        DateTime GetLatestSleepStateDate(DateTime defaultDateTime);
+        DateTime GetLatestExerciseDate(DateTime defaultDateTime);
+        
 
         void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures);
         void UpsertWeights(IEnumerable<Weight> weights);
@@ -22,18 +26,10 @@ namespace Services.Health
 
         List<Weight> GetLatestWeights(int num = 10);
         List<BloodPressure> GetLatestBloodPressures(int num = 10);
-        DateTime GetLatestExerciseDate(DateTime defaultDateTime);
         List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10);
         List<Drink> GetLatestDrinks(int num = 10);
         List<Exercise> GetLatestExercises(int num = 10);
-        Exercise GetFurthest15MinuteErgo(DateTime fromDate);
-        double GetCumSumUnits();
-        Target GetTarget(DateTime date);
-        Exercise GetFurthest30MinuteTreadmill(DateTime fromDate);
-        double GetCumSumCardioMinutes();
-
-        DateTime GetLatestFitbitSleepDate(DateTime defaultDateTime);
-
         List<SleepSummary> GetLatestSleeps(int num = 10);
+        
     }
 }

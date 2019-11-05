@@ -44,7 +44,9 @@ namespace Services.Health
             return _healthRepository.GetLatestBloodPressures(num);
         }
 
-               
+
+
+
         public DateTime GetLatestExerciseDate(DateTime defaultDateTime)
         {
             var latestDate = _healthRepository.GetLatestExerciseDate();
@@ -61,9 +63,15 @@ namespace Services.Health
             return _healthRepository.GetLatestDrinks(num);
         }
 
-        public DateTime GetLatestFitbitSleepDate(DateTime defaultDateTime)
+        public DateTime GetLatestSleepSummaryDate(DateTime defaultDateTime)
         {
-            var latestDate = _healthRepository.GetLatestFitbitSleepDate();
+            var latestDate = _healthRepository.GetLatestSleepSummaryDate();
+            return latestDate ?? defaultDateTime;
+        }
+
+        public DateTime GetLatestSleepStateDate(DateTime defaultDateTime)
+        {
+            var latestDate = _healthRepository.GetLatestSleepStateDate(defaultDateTime);
             return latestDate ?? defaultDateTime;
         }
 
@@ -77,25 +85,6 @@ namespace Services.Health
             return _healthRepository.GetLatestExercises(num);
         }
 
-        public Exercise GetFurthest15MinuteErgo(DateTime fromDate)
-        {
-            return _healthRepository.GetFurthest(fromDate, "ergo", 900);
-        }
-
-        public Exercise GetFurthest30MinuteTreadmill(DateTime fromDate)
-        {
-            return _healthRepository.GetFurthest(fromDate, "treadmill", 1800);
-        }
-
-        public double GetCumSumUnits()
-        {
-            return _healthRepository.GetCumSumUnits();
-        }
-
-        public double GetCumSumCardioMinutes()
-        {
-            return _healthRepository.GetCumSumCardioMinutes();
-        }
 
 
 

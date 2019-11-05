@@ -58,10 +58,10 @@ namespace HealthAPI.Hangfire
 
         private async Task MigrateSleepSummaries()
         {
-            var latestFitbitSleepDate = _healthService.GetLatestFitbitSleepDate(MIN_FITBIT_SLEEP_DATE);
-            await _logger.LogMessageAsync($"SLEEP : Latest Sleep record has a date of : {latestFitbitSleepDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            var latestFitbitSleepSummaryDate = _healthService.GetLatestSleepSummaryDate(MIN_FITBIT_SLEEP_DATE);
+            await _logger.LogMessageAsync($"SLEEP : Latest Sleep record has a date of : {latestFitbitSleepSummaryDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            var getDataFromDate = latestFitbitSleepDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+            var getDataFromDate = latestFitbitSleepSummaryDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             
             await _logger.LogMessageAsync($"SLEEP : Retrieving Sleep records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
@@ -74,6 +74,8 @@ namespace HealthAPI.Hangfire
         private async Task MigrateSleepStates()
         {
             //var date = MIN_FITBIT_SLEEP_DATE;
+
+            var latestFitbitSleepStateDate = _healthService.GetLatestSleepStateDate(MIN_FITBIT_SLEEP_DATE);
 
             for (DateTime date = MIN_FITBIT_SLEEP_DATE; date < _calendar.Now().AddDays(1); date = date.AddDays(1))
             {
