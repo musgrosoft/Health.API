@@ -202,7 +202,9 @@ namespace Repositories.Health
                 .WhenMatched(x => new SleepState 
                 { 
                     State = sleepState.State
-                });
+                })
+                //.RunAsync();
+                .Run();
                 
             _healthContext.SaveChanges();
 
