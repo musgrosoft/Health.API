@@ -13,9 +13,7 @@ namespace Repository.Tests.Unit
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder
-                    .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                    .EnableSensitiveDataLogging();
+                optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
 
             }
         }

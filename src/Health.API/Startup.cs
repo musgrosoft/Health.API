@@ -46,19 +46,21 @@ namespace HealthAPI
                 .AddEntityFrameworkSqlServer()
                 .AddDbContext<HealthContext>(dboptions =>
             {
-                dboptions.UseSqlServer(
-                    _config.HealthDbConnectionString,
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                            maxRetryCount: 5,
-                            maxRetryDelay: TimeSpan.FromSeconds(30),
-                            errorNumbersToAdd: null);
+                dboptions
+                    .UseSqlServer(
+                        _config.HealthDbConnectionString,
+                        sqlServerOptionsAction: sqlOptions =>
+                        {
+                            sqlOptions.EnableRetryOnFailure(
+                                maxRetryCount: 5,
+                                maxRetryDelay: TimeSpan.FromSeconds(30),
+                                errorNumbersToAdd: null);
 
-                        sqlOptions.MigrationsAssembly("Repositories");
+                            sqlOptions.MigrationsAssembly("Repositories");
 
-                    }
-                );
+                        }
+                    )
+                    .EnableSensitiveDataLogging();
             });
             
         }
