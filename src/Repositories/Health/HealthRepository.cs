@@ -127,9 +127,9 @@ namespace Repositories.Health
 
         public void Upsert(IEnumerable<Weight> weights)
         {
-            for (int i = 0; i < weights.Count(); i += 1000)
+            for (int i = 0; i < weights.Count(); i += 500)
             {
-                _healthContext.UpsertRange(weights.Skip(i).Take(1000))
+                _healthContext.UpsertRange(weights.Skip(i).Take(500))
                     //.RunAsync();
                     .Run();
 
@@ -219,7 +219,8 @@ namespace Repositories.Health
         {
             for (int i = 0; i < sleepStates.Count(); i += 500)
             {
-                _healthContext.UpsertRange(sleepStates.Skip(i).Take(500))
+                _healthContext
+                    .UpsertRange(sleepStates.Skip(i).Take(500))
                     //.RunAsync();
                     .Run();
 

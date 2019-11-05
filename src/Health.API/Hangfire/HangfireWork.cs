@@ -93,7 +93,8 @@ namespace HealthAPI.Hangfire
             await _logger.LogMessageAsync($"SLEEP STATES : Upserting {sleepStates.Count()} records.");
 
             _healthService.UpsertSleepStates(sleepStates);
-            
+
+            await _logger.LogMessageAsync($"SLEEP STATES : Finished Importing Sleep States.");
 
         }
 

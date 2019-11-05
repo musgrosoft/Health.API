@@ -33,18 +33,18 @@ namespace HealthAPI.Controllers
         [Route("Notify/Weights")]
         public async Task<IActionResult> MigrateWeights()
         {
-            await _logger.LogMessageAsync("WITHINGS WEIGHTS NOTIFICATION");
-            await _logger.LogMessageAsync("WEIGHTS : Starting to import weights");
+            await _logger.LogMessageAsync("WEIGHTS : NOTIFICATION from Withings");
 
             var latestWeightDate = _healthService.GetLatestWeightDate(MIN_WEIGHT_DATE);
             await _logger.LogMessageAsync($"WEIGHTS : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}, will retrieve from {SEARCH_DAYS_PREVIOUS} days previous to this date");
 
             var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             var weights = (await _withingsService.GetWeights(fromDate)).ToList();
-            await _logger.LogMessageAsync($"WEIGHT : Found {weights.Count()} weight records from {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogMessageAsync($"WEIGHTS : Found {weights.Count()} weight records from {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
-            _healthService.UpsertWeights(weights);            
-            await _logger.LogMessageAsync("Finished Migrating just weights");
+            _healthService.UpsertWeights(weights);       
+            
+            await _logger.LogMessageAsync("WEIGHTS: Finished Importing weights");
 
 
 
