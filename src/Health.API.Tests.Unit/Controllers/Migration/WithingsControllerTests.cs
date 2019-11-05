@@ -55,7 +55,7 @@ namespace HealthAPI.Tests.Unit.Controllers.Migration
             await _withingsController.MigrateBloodPressures();
 
             //Then
-            _healthService.Verify(x=>x.UpsertBloodpressures(someBloodpressures),Times.Once);
+            _healthService.Verify(x=>x.UpsertBloodPressures(someBloodpressures),Times.Once);
 
 
         }

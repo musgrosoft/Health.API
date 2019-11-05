@@ -148,25 +148,25 @@ namespace Services.Tests.Unit.MyHealth
             _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[2]), Times.Once);
         }
 
-        [Fact]
-        public void ShouldUpsertNewBloodPressures()
-        {
-            //Given
-            var newBloodPressures = new List<BloodPressure>
-            {
-                new BloodPressure { CreatedDate = new DateTime(2010,10,10) },
-                new BloodPressure { CreatedDate = new DateTime(2010,10,11) },
-                new BloodPressure { CreatedDate = new DateTime(2010,10,12) }
-            };
+        //[Fact]
+        //public void ShouldUpsertNewBloodPressures()
+        //{
+        //    //Given
+        //    var newBloodPressures = new List<BloodPressure>
+        //    {
+        //        new BloodPressure { CreatedDate = new DateTime(2010,10,10) },
+        //        new BloodPressure { CreatedDate = new DateTime(2010,10,11) },
+        //        new BloodPressure { CreatedDate = new DateTime(2010,10,12) }
+        //    };
             
-            //When
-            _healthService.UpsertBloodpressures(newBloodPressures);
+        //    //When
+        //    _healthService.UpsertBloodPressures(newBloodPressures);
 
-            //Then
-            _healthRepository.Verify(x => x.Upsert(newBloodPressures[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newBloodPressures[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newBloodPressures[2]), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(newBloodPressures[0]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newBloodPressures[1]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newBloodPressures[2]), Times.Once);
+        //}
 
         //[Fact]
         //public void ShouldUpsertNewStepCounts()

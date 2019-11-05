@@ -79,15 +79,14 @@ namespace HealthAPI.Hangfire
             var getDataFromDate = latestFitbitSleepStateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
 
             await _logger.LogMessageAsync($"SLEEP STATES : Retrieving Sleep State records from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            
             var sleepStates = await _fitbitService.GetSleepStates(getDataFromDate, _calendar.Now());
+
+            await _logger.LogMessageAsync($"SLEEP STATES : found {sleepStates.Count()} ");
 
             if (sleepStates.Any())
             {
-                await _logger.LogMessageAsync($"SLEEP STATES : found {sleepStates.Count()} , first at {sleepStates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}");
-            }
-            else
-            {
-                await _logger.LogMessageAsync($"SLEEP STATES : found {sleepStates.Count()} records. ");
+                await _logger.LogMessageAsync($"SLEEP STATES : First at {sleepStates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}");
             }
 
             await _logger.LogMessageAsync($"SLEEP STATES : Upserting {sleepStates.Count()} records.");

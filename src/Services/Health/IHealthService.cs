@@ -15,7 +15,7 @@ namespace Services.Health
         DateTime GetLatestExerciseDate(DateTime defaultDateTime);
         
 
-        void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures);
+        void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures);
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
         void UpsertAlcoholIntakes(List<Drink> alcoholIntakes);

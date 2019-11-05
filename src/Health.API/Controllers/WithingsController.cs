@@ -36,29 +36,23 @@ namespace HealthAPI.Controllers
             await _logger.LogMessageAsync("WEIGHTS : NOTIFICATION from Withings");
 
             var latestWeightDate = _healthService.GetLatestWeightDate(MIN_WEIGHT_DATE);
-            await _logger.LogMessageAsync($"WEIGHTS : Latest Weight record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}, will retrieve from {SEARCH_DAYS_PREVIOUS} days previous to this date");
-
             var fromDate = latestWeightDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+
+            await _logger.LogMessageAsync($"WEIGHTS : Latest record has a date of : {latestWeightDate:dd-MMM-yyyy HH:mm:ss (ddd)}, will retrieve from {SEARCH_DAYS_PREVIOUS} days previous to this date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}.");
+                        
             var weights = (await _withingsService.GetWeights(fromDate)).ToList();
-            await _logger.LogMessageAsync($"WEIGHTS : Found {weights.Count()} weight records from {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+
+            await _logger.LogMessageAsync($"WEIGHTS : Found {weights.Count()} records.");
+
+            if (weights.Any())
+            {
+                await _logger.LogMessageAsync($"WEIGHTS : First at {weights.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {weights.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
+            }
 
             _healthService.UpsertWeights(weights);       
             
-            await _logger.LogMessageAsync("WEIGHTS: Finished Importing weights");
-
-
-
-            //var sleepStates = await _withingsService.GetSleepStates();
-            //sleepStates = sleepStates.Select(x => new Repositories.Health.Models.SleepState
-            //{
-            //    CreatedDate = x.CreatedDate.AddYears(-1),
-            //    State = x.State
-            //}).ToList();
-
-
-            //_healthService.UpsertSleepStates(sleepStates);
-
-
+            await _logger.LogMessageAsync("WEIGHTS: Finished Importing weights.");
+                       
             return Ok();
         }
 
@@ -66,14 +60,25 @@ namespace HealthAPI.Controllers
         [Route("Notify/BloodPressures")]
         public async Task<IActionResult> MigrateBloodPressures()
         {
+            await _logger.LogMessageAsync("BLOOD PRESSURES : NOTIFICATION from Withings");
+
             var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(MIN_BLOOD_PRESSURE_DATE);
             var fromDate = latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            var bloodPressures = await _withingsService.GetBloodPressures(fromDate);
-            _healthService.UpsertBloodpressures(bloodPressures);
 
-            await _logger.LogMessageAsync($"BLOOD PRESSURE : Latest Blood Pressure record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
-                                          $"BLOOD PRESSURE : Retrieving Blood Pressure records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)} " +
-                                          $"BLOOD PRESSURE : Upserting {bloodPressures.Count()} Blood Pressure records.");
+            await _logger.LogMessageAsync($"BLOOD PRESSURES : Latest record has a date of : {latestBloodPressureDate:dd-MMM-yyyy HH:mm:ss (ddd)}, will retrieve from {SEARCH_DAYS_PREVIOUS} days previous to this date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}.");
+
+            var bloodPressures = await _withingsService.GetBloodPressures(fromDate);
+
+            await _logger.LogMessageAsync($"BLOOD PRESSURES : Found {bloodPressures.Count()} records.");
+
+            if (bloodPressures.Any())
+            {
+                await _logger.LogMessageAsync($"BLOOD PRESSURES : First at {bloodPressures.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {bloodPressures.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
+            }
+
+            _healthService.UpsertBloodPressures(bloodPressures);
+
+            await _logger.LogMessageAsync("BLOOD PRESSURES: Finished Importing.");
 
             return Ok();
         }

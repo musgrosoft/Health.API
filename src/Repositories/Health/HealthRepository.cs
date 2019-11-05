@@ -105,25 +105,6 @@ namespace Repositories.Health
             return _healthContext.SleepStates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        //public void Upsert(Weight weight)
-        //{
-
-        //    var existingWeight = _healthContext.Weights.Find(weight.CreatedDate);
-
-        //    if (existingWeight == null)
-        //    {
-        //      //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-        //        _healthContext.Add(weight);
-        //    }
-        //    else
-        //    {
-        //       // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-        //        existingWeight.Kg = weight.Kg;
-        //        existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
-        //    }
-
-        //    _healthContext.SaveChanges();
-        //}
 
         public void Upsert(IEnumerable<Weight> weights)
         {
@@ -268,25 +249,16 @@ namespace Repositories.Health
 
 
 
-        public void Upsert(BloodPressure bloodPressure)
+        public void Upsert(IEnumerable<BloodPressure> bloodPressures)
         {
-            var existingBloodPressure = _healthContext.BloodPressures.Find(bloodPressure.CreatedDate);
-
-            if (existingBloodPressure != null)
+            for (int i = 0; i < bloodPressures.Count(); i += 500)
             {
-                existingBloodPressure.Diastolic = bloodPressure.Diastolic;
-                existingBloodPressure.Systolic = bloodPressure.Systolic;
+                _healthContext.UpsertRange(bloodPressures.Skip(i).Take(500))
+                    //.RunAsync();
+                    .Run();
 
-                // _logger.Log($"BLOOD PRESSURE : Updating record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
-                
+                _healthContext.SaveChanges();
             }
-            else
-            {
-                //  _logger.Log($"BLOOD PRESSURE : Inserting record : {bloodPressure.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {bloodPressure.Diastolic} mmHg Diastolic , {bloodPressure.Systolic} mmHg Systolic");
-                _healthContext.Add(bloodPressure);
-            }
-
-            _healthContext.SaveChanges();
 
         }
 

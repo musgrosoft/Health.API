@@ -132,12 +132,9 @@ namespace Services.Health
             //}
         }
 
-        public void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures)
+        public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
         {
-            foreach (var bloodPressure in bloodPressures)
-            {
-                _healthRepository.Upsert(bloodPressure);
-            }
+            _healthRepository.Upsert(bloodPressures);
         }
 
         public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)

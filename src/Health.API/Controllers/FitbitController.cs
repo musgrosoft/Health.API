@@ -32,7 +32,7 @@ namespace HealthAPI.Controllers
         [Route("Notification")]
         public IActionResult Notify()
         {
-            _logger.LogMessageAsync("Fitbit Notification : MIGRATING ALL FITBIT DATA");
+            _logger.LogMessageAsync("FITBIT NOTIFICATION : MIGRATING ALL FITBIT DATA");
 
             _backgroundJobClient.Enqueue(() => _hangfireWork.MigrateAllFitbitData());
 

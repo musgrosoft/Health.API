@@ -21,17 +21,17 @@ namespace Repository.Tests.Unit
             _fakeLocalContext.Database.EnsureDeleted();
         }
         
-        [Fact]
-        public void ShouldInsertBloodPressure()
-        {
-            var bloodPressure = new BloodPressure { Systolic = 123 };
+        //[Fact]
+        //public void ShouldInsertBloodPressure()
+        //{
+        //    var bloodPressure = new BloodPressure { Systolic = 123 };
 
-            _healthRepository.Upsert(bloodPressure);
+        //    _healthRepository.Upsert(bloodPressure);
 
-            var bloodPressures = _fakeLocalContext.BloodPressures;
+        //    var bloodPressures = _fakeLocalContext.BloodPressures;
 
-            Assert.Contains(bloodPressure, bloodPressures);
-        }
+        //    Assert.Contains(bloodPressure, bloodPressures);
+        //}
 
         [Fact]
         public void ShouldInsertRestingHeartRate()
@@ -167,20 +167,20 @@ namespace Repository.Tests.Unit
 
         //}
 
-        [Fact]
-        public void ShouldUpdateBloodPressure()
-        {
-            var existingBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 1, Diastolic = 3};
-            _fakeLocalContext.BloodPressures.Add(existingBloodPressure);
-            _fakeLocalContext.SaveChanges();
+        //[Fact]
+        //public void ShouldUpdateBloodPressure()
+        //{
+        //    var existingBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 1, Diastolic = 3};
+        //    _fakeLocalContext.BloodPressures.Add(existingBloodPressure);
+        //    _fakeLocalContext.SaveChanges();
 
-            var newBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 2, Diastolic = 4 };
+        //    var newBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 2, Diastolic = 4 };
 
-            _healthRepository.Upsert(newBloodPressure);
+        //    _healthRepository.Upsert(newBloodPressure);
 
-            Assert.Equal(2, existingBloodPressure.Systolic);
-            Assert.Equal(4, existingBloodPressure.Diastolic);
-        }
+        //    Assert.Equal(2, existingBloodPressure.Systolic);
+        //    Assert.Equal(4, existingBloodPressure.Diastolic);
+        //}
 
     
         [Fact]
