@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Repositories.Health.Models;
-using Utils;
 
 namespace Withings
 {
@@ -12,7 +11,6 @@ namespace Withings
         private readonly IWithingsMapper _withingsMapper;
         private readonly IWithingsClientQueryAdapter _withingsClientQueryAdapter;
         private readonly IWithingsClient _withingsClient;
-        private readonly IWithingsService _withingsService;
 
         public WithingsService(IWithingsAuthenticator withingsAuthenticator, IWithingsMapper withingsMapper, IWithingsClientQueryAdapter withingsClientQueryAdapter, IWithingsClient withingsClient)
         {
@@ -38,35 +36,6 @@ namespace Withings
             var measureGroups = await _withingsClientQueryAdapter.GetMeasureGroups(sinceDateTime, accessToken);
 
             return _withingsMapper.MapToBloodPressures(measureGroups);
-        }
-
-        public async Task<List<SleepState>> GetSleepStates()
-        {
-
-            var accessToken = await _withingsAuthenticator.GetAccessToken();
-
-            var sleepStates = new List<SleepState>();
-
-            for (int i = 0; i < 30; i++ )
-            {
-                var date = new DateTime(2019, 7, 18).AddDays(i);
-
-                var d = await _withingsClient.Get1DayOfDetailedSleepData(date, accessToken);
-
-                foreach (var sSeries in d)
-                {
-                    for (int j = sSeries.startdate; j < sSeries.enddate; j+=60)
-                    {
-                        var sleepState = new SleepState
-                            {CreatedDate = j.ToDateFromUnixTime(), State = sSeries.state.ToString()};
-                        sleepStates.Add(sleepState);
-                    }
-                }
-
-            }
-
-            return sleepStates;
-
         }
 
         public async Task SetTokens(string authorizationCode)
