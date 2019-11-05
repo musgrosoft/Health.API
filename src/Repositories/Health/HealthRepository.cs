@@ -217,7 +217,7 @@ namespace Repositories.Health
 
         }
 
-        public void Upsert(List<SleepState> sleepStates)
+        public void Upsert(IEnumerable<SleepState> sleepStates)
         {
             //var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
 

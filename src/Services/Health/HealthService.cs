@@ -129,10 +129,12 @@ namespace Services.Health
 
         public void UpsertSleepStates(IEnumerable<SleepState> sleepStates)
         {
-            foreach (var sleepState in sleepStates)
-            {
-                _healthRepository.Upsert(sleepState);
-            }
+            _healthRepository.Upsert(sleepStates);
+
+            //foreach (var sleepState in sleepStates)
+            //{
+            //    _healthRepository.Upsert(sleepState);
+            //}
         }
 
         public void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures)

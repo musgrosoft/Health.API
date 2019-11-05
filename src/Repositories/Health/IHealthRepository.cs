@@ -21,6 +21,7 @@ namespace Repositories.Health
         void Upsert(SleepSummary sleepSummary);
 
         void Upsert(SleepState sleepState);
+        void Upsert(IEnumerable<SleepState> sleepStates);
 
         List<Weight> GetLatestWeights(int num);
         List<BloodPressure> GetLatestBloodPressures(int num);
