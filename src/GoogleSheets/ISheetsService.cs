@@ -7,9 +7,6 @@ namespace GoogleSheets
     {
         List<Drink> GetDrinks();
         List<Exercise> GetExercises();
-
-        void InsertExercises(Exercise exercise);
-
         List<Drink> GetHistoricDrinks();
     }
 }

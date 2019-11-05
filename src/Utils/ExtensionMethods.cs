@@ -16,6 +16,16 @@ namespace Utils
             return epoch.AddSeconds(val);
         }
 
+        public static DateTime ToDateFromUnixTimeMilliseconds(this long val)
+        {
+            return epoch.AddMilliseconds(val);
+        }
+
+        public static DateTime ToDateFromUnixTimeMilliseconds(this int val)
+        {
+            return epoch.AddMilliseconds(val);
+        }
+
         public static double ToUnixTimeFromDate(this DateTime dateTime)
         {
             return (dateTime - epoch).TotalSeconds;
