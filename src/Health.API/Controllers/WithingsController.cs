@@ -76,7 +76,7 @@ namespace HealthAPI.Controllers
                 await _logger.LogMessageAsync($"BLOOD PRESSURES : First at {bloodPressures.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {bloodPressures.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            _healthService.UpsertBloodPressures(bloodPressures);
+            await _healthService.UpsertBloodPressuresAsync(bloodPressures);
 
             await _logger.LogMessageAsync("BLOOD PRESSURES: Finished Importing.");
 

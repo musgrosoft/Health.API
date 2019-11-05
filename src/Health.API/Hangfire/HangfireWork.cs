@@ -43,59 +43,72 @@ namespace HealthAPI.Hangfire
             }
         }
 
+        private async Task MigrateSleepStates()
+        {
+            var latestFitbitSleepStateDate = _healthService.GetLatestSleepStateDate(MIN_FITBIT_SLEEP_DATE);
+            var fromDate = latestFitbitSleepStateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
+
+            await _logger.LogMessageAsync($"SLEEP STATES : Latest Sleep State record has a date of : {latestFitbitSleepStateDate:dd-MMM-yyyy HH:mm:ss (ddd)}, retrieving records from {SEARCH_DAYS_PREVIOUS} days previous : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}.");
+
+            var sleepStates = await _fitbitService.GetSleepStates(fromDate, _calendar.Now());
+
+            await _logger.LogMessageAsync($"SLEEP STATES : found {sleepStates.Count()} records.");
+
+            if (sleepStates.Any())
+            {
+                await _logger.LogMessageAsync($"SLEEP STATES : First at {sleepStates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
+            }
+
+            _healthService.UpsertSleepStates(sleepStates);
+
+            await _logger.LogMessageAsync($"SLEEP STATES : Finished Importing.");
+        }
+
         private async Task MigrateRestingHeartRates()
         {
             var latestRestingHeartRateDate = _healthService.GetLatestRestingHeartRateDate(MIN_FITBIT_DATE);
-            await _logger.LogMessageAsync($"RESTING HEART RATE : Latest Resting Heart Rate record has a date of : {latestRestingHeartRateDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            var fromDate = latestRestingHeartRateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
 
-            var getDataFromDate = latestRestingHeartRateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            await _logger.LogMessageAsync($"RESTING HEART RATE : Retrieving Resting Heart Rate records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogMessageAsync($"RESTING HEART RATES : Latest record has a date of : {latestRestingHeartRateDate:dd-MMM-yyyy HH:mm:ss (ddd)}, retrieving records from {SEARCH_DAYS_PREVIOUS} days previous : {fromDate:dd-MMM-yyyy HH:mm:ss(ddd)}");
 
-            var restingHeartRates = await _fitbitService.GetRestingHeartRates(getDataFromDate, _calendar.Now());
+            var restingHeartRates = await _fitbitService.GetRestingHeartRates(fromDate, _calendar.Now());
+
+            await _logger.LogMessageAsync($"RESTING HEART RATES : found {restingHeartRates.Count()} records");
+
+            if (restingHeartRates.Any())
+            {
+                await _logger.LogMessageAsync($"RESTING HEART RATES : First at {restingHeartRates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {restingHeartRates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
+            }
 
             _healthService.UpsertRestingHeartRates(restingHeartRates);
+
+            await _logger.LogMessageAsync($"RESTING HEART RATES : Finished Importing.");
+
         }
 
         private async Task MigrateSleepSummaries()
         {
             var latestFitbitSleepSummaryDate = _healthService.GetLatestSleepSummaryDate(MIN_FITBIT_SLEEP_DATE);
-            await _logger.LogMessageAsync($"SLEEP SUMMARIES : Latest Sleep Summary record has a date of : {latestFitbitSleepSummaryDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            var fromDate = latestFitbitSleepSummaryDate.AddDays(-SEARCH_DAYS_PREVIOUS);
 
-            var getDataFromDate = latestFitbitSleepSummaryDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-            
-            await _logger.LogMessageAsync($"SLEEP SUMMARIES : Retrieving Sleep records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogMessageAsync($"SLEEP SUMMARIES : Latest record has a date of : {latestFitbitSleepSummaryDate:dd-MMM-yyyy HH:mm:ss (ddd)}, retrieving records from {SEARCH_DAYS_PREVIOUS} days previous : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}.");
 
-            var fitbitSleeps = await _fitbitService.GetSleepSummaries(getDataFromDate, _calendar.Now());
+            var sleepSummaries = await _fitbitService.GetSleepSummaries(fromDate, _calendar.Now());
 
-            _healthService.UpsertSleepSummaries(fitbitSleeps);
-        }
+            await _logger.LogMessageAsync($"SLEEP SUMMARIES : found {sleepSummaries.Count()} records");
 
-
-        private async Task MigrateSleepStates()
-        {
-            var latestFitbitSleepStateDate = _healthService.GetLatestSleepStateDate(MIN_FITBIT_SLEEP_DATE);
-            await _logger.LogMessageAsync($"SLEEP STATES : Latest Sleep State record has a date of : {latestFitbitSleepStateDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-
-            var getDataFromDate = latestFitbitSleepStateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-
-            await _logger.LogMessageAsync($"SLEEP STATES : Retrieving Sleep State records from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
-            
-            var sleepStates = await _fitbitService.GetSleepStates(getDataFromDate, _calendar.Now());
-
-            await _logger.LogMessageAsync($"SLEEP STATES : found {sleepStates.Count()} ");
-
-            if (sleepStates.Any())
+            if (sleepSummaries.Any())
             {
-                await _logger.LogMessageAsync($"SLEEP STATES : First at {sleepStates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}");
+                await _logger.LogMessageAsync($"SLEEP SUMMARIES : First at {sleepSummaries.Min(x => x.DateOfSleep):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepSummaries.Max(x => x.DateOfSleep):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            await _logger.LogMessageAsync($"SLEEP STATES : Upserting {sleepStates.Count()} records.");
+            _healthService.UpsertSleepSummaries(sleepSummaries);
 
-            _healthService.UpsertSleepStates(sleepStates);
-
-            await _logger.LogMessageAsync($"SLEEP STATES : Finished Importing Sleep States.");
-
+            await _logger.LogMessageAsync($"SLEEP SUMMARIES : Finished Importing.");
         }
+
+
+
 
     }
 }

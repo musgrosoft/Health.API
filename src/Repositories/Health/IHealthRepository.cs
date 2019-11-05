@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Repositories.Health.Models;
 
 namespace Repositories.Health
@@ -14,7 +15,7 @@ namespace Repositories.Health
         DateTime? GetLatestSleepStateDate(DateTime defaultDateTime);
 
         void Upsert(IEnumerable<Weight> weights);
-        void Upsert(IEnumerable<BloodPressure> bloodPressure);
+        Task UpsertAsync(IEnumerable<BloodPressure> bloodPressure);
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(Drink drink);
         void Upsert(Exercise exercise);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Health.Models;
 
@@ -249,13 +250,13 @@ namespace Repositories.Health
 
 
 
-        public void Upsert(IEnumerable<BloodPressure> bloodPressures)
+        public async Task UpsertAsync(IEnumerable<BloodPressure> bloodPressures)
         {
             for (int i = 0; i < bloodPressures.Count(); i += 500)
             {
-                _healthContext.UpsertRange(bloodPressures.Skip(i).Take(500))
-                    //.RunAsync();
-                    .Run();
+                await _healthContext
+                            .UpsertRange(bloodPressures.Skip(i).Take(500))
+                            .RunAsync();
 
                 _healthContext.SaveChanges();
             }

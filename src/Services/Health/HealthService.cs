@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Repositories.Health;
 using Repositories.Health.Models;
 using Utils;
@@ -132,15 +133,13 @@ namespace Services.Health
             //}
         }
 
-        public void UpsertBloodPressures(IEnumerable<BloodPressure> bloodPressures)
+        public async Task UpsertBloodPressuresAsync(IEnumerable<BloodPressure> bloodPressures)
         {
-            _healthRepository.Upsert(bloodPressures);
+            await _healthRepository.UpsertAsync(bloodPressures);
         }
 
         public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {
-            _logger.LogMessageAsync($"RESTING HEART RATE : Saving {restingHeartRates.Count()} resting heart rates");
-
             foreach (var restingHeartRate in restingHeartRates)
             {
                 _healthRepository.Upsert(restingHeartRate);

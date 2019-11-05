@@ -39,26 +39,26 @@ namespace HealthAPI.Tests.Unit.Controllers.Migration
 
         }
 
-        [Fact]
-        public async Task ShouldMigrateBloodPressures()
-        {
-            //Given
-            var minBloodPressureDate = new DateTime(2012, 1, 1);
-            var searchDaysPrevious = 10;
-            var latestBloodPRessureDate = new DateTime(2019,1,1);
-            IEnumerable<BloodPressure> someBloodpressures = new List<BloodPressure>();
+        //[Fact]
+        //public async Task ShouldMigrateBloodPressures()
+        //{
+        //    //Given
+        //    var minBloodPressureDate = new DateTime(2012, 1, 1);
+        //    var searchDaysPrevious = 10;
+        //    var latestBloodPRessureDate = new DateTime(2019,1,1);
+        //    IEnumerable<BloodPressure> someBloodpressures = new List<BloodPressure>();
 
-            _healthService.Setup(x => x.GetLatestBloodPressureDate(minBloodPressureDate)).Returns(latestBloodPRessureDate);
-            _withingsService.Setup(x => x.GetBloodPressures(latestBloodPRessureDate.AddDays(-searchDaysPrevious))).Returns(Task.FromResult(someBloodpressures));
+        //    _healthService.Setup(x => x.GetLatestBloodPressureDate(minBloodPressureDate)).Returns(latestBloodPRessureDate);
+        //    _withingsService.Setup(x => x.GetBloodPressures(latestBloodPRessureDate.AddDays(-searchDaysPrevious))).Returns(Task.FromResult(someBloodpressures));
 
-            //When
-            await _withingsController.MigrateBloodPressures();
+        //    //When
+        //    await _withingsController.MigrateBloodPressures();
 
-            //Then
-            _healthService.Verify(x=>x.UpsertBloodPressures(someBloodpressures),Times.Once);
+        //    //Then
+        //    _healthService.Verify(x=>x.UpsertBloodPressures(someBloodpressures),Times.Once);
 
 
-        }
+        //}
 
         //[Fact]
         //public async Task ShouldMigrateWeights()
