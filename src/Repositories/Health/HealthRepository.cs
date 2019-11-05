@@ -197,7 +197,13 @@ namespace Repositories.Health
             //}
 
 
-            _healthContext.Upsert(sleepState);
+            _healthContext.Upsert(sleepState)
+                .On(x => x.CreatedDate)
+                .WhenMatched(x => new SleepState 
+                { 
+                    State = sleepState.State
+                });
+                
             _healthContext.SaveChanges();
 
 

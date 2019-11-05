@@ -82,7 +82,7 @@ namespace HealthAPI.Hangfire
             for (DateTime date = latestFitbitSleepStateDate.AddDays(-1); date < _calendar.Now().AddDays(1); date = date.AddDays(1))
             {
                 var sleepStates = await _fitbitService.GetSleepStates(date, date.AddDays(1));
-                await _logger.LogMessageAsync($"SLEEP : Retrieving Sleep State records from {date:dd-MMM-yyyy HH:mm:ss (ddd)} : found {sleepStates.Count()} for that day.");
+                await _logger.LogMessageAsync($"SLEEP : Retrieving Sleep State records from {date:dd-MMM-yyyy HH:mm:ss (ddd)} : found {sleepStates.Count()} for that day. First at {sleepStates.Min(x=>x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}");
                 
                 _healthService.UpsertSleepStates(sleepStates);
             }
