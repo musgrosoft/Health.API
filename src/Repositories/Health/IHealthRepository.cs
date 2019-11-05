@@ -13,7 +13,7 @@ namespace Repositories.Health
         DateTime? GetLatestSleepSummaryDate();
         DateTime? GetLatestSleepStateDate(DateTime defaultDateTime);
 
-        void Upsert(Weight weight);
+        void Upsert(IEnumerable<Weight> weights);
         void Upsert(BloodPressure bloodPressure);
         void Upsert(RestingHeartRate restingHeartRate);
         void Upsert(Drink drink);
@@ -21,7 +21,7 @@ namespace Repositories.Health
         void Upsert(SleepSummary sleepSummary);
 
         void Upsert(SleepState sleepState);
-        //void Upsert(IEnumerable<SleepState> sleepStates);
+        void Upsert(IEnumerable<SleepState> sleepStates);
 
         List<Weight> GetLatestWeights(int num);
         List<BloodPressure> GetLatestBloodPressures(int num);
@@ -29,11 +29,10 @@ namespace Repositories.Health
         List<Exercise> GetLatestExercises(int num);
         List<Drink> GetLatestDrinks(int num);
         List<RestingHeartRate> GetLatestRestingHeartRate(int num);
-        Exercise GetFurthest(DateTime fromDate, string exerciseType, int totalSeconds);
 
-        double GetCumSumUnits();
+
         Target GetTarget(DateTime date);
-        double GetCumSumCardioMinutes();
+
 
         List<SleepSummary> GetLatestSleeps(int num);
         

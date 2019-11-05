@@ -84,26 +84,26 @@ namespace Services.Tests.Unit.MyHealth
 
         }
         
-        [Fact]
-        public void ShouldUpsertNewWeights()
-        {
-            //Given
-            var newWeights = new List<Weight>
-            {
-                new Weight { CreatedDate = new DateTime(2010,10,10) },
-                new Weight { CreatedDate = new DateTime(2010,10,11) },
-                new Weight { CreatedDate = new DateTime(2010,10,12) }
+        //[Fact]
+        //public void ShouldUpsertNewWeights()
+        //{
+        //    //Given
+        //    var newWeights = new List<Weight>
+        //    {
+        //        new Weight { CreatedDate = new DateTime(2010,10,10) },
+        //        new Weight { CreatedDate = new DateTime(2010,10,11) },
+        //        new Weight { CreatedDate = new DateTime(2010,10,12) }
 
-            };
+        //    };
 
-            //When
-            _healthService.UpsertWeights(newWeights);
+        //    //When
+        //    _healthService.UpsertWeights(newWeights);
 
-            //Then
-            _healthRepository.Verify(x => x.Upsert(newWeights[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newWeights[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newWeights[2]), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(newWeights[0]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newWeights[1]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newWeights[2]), Times.Once);
+        //}
 
 
         [Fact]

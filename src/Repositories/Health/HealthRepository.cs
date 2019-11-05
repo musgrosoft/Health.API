@@ -46,25 +46,7 @@ namespace Repositories.Health
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
 
-//        public Exercise GetFastest15MinuteErgo(DateTime fromDate)
-//        {
-//            return _healthContext.Exercises
-//                .Where(x => x.Description.ToLower() == "ergo")
-//                .Where(x => x.TotalSeconds == 900)
-//                .Where(x => x.CreatedDate >= fromDate)
-//                .OrderByDescending(x => x.Metres)
-//                .FirstOrDefault();
-//        }
 
-        public Exercise GetFurthest(DateTime fromDate, string exerciseType, int totalSeconds)
-        {
-            return _healthContext.Exercises
-                .Where(x => x.Description.ToLower() == exerciseType.ToLower())
-                .Where(x => x.TotalSeconds == totalSeconds)
-                .Where(x => x.CreatedDate >= fromDate)
-                .OrderByDescending(x => x.Metres)
-                .FirstOrDefault();
-        }
 
         public List<Drink> GetLatestDrinks(int num)
         {
@@ -76,15 +58,7 @@ namespace Repositories.Health
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
         }
 
-        public double GetCumSumUnits()
-        {
-            return _healthContext.Drinks.Sum(x=>x.Units);
-        }
-
-        public double GetCumSumCardioMinutes()
-        {
-            return (_healthContext.Exercises.Sum(x => x.TotalSeconds))/60;
-        }
+ 
 
         public List<SleepSummary> GetLatestSleeps(int num)
         {
@@ -131,22 +105,31 @@ namespace Repositories.Health
             return _healthContext.SleepStates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
-        public void Upsert(Weight weight)
+        //public void Upsert(Weight weight)
+        //{
+
+        //    var existingWeight = _healthContext.Weights.Find(weight.CreatedDate);
+
+        //    if (existingWeight == null)
+        //    {
+        //      //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+        //        _healthContext.Add(weight);
+        //    }
+        //    else
+        //    {
+        //       // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
+        //        existingWeight.Kg = weight.Kg;
+        //        existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
+        //    }
+
+        //    _healthContext.SaveChanges();
+        //}
+
+        public void Upsert(IEnumerable<Weight> weights)
         {
-
-            var existingWeight = _healthContext.Weights.Find(weight.CreatedDate);
-
-            if (existingWeight == null)
-            {
-              //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                _healthContext.Add(weight);
-            }
-            else
-            {
-               // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                existingWeight.Kg = weight.Kg;
-                existingWeight.FatRatioPercentage = weight.FatRatioPercentage;
-            }
+            _healthContext.UpsertRange(weights)
+                //.RunAsync();
+                .Run();
 
             _healthContext.SaveChanges();
         }
@@ -228,40 +211,20 @@ namespace Repositories.Health
 
         }
 
-        //public void Upsert(IEnumerable<SleepState> sleepStates)
-        //{
-        //    //var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
+        public void Upsert(IEnumerable<SleepState> sleepStates)
+        {
+            for (int i = 0; i < sleepStates.Count(); i += 1000)
+            {
+                _healthContext.UpsertRange(sleepStates.Skip(i).Take(1000))
+                    //.RunAsync();
+                    .Run();
 
-        //    //if (existingSleepState == null)
-        //    //{
-        //    //    _healthContext.Add(sleepState);
-        //    //}
-        //    //else
-        //    //{
-        //    //    existingSleepState.State = sleepState.State;
-        //    //}
-
-        //    //_healthContext.SaveChanges();
+                _healthContext.SaveChanges();
+            }
 
 
-        //    try
-        //    {
-        //        //disable detection of changes to improve performance
-        //        _healthContext.ChangeTracker.AutoDetectChangesEnabled = false;
 
-        //        //for all the entities to update...
-        //        _healthContext.AttachRange(sleepStates);
-
-        //        //then perform the update
-        //        _healthContext.SaveChanges();
-        //    }
-        //    finally
-        //    {
-        //        //re-enable detection of changes
-        //        _healthContext.ChangeTracker.AutoDetectChangesEnabled = true;
-        //    }
-
-        //}
+        }
 
         public void Upsert(Drink drink)
         {

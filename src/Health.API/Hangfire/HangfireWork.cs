@@ -59,11 +59,11 @@ namespace HealthAPI.Hangfire
         private async Task MigrateSleepSummaries()
         {
             var latestFitbitSleepSummaryDate = _healthService.GetLatestSleepSummaryDate(MIN_FITBIT_SLEEP_DATE);
-            await _logger.LogMessageAsync($"SLEEP : Latest Sleep Summary record has a date of : {latestFitbitSleepSummaryDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogMessageAsync($"SLEEP SUMMARIES : Latest Sleep Summary record has a date of : {latestFitbitSleepSummaryDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var getDataFromDate = latestFitbitSleepSummaryDate.AddDays(-SEARCH_DAYS_PREVIOUS);
             
-            await _logger.LogMessageAsync($"SLEEP : Retrieving Sleep records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogMessageAsync($"SLEEP SUMMARIES : Retrieving Sleep records from {SEARCH_DAYS_PREVIOUS} days previous to last record. Retrieving from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
             var fitbitSleeps = await _fitbitService.GetSleepSummaries(getDataFromDate, _calendar.Now());
 
@@ -73,28 +73,27 @@ namespace HealthAPI.Hangfire
 
         private async Task MigrateSleepStates()
         {
-            //var date = MIN_FITBIT_SLEEP_DATE;
-
             var latestFitbitSleepStateDate = _healthService.GetLatestSleepStateDate(MIN_FITBIT_SLEEP_DATE);
-            await _logger.LogMessageAsync($"SLEEP : Latest Sleep State record has a date of : {latestFitbitSleepStateDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            await _logger.LogMessageAsync($"SLEEP STATES : Latest Sleep State record has a date of : {latestFitbitSleepStateDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
 
+            var getDataFromDate = latestFitbitSleepStateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
 
-            for (DateTime date = latestFitbitSleepStateDate.AddDays(-1); date < _calendar.Now().AddDays(1); date = date.AddDays(1))
+            await _logger.LogMessageAsync($"SLEEP STATES : Retrieving Sleep State records from date : {getDataFromDate:dd-MMM-yyyy HH:mm:ss (ddd)}");
+            var sleepStates = await _fitbitService.GetSleepStates(getDataFromDate, _calendar.Now());
+
+            if (sleepStates.Any())
             {
-                var sleepStates = await _fitbitService.GetSleepStates(date, date.AddDays(1));
-
-                if (sleepStates.Any())
-                {
-                    await _logger.LogMessageAsync($"SLEEP : Retrieving Sleep State records from {date:dd-MMM-yyyy HH:mm:ss (ddd)} : found {sleepStates.Count()} for that day. First at {sleepStates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}");
-                }
-                else
-                {
-                    await _logger.LogMessageAsync($"SLEEP : Retrieving Sleep State records from {date:dd-MMM-yyyy HH:mm:ss (ddd)} : found {sleepStates.Count()} for that day. ");
-                }
-
-                
-                _healthService.UpsertSleepStates(sleepStates);
+                await _logger.LogMessageAsync($"SLEEP STATES : found {sleepStates.Count()} , first at {sleepStates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}");
             }
+            else
+            {
+                await _logger.LogMessageAsync($"SLEEP STATES : found {sleepStates.Count()} records. ");
+            }
+
+            await _logger.LogMessageAsync($"SLEEP STATES : Upserting {sleepStates.Count()} records.");
+
+            _healthService.UpsertSleepStates(sleepStates);
+            
 
         }
 

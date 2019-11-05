@@ -45,17 +45,17 @@ namespace Repository.Tests.Unit
             Assert.Contains(restingHeartRate, restingHeartRates);
         }
 
-        [Fact]
-        public void ShouldInsertWeight()
-        {
-            var weight = new Weight { Kg = 123, CreatedDate = new DateTime(2018,1,1)};
+        //[Fact]
+        //public void ShouldInsertWeight()
+        //{
+        //    var weight = new Weight { Kg = 123, CreatedDate = new DateTime(2018,1,1)};
 
-            _healthRepository.Upsert(weight);
+        //    _healthRepository.Upsert(weight);
 
-            var weights = _fakeLocalContext.Weights;
+        //    var weights = _fakeLocalContext.Weights;
 
-            Assert.Contains(weight, weights);
-        }
+        //    Assert.Contains(weight, weights);
+        //}
 
         [Fact]
         public void ShouldInsertAlcoholIntake()
@@ -151,21 +151,21 @@ namespace Repository.Tests.Unit
 
         }
 
-        [Fact]
-        public void ShouldUpdateWeight()
-        {
-            var existingWeight = new Weight {CreatedDate = new DateTime(2017, 1, 1), Kg = 1, FatRatioPercentage = 3};
-            _fakeLocalContext.Weights.Add(existingWeight);
-            _fakeLocalContext.SaveChanges();
+        //[Fact]
+        //public void ShouldUpdateWeight()
+        //{
+        //    var existingWeight = new Weight {CreatedDate = new DateTime(2017, 1, 1), Kg = 1, FatRatioPercentage = 3};
+        //    _fakeLocalContext.Weights.Add(existingWeight);
+        //    _fakeLocalContext.SaveChanges();
 
-            var newWeight = new Weight { CreatedDate = new DateTime(2017, 1, 1), Kg = 2, FatRatioPercentage = 4 };
+        //    var newWeight = new Weight { CreatedDate = new DateTime(2017, 1, 1), Kg = 2, FatRatioPercentage = 4 };
 
-            _healthRepository.Upsert(newWeight);
+        //    _healthRepository.Upsert(newWeight);
 
-            Assert.Equal(2,existingWeight.Kg);
-            Assert.Equal(4, existingWeight.FatRatioPercentage);
+        //    Assert.Equal(2,existingWeight.Kg);
+        //    Assert.Equal(4, existingWeight.FatRatioPercentage);
 
-        }
+        //}
 
         [Fact]
         public void ShouldUpdateBloodPressure()

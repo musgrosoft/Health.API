@@ -110,12 +110,7 @@ namespace Services.Health
 
         public void UpsertWeights(IEnumerable<Weight> weights)
         {
-            var enumerable = weights.ToList();
-
-            foreach (var weight in enumerable)
-            {
-                _healthRepository.Upsert(weight);
-            }
+            _healthRepository.Upsert(weights);
         }
 
 
@@ -129,12 +124,12 @@ namespace Services.Health
 
         public void UpsertSleepStates(IEnumerable<SleepState> sleepStates)
         {
-            // _healthRepository.Upsert(sleepStates);
+             _healthRepository.Upsert(sleepStates);
 
-            foreach (var sleepState in sleepStates)
-            {
-                _healthRepository.Upsert(sleepState);
-            }
+            //foreach (var sleepState in sleepStates)
+            //{
+            //    _healthRepository.Upsert(sleepState);
+            //}
         }
 
         public void UpsertBloodpressures(IEnumerable<BloodPressure> bloodPressures)
