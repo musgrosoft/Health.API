@@ -153,12 +153,10 @@ namespace Withings
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-
-        https://wbsapi.withings.net/v2/sleep?action=get
-
+            
             var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=get" +
-                $"&startDate={startDate.ToUnixTimeFromDate()}" +
-                $"&endDate={startDate.AddDays(1).ToUnixTimeFromDate()}" +
+                $"&startdate={startDate.ToUnixTimeFromDate()}" +
+                $"&enddate={startDate.AddDays(1).ToUnixTimeFromDate()}" +
                 $"&data_fields=hr,rr";
 
             var response = await _httpClient.GetAsync(url);

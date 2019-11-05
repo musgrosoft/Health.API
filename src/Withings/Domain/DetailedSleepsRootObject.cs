@@ -43,8 +43,8 @@ namespace Withings.Domain
         public int startdate { get; set; }
         public int enddate { get; set; }
         public int state { get; set; }
-        public List<HeartRate> hr {get;set;}
-        public List<RespiratoryRate> rr { get; set; }
+        //public List<HeartRate> hr {get;set;}
+        //public List<RespiratoryRate> rr { get; set; }
 
 
 

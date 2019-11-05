@@ -43,12 +43,13 @@ namespace Withings
         public async Task<List<SleepState>> GetSleepStates()
         {
 
+            var accessToken = await _withingsAuthenticator.GetAccessToken();
+
             var sleepStates = new List<SleepState>();
 
             for (int i = 0; i < 30; i++ )
             {
                 var date = new DateTime(2019, 7, 18).AddDays(i);
-                var accessToken = await _withingsAuthenticator.GetAccessToken();
 
                 var d = await _withingsClient.Get1DayOfDetailedSleepData(date, accessToken);
 
