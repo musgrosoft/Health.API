@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Health.Models;
 
 namespace Repositories.Health
@@ -195,62 +196,64 @@ namespace Repositories.Health
             //    existingSleepState.State = sleepState.State;
             //}
 
-            //_healthContext.SaveChanges();
+
+            _healthContext.Upsert(sleepState);
+            _healthContext.SaveChanges();
 
 
-            try
-            {
-                //disable detection of changes to improve performance
-                _healthContext.ChangeTracker.AutoDetectChangesEnabled = false;
+            //try
+            //{
+            //    //disable detection of changes to improve performance
+            //    _healthContext.ChangeTracker.AutoDetectChangesEnabled = false;
 
-                //for all the entities to update...
-                _healthContext.Attach(sleepState);
+            //    //for all the entities to update...
+            //    _healthContext.Attach(sleepState);
 
-                //then perform the update
-                _healthContext.SaveChanges();
-            }
-            finally
-            {
-                //re-enable detection of changes
-                _healthContext.ChangeTracker.AutoDetectChangesEnabled = true;
-            }
+            //    //then perform the update
+            //    _healthContext.SaveChanges();
+            //}
+            //finally
+            //{
+            //    //re-enable detection of changes
+            //    _healthContext.ChangeTracker.AutoDetectChangesEnabled = true;
+            //}
 
         }
 
-        public void Upsert(IEnumerable<SleepState> sleepStates)
-        {
-            //var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
+        //public void Upsert(IEnumerable<SleepState> sleepStates)
+        //{
+        //    //var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
 
-            //if (existingSleepState == null)
-            //{
-            //    _healthContext.Add(sleepState);
-            //}
-            //else
-            //{
-            //    existingSleepState.State = sleepState.State;
-            //}
+        //    //if (existingSleepState == null)
+        //    //{
+        //    //    _healthContext.Add(sleepState);
+        //    //}
+        //    //else
+        //    //{
+        //    //    existingSleepState.State = sleepState.State;
+        //    //}
 
-            //_healthContext.SaveChanges();
+        //    //_healthContext.SaveChanges();
 
 
-            try
-            {
-                //disable detection of changes to improve performance
-                _healthContext.ChangeTracker.AutoDetectChangesEnabled = false;
+        //    try
+        //    {
+        //        //disable detection of changes to improve performance
+        //        _healthContext.ChangeTracker.AutoDetectChangesEnabled = false;
 
-                //for all the entities to update...
-                _healthContext.AttachRange(sleepStates);
+        //        //for all the entities to update...
+        //        _healthContext.AttachRange(sleepStates);
 
-                //then perform the update
-                _healthContext.SaveChanges();
-            }
-            finally
-            {
-                //re-enable detection of changes
-                _healthContext.ChangeTracker.AutoDetectChangesEnabled = true;
-            }
+        //        //then perform the update
+        //        _healthContext.SaveChanges();
+        //    }
+        //    finally
+        //    {
+        //        //re-enable detection of changes
+        //        _healthContext.ChangeTracker.AutoDetectChangesEnabled = true;
+        //    }
 
-        }
+        //}
 
         public void Upsert(Drink drink)
         {
