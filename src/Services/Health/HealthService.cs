@@ -48,11 +48,6 @@ namespace Services.Health
 
 
 
-        public DateTime GetLatestExerciseDate(DateTime defaultDateTime)
-        {
-            var latestDate = _healthRepository.GetLatestExerciseDate();
-            return latestDate ?? defaultDateTime;
-        }
 
         public List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10)
         {
@@ -88,7 +83,6 @@ namespace Services.Health
 
 
 
-
         public DateTime GetLatestBloodPressureDate(DateTime defaultDateTime)
         {
             var latestDate = _healthRepository.GetLatestBloodPressureDate();
@@ -102,12 +96,18 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
-        public DateTime GetLatestDrinkDate()
+        public DateTime GetLatestDrinkDate(DateTime defaultDateTime)
         {
             var latestDate = _healthRepository.GetLatestDrinkDate();
-            return latestDate ?? DateTime.MinValue;
+            return latestDate ?? defaultDateTime;
         }
 
+
+        public DateTime GetLatestExerciseDate(DateTime defaultDateTime)
+        {
+            var latestDate = _healthRepository.GetLatestExerciseDate();
+            return latestDate ?? defaultDateTime;
+        }
 
         public void UpsertWeights(IEnumerable<Weight> weights)
         {
@@ -147,9 +147,9 @@ namespace Services.Health
         }
 
         
-        public void UpsertAlcoholIntakes(List<Drink> alcoholIntakes)
+        public void UpsertAlcoholIntakes(IEnumerable<Drink> alcoholIntakes)
         {
-            _logger.LogMessageAsync($"UNITS : Saving {alcoholIntakes.Count} alcohol intakes");
+            _logger.LogMessageAsync($"UNITS : Saving {alcoholIntakes.Count()} alcohol intakes");
             
             foreach (var alcoholIntake in alcoholIntakes)
             {

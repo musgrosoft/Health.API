@@ -40,19 +40,19 @@ namespace Services.Tests.Unit.MyHealth
             Assert.Equal(date, latestDate);
         }
 
-        [Fact]
-        public void ShouldGetLatestDrinkDate()
-        {
-            //Given 
-            var date = new DateTime(2018, 1, 2);
-            _healthRepository.Setup(x => x.GetLatestDrinkDate()).Returns(date);
+        //[Fact]
+        //public void ShouldGetLatestDrinkDate()
+        //{
+        //    //Given 
+        //    var date = new DateTime(2018, 1, 2);
+        //    _healthRepository.Setup(x => x.GetLatestDrinkDate()).Returns(date);
 
-            //when
-            var latestDate = _healthService.GetLatestDrinkDate();
+        //    //when
+        //    var latestDate = _healthService.GetLatestDrinkDate();
 
-            //then
-            Assert.Equal(date, latestDate);
-        }
+        //    //then
+        //    Assert.Equal(date, latestDate);
+        //}
 
         [Fact]
         public void ShouldGetLatestBloodPressureDate()

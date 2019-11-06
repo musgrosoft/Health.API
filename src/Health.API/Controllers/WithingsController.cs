@@ -51,7 +51,7 @@ namespace HealthAPI.Controllers
 
             _healthService.UpsertWeights(weights);       
             
-            await _logger.LogMessageAsync("WEIGHTS: Finished Importing weights.");
+            await _logger.LogMessageAsync("WEIGHTS: Finished Importing.");
                        
             return Ok();
         }
@@ -60,7 +60,7 @@ namespace HealthAPI.Controllers
         [Route("Notify/BloodPressures")]
         public async Task<IActionResult> MigrateBloodPressures()
         {
-            await _logger.LogMessageAsync("BLOOD PRESSURES : NOTIFICATION from Withings");
+            await _logger.LogMessageAsync("BLOOD PRESSURES : NOTIFICATION (from Withings)");
 
             var latestBloodPressureDate = _healthService.GetLatestBloodPressureDate(MIN_BLOOD_PRESSURE_DATE);
             var fromDate = latestBloodPressureDate.AddDays(-SEARCH_DAYS_PREVIOUS);

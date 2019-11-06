@@ -10,7 +10,7 @@ namespace Services.Health
         DateTime GetLatestBloodPressureDate(DateTime defaultDateTime);
         DateTime GetLatestRestingHeartRateDate(DateTime defaultDateTime);
         DateTime GetLatestWeightDate(DateTime defaultDateTime);
-        DateTime GetLatestDrinkDate();
+        DateTime GetLatestDrinkDate(DateTime defaultDateTime);
         DateTime GetLatestSleepSummaryDate(DateTime defaultDateTime);
         DateTime GetLatestSleepStateDate(DateTime defaultDateTime);
         DateTime GetLatestExerciseDate(DateTime defaultDateTime);
@@ -19,7 +19,7 @@ namespace Services.Health
         Task UpsertBloodPressuresAsync(IEnumerable<BloodPressure> bloodPressures);
         void UpsertWeights(IEnumerable<Weight> weights);
         void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
-        void UpsertAlcoholIntakes(List<Drink> alcoholIntakes);
+        void UpsertAlcoholIntakes(IEnumerable<Drink> alcoholIntakes);
         void UpsertExercises(List<Exercise> exercises);
         void UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries);
         void UpsertSleepStates(IEnumerable<SleepState> sleepStates);
