@@ -66,7 +66,7 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync($"EXERCISES : Latest record has a date of : {latestExerciseDate:dd-MMM-yyyy HH:mm:ss (ddd)}, will retrieve from {SEARCH_DAYS_PREVIOUS} days previous to this date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}.");
 
-            var exercises = _sheetsService.GetExercises();
+            var exercises = _sheetsService.GetExercises(fromDate);
 
             await _logger.LogMessageAsync($"EXERCISES : Found {exercises.Count()} records.");
 

@@ -13,7 +13,7 @@ namespace GoogleSheets
         private readonly IMapFunctions _mapFunctions;
         private readonly ISheetsClient _sheetsClient;
         static string[] Scopes = { Google.Apis.Sheets.v4.SheetsService.Scope.Spreadsheets };
-        static string ApplicationName = "sheetreader";
+        //static string ApplicationName = "sheetreader";
 
         public SheetsService(IConfig config, IRowMapper rowMapper, IMapFunctions mapFunctions, ISheetsClient sheetsClient)
         {
@@ -41,26 +41,13 @@ namespace GoogleSheets
 
         }
 
-        //public List<Drink> GetDrinks()
-        //{
-        //    var rows = _sheetsClient.GetRows(_config.AlcoholSpreadsheetId, _config.DrinksRange);
-
-        //    var drinks = _rowMapper.Get<Drink>(rows, _mapFunctions.MapRowToDrink);
-
-        //    return drinks
-        //        .GroupBy(x => x.CreatedDate)
-        //        .Select(x => new Drink
-        //        {
-        //            CreatedDate = x.Key,
-        //            Units = x.Sum(y => y.Units)
-        //        }).ToList();
-        //}
-
-        public List<Exercise> GetExercises()
+        public List<Exercise> GetExercises(DateTime fromDate)
         {
             var rows = _sheetsClient.GetRows(_config.ExerciseSpreadsheetId, _config.ExercisesRange);
 
-            return _rowMapper.Get<Exercise>(rows, _mapFunctions.MapRowToExercise);
+            var exercises = _rowMapper.Get<Exercise>(rows, _mapFunctions.MapRowToExercise);
+
+            return exercises.Where(x => x.CreatedDate > fromDate).ToList();
         }
 
     }

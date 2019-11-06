@@ -119,51 +119,51 @@ namespace GoogleSheets.Tests.Unit
 
         //}
 
-        [Fact]
-        public async Task ShouldGetExercises()
-        {
-            //Given
-            var spreadsheetId = "sadasdasdassdasd";
-            var range = "A1B1";
+        //[Fact]
+        //public async Task ShouldGetExercises()
+        //{
+        //    //Given
+        //    var spreadsheetId = "sadasdasdassdasd";
+        //    var range = "A1B1";
 
-            var someRows = new List<IList<object>>();
+        //    var someRows = new List<IList<object>>();
 
-            var someExercises = new List<Exercise>
-            {
-                new Exercise
-                {
-                    CreatedDate = new DateTime(2010,1,1),
-                    Metres = 1
-                },
-                new Exercise
-                {
-                    CreatedDate = new DateTime(2010, 1, 1),
-                    Metres = 2
-                },
-                new Exercise
-                {
-                    CreatedDate = new DateTime(2010, 1, 2),
-                    Metres = 3
-                }
-            };
+        //    var someExercises = new List<Exercise>
+        //    {
+        //        new Exercise
+        //        {
+        //            CreatedDate = new DateTime(2010,1,1),
+        //            Metres = 1
+        //        },
+        //        new Exercise
+        //        {
+        //            CreatedDate = new DateTime(2010, 1, 1),
+        //            Metres = 2
+        //        },
+        //        new Exercise
+        //        {
+        //            CreatedDate = new DateTime(2010, 1, 2),
+        //            Metres = 3
+        //        }
+        //    };
 
-            _config.Setup(x => x.ExerciseSpreadsheetId).Returns(spreadsheetId);
-            _config.Setup(x => x.ExercisesRange).Returns(range);
+        //    _config.Setup(x => x.ExerciseSpreadsheetId).Returns(spreadsheetId);
+        //    _config.Setup(x => x.ExercisesRange).Returns(range);
 
-            _sheetsClient.Setup(x => x.GetRows(spreadsheetId, range)).Returns(someRows);
+        //    _sheetsClient.Setup(x => x.GetRows(spreadsheetId, range)).Returns(someRows);
 
-            _rowMapper.Setup(x => x.Get(someRows, _mapFunctions.MapRowToExercise)).Returns(someExercises);
+        //    _rowMapper.Setup(x => x.Get(someRows, _mapFunctions.MapRowToExercise)).Returns(someExercises);
 
-            //When
-            var exercises = _sheetsService.GetExercises();
+        //    //When
+        //    var exercises = _sheetsService.GetExercises();
 
-            //Then
-            Assert.Equal(3, exercises.Count);
-            Assert.Contains(exercises, x => x.Metres == 1);
-            Assert.Contains(exercises, x => x.Metres == 2);
-            Assert.Contains(exercises, x => x.Metres == 3);
+        //    //Then
+        //    Assert.Equal(3, exercises.Count);
+        //    Assert.Contains(exercises, x => x.Metres == 1);
+        //    Assert.Contains(exercises, x => x.Metres == 2);
+        //    Assert.Contains(exercises, x => x.Metres == 3);
 
 
-        }
+        //}
     }
 }

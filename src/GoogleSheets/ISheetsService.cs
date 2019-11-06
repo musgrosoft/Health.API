@@ -7,7 +7,7 @@ namespace GoogleSheets
     public interface ISheetsService
     {
         
-        List<Exercise> GetExercises();
+        List<Exercise> GetExercises(DateTime fromDate);
         List<Drink> GetDrinks(DateTime fromDate);
     }
 }
