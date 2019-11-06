@@ -13,7 +13,7 @@ namespace HealthAPI.Hangfire
         private readonly IHealthService _healthService;
         private readonly ICalendar _calendar;
 
-        private const int SEARCH_DAYS_PREVIOUS = 1;
+        private const int SEARCH_DAYS_PREVIOUS = 10;
 
         private DateTime MIN_FITBIT_DATE = new DateTime(2017, 5, 1);
         private DateTime MIN_FITBIT_SLEEP_DATE = new DateTime(2019, 7, 1);
