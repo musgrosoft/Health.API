@@ -25,7 +25,7 @@ namespace GoogleSheets
 
         public List<Drink> GetDrinks(DateTime fromDate)
         {
-            var rows = _sheetsClient.GetRows(_config.HistoricAlcoholSpreadsheetId, _config.DrinksRange);
+            var rows = _sheetsClient.GetRows(_config.DrinksSpreadsheetId, _config.DrinksRange);
 
             var drinks = _rowMapper.Get<Drink>(rows, _mapFunctions.MapRowToDrink);
 

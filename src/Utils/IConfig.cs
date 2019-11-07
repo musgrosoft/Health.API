@@ -19,8 +19,8 @@
         //Google Sheets
         string GoogleClientId { get; }
         string GoogleClientSecret { get; }
-        string HistoricAlcoholSpreadsheetId { get; }
-        string AlcoholSpreadsheetId { get; }
+        string DrinksSpreadsheetId { get; }
+        //string AlcoholSpreadsheetId { get; }
         string ExerciseSpreadsheetId { get; }
         string DrinksRange { get; }
         string ExercisesRange { get; }
