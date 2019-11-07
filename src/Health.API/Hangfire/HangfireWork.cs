@@ -59,7 +59,7 @@ namespace HealthAPI.Hangfire
                 await _logger.LogMessageAsync($"SLEEP STATES : First at {sleepStates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            await _healthService.UpsertSleepStates(sleepStates);
+            await _healthService.UpsertAsync(sleepStates);
 
             await _logger.LogMessageAsync($"SLEEP STATES : Finished Importing.");
         }
@@ -80,7 +80,7 @@ namespace HealthAPI.Hangfire
                 await _logger.LogMessageAsync($"RESTING HEART RATES : First at {restingHeartRates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {restingHeartRates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            await _healthService.UpsertRestingHeartRates(restingHeartRates);
+            await _healthService.UpsertAsync(restingHeartRates);
 
             await _logger.LogMessageAsync($"RESTING HEART RATES : Finished Importing.");
 
@@ -102,7 +102,7 @@ namespace HealthAPI.Hangfire
                 await _logger.LogMessageAsync($"SLEEP SUMMARIES : First at {sleepSummaries.Min(x => x.DateOfSleep):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepSummaries.Max(x => x.DateOfSleep):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            await _healthService.UpsertSleepSummaries(sleepSummaries);
+            await _healthService.UpsertAsync(sleepSummaries);
 
             await _logger.LogMessageAsync($"SLEEP SUMMARIES : Finished Importing.");
         }

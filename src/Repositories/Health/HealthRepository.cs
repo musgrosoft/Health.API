@@ -46,7 +46,7 @@ namespace Repositories.Health
             return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).FirstOrDefault()?.DateOfSleep;
         }
 
-        public DateTime? GetLatestSleepStateDate(DateTime defaultDateTime)
+        public DateTime? GetLatestSleepStateDate()
         {
             return _healthContext.SleepStates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
@@ -88,7 +88,6 @@ namespace Repositories.Health
         
         public List<SleepSummary> GetLatestSleeps(int num)
         {
-            //todo when you start sleep past midnight???
             return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).Take(num).ToList();
         }
         
@@ -115,7 +114,6 @@ namespace Repositories.Health
 
                 _healthContext.SaveChanges();
             }
-
         }
 
         public async Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries)
@@ -129,8 +127,7 @@ namespace Repositories.Health
                 _healthContext.SaveChanges();
             }
         }
-
-
+        
         public async Task UpsertAsync(IEnumerable<SleepState> sleepStates)
         {
             for (int i = 0; i < sleepStates.Count(); i += 500)
@@ -153,7 +150,6 @@ namespace Repositories.Health
 
                 _healthContext.SaveChanges();
             }
-
         }
 
         public async Task UpsertAsync(IEnumerable<Exercise> exercises)
@@ -168,8 +164,6 @@ namespace Repositories.Health
             }
         }
 
-
-
         public async Task UpsertAsync(IEnumerable<BloodPressure> bloodPressures)
         {
             for (int i = 0; i < bloodPressures.Count(); i += 500)
@@ -182,8 +176,6 @@ namespace Repositories.Health
             }
         }
 
-
-
         public async Task UpsertAsync(IEnumerable<RestingHeartRate> restingHeartRates)
         {
             for (int i = 0; i < restingHeartRates.Count(); i += 500)
@@ -195,8 +187,6 @@ namespace Repositories.Health
                 _healthContext.SaveChanges();
             }
         }
-
-
 
     }
 }

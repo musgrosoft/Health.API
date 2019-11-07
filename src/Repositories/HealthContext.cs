@@ -44,47 +44,7 @@ namespace Repositories
                     modelBuilder.Entity<CalendarDate>().HasData(new CalendarDate {Date = date});
                 }
 
-                //Seed Weights
-                var weightsJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/Weights.json");
-                var weights = JsonConvert.DeserializeObject<List<Weight>>(weightsJson);
-                foreach (var weight in weights)
-                {
-                    modelBuilder.Entity<Weight>().HasData(weight);
-                }
-
-                //Seed Blood Pressures
-                var bloodPressuresJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/BloodPressures.json");
-                var bloodPressures = JsonConvert.DeserializeObject<List<BloodPressure>>(bloodPressuresJson);
-                foreach (var bloodPressure in bloodPressures)
-                {
-                    modelBuilder.Entity<BloodPressure>().HasData(bloodPressure);
-                }
-
-                //Seed Exercises
-                var exercisesJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/Exercises.json");
-                var exercises = JsonConvert.DeserializeObject<List<Exercise>>(exercisesJson);
-                foreach (var exercise in exercises)
-                {
-                    modelBuilder.Entity<Exercise>().HasData(exercise);
-                }
-
-                //Seed Resting Heart Rates
-                var restingHeartRateJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/RestingHeartRates.json");
-                var restingHeartRates = JsonConvert.DeserializeObject<List<RestingHeartRate>>(restingHeartRateJson);
-                foreach (var restingHeartRate in restingHeartRates)
-                {
-                    modelBuilder.Entity<RestingHeartRate>().HasData(restingHeartRate);
-                }
-
-                //Seed Units
-                var drinksJson = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Seed Data/Drinks.json");
-                var drinks = JsonConvert.DeserializeObject<List<Drink>>(drinksJson);
-                foreach (var drink in drinks)
-                {
-                    modelBuilder.Entity<Drink>().HasData(drink);
-                }
-
-
+                //Seed Targets
                 for (var date = new DateTime(2018, 5, 1); date < new DateTime(2020, 1, 1); date = date.AddDays(1))
                 {
                     modelBuilder.Entity<Target>().HasData(new Target

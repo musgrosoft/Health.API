@@ -49,7 +49,7 @@ namespace HealthAPI.Controllers
                 await _logger.LogMessageAsync($"WEIGHTS : First at {weights.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {weights.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            await _healthService.UpsertWeights(weights);       
+            await _healthService.UpsertAsync(weights);       
             
             await _logger.LogMessageAsync("WEIGHTS: Finished Importing.");
                        
@@ -76,7 +76,7 @@ namespace HealthAPI.Controllers
                 await _logger.LogMessageAsync($"BLOOD PRESSURES : First at {bloodPressures.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {bloodPressures.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            await _healthService.UpsertBloodPressuresAsync(bloodPressures);
+            await _healthService.UpsertAsync(bloodPressures);
 
             await _logger.LogMessageAsync("BLOOD PRESSURES: Finished Importing.");
 

@@ -67,7 +67,7 @@ namespace Services.Health
 
         public DateTime GetLatestSleepStateDate(DateTime defaultDateTime)
         {
-            var latestDate = _healthRepository.GetLatestSleepStateDate(defaultDateTime);
+            var latestDate = _healthRepository.GetLatestSleepStateDate();
             return latestDate ?? defaultDateTime;
         }
 
@@ -109,39 +109,39 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
-        public async Task UpsertWeights(IEnumerable<Weight> weights)
+        public async Task UpsertAsync(IEnumerable<Weight> weights)
         {
             await _healthRepository.UpsertAsync(weights);
         }
 
 
-        public async Task UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries)
+        public async Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries)
         {
             await _healthRepository.UpsertAsync(sleepSummaries);
         }
 
-        public async Task UpsertSleepStates(IEnumerable<SleepState> sleepStates)
+        public async Task UpsertAsync(IEnumerable<SleepState> sleepStates)
         {
              await _healthRepository.UpsertAsync(sleepStates);
         }
 
-        public async Task UpsertBloodPressuresAsync(IEnumerable<BloodPressure> bloodPressures)
+        public async Task UpsertAsync(IEnumerable<BloodPressure> bloodPressures)
         {
             await _healthRepository.UpsertAsync(bloodPressures);
         }
 
-        public async Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
+        public async Task UpsertAsync(IEnumerable<RestingHeartRate> restingHeartRates)
         {
             await _healthRepository.UpsertAsync(restingHeartRates);
         }
 
         
-        public async Task UpsertDrinksAsync(IEnumerable<Drink> drinks)
+        public async Task UpsertAsync(IEnumerable<Drink> drinks)
         {
             await _healthRepository.UpsertAsync(drinks);
         }
 
-        public async Task UpsertExercisesAsync(List<Exercise> exercises)
+        public async Task UpsertAsync(List<Exercise> exercises)
         {
             await _healthRepository.UpsertAsync(exercises);
         }

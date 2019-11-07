@@ -16,13 +16,13 @@ namespace Services.Health
         DateTime GetLatestExerciseDate(DateTime defaultDateTime);
         
 
-        Task UpsertBloodPressuresAsync(IEnumerable<BloodPressure> bloodPressures);
-        Task UpsertWeights(IEnumerable<Weight> weights);
-        Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
-        Task UpsertDrinksAsync(IEnumerable<Drink> drinks);
-        Task UpsertExercisesAsync(List<Exercise> exercises);
-        Task UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries);
-        Task UpsertSleepStates(IEnumerable<SleepState> sleepStates);
+        Task UpsertAsync(IEnumerable<BloodPressure> bloodPressures);
+        Task UpsertAsync(IEnumerable<Weight> weights);
+        Task UpsertAsync(IEnumerable<RestingHeartRate> restingHeartRates);
+        Task UpsertAsync(IEnumerable<Drink> drinks);
+        Task UpsertAsync(List<Exercise> exercises);
+        Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries);
+        Task UpsertAsync(IEnumerable<SleepState> sleepStates);
 
 
         List<Weight> GetLatestWeights(int num = 10);
