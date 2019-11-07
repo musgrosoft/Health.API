@@ -33,17 +33,17 @@ namespace Repository.Tests.Unit
         //    Assert.Contains(bloodPressure, bloodPressures);
         //}
 
-        [Fact]
-        public void ShouldInsertRestingHeartRate()
-        {
-            var restingHeartRate = new RestingHeartRate { Beats = 123 };
+        //[Fact]
+        //public void ShouldInsertRestingHeartRate()
+        //{
+        //    var restingHeartRate = new RestingHeartRate { Beats = 123 };
 
-            _healthRepository.Upsert(restingHeartRate);
+        //    _healthRepository.Upsert(restingHeartRate);
 
-            var restingHeartRates = _fakeLocalContext.RestingHeartRates;
+        //    var restingHeartRates = _fakeLocalContext.RestingHeartRates;
 
-            Assert.Contains(restingHeartRate, restingHeartRates);
-        }
+        //    Assert.Contains(restingHeartRate, restingHeartRates);
+        //}
 
         //[Fact]
         //public void ShouldInsertWeight()
@@ -57,29 +57,29 @@ namespace Repository.Tests.Unit
         //    Assert.Contains(weight, weights);
         //}
 
-        [Fact]
-        public void ShouldInsertAlcoholIntake()
-        {
-            var alcoholIntake = new Drink { CreatedDate = new DateTime(2018,1,1) , Units = 123 };
+        //[Fact]
+        //public void ShouldInsertAlcoholIntake()
+        //{
+        //    var alcoholIntake = new Drink { CreatedDate = new DateTime(2018,1,1) , Units = 123 };
 
-            _healthRepository.Upsert(alcoholIntake);
+        //    _healthRepository.Upsert(alcoholIntake);
 
-            var alcoholIntakes = _fakeLocalContext.Drinks;
+        //    var alcoholIntakes = _fakeLocalContext.Drinks;
 
-            Assert.Contains(alcoholIntake, alcoholIntakes);
-        }
+        //    Assert.Contains(alcoholIntake, alcoholIntakes);
+        //}
 
-        [Fact]
-        public void ShouldInsertExercise()
-        {
-            var exercise = new Exercise { CreatedDate = new DateTime(2018, 1, 1), Description = "treadmill", Metres = 1, TotalSeconds = 1};
+        //[Fact]
+        //public void ShouldInsertExercise()
+        //{
+        //    var exercise = new Exercise { CreatedDate = new DateTime(2018, 1, 1), Description = "treadmill", Metres = 1, TotalSeconds = 1};
 
-            _healthRepository.Upsert(exercise);
+        //    _healthRepository.Upsert(exercise);
 
-            var exercises = _fakeLocalContext.Exercises;
+        //    var exercises = _fakeLocalContext.Exercises;
 
-            Assert.Contains(exercise, exercises);
-        }
+        //    Assert.Contains(exercise, exercises);
+        //}
         
         [Fact]
         public void ShouldGetLatestBloodPressureDate()
@@ -183,48 +183,48 @@ namespace Repository.Tests.Unit
         //}
 
     
-        [Fact]
-        public void ShouldUpdateAlcoholIntake()
-        {
-            var existingAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 1234};
-            _fakeLocalContext.Drinks.Add(existingAlcoholIntake);
-            _fakeLocalContext.SaveChanges();
+        //[Fact]
+        //public void ShouldUpdateAlcoholIntake()
+        //{
+        //    var existingAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 1234};
+        //    _fakeLocalContext.Drinks.Add(existingAlcoholIntake);
+        //    _fakeLocalContext.SaveChanges();
 
-            var newAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 2345 };
+        //    var newAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 2345 };
 
-            _healthRepository.Upsert(newAlcoholIntake);
+        //    _healthRepository.Upsert(newAlcoholIntake);
 
-            Assert.Equal(2345, existingAlcoholIntake.Units);
-        }
+        //    Assert.Equal(2345, existingAlcoholIntake.Units);
+        //}
 
-        [Fact]
-        public void ShouldUpdateRestingHeartRate()
-        {
-            var existingRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 1 };
-            _fakeLocalContext.RestingHeartRates.Add(existingRestingHeartRate);
-            _fakeLocalContext.SaveChanges();
+        //[Fact]
+        //public void ShouldUpdateRestingHeartRate()
+        //{
+        //    var existingRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 1 };
+        //    _fakeLocalContext.RestingHeartRates.Add(existingRestingHeartRate);
+        //    _fakeLocalContext.SaveChanges();
 
-            var newRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 2 };
+        //    var newRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 2 };
 
-            _healthRepository.Upsert(newRestingHeartRate);
+        //    _healthRepository.Upsert(newRestingHeartRate);
 
-            Assert.Equal(2, existingRestingHeartRate.Beats);
-        }
+        //    Assert.Equal(2, existingRestingHeartRate.Beats);
+        //}
 
-        [Fact]
-        public void ShouldUpdateExercise()
-        {
-            var existingExercise = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo" , Metres = 1234, TotalSeconds = 445566};
-            _fakeLocalContext.Exercises.Add(existingExercise);
-            _fakeLocalContext.SaveChanges();
+        //[Fact]
+        //public void ShouldUpdateExercise()
+        //{
+        //    var existingExercise = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo" , Metres = 1234, TotalSeconds = 445566};
+        //    _fakeLocalContext.Exercises.Add(existingExercise);
+        //    _fakeLocalContext.SaveChanges();
 
-            var newRestingHeartRate = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 2345, TotalSeconds = 556677};
+        //    var newRestingHeartRate = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 2345, TotalSeconds = 556677};
 
-            _healthRepository.Upsert(newRestingHeartRate);
+        //    _healthRepository.Upsert(newRestingHeartRate);
 
-            Assert.Equal(2345, existingExercise.Metres);
-            Assert.Equal(556677, existingExercise.TotalSeconds);
-        }
+        //    Assert.Equal(2345, existingExercise.Metres);
+        //    Assert.Equal(556677, existingExercise.TotalSeconds);
+        //}
 
 
     }

@@ -48,7 +48,7 @@ namespace HealthAPI.Controllers
                 await _logger.LogMessageAsync($"DRINKS : First at {drinks.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {drinks.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            _healthService.UpsertAlcoholIntakes(drinks);
+            await _healthService.UpsertDrinksAsync(drinks);
 
             await _logger.LogMessageAsync("DRINKS: Finished Importing.");
 
@@ -75,7 +75,7 @@ namespace HealthAPI.Controllers
                 await _logger.LogMessageAsync($"EXERCISES : First at {exercises.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {exercises.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            _healthService.UpsertExercises(exercises);
+            await _healthService.UpsertExercisesAsync(exercises);
 
 
             await _logger.LogMessageAsync("EXERCISES: Finished Importing.");

@@ -109,28 +109,20 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
-        public void UpsertWeights(IEnumerable<Weight> weights)
+        public async Task UpsertWeights(IEnumerable<Weight> weights)
         {
-            _healthRepository.Upsert(weights);
+            await _healthRepository.UpsertAsync(weights);
         }
 
 
-        public void UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries)
+        public async Task UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries)
         {
-            foreach (var fitbitSleep in sleepSummaries)
-            {
-                _healthRepository.Upsert(fitbitSleep);
-            }
+            await _healthRepository.UpsertAsync(sleepSummaries);
         }
 
-        public void UpsertSleepStates(IEnumerable<SleepState> sleepStates)
+        public async Task UpsertSleepStates(IEnumerable<SleepState> sleepStates)
         {
-             _healthRepository.Upsert(sleepStates);
-
-            //foreach (var sleepState in sleepStates)
-            //{
-            //    _healthRepository.Upsert(sleepState);
-            //}
+             await _healthRepository.UpsertAsync(sleepStates);
         }
 
         public async Task UpsertBloodPressuresAsync(IEnumerable<BloodPressure> bloodPressures)
@@ -138,33 +130,20 @@ namespace Services.Health
             await _healthRepository.UpsertAsync(bloodPressures);
         }
 
-        public void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
+        public async Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates)
         {
-            foreach (var restingHeartRate in restingHeartRates)
-            {
-                _healthRepository.Upsert(restingHeartRate);
-            }
+            await _healthRepository.UpsertAsync(restingHeartRates);
         }
 
         
-        public void UpsertAlcoholIntakes(IEnumerable<Drink> alcoholIntakes)
+        public async Task UpsertDrinksAsync(IEnumerable<Drink> drinks)
         {
-            _logger.LogMessageAsync($"UNITS : Saving {alcoholIntakes.Count()} alcohol intakes");
-            
-            foreach (var alcoholIntake in alcoholIntakes)
-            {
-                _healthRepository.Upsert(alcoholIntake);
-            }
+            await _healthRepository.UpsertAsync(drinks);
         }
 
-        public void UpsertExercises(List<Exercise> exercises)
+        public async Task UpsertExercisesAsync(List<Exercise> exercises)
         {
-            _logger.LogMessageAsync($"EXERCISES : Saving {exercises.Count} exercises");
-
-            foreach (var exercise in exercises)
-            {
-                _healthRepository.Upsert(exercise);
-            }
+            await _healthRepository.UpsertAsync(exercises);
         }
 
 

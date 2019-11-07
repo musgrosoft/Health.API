@@ -49,7 +49,7 @@ namespace HealthAPI.Controllers
                 await _logger.LogMessageAsync($"WEIGHTS : First at {weights.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {weights.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
-            _healthService.UpsertWeights(weights);       
+            await _healthService.UpsertWeights(weights);       
             
             await _logger.LogMessageAsync("WEIGHTS: Finished Importing.");
                        

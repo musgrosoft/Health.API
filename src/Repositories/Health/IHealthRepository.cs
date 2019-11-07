@@ -14,15 +14,15 @@ namespace Repositories.Health
         DateTime? GetLatestSleepSummaryDate();
         DateTime? GetLatestSleepStateDate(DateTime defaultDateTime);
 
-        void Upsert(IEnumerable<Weight> weights);
+        Task UpsertAsync(IEnumerable<Weight> weights);
         Task UpsertAsync(IEnumerable<BloodPressure> bloodPressure);
-        void Upsert(RestingHeartRate restingHeartRate);
-        void Upsert(Drink drink);
-        void Upsert(Exercise exercise);
-        void Upsert(SleepSummary sleepSummary);
+        Task UpsertAsync(IEnumerable<RestingHeartRate> restingHeartRates);
+        Task UpsertAsync(IEnumerable<Drink> drinks);
+        Task UpsertAsync(IEnumerable<Exercise> exercise);
+        Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries);
 
-        void Upsert(SleepState sleepState);
-        void Upsert(IEnumerable<SleepState> sleepStates);
+        //Task UpsertAsync(IEnumerable<SleepState> sleepState);
+        Task UpsertAsync(IEnumerable<SleepState> sleepStates);
 
         List<Weight> GetLatestWeights(int num);
         List<BloodPressure> GetLatestBloodPressures(int num);

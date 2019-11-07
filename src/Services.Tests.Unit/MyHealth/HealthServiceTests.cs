@@ -106,47 +106,47 @@ namespace Services.Tests.Unit.MyHealth
         //}
 
 
-        [Fact]
-        public void ShouldUpsertNewExercises()
-        {
-            //Given
-            var newExercises = new List<Exercise>
-            {
-                new Exercise { CreatedDate = new DateTime(2010,10,10) },
-                new Exercise { CreatedDate = new DateTime(2010,10,11) },
-                new Exercise { CreatedDate = new DateTime(2010,10,12) }
+        //[Fact]
+        //public void ShouldUpsertNewExercises()
+        //{
+        //    //Given
+        //    var newExercises = new List<Exercise>
+        //    {
+        //        new Exercise { CreatedDate = new DateTime(2010,10,10) },
+        //        new Exercise { CreatedDate = new DateTime(2010,10,11) },
+        //        new Exercise { CreatedDate = new DateTime(2010,10,12) }
 
-            };
+        //    };
 
-            //When
-            _healthService.UpsertExercises(newExercises);
+        //    //When
+        //    _healthService.UpsertExercises(newExercises);
 
-            //Then
-            _healthRepository.Verify(x => x.Upsert(newExercises[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newExercises[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newExercises[2]), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(newExercises[0]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newExercises[1]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newExercises[2]), Times.Once);
+        //}
 
-        [Fact]
-        public void ShouldUpsertNewAlcoholIntakes()
-        {
-            //Given
-            var newAlcoholIntake = new List<Drink>
-            {
-                new Drink { CreatedDate = new DateTime(2010,10,10) },
-                new Drink { CreatedDate = new DateTime(2010,10,11) },
-                new Drink { CreatedDate = new DateTime(2010,10,12) }
+        //[Fact]
+        //public void ShouldUpsertNewAlcoholIntakes()
+        //{
+        //    //Given
+        //    var newAlcoholIntake = new List<Drink>
+        //    {
+        //        new Drink { CreatedDate = new DateTime(2010,10,10) },
+        //        new Drink { CreatedDate = new DateTime(2010,10,11) },
+        //        new Drink { CreatedDate = new DateTime(2010,10,12) }
 
-            };
+        //    };
 
-            //When
-            _healthService.UpsertAlcoholIntakes(newAlcoholIntake);
+        //    //When
+        //    _healthService.UpsertAlcoholIntakes(newAlcoholIntake);
 
-            //Then
-            _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[2]), Times.Once);
-        }
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[0]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[1]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[2]), Times.Once);
+        //}
 
         //[Fact]
         //public void ShouldUpsertNewBloodPressures()
@@ -208,26 +208,26 @@ namespace Services.Tests.Unit.MyHealth
         //    _healthRepository.Verify(x => x.Upsert(newActivitySummaries[2]), Times.Once);
         //}
         
-        [Fact]
-        public void ShouldUpsertNewRestingHeartRates()
-        {
-            //Given
-            var newHeartSummaries = new List<RestingHeartRate>
-            {
-                new RestingHeartRate { CreatedDate = new DateTime(2010,10,10) },
-                new RestingHeartRate { CreatedDate = new DateTime(2010,10,11) },
-                new RestingHeartRate { CreatedDate = new DateTime(2010,10,12) }
-            };
+        //[Fact]
+        //public void ShouldUpsertNewRestingHeartRates()
+        //{
+        //    //Given
+        //    var newHeartSummaries = new List<RestingHeartRate>
+        //    {
+        //        new RestingHeartRate { CreatedDate = new DateTime(2010,10,10) },
+        //        new RestingHeartRate { CreatedDate = new DateTime(2010,10,11) },
+        //        new RestingHeartRate { CreatedDate = new DateTime(2010,10,12) }
+        //    };
             
-            //When
-            _healthService.UpsertRestingHeartRates(newHeartSummaries);
+        //    //When
+        //    _healthService.UpsertRestingHeartRates(newHeartSummaries);
 
-            //Then
-            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[0]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[1]), Times.Once);
-            _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
+        //    //Then
+        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[0]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[1]), Times.Once);
+        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
 
-        }
+        //}
         
         //[Fact]
         //public void ShouldUpsertHeartSummaries()

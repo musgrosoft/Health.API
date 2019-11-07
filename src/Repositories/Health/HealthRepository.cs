@@ -27,65 +27,10 @@ namespace Repositories.Health
            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
         
-        public Weight GetLatestWeight()
-        {
-            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
-        }
-
-        public List<BloodPressure> GetLatestBloodPressures(int num)
-        {
-            return  _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        }
-
         public DateTime? GetLatestExerciseDate()
         {
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
-
-        public List<Exercise> GetLatestExercises(int num)
-        {
-            return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        }
-
-
-
-        public List<Drink> GetLatestDrinks(int num)
-        {
-            return _healthContext.Drinks.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        }
-
-        public List<RestingHeartRate> GetLatestRestingHeartRate(int num)
-        {
-            return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        }
-
- 
-
-        public List<SleepSummary> GetLatestSleeps(int num)
-        {
-            //todo when you start sleep past midnight???
-            return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).Take(num).ToList();
-        }
-
-
-        public Target GetTarget(DateTime date)
-        {
-            return _healthContext.Targets.First(x => x.Date.Date == date.Date);
-        }
-
-        public List<BloodPressure> GetLatestBloodPressure(int num)
-        {
-            return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        }
-
-
-
-
-        public List<Weight> GetLatestWeights(int num)
-        {
-            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        }
-
         public DateTime? GetLatestRestingHeartRateDate()
         {
             return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
@@ -107,145 +52,120 @@ namespace Repositories.Health
         }
 
 
-        public void Upsert(IEnumerable<Weight> weights)
+
+        public Target GetTarget(DateTime date)
+        {
+            return _healthContext.Targets.First(x => x.Date.Date == date.Date);
+        }
+
+
+
+
+        public Weight GetLatestWeight()
+        {
+            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+        }
+
+        public List<BloodPressure> GetLatestBloodPressures(int num)
+        {
+            return  _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        public List<Exercise> GetLatestExercises(int num)
+        {
+            return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+               
+        public List<Drink> GetLatestDrinks(int num)
+        {
+            return _healthContext.Drinks.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        public List<RestingHeartRate> GetLatestRestingHeartRate(int num)
+        {
+            return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+        
+        public List<SleepSummary> GetLatestSleeps(int num)
+        {
+            //todo when you start sleep past midnight???
+            return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).Take(num).ToList();
+        }
+        
+        public List<BloodPressure> GetLatestBloodPressure(int num)
+        {
+            return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        public List<Weight> GetLatestWeights(int num)
+        {
+            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
+        }
+
+        
+
+
+        public async Task UpsertAsync(IEnumerable<Weight> weights)
         {
             for (int i = 0; i < weights.Count(); i += 500)
             {
-                _healthContext.UpsertRange(weights.Skip(i).Take(500))
-                    //.RunAsync();
-                    .Run();
+                await _healthContext
+                    .UpsertRange(weights.Skip(i).Take(500))
+                    .RunAsync();
 
                 _healthContext.SaveChanges();
             }
 
         }
 
-        public void Upsert(SleepSummary sleepSummary)
+        public async Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries)
         {
-            var existingSleep = _healthContext.SleepSummaries.Find(sleepSummary.LogId);
-
-            if (existingSleep == null)
+            for (int i = 0; i < sleepSummaries.Count(); i += 500)
             {
-                _healthContext.Add(sleepSummary);
-            }
-            else
-            {
-                existingSleep.AwakeCount = sleepSummary.AwakeCount;
-                existingSleep.AwakeMinutes = sleepSummary.AwakeMinutes;
-                
-                existingSleep.DateOfSleep = sleepSummary.DateOfSleep;
-                existingSleep.Duration = sleepSummary.Duration;
-                existingSleep.Efficiency = sleepSummary.Efficiency;
-                existingSleep.EndTime = sleepSummary.EndTime;
-                existingSleep.MinutesAfterWakeup = sleepSummary.MinutesAfterWakeup;
-                existingSleep.MinutesAsleep = sleepSummary.MinutesAsleep;
-                existingSleep.MinutesAwake = sleepSummary.MinutesAwake;
-                existingSleep.MinutesToFallAsleep = sleepSummary.MinutesToFallAsleep;
-                existingSleep.RestlessCount = sleepSummary.RestlessCount;
-                existingSleep.RestlessMinutes = sleepSummary.RestlessMinutes;
-                existingSleep.StartTime = sleepSummary.StartTime;
-                existingSleep.TimeInBed = sleepSummary.TimeInBed;
+                await _healthContext
+                    .UpsertRange(sleepSummaries.Skip(i).Take(500))
+                    .RunAsync();
 
-                //existingSleep.IsMainSleep= sleep.IsMainSleep;
+                _healthContext.SaveChanges();
             }
-
-            _healthContext.SaveChanges();
         }
 
-        public void Upsert(SleepState sleepState)
-        {
-            //var existingSleepState = _healthContext.SleepStates.Find(sleepState.CreatedDate);
 
-            //if (existingSleepState == null)
-            //{
-            //    _healthContext.Add(sleepState);
-            //}
-            //else
-            //{
-            //    existingSleepState.State = sleepState.State;
-            //}
-
-
-            _healthContext.Upsert(sleepState)
-                .On(x => x.CreatedDate)
-                .WhenMatched(x => new SleepState 
-                { 
-                    State = sleepState.State
-                })
-                //.RunAsync();
-                .Run();
-                
-            _healthContext.SaveChanges();
-
-
-            //try
-            //{
-            //    //disable detection of changes to improve performance
-            //    _healthContext.ChangeTracker.AutoDetectChangesEnabled = false;
-
-            //    //for all the entities to update...
-            //    _healthContext.Attach(sleepState);
-
-            //    //then perform the update
-            //    _healthContext.SaveChanges();
-            //}
-            //finally
-            //{
-            //    //re-enable detection of changes
-            //    _healthContext.ChangeTracker.AutoDetectChangesEnabled = true;
-            //}
-
-        }
-
-        public void Upsert(IEnumerable<SleepState> sleepStates)
+        public async Task UpsertAsync(IEnumerable<SleepState> sleepStates)
         {
             for (int i = 0; i < sleepStates.Count(); i += 500)
             {
-                _healthContext
+                await _healthContext
                     .UpsertRange(sleepStates.Skip(i).Take(500))
-                    //.RunAsync();
-                    .Run();
+                    .RunAsync();
+
+                _healthContext.SaveChanges();
+            }
+        }
+
+        public async Task UpsertAsync(IEnumerable<Drink> drinks)
+        {
+            for (int i = 0; i < drinks.Count(); i += 500)
+            {
+                await _healthContext
+                            .UpsertRange(drinks.Skip(i).Take(500))
+                            .RunAsync();
 
                 _healthContext.SaveChanges();
             }
 
-
-
         }
 
-        public void Upsert(Drink drink)
+        public async Task UpsertAsync(IEnumerable<Exercise> exercises)
         {
-            var existingAlcoholIntake = _healthContext.Drinks.Find(drink.CreatedDate);
-
-            if (existingAlcoholIntake == null)
+            for (int i = 0; i < exercises.Count(); i += 500)
             {
-                //  _logger.Log($"WEIGHT : Insert Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                _healthContext.Add(drink);
-            }
-            else
-            {
-                // _logger.Log($"WEIGHT : Update Weight record : {weight.DateTime:yy-MM-dd} , {weight.Kg} Kg , {weight.FatRatioPercentage} % Fat");
-                existingAlcoholIntake.Units = drink.Units;
-            }
+                await _healthContext
+                            .UpsertRange(exercises.Skip(i).Take(500))
+                            .RunAsync();
 
-            _healthContext.SaveChanges();
-        }
-
-        public void Upsert(Exercise exercise)
-        {
-            var existingExercise = _healthContext.Exercises.Find(exercise.CreatedDate, exercise.Description);
-
-            if (existingExercise == null)
-            {
-                _healthContext.Add(exercise);
+                _healthContext.SaveChanges();
             }
-            else
-            {
-                existingExercise.Metres = exercise.Metres;
-                existingExercise.TotalSeconds = exercise.TotalSeconds;
-            }
-
-            _healthContext.SaveChanges();
         }
 
 
@@ -260,31 +180,21 @@ namespace Repositories.Health
 
                 _healthContext.SaveChanges();
             }
-
         }
 
 
 
-        public void Upsert(RestingHeartRate restingHeartRate)
+        public async Task UpsertAsync(IEnumerable<RestingHeartRate> restingHeartRates)
         {
-            var existingRestingHeartRate = _healthContext.RestingHeartRates.Find(restingHeartRate.CreatedDate);
-
-            if (existingRestingHeartRate != null)
+            for (int i = 0; i < restingHeartRates.Count(); i += 500)
             {
-                existingRestingHeartRate.Beats = restingHeartRate.Beats;
-              //  existingRestingHeartRate.MovingAverageBeats = restingHeartRate.MovingAverageBeats;
-             //   _logger.Log($"RESTING HEART RATE : About to update Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
-                //_healthRepository.Update(existingRestingHeartRate, restingHeartRate);
-            }
-            else
-            {
-                //   _logger.Log($"RESTING HEART RATE : About to insert Resting Heart Rate record : {restingHeartRate.DateTime:dd-MMM-yyyy HH:mm:ss (ddd)} , {restingHeartRate.Beats} beats");
-                _healthContext.Add(restingHeartRate);
-            }
+                await _healthContext
+                            .UpsertRange(restingHeartRates.Skip(i).Take(500))
+                            .RunAsync();
 
-            _healthContext.SaveChanges();
+                _healthContext.SaveChanges();
+            }
         }
-
 
 
 

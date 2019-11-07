@@ -17,12 +17,12 @@ namespace Services.Health
         
 
         Task UpsertBloodPressuresAsync(IEnumerable<BloodPressure> bloodPressures);
-        void UpsertWeights(IEnumerable<Weight> weights);
-        void UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
-        void UpsertAlcoholIntakes(IEnumerable<Drink> alcoholIntakes);
-        void UpsertExercises(List<Exercise> exercises);
-        void UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries);
-        void UpsertSleepStates(IEnumerable<SleepState> sleepStates);
+        Task UpsertWeights(IEnumerable<Weight> weights);
+        Task UpsertRestingHeartRates(IEnumerable<RestingHeartRate> restingHeartRates);
+        Task UpsertDrinksAsync(IEnumerable<Drink> drinks);
+        Task UpsertExercisesAsync(List<Exercise> exercises);
+        Task UpsertSleepSummaries(IEnumerable<SleepSummary> sleepSummaries);
+        Task UpsertSleepStates(IEnumerable<SleepState> sleepStates);
 
 
         List<Weight> GetLatestWeights(int num = 10);
