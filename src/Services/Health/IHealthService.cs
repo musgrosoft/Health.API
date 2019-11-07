@@ -25,12 +25,12 @@ namespace Services.Health
         Task UpsertAsync(IEnumerable<SleepState> sleepStates);
 
 
-        List<Weight> GetLatestWeights(int num = 10);
-        List<BloodPressure> GetLatestBloodPressures(int num = 10);
-        List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10);
-        List<Drink> GetLatestDrinks(int num = 10);
-        List<Exercise> GetLatestExercises(int num = 10);
-        List<SleepSummary> GetLatestSleeps(int num = 10);
+        //List<Weight> GetLatestWeights(int num = 10);
+        //List<BloodPressure> GetLatestBloodPressures(int num = 10);
+        //List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10);
+        //List<Drink> GetLatestDrinks(int num = 10);
+        //List<Exercise> GetLatestExercises(int num = 10);
+        //List<SleepSummary> GetLatestSleeps(int num = 10);
         
     }
 }

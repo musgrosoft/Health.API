@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Repositories.Health;
 using Repositories.Health.Models;
 using Xunit;
@@ -20,67 +23,70 @@ namespace Repository.Tests.Unit
         {
             _fakeLocalContext.Database.EnsureDeleted();
         }
-        
-        //[Fact]
-        //public void ShouldInsertBloodPressure()
-        //{
-        //    var bloodPressure = new BloodPressure { Systolic = 123 };
 
-        //    _healthRepository.Upsert(bloodPressure);
+        [Fact]
+        public async Task ShouldInsertBloodPressure()
+        {
+            var bloodPressures = new List<BloodPressure> {new BloodPressure {Systolic = 123}};
 
-        //    var bloodPressures = _fakeLocalContext.BloodPressures;
+            await _healthRepository.UpsertAsync(bloodPressures);
 
-        //    Assert.Contains(bloodPressure, bloodPressures);
-        //}
+            var retrievedBloodPressures = _fakeLocalContext.BloodPressures;
 
-        //[Fact]
-        //public void ShouldInsertRestingHeartRate()
-        //{
-        //    var restingHeartRate = new RestingHeartRate { Beats = 123 };
+            Assert.Contains(bloodPressures.First(), retrievedBloodPressures);
+        }
 
-        //    _healthRepository.Upsert(restingHeartRate);
+        [Fact]
+        public async Task ShouldInsertRestingHeartRate()
+        {
+            var restingHeartRates = new List<RestingHeartRate> {new RestingHeartRate {Beats = 123}};
 
-        //    var restingHeartRates = _fakeLocalContext.RestingHeartRates;
+            await _healthRepository.UpsertAsync(restingHeartRates);
 
-        //    Assert.Contains(restingHeartRate, restingHeartRates);
-        //}
+            var retrievedRestingHeartRates = _fakeLocalContext.RestingHeartRates;
 
-        //[Fact]
-        //public void ShouldInsertWeight()
-        //{
-        //    var weight = new Weight { Kg = 123, CreatedDate = new DateTime(2018,1,1)};
+            Assert.Contains(restingHeartRates.First(), retrievedRestingHeartRates);
+        }
 
-        //    _healthRepository.Upsert(weight);
+        [Fact]
+        public async Task ShouldInsertWeight()
+        {
+            var weights = new List<Weight> { new Weight { Kg = 123, CreatedDate = new DateTime(2018,1,1)}};
 
-        //    var weights = _fakeLocalContext.Weights;
+            await _healthRepository.UpsertAsync(weights);
 
-        //    Assert.Contains(weight, weights);
-        //}
+            var retrievedWeights = _fakeLocalContext.Weights;
 
-        //[Fact]
-        //public void ShouldInsertAlcoholIntake()
-        //{
-        //    var alcoholIntake = new Drink { CreatedDate = new DateTime(2018,1,1) , Units = 123 };
+            Assert.Contains(weights.First(), retrievedWeights);
+        }
 
-        //    _healthRepository.Upsert(alcoholIntake);
+        [Fact]
+        public async Task ShouldInsertDrink()
+        {
+            var drinks = new List<Drink> {new Drink {CreatedDate = new DateTime(2018, 1, 1), Units = 123}};
 
-        //    var alcoholIntakes = _fakeLocalContext.Drinks;
+            await _healthRepository.UpsertAsync(drinks);
 
-        //    Assert.Contains(alcoholIntake, alcoholIntakes);
-        //}
+            var retrievedDrinks = _fakeLocalContext.Drinks;
 
-        //[Fact]
-        //public void ShouldInsertExercise()
-        //{
-        //    var exercise = new Exercise { CreatedDate = new DateTime(2018, 1, 1), Description = "treadmill", Metres = 1, TotalSeconds = 1};
+            Assert.Contains(drinks.First(), retrievedDrinks);
+        }
 
-        //    _healthRepository.Upsert(exercise);
+        [Fact]
+        public async Task ShouldInsertExercise()
+        {
+            var exercises = new List<Exercise>
+            {
+                new Exercise {CreatedDate = new DateTime(2018, 1, 1), Description = "treadmill", Metres = 1, TotalSeconds = 1}
+            };
 
-        //    var exercises = _fakeLocalContext.Exercises;
+            await _healthRepository.UpsertAsync(exercises);
 
-        //    Assert.Contains(exercise, exercises);
-        //}
-        
+            var retrievedExercises = _fakeLocalContext.Exercises;
+
+            Assert.Contains(exercises.First(), retrievedExercises);
+        }
+
         [Fact]
         public void ShouldGetLatestBloodPressureDate()
         {
@@ -151,80 +157,80 @@ namespace Repository.Tests.Unit
 
         }
 
-        //[Fact]
-        //public void ShouldUpdateWeight()
-        //{
-        //    var existingWeight = new Weight {CreatedDate = new DateTime(2017, 1, 1), Kg = 1, FatRatioPercentage = 3};
-        //    _fakeLocalContext.Weights.Add(existingWeight);
-        //    _fakeLocalContext.SaveChanges();
+        [Fact]
+        public async Task ShouldUpdateWeight()
+        {
+            var existingWeight = new Weight {CreatedDate = new DateTime(2017, 1, 1), Kg = 1, FatRatioPercentage = 3};
+            _fakeLocalContext.Weights.Add(existingWeight);
+            _fakeLocalContext.SaveChanges();
 
-        //    var newWeight = new Weight { CreatedDate = new DateTime(2017, 1, 1), Kg = 2, FatRatioPercentage = 4 };
+            var newWeights = new List<Weight> {new Weight {CreatedDate = new DateTime(2017, 1, 1), Kg = 2, FatRatioPercentage = 4}};
 
-        //    _healthRepository.Upsert(newWeight);
+            await _healthRepository.UpsertAsync(newWeights);
 
-        //    Assert.Equal(2,existingWeight.Kg);
-        //    Assert.Equal(4, existingWeight.FatRatioPercentage);
+            Assert.Equal(2, existingWeight.Kg);
+            Assert.Equal(4, existingWeight.FatRatioPercentage);
 
-        //}
+        }
 
-        //[Fact]
-        //public void ShouldUpdateBloodPressure()
-        //{
-        //    var existingBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 1, Diastolic = 3};
-        //    _fakeLocalContext.BloodPressures.Add(existingBloodPressure);
-        //    _fakeLocalContext.SaveChanges();
+        [Fact]
+        public async Task ShouldUpdateBloodPressure()
+        {
+            var existingBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 1, Diastolic = 3 };
+            _fakeLocalContext.BloodPressures.Add(existingBloodPressure);
+            _fakeLocalContext.SaveChanges();
 
-        //    var newBloodPressure = new BloodPressure() { CreatedDate = new DateTime(2017, 1, 1), Systolic = 2, Diastolic = 4 };
+            var newBloodPressures = new List<BloodPressure> {new BloodPressure() {CreatedDate = new DateTime(2017, 1, 1), Systolic = 2, Diastolic = 4}};
 
-        //    _healthRepository.Upsert(newBloodPressure);
+            await _healthRepository.UpsertAsync(newBloodPressures);
 
-        //    Assert.Equal(2, existingBloodPressure.Systolic);
-        //    Assert.Equal(4, existingBloodPressure.Diastolic);
-        //}
+            Assert.Equal(2, existingBloodPressure.Systolic);
+            Assert.Equal(4, existingBloodPressure.Diastolic);
+        }
 
-    
-        //[Fact]
-        //public void ShouldUpdateAlcoholIntake()
-        //{
-        //    var existingAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 1234};
-        //    _fakeLocalContext.Drinks.Add(existingAlcoholIntake);
-        //    _fakeLocalContext.SaveChanges();
 
-        //    var newAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 2345 };
+        [Fact]
+        public async Task ShouldUpdateDrink()
+        {
+            var existingAlcoholIntake = new Drink { CreatedDate = new DateTime(2017, 1, 1), Units = 1234};
+            _fakeLocalContext.Drinks.Add(existingAlcoholIntake);
+            _fakeLocalContext.SaveChanges();
 
-        //    _healthRepository.Upsert(newAlcoholIntake);
+            var newDrinks = new List<Drink> {new Drink {CreatedDate = new DateTime(2017, 1, 1), Units = 2345}};
 
-        //    Assert.Equal(2345, existingAlcoholIntake.Units);
-        //}
+            await _healthRepository.UpsertAsync(newDrinks);
 
-        //[Fact]
-        //public void ShouldUpdateRestingHeartRate()
-        //{
-        //    var existingRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 1 };
-        //    _fakeLocalContext.RestingHeartRates.Add(existingRestingHeartRate);
-        //    _fakeLocalContext.SaveChanges();
+            Assert.Equal(2345, existingAlcoholIntake.Units);
+        }
 
-        //    var newRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 2 };
+        [Fact]
+        public async Task ShouldUpdateRestingHeartRate()
+        {
+            var existingRestingHeartRate = new RestingHeartRate() { CreatedDate = new DateTime(2017, 1, 1), Beats = 1 };
+            _fakeLocalContext.RestingHeartRates.Add(existingRestingHeartRate);
+            _fakeLocalContext.SaveChanges();
 
-        //    _healthRepository.Upsert(newRestingHeartRate);
+            var newRestingHeartRates = new List<RestingHeartRate> {new RestingHeartRate() {CreatedDate = new DateTime(2017, 1, 1), Beats = 2}};
 
-        //    Assert.Equal(2, existingRestingHeartRate.Beats);
-        //}
+            await _healthRepository.UpsertAsync(newRestingHeartRates);
 
-        //[Fact]
-        //public void ShouldUpdateExercise()
-        //{
-        //    var existingExercise = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo" , Metres = 1234, TotalSeconds = 445566};
-        //    _fakeLocalContext.Exercises.Add(existingExercise);
-        //    _fakeLocalContext.SaveChanges();
+            Assert.Equal(2, existingRestingHeartRate.Beats);
+        }
 
-        //    var newRestingHeartRate = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 2345, TotalSeconds = 556677};
+        [Fact]
+        public async Task ShouldUpdateExercise()
+        {
+            var existingExercise = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 1234, TotalSeconds = 445566 };
+            _fakeLocalContext.Exercises.Add(existingExercise);
+            _fakeLocalContext.SaveChanges();
 
-        //    _healthRepository.Upsert(newRestingHeartRate);
+            var newExercises = new List<Exercise> { new Exercise() {CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 2345, TotalSeconds = 556677}};
 
-        //    Assert.Equal(2345, existingExercise.Metres);
-        //    Assert.Equal(556677, existingExercise.TotalSeconds);
-        //}
+            await _healthRepository.UpsertAsync(newExercises);
+
+            Assert.Equal(2345, existingExercise.Metres);
+            Assert.Equal(556677, existingExercise.TotalSeconds);
+        }
 
 
     }

@@ -24,12 +24,12 @@ namespace Repositories.Health
         Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries);
         Task UpsertAsync(IEnumerable<SleepState> sleepStates);
 
-        List<Weight> GetLatestWeights(int num);
-        List<BloodPressure> GetLatestBloodPressures(int num);
-        List<Exercise> GetLatestExercises(int num);
-        List<Drink> GetLatestDrinks(int num);
-        List<RestingHeartRate> GetLatestRestingHeartRate(int num);
-        List<SleepSummary> GetLatestSleeps(int num);
+        //List<Weight> GetLatestWeights(int num);
+        //List<BloodPressure> GetLatestBloodPressures(int num);
+        //List<Exercise> GetLatestExercises(int num);
+        //List<Drink> GetLatestDrinks(int num);
+        //List<RestingHeartRate> GetLatestRestingHeartRate(int num);
+        //List<SleepSummary> GetLatestSleeps(int num);
 
 
         Target GetTarget(DateTime date);

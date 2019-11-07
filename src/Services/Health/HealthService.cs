@@ -35,29 +35,29 @@ namespace Services.Health
 
 
 
-        public List<Weight> GetLatestWeights(int num = 10)
-        {
-            return _healthRepository.GetLatestWeights(num);
-        }
+        //public List<Weight> GetLatestWeights(int num = 10)
+        //{
+        //    return _healthRepository.GetLatestWeights(num);
+        //}
 
-        public List<BloodPressure> GetLatestBloodPressures(int num = 10)
-        {
-            return _healthRepository.GetLatestBloodPressures(num);
-        }
-
-
+        //public List<BloodPressure> GetLatestBloodPressures(int num = 10)
+        //{
+        //    return _healthRepository.GetLatestBloodPressures(num);
+        //}
 
 
 
-        public List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10)
-        {
-            return _healthRepository.GetLatestRestingHeartRate(num);
-        }
 
-        public List<Drink> GetLatestDrinks(int num = 10)
-        {
-            return _healthRepository.GetLatestDrinks(num);
-        }
+
+        //public List<RestingHeartRate> GetLatestRestingHeartRates(int num = 10)
+        //{
+        //    return _healthRepository.GetLatestRestingHeartRate(num);
+        //}
+
+        //public List<Drink> GetLatestDrinks(int num = 10)
+        //{
+        //    return _healthRepository.GetLatestDrinks(num);
+        //}
 
         public DateTime GetLatestSleepSummaryDate(DateTime defaultDateTime)
         {
@@ -71,15 +71,15 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
-        public List<SleepSummary> GetLatestSleeps(int num = 10)
-        {
-            return _healthRepository.GetLatestSleeps(num);
-        }
+        //public List<SleepSummary> GetLatestSleeps(int num = 10)
+        //{
+        //    return _healthRepository.GetLatestSleeps(num);
+        //}
 
-        public List<Exercise> GetLatestExercises(int num)
-        {
-            return _healthRepository.GetLatestExercises(num);
-        }
+        //public List<Exercise> GetLatestExercises(int num)
+        //{
+        //    return _healthRepository.GetLatestExercises(num);
+        //}
 
 
 
