@@ -37,6 +37,30 @@ namespace Repository.Tests.Unit
         }
 
         [Fact]
+        public async Task ShouldInsertSleepSummary()
+        {
+            var sleepSummaries = new List<SleepSummary> { new SleepSummary { DateOfSleep = new DateTime(2019,1,1), AsleepMinutes = 123} };
+
+            await _healthRepository.UpsertAsync(sleepSummaries);
+
+            var retrievedSleepSummaries = _fakeLocalContext.SleepSummaries;
+
+            Assert.Contains(sleepSummaries.First(), retrievedSleepSummaries);
+        }
+
+        [Fact]
+        public async Task ShouldInsertSleepState()
+        {
+            var sleepStates = new List<SleepState> { new SleepState { CreatedDate = new DateTime(2019,2,2) , State = "light"} };
+
+            await _healthRepository.UpsertAsync(sleepStates);
+
+            var retrievedSleepStates = _fakeLocalContext.SleepStates;
+
+            Assert.Contains(sleepStates.First(), retrievedSleepStates);
+        }
+
+        [Fact]
         public async Task ShouldInsertRestingHeartRate()
         {
             var restingHeartRates = new List<RestingHeartRate> {new RestingHeartRate {Beats = 123}};
@@ -231,6 +255,33 @@ namespace Repository.Tests.Unit
             Assert.Equal(2345, existingExercise.Metres);
             Assert.Equal(556677, existingExercise.TotalSeconds);
         }
+
+        //[Fact]
+        //public async Task ShouldUpdateSleepSummary()
+        //{
+        //    var existingExercise = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 1234, TotalSeconds = 445566 };
+        //    _fakeLocalContext.Exercises.Add(existingExercise);
+        //    _fakeLocalContext.SaveChanges();
+
+        //    var newExercises = new List<Exercise> { new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 2345, TotalSeconds = 556677 } };
+
+        //    await _healthRepository.UpsertAsync(newExercises);
+
+        //    Assert.Equal(2345, existingExercise.Metres);
+        //    Assert.Equal(556677, existingExercise.TotalSeconds);
+        //}
+
+        //[Fact]
+        //public async Task ShouldUpdateSleepState()
+        //{
+        //    var sleepStates = new List<SleepState> { new SleepState { CreatedDate = new DateTime(2019, 2, 2), State = "light" } };
+
+        //    await _healthRepository.UpsertAsync(sleepStates);
+
+        //    var retrievedSleepStates = _fakeLocalContext.SleepStates;
+
+        //    Assert.Contains(sleepStates.First(), retrievedSleepStates);
+        //}
 
 
     }

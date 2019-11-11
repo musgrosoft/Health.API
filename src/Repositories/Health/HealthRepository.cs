@@ -15,8 +15,8 @@ namespace Repositories.Health
         {
             _healthContext = healthContext;
         }
-        
-        
+
+
         public DateTime? GetLatestBloodPressureDate()
         {
             return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
@@ -24,9 +24,9 @@ namespace Repositories.Health
 
         public DateTime? GetLatestWeightDate()
         {
-           return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
+            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
-        
+
         public DateTime? GetLatestExerciseDate()
         {
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
