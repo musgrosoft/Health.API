@@ -78,6 +78,7 @@ namespace GoogleSheets
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
 
                 }
 
