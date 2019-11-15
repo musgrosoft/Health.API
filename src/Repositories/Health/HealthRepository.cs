@@ -64,47 +64,6 @@ namespace Repositories.Health
         }
 
 
-
-        //public Weight GetLatestWeight()
-        //{
-        //    return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
-        //}
-
-        //public List<BloodPressure> GetLatestBloodPressures(int num)
-        //{
-        //    return  _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        //}
-
-        //public List<Exercise> GetLatestExercises(int num)
-        //{
-        //    return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        //}
-               
-        //public List<Drink> GetLatestDrinks(int num)
-        //{
-        //    return _healthContext.Drinks.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        //}
-
-        //public List<RestingHeartRate> GetLatestRestingHeartRate(int num)
-        //{
-        //    return _healthContext.RestingHeartRates.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        //}
-        
-        //public List<SleepSummary> GetLatestSleeps(int num)
-        //{
-        //    return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).Take(num).ToList();
-        //}
-        
-        //public List<BloodPressure> GetLatestBloodPressure(int num)
-        //{
-        //    return _healthContext.BloodPressures.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        //}
-
-        //public List<Weight> GetLatestWeights(int num)
-        //{
-        //    return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).Take(num).ToList();
-        //}
-
         
 
 
@@ -196,10 +155,10 @@ namespace Repositories.Health
 
         public async Task UpsertAsync(IEnumerable<Target> targets)
         {
-            for (int i = 0; i < targets.Count(); i += 500)
+            for (int i = 0; i < targets.Count(); i += 200)
             {
                 await _healthContext
-                    .UpsertRange(targets.Skip(i).Take(500))
+                    .UpsertRange(targets.Skip(i).Take(200))
                     .RunAsync();
 
                 _healthContext.SaveChanges();
