@@ -66,11 +66,11 @@ namespace GoogleSheets
 
             var targets = new List<Target>();
 
-            foreach (var line in lines.Skip(1))
+            foreach (var values in lines.Skip(1).Select(x=>x.Split(',')))
             {
                 try
                 {
-                    var values = line.Split(',');
+                    //var values = line.Split(',');
 
                     double.TryParse(values[1], out var kg);
                     int.TryParse(values[2], out var diastolic);
