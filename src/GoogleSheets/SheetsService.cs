@@ -72,10 +72,25 @@ namespace GoogleSheets
                 {
                     var values = line.Split(',');
 
+                    double.TryParse(values[1], out var kg);
+                    int.TryParse(values[2], out var diastolic);
+                    int.TryParse(values[3], out var systolic);
+                    int.TryParse(values[4], out var units);
+                    int.TryParse(values[5], out var cardioMinutes);
+                    int.TryParse(values[6], out var metresErgo15Minutes);
+                    int.TryParse(values[7], out var metresTreadmill30Minutes);
+
+
                     var target = new Target
                     {
                         Date = DateTime.Parse(values[0]),
-                        Kg = double.Parse(values[1])
+                        Kg = kg,
+                        Diastolic = diastolic,
+                        Systolic = systolic,
+                        Units = units,
+                        CardioMinutes = cardioMinutes,
+                        MetresErgo15Minutes = metresErgo15Minutes,
+                        MetresTreadmill30Minutes = metresTreadmill30Minutes
                     };
 
                     targets.Add(target);
