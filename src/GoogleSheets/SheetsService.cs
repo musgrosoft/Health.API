@@ -64,28 +64,28 @@ namespace GoogleSheets
 
             var lines = csv.Split("\r\n");
 
-            var targets = lines.Skip(1).Select((x) =>
+            var targets = new List<Target>();
+
+            foreach (var line in lines.Skip(1))
             {
                 try
                 {
-                    var values = x.Split(',');
+                    var values = line.Split(',');
 
-                    return new Target
+                    var target = new Target
                     {
                         Date = DateTime.Parse(values[0]),
                         Kg = double.Parse(values[1])
                     };
+
+                    targets.Add(target);
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
-
+                    //log
                 }
-
-                return new Target {Date = DateTime.Now.AddDays(1)};
-
-            });
-
+            }
+            
             return targets;
 
         }
