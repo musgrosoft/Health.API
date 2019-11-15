@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Repositories.Health.Models;
 using Utils;
 
@@ -48,6 +50,43 @@ namespace GoogleSheets
             var exercises = _rowMapper.Get<Exercise>(rows, _mapFunctions.MapRowToExercise);
 
             return exercises.Where(x => x.CreatedDate > fromDate).ToList();
+        }
+
+        public async Task<IEnumerable<Target>> GetTargets()
+        {
+            var targetsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR39rv_K6Lx1Gn-i8BbzOicLdZNm_whlpFgnhGxDC3nh1PUCY04j2Aa3JKN6TU1MS7O8QHEZ7Gn85nE/pub?gid=0&single=true&output=csv";
+
+            var http = new HttpClient();
+
+            var response = await http.GetAsync(targetsCsvUrl);
+
+            var csv = await response.Content.ReadAsStringAsync();
+
+            var lines = csv.Split("/r/n");
+
+            var targets = lines.Skip(1).Select((x) =>
+            {
+                try
+                {
+                    var values = x.Split(',');
+
+                    return new Target
+                    {
+                        Date = DateTime.Parse(values[0]),
+                        Kg = double.Parse(values[1])
+                    };
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return new Target {Date = DateTime.Now.AddDays(1)};
+
+            });
+
+            return targets;
+
         }
 
     }
