@@ -27,6 +27,11 @@ namespace Repositories.Health
             return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
         }
 
+        public DateTime? GetLatestTargetDate()
+        {
+            return _healthContext.Weights.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
+        }
+
         public DateTime? GetLatestExerciseDate()
         {
             return _healthContext.Exercises.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
@@ -57,7 +62,6 @@ namespace Repositories.Health
         {
             return _healthContext.Targets.First(x => x.Date.Date == date.Date);
         }
-
 
 
 
@@ -184,6 +188,19 @@ namespace Repositories.Health
                 await _healthContext
                             .UpsertRange(restingHeartRates.Skip(i).Take(500))
                             .RunAsync();
+
+                _healthContext.SaveChanges();
+            }
+        }
+
+
+        public async Task UpsertAsync(IEnumerable<Target> targets)
+        {
+            for (int i = 0; i < targets.Count(); i += 500)
+            {
+                await _healthContext
+                    .UpsertRange(targets.Skip(i).Take(500))
+                    .RunAsync();
 
                 _healthContext.SaveChanges();
             }

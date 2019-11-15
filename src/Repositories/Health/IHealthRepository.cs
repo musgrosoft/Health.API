@@ -23,6 +23,7 @@ namespace Repositories.Health
         Task UpsertAsync(IEnumerable<Exercise> exercise);
         Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries);
         Task UpsertAsync(IEnumerable<SleepState> sleepStates);
+        Task UpsertAsync(IEnumerable<Target> targets);
 
         //List<Weight> GetLatestWeights(int num);
         //List<BloodPressure> GetLatestBloodPressures(int num);
@@ -34,5 +35,6 @@ namespace Repositories.Health
 
         Target GetTarget(DateTime date);
 
+        DateTime? GetLatestTargetDate();
     }
 }

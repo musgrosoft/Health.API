@@ -90,7 +90,9 @@ namespace HealthAPI.Controllers
         {
             var targets = await _sheetsService.GetTargets();
 
-            return Ok(targets);
+            await _healthService.UpsertAsync(targets);
+
+            return Ok();
         }
 
 

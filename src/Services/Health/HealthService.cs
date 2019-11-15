@@ -109,6 +109,12 @@ namespace Services.Health
             return latestDate ?? defaultDateTime;
         }
 
+        public DateTime GetLatestTargetDate(DateTime defaultDateTime)
+        {
+            var latestDate = _healthRepository.GetLatestTargetDate();
+            return latestDate ?? defaultDateTime;
+        }
+
         public async Task UpsertAsync(IEnumerable<Weight> weights)
         {
             await _healthRepository.UpsertAsync(weights);
@@ -123,6 +129,11 @@ namespace Services.Health
         public async Task UpsertAsync(IEnumerable<SleepState> sleepStates)
         {
              await _healthRepository.UpsertAsync(sleepStates);
+        }
+
+        public async Task UpsertAsync(IEnumerable<Target> targets)
+        {
+            await _healthRepository.UpsertAsync(targets);
         }
 
         public async Task UpsertAsync(IEnumerable<BloodPressure> bloodPressures)
