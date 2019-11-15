@@ -62,7 +62,7 @@ namespace GoogleSheets
 
             var csv = await response.Content.ReadAsStringAsync();
 
-            var lines = csv.Split("/r/n");
+            var lines = csv.Split("\r\n");
 
             var targets = lines.Skip(1).Select((x) =>
             {
