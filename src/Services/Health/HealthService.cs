@@ -27,10 +27,10 @@ namespace Services.Health
             return latestWeightDate ?? defaultDateTime;
         }
 
-        public Target GetTarget(DateTime date)
-        {
-            return _healthRepository.GetTarget(date);
-        }
+//        public Target GetTarget(DateTime date)
+//        {
+//            return _healthRepository.GetTarget(date);
+//        }
 
 
 
