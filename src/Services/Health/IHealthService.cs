@@ -14,7 +14,8 @@ namespace Services.Health
         DateTime GetLatestSleepSummaryDate(DateTime defaultDateTime);
         DateTime GetLatestSleepStateDate(DateTime defaultDateTime);
         DateTime GetLatestExerciseDate(DateTime defaultDateTime);
-        
+        DateTime GetLatestTargetDate(DateTime defaultDateTime);
+
 
         Task UpsertAsync(IEnumerable<BloodPressure> bloodPressures);
         Task UpsertAsync(IEnumerable<Weight> weights);
@@ -23,6 +24,7 @@ namespace Services.Health
         Task UpsertAsync(List<Exercise> exercises);
         Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries);
         Task UpsertAsync(IEnumerable<SleepState> sleepStates);
+        Task UpsertAsync(IEnumerable<Target> targets);
 
 
         //List<Weight> GetLatestWeights(int num = 10);
@@ -31,6 +33,6 @@ namespace Services.Health
         //List<Drink> GetLatestDrinks(int num = 10);
         //List<Exercise> GetLatestExercises(int num = 10);
         //List<SleepSummary> GetLatestSleeps(int num = 10);
-        
+
     }
 }

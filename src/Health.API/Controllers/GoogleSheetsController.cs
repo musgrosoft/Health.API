@@ -83,6 +83,19 @@ namespace HealthAPI.Controllers
             return Ok();
         }
 
+
+        [HttpGet]
+        [Route("Notify/Targets")]
+        public async Task<IActionResult> ImportTargets()
+        {
+            var targets = await _sheetsService.GetTargets();
+
+            await _healthService.UpsertAsync(targets);
+
+            return Ok();
+        }
+
+
     }
 
 }
