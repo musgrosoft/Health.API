@@ -234,101 +234,59 @@ namespace Services.Tests.Unit.MyHealth
             _healthRepository.Verify(x => x.UpsertAsync(newHeartSummaries), Times.Once);
         }
 
-        //[Fact]
-        //public void ShouldUpsertHeartSummaries()
-        //{
-        //    //Given
-        //    var newHeartSummaries = new List<HeartRateSummary>
-        //    {
-        //        new HeartRateSummary {CreatedDate = new DateTime(2016,1,1), CardioMinutes = 2016},
-        //        new HeartRateSummary {CreatedDate = new DateTime(2017,1,1), CardioMinutes = 2017},
-        //        new HeartRateSummary {CreatedDate = new DateTime(2018,1,1), CardioMinutes = 2018}
-        //    };
+        [Fact]
+        public async Task ShouldUpsertNewSleepSummaries()
+        {
+            //Given
+            var newSleepSummaries = new List<SleepSummary>
+            {
+                new SleepSummary { DateOfSleep = new DateTime(2010,10,10) },
+                new SleepSummary { DateOfSleep = new DateTime(2010,10,11) },
+                new SleepSummary { DateOfSleep = new DateTime(2010,10,12) }
+            };
 
-        //    //When
-        //    _healthService.UpsertHeartSummaries(newHeartSummaries);
+            //When
+            await _healthService.UpsertAsync(newSleepSummaries);
 
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
-        //}
+            //Then
+            _healthRepository.Verify(x => x.UpsertAsync(newSleepSummaries), Times.Once);
+        }
 
-        //[Fact]
-        //public void ShouldGetAllRestingHeartRates()
-        //{
-        //    //Given
-        //    var restingHeartRates = new List<RestingHeartRate>
-        //    {
-        //        new RestingHeartRate {CreatedDate = new DateTime(2018,6,6), Beats = 123}
-        //    };
+        [Fact]
+        public async Task ShouldUpsertNewSleepStates()
+        {
+            //Given
+            var newSleepStates = new List<SleepState>
+            {
+                new SleepState { CreatedDate = new DateTime(2010,10,10) },
+                new SleepState { CreatedDate = new DateTime(2010,10,11) },
+                new SleepState { CreatedDate = new DateTime(2010,10,12) }
+            };
 
-        //    _entityDecorator.Setup(x => x.GetAllRestingHeartRates()).Returns(restingHeartRates);
+            //When
+            await _healthService.UpsertAsync(newSleepStates);
 
-        //    //when
-        //    var result = _healthService.GetAllRestingHeartRates();
+            //Then
+            _healthRepository.Verify(x => x.UpsertAsync(newSleepStates), Times.Once);
+        }
 
-        //    //then
-        //    Assert.Equal(restingHeartRates, result);
-        //}
+        [Fact]
+        public async Task ShouldUpsertNewTargets()
+        {
+            //Given
+            var newTargets = new List<Target>
+            {
+                new Target { Date = new DateTime(2010,10,10) },
+                new Target { Date = new DateTime(2010,10,11) },
+                new Target { Date = new DateTime(2010,10,12) }
+            };
 
+            //When
+            await _healthService.UpsertAsync(newTargets);
 
-        //[Fact]
-        //public void ShouldGetAllBloodPressures(){
-
-        //    //Given
-        //    var bloodPressures = new List<BloodPressure>
-        //    {
-        //        new BloodPressure {CreatedDate = new DateTime(2018,6,6), Systolic = 123}
-        //    };
-
-        //    _entityDecorator.Setup(x => x.GetAllBloodPressures()).Returns(bloodPressures);
-
-        //    //when
-        //    var result = _healthService.GetAllBloodPressures();
-
-        //    //then
-        //    Assert.Equal(bloodPressures, result);
-
-        //}
-
-        //[Fact]
-        //public void ShouldGetAllRuns()
-        //{
-        //    //Given
-        //    var runs = new List<Run>
-        //    {
-        //        new Run {CreatedDate = new DateTime(2018,6,6), Metres = 123}
-        //    };
-
-        //    _healthRepository.Setup(x => x.GetAllRuns()).Returns(runs);
-
-        //    //when
-        //    var result = _healthService.GetAllRuns();
-
-        //    //then
-        //    Assert.Equal(runs, result);
-
-        //}
-
-        //[Fact]
-        //public void ShouldGetAllErgos()
-        //{
-        //    //Given
-        //    var ergos = new List<Ergo>
-        //    {
-        //        new Ergo {CreatedDate = new DateTime(2018,6,6), Metres = 123}
-        //    };
-
-        //    _healthRepository.Setup(x => x.GetAllErgos()).Returns(ergos);
-
-        //    //when
-        //    var result = _healthService.GetAllErgos();
-
-        //    //then
-        //    Assert.Equal(ergos, result);
-
-        //}
+            //Then
+            _healthRepository.Verify(x => x.UpsertAsync(newTargets), Times.Once);
+        }
 
 
     }
