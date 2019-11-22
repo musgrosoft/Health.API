@@ -33,7 +33,7 @@ namespace Repositories.Health
         //List<SleepSummary> GetLatestSleeps(int num);
 
 
-        Target GetTarget(DateTime date);
+        //Target GetTarget(DateTime date);
 
         DateTime? GetLatestTargetDate();
     }

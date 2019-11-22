@@ -58,10 +58,10 @@ namespace Repositories.Health
 
 
 
-        public Target GetTarget(DateTime date)
-        {
-            return _healthContext.Targets.First(x => x.Date.Date == date.Date);
-        }
+        //public Target GetTarget(DateTime date)
+        //{
+        //    return _healthContext.Targets.First(x => x.Date.Date == date.Date);
+        //}
 
 
         

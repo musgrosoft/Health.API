@@ -6,10 +6,13 @@ namespace Repositories.Health.Models
 {
     public class SleepSummary
     {
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None), Key]
+
         public long LogId { get; set; }
 
+        
         public DateTime DateOfSleep { get; set; }
+
+        [Key]
         public DateTime StartTime{get;set;}
         public DateTime EndTime { get; set; }
         public bool IsMainSleep { get; set; }

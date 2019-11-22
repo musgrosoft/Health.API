@@ -182,6 +182,57 @@ namespace Repository.Tests.Unit
         }
 
         [Fact]
+        public void ShouldGetLatestExerciseDate()
+        {
+            var firstExercise = new Exercise { CreatedDate = new DateTime(2018, 5, 1) , Description = "swim"};
+            var secondExercise = new Exercise { CreatedDate = new DateTime(2018, 5, 2), Description = "swim" };
+            var thirdExercise = new Exercise { CreatedDate = new DateTime(2018, 5, 3), Description = "swim" };
+
+            _fakeLocalContext.Exercises.Add(firstExercise);
+            _fakeLocalContext.Exercises.Add(secondExercise);
+            _fakeLocalContext.Exercises.Add(thirdExercise);
+            _fakeLocalContext.SaveChanges();
+
+            var latestExerciseDate = _healthRepository.GetLatestExerciseDate();
+
+            Assert.Equal(thirdExercise.CreatedDate, latestExerciseDate);
+        }
+
+        [Fact]
+        public void ShouldGetLatestSleepSummaryDate()
+        {
+            var firstSleepSummary = new SleepSummary { DateOfSleep = new DateTime(2018, 5, 1), StartTime = new DateTime(2018, 5, 1) };
+            var secondSleepSummary = new SleepSummary { DateOfSleep = new DateTime(2018, 5, 2), StartTime = new DateTime(2018, 5, 2) };
+            var thirdSleepSummary = new SleepSummary { DateOfSleep = new DateTime(2018, 5, 3), StartTime = new DateTime(2018, 5, 3) };
+
+            _fakeLocalContext.SleepSummaries.Add(firstSleepSummary);
+            _fakeLocalContext.SleepSummaries.Add(secondSleepSummary);
+            _fakeLocalContext.SleepSummaries.Add(thirdSleepSummary);
+            _fakeLocalContext.SaveChanges();
+
+            var latestSleepSummaryDate = _healthRepository.GetLatestSleepSummaryDate();
+
+            Assert.Equal(thirdSleepSummary.DateOfSleep, latestSleepSummaryDate);
+        }
+
+        [Fact]
+        public void ShouldGetLatestSleepStateDate()
+        {
+            var firstSleepState = new SleepState { CreatedDate = new DateTime(2018, 5, 1) };
+            var secondSleepState = new SleepState { CreatedDate = new DateTime(2018, 5, 2) };
+            var thirdSleepState = new SleepState { CreatedDate = new DateTime(2018, 5, 3) };
+
+            _fakeLocalContext.SleepStates.Add(firstSleepState);
+            _fakeLocalContext.SleepStates.Add(secondSleepState);
+            _fakeLocalContext.SleepStates.Add(thirdSleepState);
+            _fakeLocalContext.SaveChanges();
+
+            var latestSleepStateDate = _healthRepository.GetLatestSleepStateDate();
+
+            Assert.Equal(thirdSleepState.CreatedDate, latestSleepStateDate);
+        }
+
+        [Fact]
         public async Task ShouldUpdateWeight()
         {
             var existingWeight = new Weight {CreatedDate = new DateTime(2017, 1, 1), Kg = 1, FatRatioPercentage = 3};
