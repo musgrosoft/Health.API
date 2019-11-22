@@ -25,6 +25,10 @@
         string DrinksRange { get; }
         string ExercisesRange { get; }
 
+        string DrinksCsvUrl { get; }
+        string ExercisesCsvUrl { get; }
+        string TargetsCsvUrl { get; }
+
         //Withings
         string WithingsClientId { get; }
         string WithingsClientSecret { get; }

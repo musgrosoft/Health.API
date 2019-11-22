@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Fitbit.Internal.Domain;
 using Repositories.Health.Models;
 

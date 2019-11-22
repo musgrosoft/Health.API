@@ -136,7 +136,7 @@ namespace Withings
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
+                var data = content.FromJSONTo<Response.RootObject>();
                 return data.body.measuregrps;
             }
             else

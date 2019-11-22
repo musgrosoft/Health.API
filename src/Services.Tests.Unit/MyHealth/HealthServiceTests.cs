@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Moq;
 using Repositories.Health;
 using Repositories.Health.Models;
@@ -30,7 +31,7 @@ namespace Services.Tests.Unit.MyHealth
         public void ShouldGetLatestWeightDate()
         {
             //Given 
-            var date = new DateTime(2018, 1, 2);
+            var date = new DateTime(2018, 1, 1);
             _healthRepository.Setup(x => x.GetLatestWeightDate()).Returns(date);
 
             //when
@@ -40,19 +41,33 @@ namespace Services.Tests.Unit.MyHealth
             Assert.Equal(date, latestDate);
         }
 
-        //[Fact]
-        //public void ShouldGetLatestDrinkDate()
-        //{
-        //    //Given 
-        //    var date = new DateTime(2018, 1, 2);
-        //    _healthRepository.Setup(x => x.GetLatestDrinkDate()).Returns(date);
+        [Fact]
+        public void ShouldGetLatestTargetDate()
+        {
+            //Given 
+            var date = new DateTime(2018, 1, 2);
+            _healthRepository.Setup(x => x.GetLatestTargetDate()).Returns(date);
 
-        //    //when
-        //    var latestDate = _healthService.GetLatestDrinkDate();
+            //when
+            var latestDate = _healthService.GetLatestTargetDate(DateTime.MinValue);
 
-        //    //then
-        //    Assert.Equal(date, latestDate);
-        //}
+            //then
+            Assert.Equal(date, latestDate);
+        }
+
+        [Fact]
+        public void ShouldGetLatestDrinkDate()
+        {
+            //Given 
+            var date = new DateTime(2018, 1, 3);
+            _healthRepository.Setup(x => x.GetLatestDrinkDate()).Returns(date);
+
+            //when
+            var latestDate = _healthService.GetLatestDrinkDate(DateTime.MinValue);
+
+            //then
+            Assert.Equal(date, latestDate);
+        }
 
         [Fact]
         public void ShouldGetLatestBloodPressureDate()
@@ -73,7 +88,7 @@ namespace Services.Tests.Unit.MyHealth
         public void ShouldGetLatestRestingHeartRateDate()
         {
             //Given 
-            var date = new DateTime(2018, 1, 6);
+            var date = new DateTime(2018, 1, 5);
             _healthRepository.Setup(x => x.GetLatestRestingHeartRateDate()).Returns(date);
 
             //when
@@ -83,152 +98,142 @@ namespace Services.Tests.Unit.MyHealth
             Assert.Equal(date, latestDate);
 
         }
+
+        [Fact]
+        public void ShouldGetLatestExerciseDate()
+        {
+            //Given 
+            var date = new DateTime(2018, 1, 6);
+            _healthRepository.Setup(x => x.GetLatestExerciseDate()).Returns(date);
+
+            //when
+            var latestDate = _healthService.GetLatestExerciseDate(DateTime.MinValue);
+
+            //then
+            Assert.Equal(date, latestDate);
+        }
+
+        [Fact]
+        public void ShouldGetLatestSleepStateDate()
+        {
+            //Given 
+            var date = new DateTime(2018, 1, 6);
+            _healthRepository.Setup(x => x.GetLatestSleepStateDate()).Returns(date);
+
+            //when
+            var latestDate = _healthService.GetLatestSleepStateDate(DateTime.MinValue);
+
+            //then
+            Assert.Equal(date, latestDate);
+        }
+
+        [Fact]
+        public void ShouldGetLatestSleepSummaryDate()
+        {
+            //Given 
+            var date = new DateTime(2018, 1, 6);
+            _healthRepository.Setup(x => x.GetLatestSleepSummaryDate()).Returns(date);
+
+            //when
+            var latestDate = _healthService.GetLatestSleepSummaryDate(DateTime.MinValue);
+
+            //then
+            Assert.Equal(date, latestDate);
+        }
+
+        [Fact]
+        public async Task ShouldUpsertNewWeights()
+        {
+            //Given
+            var newWeights = new List<Weight>
+            {
+                new Weight { CreatedDate = new DateTime(2010,10,10) },
+                new Weight { CreatedDate = new DateTime(2010,10,11) },
+                new Weight { CreatedDate = new DateTime(2010,10,12) }
+            };
+
+            //When
+            await _healthService.UpsertAsync(newWeights);
+
+            //Then
+            _healthRepository.Verify(x => x.UpsertAsync(newWeights), Times.Once);
+        }
+
+
+        [Fact]
+        public async Task ShouldUpsertNewExercises()
+        {
+            //Given
+            var newExercises = new List<Exercise>
+            {
+                new Exercise { CreatedDate = new DateTime(2010,10,10) },
+                new Exercise { CreatedDate = new DateTime(2010,10,11) },
+                new Exercise { CreatedDate = new DateTime(2010,10,12) }
+
+            };
+
+            //When
+            await _healthService.UpsertAsync(newExercises);
+
+            //Then
+            _healthRepository.Verify(x => x.UpsertAsync(newExercises), Times.Once);
+        }
+
+        [Fact]
+        public async Task ShouldUpsertNewAlcoholIntakes()
+        {
+            //Given
+            var newDrinks = new List<Drink>
+            {
+                new Drink { CreatedDate = new DateTime(2010,10,10) },
+                new Drink { CreatedDate = new DateTime(2010,10,11) },
+                new Drink { CreatedDate = new DateTime(2010,10,12) }
+
+            };
+
+            //When
+            await _healthService.UpsertAsync(newDrinks);
+
+            //Then
+            _healthRepository.Verify(x => x.UpsertAsync(newDrinks), Times.Once);
+        }
+
+        [Fact]
+        public async Task ShouldUpsertNewBloodPressures()
+        {
+            //Given
+            var newBloodPressures = new List<BloodPressure>
+            {
+                new BloodPressure { CreatedDate = new DateTime(2010,10,10) },
+                new BloodPressure { CreatedDate = new DateTime(2010,10,11) },
+                new BloodPressure { CreatedDate = new DateTime(2010,10,12) }
+            };
+
+            //When
+            await _healthService.UpsertAsync(newBloodPressures);
+
+            //Then
+            _healthRepository.Verify(x => x.UpsertAsync(newBloodPressures), Times.Once);
+        }
         
-        //[Fact]
-        //public void ShouldUpsertNewWeights()
-        //{
-        //    //Given
-        //    var newWeights = new List<Weight>
-        //    {
-        //        new Weight { CreatedDate = new DateTime(2010,10,10) },
-        //        new Weight { CreatedDate = new DateTime(2010,10,11) },
-        //        new Weight { CreatedDate = new DateTime(2010,10,12) }
+        [Fact]
+        public async Task ShouldUpsertNewRestingHeartRates()
+        {
+            //Given
+            var newHeartSummaries = new List<RestingHeartRate>
+            {
+                new RestingHeartRate { CreatedDate = new DateTime(2010,10,10) },
+                new RestingHeartRate { CreatedDate = new DateTime(2010,10,11) },
+                new RestingHeartRate { CreatedDate = new DateTime(2010,10,12) }
+            };
 
-        //    };
+            //When
+            await _healthService.UpsertAsync(newHeartSummaries);
 
-        //    //When
-        //    _healthService.UpsertWeights(newWeights);
+            //Then
+            _healthRepository.Verify(x => x.UpsertAsync(newHeartSummaries), Times.Once);
+        }
 
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newWeights[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newWeights[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newWeights[2]), Times.Once);
-        //}
-
-
-        //[Fact]
-        //public void ShouldUpsertNewExercises()
-        //{
-        //    //Given
-        //    var newExercises = new List<Exercise>
-        //    {
-        //        new Exercise { CreatedDate = new DateTime(2010,10,10) },
-        //        new Exercise { CreatedDate = new DateTime(2010,10,11) },
-        //        new Exercise { CreatedDate = new DateTime(2010,10,12) }
-
-        //    };
-
-        //    //When
-        //    _healthService.UpsertExercises(newExercises);
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newExercises[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newExercises[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newExercises[2]), Times.Once);
-        //}
-
-        //[Fact]
-        //public void ShouldUpsertNewAlcoholIntakes()
-        //{
-        //    //Given
-        //    var newAlcoholIntake = new List<Drink>
-        //    {
-        //        new Drink { CreatedDate = new DateTime(2010,10,10) },
-        //        new Drink { CreatedDate = new DateTime(2010,10,11) },
-        //        new Drink { CreatedDate = new DateTime(2010,10,12) }
-
-        //    };
-
-        //    //When
-        //    _healthService.UpsertAlcoholIntakes(newAlcoholIntake);
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newAlcoholIntake[2]), Times.Once);
-        //}
-
-        //[Fact]
-        //public void ShouldUpsertNewBloodPressures()
-        //{
-        //    //Given
-        //    var newBloodPressures = new List<BloodPressure>
-        //    {
-        //        new BloodPressure { CreatedDate = new DateTime(2010,10,10) },
-        //        new BloodPressure { CreatedDate = new DateTime(2010,10,11) },
-        //        new BloodPressure { CreatedDate = new DateTime(2010,10,12) }
-        //    };
-            
-        //    //When
-        //    _healthService.UpsertBloodPressures(newBloodPressures);
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newBloodPressures[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newBloodPressures[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newBloodPressures[2]), Times.Once);
-        //}
-
-        //[Fact]
-        //public void ShouldUpsertNewStepCounts()
-        //{
-        //    //Given
-        //    var newStepCounts = new List<StepCount>
-        //    {
-        //        new StepCount {CreatedDate = new DateTime(2016,1,1), Count = 2016},
-        //        new StepCount {CreatedDate = new DateTime(2017,1,1), Count = 2017},
-        //        new StepCount {CreatedDate = new DateTime(2018,1,1), Count = 2018}
-        //    };
-
-        //    //When
-        //    _healthService.UpsertStepCounts(newStepCounts);
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newStepCounts[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newStepCounts[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newStepCounts[2]), Times.Once);
-        //}
-
-        //[Fact]
-        //public void ShouldUpsertNewActivitySummaries()
-        //{
-        //    //Given
-        //    var newActivitySummaries = new List<ActivitySummary>
-        //    {
-        //        new ActivitySummary {CreatedDate = new DateTime(2016,1,1), FairlyActiveMinutes = 2016},
-        //        new ActivitySummary {CreatedDate = new DateTime(2017,1,1), FairlyActiveMinutes = 2017},
-        //        new ActivitySummary {CreatedDate = new DateTime(2018,1,1), FairlyActiveMinutes = 2018}
-        //    };
-            
-        //    //When
-        //    _healthService.UpsertActivitySummaries(newActivitySummaries);
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newActivitySummaries[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newActivitySummaries[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newActivitySummaries[2]), Times.Once);
-        //}
-        
-        //[Fact]
-        //public void ShouldUpsertNewRestingHeartRates()
-        //{
-        //    //Given
-        //    var newHeartSummaries = new List<RestingHeartRate>
-        //    {
-        //        new RestingHeartRate { CreatedDate = new DateTime(2010,10,10) },
-        //        new RestingHeartRate { CreatedDate = new DateTime(2010,10,11) },
-        //        new RestingHeartRate { CreatedDate = new DateTime(2010,10,12) }
-        //    };
-            
-        //    //When
-        //    _healthService.UpsertRestingHeartRates(newHeartSummaries);
-
-        //    //Then
-        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[0]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[1]), Times.Once);
-        //    _healthRepository.Verify(x => x.Upsert(newHeartSummaries[2]), Times.Once);
-
-        //}
-        
         //[Fact]
         //public void ShouldUpsertHeartSummaries()
         //{
@@ -257,9 +262,9 @@ namespace Services.Tests.Unit.MyHealth
         //    {
         //        new RestingHeartRate {CreatedDate = new DateTime(2018,6,6), Beats = 123}
         //    };
-            
+
         //    _entityDecorator.Setup(x => x.GetAllRestingHeartRates()).Returns(restingHeartRates);
-            
+
         //    //when
         //    var result = _healthService.GetAllRestingHeartRates();
 

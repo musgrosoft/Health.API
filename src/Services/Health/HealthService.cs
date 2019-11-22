@@ -27,10 +27,10 @@ namespace Services.Health
             return latestWeightDate ?? defaultDateTime;
         }
 
-        public Target GetTarget(DateTime date)
-        {
-            return _healthRepository.GetTarget(date);
-        }
+//        public Target GetTarget(DateTime date)
+//        {
+//            return _healthRepository.GetTarget(date);
+//        }
 
 
 
@@ -152,7 +152,7 @@ namespace Services.Health
             await _healthRepository.UpsertAsync(drinks);
         }
 
-        public async Task UpsertAsync(List<Exercise> exercises)
+        public async Task UpsertAsync(IEnumerable<Exercise> exercises)
         {
             await _healthRepository.UpsertAsync(exercises);
         }

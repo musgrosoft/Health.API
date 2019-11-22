@@ -256,32 +256,33 @@ namespace Repository.Tests.Unit
             Assert.Equal(556677, existingExercise.TotalSeconds);
         }
 
-        //[Fact]
-        //public async Task ShouldUpdateSleepSummary()
-        //{
-        //    var existingExercise = new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 1234, TotalSeconds = 445566 };
-        //    _fakeLocalContext.Exercises.Add(existingExercise);
-        //    _fakeLocalContext.SaveChanges();
+        [Fact]
+        public async Task ShouldUpdateSleepSummary()
+        {
+            var existingSleepSummmary = new SleepSummary() { DateOfSleep = new DateTime(2017, 1, 1), AsleepMinutes = 1234};
+            _fakeLocalContext.SleepSummaries.Add(existingSleepSummmary);
+            _fakeLocalContext.SaveChanges();
 
-        //    var newExercises = new List<Exercise> { new Exercise() { CreatedDate = new DateTime(2017, 1, 1), Description = "Ergo", Metres = 2345, TotalSeconds = 556677 } };
+            var newSleepSummaries = new List<SleepSummary> { new SleepSummary() { DateOfSleep = new DateTime(2017, 1, 1), AsleepMinutes = 4444} };
 
-        //    await _healthRepository.UpsertAsync(newExercises);
+            await _healthRepository.UpsertAsync(newSleepSummaries);
 
-        //    Assert.Equal(2345, existingExercise.Metres);
-        //    Assert.Equal(556677, existingExercise.TotalSeconds);
-        //}
+            Assert.Equal(4444, existingSleepSummmary.AsleepMinutes);
+        }
 
-        //[Fact]
-        //public async Task ShouldUpdateSleepState()
-        //{
-        //    var sleepStates = new List<SleepState> { new SleepState { CreatedDate = new DateTime(2019, 2, 2), State = "light" } };
+        [Fact]
+        public async Task ShouldUpdateSleepState()
+        {
+            var existingSleepState = new SleepState() { CreatedDate = new DateTime(2017, 1, 1), State = "flying"};
+            _fakeLocalContext.SleepStates.Add(existingSleepState);
+            _fakeLocalContext.SaveChanges();
 
-        //    await _healthRepository.UpsertAsync(sleepStates);
+            var newSleepStates = new List<SleepState> { new SleepState() { CreatedDate = new DateTime(2017, 1, 1), State = "dreaming" } };
 
-        //    var retrievedSleepStates = _fakeLocalContext.SleepStates;
+            await _healthRepository.UpsertAsync(newSleepStates);
 
-        //    Assert.Contains(sleepStates.First(), retrievedSleepStates);
-        //}
+            Assert.Equal("dreaming", existingSleepState.State);
+        }
 
 
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using GoogleSheets;
 using Moq;
@@ -12,21 +14,40 @@ namespace GoogleSheets.Tests.Unit
     public class SheetsServiceTests
     {
         private Mock<IConfig> _config;
-        //private Mock<IMapFunctions> _mapFunctions;
-        private IMapFunctions _mapFunctions;
-        private Mock<IRowMapper> _rowMapper;
-        private Mock<ISheetsClient> _sheetsClient;
+//        //private Mock<IMapFunctions> _mapFunctions;
+//        private IMapFunctions _mapFunctions;
+//        private Mock<IRowMapper> _rowMapper;
+        //private Mock<ISheetsClient> _sheetsClient;
         private SheetsService _sheetsService;
 
         public SheetsServiceTests()
         {
             _config = new Mock<IConfig>();
-            //_mapFunctions = new Mock<IMapFunctions>();
-            _mapFunctions = new MapFunctions();
-            _rowMapper = new Mock<IRowMapper>();
-            _sheetsClient = new Mock<ISheetsClient>();
+//            //_mapFunctions = new Mock<IMapFunctions>();
+//            _mapFunctions = new MapFunctions();
+//            _rowMapper = new Mock<IRowMapper>();
+            //_sheetsClient = new Mock<ISheetsClient>();
 
-            _sheetsService = new SheetsService(_config.Object,_rowMapper.Object, _mapFunctions, _sheetsClient.Object);
+
+            //_sheetsService = new SheetsService(_config.Object);//,_rowMapper.Object, _mapFunctions, _sheetsClient.Object);
+        }
+
+        [Fact]
+        public async Task shouldDoThing()
+        {
+            var targetsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR39rv_K6Lx1Gn-i8BbzOicLdZNm_whlpFgnhGxDC3nh1PUCY04j2Aa3JKN6TU1MS7O8QHEZ7Gn85nE/pub?gid=0&single=true&output=csv";
+
+            var http = new HttpClient();
+
+            var response = await http.GetAsync(targetsCsvUrl);
+
+            var csv = await response.Content.ReadAsStringAsync();
+
+            var targets = csv.FromCSVToIEnumerableOf<Target>();
+
+            Assert.True(targets.Count() > 2);
+
+
         }
 
         //[Fact]

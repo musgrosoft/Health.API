@@ -21,7 +21,7 @@ namespace Services.Health
         Task UpsertAsync(IEnumerable<Weight> weights);
         Task UpsertAsync(IEnumerable<RestingHeartRate> restingHeartRates);
         Task UpsertAsync(IEnumerable<Drink> drinks);
-        Task UpsertAsync(List<Exercise> exercises);
+        Task UpsertAsync(IEnumerable<Exercise> exercises);
         Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries);
         Task UpsertAsync(IEnumerable<SleepState> sleepStates);
         Task UpsertAsync(IEnumerable<Target> targets);

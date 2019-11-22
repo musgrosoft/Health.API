@@ -8,8 +8,8 @@ namespace Repositories.Health.Models
         [Key]
         public DateTime Date { get; set; }
         public Double Kg  { get; set; }
-        public int MetresErgo15Minutes { get; set; }
-        public int MetresTreadmill30Minutes { get; set; }
+        public Double MetresErgo15Minutes { get; set; }
+        public Double MetresTreadmill30Minutes { get; set; }
         public int Diastolic { get; set; }
         public int Systolic { get; set; }
         public int Units { get; set; }

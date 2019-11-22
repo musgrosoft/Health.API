@@ -39,7 +39,7 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync($"DRINKS : Latest record has a date of : {latestDrinkDate:dd-MMM-yyyy HH:mm:ss (ddd)}, will retrieve from {SEARCH_DAYS_PREVIOUS} days previous to this date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}.");
 
-            var drinks = _sheetsService.GetDrinks(fromDate);
+            var drinks = await _sheetsService.GetDrinks(fromDate);
 
             await _logger.LogMessageAsync($"DRINKS : Found {drinks.Count()} records.");
 
@@ -66,7 +66,7 @@ namespace HealthAPI.Controllers
 
             await _logger.LogMessageAsync($"EXERCISES : Latest record has a date of : {latestExerciseDate:dd-MMM-yyyy HH:mm:ss (ddd)}, will retrieve from {SEARCH_DAYS_PREVIOUS} days previous to this date : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}.");
 
-            var exercises = _sheetsService.GetExercises(fromDate);
+            var exercises = await _sheetsService.GetExercises(fromDate);
 
             await _logger.LogMessageAsync($"EXERCISES : Found {exercises.Count()} records.");
 

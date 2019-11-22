@@ -49,6 +49,9 @@ namespace Utils
         public string ExerciseSpreadsheetId => "1iZcGq0qBonWjU3cpmfz42zR-Mp7vHfr2uvw50s6Rj8g";
         public string DrinksRange => "Sheet1!A2:E";
         public string ExercisesRange => "Sheet1!A2:E";
+        public string DrinksCsvUrl => GetConfigValue("DrinksCsvUrl");
+        public string ExercisesCsvUrl => GetConfigValue("ExercisesCsvUrl");
+        public string TargetsCsvUrl => GetConfigValue("TargetsCsvUrl");
 
         //Withings
         public string WithingsClientId => GetConfigValue("WithingsClientId");
