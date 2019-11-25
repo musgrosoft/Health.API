@@ -21,7 +21,7 @@ namespace HealthAPI.Controllers
         private DateTime MIN_DRINK_DATE = new DateTime(2016, 1, 1);
         private DateTime MIN_EXERCISEE_DATE = new DateTime(2017, 5, 3);
 
-        public GoogleSheetsController(ILogger logger, ISheetsService sheetsService, IHealthService healthService)
+        public GoogleSheetsController(ILogger logger, ISheetsService sheetsService, IHealthService healthService, ICalendar c)
         {
             _logger = logger;
             _sheetsService = sheetsService;

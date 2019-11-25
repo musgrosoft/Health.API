@@ -148,64 +148,64 @@ namespace Withings
         }
 
 
-        public async Task<List<SSeries>> Get1DayOfDetailedSleepData(DateTime startDate, string accessToken)
-        {
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-            
-            var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=get" +
-                $"&startdate={startDate.ToUnixTimeFromDate()}" +
-                $"&enddate={startDate.AddDays(1).ToUnixTimeFromDate()}" +
-                $"&data_fields=hr,rr";
+//        public async Task<List<SSeries>> Get1DayOfDetailedSleepData(DateTime startDate, string accessToken)
+//        {
+//            _httpClient.DefaultRequestHeaders.Clear();
+//            _httpClient.DefaultRequestHeaders.Accept.Clear();
+//            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+//            
+//            var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=get" +
+//                $"&startdate={startDate.ToUnixTimeFromDate()}" +
+//                $"&enddate={startDate.AddDays(1).ToUnixTimeFromDate()}" +
+//                $"&data_fields=hr,rr";
+//
+//            var response = await _httpClient.GetAsync(url);
+//
+//            //TODO : success status code, does not indicate lack of error
+//            if (response.IsSuccessStatusCode)
+//            {
+//                var content = await response.Content.ReadAsStringAsync();
+//                await _logger.LogMessageAsync("blip bloop : " + content);
+//                await _logger.LogMessageAsync("blip bloop url : " + url);
+//
+//                var data = JsonConvert.DeserializeObject<DetailedSleepsRootObject>(content);
+//                return data.body.series;
+//            }
+//            else
+//            {
+//                var content = await response.Content.ReadAsStringAsync();
+//
+//                throw new Exception($"Error calling withings api , status code is {(int)response.StatusCode} , and content is {content}");
+//            }
+//
+//            
+//
+//        }
 
-            var response = await _httpClient.GetAsync(url);
-
-            //TODO : success status code, does not indicate lack of error
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                await _logger.LogMessageAsync("blip bloop : " + content);
-                await _logger.LogMessageAsync("blip bloop url : " + url);
-
-                var data = JsonConvert.DeserializeObject<DetailedSleepsRootObject>(content);
-                return data.body.series;
-            }
-            else
-            {
-                var content = await response.Content.ReadAsStringAsync();
-
-                throw new Exception($"Error calling withings api , status code is {(int)response.StatusCode} , and content is {content}");
-            }
-
-            
-
-        }
-
-        public async Task<IEnumerable<Series>> Get7DaysOfSleeps(string accessToken, DateTime startDate)
-        {
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-
-            var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=getsummary&lastupdate={startDate.ToUnixTimeFromDate()}&data_fields=wakeupduration,lightsleepduration,deepsleepduration,wakeupcount,durationtosleep,remsleepduration,durationtowakeup,hr_average,hr_min,hr_max,rr_average,rr_min,rr_max";
-            var response = await _httpClient.GetAsync(url);
-            
-            //TODO : success status code, does not indicate lack of error
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-
-                var data = JsonConvert.DeserializeObject<SleepsRootObject>(content);
-                return data.body.series;
-            }
-            else
-            {
-                var content = await response.Content.ReadAsStringAsync();
-
-                throw new Exception($"Error calling withings api , status code is {(int)response.StatusCode} , and content is {content}");
-            }
-        }
+//        public async Task<IEnumerable<Series>> Get7DaysOfSleeps(string accessToken, DateTime startDate)
+//        {
+//            _httpClient.DefaultRequestHeaders.Clear();
+//            _httpClient.DefaultRequestHeaders.Accept.Clear();
+//            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+//
+//            var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=getsummary&lastupdate={startDate.ToUnixTimeFromDate()}&data_fields=wakeupduration,lightsleepduration,deepsleepduration,wakeupcount,durationtosleep,remsleepduration,durationtowakeup,hr_average,hr_min,hr_max,rr_average,rr_min,rr_max";
+//            var response = await _httpClient.GetAsync(url);
+//            
+//            //TODO : success status code, does not indicate lack of error
+//            if (response.IsSuccessStatusCode)
+//            {
+//                var content = await response.Content.ReadAsStringAsync();
+//
+//                var data = JsonConvert.DeserializeObject<SleepsRootObject>(content);
+//                return data.body.series;
+//            }
+//            else
+//            {
+//                var content = await response.Content.ReadAsStringAsync();
+//
+//                throw new Exception($"Error calling withings api , status code is {(int)response.StatusCode} , and content is {content}");
+//            }
+//        }
 
 
     }

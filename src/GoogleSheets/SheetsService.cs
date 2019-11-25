@@ -13,11 +13,13 @@ namespace GoogleSheets
         private readonly IConfig _config;
 
         private readonly HttpClient _httpClient;
-        
-        public SheetsService(IConfig config, HttpClient httpClient)
+        private readonly ICalendar _calendar;
+
+        public SheetsService(IConfig config, HttpClient httpClient, ICalendar calendar)
         {
             _config = config;
             _httpClient = httpClient;
+            _calendar = calendar;
         }
 
         public async Task<IEnumerable<Drink>> GetDrinks(DateTime fromDate)
@@ -29,7 +31,7 @@ namespace GoogleSheets
             var drinks = csv.FromCSVToIEnumerableOf<Drink>();
 
             return drinks
-                .Where(x => x.CreatedDate >= fromDate)
+                .Where(x => x.CreatedDate.Between(fromDate,_calendar.Now().Date))
                 .GroupBy(x => x.CreatedDate)
                 .Select(x => new Drink
                 {
@@ -48,7 +50,7 @@ namespace GoogleSheets
 
             var exercises = csv.FromCSVToIEnumerableOf<Exercise>();
 
-            return exercises.Where(x => x.CreatedDate > fromDate).ToList();
+            return exercises.Where(x => x.CreatedDate.Between(fromDate, _calendar.Now().Date)).ToList();
         }
 
         public async Task<IEnumerable<Target>> GetTargets()
