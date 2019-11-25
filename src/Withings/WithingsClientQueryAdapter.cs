@@ -26,21 +26,21 @@ namespace Withings
 
         }
 
-        public async Task<IEnumerable<Series>> GetSleepSeries(DateTime sinceDateTime, string accessToken)
-        {
-            var allTheSleeps = new List<Series>();
-
-            for (DateTime date = sinceDateTime;
-                date <= DateTime.Now;
-                date = date.AddDays(7))
-            {
-                var series = await _withingsClient.Get7DaysOfSleeps(accessToken, date);
-                
-                allTheSleeps.AddRange(series);
-            }
-
-            return allTheSleeps;
-        }
+//        public async Task<IEnumerable<Series>> GetSleepSeries(DateTime sinceDateTime, string accessToken)
+//        {
+//            var allTheSleeps = new List<Series>();
+//
+//            for (DateTime date = sinceDateTime;
+//                date <= DateTime.Now;
+//                date = date.AddDays(7))
+//            {
+//                var series = await _withingsClient.Get7DaysOfSleeps(accessToken, date);
+//                
+//                allTheSleeps.AddRange(series);
+//            }
+//
+//            return allTheSleeps;
+//        }
 
 
     }

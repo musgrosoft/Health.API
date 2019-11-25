@@ -10,7 +10,7 @@ namespace Withings
         Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(string accessToken);
         Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode);
         Task<WithingsTokenResponse> GetTokensByRefreshToken(string refreshToken);
-        Task<IEnumerable<Series>> Get7DaysOfSleeps(string accessToken, DateTime startDate);
-        Task<List<SSeries>> Get1DayOfDetailedSleepData(DateTime startDate, string accessToken);
+//        Task<IEnumerable<Series>> Get7DaysOfSleeps(string accessToken, DateTime startDate);
+//        Task<List<SSeries>> Get1DayOfDetailedSleepData(DateTime startDate, string accessToken);
     }
 }
