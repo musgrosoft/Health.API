@@ -137,6 +137,41 @@ namespace GoogleSheets.Tests.Unit
 
 
         [Fact]
+        public async Task ShouldParseContentWhenGettingTargets()
+        {
+//            var fromDate = new DateTime(2018, 5, 1);
+//            var today = new DateTime(2018, 5, 6);
+
+           // _calendar.Setup(x => x.Now()).Returns(today);
+
+            var content = 
+$@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""MetresErgo15Minutes"",""MetresTreadmill30Minutes""
+""1-May-2018"",""90.74"",""80"",""120"",""4"",""11"","""",""""
+""2-May-2018"",""90.72333333"",""80"",""120"",""4"",""11"","""",""""
+""3-May-2018"",""90.70666667"",""80"",""120"",""4"",""11"","""",""""
+""4-May-2018"",""90.69"",""80"",""120"",""4"",""11"","""",""""
+""5-May-2018"",""90.67333333"",""80"",""120"",""4"",""11"","""",""""";
+
+
+            HttpRequestMessage capturedRequest = new HttpRequestMessage();
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(content)
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
+
+            var targets = await _sheetsService.GetTargets();
+
+            Assert.Equal(5, targets.Count());
+
+
+
+        }
+
+
+
+        [Fact]
         public async Task shouldDoThing()
         {
             var targetsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR39rv_K6Lx1Gn-i8BbzOicLdZNm_whlpFgnhGxDC3nh1PUCY04j2Aa3JKN6TU1MS7O8QHEZ7Gn85nE/pub?gid=0&single=true&output=csv";
