@@ -23,7 +23,7 @@ namespace Fitbit.Tests
         private Mock<ILogger> _logger;
         private FitbitService _fitbitService;
 
-        private string _content = "wibble";
+            //private string _content = "wibble";
 
         public FitbitServiceTests()
         {
@@ -90,7 +90,7 @@ namespace Fitbit.Tests
             var accesssToken = "***this is the access token***";
             var refreshToken = "***this is the refresh token***";
             //setup hhtpClient
-            _content = $@"{{                    
+            var responseContent = $@"{{                    
                             ""access_token"": ""{accesssToken}"",
                             ""expires_in"": 3600,
                             ""refresh_token"": ""{refreshToken}"",
@@ -104,7 +104,7 @@ namespace Fitbit.Tests
                 .Returns(Task.FromResult(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(_content)
+                    Content = new StringContent(responseContent)
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
 
             //When
@@ -130,7 +130,7 @@ namespace Fitbit.Tests
             var accesssToken = "***this is the access token***";
             var refreshToken = "***this is the refresh token***";
             //setup hhtpClient
-            _content = $@"{{                    
+            var responseContent = $@"{{                    
                             ""access_token"": ""{accesssToken}"",
                             ""expires_in"": 3600,
                             ""refresh_token"": ""{refreshToken}"",
@@ -145,7 +145,7 @@ namespace Fitbit.Tests
                 .Returns(Task.FromResult(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(_content)
+                    Content = new StringContent(responseContent)
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedUri = h.RequestUri);
 
 

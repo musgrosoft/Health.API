@@ -64,7 +64,7 @@ namespace Utils
         {
             var listT = new List<T>();
 
-            var lines = csv.Split("\r\n");
+            var lines = csv.Replace("\"","").Split("\r\n");
 
             var propertyNames = lines.First().Split(',');
 
@@ -87,27 +87,34 @@ namespace Utils
 
             foreach (var line in lines.Skip(1))
             {
-                var values = line.Split(',');
-                var elementT = new T();
-
-                for (int i = 0; i < propertyNames.Length; i++)
+                try
                 {
-                    if (propertyInfos.ContainsKey(propertyNames[i]))
+                    var values = line.Split(',');
+                    var elementT = new T();
+
+                    for (int i = 0; i < propertyNames.Length; i++)
                     {
-                        var value = values[i];
-         
-                        if (!string.IsNullOrWhiteSpace(value))
+                        if (propertyInfos.ContainsKey(propertyNames[i]))
                         {
-                            var propInfo = propertyInfos[propertyNames[i]];
+                            var value = values[i];
 
-                            var typedValue = Convert.ChangeType(value, propInfo.PropertyType);
+                            if (!string.IsNullOrWhiteSpace(value))
+                            {
+                                var propInfo = propertyInfos[propertyNames[i]];
 
-                            propInfo.SetValue(elementT, typedValue);
+                                var typedValue = Convert.ChangeType(value, propInfo.PropertyType);
+
+                                propInfo.SetValue(elementT, typedValue);
+                            }
                         }
                     }
-                }
 
-                listT.Add(elementT);
+                    listT.Add(elementT);
+                }
+                catch (Exception ex)
+                {
+
+                }
 
             }
 
