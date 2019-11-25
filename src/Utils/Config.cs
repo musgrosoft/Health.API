@@ -42,16 +42,18 @@ namespace Utils
         public string FitbitBaseUrl => "https://api.fitbit.com";
 
         //Google Sheets
-        public string GoogleClientId => GetConfigValue("GoogleClientId");
-        public string GoogleClientSecret => GetConfigValue("GoogleClientSecret");
+//        public string GoogleClientId => GetConfigValue("GoogleClientId");
+//        public string GoogleClientSecret => GetConfigValue("GoogleClientSecret");
         public string DrinksSpreadsheetId => "15c9GFccexP91E-YmcaGr6spIEeHVFu1APRl0tNVj1io";
         //public string AlcoholSpreadsheetId => "1f3aTKUUMwE63nKeow917vhfsQyN1RTyoLCu6M2iml0I";
         public string ExerciseSpreadsheetId => "1iZcGq0qBonWjU3cpmfz42zR-Mp7vHfr2uvw50s6Rj8g";
-        public string DrinksRange => "Sheet1!A2:E";
-        public string ExercisesRange => "Sheet1!A2:E";
-        public string DrinksCsvUrl => GetConfigValue("DrinksCsvUrl");
-        public string ExercisesCsvUrl => GetConfigValue("ExercisesCsvUrl");
-        public string TargetsCsvUrl => GetConfigValue("TargetsCsvUrl");
+
+        public string TargetsSpreadsheetId => "1GinFPvwco9gmtH2ZnyVQNl10FtvxRgYrrGL4rEQ5PdQ";
+//        public string DrinksRange => "Sheet1!A2:E";
+//        public string ExercisesRange => "Sheet1!A2:E";
+//        public string DrinksCsvUrl => GetConfigValue("DrinksCsvUrl");
+//        public string ExercisesCsvUrl => GetConfigValue("ExercisesCsvUrl");
+//        public string TargetsCsvUrl => GetConfigValue("TargetsCsvUrl");
 
         //Withings
         public string WithingsClientId => GetConfigValue("WithingsClientId");

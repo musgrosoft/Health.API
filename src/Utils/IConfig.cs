@@ -17,17 +17,19 @@
         string FitbitBaseUrl { get;}
 
         //Google Sheets
-        string GoogleClientId { get; }
-        string GoogleClientSecret { get; }
+//        string GoogleClientId { get; }
+//        string GoogleClientSecret { get; }
         string DrinksSpreadsheetId { get; }
         //string AlcoholSpreadsheetId { get; }
         string ExerciseSpreadsheetId { get; }
-        string DrinksRange { get; }
-        string ExercisesRange { get; }
 
-        string DrinksCsvUrl { get; }
-        string ExercisesCsvUrl { get; }
-        string TargetsCsvUrl { get; }
+        string TargetsSpreadsheetId { get; }
+        //        string DrinksRange { get; }
+        //        string ExercisesRange { get; }
+        //
+        //        string DrinksCsvUrl { get; }
+        //        string ExercisesCsvUrl { get; }
+        //        string TargetsCsvUrl { get; }
 
         //Withings
         string WithingsClientId { get; }
