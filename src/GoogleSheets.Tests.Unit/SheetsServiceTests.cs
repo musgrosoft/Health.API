@@ -147,7 +147,7 @@ namespace GoogleSheets.Tests.Unit
             var content = 
 $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""MetresErgo15Minutes"",""MetresTreadmill30Minutes""
 ""1-May-2018"",""90.74"",""80"",""120"",""4"",""11"","""",""""
-""2-May-2018"",""90.72333333"",""80"",""120"",""4"",""11"","""",""""
+""2-May-2018"",""90.72333333"",""80"",""120"",""4"",""11"",""123"",""456""
 ""3-May-2018"",""90.70666667"",""80"",""120"",""4"",""11"","""",""""
 ""4-May-2018"",""90.69"",""80"",""120"",""4"",""11"","""",""""
 ""5-May-2018"",""90.67333333"",""80"",""120"",""4"",""11"","""",""""";
@@ -161,9 +161,18 @@ $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""Metr
                     Content = new StringContent(content)
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
 
-            var targets = await _sheetsService.GetTargets();
+            var targets = (await _sheetsService.GetTargets()).OrderBy(x => x.Date).ToList();
 
             Assert.Equal(5, targets.Count());
+
+            Assert.Equal(new DateTime(2018, 5, 2), targets[1].Date);
+            Assert.Equal(90.72333333, targets[1].Kg);
+            Assert.Equal(80, targets[1].Diastolic);
+            Assert.Equal(120, targets[1].Systolic);
+            Assert.Equal(4, targets[1].Units);
+            Assert.Equal(11, targets[1].CardioMinutes);
+            Assert.Equal(123, targets[1].MetresErgo15Minutes);
+            Assert.Equal(456, targets[1].MetresTreadmill30Minutes);
 
 
 
