@@ -64,7 +64,7 @@ namespace Utils
         {
             var listT = new List<T>();
 
-            var lines = csv.Replace("\"","").Split("\r\n");
+            var lines = csv.Replace("\"","").Split("\n");
 
             var propertyNames = lines.First().Split(',');
 
