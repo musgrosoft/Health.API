@@ -171,23 +171,25 @@ $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""Metr
 
 
 
-        [Fact]
-        public async Task shouldDoThing()
-        {
-            var targetsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR39rv_K6Lx1Gn-i8BbzOicLdZNm_whlpFgnhGxDC3nh1PUCY04j2Aa3JKN6TU1MS7O8QHEZ7Gn85nE/pub?gid=0&single=true&output=csv";
+//        [Fact]
+//        public async Task shouldDoThing()
+//        {
+//            // var targetsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR39rv_K6Lx1Gn-i8BbzOicLdZNm_whlpFgnhGxDC3nh1PUCY04j2Aa3JKN6TU1MS7O8QHEZ7Gn85nE/pub?gid=0&single=true&output=csv";
 
-            var http = new HttpClient();
+//var url =            $"https://docs.google.com/spreadsheets/d/1iZcGq0qBonWjU3cpmfz42zR-Mp7vHfr2uvw50s6Rj8g/gviz/tq?tqx=out:csv&sheet=Sheet1";
 
-            var response = await http.GetAsync(targetsCsvUrl);
+//            var http = new HttpClient();
 
-            var csv = await response.Content.ReadAsStringAsync();
+//            var response = await http.GetAsync(url);
 
-            var targets = csv.FromCSVToIEnumerableOf<Target>();
+//            var csv = await response.Content.ReadAsStringAsync();
 
-            Assert.True(targets.Count() > 2);
+//            var targets = csv.FromCSVToIEnumerableOf<Exercise>();
+
+//            Assert.True(targets.Count() > 2);
 
 
-        }
+//        }
 
         //[Fact]
         //public async Task ShouldGetHistoricDrinks()
