@@ -27,6 +27,7 @@ namespace GoogleSheets.Tests.Unit
         private HttpRequestMessage _capturedRequest;
         private HttpClient _httpClient;
         private Mock<ICalendar> _calendar;
+        private Mock<ILogger> _logger;
 
         public SheetsServiceTests()
         {
@@ -46,8 +47,9 @@ namespace GoogleSheets.Tests.Unit
 
             _calendar = new Mock<ICalendar>();
 
+            _logger = new Mock<ILogger>();
 
-            _sheetsService = new SheetsService(_config.Object, _httpClient, _calendar.Object);
+            _sheetsService = new SheetsService(_config.Object, _httpClient, _calendar.Object, _logger.Object);
         }
 
         public void ShouldSendCorrectRequestWhenGettingDrinks()
@@ -70,7 +72,7 @@ namespace GoogleSheets.Tests.Unit
             ""Saturday"",""21-Nov-2019"","""","""","""",""0"","""","""","""","""","""","""",""""
             ""Sunday"",""22-Nov-2019"","""","""","""",""123"","""","""","""","""","""","""",""""
             ""Monday"",""23-Nov-2019"","""","""","""",""234"","""","""","""","""","""","""",""""
-            ""Tuesday"",""24-Nov-2019"","""","""","""",""456"","""","""","""","""","""","""",""""";
+            ""Tuesday"",""24-Nov-2019"","""","""","""",""456"","""","""","""","""","""","""",""""".Replace("\r\n", "\n");
 
 
             HttpRequestMessage capturedRequest = new HttpRequestMessage();
@@ -116,7 +118,7 @@ namespace GoogleSheets.Tests.Unit
             """","""","""","""",""0"","""","""",""""
             """","""","""","""",""0"","""","""",""""
             """","""","""","""",""0"","""","""",""""
-            """","""","""","""",""0"","""","""",""""";
+            """","""","""","""",""0"","""","""",""""".Replace("\r\n", "\n");
 
 
             HttpRequestMessage capturedRequest = new HttpRequestMessage();
@@ -139,18 +141,13 @@ namespace GoogleSheets.Tests.Unit
         [Fact]
         public async Task ShouldParseContentWhenGettingTargets()
         {
-//            var fromDate = new DateTime(2018, 5, 1);
-//            var today = new DateTime(2018, 5, 6);
-
-           // _calendar.Setup(x => x.Now()).Returns(today);
-
             var content = 
 $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""MetresErgo15Minutes"",""MetresTreadmill30Minutes""
 ""1-May-2018"",""90.74"",""80"",""120"",""4"",""11"","""",""""
 ""2-May-2018"",""90.72333333"",""80"",""120"",""4"",""11"",""123"",""456""
 ""3-May-2018"",""90.70666667"",""80"",""120"",""4"",""11"","""",""""
 ""4-May-2018"",""90.69"",""80"",""120"",""4"",""11"","""",""""
-""5-May-2018"",""90.67333333"",""80"",""120"",""4"",""11"","""",""""";
+""5-May-2018"",""90.67333333"",""80"",""120"",""4"",""11"","""",""""".Replace("\r\n","\n");
 
 
             HttpRequestMessage capturedRequest = new HttpRequestMessage();
@@ -180,25 +177,25 @@ $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""Metr
 
 
 
-        [Fact]
-        public async Task shouldDoThing()
-        {
-            // var targetsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR39rv_K6Lx1Gn-i8BbzOicLdZNm_whlpFgnhGxDC3nh1PUCY04j2Aa3JKN6TU1MS7O8QHEZ7Gn85nE/pub?gid=0&single=true&output=csv";
-
-var url =            $"https://docs.google.com/spreadsheets/d/1iZcGq0qBonWjU3cpmfz42zR-Mp7vHfr2uvw50s6Rj8g/gviz/tq?tqx=out:csv&sheet=Sheet1";
-
-            var http = new HttpClient();
-
-            var response = await http.GetAsync(url);
-
-            var csv = await response.Content.ReadAsStringAsync();
-
-            var targets = csv.FromCSVToIEnumerableOf<Exercise>();
-
-            Assert.True(targets.Count() > 2);
-
-
-        }
+//        [Fact]
+//        public async Task shouldDoThing()
+//        {
+//            // var targetsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR39rv_K6Lx1Gn-i8BbzOicLdZNm_whlpFgnhGxDC3nh1PUCY04j2Aa3JKN6TU1MS7O8QHEZ7Gn85nE/pub?gid=0&single=true&output=csv";
+//
+//var url =            $"https://docs.google.com/spreadsheets/d/1iZcGq0qBonWjU3cpmfz42zR-Mp7vHfr2uvw50s6Rj8g/gviz/tq?tqx=out:csv&sheet=Sheet1";
+//
+//            var http = new HttpClient();
+//
+//            var response = await http.GetAsync(url);
+//
+//            var csv = await response.Content.ReadAsStringAsync();
+//
+//            var targets = csv.FromCSVToIEnumerableOf<Exercise>();
+//
+//            Assert.True(targets.Count() > 2);
+//
+//
+//        }
 
         //[Fact]
         //public async Task ShouldGetHistoricDrinks()
