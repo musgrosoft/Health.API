@@ -24,6 +24,9 @@ namespace GoogleSheets.Tests.Unit
         public SheetsServiceTests()
         {
             _config = new Mock<IConfig>();
+            _config.SetupGet(x => x.ExerciseSpreadsheetId).Returns("ExerciseSpreadsheetId");
+            _config.SetupGet(x => x.DrinksSpreadsheetId).Returns("DrinksSpreadsheetId");
+            _config.SetupGet(x => x.TargetsSpreadsheetId).Returns("TargetsSpreadsheetId");
 
             _httpMessageHandler = new Mock<HttpMessageHandler>();
 
@@ -35,14 +38,59 @@ namespace GoogleSheets.Tests.Unit
 
             _logger = new Mock<ILogger>();
 
+            SetupHttpMessageHandlerMock("");
+
             _sheetsService = new SheetsService(_config.Object, _httpClient, _calendar.Object, _logger.Object);
         }
 
-        public void ShouldSendCorrectRequestWhenGettingDrinks()
-        { }
+        private void SetupHttpMessageHandlerMock(string content)
+        {
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(content)
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+        }
+
+        [Fact]
+        public async Task ShouldSendCorrectRequestWhenGettingDrinks()
+        {
+            //When
+            await _sheetsService.GetDrinks(new DateTime(2000,1,1));
+
+            //Then
+            Assert.Equal(HttpMethod.Get, _capturedRequest.Method);
+            Assert.Equal("https://docs.google.com/spreadsheets/d/DrinksSpreadsheetId/gviz/tq?tqx=out:csv&sheet=Sheet1", _capturedRequest.RequestUri.AbsoluteUri);
+        }
+
+        [Fact]
+        public async Task ShouldSendCorrectRequestWhenGettingExercises()
+        {
+            //When
+            await _sheetsService.GetExercises(new DateTime(2000, 1, 1));
+
+            //Then
+            Assert.Equal(HttpMethod.Get, _capturedRequest.Method);
+            Assert.Equal("https://docs.google.com/spreadsheets/d/ExerciseSpreadsheetId/gviz/tq?tqx=out:csv&sheet=Sheet1", _capturedRequest.RequestUri.AbsoluteUri);
+        }
+
+        [Fact]
+        public async Task ShouldSendCorrectRequestWhenGettingTargets()
+        {
+            //When
+            await _sheetsService.GetTargets();
+
+            //Then
+            Assert.Equal(HttpMethod.Get, _capturedRequest.Method);
+            Assert.Equal("https://docs.google.com/spreadsheets/d/TargetsSpreadsheetId/gviz/tq?tqx=out:csv&sheet=Sheet1", _capturedRequest.RequestUri.AbsoluteUri);
+        }
 
         public void ShouldAggregateDrinks()
-        { }
+        {
+
+            //*********************************************TODO*******************************************************************************
+        }
 
         [Fact]
         public async Task ShouldParseContentWhenGettingDrinks()
@@ -60,14 +108,16 @@ namespace GoogleSheets.Tests.Unit
             ""Monday"",""23-Nov-2019"","""","""","""",""234"","""","""","""","""","""","""",""""
             ""Tuesday"",""24-Nov-2019"","""","""","""",""456"","""","""","""","""","""","""",""""".Replace("\r\n", "\n");
 
-
-            HttpRequestMessage capturedRequest = new HttpRequestMessage();
-            SetupHttpMessageHandlerMock(content, capturedRequest);
+            SetupHttpMessageHandlerMock(content);
 
             var drinks = (await _sheetsService.GetDrinks(fromDate)).ToList();
 
-            Assert.Equal(6,drinks.Count());
-            Assert.Equal(new DateTime(2019,11,19), drinks[0].CreatedDate);
+            Assert.Equal(6,drinks.Count);
+
+            Assert.Equal(new DateTime(2019, 11, 19), drinks[0].CreatedDate);
+            Assert.Equal(7.9, drinks[0].Units);
+            Assert.Equal(new DateTime(2019, 11, 24), drinks[5].CreatedDate);
+            Assert.Equal(456, drinks[5].Units);
 
 
         }
@@ -101,16 +151,26 @@ namespace GoogleSheets.Tests.Unit
             """","""","""","""",""0"","""","""",""""
             """","""","""","""",""0"","""","""",""""".Replace("\r\n", "\n");
 
+            SetupHttpMessageHandlerMock(content);
 
-            HttpRequestMessage capturedRequest = new HttpRequestMessage();
-            SetupHttpMessageHandlerMock(content, capturedRequest);
+            var exercises = (await _sheetsService.GetExercises(fromDate)).ToList();
 
-            var exercises = await _sheetsService.GetExercises(fromDate);
+            Assert.Equal(13, exercises.Count);
 
-            Assert.Equal(13, exercises.Count());
+            Assert.Equal(new DateTime(2019,9,9), exercises[0].CreatedDate );
+            Assert.Equal("ergo", exercises[0].Description);
+            Assert.Equal(3404, exercises[0].Metres);
+            Assert.Equal(900, exercises[0].TotalSeconds);
 
+            Assert.Equal(new DateTime(2019, 9, 9), exercises[1].CreatedDate);
+            Assert.Equal("airbike", exercises[1].Description);
+            Assert.Equal(8000, exercises[1].Metres);
+            Assert.Equal(900, exercises[1].TotalSeconds);
 
-
+            Assert.Equal(new DateTime(2019, 9, 19), exercises[6].CreatedDate);
+            Assert.Equal("treadmill", exercises[6].Description);
+            Assert.Equal(6000, exercises[6].Metres);
+            Assert.Equal(2057, exercises[6].TotalSeconds);
         }
 
 
@@ -126,8 +186,7 @@ $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""Metr
 ""5-May-2018"",""90.67333333"",""80"",""120"",""4"",""11"","""",""""".Replace("\r\n","\n");
 
 
-            HttpRequestMessage capturedRequest = new HttpRequestMessage();
-            SetupHttpMessageHandlerMock(content, capturedRequest);
+            SetupHttpMessageHandlerMock(content);
 
 
             var targets = (await _sheetsService.GetTargets()).OrderBy(x => x.Date).ToList();
@@ -143,19 +202,18 @@ $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""Metr
             Assert.Equal(123, targets[1].MetresErgo15Minutes);
             Assert.Equal(456, targets[1].MetresTreadmill30Minutes);
 
-
+            Assert.Equal(new DateTime(2018, 5, 4), targets[3].Date);
+            Assert.Equal(90.69, targets[3].Kg);
+            Assert.Equal(80, targets[3].Diastolic);
+            Assert.Equal(120, targets[3].Systolic);
+            Assert.Equal(4, targets[3].Units);
+            Assert.Equal(11, targets[3].CardioMinutes);
+            Assert.Equal(0, targets[3].MetresErgo15Minutes);
+            Assert.Equal(0, targets[3].MetresTreadmill30Minutes);
 
         }
 
-        private void SetupHttpMessageHandlerMock(string content, HttpRequestMessage capturedRequest)
-        {
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(content)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
-        }
+
 
 
     }
