@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using GoogleSheets;
 using Moq;
 using Moq.Protected;
-using Repositories.Health.Models;
 using Utils;
 using Xunit;
 
@@ -17,29 +13,19 @@ namespace GoogleSheets.Tests.Unit
 {
     public class SheetsServiceTests
     {
-        private Mock<IConfig> _config;
-//        //private Mock<IMapFunctions> _mapFunctions;
-//        private IMapFunctions _mapFunctions;
-//        private Mock<IRowMapper> _rowMapper;
-        //private Mock<ISheetsClient> _sheetsClient;
-        private SheetsService _sheetsService;
-        private Mock<HttpMessageHandler> _httpMessageHandler;
+        private readonly Mock<IConfig> _config;
+        private readonly SheetsService _sheetsService;
+        private readonly Mock<HttpMessageHandler> _httpMessageHandler;
         private HttpRequestMessage _capturedRequest;
-        private HttpClient _httpClient;
-        private Mock<ICalendar> _calendar;
-        private Mock<ILogger> _logger;
+        private readonly HttpClient _httpClient;
+        private readonly Mock<ICalendar> _calendar;
+        private readonly Mock<ILogger> _logger;
 
         public SheetsServiceTests()
         {
             _config = new Mock<IConfig>();
-            //            //_mapFunctions = new Mock<IMapFunctions>();
-            //            _mapFunctions = new MapFunctions();
-            //            _rowMapper = new Mock<IRowMapper>();
-            //_sheetsClient = new Mock<ISheetsClient>();
 
             _httpMessageHandler = new Mock<HttpMessageHandler>();
-
-            //_httpMessageHandler = new Mock<HttpMessageHandler> { CallBase = true };
 
             _capturedRequest = new HttpRequestMessage();
 
@@ -76,12 +62,7 @@ namespace GoogleSheets.Tests.Unit
 
 
             HttpRequestMessage capturedRequest = new HttpRequestMessage();
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(content)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
+            SetupHttpMessageHandlerMock(content, capturedRequest);
 
             var drinks = (await _sheetsService.GetDrinks(fromDate)).ToList();
 
@@ -122,12 +103,7 @@ namespace GoogleSheets.Tests.Unit
 
 
             HttpRequestMessage capturedRequest = new HttpRequestMessage();
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(content)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
+            SetupHttpMessageHandlerMock(content, capturedRequest);
 
             var exercises = await _sheetsService.GetExercises(fromDate);
 
@@ -151,12 +127,8 @@ $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""Metr
 
 
             HttpRequestMessage capturedRequest = new HttpRequestMessage();
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(content)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
+            SetupHttpMessageHandlerMock(content, capturedRequest);
+
 
             var targets = (await _sheetsService.GetTargets()).OrderBy(x => x.Date).ToList();
 
@@ -175,163 +147,16 @@ $@"""Date"",""Kg"",""Diastolic"",""Systolic"",""Units"",""CardioMinutes"",""Metr
 
         }
 
+        private void SetupHttpMessageHandlerMock(string content, HttpRequestMessage capturedRequest)
+        {
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(content)
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => capturedRequest = h);
+        }
 
 
-//        [Fact]
-//        public async Task shouldDoThing()
-//        {
-//            // var targetsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR39rv_K6Lx1Gn-i8BbzOicLdZNm_whlpFgnhGxDC3nh1PUCY04j2Aa3JKN6TU1MS7O8QHEZ7Gn85nE/pub?gid=0&single=true&output=csv";
-//
-//var url =            $"https://docs.google.com/spreadsheets/d/1iZcGq0qBonWjU3cpmfz42zR-Mp7vHfr2uvw50s6Rj8g/gviz/tq?tqx=out:csv&sheet=Sheet1";
-//
-//            var http = new HttpClient();
-//
-//            var response = await http.GetAsync(url);
-//
-//            var csv = await response.Content.ReadAsStringAsync();
-//
-//            var targets = csv.FromCSVToIEnumerableOf<Exercise>();
-//
-//            Assert.True(targets.Count() > 2);
-//
-//
-//        }
-
-        //[Fact]
-        //public async Task ShouldGetHistoricDrinks()
-        //{
-        //    //Given
-        //    var spreadsheetId = "sdfdsfsdf";
-        //    var range = "A1B1";
-
-        //    var someRows = new List<IList<object>>();
-
-        //    var someDrinks = new List<Drink>
-        //    {
-        //        new Drink
-        //        {
-        //            CreatedDate = new DateTime(2010,1,1),
-        //            Units = 11
-        //        },
-        //        new Drink
-        //        {
-        //            CreatedDate = new DateTime(2010, 1, 1),
-        //            Units = 2
-        //        },
-        //        new Drink
-        //        {
-        //            CreatedDate = new DateTime(2010, 1, 2),
-        //            Units = 3
-        //        }
-        //    };
-            
-        //    _config.Setup(x => x.HistoricAlcoholSpreadsheetId).Returns(spreadsheetId);
-        //    _config.Setup(x => x.DrinksRange).Returns(range);
-
-        //    _sheetsClient.Setup(x => x.GetRows(spreadsheetId, range)).Returns(someRows);
-            
-        //    _rowMapper.Setup(x => x.Get(someRows, _mapFunctions.MapRowToDrink)).Returns(someDrinks);
-            
-        //    //When
-        //    var drinks = _sheetsService.GetHistoricDrinks();
-
-        //    //Then
-        //    Assert.Equal(2,drinks.Count);
-        //    Assert.Contains(drinks, x => x.CreatedDate == new DateTime(2010, 1, 1) && x.Units == 13);
-        //    Assert.Contains(drinks, x => x.CreatedDate == new DateTime(2010, 1, 2) && x.Units == 3);
-
-        //}
-
-        //[Fact]
-        //public async Task ShouldGetDrinks()
-        //{
-        //    //Given
-        //    var spreadsheetId = "sdfsdf234234123423423";
-        //    var range = "A1B1";
-
-        //    var someRows = new List<IList<object>>();
-
-        //    var someDrinks = new List<Drink>
-        //    {
-        //        new Drink
-        //        {
-        //            CreatedDate = new DateTime(2010,1,1),
-        //            Units = 11
-        //        },
-        //        new Drink
-        //        {
-        //            CreatedDate = new DateTime(2010, 1, 1),
-        //            Units = 2
-        //        },
-        //        new Drink
-        //        {
-        //            CreatedDate = new DateTime(2010, 1, 2),
-        //            Units = 3
-        //        }
-        //    };
-
-        //    _config.Setup(x => x.AlcoholSpreadsheetId).Returns(spreadsheetId);
-        //    _config.Setup(x => x.DrinksRange).Returns(range);
-
-        //    _sheetsClient.Setup(x => x.GetRows(spreadsheetId, range)).Returns(someRows);
-
-        //    _rowMapper.Setup(x => x.Get(someRows, _mapFunctions.MapRowToDrink)).Returns(someDrinks);
-
-        //    //When
-        //    var drinks = _sheetsService.GetDrinks();
-
-        //    //Then
-        //    Assert.Equal(2, drinks.Count);
-        //    Assert.Contains(drinks, x => x.CreatedDate == new DateTime(2010, 1, 1) && x.Units == 13);
-        //    Assert.Contains(drinks, x => x.CreatedDate == new DateTime(2010, 1, 2) && x.Units == 3);
-
-        //}
-
-        //[Fact]
-        //public async Task ShouldGetExercises()
-        //{
-        //    //Given
-        //    var spreadsheetId = "sadasdasdassdasd";
-        //    var range = "A1B1";
-
-        //    var someRows = new List<IList<object>>();
-
-        //    var someExercises = new List<Exercise>
-        //    {
-        //        new Exercise
-        //        {
-        //            CreatedDate = new DateTime(2010,1,1),
-        //            Metres = 1
-        //        },
-        //        new Exercise
-        //        {
-        //            CreatedDate = new DateTime(2010, 1, 1),
-        //            Metres = 2
-        //        },
-        //        new Exercise
-        //        {
-        //            CreatedDate = new DateTime(2010, 1, 2),
-        //            Metres = 3
-        //        }
-        //    };
-
-        //    _config.Setup(x => x.ExerciseSpreadsheetId).Returns(spreadsheetId);
-        //    _config.Setup(x => x.ExercisesRange).Returns(range);
-
-        //    _sheetsClient.Setup(x => x.GetRows(spreadsheetId, range)).Returns(someRows);
-
-        //    _rowMapper.Setup(x => x.Get(someRows, _mapFunctions.MapRowToExercise)).Returns(someExercises);
-
-        //    //When
-        //    var exercises = _sheetsService.GetExercises();
-
-        //    //Then
-        //    Assert.Equal(3, exercises.Count);
-        //    Assert.Contains(exercises, x => x.Metres == 1);
-        //    Assert.Contains(exercises, x => x.Metres == 2);
-        //    Assert.Contains(exercises, x => x.Metres == 3);
-
-
-        //}
     }
 }
