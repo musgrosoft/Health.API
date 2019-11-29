@@ -75,7 +75,7 @@ namespace Fitbit.Internal
 //
 //        }
 
-        internal async Task<FitbitSleeps> Get100DaysOfSleeps(DateTime startDate, string accessToken)
+        internal async Task<FitbitSleepsResponse> Get100DaysOfSleeps(DateTime startDate, string accessToken)
         {
             var uri = FITBIT_BASE_URL + $"/1.2/user/{_config.FitbitUserId}/sleep/date/{startDate:yyyy-MM-dd}/{startDate.AddDays(100):yyyy-MM-dd}.json";
             _httpClient.DefaultRequestHeaders.Clear();
@@ -85,7 +85,7 @@ namespace Fitbit.Internal
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<FitbitSleeps>(content);
+                var data = JsonConvert.DeserializeObject<FitbitSleepsResponse>(content);
                 return data;
             }
             else if (response.StatusCode == (HttpStatusCode)429)

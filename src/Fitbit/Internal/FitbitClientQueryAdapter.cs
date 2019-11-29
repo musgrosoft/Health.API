@@ -54,17 +54,17 @@ namespace Fitbit.Internal
                 date < toDate;
                 date = date.AddDays(100))
             {
-                FitbitSleeps fitbitSleeps;
+                FitbitSleepsResponse fitbitSleepsResponse;
                 try
                 {
-                    fitbitSleeps = await _fitbitClient.Get100DaysOfSleeps(date, accessToken);
+                    fitbitSleepsResponse = await _fitbitClient.Get100DaysOfSleeps(date, accessToken);
                 }
                 catch (TooManyRequestsException ex)
                 {
                     await _logger.LogErrorAsync(ex);
                     break;
                 }
-                allTheSleeps.AddRange(fitbitSleeps.sleep);
+                allTheSleeps.AddRange(fitbitSleepsResponse.sleep);
             }
 
             return allTheSleeps.Where(x => x.dateOfSleep.Between(fromDate, toDate));

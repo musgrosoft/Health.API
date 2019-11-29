@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Moq;
 using Repositories.Health.Models;
 using Withings.Domain;
+using Withings.Domain.WithingsMeasureGroupResponse;
 using Xunit;
 
 namespace Withings.Tests.Unit
@@ -39,7 +40,7 @@ namespace Withings.Tests.Unit
         public async Task ShouldGetWeights()
         {
             //Given
-            IEnumerable<WithingsMeasureGroupResponse.Measuregrp> someMeasureGroups = new List<WithingsMeasureGroupResponse.Measuregrp> { };
+            IEnumerable<Measuregrp> someMeasureGroups = new List<Measuregrp> { };
             var someWeights = new List<Weight>();
             _withingsClientQueryAdaptor.Setup(x => x.GetMeasureGroups(It.IsAny<DateTime>(), It.IsAny<string>())).Returns(Task.FromResult(someMeasureGroups));
             _withingsMapper.Setup(x => x.MapToWeights(someMeasureGroups)).Returns(someWeights);
@@ -56,7 +57,7 @@ namespace Withings.Tests.Unit
         public async Task ShouldGetBloodPressures()
         {
             //Given
-            IEnumerable<WithingsMeasureGroupResponse.Measuregrp> someMeasureGroups = new List<WithingsMeasureGroupResponse.Measuregrp> { };
+            IEnumerable<Measuregrp> someMeasureGroups = new List<Measuregrp> { };
             var someBloodpressures = new List<BloodPressure>();
             _withingsClientQueryAdaptor.Setup(x => x.GetMeasureGroups(It.IsAny<DateTime>(), It.IsAny<string>())).Returns(Task.FromResult(someMeasureGroups));
             _withingsMapper.Setup(x => x.MapToBloodPressures(someMeasureGroups)).Returns(someBloodpressures);

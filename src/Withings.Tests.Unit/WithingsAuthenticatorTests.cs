@@ -3,6 +3,7 @@ using Moq;
 using Services.OAuth;
 using Utils;
 using Withings.Domain;
+using Withings.Domain.WithingsTokenResponse;
 using Xunit;
 
 namespace Withings.Tests.Unit
@@ -34,7 +35,7 @@ namespace Withings.Tests.Unit
             var refreshToken = "sdfsdf454767utgj";
 
             _withingsClient.Setup(x => x.GetTokensByAuthorisationCode(authorizationCode)).Returns(Task.FromResult(
-                new WithingsTokenResponse
+                new Response
                 {
                     access_token = accessToken,
                     refresh_token = refreshToken
@@ -54,7 +55,7 @@ namespace Withings.Tests.Unit
         {
             //Given
             var refreshToken = "sdfsf4w55yujytjghdfg";
-            var newTokens = new WithingsTokenResponse
+            var newTokens = new Response
             {
                 access_token = "dfsdsfsfdf",
                 refresh_token = "gfdghhtrjtyj"

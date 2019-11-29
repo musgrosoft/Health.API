@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Fitbit.Internal.Domain
 {
-    public class FitbitSleeps
+    public class FitbitSleepsResponse
     {
         public List<FSleep> sleep { get; set; }
     }

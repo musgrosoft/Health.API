@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 using Repositories.Health.Models;
 using Utils;
 using Withings.Domain;
+using Withings.Domain.WithingsMeasureGroupResponse;
+using Withings.Domain.WithingsTokenResponse;
+using Response = Withings.Domain.WithingsTokenResponse.Response;
 
 namespace Withings
 {
@@ -27,7 +30,7 @@ namespace Withings
 
 
 
-        public async Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode)
+        public async Task<Response> GetTokensByAuthorisationCode(string authorizationCode)
         {
 
                 var url = $"{_config.WithingsAccountBaseUrl}/oauth2/token";
@@ -53,7 +56,7 @@ namespace Withings
                 {
                     await _logger.LogMessageAsync("~~~ Success Status Code");
 
-                    var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
+                    var tokenResponse = JsonConvert.DeserializeObject<Response>(responseBody);
 
                     if (String.IsNullOrEmpty(tokenResponse.access_token) ||
                         String.IsNullOrEmpty(tokenResponse.refresh_token))
@@ -76,7 +79,7 @@ namespace Withings
         }
 
 
-        public async Task<WithingsTokenResponse> GetTokensByRefreshToken(string refreshToken)
+        public async Task<Response> GetTokensByRefreshToken(string refreshToken)
         {
             var url = $"{_config.WithingsAccountBaseUrl}/oauth2/token";
 
@@ -99,7 +102,7 @@ namespace Withings
             {
                 await _logger.LogMessageAsync("~~~ Success Status Code");
 
-                var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
+                var tokenResponse = JsonConvert.DeserializeObject<Response>(responseBody);
 
                 if (String.IsNullOrEmpty(tokenResponse.access_token) ||
                     String.IsNullOrEmpty(tokenResponse.refresh_token))
@@ -123,7 +126,7 @@ namespace Withings
 
 
         
-        public async Task<IEnumerable<WithingsMeasureGroupResponse.Measuregrp>> GetMeasureGroups(string accessToken)
+        public async Task<IEnumerable<Measuregrp>> GetMeasureGroups(string accessToken)
         {
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -136,7 +139,7 @@ namespace Withings
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                var data = JsonConvert.DeserializeObject<WithingsMeasureGroupResponse.RootObject>(content);
+                var data = JsonConvert.DeserializeObject<Domain.WithingsMeasureGroupResponse.Response>(content);
                 return data.body.measuregrps;
             }
             else

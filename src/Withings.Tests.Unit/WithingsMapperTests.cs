@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Utils;
 using Withings.Domain;
+using Withings.Domain.WithingsMeasureGroupResponse;
 using Xunit;
 
 namespace Withings.Tests.Unit
@@ -24,20 +25,20 @@ namespace Withings.Tests.Unit
         [Fact]
         public void ShouldMapMeasuresGroupsToWeights()
         {
-            var measuresGroups = new List<WithingsMeasureGroupResponse.Measuregrp>
+            var measuresGroups = new List<Measuregrp>
             {
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)(new DateTime(2018,1,1).ToUnixTimeFromDate()), measures = new List<WithingsMeasureGroupResponse.Measure>
+                new Measuregrp {date = (int)(new DateTime(2018,1,1).ToUnixTimeFromDate()), measures = new List<Measure>
                 {
-                    new WithingsMeasureGroupResponse.Measure {type = WeightKgMeasureTypeId, unit = 0, value = 90},
-                    new WithingsMeasureGroupResponse.Measure {type = FatRatioPercentageMeasureTypeId, unit = 0, value = 80},
+                    new Measure {type = WeightKgMeasureTypeId, unit = 0, value = 90},
+                    new Measure {type = FatRatioPercentageMeasureTypeId, unit = 0, value = 80},
                 }},
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)(new DateTime(2018,1,2).ToUnixTimeFromDate()), measures = new List<WithingsMeasureGroupResponse.Measure>
+                new Measuregrp {date = (int)(new DateTime(2018,1,2).ToUnixTimeFromDate()), measures = new List<Measure>
                 {
-                    new WithingsMeasureGroupResponse.Measure {type = WeightKgMeasureTypeId, unit = 0, value = 91}
+                    new Measure {type = WeightKgMeasureTypeId, unit = 0, value = 91}
                 }},
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)(new DateTime(2018,1,3).ToUnixTimeFromDate()), measures = new List<WithingsMeasureGroupResponse.Measure>
+                new Measuregrp {date = (int)(new DateTime(2018,1,3).ToUnixTimeFromDate()), measures = new List<Measure>
                 {
-                    new WithingsMeasureGroupResponse.Measure {type = WeightKgMeasureTypeId, unit = 0, value = 92}
+                    new Measure {type = WeightKgMeasureTypeId, unit = 0, value = 92}
                 }}
             };
 
@@ -53,22 +54,22 @@ namespace Withings.Tests.Unit
         [Fact]
         public void ShouldMapMeasuresGroupsToBloodPressures()
         {
-            var measuresGroups = new List<WithingsMeasureGroupResponse.Measuregrp>
+            var measuresGroups = new List<Measuregrp>
             {
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)(new DateTime(2018,1,1).ToUnixTimeFromDate()), measures = new List<WithingsMeasureGroupResponse.Measure>
+                new Measuregrp {date = (int)(new DateTime(2018,1,1).ToUnixTimeFromDate()), measures = new List<Measure>
                 {
-                    new WithingsMeasureGroupResponse.Measure {type = DiastolicBloodPressureMeasureTypeId, unit = 0, value = 71},
-                    new WithingsMeasureGroupResponse.Measure {type = SystolicBloodPressureMeasureTypeId, unit = 0, value = 131},
+                    new Measure {type = DiastolicBloodPressureMeasureTypeId, unit = 0, value = 71},
+                    new Measure {type = SystolicBloodPressureMeasureTypeId, unit = 0, value = 131},
                 }},
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)(new DateTime(2018,1,2).ToUnixTimeFromDate()), measures = new List<WithingsMeasureGroupResponse.Measure>
+                new Measuregrp {date = (int)(new DateTime(2018,1,2).ToUnixTimeFromDate()), measures = new List<Measure>
                 {
-                    new WithingsMeasureGroupResponse.Measure {type = DiastolicBloodPressureMeasureTypeId, unit = 0, value = 72},
-                    new WithingsMeasureGroupResponse.Measure {type = SystolicBloodPressureMeasureTypeId, unit = 0, value = 132},
+                    new Measure {type = DiastolicBloodPressureMeasureTypeId, unit = 0, value = 72},
+                    new Measure {type = SystolicBloodPressureMeasureTypeId, unit = 0, value = 132},
                 }},
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)(new DateTime(2018,1,3).ToUnixTimeFromDate()), measures = new List<WithingsMeasureGroupResponse.Measure>
+                new Measuregrp {date = (int)(new DateTime(2018,1,3).ToUnixTimeFromDate()), measures = new List<Measure>
                 {
-                    new WithingsMeasureGroupResponse.Measure {type = DiastolicBloodPressureMeasureTypeId, unit = 0, value = 73},
-                    new WithingsMeasureGroupResponse.Measure {type = SystolicBloodPressureMeasureTypeId, unit = 0, value = 133},
+                    new Measure {type = DiastolicBloodPressureMeasureTypeId, unit = 0, value = 73},
+                    new Measure {type = SystolicBloodPressureMeasureTypeId, unit = 0, value = 133},
                 }}
             };
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using Withings.Domain;
+using Withings.Domain.WithingsMeasureGroupResponse;
 using Xunit;
 
 namespace Withings.Tests.Unit
@@ -26,16 +27,16 @@ namespace Withings.Tests.Unit
             //Given
             var accessToken = "fsdfsdfdsf";
             var filterDate = new DateTime(2010, 1, 15);
-            var someMeasureGroups = new List<WithingsMeasureGroupResponse.Measuregrp>
+            var someMeasureGroups = new List<Measuregrp>
             {
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,1))},
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,2))},
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,3))},
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,16))},
-                new WithingsMeasureGroupResponse.Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,17))},
+                new Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,1))},
+                new Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,2))},
+                new Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,3))},
+                new Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,16))},
+                new Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,17))},
             };
 
-            _withingsClient.Setup(x => x.GetMeasureGroups(accessToken)).Returns(Task.FromResult((IEnumerable<WithingsMeasureGroupResponse.Measuregrp>)someMeasureGroups));
+            _withingsClient.Setup(x => x.GetMeasureGroups(accessToken)).Returns(Task.FromResult((IEnumerable<Measuregrp>)someMeasureGroups));
 
             //When
             var result = await _withingsClientQueryAdapter.GetMeasureGroups(filterDate, accessToken);
