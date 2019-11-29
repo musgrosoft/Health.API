@@ -16,7 +16,7 @@ namespace Withings
             _withingsClient = withingsClient;
         }
 
-        public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(DateTime sinceDateTime, string accessToken)
+        public async Task<IEnumerable<WithingsMeasureGroupResponse.Measuregrp>> GetMeasureGroups(DateTime sinceDateTime, string accessToken)
         {
             var measureGroups = await _withingsClient.GetMeasureGroups(accessToken);
 

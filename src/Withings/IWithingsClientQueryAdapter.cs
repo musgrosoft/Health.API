@@ -7,7 +7,7 @@ namespace Withings
 {
     public interface IWithingsClientQueryAdapter
     {
-        Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(DateTime sinceDateTime, string accessToken);
+        Task<IEnumerable<WithingsMeasureGroupResponse.Measuregrp>> GetMeasureGroups(DateTime sinceDateTime, string accessToken);
 //        Task<IEnumerable<Series>> GetSleepSeries(DateTime sinceDateTime, string accessToken);
     }
 }

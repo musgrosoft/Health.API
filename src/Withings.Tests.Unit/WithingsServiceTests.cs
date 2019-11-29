@@ -39,7 +39,7 @@ namespace Withings.Tests.Unit
         public async Task ShouldGetWeights()
         {
             //Given
-            IEnumerable<Response.Measuregrp> someMeasureGroups = new List<Response.Measuregrp> { };
+            IEnumerable<WithingsMeasureGroupResponse.Measuregrp> someMeasureGroups = new List<WithingsMeasureGroupResponse.Measuregrp> { };
             var someWeights = new List<Weight>();
             _withingsClientQueryAdaptor.Setup(x => x.GetMeasureGroups(It.IsAny<DateTime>(), It.IsAny<string>())).Returns(Task.FromResult(someMeasureGroups));
             _withingsMapper.Setup(x => x.MapToWeights(someMeasureGroups)).Returns(someWeights);
@@ -56,7 +56,7 @@ namespace Withings.Tests.Unit
         public async Task ShouldGetBloodPressures()
         {
             //Given
-            IEnumerable<Response.Measuregrp> someMeasureGroups = new List<Response.Measuregrp> { };
+            IEnumerable<WithingsMeasureGroupResponse.Measuregrp> someMeasureGroups = new List<WithingsMeasureGroupResponse.Measuregrp> { };
             var someBloodpressures = new List<BloodPressure>();
             _withingsClientQueryAdaptor.Setup(x => x.GetMeasureGroups(It.IsAny<DateTime>(), It.IsAny<string>())).Returns(Task.FromResult(someMeasureGroups));
             _withingsMapper.Setup(x => x.MapToBloodPressures(someMeasureGroups)).Returns(someBloodpressures);

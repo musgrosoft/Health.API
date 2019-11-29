@@ -6,7 +6,7 @@ namespace Withings
 {
     public interface IWithingsMapper
     {
-        IEnumerable<Weight> MapToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups);
-        IEnumerable<BloodPressure> MapToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups);
+        IEnumerable<Weight> MapToWeights(IEnumerable<WithingsMeasureGroupResponse.Measuregrp> weightMeasuresGroups);
+        IEnumerable<BloodPressure> MapToBloodPressures(IEnumerable<WithingsMeasureGroupResponse.Measuregrp> bloodPressureMeasuresGroups);
     }
 }

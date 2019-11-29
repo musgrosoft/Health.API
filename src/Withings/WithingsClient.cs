@@ -123,7 +123,7 @@ namespace Withings
 
 
         
-        public async Task<IEnumerable<Response.Measuregrp>> GetMeasureGroups(string accessToken)
+        public async Task<IEnumerable<WithingsMeasureGroupResponse.Measuregrp>> GetMeasureGroups(string accessToken)
         {
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -136,7 +136,7 @@ namespace Withings
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                var data = JsonConvert.DeserializeObject<Response.RootObject>(content);
+                var data = JsonConvert.DeserializeObject<WithingsMeasureGroupResponse.RootObject>(content);
                 return data.body.measuregrps;
             }
             else

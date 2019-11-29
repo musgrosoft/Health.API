@@ -2,7 +2,7 @@
 
 namespace Withings.Domain
 {
-    public class Response
+    public class WithingsMeasureGroupResponse
     {
         public class Measure
         {

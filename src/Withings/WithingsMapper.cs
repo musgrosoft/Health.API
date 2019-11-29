@@ -14,7 +14,7 @@ namespace Withings
         private const int DiastolicBloodPressureMeasureTypeId = 9;
         private const int SystolicBloodPressureMeasureTypeId = 10;
 
-        public IEnumerable<Weight> MapToWeights(IEnumerable<Response.Measuregrp> weightMeasuresGroups)
+        public IEnumerable<Weight> MapToWeights(IEnumerable<WithingsMeasureGroupResponse.Measuregrp> weightMeasuresGroups)
         {
             return weightMeasuresGroups
                 .Where(x=>x.measures.Any(y=>y.type == WeightKgMeasureTypeId))
@@ -31,7 +31,7 @@ namespace Withings
             });
         }
 
-        public IEnumerable<BloodPressure> MapToBloodPressures(IEnumerable<Response.Measuregrp> bloodPressureMeasuresGroups)
+        public IEnumerable<BloodPressure> MapToBloodPressures(IEnumerable<WithingsMeasureGroupResponse.Measuregrp> bloodPressureMeasuresGroups)
         {
             return bloodPressureMeasuresGroups
                 .Where(x => x.measures.Any(y => y.type == DiastolicBloodPressureMeasureTypeId))
