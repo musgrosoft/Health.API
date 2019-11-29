@@ -14,12 +14,13 @@ namespace GoogleSheets.Tests.Unit
     public class SheetsServiceTests
     {
         private readonly Mock<IConfig> _config;
-        private readonly SheetsService _sheetsService;
         private readonly Mock<HttpMessageHandler> _httpMessageHandler;
         private HttpRequestMessage _capturedRequest;
         private readonly HttpClient _httpClient;
         private readonly Mock<ICalendar> _calendar;
         private readonly Mock<ILogger> _logger;
+
+        private readonly SheetsService _sheetsService;
 
         public SheetsServiceTests()
         {

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Fitbit;
 using Moq;
 using Moq.Protected;
 using Services.OAuth;
@@ -15,18 +13,20 @@ namespace Fitbit.Tests
 {
     public class FitbitServiceTests
     {
-        private Mock<ITokenService> _tokenService;
-        private Mock<HttpMessageHandler> _httpMessageHandler;
+        private readonly Mock<ITokenService> _tokenService;
+        private readonly Mock<HttpMessageHandler> _httpMessageHandler;
         private HttpRequestMessage _capturedRequest;
-        private HttpClient _httpClient;
-        private Mock<IConfig> _config;
-        private Mock<ILogger> _logger;
-        private FitbitService _fitbitService;
-
-            //private string _content = "wibble";
-
+        private readonly HttpClient _httpClient;
+        private readonly Mock<IConfig> _config;
+        private readonly Mock<ILogger> _logger;
+        
+        private readonly FitbitService _fitbitService;
+        
         public FitbitServiceTests()
         {
+            _config = new Mock<IConfig>();
+            _config.Setup(x => x.FitbitBaseUrl).Returns("http://www.null.com");
+
             _tokenService = new Mock<ITokenService>();
 
             _httpMessageHandler = new Mock<HttpMessageHandler>();
@@ -37,47 +37,40 @@ namespace Fitbit.Tests
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
 
-            _config = new Mock<IConfig>();
-            _config.Setup(x => x.FitbitBaseUrl).Returns("http://www.null.com");
-
             _logger = new Mock<ILogger>();
+
+            SetupHttpMessageHandlerMock("");
 
             _fitbitService = new FitbitService(_tokenService.Object, _httpClient, _config.Object, _logger.Object);
 
-            Uri _capturedUri = new Uri("http://www.null.com");
-
-
-//
-//            _httpMessageHandler.Setup(f => f.Send(It.IsAny<HttpRequestMessage>())).Returns(new HttpResponseMessage
-//            {
-//                StatusCode = HttpStatusCode.OK,
-//                Content = new StringContent("{\"success\": false,\"error-codes\": [\"It's a fake error!\",\"It's a fake error\"]}")
-//            });
-
-
-            //
-            //            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>())
-            //                .Returns(Task.FromResult(new HttpResponseMessage
-            //                {
-            //                    StatusCode = HttpStatusCode.OK,
-            //                    Content = new StringContent(_content)
-            //                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri);
-
-            //            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-            //                .Returns(Task.FromResult(new HttpResponseMessage
-            //                {
-            //                    StatusCode = HttpStatusCode.OK,
-            //                    Content = new StringContent(@"{                    
-            //                                                            ""access_token"": ""eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MzAzNDM3MzUsInNjb3BlcyI6Indwcm8gd2xvYyB3bnV0IHdzbGUgd3NldCB3aHIgd3dlaSB3YWN0IHdzb2MiLCJzdWIiOiJBQkNERUYiLCJhdWQiOiJJSktMTU4iLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJpYXQiOjE0MzAzNDAxMzV9.z0VHrIEzjsBnjiNMBey6wtu26yHTnSWz_qlqoEpUlpc"",
-            //                                                            ""expires_in"": 3600,
-            //                                                            ""refresh_token"": ""c643a63c072f0f05478e9d18b991db80ef6061e4f8e6c822d83fed53e5fafdd7"",
-            //                                                            ""token_type"": ""Bearer"",
-            //                                                            ""user_id"": ""26FWFL""
-            //                                                        }")
-            //                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
-
-
         }
+
+        private void SetupHttpMessageHandlerMock(string content)
+        {
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(content)
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         [Fact]
