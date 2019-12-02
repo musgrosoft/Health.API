@@ -14,7 +14,6 @@ namespace Withings.Tests.Unit
 {
     public class WithingsClientTests
     {
-      //  Uri _capturedUri = new Uri("http://www.null.com");
         private string withingsClientId = "12312jhjskdh937ey19d";
         private string withingsClientSecret = "fdjs982rhdgdsfogiuhd";
         private string baseAccountUrl = "https://www.nullaccount.com";
@@ -25,8 +24,6 @@ namespace Withings.Tests.Unit
         private WithingsClient _withingsClient;
         private Mock<IConfig> _config;
 
-        private Mock<ILogger> _logger;
-
         private HttpRequestMessage _capturedRequest;
 
         public WithingsClientTests()
@@ -36,7 +33,6 @@ namespace Withings.Tests.Unit
             _capturedRequest = new HttpRequestMessage();
 
             _httpClient = new HttpClient(_httpMessageHandler.Object);
-            _logger = new Mock<ILogger>();
 
             _config = new Mock<IConfig>();
             _config.Setup(x => x.WithingsClientId).Returns(withingsClientId);
@@ -46,7 +42,7 @@ namespace Withings.Tests.Unit
             _config.Setup(x => x.WithingsApiBaseUrl).Returns(baseApiUrl);
             _config.Setup(x => x.WithingsRedirectUrl).Returns(redirectUrl);
             
-            _withingsClient = new WithingsClient(_httpClient, _logger.Object,  _config.Object);
+            _withingsClient = new WithingsClient(_httpClient, _config.Object);
         }
 
         private void SetupHttpMessageHandlerMock(string content, HttpStatusCode statusCode = HttpStatusCode.OK)
@@ -60,17 +56,68 @@ namespace Withings.Tests.Unit
         }
 
         [Fact]
-        public async Task GetTokensByAuthorisationCodeShouldThrowExceptionOnNonSuccessStatusCode()
+        public async Task ShouldParseContentWhenGettingMeasureGroups()
         {
             //Given
-            SetupHttpMessageHandlerMock("Has Error", HttpStatusCode.NotFound);
+            SetupHttpMessageHandlerMock(withingsContent);
 
             //When
-            var ex = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByAuthorisationCode(""));
+            var measuregrps = await _withingsClient.GetMeasureGroups("abc123");
+
+            //Assert.Equal($"{baseApiUrl}/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal($"{baseApiUrl}/measure?action=getmeas", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal("abc123", _capturedRequest.Headers.Authorization.Parameter);
+            Assert.Equal(8, measuregrps.Count());
+            Assert.Contains(measuregrps, x => x.date == 1526015332 && x.measures.Exists(a => a.value == 83000 && a.type == 9 && a.unit == -3));
+            //Assert.Contains(measuregrps, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018, 5, 10, 5, 4, 42));
+        }
+
+        [Fact]
+        public async Task ShouldSendCorrectRequestWhenGettingMeasureGroups()
+        {
+            //Given
+            SetupHttpMessageHandlerMock(withingsContent);
+
+            //When
+            await _withingsClient.GetMeasureGroups("abc123");
 
             //Then
-            Assert.Contains(((int)HttpStatusCode.NotFound).ToString(), ex.Message);
-            Assert.Contains("Has Error", ex.Message);
+            Assert.Equal(HttpMethod.Get,_capturedRequest.Method);
+        }
+        
+        [Fact]
+        public async void ShouldThrowErrorOnNonSuccessStatusCodeWhenGettingMeasureGroups()
+        {
+            //Given
+            SetupHttpMessageHandlerMock("this is an error", HttpStatusCode.NotFound);
+
+            //When
+            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetMeasureGroups("abc123"));
+
+            //Then
+            Assert.Contains("status code is 404", exception.Message);
+            Assert.Contains("content is this is an error", exception.Message);
+        }
+
+        [Theory]
+        [InlineData(null, "r")]
+        [InlineData("", "r")]
+        [InlineData("a", null)]
+        [InlineData("a", "")]
+        public async void ShouldThrowErrorIfAccessTokenOrRefreshTokenIsEmptyWhenGettingTokensByAuthorisationCode(
+            string accessToken, string refreshToken)
+        {
+            //Given
+            string authorizationCode = "qwe321";
+
+            SetupHttpMessageHandlerMock($"{{'access_token':'{accessToken}' , 'refresh_token':'{refreshToken}' }}");
+
+            //When
+            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByAuthorisationCode(authorizationCode));
+
+            //Then
+            Assert.Contains("Access token or Refresh token is empty", exception.Message);
+
         }
 
         [Fact]
@@ -79,16 +126,9 @@ namespace Withings.Tests.Unit
             //Given
             string authorizationCode = "qwe321";
 
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent("{'access_token':'aaa111' , 'refresh_token':'bbb111' }")
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
-
+            SetupHttpMessageHandlerMock("{'access_token':'aaa111' , 'refresh_token':'bbb111' }");
 
             //When
-
             var tokenResponse = await _withingsClient.GetTokensByAuthorisationCode(authorizationCode);
 
             //Then
@@ -107,20 +147,28 @@ namespace Withings.Tests.Unit
         }
 
         [Fact]
+        public async Task ShouldThrowExceptionOnNonSuccessStatusCodeWhenGettingTokensByAuthorisationCode()
+        {
+            //Given
+            SetupHttpMessageHandlerMock("Has Error", HttpStatusCode.NotFound);
+
+            //When
+            var ex = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByAuthorisationCode(""));
+
+            //Then
+            Assert.Contains(((int)HttpStatusCode.NotFound).ToString(), ex.Message);
+            Assert.Contains("Has Error", ex.Message);
+        }
+        
+        [Fact]
         public async Task ShouldGetTokensByRefreshToken()
         {
             //Given
             string refreshToken = "slkdjflsdjkfjsldkf";
 
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent("{'access_token':'ccc' , 'refresh_token':'ddd' }")
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+            SetupHttpMessageHandlerMock("{'access_token':'ccc' , 'refresh_token':'ddd' }");
 
             //When
-
             var tokenResponse = await _withingsClient.GetTokensByRefreshToken(refreshToken);
 
             //Then
@@ -140,44 +188,21 @@ namespace Withings.Tests.Unit
         }
 
         [Fact]
-        public async Task ShouldGetMeasureGroups()
+        public async Task ShouldThrowExceptionOnNonSuccessStatusCodeWhenGettingTokensByRefreshToken()
         {
             //Given
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(withingsContent)
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+            SetupHttpMessageHandlerMock("Has Error", HttpStatusCode.NotFound);
 
             //When
+            var ex = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByRefreshToken(""));
 
-            var measuregrps = await _withingsClient.GetMeasureGroups("abc123");
-
-            //Assert.Equal($"{baseApiUrl}/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
-            Assert.Equal($"{baseApiUrl}/measure?action=getmeas", _capturedRequest.RequestUri.AbsoluteUri);
-            Assert.Equal("abc123", _capturedRequest.Headers.Authorization.Parameter);
-            Assert.Equal(8, measuregrps.Count());
-            Assert.Contains(measuregrps, x => x.date == 1526015332 && x.measures.Exists(a => a.value == 83000 && a.type == 9 && a.unit == -3));
-            //Assert.Contains(measuregrps, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018, 5, 10, 5, 4, 42));
+            //Then
+            Assert.Contains(((int)HttpStatusCode.NotFound).ToString(), ex.Message);
+            Assert.Contains("Has Error", ex.Message);
         }
 
-        [Fact]
-        public async void ShouldThrowErrorOnNoSuccessStausCodeWhenGetMeasureGroups()
-        {
-            //Given
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.NotFound,
-                    Content = new StringContent("this is an error")
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
 
-            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetMeasureGroups("abc123"));
 
-            Assert.Contains("status code is 404", exception.Message);
-            Assert.Contains("content is this is an error", exception.Message);
-        }
 
 
         private string withingsContent = @"{

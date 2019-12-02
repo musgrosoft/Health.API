@@ -13,61 +13,44 @@ namespace Withings
     public class WithingsClient : IWithingsClient
     {
         private readonly HttpClient _httpClient;
-        private readonly ILogger _logger;
         private readonly IConfig _config;
         
-        public WithingsClient(HttpClient httpClient, ILogger logger, IConfig config)
+        public WithingsClient(HttpClient httpClient, IConfig config)
         {
             _httpClient = httpClient;
-            _logger = logger;
             _config = config;
         }
 
         public async Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode)
         {
+            var url = $"{_config.WithingsAccountBaseUrl}/oauth2/token";
 
-                var url = $"{_config.WithingsAccountBaseUrl}/oauth2/token";
+            var nvc = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                new KeyValuePair<string, string>("client_id", _config.WithingsClientId),
+                new KeyValuePair<string, string>("client_secret", _config.WithingsClientSecret),
+                new KeyValuePair<string, string>("code", authorizationCode),
+                new KeyValuePair<string, string>("redirect_uri", _config.WithingsRedirectUrl)
+            };
+        
+            var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
+        
+            string responseBody = await response.Content.ReadAsStringAsync();
 
-                var nvc = new List<KeyValuePair<string, string>>
-                {
-                    new KeyValuePair<string, string>("grant_type", "authorization_code"),
-                    new KeyValuePair<string, string>("client_id", _config.WithingsClientId),
-                    new KeyValuePair<string, string>("client_secret", _config.WithingsClientSecret),
-                    new KeyValuePair<string, string>("code", authorizationCode),
-                    new KeyValuePair<string, string>("redirect_uri", _config.WithingsRedirectUrl)
-                };
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"non success status code : {(int) response.StatusCode} , content: {responseBody}");
+            }
 
-                await _logger.LogMessageAsync("~~~ trying to get tokens by authorisation code");
+            var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
 
-                var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
+            if (string.IsNullOrEmpty(tokenResponse.access_token) || string.IsNullOrEmpty(tokenResponse.refresh_token))
+            {
+                throw new Exception($"Access token or Refresh token is empty : {(int)response.StatusCode} , content: {responseBody}");
+            }
 
-                await _logger.LogMessageAsync("~~~ received response from Withings");
-
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    await _logger.LogMessageAsync("~~~ Success Status Code");
-
-                    var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
-
-                    if (String.IsNullOrEmpty(tokenResponse.access_token) ||
-                        String.IsNullOrEmpty(tokenResponse.refresh_token))
-                    {
-                        throw new Exception($"Access token or Refresh token is empty : {(int)response.StatusCode} , content: {responseBody}");
-                    }
-
-                    return tokenResponse;
-
-                }
-                else
-                {
-                    await _logger.LogMessageAsync("~~~ Non Success Status Code");
-
-                    throw  new Exception($"non success status code : {(int)response.StatusCode} , content: {responseBody}");
-
-                }
-            
+            return tokenResponse;
 
         }
 
@@ -84,20 +67,15 @@ namespace Withings
                 new KeyValuePair<string, string>("redirect_uri", _config.WithingsRedirectUrl)
             };
 
-            await _logger.LogMessageAsync("~~~ trying to get tokens by refresh token");
-
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(nvc));
 
             string responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                await _logger.LogMessageAsync("~~~ Success Status Code");
-
                 var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
 
-                if (String.IsNullOrEmpty(tokenResponse.access_token) ||
-                    String.IsNullOrEmpty(tokenResponse.refresh_token))
+                if (String.IsNullOrEmpty(tokenResponse.access_token) || String.IsNullOrEmpty(tokenResponse.refresh_token))
                 {
                     throw new Exception($"Access token or Refresh token is empty : {(int)response.StatusCode} , content: {responseBody}");
                 }
@@ -106,8 +84,6 @@ namespace Withings
             }
             else
             {
-                await _logger.LogMessageAsync("~~~ Non Success Status Code");
-
                 throw new Exception($"non success status code : {(int)response.StatusCode} , content: {responseBody}");
             }
 
@@ -119,15 +95,16 @@ namespace Withings
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+
             //todo add lastupdate - to getmodified since
-            var response = await _httpClient.GetAsync($"{_config.WithingsApiBaseUrl}/measure?action=getmeas");//&access_token={accessToken}");
+            var response = await _httpClient.GetAsync($"{_config.WithingsApiBaseUrl}/measure?action=getmeas");
 
             //TODO : success status code, does not indicate lack of error
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                var data = JsonConvert.DeserializeObject<Domain.WithingsMeasureGroupResponse.WithingsMeasureGroupResponse>(content);
+                var data = JsonConvert.DeserializeObject<WithingsMeasureGroupResponse>(content);
                 return data.body.measuregrps;
             }
             else
