@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Repositories.Health.Models;
 using Utils;
-using Withings.Domain;
 using Withings.Domain.WithingsMeasureGroupResponse;
 using Withings.Domain.WithingsTokenResponse;
-using Response = Withings.Domain.WithingsTokenResponse.Response;
+
 
 namespace Withings
 {
@@ -17,10 +15,7 @@ namespace Withings
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
         private readonly IConfig _config;
-
-       
-
-
+        
         public WithingsClient(HttpClient httpClient, ILogger logger, IConfig config)
         {
             _httpClient = httpClient;
@@ -28,9 +23,7 @@ namespace Withings
             _config = config;
         }
 
-
-
-        public async Task<Response> GetTokensByAuthorisationCode(string authorizationCode)
+        public async Task<WithingsTokenResponse> GetTokensByAuthorisationCode(string authorizationCode)
         {
 
                 var url = $"{_config.WithingsAccountBaseUrl}/oauth2/token";
@@ -56,7 +49,7 @@ namespace Withings
                 {
                     await _logger.LogMessageAsync("~~~ Success Status Code");
 
-                    var tokenResponse = JsonConvert.DeserializeObject<Response>(responseBody);
+                    var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
 
                     if (String.IsNullOrEmpty(tokenResponse.access_token) ||
                         String.IsNullOrEmpty(tokenResponse.refresh_token))
@@ -78,8 +71,7 @@ namespace Withings
 
         }
 
-
-        public async Task<Response> GetTokensByRefreshToken(string refreshToken)
+        public async Task<WithingsTokenResponse> GetTokensByRefreshToken(string refreshToken)
         {
             var url = $"{_config.WithingsAccountBaseUrl}/oauth2/token";
 
@@ -102,7 +94,7 @@ namespace Withings
             {
                 await _logger.LogMessageAsync("~~~ Success Status Code");
 
-                var tokenResponse = JsonConvert.DeserializeObject<Response>(responseBody);
+                var tokenResponse = JsonConvert.DeserializeObject<WithingsTokenResponse>(responseBody);
 
                 if (String.IsNullOrEmpty(tokenResponse.access_token) ||
                     String.IsNullOrEmpty(tokenResponse.refresh_token))
@@ -122,10 +114,6 @@ namespace Withings
 
         }
 
-
-
-
-        
         public async Task<IEnumerable<Measuregrp>> GetMeasureGroups(string accessToken)
         {
             _httpClient.DefaultRequestHeaders.Clear();
@@ -139,7 +127,7 @@ namespace Withings
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                var data = JsonConvert.DeserializeObject<Domain.WithingsMeasureGroupResponse.Response>(content);
+                var data = JsonConvert.DeserializeObject<Domain.WithingsMeasureGroupResponse.WithingsMeasureGroupResponse>(content);
                 return data.body.measuregrps;
             }
             else
@@ -149,67 +137,6 @@ namespace Withings
                 throw new Exception($"Error calling withings api , status code is {(int)response.StatusCode} , and content is {content}");
             }
         }
-
-
-//        public async Task<List<SSeries>> Get1DayOfDetailedSleepData(DateTime startDate, string accessToken)
-//        {
-//            _httpClient.DefaultRequestHeaders.Clear();
-//            _httpClient.DefaultRequestHeaders.Accept.Clear();
-//            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-//            
-//            var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=get" +
-//                $"&startdate={startDate.ToUnixTimeFromDate()}" +
-//                $"&enddate={startDate.AddDays(1).ToUnixTimeFromDate()}" +
-//                $"&data_fields=hr,rr";
-//
-//            var response = await _httpClient.GetAsync(url);
-//
-//            //TODO : success status code, does not indicate lack of error
-//            if (response.IsSuccessStatusCode)
-//            {
-//                var content = await response.Content.ReadAsStringAsync();
-//                await _logger.LogMessageAsync("blip bloop : " + content);
-//                await _logger.LogMessageAsync("blip bloop url : " + url);
-//
-//                var data = JsonConvert.DeserializeObject<DetailedSleepsRootObject>(content);
-//                return data.body.series;
-//            }
-//            else
-//            {
-//                var content = await response.Content.ReadAsStringAsync();
-//
-//                throw new Exception($"Error calling withings api , status code is {(int)response.StatusCode} , and content is {content}");
-//            }
-//
-//            
-//
-//        }
-
-//        public async Task<IEnumerable<Series>> Get7DaysOfSleeps(string accessToken, DateTime startDate)
-//        {
-//            _httpClient.DefaultRequestHeaders.Clear();
-//            _httpClient.DefaultRequestHeaders.Accept.Clear();
-//            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-//
-//            var url = $"{_config.WithingsApiBaseUrl}/v2/sleep?action=getsummary&lastupdate={startDate.ToUnixTimeFromDate()}&data_fields=wakeupduration,lightsleepduration,deepsleepduration,wakeupcount,durationtosleep,remsleepduration,durationtowakeup,hr_average,hr_min,hr_max,rr_average,rr_min,rr_max";
-//            var response = await _httpClient.GetAsync(url);
-//            
-//            //TODO : success status code, does not indicate lack of error
-//            if (response.IsSuccessStatusCode)
-//            {
-//                var content = await response.Content.ReadAsStringAsync();
-//
-//                var data = JsonConvert.DeserializeObject<SleepsRootObject>(content);
-//                return data.body.series;
-//            }
-//            else
-//            {
-//                var content = await response.Content.ReadAsStringAsync();
-//
-//                throw new Exception($"Error calling withings api , status code is {(int)response.StatusCode} , and content is {content}");
-//            }
-//        }
-
 
     }
 }

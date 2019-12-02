@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Repositories.Health.Models;
 using Utils;
-using Withings.Domain;
 using Withings.Domain.WithingsMeasureGroupResponse;
 
 namespace Withings

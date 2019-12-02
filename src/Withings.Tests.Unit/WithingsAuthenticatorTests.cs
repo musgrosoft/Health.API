@@ -35,7 +35,7 @@ namespace Withings.Tests.Unit
             var refreshToken = "sdfsdf454767utgj";
 
             _withingsClient.Setup(x => x.GetTokensByAuthorisationCode(authorizationCode)).Returns(Task.FromResult(
-                new Response
+                new WithingsTokenResponse
                 {
                     access_token = accessToken,
                     refresh_token = refreshToken
@@ -55,7 +55,7 @@ namespace Withings.Tests.Unit
         {
             //Given
             var refreshToken = "sdfsf4w55yujytjghdfg";
-            var newTokens = new Response
+            var newTokens = new WithingsTokenResponse
             {
                 access_token = "dfsdsfsfdf",
                 refresh_token = "gfdghhtrjtyj"

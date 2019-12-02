@@ -49,23 +49,28 @@ namespace Withings.Tests.Unit
             _withingsClient = new WithingsClient(_httpClient, _logger.Object,  _config.Object);
         }
 
+        private void SetupHttpMessageHandlerMock(string content, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = statusCode,
+                    Content = new StringContent(content)
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+        }
+
         [Fact]
         public async Task GetTokensByAuthorisationCodeShouldThrowExceptionOnNonSuccessStatusCode()
         {
             //Given
-            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.NotFound,
-                    Content = new StringContent("Has error")
-                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
+            SetupHttpMessageHandlerMock("Has Error", HttpStatusCode.NotFound);
 
             //When
             var ex = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByAuthorisationCode(""));
 
             //Then
-            Assert.Contains("404", ex.Message);
-            Assert.Contains("Has error", ex.Message);
+            Assert.Contains(((int)HttpStatusCode.NotFound).ToString(), ex.Message);
+            Assert.Contains("Has Error", ex.Message);
         }
 
         [Fact]
