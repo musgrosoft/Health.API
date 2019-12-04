@@ -9,15 +9,14 @@ SELECT
 FROM
 (
 	SELECT 
-		Date,
-		Units,
-		CASE 
-			WHEN Date > '2018/05/29' THEN 4
-			ELSE NULL
-		END AS TargetUnits
+		C.Date,
+		D.Units,
+		T.Units AS TargetUnits
 	FROM 
 		Drinks D
 		INNER JOIN CalendarDates C
 		ON D.CreatedDate = C.Date
+		LEFT JOIN Targets T
+		On T.Date = C.Date
 		 
 ) AS DailyAlcohol
