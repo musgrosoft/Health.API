@@ -112,21 +112,7 @@ namespace Services.Tests.Unit.MyHealth
             //then
             Assert.Equal(date, latestDate);
         }
-
-        [Fact]
-        public void ShouldGetLatestSleepStateDate()
-        {
-            //Given 
-            var date = new DateTime(2018, 1, 6);
-            _healthRepository.Setup(x => x.GetLatestSleepStateDate()).Returns(date);
-
-            //when
-            var latestDate = _healthService.GetLatestSleepStateDate(DateTime.MinValue);
-
-            //then
-            Assert.Equal(date, latestDate);
-        }
-
+        
         [Fact]
         public void ShouldGetLatestSleepSummaryDate()
         {

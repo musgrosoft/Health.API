@@ -43,27 +43,6 @@ namespace HealthAPI.Hangfire
             }
         }
 
-        private async Task MigrateSleepStates()
-        {
-            var latestFitbitSleepStateDate = _healthService.GetLatestSleepStateDate(MIN_FITBIT_SLEEP_DATE);
-            var fromDate = latestFitbitSleepStateDate.AddDays(-SEARCH_DAYS_PREVIOUS);
-
-            await _logger.LogMessageAsync($"SLEEP STATES : Latest Sleep State record has a date of : {latestFitbitSleepStateDate:dd-MMM-yyyy HH:mm:ss (ddd)}, retrieving records from {SEARCH_DAYS_PREVIOUS} days previous : {fromDate:dd-MMM-yyyy HH:mm:ss (ddd)}.");
-
-            var sleepStates = await _fitbitService.GetSleepStates(fromDate, _calendar.Now());
-
-            await _logger.LogMessageAsync($"SLEEP STATES : found {sleepStates.Count()} records.");
-
-            if (sleepStates.Any())
-            {
-                await _logger.LogMessageAsync($"SLEEP STATES : First at {sleepStates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {sleepStates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
-            }
-
-            await _healthService.UpsertAsync(sleepStates);
-
-            await _logger.LogMessageAsync($"SLEEP STATES : Finished Importing.");
-        }
-
         private async Task MigrateRestingHeartRates()
         {
             var latestRestingHeartRateDate = _healthService.GetLatestRestingHeartRateDate(MIN_FITBIT_DATE);

@@ -41,17 +41,6 @@ namespace Fitbit
 
             return sleepSummaries;
         }
-
-        public async Task<IEnumerable<SleepState>> GetSleepStates(DateTime fromDate, DateTime toDate)
-        {
-            var accessToken = await _fitbitAuthenticator.GetAccessToken();
-
-            var fitbitSleeps = await _fitbitClientQueryAdapter.GetFitbitSleeps(fromDate, toDate, accessToken);
-
-            var sleepStates = _fitbitMapper.MapFitbitSleepsToSleepStates(fitbitSleeps);
-
-            return sleepStates;
-        }
         
         public async Task SetTokens(string code)
         {
