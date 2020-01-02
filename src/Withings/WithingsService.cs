@@ -10,14 +10,12 @@ namespace Withings
         private readonly IWithingsAuthenticator _withingsAuthenticator;
         private readonly IWithingsMapper _withingsMapper;
         private readonly IWithingsClientQueryAdapter _withingsClientQueryAdapter;
-        private readonly IWithingsClient _withingsClient;
-
-        public WithingsService(IWithingsAuthenticator withingsAuthenticator, IWithingsMapper withingsMapper, IWithingsClientQueryAdapter withingsClientQueryAdapter, IWithingsClient withingsClient)
+        
+        public WithingsService(IWithingsAuthenticator withingsAuthenticator, IWithingsMapper withingsMapper, IWithingsClientQueryAdapter withingsClientQueryAdapter)
         {
             _withingsAuthenticator = withingsAuthenticator;
             _withingsMapper = withingsMapper;
             _withingsClientQueryAdapter = withingsClientQueryAdapter;
-            _withingsClient = withingsClient;
         }
 
         public async Task<IEnumerable<Weight>> GetWeights(DateTime sinceDateTime)

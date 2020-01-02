@@ -36,7 +36,7 @@ namespace Withings.Tests.Unit
                 new Measuregrp {date = (int)ToUnixTimeFromDate(new DateTime(2010,1,17))},
             };
 
-            _withingsClient.Setup(x => x.GetMeasureGroups(accessToken)).Returns(Task.FromResult((IEnumerable<Measuregrp>)someMeasureGroups));
+            _withingsClient.Setup(x => x.GetMeasureGroups(accessToken, It.IsAny<DateTime>())).Returns(Task.FromResult((IEnumerable<Measuregrp>)someMeasureGroups));
 
             //When
             var result = await _withingsClientQueryAdapter.GetMeasureGroups(filterDate, accessToken);

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Utils;
 using Withings.Domain.WithingsMeasureGroupResponse;
 using Withings.Domain.WithingsTokenResponse;
+using Utils;
 
 
 namespace Withings
@@ -90,13 +91,14 @@ namespace Withings
 
         }
 
-        public async Task<IEnumerable<Measuregrp>> GetMeasureGroups(string accessToken)
+        public async Task<IEnumerable<Measuregrp>> GetMeasureGroups(string accessToken, DateTime lastUpdatedDate)
         {
             _httpClient.DefaultRequestHeaders.Clear();
+            //TODO is this line needed
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
-            //todo add lastupdate - to getmodified since
+            //TODO add lastupdate - to getmodified since
             var response = await _httpClient.GetAsync($"{_config.WithingsApiBaseUrl}/measure?action=getmeas");
 
             //TODO : success status code, does not indicate lack of error

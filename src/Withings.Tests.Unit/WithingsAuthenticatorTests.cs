@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Moq;
 using Services.OAuth;
-using Utils;
-using Withings.Domain;
 using Withings.Domain.WithingsTokenResponse;
 using Xunit;
 
@@ -13,18 +11,14 @@ namespace Withings.Tests.Unit
         private Mock<ITokenService> _tokenService;
         private WithingsAuthenticator _withingsAuthenticator;
         private Mock<IWithingsClient> _withingsClient;
-        private Mock<ILogger> _logger;
 
         public WithingsAuthenticatorTests()
         {
             _tokenService = new Mock<ITokenService>();
             _withingsClient = new Mock<IWithingsClient>();
-            _logger = new Mock<ILogger>();
 
-            _withingsAuthenticator = new WithingsAuthenticator(_tokenService.Object, _withingsClient.Object, _logger.Object);
+            _withingsAuthenticator = new WithingsAuthenticator(_tokenService.Object, _withingsClient.Object);
         }
-
-
 
         [Fact]
         public async Task ShouldSetTokens()

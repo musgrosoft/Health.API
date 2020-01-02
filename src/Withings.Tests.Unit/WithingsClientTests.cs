@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Moq;
 using Moq.Protected;
 using Utils;
@@ -56,15 +55,30 @@ namespace Withings.Tests.Unit
         }
 
         [Fact]
+        public async Task ShouldSendCorrectRequestWhenGettingMeasureGroups()
+        {
+            //Given
+            SetupHttpMessageHandlerMock(withingsContent);
+
+            //When
+            await _withingsClient.GetMeasureGroups("abc123", new DateTime());
+
+            //Then
+            Assert.Equal(HttpMethod.Get, _capturedRequest.Method);
+            Assert.Equal("https://www.nullapi.com/measure?action=getmeas", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal("abc123", _capturedRequest.Headers.Authorization.Parameter);
+            //_capturedRequest.Headers.Accept.
+        }
+
+        [Fact]
         public async Task ShouldParseContentWhenGettingMeasureGroups()
         {
             //Given
             SetupHttpMessageHandlerMock(withingsContent);
 
             //When
-            var measuregrps = await _withingsClient.GetMeasureGroups("abc123");
+            var measuregrps = await _withingsClient.GetMeasureGroups("abc123", new DateTime());
 
-            //Assert.Equal($"{baseApiUrl}/measure?action=getmeas&access_token=abc123", _capturedRequest.RequestUri.AbsoluteUri);
             Assert.Equal($"{baseApiUrl}/measure?action=getmeas", _capturedRequest.RequestUri.AbsoluteUri);
             Assert.Equal("abc123", _capturedRequest.Headers.Authorization.Parameter);
             Assert.Equal(8, measuregrps.Count());
@@ -72,18 +86,6 @@ namespace Withings.Tests.Unit
             //Assert.Contains(measuregrps, x => x.Kg == 90.261 && x.CreatedDate == new DateTime(2018, 5, 10, 5, 4, 42));
         }
 
-        [Fact]
-        public async Task ShouldSendCorrectRequestWhenGettingMeasureGroups()
-        {
-            //Given
-            SetupHttpMessageHandlerMock(withingsContent);
-
-            //When
-            await _withingsClient.GetMeasureGroups("abc123");
-
-            //Then
-            Assert.Equal(HttpMethod.Get,_capturedRequest.Method);
-        }
         
         [Fact]
         public async void ShouldThrowErrorOnNonSuccessStatusCodeWhenGettingMeasureGroups()
@@ -92,36 +94,36 @@ namespace Withings.Tests.Unit
             SetupHttpMessageHandlerMock("this is an error", HttpStatusCode.NotFound);
 
             //When
-            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetMeasureGroups("abc123"));
+            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetMeasureGroups("abc123", new DateTime()));
 
             //Then
             Assert.Contains("status code is 404", exception.Message);
             Assert.Contains("content is this is an error", exception.Message);
         }
 
-        [Theory]
-        [InlineData(null, "r")]
-        [InlineData("", "r")]
-        [InlineData("a", null)]
-        [InlineData("a", "")]
-        public async void ShouldThrowErrorIfAccessTokenOrRefreshTokenIsEmptyWhenGettingTokensByAuthorisationCode(
-            string accessToken, string refreshToken)
+        [Fact]
+        public async Task ShouldSendCorrectRequestWhenGettingTokensByAuthorisationCode()
         {
             //Given
-            string authorizationCode = "qwe321";
-
-            SetupHttpMessageHandlerMock($"{{'access_token':'{accessToken}' , 'refresh_token':'{refreshToken}' }}");
+            SetupHttpMessageHandlerMock("{'access_token':'ccc' , 'refresh_token':'ddd' }");
 
             //When
-            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByAuthorisationCode(authorizationCode));
+            await _withingsClient.GetTokensByAuthorisationCode("abc123");
 
             //Then
-            Assert.Contains("Access token or Refresh token is empty", exception.Message);
-
+            var content = await _capturedRequest.Content.ReadAsStringAsync();
+            Assert.Equal(HttpMethod.Post, _capturedRequest.Method);
+            Assert.Equal("https://www.nullaccount.com/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Contains("grant_type=authorization_code", content);
+            Assert.Contains($"client_id={withingsClientId}", content);
+            Assert.Contains($"client_secret={withingsClientSecret}", content);
+            Assert.Contains("code=abc123", content);
+            Assert.Contains("redirect_uri=https%3A%2F%2Fwww.redirect.com%2Fthing%2Fstuff%2F", content);
         }
 
+
         [Fact]
-        public async Task ShouldGetTokensByAuthorisationCode()
+        public async Task ShouldParseContentWhenGettingTokensByAuthorisationCode()
         {
             //Given
             string authorizationCode = "qwe321";
@@ -134,16 +136,6 @@ namespace Withings.Tests.Unit
             //Then
             Assert.Equal("aaa111", tokenResponse.access_token);
             Assert.Equal("bbb111", tokenResponse.refresh_token);
-
-            Assert.Equal($"{baseAccountUrl}/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
-
-            var content = await _capturedRequest.Content.ReadAsStringAsync();
-
-            Assert.Contains("grant_type=authorization_code", content);
-            Assert.Contains($"client_id={withingsClientId}", content);
-            Assert.Contains($"client_secret={withingsClientSecret}", content);
-            Assert.Contains(($"redirect_uri={HttpUtility.UrlEncode(redirectUrl)}").ToUpper(), content.ToUpper());
-            Assert.Contains($"code={authorizationCode}", content);
         }
 
         [Fact]
@@ -159,32 +151,59 @@ namespace Withings.Tests.Unit
             Assert.Contains(((int)HttpStatusCode.NotFound).ToString(), ex.Message);
             Assert.Contains("Has Error", ex.Message);
         }
-        
-        [Fact]
-        public async Task ShouldGetTokensByRefreshToken()
+
+        [Theory]
+        [InlineData(null, "r")]
+        [InlineData("", "r")]
+        [InlineData("a", null)]
+        [InlineData("a", "")]
+        public async void ShouldThrowErrorIfAccessTokenOrRefreshTokenIsEmptyWhenGettingTokensByAuthorisationCode(string accessToken, string refreshToken)
         {
             //Given
-            string refreshToken = "slkdjflsdjkfjsldkf";
+            string authorizationCode = "qwe321";
 
+            SetupHttpMessageHandlerMock($"{{'access_token':'{accessToken}' , 'refresh_token':'{refreshToken}' }}");
+
+            //When
+            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByAuthorisationCode(authorizationCode));
+
+            //Then
+            Assert.Contains("Access token or Refresh token is empty", exception.Message);
+
+        }
+
+        [Fact]
+        public async Task ShouldSendCorrectRequestWhenGettingTokensByRefreshToken()
+        {
+            //Given
             SetupHttpMessageHandlerMock("{'access_token':'ccc' , 'refresh_token':'ddd' }");
 
             //When
-            var tokenResponse = await _withingsClient.GetTokensByRefreshToken(refreshToken);
+            await _withingsClient.GetTokensByRefreshToken("abc123");
+
+            //Then
+            var content = await _capturedRequest.Content.ReadAsStringAsync();
+            Assert.Equal(HttpMethod.Post, _capturedRequest.Method);
+            Assert.Equal("https://www.nullaccount.com/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Contains("grant_type=refresh_token", content);
+            Assert.Contains($"client_id={withingsClientId}", content);
+            Assert.Contains($"client_secret={withingsClientSecret}", content);
+            Assert.Contains("refresh_token=abc123", content);
+            Assert.Contains("redirect_uri=https%3A%2F%2Fwww.redirect.com%2Fthing%2Fstuff%2F", content);
+        }
+
+        [Fact]
+        public async Task ShouldParseContentWhenGettingTokensByRefreshToken()
+        {
+            //Given
+            SetupHttpMessageHandlerMock("{'access_token':'ccc' , 'refresh_token':'ddd' }");
+
+            //When
+            var tokenResponse = await _withingsClient.GetTokensByRefreshToken("refresh123");
 
             //Then
             Assert.Equal("ccc", tokenResponse.access_token);
             Assert.Equal("ddd", tokenResponse.refresh_token);
-
-            Assert.Equal($"{baseAccountUrl}/oauth2/token", _capturedRequest.RequestUri.AbsoluteUri);
-
-            var content = await _capturedRequest.Content.ReadAsStringAsync();
-
-            Assert.Contains("grant_type=refresh_token", content);
-            Assert.Contains($"client_id={withingsClientId}", content);
-            Assert.Contains($"client_secret={withingsClientSecret}", content);
-            Assert.Contains(($"redirect_uri={HttpUtility.UrlEncode(redirectUrl)}").ToUpper(), content.ToUpper());
-            Assert.Contains($"refresh_token={refreshToken}", content);
-
         }
 
         [Fact]
@@ -201,7 +220,25 @@ namespace Withings.Tests.Unit
             Assert.Contains("Has Error", ex.Message);
         }
 
+        [Theory]
+        [InlineData(null, "r")]
+        [InlineData("", "r")]
+        [InlineData("a", null)]
+        [InlineData("a", "")]
+        public async void ShouldThrowErrorIfAccessTokenOrRefreshTokenIsEmptyWhenGettingTokensByRefreshToken(string accessToken, string refreshToken)
+        {
+            //Given
+            string authorizationCode = "qwe321";
 
+            SetupHttpMessageHandlerMock($"{{'access_token':'{accessToken}' , 'refresh_token':'{refreshToken}' }}");
+            
+            //When
+            var exception = await Assert.ThrowsAsync<Exception>(() => _withingsClient.GetTokensByRefreshToken(authorizationCode));
+
+            //Then
+            Assert.Contains("Access token or Refresh token is empty", exception.Message);
+
+        }
 
 
 
