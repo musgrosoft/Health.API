@@ -18,35 +18,6 @@ namespace Fitbit.Internal
                 });
         }
 
-        internal IEnumerable<SleepState> MapFitbitSleepsToSleepStates(IEnumerable<Domain.FSleep> sleeps)
-        {
-            var sleepStates = new List<SleepState>();
-
-            foreach (var sleep in sleeps)
-            {
-                foreach (var dat in sleep.levels.data)
-                {
-                    var states = new List<SleepState>();
-
-                    for (int i = 0; i < dat.seconds ; i += 30)
-                    {
-                        var state = new SleepState
-                        {
-                            CreatedDate = dat.dateTime.AddSeconds(i),
-                            State = dat.level
-                        };
-
-                        states.Add(state);
-                    }
-
-                    sleepStates.AddRange(states);
-                }
-
-            }
-
-            return sleepStates;
-
-        }
 
         internal IEnumerable<SleepSummary> MapFitbitSleepsToSleepSummaries(IEnumerable<Domain.FSleep> sleeps)
         {
@@ -63,34 +34,34 @@ namespace Fitbit.Internal
                 
 
                 //DeepCount = x.levels.summary.deep?.count,
-                //DeepMinutes = x.levels.summary.deep?.minutes,
+                DeepMinutes = x.levels.summary.deep?.minutes,
                 //DeepMinutesThirtyDayAvg = x.levels.summary.deep?.thirtyDayAvgMinutes,
 
                 //LightCount = x.levels.summary.light?.count,
-                //LightMinutes = x.levels.summary.light?.minutes,
+                LightMinutes = x.levels.summary.light?.minutes,
                 //LightMinutesThirtyDayAvg = x.levels.summary.light?.thirtyDayAvgMinutes,
 
                 //RemCount = x.levels.summary.rem?.count,
-                //RemMinutes = x.levels.summary.rem?.minutes,
+                RemMinutes = x.levels.summary.rem?.minutes,
                 //RemMinutesThirtyDayAvg = x.levels.summary.rem?.thirtyDayAvgMinutes,
 
                 //WakeCount = x.levels.summary.wake?.count,
-                //WakeMinutes = x.levels.summary.wake?.minutes,
+                WakeMinutes = x.levels.summary.wake?.minutes,
                 //WakeMinutesThirtyDayAvg = x.levels.summary.wake?.thirtyDayAvgMinutes,
 
 
                 DateOfSleep = x.dateOfSleep,
-                Duration = x.duration,
-                Efficiency = x.efficiency,
+                //Duration = x.duration,
+                //Efficiency = x.efficiency,
                 EndTime = x.endTime,
-                LogId = x.logId,
-                MinutesAfterWakeup = x.minutesAfterWakeup,
+                //LogId = x.logId,
+                //MinutesAfterWakeup = x.minutesAfterWakeup,
                 MinutesAsleep = x.minutesAsleep,
                 MinutesAwake = x.minutesAwake,
-                MinutesToFallAsleep = x.minutesToFallAsleep,
+                //MinutesToFallAsleep = x.minutesToFallAsleep,
 
                 StartTime = x.startTime,
-                TimeInBed = x.timeInBed,
+                //TimeInBed = x.timeInBed,
                 Type = x.type,
                 InfoCode = x.infoCode,
 

@@ -39,7 +39,7 @@ namespace Repository.Tests.Unit
         [Fact]
         public async Task ShouldInsertSleepSummary()
         {
-            var sleepSummaries = new List<SleepSummary> { new SleepSummary { DateOfSleep = new DateTime(2019,1,1), AsleepMinutes = 123} };
+            var sleepSummaries = new List<SleepSummary> { new SleepSummary { DateOfSleep = new DateTime(2019,1,1), MinutesAsleep = 123} };
 
             await _healthRepository.UpsertAsync(sleepSummaries);
 
@@ -310,15 +310,15 @@ namespace Repository.Tests.Unit
         [Fact]
         public async Task ShouldUpdateSleepSummary()
         {
-            var existingSleepSummmary = new SleepSummary() { DateOfSleep = new DateTime(2017, 1, 1), AsleepMinutes = 1234};
+            var existingSleepSummmary = new SleepSummary() { DateOfSleep = new DateTime(2017, 1, 1), MinutesAsleep = 1234};
             _fakeLocalContext.SleepSummaries.Add(existingSleepSummmary);
             _fakeLocalContext.SaveChanges();
 
-            var newSleepSummaries = new List<SleepSummary> { new SleepSummary() { DateOfSleep = new DateTime(2017, 1, 1), AsleepMinutes = 4444} };
+            var newSleepSummaries = new List<SleepSummary> { new SleepSummary() { DateOfSleep = new DateTime(2017, 1, 1), MinutesAsleep = 4444} };
 
             await _healthRepository.UpsertAsync(newSleepSummaries);
 
-            Assert.Equal(4444, existingSleepSummmary.AsleepMinutes);
+            Assert.Equal(4444, existingSleepSummmary.MinutesAsleep);
         }
 
         [Fact]
