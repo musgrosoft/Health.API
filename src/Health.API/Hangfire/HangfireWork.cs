@@ -53,7 +53,9 @@ namespace HealthAPI.Hangfire
 
             await _logger.LogMessageAsync($"RESTING HEART RATES : found {restingHeartRates.Count()} records");
 
-            restingHeartRates = restingHeartRates.Distinct();
+            restingHeartRates = restingHeartRates
+                .GroupBy(x => x.CreatedDate)
+                .Select(group => group.First());
 
             await _logger.LogMessageAsync($"RESTING HEART RATES : distinct count is {restingHeartRates.Count()} records");
 
