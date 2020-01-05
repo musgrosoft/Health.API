@@ -32,7 +32,7 @@
 //            DateTime toDate = new DateTime(2018, 3, 15);
 //
 //            //Given 
-//            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(1), It.IsAny<string>())).Returns(Task.FromResult(
+//            _fitbitClient.Setup(x => x.GetMonthOfFitbitHeartRates(fromDate.AddMonths(1), It.IsAny<string>())).Returns(Task.FromResult(
 //                new FitBitActivity
 //                {
 //                    activitiesHeart = new List<ActivitiesHeart>
@@ -50,7 +50,7 @@
 //                    }
 //                }));
 //
-//            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(2), It.IsAny<string>())).Returns(Task.FromResult(
+//            _fitbitClient.Setup(x => x.GetMonthOfFitbitHeartRates(fromDate.AddMonths(2), It.IsAny<string>())).Returns(Task.FromResult(
 //                new FitBitActivity
 //                {
 //                    activitiesHeart = new List<ActivitiesHeart>
@@ -68,7 +68,7 @@
 //                    }
 //                }));
 //
-//            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(3), It.IsAny<string>())).Returns(Task.FromResult(
+//            _fitbitClient.Setup(x => x.GetMonthOfFitbitHeartRates(fromDate.AddMonths(3), It.IsAny<string>())).Returns(Task.FromResult(
 //                new FitBitActivity
 //                {
 //                    activitiesHeart = new List<ActivitiesHeart>
@@ -108,7 +108,7 @@
 //            var tooManyRequests = new TooManyRequestsException("I'm a little teapot.");
 //
 //            //Given 
-//            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(1), It.IsAny<string>())).Returns(Task.FromResult(
+//            _fitbitClient.Setup(x => x.GetMonthOfFitbitHeartRates(fromDate.AddMonths(1), It.IsAny<string>())).Returns(Task.FromResult(
 //                new FitBitActivity
 //                {
 //                    activitiesHeart = new List<ActivitiesHeart>
@@ -126,9 +126,9 @@
 //                    }
 //                }));
 //
-//            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(2), It.IsAny<string>())).Throws(tooManyRequests);
+//            _fitbitClient.Setup(x => x.GetMonthOfFitbitHeartRates(fromDate.AddMonths(2), It.IsAny<string>())).Throws(tooManyRequests);
 //
-//            _fitbitClient.Setup(x => x.GetMonthOfFitbitActivities(fromDate.AddMonths(3), It.IsAny<string>())).Returns(Task.FromResult(
+//            _fitbitClient.Setup(x => x.GetMonthOfFitbitHeartRates(fromDate.AddMonths(3), It.IsAny<string>())).Returns(Task.FromResult(
 //                new FitBitActivity
 //                {
 //                    activitiesHeart = new List<ActivitiesHeart>

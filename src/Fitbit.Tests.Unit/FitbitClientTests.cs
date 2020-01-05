@@ -60,16 +60,25 @@ namespace Fitbit.Tests.Unit
 
 
         [Fact]
-        public async Task ShouldGetFitbitMonthlyActivity()
+        public async Task ShouldGetFitbitMonthlyHeartRates()
         {
             
             SetupHttpMessageHandlerMock(fitbitMonthlyActivityContent);
 
-            var fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(new DateTime(), It.IsAny<string>());
+            var fitbitActivity = await _fitbitClient.GetMonthOfFitbitHeartRates(new DateTime(2010,1,2), It.IsAny<string>());
 
-            Assert.Equal("", _capturedRequest.RequestUri.AbsoluteUri);
+            Assert.Equal("https://api.fitbit.com/1/user//activities/heart/date/2010-01-02/1m.json", _capturedRequest.RequestUri.AbsoluteUri);
 
-            Assert.Equal(123, fitbitActivity.activitiesHeart.Count);
+            Assert.Equal(3, fitbitActivity.activitiesHeart.Count);
+
+            Assert.Equal(new DateTime(2015, 8, 4), fitbitActivity.activitiesHeart[0].dateTime);
+            Assert.Equal(68, fitbitActivity.activitiesHeart[0].value.restingHeartRate);
+
+            Assert.Equal(new DateTime(2015, 8, 5), fitbitActivity.activitiesHeart[1].dateTime);
+            Assert.Equal(69, fitbitActivity.activitiesHeart[1].value.restingHeartRate);
+            
+            Assert.Equal(new DateTime(2015, 8, 6), fitbitActivity.activitiesHeart[2].dateTime);
+            Assert.Equal(70, fitbitActivity.activitiesHeart[2].value.restingHeartRate);
 
 
         }
@@ -79,7 +88,7 @@ namespace Fitbit.Tests.Unit
         {
             SetupHttpMessageHandlerMock(fitbitMonthlyActivityContent, (HttpStatusCode)429);
 
-            await Assert.ThrowsAsync<TooManyRequestsException>(() => _fitbitClient.GetMonthOfFitbitActivities(new DateTime(), It.IsAny<string>()));
+            await Assert.ThrowsAsync<TooManyRequestsException>(() => _fitbitClient.GetMonthOfFitbitHeartRates(new DateTime(), It.IsAny<string>()));
         }
 
         [Fact]
@@ -94,7 +103,7 @@ namespace Fitbit.Tests.Unit
                     Content = new StringContent("I'm a little teapot")
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
 
-            Exception ex = await Assert.ThrowsAsync<Exception>(() => _fitbitClient.GetMonthOfFitbitActivities(new DateTime(), It.IsAny<string>()));
+            Exception ex = await Assert.ThrowsAsync<Exception>(() => _fitbitClient.GetMonthOfFitbitHeartRates(new DateTime(), It.IsAny<string>()));
             Assert.Contains("status code is 400", ex.Message);
             Assert.Contains("content is I'm a little teapot", ex.Message);
 
@@ -273,7 +282,121 @@ namespace Fitbit.Tests.Unit
 
         private readonly string fitbitDailyActivityContent = "";
 
-        private readonly string fitbitMonthlyActivityContent = "";
+        private readonly string fitbitMonthlyActivityContent = @"{
+            ""activities-heart"": [
+        {
+            ""dateTime"": ""2015-08-04"",
+            ""value"": {
+                ""customHeartRateZones"": [],
+                ""heartRateZones"": [
+                {
+                    ""caloriesOut"": 740.15264,
+                    ""max"": 94,
+                    ""min"": 30,
+                    ""minutes"": 593,
+                    ""name"": ""Out of Range""
+                },
+                {
+                    ""caloriesOut"": 249.66204,
+                    ""max"": 132,
+                    ""min"": 94,
+                    ""minutes"": 46,
+                    ""name"": ""Fat Burn""
+                },
+                {
+                    ""caloriesOut"": 0,
+                    ""max"": 160,
+                    ""min"": 132,
+                    ""minutes"": 0,
+                    ""name"": ""Cardio""
+                },
+                {
+                    ""caloriesOut"": 0,
+                    ""max"": 220,
+                    ""min"": 160,
+                    ""minutes"": 0,
+                    ""name"": ""Peak""
+                }
+                ],
+                ""restingHeartRate"": 68
+            }
+        },
+{
+            ""dateTime"": ""2015-08-05"",
+            ""value"": {
+                ""customHeartRateZones"": [],
+                ""heartRateZones"": [
+                {
+                    ""caloriesOut"": 740.15264,
+                    ""max"": 94,
+                    ""min"": 30,
+                    ""minutes"": 593,
+                    ""name"": ""Out of Range""
+                },
+                {
+                    ""caloriesOut"": 249.66204,
+                    ""max"": 132,
+                    ""min"": 94,
+                    ""minutes"": 46,
+                    ""name"": ""Fat Burn""
+                },
+                {
+                    ""caloriesOut"": 0,
+                    ""max"": 160,
+                    ""min"": 132,
+                    ""minutes"": 0,
+                    ""name"": ""Cardio""
+                },
+                {
+                    ""caloriesOut"": 0,
+                    ""max"": 220,
+                    ""min"": 160,
+                    ""minutes"": 0,
+                    ""name"": ""Peak""
+                }
+                ],
+                ""restingHeartRate"": 69
+            }
+        },
+        {
+            ""dateTime"": ""2015-08-06"",
+            ""value"": {
+                ""customHeartRateZones"": [],
+                ""heartRateZones"": [
+                {
+                    ""caloriesOut"": 740.15264,
+                    ""max"": 94,
+                    ""min"": 30,
+                    ""minutes"": 593,
+                    ""name"": ""Out of Range""
+                },
+                {
+                    ""caloriesOut"": 249.66204,
+                    ""max"": 132,
+                    ""min"": 94,
+                    ""minutes"": 46,
+                    ""name"": ""Fat Burn""
+                },
+                {
+                    ""caloriesOut"": 0,
+                    ""max"": 160,
+                    ""min"": 132,
+                    ""minutes"": 0,
+                    ""name"": ""Cardio""
+                },
+                {
+                    ""caloriesOut"": 0,
+                    ""max"": 220,
+                    ""min"": 160,
+                    ""minutes"": 0,
+                    ""name"": ""Peak""
+                }
+                ],
+                ""restingHeartRate"": 70
+            }
+        }
+        ]
+    }";
         
             
     }

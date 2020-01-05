@@ -31,7 +31,7 @@ namespace Fitbit
                 FitBitActivity fitbitActivity;
                 try
                 { 
-                    fitbitActivity = await _fitbitClient.GetMonthOfFitbitActivities(date, accessToken);
+                    fitbitActivity = await _fitbitClient.GetMonthOfFitbitHeartRates(date, accessToken);
                 }
                 catch (TooManyRequestsException ex)
                 {

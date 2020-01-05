@@ -27,7 +27,7 @@ namespace Fitbit
 
         }
         
-        public async Task<FitBitActivity> GetMonthOfFitbitActivities(DateTime startDate, string accessToken)
+        public async Task<FitBitActivity> GetMonthOfFitbitHeartRates(DateTime startDate, string accessToken)
         {
             var uri = FITBIT_BASE_URL + $"/1/user/{_config.FitbitUserId}/activities/heart/date/{startDate:yyyy-MM-dd}/1m.json";
             _httpClient.DefaultRequestHeaders.Clear();
