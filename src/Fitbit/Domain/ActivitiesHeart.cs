@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fitbit.Internal.Domain
+namespace Fitbit.Domain
 {
     public class ActivitiesHeart
     {

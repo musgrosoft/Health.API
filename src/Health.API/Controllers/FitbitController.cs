@@ -58,7 +58,8 @@ namespace HealthAPI.Controllers
         public async Task<IActionResult> OAuth([FromQuery]string code)
         {   
             await _fitbitService.SetTokens(code);
-            return Ok();
+
+            return Ok("Saved tokens successfully");
         }
 
 

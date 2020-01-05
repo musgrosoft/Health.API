@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Fitbit.Internal.Domain
+namespace Fitbit.Domain
 {
     public class FitbitSleepsResponse
     {

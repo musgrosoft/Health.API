@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Fitbit.Internal;
 using Repositories.Health.Models;
 using Services.OAuth;
 using Utils;

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Fitbit.Internal.Domain;
+using Fitbit.Domain;
 using Repositories.Health.Models;
 
-namespace Fitbit.Internal
+namespace Fitbit
 {
     internal class FitbitMapper //: IFitbitMapper
     {

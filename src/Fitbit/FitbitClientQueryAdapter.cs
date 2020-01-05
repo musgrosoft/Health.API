@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Fitbit.Internal.Domain;
+using Fitbit.Domain;
 using Utils;
-using Sleep = Fitbit.Internal.Domain.FSleep;
+using Sleep = Fitbit.Domain.FSleep;
 
-namespace Fitbit.Internal
+namespace Fitbit
 {
     internal class FitbitClientQueryAdapter //: IFitbitClientQueryAdapter
     {
