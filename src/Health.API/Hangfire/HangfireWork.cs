@@ -58,6 +58,12 @@ namespace HealthAPI.Hangfire
                 await _logger.LogMessageAsync($"RESTING HEART RATES : First at {restingHeartRates.Min(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)} , last at {restingHeartRates.Max(x => x.CreatedDate):dd-MMM-yyyy HH:mm:ss (ddd)}.");
             }
 
+            foreach (var restingHeartRate in restingHeartRates)
+            {
+                await _logger.LogMessageAsync(
+                    $"Date : {restingHeartRate.CreatedDate} and Beats : {restingHeartRate.Beats}");
+            }
+
             await _healthService.UpsertAsync(restingHeartRates);
 
             await _logger.LogMessageAsync($"RESTING HEART RATES : Finished Importing.");
