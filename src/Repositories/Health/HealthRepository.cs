@@ -66,10 +66,10 @@ namespace Repositories.Health
 
         public async Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries)
         {
-            for (int i = 0; i < sleepSummaries.Count(); i += 250)
+            for (int i = 0; i < sleepSummaries.Count(); i += 100)
             {
                 await _healthContext
-                    .UpsertRange(sleepSummaries.Skip(i).Take(250))
+                    .UpsertRange(sleepSummaries.Skip(i).Take(100))
                     .RunAsync();
 
                 _healthContext.SaveChanges();
