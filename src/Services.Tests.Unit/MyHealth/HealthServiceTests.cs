@@ -238,23 +238,6 @@ namespace Services.Tests.Unit.MyHealth
             _healthRepository.Verify(x => x.UpsertAsync(newSleepSummaries), Times.Once);
         }
 
-        [Fact]
-        public async Task ShouldUpsertNewSleepStates()
-        {
-            //Given
-            var newSleepStates = new List<SleepState>
-            {
-                new SleepState { CreatedDate = new DateTime(2010,10,10) },
-                new SleepState { CreatedDate = new DateTime(2010,10,11) },
-                new SleepState { CreatedDate = new DateTime(2010,10,12) }
-            };
-
-            //When
-            await _healthService.UpsertAsync(newSleepStates);
-
-            //Then
-            _healthRepository.Verify(x => x.UpsertAsync(newSleepStates), Times.Once);
-        }
 
         [Fact]
         public async Task ShouldUpsertNewTargets()

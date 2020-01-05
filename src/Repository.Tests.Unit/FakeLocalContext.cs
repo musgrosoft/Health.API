@@ -23,7 +23,7 @@ namespace Repository.Tests.Unit
         //{
         //}
 
-        public FakeLocalContext() : base(new DbContextOptions<HealthContext>(), new Mock<ILogger>().Object)
+        public FakeLocalContext() : base(new DbContextOptions<HealthContext>())
         {
         }
     }

@@ -50,22 +50,7 @@ namespace Repositories.Health
         {
             return _healthContext.SleepSummaries.OrderByDescending(x => x.DateOfSleep).FirstOrDefault()?.DateOfSleep;
         }
-
-        public DateTime? GetLatestSleepStateDate()
-        {
-            return _healthContext.SleepStates.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate;
-        }
-
-
-
-        //public Target GetTarget(DateTime date)
-        //{
-        //    return _healthContext.Targets.First(x => x.Date.Date == date.Date);
-        //}
-
-
         
-
 
         public async Task UpsertAsync(IEnumerable<Weight> weights)
         {
@@ -91,18 +76,6 @@ namespace Repositories.Health
             }
         }
         
-        public async Task UpsertAsync(IEnumerable<SleepState> sleepStates)
-        {
-            for (int i = 0; i < sleepStates.Count(); i += 500)
-            {
-                await _healthContext
-                    .UpsertRange(sleepStates.Skip(i).Take(500))
-                    .RunAsync();
-
-                _healthContext.SaveChanges();
-            }
-        }
-
         public async Task UpsertAsync(IEnumerable<Drink> drinks)
         {
             var enumerable = drinks.ToList();

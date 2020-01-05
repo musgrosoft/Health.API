@@ -74,10 +74,6 @@ namespace Services.Health
             await _healthRepository.UpsertAsync(sleepSummaries);
         }
 
-        public async Task UpsertAsync(IEnumerable<SleepState> sleepStates)
-        {
-             await _healthRepository.UpsertAsync(sleepStates);
-        }
 
         public async Task UpsertAsync(IEnumerable<Target> targets)
         {

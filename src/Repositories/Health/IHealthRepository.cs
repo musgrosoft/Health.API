@@ -12,7 +12,6 @@ namespace Repositories.Health
         DateTime? GetLatestRestingHeartRateDate();
         DateTime? GetLatestDrinkDate();
         DateTime? GetLatestSleepSummaryDate();
-        DateTime? GetLatestSleepStateDate();
         DateTime? GetLatestExerciseDate();
 
 
@@ -22,7 +21,6 @@ namespace Repositories.Health
         Task UpsertAsync(IEnumerable<Drink> drinks);
         Task UpsertAsync(IEnumerable<Exercise> exercise);
         Task UpsertAsync(IEnumerable<SleepSummary> sleepSummaries);
-        Task UpsertAsync(IEnumerable<SleepState> sleepStates);
         Task UpsertAsync(IEnumerable<Target> targets);
 
         //List<Weight> GetLatestWeights(int num);

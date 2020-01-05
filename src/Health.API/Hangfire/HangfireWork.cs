@@ -35,7 +35,6 @@ namespace HealthAPI.Hangfire
             {
                 await MigrateRestingHeartRates();
                 await MigrateSleepSummaries();
-                //await MigrateSleepStates();
             }
             catch (Exception ex)
             {

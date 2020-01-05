@@ -48,17 +48,6 @@ namespace Repository.Tests.Unit
             Assert.Contains(sleepSummaries.First(), retrievedSleepSummaries);
         }
 
-        [Fact]
-        public async Task ShouldInsertSleepState()
-        {
-            var sleepStates = new List<SleepState> { new SleepState { CreatedDate = new DateTime(2019,2,2) , State = "light"} };
-
-            await _healthRepository.UpsertAsync(sleepStates);
-
-            var retrievedSleepStates = _fakeLocalContext.SleepStates;
-
-            Assert.Contains(sleepStates.First(), retrievedSleepStates);
-        }
 
         [Fact]
         public async Task ShouldInsertRestingHeartRate()
@@ -215,22 +204,6 @@ namespace Repository.Tests.Unit
             Assert.Equal(thirdSleepSummary.DateOfSleep, latestSleepSummaryDate);
         }
 
-        [Fact]
-        public void ShouldGetLatestSleepStateDate()
-        {
-            var firstSleepState = new SleepState { CreatedDate = new DateTime(2018, 5, 1) };
-            var secondSleepState = new SleepState { CreatedDate = new DateTime(2018, 5, 2) };
-            var thirdSleepState = new SleepState { CreatedDate = new DateTime(2018, 5, 3) };
-
-            _fakeLocalContext.SleepStates.Add(firstSleepState);
-            _fakeLocalContext.SleepStates.Add(secondSleepState);
-            _fakeLocalContext.SleepStates.Add(thirdSleepState);
-            _fakeLocalContext.SaveChanges();
-
-            var latestSleepStateDate = _healthRepository.GetLatestSleepStateDate();
-
-            Assert.Equal(thirdSleepState.CreatedDate, latestSleepStateDate);
-        }
 
         [Fact]
         public async Task ShouldUpdateWeight()
@@ -319,20 +292,6 @@ namespace Repository.Tests.Unit
             await _healthRepository.UpsertAsync(newSleepSummaries);
 
             Assert.Equal(4444, existingSleepSummmary.MinutesAsleep);
-        }
-
-        [Fact]
-        public async Task ShouldUpdateSleepState()
-        {
-            var existingSleepState = new SleepState() { CreatedDate = new DateTime(2017, 1, 1), State = "flying"};
-            _fakeLocalContext.SleepStates.Add(existingSleepState);
-            _fakeLocalContext.SaveChanges();
-
-            var newSleepStates = new List<SleepState> { new SleepState() { CreatedDate = new DateTime(2017, 1, 1), State = "dreaming" } };
-
-            await _healthRepository.UpsertAsync(newSleepStates);
-
-            Assert.Equal("dreaming", existingSleepState.State);
         }
 
 

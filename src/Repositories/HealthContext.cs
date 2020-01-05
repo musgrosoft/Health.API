@@ -17,13 +17,11 @@ namespace Repositories
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<CalendarDate> CalendarDates { get; set; }
         public virtual DbSet<SleepSummary> SleepSummaries { get; set; }
-        public virtual DbSet<SleepState> SleepStates { get; set; }
-
-        private readonly ILogger _logger;
         
-        public HealthContext(DbContextOptions<HealthContext> options, ILogger logger) : base(options)
+        
+        public HealthContext(DbContextOptions<HealthContext> options) : base(options)
         {
-            _logger = logger;
+
         }
 
         
