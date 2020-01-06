@@ -70,6 +70,15 @@
     <None Update="Sql Scripts\vw_Exercises_Weekly.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Sql Scripts\vw_Sleeps_Monthly.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Sql Scripts\vw_Sleeps_Weekly.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Sql Scripts\vw_Sleeps_Daily.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Sql Scripts\vw_Weights_Daily.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

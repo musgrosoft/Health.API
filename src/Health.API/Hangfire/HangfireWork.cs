@@ -53,6 +53,7 @@ namespace HealthAPI.Hangfire
 
             await _logger.LogMessageAsync($"RESTING HEART RATES : found {restingHeartRates.Count()} records");
 
+            //todo figure out why this has duplicate entries in it.
             restingHeartRates = restingHeartRates
                 .GroupBy(x => x.CreatedDate)
                 .Select(group => group.First());
