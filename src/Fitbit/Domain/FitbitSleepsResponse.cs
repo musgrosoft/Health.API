@@ -5,7 +5,7 @@ namespace Fitbit.Domain
 {
     public class FitbitSleepsResponse
     {
-        public List<FSleep> sleep { get; set; }
+        public List<Sleep> sleep { get; set; }
     }
 
     public class Datum
@@ -22,28 +22,28 @@ namespace Fitbit.Domain
         public int seconds { get; set; }
     }
 
-    public class Deep
-    {
-        public int count { get; set; }
-        public int minutes { get; set; }
-        public int thirtyDayAvgMinutes { get; set; }
-    }
+//    public class Deep
+//    {
+//        public int count { get; set; }
+//        public int minutes { get; set; }
+//        public int thirtyDayAvgMinutes { get; set; }
+//    }
+//
+//    public class Light
+//    {
+//        public int count { get; set; }
+//        public int minutes { get; set; }
+//        public int thirtyDayAvgMinutes { get; set; }
+//    }
+//
+//    public class Rem
+//    {
+//        public int count { get; set; }
+//        public int minutes { get; set; }
+//        public int thirtyDayAvgMinutes { get; set; }
+//    }
 
-    public class Light
-    {
-        public int count { get; set; }
-        public int minutes { get; set; }
-        public int thirtyDayAvgMinutes { get; set; }
-    }
-
-    public class Rem
-    {
-        public int count { get; set; }
-        public int minutes { get; set; }
-        public int thirtyDayAvgMinutes { get; set; }
-    }
-
-    public class Wake
+    public class SleepData
     {
         public int count { get; set; }
         public int minutes { get; set; }
@@ -52,10 +52,10 @@ namespace Fitbit.Domain
 
     public class Summary
     {
-        public Deep deep { get; set; }
-        public Light light { get; set; }
-        public Rem rem { get; set; }
-        public Wake wake { get; set; }
+        public SleepData deep { get; set; }
+        public SleepData light { get; set; }
+        public SleepData rem { get; set; }
+        public SleepData wake { get; set; }
     }
 
     public class Levels
@@ -65,7 +65,7 @@ namespace Fitbit.Domain
         public Summary summary { get; set; }
     }
 
-    public class FSleep
+    public class Sleep
     {
         public DateTime dateOfSleep { get; set; }
         public int duration { get; set; }

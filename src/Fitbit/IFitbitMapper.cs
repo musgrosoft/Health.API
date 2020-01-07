@@ -7,6 +7,6 @@ namespace Fitbit
     public interface IFitbitMapper
     {
         IEnumerable<RestingHeartRate> MapActivitiesHeartsToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts);
-        IEnumerable<SleepSummary> MapFitbitSleepsToSleepSummaries(IEnumerable<Domain.FSleep> sleeps);
+        IEnumerable<SleepSummary> MapFitbitSleepsToSleepSummaries(IEnumerable<Domain.Sleep> sleeps);
     }
 }

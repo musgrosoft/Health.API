@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Fitbit.Domain;
 using Utils;
-using Sleep = Fitbit.Domain.FSleep;
 
 namespace Fitbit
 {

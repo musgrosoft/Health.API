@@ -59,7 +59,7 @@ namespace HealthAPI.Controllers
         [Route("Notify/Exercises")]
         public async Task<IActionResult> ImportExercises()
         {
-            await _logger.LogMessageAsync("EXERCISES : Notificattion (from Google Sheets).");
+            await _logger.LogMessageAsync("EXERCISES : Notification (from Google Sheets).");
 
             var latestExerciseDate = _healthService.GetLatestExerciseDate(MIN_EXERCISEE_DATE);
             var fromDate = latestExerciseDate.AddDays(-SEARCH_DAYS_PREVIOUS);

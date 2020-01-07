@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Repositories.Health.Models;
-using Services.OAuth;
-using Utils;
 
 namespace Fitbit
 {
@@ -20,13 +17,6 @@ namespace Fitbit
             _fitbitAuthenticator = fitbitAuthenticator;
             _fitbitMapper = fitbitMapper;
         }
-
-        // public FitbitService(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
-        // {
-        //     _fitbitClientQueryAdapter = new FitbitClientQueryAdapter(httpClient,config,logger);
-        //     _fitbitAuthenticator =new FitbitAuthenticator(tokenService, httpClient, config, logger);
-        //     _fitbitMapper = new FitbitMapper();
-        // }
         
         public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
         {

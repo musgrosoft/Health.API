@@ -49,14 +49,21 @@ namespace Fitbit.Tests.Unit
             Assert.Empty(result);
         }
 
-        
 
 
 
 
-        public void ShouldMapFromActivitiesHeartToRestingHeartRates()
+        [Fact]
+        public void ShouldMapSleeps()
         {
-            Assert.True(false);
+            //Given
+            IEnumerable<Sleep> sleeps = new List<Sleep>();
+
+            //When
+            var result = _fitbitMapper.MapFitbitSleepsToSleepSummaries(sleeps);
+
+            //Then
+            //Assert.True(false);
         }
 
     }

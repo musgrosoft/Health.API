@@ -19,7 +19,7 @@ namespace Fitbit
         }
 
 
-        public IEnumerable<SleepSummary> MapFitbitSleepsToSleepSummaries(IEnumerable<Domain.FSleep> sleeps)
+        public IEnumerable<SleepSummary> MapFitbitSleepsToSleepSummaries(IEnumerable<Domain.Sleep> sleeps)
         {
             return sleeps.Select(x => new SleepSummary
             {
