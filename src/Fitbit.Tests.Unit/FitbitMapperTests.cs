@@ -57,13 +57,52 @@ namespace Fitbit.Tests.Unit
         public void ShouldMapSleeps()
         {
             //Given
-            IEnumerable<Sleep> sleeps = new List<Sleep>();
+            IEnumerable<Sleep> sleeps = new List<Sleep>
+            {
+                new Sleep
+                {
+                    dateOfSleep = new DateTime(2010, 2, 3),
+                    endTime = new DateTime(2011,5,6),
+                    minutesAsleep = 5,
+                    minutesAwake = 6,
+                    startTime = new DateTime(2022, 3, 4),
+                    type = "wibble type",
+                    infoCode = 123456,
+                    levels = new Levels
+                    {
+                        summary = new Summary
+                        {
+                            deep = new SleepData {minutes = 1},
+                            rem = new SleepData {minutes = 2},
+                            light = new SleepData {minutes = 3},
+                            wake = new SleepData {minutes = 4},
+                        }
+                    }
+                }
+                
+            };
 
             //When
-            var result = _fitbitMapper.MapFitbitSleepsToSleepSummaries(sleeps);
+            var result = _fitbitMapper.MapFitbitSleepsToSleepSummaries(sleeps).ToList();
 
             //Then
-            //Assert.True(false);
+            Assert.Single(result);
+
+            Assert.Equal(1, result[0].DeepMinutes);
+            Assert.Equal(2, result[0].RemMinutes);
+            Assert.Equal(3, result[0].LightMinutes);
+            Assert.Equal(4, result[0].WakeMinutes);
+
+            Assert.Equal(new DateTime(2010, 2, 3), result[0].DateOfSleep);
+            Assert.Equal(new DateTime(2022, 3, 4), result[0].StartTime);
+            Assert.Equal(new DateTime(2011, 5, 6), result[0].EndTime);
+
+            Assert.Equal(5, result[0].MinutesAsleep);
+            Assert.Equal(6, result[0].MinutesAwake);
+
+            Assert.Equal("wibble type", result[0].Type);
+            Assert.Equal(123456, result[0].InfoCode);
+
         }
 
     }
