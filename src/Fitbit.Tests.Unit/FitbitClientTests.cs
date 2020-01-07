@@ -56,16 +56,36 @@ namespace Fitbit.Tests.Unit
                 })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedRequest = h);
         }
 
-        
 
+        [Fact]
+        public async Task ShouldGetSleeps()
+        {
+            //Given
+            SetupHttpMessageHandlerMock(fitbitSleepsJson);
+            
+            var startDate = new DateTime(2011,3,4);
+
+            //When
+            //todo also verify use of accessTOken
+            var sleeps = await _fitbitClient.Get100DaysOfSleeps(startDate, "accessToken");
+
+            Assert.Equal("https://api.fitbit.com/1.2/user//sleep/date/2011-03-04/2011-06-12.json", _capturedRequest.RequestUri.AbsoluteUri);
+
+
+            Assert.Equal(1, sleeps.sleep.Count);
+
+
+        }
 
         [Fact]
         public async Task ShouldGetFitbitMonthlyHeartRates()
         {
-            
-            SetupHttpMessageHandlerMock(fitbitMonthlyActivityContent);
+            //Given
+            SetupHttpMessageHandlerMock(fitbitHeartRateJson);
 
-            var fitbitActivity = await _fitbitClient.GetMonthOfFitbitHeartRates(new DateTime(2010,1,2), It.IsAny<string>());
+            //When
+            //            //todo also verify use of accessTOken
+            var fitbitActivity = await _fitbitClient.GetMonthOfFitbitHeartRates(new DateTime(2010,1,2), "accessToken");
 
             Assert.Equal("https://api.fitbit.com/1/user//activities/heart/date/2010-01-02/1m.json", _capturedRequest.RequestUri.AbsoluteUri);
 
@@ -86,7 +106,7 @@ namespace Fitbit.Tests.Unit
         [Fact]
         public async Task ShouldThrowTooManyRequestsExceptionWhenStatusCode429()
         {
-            SetupHttpMessageHandlerMock(fitbitMonthlyActivityContent, (HttpStatusCode)429);
+            SetupHttpMessageHandlerMock(fitbitHeartRateJson, (HttpStatusCode)429);
 
             await Assert.ThrowsAsync<TooManyRequestsException>(() => _fitbitClient.GetMonthOfFitbitHeartRates(new DateTime(), It.IsAny<string>()));
         }
@@ -279,10 +299,71 @@ namespace Fitbit.Tests.Unit
 
 
 
+        private readonly string fitbitSleepsJson = @"{
+    ""sleep"": [
+        {
+            ""dateOfSleep"": ""2017-04-02"",
+            ""duration"": 123456,
+            ""efficiency"": 99,
+            ""isMainSleep"": true,
+            ""levels"": {
+                ""summary"": {
+                    ""deep"": {
+                        ""count"": 1,
+                        ""minutes"": 2,
+                        ""thirtyDayAvgMinutes"": 3
+                    },
+                    ""light"": {
+                        ""count"": 4,
+                        ""minutes"": 5,
+                        ""thirtyDayAvgMinutes"": 6
+                    },
+                    ""rem"": {
+                        ""count"": 7,
+                        ""minutes"": 8,
+                        ""thirtyDayAvgMinutes"": 9
+                    },
+                    ""wake"": {
+                        ""count"": 10,
+                        ""minutes"": 11,
+                        ""thirtyDayAvgMinutes"": 12
+                    }
+                },
+                ""data"": [
+                    {
+                        ""datetime"": ""2017-04-01T23:58:30.000"",
+                        ""level"": ""wake"",
+                        ""seconds"": 13
+                    },
+                    {
+                        ""datetime"": ""2017-04-02T00:16:30.000"",
+                        ""level"": ""light"",
+                        ""seconds"": 14
+                    }
+                ],
+                ""shortData"": [
+                    {
+                        ""datetime"": ""2017-04-02T05:58:30.000"",
+                        ""level"": ""wake"",
+                        ""seconds"": 15
+                    }
+                ]
+            },
+            ""logId"": 16,
+            ""minutesAfterWakeup"": 17,
+            ""minutesAsleep"": 18,
+            ""minutesAwake"": 19,
+            ""minutesToFallAsleep"": 20, 
+            ""startTime"": ""2017-04-01T23:58:30.000"",
+            ""timeInBed"": 21,
+            ""type"": ""stages""
+        }
+    ]
+}";
 
-        private readonly string fitbitDailyActivityContent = "";
+        
 
-        private readonly string fitbitMonthlyActivityContent = @"{
+        private readonly string fitbitHeartRateJson = @"{
             ""activities-heart"": [
         {
             ""dateTime"": ""2015-08-04"",

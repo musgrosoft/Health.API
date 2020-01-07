@@ -10,16 +10,23 @@ namespace Fitbit
 {
     public class FitbitService : IFitbitService
     {
-        private readonly FitbitClientQueryAdapter _fitbitClientQueryAdapter;
-        private readonly FitbitAuthenticator _fitbitAuthenticator;
-        private readonly FitbitMapper _fitbitMapper;
+        private readonly IFitbitClientQueryAdapter _fitbitClientQueryAdapter;
+        private readonly IFitbitAuthenticator _fitbitAuthenticator;
+        private readonly IFitbitMapper _fitbitMapper;
 
-        public FitbitService(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
+        public FitbitService(IFitbitClientQueryAdapter fitbitClientQueryAdapter,IFitbitAuthenticator fitbitAuthenticator,  IFitbitMapper fitbitMapper)
         {
-            _fitbitClientQueryAdapter = new FitbitClientQueryAdapter(httpClient,config,logger);
-            _fitbitAuthenticator =new FitbitAuthenticator(tokenService, httpClient, config, logger);
-            _fitbitMapper = new FitbitMapper();
+            _fitbitClientQueryAdapter = fitbitClientQueryAdapter;
+            _fitbitAuthenticator = fitbitAuthenticator;
+            _fitbitMapper = fitbitMapper;
         }
+
+        // public FitbitService(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
+        // {
+        //     _fitbitClientQueryAdapter = new FitbitClientQueryAdapter(httpClient,config,logger);
+        //     _fitbitAuthenticator =new FitbitAuthenticator(tokenService, httpClient, config, logger);
+        //     _fitbitMapper = new FitbitMapper();
+        // }
         
         public async Task<IEnumerable<RestingHeartRate>> GetRestingHeartRates(DateTime fromDate, DateTime toDate)
         {

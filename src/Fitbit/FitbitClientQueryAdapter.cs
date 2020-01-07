@@ -9,18 +9,18 @@ using Sleep = Fitbit.Domain.FSleep;
 
 namespace Fitbit
 {
-    internal class FitbitClientQueryAdapter //: IFitbitClientQueryAdapter
+    public class FitbitClientQueryAdapter : IFitbitClientQueryAdapter
     {
-        private readonly FitbitClient _fitbitClient;
+        private readonly IFitbitClient _fitbitClient;
         private readonly ILogger _logger;
 
-        internal FitbitClientQueryAdapter(HttpClient httpClient, IConfig config, ILogger logger)
+        public FitbitClientQueryAdapter(IFitbitClient fitbitClient, ILogger logger)
         {
-            _fitbitClient = new FitbitClient(httpClient, config, logger);
+            _fitbitClient = fitbitClient;
             _logger = logger;
         }
 
-        internal async Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate, string accessToken)
+        public async Task<IEnumerable<ActivitiesHeart>> GetFitbitHeartActivities(DateTime fromDate, DateTime toDate, string accessToken)
         {
             var heartActivities = new List<ActivitiesHeart>();
 
@@ -44,7 +44,7 @@ namespace Fitbit
             return heartActivities.Where(x => x.dateTime.Between(fromDate, toDate));
         }
 
-        internal async Task<IEnumerable<Sleep>> GetFitbitSleeps(DateTime fromDate, DateTime toDate, string accessToken)
+        public async Task<IEnumerable<Sleep>> GetFitbitSleeps(DateTime fromDate, DateTime toDate, string accessToken)
         {
             var allTheSleeps = new List<Sleep>();
 

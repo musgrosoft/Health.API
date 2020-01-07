@@ -9,7 +9,7 @@ using Utils;
 
 namespace Fitbit
 {
-    public class FitbitClient 
+    public class FitbitClient : IFitbitClient
     {
         private const string FITBIT_BASE_URL = "https://api.fitbit.com";
 

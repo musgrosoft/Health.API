@@ -5,9 +5,9 @@ using Repositories.Health.Models;
 
 namespace Fitbit
 {
-    internal class FitbitMapper //: IFitbitMapper
+    public class FitbitMapper : IFitbitMapper
     {
-        internal IEnumerable<RestingHeartRate> MapActivitiesHeartsToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts)
+        public IEnumerable<RestingHeartRate> MapActivitiesHeartsToRestingHeartRates(IEnumerable<ActivitiesHeart> activitiesHearts)
         {
             return activitiesHearts
                 .Where(a => a.value.restingHeartRate != 0)
@@ -19,7 +19,7 @@ namespace Fitbit
         }
 
 
-        internal IEnumerable<SleepSummary> MapFitbitSleepsToSleepSummaries(IEnumerable<Domain.FSleep> sleeps)
+        public IEnumerable<SleepSummary> MapFitbitSleepsToSleepSummaries(IEnumerable<Domain.FSleep> sleeps)
         {
             return sleeps.Select(x => new SleepSummary
             {

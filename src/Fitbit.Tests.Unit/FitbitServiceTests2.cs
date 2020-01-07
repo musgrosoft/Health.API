@@ -9,9 +9,9 @@ using Services.OAuth;
 using Utils;
 using Xunit;
 
-namespace Fitbit.Tests
+namespace Fitbit
 {
-    public class FitbitServiceTests
+    public class FitbitServiceTests2
     {
         private readonly Mock<ITokenService> _tokenService;
         private readonly Mock<HttpMessageHandler> _httpMessageHandler;
@@ -22,7 +22,7 @@ namespace Fitbit.Tests
         
         private readonly FitbitService _fitbitService;
         
-        public FitbitServiceTests()
+        public FitbitServiceTests2()
         {
             _config = new Mock<IConfig>();
             _config.Setup(x => x.FitbitBaseUrl).Returns("http://www.null.com");
@@ -41,7 +41,12 @@ namespace Fitbit.Tests
 
             SetupHttpMessageHandlerMock("");
 
-            _fitbitService = new FitbitService(_tokenService.Object, _httpClient, _config.Object, _logger.Object);
+
+            var fitbitClientQueryAdapter = new Mock<IFitbitClientQueryAdapter>();
+            var fitbitAuthenticator = new Mock<IFitbitAuthenticator>();
+            var fitbitMapper = new Mock<IFitbitMapper>();
+
+            _fitbitService = new FitbitService(fitbitClientQueryAdapter.Object, fitbitAuthenticator.Object, fitbitMapper.Object);
 
         }
 
