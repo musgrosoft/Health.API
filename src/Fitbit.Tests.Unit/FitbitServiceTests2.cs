@@ -9,7 +9,7 @@ using Services.OAuth;
 using Utils;
 using Xunit;
 
-namespace Fitbit
+namespace Fitbit.Tests.Unit
 {
     public class FitbitServiceTests2
     {

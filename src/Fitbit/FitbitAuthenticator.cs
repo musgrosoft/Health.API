@@ -8,13 +8,13 @@ namespace Fitbit
     public class FitbitAuthenticator : IFitbitAuthenticator
     {
         private readonly ITokenService _tokenService;
-        private readonly FitbitClient _fitbitClient;
+        private readonly IFitbitClient _fitbitClient;
 
 
-        public FitbitAuthenticator(ITokenService tokenService, HttpClient httpClient, IConfig config, ILogger logger)
+        public FitbitAuthenticator(ITokenService tokenService, IFitbitClient fitbitClient)
         {
             _tokenService = tokenService;
-            _fitbitClient = new FitbitClient(httpClient, config, logger); 
+            _fitbitClient = fitbitClient; 
         }
 
         public async Task SetTokens(string authorizationCode)

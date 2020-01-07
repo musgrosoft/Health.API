@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Fitbit;
 using Fitbit.Domain;
 using Moq;
 using Xunit;
 
-namespace Importer.Fitbit.Tests.Unit
+namespace Fitbit.Tests.Unit
 {
     public class FitbitServiceTests
     {
