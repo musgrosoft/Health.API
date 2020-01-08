@@ -104,7 +104,7 @@ namespace Fitbit.Tests.Unit
         }
 
         [Fact]
-        public async Task ShouldThrowTooManyRequestsExceptionWhenStatusCode429()
+        public async Task ShouldThrowTooManyRequestsExceptionWhenStatusCode429WhenGettingHeartRates()
         {
             SetupHttpMessageHandlerMock(fitbitHeartRateJson, (HttpStatusCode)429);
 
@@ -112,7 +112,16 @@ namespace Fitbit.Tests.Unit
         }
 
         [Fact]
-        public async Task ShouldThrowExceptionWhenStatusCodeNotSuccess()
+        public async Task ShouldThrowTooManyRequestsExceptionWhenStatusCode429WhenGettingSleeps()
+        {
+            SetupHttpMessageHandlerMock(fitbitHeartRateJson, (HttpStatusCode)429);
+
+            await Assert.ThrowsAsync<TooManyRequestsException>(() => _fitbitClient.Get100DaysOfSleeps(new DateTime(), It.IsAny<string>()));
+        }
+
+
+        [Fact]
+        public async Task ShouldThrowExceptionWhenStatusCodeNotSuccessWhenGettingHeartRates()
         {
             Uri _capturedUri = new Uri("http://www.null.com");
 
@@ -128,7 +137,26 @@ namespace Fitbit.Tests.Unit
             Assert.Contains("content is I'm a little teapot", ex.Message);
 
         }
-        
+
+        [Fact]
+        public async Task ShouldThrowExceptionWhenStatusCodeNotSuccessWhenGettingSleeps()
+        {
+            Uri _capturedUri = new Uri("http://www.null.com");
+
+            _httpMessageHandler.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new HttpResponseMessage
+                {
+                    StatusCode = (HttpStatusCode)400,
+                    Content = new StringContent("I'm a little teapot")
+                })).Callback<HttpRequestMessage, CancellationToken>((h, c) => _capturedUri = h.RequestUri); ;
+
+            Exception ex = await Assert.ThrowsAsync<Exception>(() => _fitbitClient.Get100DaysOfSleeps(new DateTime(), It.IsAny<string>()));
+            Assert.Contains("status code is 400", ex.Message);
+            Assert.Contains("content is I'm a little teapot", ex.Message);
+
+        }
+
+
         [Fact]
         public async Task ShouldSetTokens()
         {

@@ -64,7 +64,7 @@ namespace Fitbit.Tests.Unit
                 }));
 
             //When
-            var heartActivities = await _fitbitClientClientQueryAdapter.GetFitbitHeartActivities(_fromDate, _toDate, It.IsAny<string>());
+            var heartActivities = await _fitbitClientClientQueryAdapter.GetFitbitHeartActivities(_fromDate, _toDate, _accessToken);
 
             Assert.Equal(5, heartActivities.Count());
             Assert.Contains(heartActivities, x => x.value.restingHeartRate == 11);
@@ -79,41 +79,52 @@ namespace Fitbit.Tests.Unit
         [Fact]
         public async Task ShouldGetSleeps()
         {
-            DateTime _fromDate = new DateTime(2018, 1, 15);
-            // more than 300 days DateTime _toDate = new DateTime(2018, 3, 15);
+            DateTime fromDate = new DateTime(2018, 1, 15);
+            DateTime endDate = fromDate.AddDays(250);
 
             //Given 
-            _fitbitClient.Setup(x => x.Get100DaysOfSleeps(_fromDate, _accessToken)).Returns(Task.FromResult(
+            _fitbitClient.Setup(x => x.Get100DaysOfSleeps(fromDate, _accessToken)).Returns(Task.FromResult(
                 new FitbitSleepsResponse
                 {
                     sleep = new List<Sleep>
                     {
-                        new Sleep{dateOfSleep = new DateTime(2001,1,1), minutesAsleep = 1},
-                        new Sleep{dateOfSleep = new DateTime(2001,1,2), minutesAsleep = 2},
+                        new Sleep{dateOfSleep = fromDate.AddDays(50), minutesAsleep = 1},
+                        new Sleep{dateOfSleep = fromDate.AddDays(51), minutesAsleep = 2},
                     }
                 }));
 
-            _fitbitClient.Setup(x => x.Get100DaysOfSleeps(_fromDate.AddDays(100), _accessToken)).Returns(Task.FromResult(
+            _fitbitClient.Setup(x => x.Get100DaysOfSleeps(fromDate.AddDays(100), _accessToken)).Returns(Task.FromResult(
                 new FitbitSleepsResponse
                 {
                     sleep = new List<Sleep>
                     {
-                        new Sleep{dateOfSleep = new DateTime(2001,1,3), minutesAsleep = 3},
-                        new Sleep{dateOfSleep = new DateTime(2001,1,4), minutesAsleep = 4},
+                        new Sleep{dateOfSleep = fromDate.AddDays(150), minutesAsleep = 3},
+                        new Sleep{dateOfSleep = fromDate.AddDays(151), minutesAsleep = 4},
                     }
                 }));
 
-            _fitbitClient.Setup(x => x.Get100DaysOfSleeps(_fromDate.AddDays(200), _accessToken)).Returns(Task.FromResult(
+            _fitbitClient.Setup(x => x.Get100DaysOfSleeps(fromDate.AddDays(200), _accessToken)).Returns(Task.FromResult(
                 new FitbitSleepsResponse
                 {
                     sleep = new List<Sleep>
                     {
-                        new Sleep{dateOfSleep = new DateTime(2001,1,5), minutesAsleep = 5},
-                        new Sleep{dateOfSleep = new DateTime(2001,1,6), minutesAsleep = 6},
+                        new Sleep{dateOfSleep = fromDate.AddDays(201), minutesAsleep = 5},
+                        new Sleep{dateOfSleep = fromDate.AddDays(202), minutesAsleep = 6},
+                        new Sleep{dateOfSleep = endDate.AddDays(1), minutesAsleep = 7}, //this will be outside the range of the query
                     }
                 }));
 
-            Assert.True(false);
+            var result = await _fitbitClientClientQueryAdapter.GetFitbitSleeps(fromDate, endDate, _accessToken);
+
+            Assert.Equal(6, result.Count());
+
+            Assert.Contains(result, x => x.minutesAsleep == 1);
+            Assert.Contains(result, x => x.minutesAsleep == 2);
+            Assert.Contains(result, x => x.minutesAsleep == 3);
+            Assert.Contains(result, x => x.minutesAsleep == 4);
+            Assert.Contains(result, x => x.minutesAsleep == 5);
+            Assert.Contains(result, x => x.minutesAsleep == 6);
+
         }
 
 
@@ -175,6 +186,57 @@ namespace Fitbit.Tests.Unit
 
         }
 
+
+        [Fact]
+        public async Task ShouldReturnSleepsAfterReceivingTooManyRequestsException()
+        {
+
+            DateTime fromDate = new DateTime(2018, 1, 15);
+            DateTime endDate = fromDate.AddDays(250);
+
+            var tooManyRequests = new TooManyRequestsException("I'm a little teapot.");
+
+            //Given 
+            _fitbitClient
+                .Setup(x => x.Get100DaysOfSleeps(fromDate, _accessToken))
+                .Returns(Task.FromResult(
+                    new FitbitSleepsResponse
+                    {
+                        sleep = new List<Sleep>
+                        {
+                            new Sleep{dateOfSleep = fromDate.AddDays(50), minutesAsleep = 1},
+                            new Sleep{dateOfSleep = fromDate.AddDays(51), minutesAsleep = 2},
+                        }
+                    }));
+
+            _fitbitClient.Setup(x => x.Get100DaysOfSleeps(fromDate.AddDays(100), It.IsAny<string>()))
+                .Throws(tooManyRequests);
+
+            
+            _fitbitClient.Setup(x => x.Get100DaysOfSleeps(fromDate.AddDays(200), _accessToken)).Returns(Task.FromResult(
+                new FitbitSleepsResponse
+                {
+                    sleep = new List<Sleep>
+                    {
+                        new Sleep{dateOfSleep = fromDate.AddDays(201), minutesAsleep = 5},
+                    }
+                }));
+
+            var sleeps = await _fitbitClientClientQueryAdapter.GetFitbitSleeps(fromDate, endDate, _accessToken);
+
+
+
+
+
+
+
+
+            Assert.Equal(2, sleeps.Count());
+            Assert.Contains(sleeps, x => x.minutesAsleep == 1);
+            Assert.Contains(sleeps, x => x.minutesAsleep == 2);
+            _logger.Verify(x => x.LogErrorAsync(tooManyRequests), Times.Once);
+
+        }
 
 
 
