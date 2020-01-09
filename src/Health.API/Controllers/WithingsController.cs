@@ -20,7 +20,6 @@ namespace HealthAPI.Controllers
 
         private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
         private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
-        //private DateTime MIN_SLEEP_DATE = new DateTime(2019, 7, 15);
 
         public WithingsController(ILogger logger, IWithingsService withingsService, IHealthService healthService)
         {

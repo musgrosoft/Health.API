@@ -30,7 +30,7 @@ namespace HealthAPI.Controllers
         
         [HttpGet]
         [Route("Notify/AlcoholIntakes")]
-        public async Task<IActionResult> MigrateUnits()
+        public async Task<IActionResult> ImportDrinks()
         {
             await _logger.LogMessageAsync("DRINKS : Notification (from Google Sheets)");
 
