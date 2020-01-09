@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +20,6 @@ using Microsoft.EntityFrameworkCore;
 using Calendar = Utils.Calendar;
 using System.Threading.Tasks;
 using Fitbit;
-using Health.API.Controllers;
 using Withings;
 
 namespace HealthAPI

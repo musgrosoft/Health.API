@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Newtonsoft.Json;
 
 namespace Utils
 {
@@ -35,25 +31,25 @@ namespace Utils
             return (dateTime - epoch).TotalSeconds;
         }
 
-        public static double ToUnixTimeMillisecondsFromDate(this DateTime dateTime)
-        {
-            return (dateTime - epoch).TotalMilliseconds;
-        }
+        // public static double ToUnixTimeMillisecondsFromDate(this DateTime dateTime)
+        // {
+        //     return (dateTime - epoch).TotalMilliseconds;
+        // }
 
         public static bool Between(this DateTime val, DateTime startDate, DateTime endDate)
         {
             return (val >= startDate && val <= endDate);
         }
 
-        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
-        {
-            int diff = dt.DayOfWeek - startOfWeek;
-            if (diff < 0)
-            {
-                diff += 7;
-            }
-            return dt.AddDays(-1 * diff).Date;  
-        }
+        // public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        // {
+        //     int diff = dt.DayOfWeek - startOfWeek;
+        //     if (diff < 0)
+        //     {
+        //         diff += 7;
+        //     }
+        //     return dt.AddDays(-1 * diff).Date;  
+        // }
 
 
         
