@@ -7,62 +7,7 @@ branches:
     only:
     - master
 before_build:
-- cmd: >-
-
-    dotnet restore ./src/Health.API.Tests.Unit/Health.API.Tests.Unit.csproj
-
-    dotnet restore ./src/Repository.Tests.Unit/Repository.Tests.Unit.csproj
-
-    dotnet restore ./src/Services.Tests.Unit/Services.Tests.Unit.csproj
-    
-    dotnet restore ./src/Utils.Tests.Unit/Utils.Tests.Unit.csproj
-
-    dotnet restore ./src/Health.API/Health.API.csproj
-    
-    dotnet restore ./src/Repositories/Repositories.csproj
-
-    dotnet restore ./src/Services/Services.csproj
-
-    dotnet restore ./src/Utils/Utils.csproj
-    
-    dotnet restore ./src/Fitbit/Fitbit.csproj
-    
-    dotnet restore ./src/Fitbit.Tests/Fitbit.Tests.csproj
-    
-    dotnet restore ./src/Fitbit.Tests.Unit/Fitbit.Tests.Unit.csproj
-    
-    dotnet restore ./src/Withings.Tests.Unit/Withings.Tests.Unit.csproj
-    
-    dotnet restore ./src/GoogleSheets.Tests.Unit/GoogleSheets.Tests.Unit.csproj
-
-    
-    dotnet clean ./src/Health.API.Tests.Unit/Health.API.Tests.Unit.csproj
-
-    dotnet clean ./src/Repository.Tests.Unit/Repository.Tests.Unit.csproj
-
-    dotnet clean ./src/Services.Tests.Unit/Services.Tests.Unit.csproj
-    
-    dotnet clean ./src/Utils.Tests.Unit/Utils.Tests.Unit.csproj
-
-    dotnet clean ./src/Health.API/Health.API.csproj
-    
-    dotnet clean ./src/Repositories/Repositories.csproj
-
-    dotnet clean ./src/Services/Services.csproj
-
-    dotnet clean ./src/Utils/Utils.csproj
-    
-    dotnet clean ./src/Fitbit/Fitbit.csproj
-    
-    dotnet clean ./src/Fitbit.Tests/Fitbit.Tests.csproj
-        
-    dotnet clean ./src/Fitbit.Tests.Unit/Fitbit.Tests.Unit.csproj
-    
-    dotnet clean ./src/Withings.Tests.Unit/Withings.Tests.Unit.csproj
-    
-    dotnet clean ./src/GoogleSheets.Tests.Unit/GoogleSheets.Tests.Unit.csproj
-
-
+- ps: nuget restore 
 build:
   project: Health.API.sln
   publish_wap: true
