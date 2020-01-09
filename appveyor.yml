@@ -26,9 +26,7 @@ before_build:
     dotnet restore ./src/Utils/Utils.csproj
     
     dotnet restore ./src/Fitbit/Fitbit.csproj
-    
-    dotnet restore ./src/Fitbit.Tests/Fitbit.Tests.csproj
-    
+        
     dotnet restore ./src/Fitbit.Tests.Unit/Fitbit.Tests.Unit.csproj
     
     dotnet restore ./src/Withings.Tests.Unit/Withings.Tests.Unit.csproj
@@ -53,9 +51,7 @@ before_build:
     dotnet clean ./src/Utils/Utils.csproj
     
     dotnet clean ./src/Fitbit/Fitbit.csproj
-    
-    dotnet clean ./src/Fitbit.Tests/Fitbit.Tests.csproj
-        
+            
     dotnet clean ./src/Fitbit.Tests.Unit/Fitbit.Tests.Unit.csproj
     
     dotnet clean ./src/Withings.Tests.Unit/Withings.Tests.Unit.csproj
