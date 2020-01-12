@@ -108,19 +108,19 @@ namespace HealthAPI
             services.AddTransient<ILogger, LogzIoLogger>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ITokenRepository, TokenRepository>();
-            //services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
-            //services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
+            services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
+            services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
             services.AddTransient<IFitbitService, FitbitService>();
-            //services.AddTransient<IFitbitImporter, FitbitImporter>();
+            
             services.AddTransient<ICalendar, Calendar>();
             services.AddTransient<IWithingsClient, WithingsClient>();
             services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
-            //services.AddTransient<IFitbitClient, FitbitClient>();
+            services.AddTransient<IFitbitClient, FitbitClient>();
             services.AddTransient<ISheetsService, SheetsService>();
 
             services.AddTransient<IHangfireWork, HangfireWork>();
             services.AddTransient<IWithingsService, WithingsService>();
-            //services.AddTransient<IFitbitMapper, FitbitMapper>();
+            services.AddTransient<IFitbitMapper, FitbitMapper>();
 //            services.AddTransient<IRowMapper, RowMapper>();
 //            services.AddTransient<IMapFunctions, MapFunctions>();
             //services.AddTransient<ISheetsClient, SheetsClient>();
