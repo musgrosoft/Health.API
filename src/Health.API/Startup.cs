@@ -174,8 +174,6 @@ namespace HealthAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            
-            
 
             app.UseSwagger();
 
@@ -184,7 +182,6 @@ namespace HealthAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            //var logger = new Utils.LogzIoLogger(new Config(),new HttpClient(),new Calendar());
             var logger = serviceProvider.GetService<ILogger>();
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -195,11 +192,11 @@ namespace HealthAPI
                 try
                 {
                     Task task = Task.Run(async () => await logger.LogMessageAsync("STARTING UP SQL SCRIPTS"));
-                    //Always run scripts on startup
-                    //if (created)
-                    //{
+    
                     //Run these when db first created
-                    context.Database.SetCommandTimeout(180);
+                    if(created)
+                    { 
+                        context.Database.SetCommandTimeout(180);
 
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
 
@@ -212,7 +209,7 @@ namespace HealthAPI
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily.sql"));
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_2.sql"));
 
-                    context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_Agg.sql"));
+                        context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_Agg.sql"));
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Monthly.sql"));
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Weekly.sql"));
 
@@ -221,9 +218,9 @@ namespace HealthAPI
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Daily.sql"));
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Monthly.sql"));
                         context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Weekly.sql"));
+                       
+                    }
 
-                    //context.Database.ExecuteSqlCommand(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Fitbit_Sleeps_Daily.sql"));
-                    //}
                 }
                 catch (Exception ex)
                 {
