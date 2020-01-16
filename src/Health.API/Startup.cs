@@ -92,10 +92,10 @@ namespace HealthAPI
 
             services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-            });
+            // services.AddSwaggerGen(c =>
+            // {
+            //     c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            // });
 
             services.AddScoped<IHealthRepository, HealthRepository>();
 
@@ -165,7 +165,7 @@ namespace HealthAPI
             //app.UseCors("CorsPolicy");
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
-            app.UseMvc();
+       //     app.UseMvc();
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
