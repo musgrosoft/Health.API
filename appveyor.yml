@@ -2,7 +2,7 @@ version: 1.0.{build}
 environment:
   HealthDbConnectionString:
     secure: 4Qb2yNR0MhzSVLQu0YLCROq2+yoLbpPCnCYnpgJV5uFANx4bi9f0WBA0IRTCN8cw5/7a4/x8t16mmzV6TY7JyUoQI0X80J76bXbBYLINTKZKfY67oxj7hPjdbA5yXBG3buNP4XgI32A80dbywhowFIPrZoAA8RyZJiglbMsPyO6p9rl/8s0XmmjhSL1ll5S9Yllu3+BDGHJSZ+xUwuYBDjHUCo0kWLG3jdGISA1gn6yFMtw7VJV0ZVsnrq3ObqGvzqCqama364ALUjyY0BhBNLNL9Qvefo04IH2n+RW8nd4CgwAdCr+PkAbtp2bu+R/A
-image: Visual Studio 2017 Preview
+image: Visual Studio 2019
 branches:
     only:
     - master
