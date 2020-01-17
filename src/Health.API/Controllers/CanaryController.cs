@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Fitbit;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace Health.API.Controllers
         {
             var sleeps = await _fitbitService.GetSleepSummaries(DateTime.Now.AddDays(-10), DateTime.Now);
 
-            return Ok(sleeps);
+            return Ok(sleeps.Count());
         }
     }
 }

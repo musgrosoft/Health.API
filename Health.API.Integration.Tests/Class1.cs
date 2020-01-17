@@ -25,5 +25,17 @@ namespace Health.API.Integration.Tests
             response.EnsureSuccessStatusCode();
             Assert.Equal("Hello Tim", await response.Content.ReadAsStringAsync());
         }
+
+        [Fact]
+        public async Task thing2()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("/api/canary/Fitbit");
+
+            //Then
+            response.EnsureSuccessStatusCode();
+            Assert.True(int.Parse(await response.Content.ReadAsStringAsync()) > 3);
+        }
     }
 }
