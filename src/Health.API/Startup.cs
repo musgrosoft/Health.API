@@ -44,7 +44,7 @@ namespace HealthAPI
 
 
             services
-                .AddEntityFrameworkSqlServer()
+                //.AddEntityFrameworkSqlServer()
                 .AddDbContext<HealthContext>(dboptions =>
             {
                 dboptions
