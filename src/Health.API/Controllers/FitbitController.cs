@@ -9,7 +9,7 @@ namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Fitbit")]
-    public class FitbitController : Controller
+    public class FitbitController : ControllerBase
     {
         private readonly ILogger _logger;
         private readonly IConfig _config;

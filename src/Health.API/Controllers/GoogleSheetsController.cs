@@ -10,7 +10,7 @@ namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Google")]
-    public class GoogleSheetsController : Controller
+    public class GoogleSheetsController : ControllerBase
     {
         private readonly ILogger _logger;
         private readonly ISheetsService _sheetsService;

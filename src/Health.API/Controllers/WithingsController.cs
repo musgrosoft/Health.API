@@ -10,7 +10,7 @@ namespace HealthAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/Withings")]
-    public class WithingsController : Controller
+    public class WithingsController : ControllerBase
     {
         private readonly ILogger _logger;
         private readonly IWithingsService _withingsService;

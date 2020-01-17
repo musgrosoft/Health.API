@@ -6,7 +6,7 @@ namespace Health.API.Controllers
 {
     [Route("api/canary")]
     [ApiController]
-    public class CanaryController : Controller
+    public class CanaryController : ControllerBase
     {
         private readonly IFitbitService _fitbitService;
 
