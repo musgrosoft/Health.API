@@ -39,118 +39,118 @@ namespace HealthAPI
 
         public IConfiguration Configuration { get; }
 
-//        public virtual void SetUpDataBase(IServiceCollection services)
-//        {
-//            
-//
-//            services
-//                .AddEntityFrameworkSqlServer()
-//                .AddDbContext<HealthContext>(dboptions =>
-//            {
-//                dboptions
-//                    .UseSqlServer(
-//                        _config.HealthDbConnectionString,
-//                        sqlServerOptionsAction: sqlOptions =>
-//                        {
-//                            sqlOptions.EnableRetryOnFailure(
-//                                maxRetryCount: 5,
-//                                maxRetryDelay: TimeSpan.FromSeconds(30),
-//                                errorNumbersToAdd: null);
-//
-//                            sqlOptions.MigrationsAssembly("Repositories");
-//
-//                        }
-//                    )
-//                    .EnableSensitiveDataLogging();
-//            });
-//            
-//        }
+        public virtual void SetUpDataBase(IServiceCollection services)
+        {
+
+
+            services
+                .AddEntityFrameworkSqlServer()
+                .AddDbContext<HealthContext>(dboptions =>
+            {
+                dboptions
+                    .UseSqlServer(
+                        _config.HealthDbConnectionString,
+                        sqlServerOptionsAction: sqlOptions =>
+                        {
+                            sqlOptions.EnableRetryOnFailure(
+                                maxRetryCount: 5,
+                                maxRetryDelay: TimeSpan.FromSeconds(30),
+                                errorNumbersToAdd: null);
+
+                            sqlOptions.MigrationsAssembly("Repositories");
+
+                        }
+                    )
+                    .EnableSensitiveDataLogging();
+            });
+
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            ////// Add service and create Policy with options
-            ////services.AddCors(options =>
-            ////{
-            ////    options.AddDefaultPolicy(
-            ////        builder =>
-            ////        {
-            ////            builder.AllowAnyOrigin()
-            ////                .AllowAnyMethod()
-            ////                .AllowAnyHeader()
-            ////                .AllowCredentials();
-            ////        });
-
-            ////    options.AddPolicy("CorsPolicy",
-            ////        builder => builder.AllowAnyOrigin()
-            ////            .AllowAnyMethod()
-            ////            .AllowAnyHeader()
-            ////            .AllowCredentials());
-            ////});
-
-            //SetUpDataBase(services);
-
-            //services.AddHangfire(x => x.UseMemoryStorage());
-
-            //services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
-
-            //services.AddSwaggerGen(c =>
+             services.AddControllers();
+            //// Add service and create Policy with options
+            //services.AddCors(options =>
             //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            //    options.AddDefaultPolicy(
+            //        builder =>
+            //        {
+            //            builder.AllowAnyOrigin()
+            //                .AllowAnyMethod()
+            //                .AllowAnyHeader()
+            //                .AllowCredentials();
+            //        });
+
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder.AllowAnyOrigin()
+            //            .AllowAnyMethod()
+            //            .AllowAnyHeader()
+            //            .AllowCredentials());
             //});
 
-            //services.AddScoped<IHealthRepository, HealthRepository>();
+            SetUpDataBase(services);
 
-            //services.AddSingleton<HttpClient, HttpClient>();
+            services.AddHangfire(x => x.UseMemoryStorage());
 
-            //services.AddTransient<IHealthService, HealthService>();
+            services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
 
-            //services.AddTransient<IConfig, Config>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
 
-            //services.AddTransient<ILogger, LogzIoLogger>();
-            //services.AddTransient<ITokenService, TokenService>();
-            //services.AddTransient<ITokenRepository, TokenRepository>();
-            //services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
-            //services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
-            //services.AddTransient<IFitbitService, FitbitService>();
-            
-            //services.AddTransient<ICalendar, Calendar>();
-            //services.AddTransient<IWithingsClient, WithingsClient>();
-            //services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
-            //services.AddTransient<IFitbitClient, FitbitClient>();
-            //services.AddTransient<ISheetsService, SheetsService>();
+            services.AddScoped<IHealthRepository, HealthRepository>();
 
-            //services.AddTransient<IHangfireWork, HangfireWork>();
-            //services.AddTransient<IWithingsService, WithingsService>();
-            //services.AddTransient<IFitbitMapper, FitbitMapper>();
-            //services.AddTransient<IFitbitWork, FitbitWork>();
-            ////            services.AddTransient<IRowMapper, RowMapper>();
-            ////            services.AddTransient<IMapFunctions, MapFunctions>();
-            ////services.AddTransient<ISheetsClient, SheetsClient>();
+            services.AddSingleton<HttpClient, HttpClient>();
 
-            ////services.AddTransient<IMessageMaker, MessageMaker>();
+            services.AddTransient<IHealthService, HealthService>();
 
-            //services.AddTransient<IWithingsMapper, WithingsMapper>();
-            //services.AddTransient<IWithingsClientQueryAdapter, WithingsClientQueryAdapter>();
+            services.AddTransient<IConfig, Config>();
 
-            //services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
+            services.AddTransient<ILogger, LogzIoLogger>();
+            services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<ITokenRepository, TokenRepository>();
+            services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
+            services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
+            services.AddTransient<IFitbitService, FitbitService>();
+
+            services.AddTransient<ICalendar, Calendar>();
+            services.AddTransient<IWithingsClient, WithingsClient>();
+            services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
+            services.AddTransient<IFitbitClient, FitbitClient>();
+            services.AddTransient<ISheetsService, SheetsService>();
+
+            services.AddTransient<IHangfireWork, HangfireWork>();
+            services.AddTransient<IWithingsService, WithingsService>();
+            services.AddTransient<IFitbitMapper, FitbitMapper>();
+            services.AddTransient<IFitbitWork, FitbitWork>();
+            //            services.AddTransient<IRowMapper, RowMapper>();
+            //            services.AddTransient<IMapFunctions, MapFunctions>();
+            //services.AddTransient<ISheetsClient, SheetsClient>();
+
+            //services.AddTransient<IMessageMaker, MessageMaker>();
+
+            services.AddTransient<IWithingsMapper, WithingsMapper>();
+            services.AddTransient<IWithingsClientQueryAdapter, WithingsClientQueryAdapter>();
+
+            services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
 
 
-            ////// ********************
-            ////// Setup CORS
-            ////// ********************
-            ////var corsBuilder = new CorsPolicyBuilder();
-            ////corsBuilder.AllowAnyHeader();
-            ////corsBuilder.AllowAnyMethod();
-            ////corsBuilder.AllowAnyOrigin(); // For anyone access.
-            //////corsBuilder.WithOrigins("http://localhost:56573"); // for a specific url. Don't add a forward slash on the end!
-            //////corsBuilder.AllowCredentials();
+            //// ********************
+            //// Setup CORS
+            //// ********************
+            //var corsBuilder = new CorsPolicyBuilder();
+            //corsBuilder.AllowAnyHeader();
+            //corsBuilder.AllowAnyMethod();
+            //corsBuilder.AllowAnyOrigin(); // For anyone access.
+            ////corsBuilder.WithOrigins("http://localhost:56573"); // for a specific url. Don't add a forward slash on the end!
+            ////corsBuilder.AllowCredentials();
 
-            ////services.AddCors(options =>
-            ////{
-            ////    options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
-            ////});
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -171,92 +171,92 @@ namespace HealthAPI
             {
                 endpoints.MapControllers();
             });
-            ////            app.UseCors(
-            ////                builder =>
-            ////                {
-            ////                    builder.AllowAnyOrigin()
-            ////                        .AllowAnyMethod()
-            ////                        .AllowAnyHeader()
-            ////                        .AllowCredentials();
-            ////                });
-            ////app.UseCors("CorsPolicy");
-            ////app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
+            //            app.UseCors(
+            //                builder =>
+            //                {
+            //                    builder.AllowAnyOrigin()
+            //                        .AllowAnyMethod()
+            //                        .AllowAnyHeader()
+            //                        .AllowCredentials();
+            //                });
+            //app.UseCors("CorsPolicy");
+            //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
-            ////     app.UseMvc();
-            //app.UseRouting();
+            //     app.UseMvc();
+            app.UseRouting();
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
-            //app.UseCookiePolicy();
+            app.UseCookiePolicy();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
-            //app.UseHangfireDashboard();
-            //app.UseHangfireServer();
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
-            //app.UseSwagger();
+            app.UseSwagger();
 
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            //});
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
-            //var logger = serviceProvider.GetService<ILogger>();
+            var logger = serviceProvider.GetService<ILogger>();
 
-            //using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            //{
-            //    var context = serviceScope.ServiceProvider.GetService<HealthContext>();
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<HealthContext>();
 
-            //    var created = context.Database.EnsureCreated();
-            //    try
-            //    {
-            //        Task task = Task.Run(async () => await logger.LogMessageAsync("STARTING UP SQL SCRIPTS"));
-    
-            //        //Run these when db first created
-            //        if(created)
-            //        { 
-            //            context.Database.SetCommandTimeout(180);
+                var created = context.Database.EnsureCreated();
+                try
+                {
+                    Task task = Task.Run(async () => await logger.LogMessageAsync("STARTING UP SQL SCRIPTS"));
 
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
+                    //Run these when db first created
+                    if (created)
+                    {
+                        context.Database.SetCommandTimeout(180);
 
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Weekly.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
 
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_BloodPressures_Daily.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Weekly.sql"));
 
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily.sql"));
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_2.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_BloodPressures_Daily.sql"));
 
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_Agg.sql"));
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Monthly.sql"));
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Weekly.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_2.sql"));
 
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_Agg.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Monthly.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Weekly.sql"));
 
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Daily.sql"));
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Monthly.sql"));
-            //            context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Weekly.sql"));
-                       
-            //        }
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
 
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Task task = Task.Run(async () => await logger.LogErrorAsync(ex));
-            //    }
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Daily.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Monthly.sql"));
+                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Weekly.sql"));
 
-            //}
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Task task = Task.Run(async () => await logger.LogErrorAsync(ex));
+                }
+
+            }
 
         }
     }
