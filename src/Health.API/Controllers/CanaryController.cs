@@ -27,7 +27,7 @@ namespace Health.API.Controllers
         }
 
         [HttpGet]
-        //[Route("Notification")]
+        [Route("Fitbit")]
         public IActionResult Fitbit()
         {
             var sleeps = _fitbitService.GetSleepSummaries(DateTime.Now.AddDays(-10), DateTime.Now);
