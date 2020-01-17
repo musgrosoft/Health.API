@@ -21,7 +21,7 @@ artifacts:
   type: WebDeployPackage
 deploy:
 - provider: WebDeploy
-  server: https://musgrosoft-health-api.scm.azurewebsites.net:443/msdeploy.axd?site=Musgrosoft-Health-API
+  server: https://waws-prod-am2-281.publish.azurewebsites.windows.net:443/msdeploy.axd?site=musgrosoft-health-api
   website: musgrosoft-health-api
   username: $musgrosoft-health-api
   password:
