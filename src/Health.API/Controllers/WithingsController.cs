@@ -18,8 +18,8 @@ namespace HealthAPI.Controllers
         
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
-        private DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
-        private DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
+        private readonly DateTime MIN_WEIGHT_DATE = new DateTime(2012, 1, 1);
+        private readonly DateTime MIN_BLOOD_PRESSURE_DATE = new DateTime(2012, 1, 1);
 
         public WithingsController(ILogger logger, IWithingsService withingsService, IHealthService healthService)
         {

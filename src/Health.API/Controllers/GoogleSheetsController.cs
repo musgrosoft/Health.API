@@ -18,10 +18,10 @@ namespace HealthAPI.Controllers
 
         private const int SEARCH_DAYS_PREVIOUS = 10;
 
-        private DateTime MIN_DRINK_DATE = new DateTime(2016, 1, 1);
-        private DateTime MIN_EXERCISEE_DATE = new DateTime(2017, 5, 3);
+        private readonly DateTime MIN_DRINK_DATE = new DateTime(2016, 1, 1);
+        private readonly DateTime MIN_EXERCISEE_DATE = new DateTime(2017, 5, 3);
 
-        public GoogleSheetsController(ILogger logger, ISheetsService sheetsService, IHealthService healthService, ICalendar c)
+        public GoogleSheetsController(ILogger logger, ISheetsService sheetsService, IHealthService healthService)
         {
             _logger = logger;
             _sheetsService = sheetsService;

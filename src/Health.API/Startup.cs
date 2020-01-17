@@ -29,7 +29,7 @@ namespace HealthAPI
 {
     public class Startup
     {
-        private IConfig _config;
+        private readonly IConfig _config;
 
         public Startup(IConfiguration configuration)
         {
@@ -189,14 +189,18 @@ namespace HealthAPI
 
             app.UseCookiePolicy();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseAuthorization();
+
+
+            app.UseRouting();
+
+            
+
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
@@ -215,49 +219,47 @@ namespace HealthAPI
 
             var logger = serviceProvider.GetService<ILogger>();
 
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+
+            var context = serviceScope.ServiceProvider.GetService<HealthContext>();
+
+            var created = context.Database.EnsureCreated();
+            try
             {
-                var context = serviceScope.ServiceProvider.GetService<HealthContext>();
+                Task task = Task.Run(async () => await logger.LogMessageAsync("STARTING UP SQL SCRIPTS"));
 
-                var created = context.Database.EnsureCreated();
-                try
+                //Run these when db first created
+                if (created)
                 {
-                    Task task = Task.Run(async () => await logger.LogMessageAsync("STARTING UP SQL SCRIPTS"));
+                    context.Database.SetCommandTimeout(180);
 
-                    //Run these when db first created
-                    if (created)
-                    {
-                        context.Database.SetCommandTimeout(180);
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Weekly.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Weekly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_BloodPressures_Daily.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_BloodPressures_Daily.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_2.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_2.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_Agg.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Monthly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Weekly.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_Agg.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Monthly.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Weekly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
-
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Daily.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Monthly.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Weekly.sql"));
-
-                    }
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Daily.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Monthly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Weekly.sql"));
 
                 }
-                catch (Exception ex)
-                {
-                    Task task = Task.Run(async () => await logger.LogErrorAsync(ex));
-                }
 
+            }
+            catch (Exception ex)
+            {
+                Task task = Task.Run(async () => await logger.LogErrorAsync(ex));
             }
 
         }

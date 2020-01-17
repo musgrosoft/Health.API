@@ -6,8 +6,6 @@ using Newtonsoft.Json;
 using Utils;
 using Withings.Domain.WithingsMeasureGroupResponse;
 using Withings.Domain.WithingsTokenResponse;
-using Utils;
-
 
 namespace Withings
 {

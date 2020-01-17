@@ -11,8 +11,8 @@ namespace Withings.Tests.Unit
 {
     public class WithingsClientQueryAdapterTests
     {
-        private WithingsClientQueryAdapter _withingsClientQueryAdapter;
-        private Mock<IWithingsClient> _withingsClient;
+        private readonly WithingsClientQueryAdapter _withingsClientQueryAdapter;
+        private readonly Mock<IWithingsClient> _withingsClient;
 
         public WithingsClientQueryAdapterTests()
         {

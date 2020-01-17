@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Repositories.Health.Models;
 using Repositories.OAuth.Models;
-using Utils;
 
 namespace Repositories
 {
