@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Fitbit;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Health.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/canary")]
     [ApiController]
-    public class CanaryController : ControllerBase
+    public class CanaryController : Controller
     {
         private readonly IFitbitService _fitbitService;
 
