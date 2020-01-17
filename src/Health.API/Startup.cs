@@ -34,7 +34,7 @@ namespace HealthAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-           // _config = new Config();
+            _config = new Config();
         }
 
         public IConfiguration Configuration { get; }
@@ -183,11 +183,13 @@ namespace HealthAPI
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
             //     app.UseMvc();
-            app.UseRouting();
+
 
             app.UseHttpsRedirection();
 
             app.UseCookiePolicy();
+
+            app.UseRouting();
 
             app.UseAuthorization();
 
