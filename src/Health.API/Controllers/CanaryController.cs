@@ -16,7 +16,7 @@ namespace Health.API.Controllers
         //[Route("Notification")]
         public IActionResult Index()
         {
-            return Ok("Hello");
+            return Ok("Hello Tim");
         }
     }
 }
