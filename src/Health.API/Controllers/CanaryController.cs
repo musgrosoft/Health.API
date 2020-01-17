@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Fitbit;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,9 +25,9 @@ namespace Health.API.Controllers
 
         [HttpGet]
         [Route("Fitbit")]
-        public IActionResult Fitbit()
+        public async Task<IActionResult> Fitbit()
         {
-            var sleeps = _fitbitService.GetSleepSummaries(DateTime.Now.AddDays(-10), DateTime.Now);
+            var sleeps = await _fitbitService.GetSleepSummaries(DateTime.Now.AddDays(-10), DateTime.Now);
 
             return Ok(sleeps);
         }
