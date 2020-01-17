@@ -19,7 +19,7 @@ namespace Health.API.Integration.Tests
         {
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("/api/canary");
+            var response = await client.GetAsync("/api/canary/Index");
 
             //Then
             response.EnsureSuccessStatusCode();

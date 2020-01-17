@@ -20,7 +20,7 @@ namespace Health.API.Controllers
         }
 
         [HttpGet]
-        //[Route("Notification")]
+        [Route("Index")]
         public IActionResult Index()
         {
             return Ok("Hello Tim");
