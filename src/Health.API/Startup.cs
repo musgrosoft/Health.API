@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+//using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repositories;
@@ -16,11 +16,13 @@ using HealthAPI.Hangfire;
 using GoogleSheets;
 using Services.Health;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Calendar = Utils.Calendar;
 using System.Threading.Tasks;
 using Fitbit;
 using Withings;
+using Microsoft.Extensions.Hosting;
 
 namespace HealthAPI
 {
@@ -92,10 +94,10 @@ namespace HealthAPI
 
             services.AddMvc(o => { o.Filters.Add<GlobalExceptionFilter>(); });
 
-            // services.AddSwaggerGen(c =>
-            // {
-            //     c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-            // });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
 
             services.AddScoped<IHealthRepository, HealthRepository>();
 
@@ -154,18 +156,30 @@ namespace HealthAPI
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
 
-//            app.UseCors(
-//                builder =>
-//                {
-//                    builder.AllowAnyOrigin()
-//                        .AllowAnyMethod()
-//                        .AllowAnyHeader()
-//                        .AllowCredentials();
-//                });
+            //            app.UseCors(
+            //                builder =>
+            //                {
+            //                    builder.AllowAnyOrigin()
+            //                        .AllowAnyMethod()
+            //                        .AllowAnyHeader()
+            //                        .AllowCredentials();
+            //                });
             //app.UseCors("CorsPolicy");
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
-       //     app.UseMvc();
+            //     app.UseMvc();
+            app.UseRouting();
+
+            app.UseHttpsRedirection();
+
+            app.UseCookiePolicy();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
