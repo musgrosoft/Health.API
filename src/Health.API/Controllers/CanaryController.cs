@@ -19,18 +19,21 @@ namespace Health.API.Controllers
 
         [HttpGet]
         [Route("Index")]
-        public IActionResult Index()
-        {
-            return Ok("Hello Tim");
-        }
-
-        [HttpGet]
-        [Route("Fitbit")]
-        public async Task<IActionResult> Fitbit()
+        public async Task<IActionResult> Index()
         {
             var sleeps = await _fitbitService.GetSleepSummaries(DateTime.Now.AddDays(-10), DateTime.Now);
 
-            return Ok(sleeps.Count());
+            var resp = new CanaryResponse
+            {
+                FitbitSleepSummaries = sleeps.Any()
+            };
+
+            return Ok(resp);
         }
+    }
+
+    public class CanaryResponse
+    {
+        public bool FitbitSleepSummaries { get; set; }
     }
 }

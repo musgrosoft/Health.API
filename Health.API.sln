@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils.Tests.Unit", "src\Uti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Withings.Tests.Unit", "src\Withings.Tests.Unit\Withings.Tests.Unit.csproj", "{57F53B05-C8A2-45E4-A1A6-6AB6E12AB4B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Health.API.Integration.Tests", "Health.API.Integration.Tests\Health.API.Integration.Tests.csproj", "{5ED03E60-0EEA-4125-9FF2-9309557EE3D4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,10 +97,6 @@ Global
 		{57F53B05-C8A2-45E4-A1A6-6AB6E12AB4B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57F53B05-C8A2-45E4-A1A6-6AB6E12AB4B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57F53B05-C8A2-45E4-A1A6-6AB6E12AB4B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5ED03E60-0EEA-4125-9FF2-9309557EE3D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5ED03E60-0EEA-4125-9FF2-9309557EE3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5ED03E60-0EEA-4125-9FF2-9309557EE3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5ED03E60-0EEA-4125-9FF2-9309557EE3D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,7 +112,6 @@ Global
 		{CB8BA0D7-C9B9-49E7-BB75-2F7EE67A71E5} = {518C89E7-2598-4E16-9387-3C2F1C9EE9D0}
 		{28AEA86B-9CF0-4447-ADD6-9DBDA2B76E84} = {518C89E7-2598-4E16-9387-3C2F1C9EE9D0}
 		{57F53B05-C8A2-45E4-A1A6-6AB6E12AB4B3} = {518C89E7-2598-4E16-9387-3C2F1C9EE9D0}
-		{5ED03E60-0EEA-4125-9FF2-9309557EE3D4} = {518C89E7-2598-4E16-9387-3C2F1C9EE9D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57E8B505-0062-4C35-8F3C-BBCA3B5A5337}
