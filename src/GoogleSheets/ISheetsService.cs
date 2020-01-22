@@ -10,5 +10,7 @@ namespace GoogleSheets
         Task<IEnumerable<Exercise>> GetExercises(DateTime fromDate);
         Task<IEnumerable<Drink>> GetDrinks(DateTime fromDate);
         Task<IEnumerable<Target>> GetTargets();
+        Task<IEnumerable<GarminRestingHeartRate>> GetGarminRestingHeartRates();
+        Task<IEnumerable<GarminIntensityMinutes>> GetGarminIntensityMinutes();
     }
 }

@@ -101,7 +101,15 @@ namespace Services.Health
             await _healthRepository.UpsertAsync(exercises);
         }
 
+        public async Task UpsertAsync(IEnumerable<GarminIntensityMinutes> garminIntensityMinutes)
+        {
+            await _healthRepository.UpsertAsync(garminIntensityMinutes);
+        }
 
+        public async Task UpsertAsync(IEnumerable<GarminRestingHeartRate> garminRestingHeartRates)
+        {
+            await _healthRepository.UpsertAsync(garminRestingHeartRates);
+        }
 
     }
 }

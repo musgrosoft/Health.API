@@ -24,6 +24,7 @@ namespace Services.Health
         Task UpsertAsync(IEnumerable<Target> targets);
 
 
-
+        Task UpsertAsync(IEnumerable<GarminIntensityMinutes> garminIntensityMinutes);
+        Task UpsertAsync(IEnumerable<GarminRestingHeartRate> garminRestingHeartRates);
     }
 }

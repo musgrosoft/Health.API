@@ -34,5 +34,7 @@ namespace Repositories.Health
         //Target GetTarget(DateTime date);
 
         DateTime? GetLatestTargetDate();
+        Task UpsertAsync(IEnumerable<GarminRestingHeartRate> garminRestingHeartRates);
+        Task UpsertAsync(IEnumerable<GarminIntensityMinutes> garminIntensityMinutes);
     }
 }

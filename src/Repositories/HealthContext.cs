@@ -9,6 +9,8 @@ namespace Repositories
     {
         public virtual DbSet<BloodPressure> BloodPressures { get; set; }
         public virtual DbSet<RestingHeartRate> RestingHeartRates { get; set; }
+        public virtual DbSet<GarminRestingHeartRate> GarminRestingHeartRates { get; set; }
+        public virtual DbSet<GarminIntensityMinutes> GarminIntensityMinutes { get; set; }
         public virtual DbSet<Drink> Drinks { get; set; }
         public virtual DbSet<Weight> Weights { get; set; }
         public virtual DbSet<Exercise> Exercises { get; set; }

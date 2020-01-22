@@ -95,7 +95,27 @@ namespace HealthAPI.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("Notify/GarminRestingHeartRates")]
+        public async Task<IActionResult> ImportGarminRestingHeartRates()
+        {
+            var garminRestingHeartRates = await _sheetsService.GetGarminRestingHeartRates();
 
+            await _healthService.UpsertAsync(garminRestingHeartRates);
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("Notify/GarminIntensityMinutes")]
+        public async Task<IActionResult> ImportGarminIntensityMinutes()
+        {
+            var garminIntensityMinutes = await _sheetsService.GetGarminIntensityMinutes();
+
+            await _healthService.UpsertAsync(garminIntensityMinutes);
+
+            return Ok();
+        }
     }
 
 }
