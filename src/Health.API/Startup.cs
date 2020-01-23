@@ -205,11 +205,13 @@ namespace HealthAPI
                 var created = context.Database.EnsureCreated();
                 try
                 {
-                    Task task = Task.Run(async () => await logger.LogMessageAsync("STARTING UP SQL SCRIPTS"));
+                    
     
                     //Run these when db first created
                     if(created)
-                    { 
+                    {
+                        Task.Run(async () => await logger.LogMessageAsync("DB WAS JUST RECREATED, START RUNNING IN VIEWS"));
+
                         context.Database.SetCommandTimeout(180);
 
                         context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
@@ -232,7 +234,8 @@ namespace HealthAPI
                         context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Daily.sql"));
                         context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Monthly.sql"));
                         context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Weekly.sql"));
-                       
+
+                        Task.Run(async () => await logger.LogMessageAsync("FINISHED RUNNING IN VIEWS"));
                     }
 
                 }
