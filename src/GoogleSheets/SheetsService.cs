@@ -67,7 +67,27 @@ namespace GoogleSheets
             return targets;
         }
 
+        public async Task<IEnumerable<GarminRestingHeartRate>> GetGarminRestingHeartRates()
+        {
+            var response = await _httpClient.GetAsync($"https://docs.google.com/spreadsheets/d/{_config.GarminRestingHeartRateSpreadsheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1");
 
+            var csv = await response.Content.ReadAsStringAsync();
+
+            var garminRestingHeartRates = await FromCSVToIEnumerableOf<GarminRestingHeartRate>(csv);
+
+            return garminRestingHeartRates;
+        }
+
+        public async Task<IEnumerable<GarminIntensityMinutes>> GetGarminIntensityMinutes()
+        {
+            var response = await _httpClient.GetAsync($"https://docs.google.com/spreadsheets/d/{_config.GarminIntensityMinutesSpreadsheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1");
+
+            var csv = await response.Content.ReadAsStringAsync();
+
+            var garminIntensityMinutes = await FromCSVToIEnumerableOf<GarminIntensityMinutes>(csv);
+
+            return garminIntensityMinutes;
+        }
 
         private async Task <IEnumerable<T>> FromCSVToIEnumerableOf<T>(String csv) where T : new()
         {

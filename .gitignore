@@ -259,3 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/src/Health.API/.config/dotnet-tools.json
+/src/Health.API/Properties/PublishProfiles/HealthAPI20200117112309 - Web Deploy.pubxml
+/src/Health.API/Properties/PublishProfiles/musgrosoft-health-api - Web Deploy.pubxml

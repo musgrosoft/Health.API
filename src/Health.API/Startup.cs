@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Calendar = Utils.Calendar;
 using System.Threading.Tasks;
 using Fitbit;
+using Microsoft.AspNetCore.Hosting;
 using Withings;
 using Microsoft.Extensions.Hosting;
 
@@ -28,7 +29,7 @@ namespace HealthAPI
 {
     public class Startup
     {
-        private IConfig _config;
+        private readonly IConfig _config;
 
         public Startup(IConfiguration configuration)
         {
@@ -40,10 +41,10 @@ namespace HealthAPI
 
         public virtual void SetUpDataBase(IServiceCollection services)
         {
-            
+
 
             services
-                .AddEntityFrameworkSqlServer()
+                //.AddEntityFrameworkSqlServer()
                 .AddDbContext<HealthContext>(dboptions =>
             {
                 dboptions
@@ -62,13 +63,13 @@ namespace HealthAPI
                     )
                     .EnableSensitiveDataLogging();
             });
-            
+
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
-
+             services.AddControllers();
             //// Add service and create Policy with options
             //services.AddCors(options =>
             //{
@@ -113,7 +114,7 @@ namespace HealthAPI
             services.AddTransient<IFitbitAuthenticator, FitbitAuthenticator>();
             services.AddTransient<IFitbitClientQueryAdapter, FitbitClientQueryAdapter>();
             services.AddTransient<IFitbitService, FitbitService>();
-            
+
             services.AddTransient<ICalendar, Calendar>();
             services.AddTransient<IWithingsClient, WithingsClient>();
             services.AddTransient<IWithingsAuthenticator, WithingsAuthenticator>();
@@ -153,9 +154,23 @@ namespace HealthAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             //            app.UseCors(
             //                builder =>
             //                {
@@ -168,18 +183,24 @@ namespace HealthAPI
             //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
 
             //     app.UseMvc();
-            app.UseRouting();
+
 
             app.UseHttpsRedirection();
 
             app.UseCookiePolicy();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseAuthorization();
+
+
+            app.UseRouting();
+
+            
+
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
@@ -214,22 +235,22 @@ namespace HealthAPI
 
                         context.Database.SetCommandTimeout(180);
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Weekly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Weekly.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_BloodPressures_Daily.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_BloodPressures_Daily.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_2.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_2.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_Agg.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Monthly.sql"));
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Weekly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Daily_Agg.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Monthly.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Exercises_Weekly.sql"));
 
-                        context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
+                    context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Weights_Daily.sql"));
 
                         context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Daily.sql"));
                         context.Database.ExecuteSqlRaw(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Sleeps_Monthly.sql"));
@@ -238,12 +259,10 @@ namespace HealthAPI
                         Task.Run(async () => await logger.LogMessageAsync("FINISHED RUNNING IN VIEWS"));
                     }
 
-                }
-                catch (Exception ex)
-                {
-                    Task task = Task.Run(async () => await logger.LogErrorAsync(ex));
-                }
-
+            }
+            catch (Exception ex)
+            {
+                Task task = Task.Run(async () => await logger.LogErrorAsync(ex));
             }
 
         }

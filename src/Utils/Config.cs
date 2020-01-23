@@ -49,11 +49,18 @@ namespace Utils
         public string ExerciseSpreadsheetId => "1iZcGq0qBonWjU3cpmfz42zR-Mp7vHfr2uvw50s6Rj8g";
 
         public string TargetsSpreadsheetId => "1GinFPvwco9gmtH2ZnyVQNl10FtvxRgYrrGL4rEQ5PdQ";
-//        public string DrinksRange => "Sheet1!A2:E";
-//        public string ExercisesRange => "Sheet1!A2:E";
-//        public string DrinksCsvUrl => GetConfigValue("DrinksCsvUrl");
-//        public string ExercisesCsvUrl => GetConfigValue("ExercisesCsvUrl");
-//        public string TargetsCsvUrl => GetConfigValue("TargetsCsvUrl");
+
+        public string GarminIntensityMinutesSpreadsheetId => "1Rl7LqPSHdTbyQyAvAmRlNO0lCbx2JjY2ze2hMit7-9c";
+
+        public string GarminRestingHeartRateSpreadsheetId => "1aksjRB0F0woWOHxr-Gj4A1fVnJpjdajJlGSlcuMp_6w";
+
+
+
+        //        public string DrinksRange => "Sheet1!A2:E";
+        //        public string ExercisesRange => "Sheet1!A2:E";
+        //        public string DrinksCsvUrl => GetConfigValue("DrinksCsvUrl");
+        //        public string ExercisesCsvUrl => GetConfigValue("ExercisesCsvUrl");
+        //        public string TargetsCsvUrl => GetConfigValue("TargetsCsvUrl");
 
         //Withings
         public string WithingsClientId => GetConfigValue("WithingsClientId");

@@ -21,11 +21,11 @@ artifacts:
   type: WebDeployPackage
 deploy:
 - provider: WebDeploy
-  server: https://musgrosoft-health-api.scm.azurewebsites.net:443/msdeploy.axd?site=Musgrosoft-Health-API
-  website: Musgrosoft-Health-API
-  username: $Musgrosoft-Health-API
+  server: https://waws-prod-am2-281.publish.azurewebsites.windows.net:443/msdeploy.axd?site=musgrosoft-health-api
+  website: musgrosoft-health-api
+  username: $musgrosoft-health-api
   password:
-    secure: LhZrHs+7LDUEbh1j55xvnngKVJoypspq9MS33gISB94Nd09YN/CMGrafHFnIqo2bevxn6P4Vj5/mmT+604zqYA==
+    secure: c503wsToyVTemEHSwk9RGYnPUy5R+gxx9LAQagGCobSn24D6/ByK4JUBHXwiz4JnJLLGlixJ5qFkwfINL8HAoQ==
   artifact: mypackage
   aspnet_core: true
   remove_files: true

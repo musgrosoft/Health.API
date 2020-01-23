@@ -14,6 +14,7 @@ namespace Repositories.Health.Models
         public int Systolic { get; set; }
         public int Units { get; set; }
         public int CardioMinutes { get; set; }
+        public int SleepMinutes { get; set; }
     }
 }
 

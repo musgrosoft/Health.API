@@ -14,12 +14,9 @@ namespace Fitbit.Tests.Unit
     public class FitbitClientTests
     {
 
-        private string fitbitRedirect = "www.redirect.com";
-        private Mock<HttpMessageHandler> _httpMessageHandler;
-        private Mock<IConfig> _config;
-        private Mock<ILogger> _logger;
-        private HttpClient _httpClient;
-        private FitbitClient _fitbitClient;
+        private readonly string fitbitRedirect = "www.redirect.com";
+        private readonly Mock<HttpMessageHandler> _httpMessageHandler;
+        private readonly FitbitClient _fitbitClient;
 
 
         private HttpRequestMessage _capturedRequest;
@@ -30,20 +27,20 @@ namespace Fitbit.Tests.Unit
             _httpMessageHandler = new Mock<HttpMessageHandler>();
 
 
-            _config = new Mock<IConfig>();
+            var config = new Mock<IConfig>();
 
-            _config.Setup(x => x.FitbitBaseUrl).Returns("https://api.fitbit.com");
+            config.Setup(x => x.FitbitBaseUrl).Returns("https://api.fitbit.com");
 
-            _config.Setup(x => x.FitbitClientId).Returns("123456");
+            config.Setup(x => x.FitbitClientId).Returns("123456");
 
-            _config.Setup(x => x.FitbitClientSecret).Returns("secret");
-            _config.Setup(x => x.FitbitOAuthRedirectUrl).Returns(fitbitRedirect);
+            config.Setup(x => x.FitbitClientSecret).Returns("secret");
+            config.Setup(x => x.FitbitOAuthRedirectUrl).Returns(fitbitRedirect);
 
-            _logger = new Mock<ILogger>();
+            var logger = new Mock<ILogger>();
 
-            _httpClient = new HttpClient(_httpMessageHandler.Object);
+            var httpClient = new HttpClient(_httpMessageHandler.Object);
 
-            _fitbitClient = new FitbitClient(_httpClient, _config.Object, _logger.Object);
+            _fitbitClient = new FitbitClient(httpClient, config.Object, logger.Object);
         }
 
         private void SetupHttpMessageHandlerMock(string content, HttpStatusCode statusCode = HttpStatusCode.OK)
@@ -71,10 +68,7 @@ namespace Fitbit.Tests.Unit
 
             Assert.Equal("https://api.fitbit.com/1.2/user//sleep/date/2011-03-04/2011-06-12.json", _capturedRequest.RequestUri.AbsoluteUri);
 
-
-            Assert.Equal(1, sleeps.sleep.Count);
-
-
+            Assert.Single(sleeps.sleep);
         }
 
         [Fact]

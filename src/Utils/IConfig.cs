@@ -38,5 +38,7 @@
 
         string WithingsAccountBaseUrl { get; }
         string WithingsApiBaseUrl { get; }
+        string GarminRestingHeartRateSpreadsheetId { get; }
+        string GarminIntensityMinutesSpreadsheetId { get; }
     }
 }

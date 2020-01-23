@@ -87,6 +87,7 @@ namespace GoogleSheets.Tests.Unit
             Assert.Equal("https://docs.google.com/spreadsheets/d/TargetsSpreadsheetId/gviz/tq?tqx=out:csv&sheet=Sheet1", _capturedRequest.RequestUri.AbsoluteUri);
         }
 
+        [Fact]
         public void ShouldAggregateDrinks()
         {
 

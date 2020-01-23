@@ -138,5 +138,29 @@ namespace Repositories.Health
             }
         }
 
+        public async Task UpsertAsync(IEnumerable<GarminRestingHeartRate> garminRestingHeartRates)
+        {
+            for (int i = 0; i < garminRestingHeartRates.Count(); i += 500)
+            {
+                await _healthContext
+                    .UpsertRange(garminRestingHeartRates.Skip(i).Take(500))
+                    .RunAsync();
+
+                _healthContext.SaveChanges();
+            }
+        }
+
+        public async Task UpsertAsync(IEnumerable<GarminIntensityMinutes> garminIntensityMinutes)
+        {
+            for (int i = 0; i < garminIntensityMinutes.Count(); i += 500)
+            {
+                await _healthContext
+                    .UpsertRange(garminIntensityMinutes.Skip(i).Take(500))
+                    .RunAsync();
+
+                _healthContext.SaveChanges();
+            }
+        }
+
     }
 }
