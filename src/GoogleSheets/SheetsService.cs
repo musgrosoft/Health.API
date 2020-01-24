@@ -73,6 +73,8 @@ namespace GoogleSheets
 
             var csv = await response.Content.ReadAsStringAsync();
 
+            await _logger.LogMessageAsync("Garming Resting Heart Rate csv is " + csv);
+
             var garminRestingHeartRates = await FromCSVToIEnumerableOf<GarminRestingHeartRate>(csv);
 
             return garminRestingHeartRates;
@@ -83,6 +85,9 @@ namespace GoogleSheets
             var response = await _httpClient.GetAsync($"https://docs.google.com/spreadsheets/d/{_config.GarminIntensityMinutesSpreadsheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1");
 
             var csv = await response.Content.ReadAsStringAsync();
+
+            await _logger.LogMessageAsync("Garming Intensity Minutes csv is " + csv);
+
 
             var garminIntensityMinutes = await FromCSVToIEnumerableOf<GarminIntensityMinutes>(csv);
 
