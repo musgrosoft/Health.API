@@ -143,7 +143,7 @@ namespace GoogleSheets
                                     
                                     var propInfo = propertyInfos[propertyNames[i]];
 
-                                    await _logger.LogMessageAsync($"Property name is {propInfo.Name} , type is {propInfo.PropertyType} , value being parsed is {value} .");
+                                    //await _logger.LogMessageAsync($"Property name is {propInfo.Name} , type is {propInfo.PropertyType} , value being parsed is {value} .");
 
                                     var typedValue = Convert.ChangeType(value, propInfo.PropertyType);
 
