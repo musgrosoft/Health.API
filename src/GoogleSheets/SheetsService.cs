@@ -108,7 +108,6 @@ namespace GoogleSheets
                 var lines = csv.Replace("\"", "").Split("\n");
 
                 var propertyNames = lines.First().Split(',');
-                //var propertyNames = Regex.Split(lines.First(), ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
 
                 Type myType = typeof(T);
@@ -131,7 +130,7 @@ namespace GoogleSheets
                 {
                     try
                     {
-                        var values = Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                        var values = Regex.Split(line, ",(?=(?:[^\\\"]*\"[^\\\"]*\\\")*[^\\\"]*$)");
                         var elementT = new T();
 
                         for (int i = 0; i < propertyNames.Length; i++)
