@@ -138,7 +138,10 @@ namespace GoogleSheets
 
                                 if (!string.IsNullOrWhiteSpace(value))
                                 {
+                                    
                                     var propInfo = propertyInfos[propertyNames[i]];
+
+                                    await _logger.LogMessageAsync($"Property name is {propInfo.Name} , type is {propInfo.PropertyType} , value being parsed is {value} .");
 
                                     var typedValue = Convert.ChangeType(value, propInfo.PropertyType);
 
@@ -151,7 +154,7 @@ namespace GoogleSheets
                     }
                     catch (Exception ex)
                     {
-                        await _logger.LogErrorAsync(new Exception("Error parsing invidual line", ex));
+                        await _logger.LogErrorAsync(new Exception("Error parsing individual line ", ex));
                     }
 
                 }
