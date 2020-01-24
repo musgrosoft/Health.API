@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Calendar = Utils.Calendar;
 using System.Threading.Tasks;
 using Fitbit;
+using HealthAPI.Importer;
 using Microsoft.AspNetCore.Hosting;
 using Withings;
 using Microsoft.Extensions.Hosting;
@@ -135,6 +136,7 @@ namespace HealthAPI
             services.AddTransient<IWithingsClientQueryAdapter, WithingsClientQueryAdapter>();
 
             services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
+            services.AddTransient<IImporter, Importer.Importer>();
 
 
             //// ********************

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HealthAPI.Importer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
@@ -8,13 +9,15 @@ namespace Health.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DatabaseController : ControllerBase
+    public class AdminController : ControllerBase
     {
         private readonly HealthContext _healthContext;
+        private readonly IImporter _importer;
 
-        public DatabaseController(HealthContext healthContext)
+        public AdminController(HealthContext healthContext, IImporter importer)
         {
             _healthContext = healthContext;
+            _importer = importer;
         }
 
         [HttpGet]
@@ -33,6 +36,26 @@ namespace Health.API.Controllers
             var result = _healthContext.Database.EnsureCreated();
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("Populate")]
+        public async Task<IActionResult> Populate()
+        {
+            await _importer.ImportGoogleSheetsDrinks();
+            await _importer.ImportGoogleSheetsExercises();
+            await _importer.ImportGoogleSheetsGarminIntensityMinutes();
+            await _importer.ImportGoogleSheetsGarminRestingHeartRates();
+            await _importer.ImportGoogleSheetsTargets();
+
+            await _importer.ImportWithingsBloodPressures();
+            await _importer.ImportWithingsWeights();
+
+            await _importer.ImportFitbitRestingHeartRates();
+            await _importer.ImportFitbitSleepSummaries();
+
+
+            return Ok("ok");
         }
 
 
