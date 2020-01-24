@@ -51,6 +51,8 @@ namespace GoogleSheets
 
             var csv = await response.Content.ReadAsStringAsync();
 
+            await _logger.LogMessageAsync("Exercise csv is " + csv);
+
             var exercises = await FromCSVToIEnumerableOf<Exercise>(csv);
 
             return exercises.Where(x => x.CreatedDate.Between(fromDate, _calendar.Now().Date)).ToList();
