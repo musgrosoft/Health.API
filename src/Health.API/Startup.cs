@@ -57,7 +57,7 @@ namespace HealthAPI
                                 maxRetryDelay: TimeSpan.FromSeconds(30),
                                 errorNumbersToAdd: null);
 
-                            sqlOptions.MigrationsAssembly("Repositories");
+                          //  sqlOptions.MigrationsAssembly("Repositories");
 
                         }
                     )
