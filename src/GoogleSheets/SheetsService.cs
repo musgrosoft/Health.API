@@ -130,7 +130,7 @@ namespace GoogleSheets
                 {
                     try
                     {
-                        var values = Regex.Split(line, ",(?=(?:[^\\\"]*\"[^\\\"]*\\\")*[^\\\"]*$)");
+                        var values = Regex.Split(line, "(?:^|,)(\"(?:[^\"])*\"|[^,]*)");
                         var elementT = new T();
 
                         for (int i = 0; i < propertyNames.Length; i++)
