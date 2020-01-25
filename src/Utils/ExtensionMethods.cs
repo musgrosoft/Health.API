@@ -1,10 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Utils
 {
     public static class ExtensionMethods
     {
         private static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public static IEnumerable<string> SplitCSV(this string input)
+        {
+            Regex csvSplit = new Regex("(?:^|,)(\"(?:[^\"]+|\"\")*\"|[^,]*)", RegexOptions.Compiled);
+
+            foreach (Match match in csvSplit.Matches(input))
+            {
+                yield return match.Value.TrimStart(',');
+            }
+        }
 
         public static DateTime ToDateFromUnixTime(this long val)
         {
