@@ -105,9 +105,11 @@ namespace GoogleSheets
             {
 
 
-                var lines = csv.Replace("\"", "").Split("\n");
+                var lines = csv.Split("\n");
 
-                var propertyNames = lines.First().Split(',');
+                //.Replace("\"", "")
+
+                var propertyNames = lines.First().SplitCSV().Select(x=>x.Replace("\"", "")).ToArray();
 
 
                 Type myType = typeof(T);
@@ -130,7 +132,8 @@ namespace GoogleSheets
                 {
                     try
                     {
-                        var values = line.SplitCSV().ToArray();
+                        var values = line.SplitCSV().Select(x => x.Replace("\"", "")).ToArray();
+
                         var elementT = new T();
 
                         for (int i = 0; i < propertyNames.Length; i++)
