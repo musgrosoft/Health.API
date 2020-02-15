@@ -72,23 +72,23 @@ namespace HealthAPI
         {
              services.AddControllers();
             //// Add service and create Policy with options
-            //services.AddCors(options =>
-            //{
-            //    options.AddDefaultPolicy(
-            //        builder =>
-            //        {
-            //            builder.AllowAnyOrigin()
-            //                .AllowAnyMethod()
-            //                .AllowAnyHeader()
-            //                .AllowCredentials();
-            //        });
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
 
-            //    options.AddPolicy("CorsPolicy",
-            //        builder => builder.AllowAnyOrigin()
-            //            .AllowAnyMethod()
-            //            .AllowAnyHeader()
-            //            .AllowCredentials());
-            //});
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
 
             SetUpDataBase(services);
 
@@ -126,11 +126,6 @@ namespace HealthAPI
             services.AddTransient<IWithingsService, WithingsService>();
             services.AddTransient<IFitbitMapper, FitbitMapper>();
             services.AddTransient<IFitbitWork, FitbitWork>();
-            //            services.AddTransient<IRowMapper, RowMapper>();
-            //            services.AddTransient<IMapFunctions, MapFunctions>();
-            //services.AddTransient<ISheetsClient, SheetsClient>();
-
-            //services.AddTransient<IMessageMaker, MessageMaker>();
 
             services.AddTransient<IWithingsMapper, WithingsMapper>();
             services.AddTransient<IWithingsClientQueryAdapter, WithingsClientQueryAdapter>();
