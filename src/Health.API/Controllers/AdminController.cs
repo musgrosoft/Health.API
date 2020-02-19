@@ -42,31 +42,31 @@ namespace Health.API.Controllers
         [Route("Populate")]
         public async Task<IActionResult> Populate()
         {
-//            await _importer.ImportGoogleSheetsDrinks();
-//            await _importer.ImportGoogleSheetsExercises();
-//            await _importer.ImportGoogleSheetsGarminIntensityMinutes();
-//            await _importer.ImportGoogleSheetsGarminRestingHeartRates();
-//            await _importer.ImportGoogleSheetsTargets();
-//
-//            await _importer.ImportWithingsBloodPressures();
-//            await _importer.ImportWithingsWeights();
-//
-//            await _importer.ImportFitbitRestingHeartRates();
-//            await _importer.ImportFitbitSleepSummaries();
+            await _importer.ImportGoogleSheetsDrinks();
+            await _importer.ImportGoogleSheetsExercises();
+            await _importer.ImportGoogleSheetsGarminIntensityMinutes();
+            await _importer.ImportGoogleSheetsGarminRestingHeartRates();
+            await _importer.ImportGoogleSheetsTargets();
 
-            await Task.WhenAll(
-            _importer.ImportGoogleSheetsDrinks(),
-            _importer.ImportGoogleSheetsExercises(),
-            _importer.ImportGoogleSheetsGarminIntensityMinutes(),
-            _importer.ImportGoogleSheetsGarminRestingHeartRates(),
-            _importer.ImportGoogleSheetsTargets(),
+            await _importer.ImportWithingsBloodPressures();
+            await _importer.ImportWithingsWeights();
 
-            _importer.ImportWithingsBloodPressures(),
-            _importer.ImportWithingsWeights(),
-    
-            _importer.ImportFitbitRestingHeartRates(),
-            _importer.ImportFitbitSleepSummaries()
-                );
+            await _importer.ImportFitbitRestingHeartRates();
+            await _importer.ImportFitbitSleepSummaries();
+
+            // await Task.WhenAll(
+            // _importer.ImportGoogleSheetsDrinks(),
+            // _importer.ImportGoogleSheetsExercises(),
+            // _importer.ImportGoogleSheetsGarminIntensityMinutes(),
+            // _importer.ImportGoogleSheetsGarminRestingHeartRates(),
+            // _importer.ImportGoogleSheetsTargets(),
+            //
+            // _importer.ImportWithingsBloodPressures(),
+            // _importer.ImportWithingsWeights(),
+            //
+            // _importer.ImportFitbitRestingHeartRates(),
+            // _importer.ImportFitbitSleepSummaries()
+            //     );
 
             return Ok("ok");
         }
