@@ -71,26 +71,8 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
-             services.AddControllers();
-            //// Add service and create Policy with options
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();
-                    });
-
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
-            });
-
+            services.AddControllers();
+ 
             SetUpDataBase(services);
 
             services.AddHangfire(x => x.UseMemoryStorage());
@@ -134,21 +116,6 @@ namespace HealthAPI
             services.AddTransient<IBackgroundJobClient, BackgroundJobClient>();
             services.AddTransient<IImporter, Importer.Importer>();
 
-
-            // ********************
-            // Setup CORS
-            // ********************
-            var corsBuilder = new CorsPolicyBuilder();
-            corsBuilder.AllowAnyHeader();
-            corsBuilder.AllowAnyMethod();
-            corsBuilder.AllowAnyOrigin(); // For anyone access.
-            //corsBuilder.WithOrigins("http://localhost:56573"); // for a specific url. Don't add a forward slash on the end!
-            //corsBuilder.AllowCredentials();
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -163,25 +130,14 @@ namespace HealthAPI
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            app.UseCors(
-                builder =>
-                {
-                    builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
-                });
-            app.UseCors("CorsPolicy");
-            //app.UseCors(builder => builder.WithOrigins("http://www.musgrosoft.co.uk"));
-
-            //     app.UseMvc();
-
 
             app.UseHttpsRedirection();
 
