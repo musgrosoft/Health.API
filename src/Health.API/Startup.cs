@@ -29,8 +29,11 @@ using Microsoft.Extensions.Hosting;
 
 namespace HealthAPI
 {
+   
+
     public class Startup
-    {
+    { 
+    //    readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         private readonly IConfig _config;
 
         public Startup(IConfiguration configuration)
@@ -71,6 +74,17 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(MyAllowSpecificOrigins,
+            //        builder =>
+            //        {
+            //            builder.WithOrigins(
+            //                "https://timsstaticwebsite.z33.web.core.windows.net",
+            //                "http://www.contoso.com");
+            //        });
+            //});
+
             services.AddControllers();
  
             SetUpDataBase(services);
@@ -130,6 +144,7 @@ namespace HealthAPI
 
             app.UseRouting();
 
+            //app.UseCors(MyAllowSpecificOrigins);
             app.UseCors();
 
             app.UseAuthorization();
