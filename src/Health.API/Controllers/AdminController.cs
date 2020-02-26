@@ -20,13 +20,31 @@ namespace Health.API.Controllers
             _importer = importer;
         }
 
-        [HttpGet]
-        [Route("EnsureDeleted")]
-        public IActionResult EnsureDeleted()
-        {
-            var result = _healthContext.Database.EnsureDeleted();
+        // [HttpGet]
+        // [Route("EnsureDeleted")]
+        // public IActionResult EnsureDeleted()
+        // {
+        //     var result = _healthContext.Database.EnsureDeleted();
+        //
+        //     return Ok(result);
+        // }
 
-            return Ok(result);
+        [HttpGet]
+        [Route("DropTables")]
+        public IActionResult DropTables()
+        {
+            _healthContext.Database.ExecuteSqlRaw(System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Tables.sql"));
+
+            return Ok("ok");
+        }
+
+        [HttpGet]
+        [Route("DropViews")]
+        public IActionResult DropViews()
+        {
+            _healthContext.Database.ExecuteSqlRaw(System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
+
+            return Ok("ok");
         }
 
         [HttpGet]
@@ -73,14 +91,12 @@ namespace Health.API.Controllers
 
 
         [HttpGet]
-        [Route("RefreshViews")]
-        public IActionResult RefreshViews()
+        [Route("DeployViews")]
+        public IActionResult DeployViews()
         {
             //Task.Run(async () => await logger.LogMessageAsync("DB WAS JUST RECREATED, START RUNNING IN VIEWS"));
 
             _healthContext.Database.SetCommandTimeout(180);
-
-            _healthContext.Database.ExecuteSqlRaw(System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/Drop_All_Views.sql"));
 
             _healthContext.Database.ExecuteSqlRaw(System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Daily.sql"));
             _healthContext.Database.ExecuteSqlRaw(System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/Sql Scripts/vw_Alcohol_Monthly.sql"));
