@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using Microsoft.AspNetCore.Builder;
-//using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repositories;
@@ -15,14 +13,11 @@ using Hangfire.MemoryStorage;
 using HealthAPI.Hangfire;
 using GoogleSheets;
 using Services.Health;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Calendar = Utils.Calendar;
-using System.Threading.Tasks;
 using Fitbit;
 using HealthAPI.Importer;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Withings;
 using Microsoft.Extensions.Hosting;
@@ -33,7 +28,7 @@ namespace HealthAPI
 
     public class Startup
     { 
-    //    readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         private readonly IConfig _config;
 
         public Startup(IConfiguration configuration)
@@ -74,16 +69,16 @@ namespace HealthAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(MyAllowSpecificOrigins,
-            //        builder =>
-            //        {
-            //            builder.WithOrigins(
-            //                "https://timsstaticwebsite.z33.web.core.windows.net",
-            //                "http://www.contoso.com");
-            //        });
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins(
+                            "https://timsstaticwebsite.z33.web.core.windows.net",
+                            "http://www.contoso.com");
+                    });
+            });
 
             services.AddControllers();
  
@@ -133,13 +128,13 @@ namespace HealthAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseCors();
-            //app.UseCors(MyAllowSpecificOrigins);
-            //app.UseAuthorization();
+            //app.UseCors();
+            app.UseCors(MyAllowSpecificOrigins);
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); } );
             app.UseCookiePolicy();
             app.UseHangfireDashboard();
