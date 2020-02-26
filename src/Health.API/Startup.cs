@@ -137,8 +137,9 @@ namespace HealthAPI
         {
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseCors(); //app.UseCors(MyAllowSpecificOrigins);
-            app.UseAuthorization();
+            app.UseCors();
+            //app.UseCors(MyAllowSpecificOrigins);
+            //app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); } );
             app.UseCookiePolicy();
             app.UseHangfireDashboard();
